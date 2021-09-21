@@ -1,61 +1,933 @@
-### Changelog
+### [@coreui/angular](https://coreui.io/) changelog
 
-All notable changes to this project will be documented in this file. Dates are displayed in UTC.
+##### `v2.11.2`
 
-#### [3.2.0](https://github.com/coreui/coreui-free-react-admin-template/compare/3.1.1...3.2.0)
+- ##### `update to Angular 11.2`
 
-> 14 December 2020
+###### dependencies update
+- update `@angular/animations` to `^11.2.2`
+- update `@angular/common` to `^11.2.2`
+- update `@angular/compiler` to `^11.2.2`
+- update `@angular/core` to `^11.2.2`
+- update `@angular/forms` to `^11.2.2`
+- update `@angular/localize` to `^11.2.2`
+- update `@angular/platform-browser` to `^11.2.2`
+- update `@angular/platform-browser-dynamic` to `^11.2.2`
+- update `@angular/router` to `^11.2.2`
+- update `tslib` to `^2.1.0`
+- update `zone.js` to `^0.11.4`
+- update `@angular-devkit/build-angular` to `^0.1102.1`
+- update `@angular/cli` to `^11.2.1`
+- update `@angular/compiler-cli` to `^11.2.2`
+- update `@angular/language-service` to `^11.2.2`
+- update `@types/jasmine` to `^3.6.4`
+- update `@types/node` to `^14.14.31`
+- update `codelyzer` to `^6.0.1`
+- update `jasmine-spec-reporter` to `~5.0.2`
+- update `karma-jasmine` to `~4.0.1`
+- update `karma-jasmine-html-reporter` to `^1.5.4`
+- update `ng-packagr` to `^11.2.4`
+- update `tslint` to `~6.1.3`
 
-- fix(BrandButtons): minor temp fixes with stylings [`f0c0585`](https://github.com/coreui/coreui-free-react-admin-template/commit/f0c05858329430c9487bdcfcf36d0aa98f60776d)
-- refactor: polyfills cleanup [`9522ade`](https://github.com/coreui/coreui-free-react-admin-template/commit/9522ade1f1eb2c5a26d5208fe6e44be803123bd2)
-- test: refactor, import temp update [`f3f91c5`](https://github.com/coreui/coreui-free-react-admin-template/commit/f3f91c5d721754a2dac26143f312415c94c7ed68)
-- chore: React 17 and dependencies update [`f6a710f`](https://github.com/coreui/coreui-free-react-admin-template/commit/f6a710ffd6996c9b6b026b8eebed6ff390757fe1)
-- fix(_nav): no anonymous default export [`ed83c9a`](https://github.com/coreui/coreui-free-react-admin-template/commit/ed83c9a3d4199b8c6566a6e01396cdcbca80cf42)
 
-#### [3.1.1](https://github.com/coreui/coreui-free-react-admin-template/compare/3.1.0...3.1.1)
+##### `v2.11.1`
 
-> 26 November 2020
+- ##### `update to Angular 11.1`
 
-- chore: dependencies update [`5b70904`](https://github.com/coreui/coreui-free-react-admin-template/commit/5b70904d8f22f61a71def3306ea96ad640573c39)
-- chore: add changelog [`de605cc`](https://github.com/coreui/coreui-free-react-admin-template/commit/de605cc1aadec9fb066625c6bc7b656590efc7bb)
-- chore: limit changelog to version 3 [`6ac9a1d`](https://github.com/coreui/coreui-free-react-admin-template/commit/6ac9a1d094d4d293ddacb3f3562216a98be8e129)
-- chore: add migration docs [`b661344`](https://github.com/coreui/coreui-free-react-admin-template/commit/b661344485a38404b8c2b1326e3a4258009b071c)
-- chore: changelog update [`f9f1927`](https://github.com/coreui/coreui-free-react-admin-template/commit/f9f19274f046cf5f11f68d6c7eb7ae04c553f219)
-- chore: .gitignore cleanup [`ba21e00`](https://github.com/coreui/coreui-free-react-admin-template/commit/ba21e001944322fb48e43264719b94368c589732)
-- chore: 3.1.1 release [`081b957`](https://github.com/coreui/coreui-free-react-admin-template/commit/081b957291a8020e3d2e3b42c1f0a1455a49c524)
+###### dependencies update
+- update `@angular/animations` to `^11.1.0`
+- update `@angular/common` to `^11.1.0`
+- update `@angular/compiler` to `^11.1.0`
+- update `@angular/core` to `^11.1.0`
+- update `@angular/forms` to `^11.1.0`
+- update `@angular/localize` to `^11.1.0`
+- update `@angular/platform-browser` to `^11.1.0`
+- update `@angular/platform-browser-dynamic` to `^11.1.0`
+- update `@angular/router` to `^11.1.0`
+- update `@angular-devkit/build-angular` to `^0.1101.1`
+- update `@angular/cli` to `^11.1.1`
+- update `@angular/compiler-cli` to `^11.1.0`
+- update `@angular/language-service` to `^11.1.0`
+- update `@types/jasmine` to `^3.6.3`
+- update `@types/node` to `^14.14.22`
+- update `ng-packagr` to `^11.1.2`
 
-#### [3.1.0](https://github.com/coreui/coreui-free-react-admin-template/compare/3.0.0...3.1.0)
 
-> 12 August 2020
+##### `v2.11.0`
 
-- docs(readme): CoreUI react theme setup with laravel tutorial link add into readme [`#226`](https://github.com/coreui/coreui-free-react-admin-template/pull/226)
-- fix: fix template testing [`68ce41d`](https://github.com/coreui/coreui-free-react-admin-template/commit/68ce41db6831d6995121766a5771dc9d667cc61a)
-- chore: 3.1.0 release - update dependencies [`92f55b8`](https://github.com/coreui/coreui-free-react-admin-template/commit/92f55b8cdfd748a9e72649d5da62b93015a1c8e6)
-- refactor: add reusable folder with DocsLink component [`eef84db`](https://github.com/coreui/coreui-free-react-admin-template/commit/eef84dbbd770c7253080a6f69443c40e4fecefd2)
-- feat: add CSwitch examples to forms [`b31e452`](https://github.com/coreui/coreui-free-react-admin-template/commit/b31e452fd0ea736763d3032d7204cd478863b505)
-- refactor: add CIcon example in _nav.js [`be5d1f0`](https://github.com/coreui/coreui-free-react-admin-template/commit/be5d1f0618f981f18c45be87afb56c4409bd3389)
+- chore: update to `Angular 11` and `TypeScript 4`
+  - [https://update.angular.io/](https://update.angular.io/?v=10.2-11.0)
+  - [https://v11.angular.io/guide/updating-to-version-11](https://angular.io/guide/updating-to-version-11)
+  - [TypeScript: Documentation - TypeScript 4.0](https://www.typescriptlang.org/docs/handbook/release-notes/typescript-4-0.html)
+  - remove deprecated support for IE 9, 10, and IE mobile
 
-### [3.0.0](https://github.com/coreui/coreui-free-react-admin-template/compare/v2.6.1...3.0.0)
+###### dependencies update
+- update `@angular/animations` to `^11.0.9`
+- update `@angular/common` to `^11.0.9`
+- update `@angular/compiler` to `^11.0.9`
+- update `@angular/core` to `^11.0.9`
+- update `@angular/forms` to `^11.0.9`
+- update `@angular/localize` to `^11.0.9`
+- update `@angular/platform-browser` to `^11.0.9`
+- update `@angular/platform-browser-dynamic` to `^11.0.9`
+- update `@angular/router` to `^11.0.9`
+- update `zone.js` to `^0.11.3`
+- update `@angular-devkit/build-angular` to `^0.1100.7`
+- update `@angular/cli` to `^11.0.7`
+- update `@angular/compiler-cli` to `^11.0.9`
+- update `@angular/language-service` to `^11.0.9`
+- update `@types/jasmine` to `~3.6.0`
+- update `codelyzer` to `^6.0.0`
+- update `jasmine-core` to `~3.6.0`
+- update `karma` to `^5.2.3`
+- update `karma-coverage` to `~2.0.3`
+- update `ng-packagr` to `^11.0.3`
+- update `ts-node` to `^9.1.1`
+- update `typescript` to `~4.0.5`
 
-> 17 June 2020
 
-- feat: update template to version 3 [`cc79542`](https://github.com/coreui/coreui-free-react-admin-template/commit/cc795425bbf610873fcdf6938b5fb0aba49a4d97)
-- refactor: update folder casing to kebab-case [`75138b0`](https://github.com/coreui/coreui-free-react-admin-template/commit/75138b0d0340cc21d58bcc2f800f042f86e54346)
-- refactor: temporarily delete views folder [`cb4433a`](https://github.com/coreui/coreui-free-react-admin-template/commit/cb4433a3e33cb943bc1f47199110ead28fab517b)
-- docs: README update [`188e0b1`](https://github.com/coreui/coreui-free-react-admin-template/commit/188e0b1c09fd7d47dc87d0410303ae43e8ee79de)
-- chore: clear packages [`e236aad`](https://github.com/coreui/coreui-free-react-admin-template/commit/e236aad4ab0129e3611adfc2127670da64696e54)
-- fix: delete obsolete files, fix logos [`f479a5d`](https://github.com/coreui/coreui-free-react-admin-template/commit/f479a5dc72bb5bb75b95a4b904d1c350be8fe7bc)
-- chore: 3.0.0-beta.1 release [`d940f92`](https://github.com/coreui/coreui-free-react-admin-template/commit/d940f92ef741d7eab021af4fbcf385823c80421a)
-- fix: fix accordion, delete aside [`0e6506e`](https://github.com/coreui/coreui-free-react-admin-template/commit/0e6506ea3303ca30bc21ba2bcf3717a3f009dc8c)
-- refactor: optimize icon bundle size, update icons [`9fed168`](https://github.com/coreui/coreui-free-react-admin-template/commit/9fed168a534b88cb27371d6364b922418a5a13b4)
-- refacotor: template updates [`1df8c15`](https://github.com/coreui/coreui-free-react-admin-template/commit/1df8c15030d45779f6adc5031153eaff09701d97)
-- refactor: turn logos extensions from svg to js [`8c0deee`](https://github.com/coreui/coreui-free-react-admin-template/commit/8c0deeed169267155323a5b6bdbbdfaf8a856a41)
-- refactor: rename containers from 'Default' to 'The', small fixes [`bfc79da`](https://github.com/coreui/coreui-free-react-admin-template/commit/bfc79da4039dd534ee49b4526978f7b949cea90b)
-- refactor: update icons to version 2, rtl fixes [`8e4fbc2`](https://github.com/coreui/coreui-free-react-admin-template/commit/8e4fbc2aa8786b00a004282260c52986e1cd2430)
-- fix: delete unneded icons, aside, fix readme.md [`1ee0561`](https://github.com/coreui/coreui-free-react-admin-template/commit/1ee05619ba15d050b73df21c8d1347e8329942d5)
-- chore: 3.0.0 version release - update dependencies [`fd5236d`](https://github.com/coreui/coreui-free-react-admin-template/commit/fd5236d47340b336bf641041cbf6d48ec8b1081a)
-- feat: add query parameters to Users view [`98f8b67`](https://github.com/coreui/coreui-free-react-admin-template/commit/98f8b677edb96f9175b7d4c20370c3d6744543bd)
-- docs: add license [`db85786`](https://github.com/coreui/coreui-free-react-admin-template/commit/db85786be465fdb7a84b7337dbe876afc5e957bc)
-- chore: update react.md [`5aa0cc3`](https://github.com/coreui/coreui-free-react-admin-template/commit/5aa0cc3ce15c841032cd75392418cfeb2e4d094f)
-- docs: README cleanup [`82a4351`](https://github.com/coreui/coreui-free-react-admin-template/commit/82a4351daa6c8d452e19c7141dbadecc3f721c1b)
-- fix: fix Icons views [`1777a09`](https://github.com/coreui/coreui-free-react-admin-template/commit/1777a092f6444497120e85c8852a1e4779640e71)
+##### `v2.10.0`
+
+- chore: update to `Angular 10` and `TypeScript 3.9` 
+  - [https://update.angular.io/](https://update.angular.io/?v=9.1-10.2)
+  - [https://v10.angular.io/guide/updating-to-version-10](https://v10.angular.io/guide/updating-to-version-10)
+  - [TypeScript: Documentation - TypeScript 3.9](https://www.typescriptlang.org/docs/handbook/release-notes/typescript-3-9.html)  
+
+
+- test: deprecate `async()` in favour of `waitForAsync()`
+
+###### dependencies update
+- update `@angular/animations` to `^10.2.4`
+- update `@angular/common` to `^10.2.4`
+- update `@angular/compiler` to `^10.2.4`
+- update `@angular/core` to `^10.2.4`
+- update `@angular/forms` to `^10.2.4`
+- update `@angular/localize` to `^10.2.4`
+- update `@angular/platform-browser` to `^10.2.4`
+- update `@angular/platform-browser-dynamic` to `^10.2.4`
+- update `@angular/router` to `^10.2.4`
+- update `tslib` to `^2.0.0`
+- update `@angular-devkit/build-angular` to `^0.1002.1`
+- update `@angular-devkit/build-ng-packagr` to `^0.1002.1`
+- update `@angular/cli` to `^10.2.1`
+- update `@angular/compiler-cli` to `^10.2.4`
+- update `@angular/language-service` to `^10.2.4`
+- update `codelyzer` to `^6.0.1`
+- update `jasmine-spec-reporter` to `~5.0.0`
+- update `karma` to `~5.0.0`
+- update `karma-chrome-launcher` to `~3.1.0`
+- update `karma-coverage-istanbul-reporter` to `~3.0.2`
+- update `karma-jasmine` to `~4.0.0`
+- update `karma-jasmine-html-reporter` to `^1.5.0`
+- update `ng-packagr` to `^10.1.0`
+- update `ngx-perfect-scrollbar` to `^10.1.0`
+- update `protractor` to `~7.0.0`
+- update `tslint` to `~6.1.0`
+- update `typescript` to `~3.9.7`
+
+##### `v2.9.6`
+- fix: use type INavData instead of any
+- chore(.github): add project checks workflows
+- test: minor updates e2e, unit
+
+###### dependencies update
+- update `@angular/animations` to `^9.1.13`
+- update `@angular/common` to `^9.1.13`
+- update `@angular/compiler` to `^9.1.13`
+- update `@angular/core` to `^9.1.13`
+- update `@angular/forms` to `^9.1.13`
+- update `@angular/localize` to `^9.1.13`
+- update `@angular/platform-browser` to `^9.1.13`
+- update `@angular/platform-browser-dynamic` to `^9.1.13`
+- update `@angular/router` to `^9.1.13`
+- update `rxjs` to `^6.6.3`
+- update `tslib` to `^1.14.1`
+- update `@angular-devkit/build-angular` to `^0.901.13`
+- update `@angular-devkit/build-ng-packagr` to `^0.901.13`
+- update `@angular/cli` to `^9.1.13`
+- update `@angular/compiler-cli` to `^9.1.13`
+- update `@angular/language-service` to `^9.1.13`
+- update `@types/jasmine` to `^3.6.2`
+- update `@types/node` to `^14.14.20`
+- update `karma` to `^5.2.3`
+- update `simple-line-icons` to `^2.5.5`  
+---
+- update `stylus@0.54.8` with `npm --depth 2 update stylus`
+
+##### `v2.9.4`
+- fix: routerLinkActiveOptions not passed to SidebarNavLink - thanks @CloudStrife28492 fixes #107
+
+##### `v2.9.3`
+- fix: add missing AppSidebarNavComponent/AppSidebarMinimizer to public api - thanks @coyoteecd fixes #110
+
+###### dependencies update
+- update `@angular/animations` to `^9.1.12`
+- update `@angular/common` to `^9.1.12`
+- update `@angular/compiler` to `^9.1.12`
+- update `@angular/core` to `^9.1.12`
+- update `@angular/forms` to `^9.1.12`
+- update `@angular/localize` to `^9.1.12`
+- update `@angular/platform-browser` to `^9.1.12`
+- update `@angular/platform-browser-dynamic` to `^9.1.12`
+- update `@angular/router` to `^9.1.12`
+- update `rxjs` to `^6.6.0`
+- update `tslib` to `^1.13.0`
+- update `@angular-devkit/build-angular` to `^0.901.11`
+- update `@angular-devkit/build-ng-packagr` to `^0.901.11`
+- update `@angular/cli` to `^9.1.11`
+- update `@angular/compiler-cli` to `^9.1.12`
+- update `@angular/language-service` to `^9.1.12`
+- update `@types/jasmine` to `^3.5.11`
+- update `@types/node` to `^13.13.14`
+- update `jasmine-spec-reporter` to `^5.0.2`
+- update `karma` to `^5.1.0`
+- update `karma-jasmine` to `^3.3.1`
+- update `karma-jasmine-html-reporter` to `^1.5.4`
+- update `ng-packagr` to `^9.1.5`
+- update `protractor` to `^7.0.0`
+- update `shelljs` to `^0.8.4`
+- update `ts-node` to `^8.10.2`
+- update `tslint` to `^6.1.2`
+
+##### `v2.9.2`
+- chore: update to `Angular 9.1.1`
+- chore: remove build artifacts from git
+
+###### dependencies update
+- update `@angular/animations` to `^9.1.1`
+- update `@angular/common` to `^9.1.1`
+- update `@angular/compiler` to `^9.1.1`
+- update `@angular/core` to `^9.1.1`
+- update `@angular/forms` to `^9.1.1`
+- update `@angular/localize` to `^9.1.1`
+- update `@angular/platform-browser` to `^9.1.1`
+- update `@angular/platform-browser-dynamic` to `^9.1.1`
+- update `@angular/router` to `^9.1.1`
+- update `rxjs` to `^6.5.5`
+- update `zone.js` to `^0.10.3`
+- update `@angular-devkit/build-angular` to `~0.901.1`
+- update `@angular-devkit/build-ng-packagr` to `~0.901.1`
+- update `@angular/cli` to `^9.1.1`
+- update `@angular/compiler-cli` to `^9.1.1`
+- update `@angular/language-service` to `^9.1.1`
+- update `@types/jasmine` to `^3.5.10`
+- update `@types/jasminewd2` to `~2.0.8`
+- update `@types/node` to `^13.11.1`
+- update `codelyzer` to `^5.2.2`
+- update `jasmine-spec-reporter` to `^5.0.1`
+- update `karma` to `^5.0.1`
+- update `karma-chrome-launcher` to `^3.1.0`
+- update `karma-coverage-istanbul-reporter` to `^2.1.1`
+- update `karma-jasmine` to `^3.1.1`
+- update `karma-jasmine-html-reporter` to `^1.5.3`
+- update `ng-packagr` to `^9.1.0`
+- update `protractor` to `^5.4.3`
+- update `ts-node` to `^8.8.2`
+- update `tslint` to `^6.1.1`
+- update `typescript` to `~3.6.5`
+
+##### `v2.9.1`
+- fix: downgrade TypeScript to ~3.6.4 - thanks @jrocha closes #103
+
+###### dependencies update
+- update `typescript` to `~3.6.4`
+- update `@angular/animations` to `~9.0.5`
+- update `@angular/common` to `~9.0.5`
+- update `@angular/compiler` to `~9.0.5`
+- update `@angular/core` to `~9.0.5`
+- update `@angular/forms` to `~9.0.5`
+- update `@angular/localize` to `^9.0.5`
+- update `@angular/platform-browser` to `~9.0.5`
+- update `@angular/platform-browser-dynamic` to `~9.0.5`
+- update `@angular/router` to `~9.0.5`
+- update `tslib` to `^1.11.1`
+- update `@angular-devkit/build-angular` to `~0.900.5`
+- update `@angular-devkit/build-ng-packagr` to `~0.900.5`
+- update `@angular/cli` to `~9.0.5`
+- update `@angular/compiler-cli` to `~9.0.5`
+- update `@angular/language-service` to `~9.0.5`
+- update `@types/jasmine` to `^3.5.7`
+- update `@types/node` to `^12.12.29`
+- update `ng-packagr` to `^9.0.2`
+- update `ngx-perfect-scrollbar` to `^9.0.0`
+
+##### `v2.9.0`
+- chore: update to `Angular 9.0.0`
+    - [https://update.angular.io/](https://update.angular.io/#8.0:9.0)
+    - [https://angular.io/guide/updating-to-version-9](https://angular.io/guide/updating-to-version-9)
+    - [https://blog.angular.io/version-9-of-angular-now-available-project-ivy-has-arrived](https://blog.angular.io/version-9-of-angular-now-available-project-ivy-has-arrived-23c97b63cfa3)
+
+- chore: update to `TypeScript 3.7`
+    - [https://www.typescriptlang.org/docs/handbook/release-notes/typescript-3-7.html](https://www.typescriptlang.org/docs/handbook/release-notes/typescript-3-7.html)
+    - [https://www.typescriptlang.org/docs/handbook/release-notes/typescript-3-6.html](https://www.typescriptlang.org/docs/handbook/release-notes/typescript-3-6.html)
+
+###### dependencies update
+- update `@angular/animations` to `~9.0.0`
+- update `@angular/common` to `~9.0.0`
+- update `@angular/compiler` to `~9.0.0`
+- update `@angular/core` to `~9.0.0`
+- update `@angular/forms` to `~9.0.0`
+- update `@angular/localize` to `^9.0.0`
+- update `@angular/platform-browser` to `~9.0.0`
+- update `@angular/platform-browser-dynamic` to `~9.0.0`
+- update `@angular/router` to `~9.0.0`
+- update `@angular-devkit/build-angular` to `~0.900.1`
+- update `@angular-devkit/build-ng-packagr` to `~0.900.1`
+- update `@angular/cli` to `~9.0.1`
+- update `@angular/compiler-cli` to `~9.0.0`
+- update `@angular/language-service` to `~9.0.0`
+- update `@types/node` to `^12.12.26`
+- update `@types/jasmine` to `~3.5.3`
+- update `karma-jasmine-html-reporter` to `^1.5.2`
+- update `ng-packagr` to `^9.0.0`
+- update `typescript` to `~3.7.5`
+
+##### `v2.7.5`
+- chore: update to `Angular 9.0.0-rc.12`
+
+###### dependencies update
+- update `@angular/animations` to `~9.0.0-rc.12`
+- update `@angular/common` to `~9.0.0-rc.12`
+- update `@angular/compiler` to `~9.0.0-rc.12`
+- update `@angular/core` to `~9.0.0-rc.12`
+- update `@angular/forms` to `~9.0.0-rc.12`
+- update `@angular/localize` to `^9.0.0-rc.12`
+- update `@angular/platform-browser` to `~9.0.0-rc.12`
+- update `@angular/platform-browser-dynamic` to `~9.0.0-rc.12`
+- update `@angular/router` to `~9.0.0-rc.12`
+- update `@angular-devkit/build-angular` to `~0.900.0-rc.12`
+- update `@angular-devkit/build-ng-packagr` to `~0.900.0-rc.12`
+- update `@angular/cli` to `~9.0.0-rc.12`
+- update `@angular/compiler-cli` to `~9.0.0-rc.12`
+- update `@angular/language-service` to `~9.0.0-rc.12`
+
+##### `v2.7.4`
+- fix: add `SidebarNavHelper` to public-api surface - see: #67 
+
+##### `v2.7.3`
+- chore: update to `Angular 9.0.0-rc.9`
+- refactor: `@coreui/angular` components library
+- tests: fix and add some missing tests
+
+###### dependencies update
+- update `@angular/animations` to `~9.0.0-rc.9`
+- update `@angular/common` to `~9.0.0-rc.9`
+- update `@angular/compiler` to `~9.0.0-rc.9`
+- update `@angular/core` to `~9.0.0-rc.9`
+- update `@angular/forms` to `~9.0.0-rc.9`
+- update `@angular/platform-browser` to `~9.0.0-rc.9`
+- update `@angular/platform-browser-dynamic` to `~9.0.0-rc.9`
+- update `@angular/router` to `~9.0.0-rc.9`
+- update `@angular-devkit/build-angular` to `~0.900.0-rc.9`
+- update `@angular-devkit/build-ng-packagr` to `~0.900.0-rc.9`
+- update `@angular/cli` to `~9.0.0-rc.9`
+- update `@angular/compiler-cli` to `~9.0.0-rc.9`
+- update `@angular/language-service` to `~9.0.0-rc.9`
+- update `@types/node` to `^12.11.1`
+- update `@types/jasmine` to `~3.5.0`
+- update `@types/jasminewd2` to `~2.0.3`
+- update `codelyzer` to `^5.1.2`
+- update `jasmine-core` to `~3.5.0`
+- update `jasmine-spec-reporter` to `~4.2.1`
+- update `karma` to `~4.3.0`
+- update `karma-chrome-launcher` to `~3.1.0`
+- update `karma-coverage-istanbul-reporter` to `~2.1.0`
+- update `ng-packagr` to `^9.0.0-rc.7`
+- update `protractor` to `~5.4.2`
+- update `ts-node` to `~8.3.0`
+- update `tslint` to `~5.18.0`
+
+##### `v2.7.2`
+- fix(sidebar-nav): AppSidebarNavLabelComponent is not exported in the AppSidebarModule - thanks @zwiras #63
+
+###### dependencies update
+- update `@angular/animations` to `^9.0.0-rc.7`
+- update `@angular/common` to `^9.0.0-rc.7`
+- update `@angular/compiler` to `^9.0.0-rc.7`
+- update `@angular/core` to `^9.0.0-rc.7`
+- update `@angular/forms` to `^9.0.0-rc.7`
+- update `@angular/platform-browser` to `^9.0.0-rc.7`
+- update `@angular/platform-browser-dynamic` to `^9.0.0-rc.7`
+- update `@angular/router` to `^9.0.0-rc.7`
+- update `@angular-devkit/build-angular` to `^0.900.0-rc.7`
+- update `@angular-devkit/build-ng-packagr` to `^0.900.0-rc.7`
+- update `@angular/cli` to `^9.0.0-rc.7`
+- update `@angular/compiler-cli` to `^9.0.0-rc.7`
+- update `@angular/language-service` to `^9.0.0-rc.7`
+- update `@types/node` to `^12.12.21`
+- update `codelyzer` to `^5.2.1`
+
+##### `v2.7.1`
+- fix(sidebar-nav): @angular/router has no exported member QueryParamsHandling, see: 
+    - https://github.com/angular/angular/issues/30925
+    - https://github.com/angular/angular/issues/30816
+
+###### dependencies update
+- update `@angular/animations` to `^9.0.0-rc.5`
+- update `@angular/common` to `^9.0.0-rc.5`
+- update `@angular/compiler` to `^9.0.0-rc.5`
+- update `@angular/core` to `^9.0.0-rc.5`
+- update `@angular/forms` to `^9.0.0-rc.5`
+- update `@angular/platform-browser` to `^9.0.0-rc.5`
+- update `@angular/platform-browser-dynamic` to `^9.0.0-rc.5`
+- update `@angular/router` to `^9.0.0-rc.5`
+- update `core-js` to `^2.6.11`
+- update `@angular-devkit/build-angular` to `^0.900.0-rc.5`
+- update `@angular-devkit/build-ng-packagr` to `^0.900.0-rc.5`
+- update `@angular/cli` to `^9.0.0-rc.5`
+- update `@angular/compiler-cli` to `^9.0.0-rc.5`
+- update `@angular/language-service` to `^9.0.0-rc.5`
+- update `@types/jasmine` to `^3.5.0`
+- update `@types/node` to `^12.12.17`
+- update `karma-coverage-istanbul-reporter` to `^2.1.1`
+- update `ng-packagr` to `^9.0.0-rc.3`
+- update `ts-node` to `^8.5.4`
+- update `tslint` to `^5.20.1`
+
+##### `v2.7.0`
+- chore: upgrade to Angular 9 - see also: 
+    - `https://next.angular.io/guide/updating-to-version-9`
+    - `https://update.angular.io/#8.0:9.0`
+    - add missing `@Injectable` decorator to `SidebarNavHelper`
+    - add a generic type to `ModuleWithProviders`
+    - tsconfig.lib `enableIvy: false` for library backward compatibility
+    - tsconfig.lib `annotateForClosureCompiler: false` and remove `tsickle` dependency 
+    - move `tslib` to `dependencies`
+    - tsconfig.app: add files[]
+    - test: deprecate TestBed.get() use TestBed.inject()
+- refactor(SidebarNavItem): add INavData items type
+
+###### dependencies update
+- update `@angular/animations` to `^9.0.0-rc.0`
+- update `@angular/common` to `^9.0.0-rc.0`
+- update `@angular/compiler` to `^9.0.0-rc.0`
+- update `@angular/core` to `^9.0.0-rc.0`
+- update `@angular/forms` to `^9.0.0-rc.0`
+- update `@angular/platform-browser` to `^9.0.0-rc.0`
+- update `@angular/platform-browser-dynamic` to `^9.0.0-rc.0`
+- update `@angular/router` to `^9.0.0-rc.0`
+- update `@angular-devkit/build-angular` to `~0.900.0-rc.0`
+- update `@angular-devkit/build-ng-packagr` to `~0.900.0-rc.0`
+- update `@angular/cli` to `^9.0.0-rc.0`
+- update `@angular/compiler-cli` to `^9.0.0-rc.0`
+- update `@angular/language-service` to `^9.0.0-rc.0`
+- update `ng-packagr` to `^9.0.0-rc.1`
+- update `typescript` to `~3.6.4"
+- update `@types/node` to `^12.11.1`
+- update `codelyzer` to `^5.1.2`
+- update `@coreui/coreui` to `^2.1.16`
+- update `@types/jasmine` to `^3.4.5`
+
+##### `v2.6.3`
+- refactor: change renderer.addClass to HostBinding
+- test: add e2e test bed with some tests 
+
+###### dependencies update
+- update `@angular-devkit/build-angular` to `^0.803.14`
+- update `@angular-devkit/build-ng-packagr` to `^0.803.14`
+- update `@angular/cli` to `^8.3.14`
+- update `@angular/compiler-cli` to `^8.2.12`
+- update `@angular/language-service` to `^8.2.12`
+- update `@angular/animations` to `^8.2.12`
+- update `@angular/common` to `^8.2.12`
+- update `@angular/compiler` to `^8.2.12`
+- update `@angular/core` to `^8.2.12`
+- update `@angular/forms` to `^8.2.12`
+- update `@angular/platform-browser` to `^8.2.12`
+- update `@angular/platform-browser-dynamic` to `^8.2.12`
+- update `@angular/router` to `^8.2.12`
+- rollback `protractor` to `^5.4.2`
+- add `@coreui/coreui` (e2e)
+- add `simple-line-icons` (e2e)
+- add `ngx-perfect-scrollbar` (e2e)
+
+##### `v2.6.2`
+- feat(Sidebar): `minimized` state @Input/@Output - thanks @Hagith #84
+- test(Sidebar): `minimized` state - thanks @Hagith #84
+- feat(SidebarService): add SidebarService with observable actions 
+- refactor(Sidebar): inject SidebarService, subscribe and toggle action events 
+- refactor(SidebarMinimizer): inject SidebarService, toggle action events 
+- refactor(Sidebar): onDestroy remove minimized classes
+
+###### dependencies update
+- update `@angular-devkit/build-angular` to `^0.803.13`
+- update `@angular-devkit/build-ng-packagr` to `^0.803.13`
+- update `@angular/cli` to `^8.3.13`
+- update `codelyzer` to `^5.2.0`
+- update `jasmine-core` to `^3.5.0`
+- update `jasmine-spec-reporter` to `^4.2.1`
+- update `karma` to `^4.4.1`
+- update `karma-chrome-launcher` to `^3.1.0`
+- update `karma-jasmine-html-reporter` to `^1.4.2`
+- update `protractor` to `^6.0.0`
+
+##### `v2.6.1`
+- chore: add "cui" prefixed selector alias to all components - thanks @Hagith #80
+- fix(INavData): add missing `href` for explicit external links
+- refactor(SidebarNavLink): add `INavData` type to items, cleanup
+- test: add `test-lib` script & make it work - thanks @Hagith #83
+
+###### dependencies update
+- update `@angular-devkit/build-angular` to `^0.803.12`
+- update `@angular-devkit/build-ng-packagr` to `^0.803.12`
+- update `@angular/cli` to `^8.3.12`
+- update `karma` to `^4.4.0`
+
+##### `v2.6.0`
+- fix(SidebarNavLink): nav link target doesn't work through appHtmlAttr - thanks @Hagith #79
+- fix(SidebarNavLink): allow link parameters array
+- refactor(SidebarNavLink): extract disabled link type
+- fix(SidebarNavLink): test for item.attributes presence
+- refactor(SidebarNavLink): add `item.href` for explicit external links
+- refactor(SidebarNavLink): extract SidebarNavLinkContent component
+- fix(SidebarNavBadge): add missing badge.class prop
+- feat(SidebarNavLink): allow `routerLink` properties as `item.linkProps`
+- refactor(SidebarNavLink): `active` class workaround with NavigationEnd Observable
+- refactor(SidebarNavLink): add pipe SidebarNavLink
+
+```typescript
+export interface INavLinkProps {
+  queryParams?: {[k: string]: any};
+  fragment?: string;
+  queryParamsHandling?: 'merge' | 'preserve' | '';
+  preserveFragment?: boolean;
+  skipLocationChange?: boolean;
+  replaceUrl?: boolean;
+  state?: {[k: string]: any};
+}
+```
+
+###### dependencies update
+- update `@angular/animations` to `^8.2.11`
+- update `@angular/common` to `^8.2.11`
+- update `@angular/compiler` to `^8.2.11`
+- update `@angular/core` to `^8.2.11`
+- update `@angular/forms` to `^8.2.11`
+- update `@angular/platform-browser` to `^8.2.11`
+- update `@angular/platform-browser-dynamic` to `^8.2.11`
+- update `@angular/router` to `^8.2.11`
+- update `core-js` to `^2.6.10`
+- update `@angular-devkit/build-angular` to `^0.803.10`
+- update `@angular-devkit/build-ng-packagr` to `^0.803.10`
+- update `@angular/cli` to `^8.3.10`
+- update `@angular/compiler-cli` to `^8.2.11`
+- update `@angular/language-service` to `^8.2.11`
+- update `@types/jasmine` to `^3.4.4`
+- update `@types/jasminewd2` to `^2.0.8`
+- update `@types/node` to `^11.13.22`
+- update `codelyzer` to `^5.1.2`
+- update `ng-packagr` to `^5.7.0`
+    
+##### `v2.5.5`
+- fix: regression build issue - Please add a @NgModule annotation
+
+##### `v2.5.4`
+- refactor(sidebar): move INavData interface to @coreui/angular library - thanks @Fredx87 #72
+- refactor(sidebar): add pipe SidebarNavItemClass #74
+- refactor(sidebar): use pipes in sidebar-nav-dropdown - thanks @coyoteecd #74
+- refactor(sidebar): use pipes in sidebar-nav-items pipe #74
+- refactor(sidebar): sidebar-nav-service cleanup
+- refactor: public_api
+
+###### dependencies update
+- update `@angular/animations` to `^8.2.7`
+- update `@angular/common` to `^8.2.7`
+- update `@angular/compiler` to `^8.2.7`
+- update `@angular/core` to `^8.2.7`
+- update `@angular/forms` to `^8.2.7`
+- update `@angular/platform-browser` to `^8.2.7`
+- update `@angular/platform-browser-dynamic` to `^8.2.7`
+- update `@angular/router` to `^8.2.7`
+- update `rxjs` to `^6.5.3`
+- update `zone.js` to `^0.10.2`
+- update `@angular-devkit/build-angular` to `^0.803.5`
+- update `@angular-devkit/build-ng-packagr` to `^0.803.5`
+- update `@angular/cli` to `^8.3.5`
+- update `@angular/compiler-cli` to `^8.2.7`
+- update `@angular/language-service` to `^8.2.7`
+- update `@types/jasmine` to `^3.4.0`
+- update `@types/node` to `^11.13.20`
+- update `codelyzer` to `^5.1.1`
+- update `karma` to `^4.3.0`
+- update `ng-packagr` to `^5.5.1`
+- update `ts-node` to `^8.4.1`
+- update `tsickle` to `~0.37.0`
+- update `tslint` to `^5.20.0`
+
+##### `v2.5.3`
+- fix(sidebar): performance issues with app-sidebar-nav components due to ngClass bindings - thanks @coyoteecd #74
+- fix(sidebar): app-sidebar-nav-label.component sets an incomplete variant style - thanks @coyoteecd closes #75 
+
+###### dependencies update
+- update `@angular/animations` to `^8.2.0`
+- update `@angular/common` to `^8.2.0`
+- update `@angular/compiler` to `^8.2.0`
+- update `@angular/core` to `^8.2.0`
+- update `@angular/forms` to `^8.2.0`
+- update `@angular/platform-browser` to `^8.2.0`
+- update `@angular/platform-browser-dynamic` to `^8.2.0`
+- update `@angular/router` to `^8.2.0`
+- update `zone.js` to `~0.10.0`
+- update `@angular-devkit/build-angular` to `^0.802.0`
+- update `@angular-devkit/build-ng-packagr` to `^0.802.0`
+- update `@angular/cli` to `^8.2.0`
+- update `@angular/compiler-cli` to `^8.2.0`
+- update `@angular/language-service` to `^8.2.0`
+- update `@types/jasmine` to `^3.3.16`
+- update `@types/node` to `^11.13.18`
+- update `karma` to `^4.2.0`
+- update `karma-coverage-istanbul-reporter` to `^2.1.0`
+- update `ng-packagr` to `^5.4.3`
+- update `tsickle` to `^0.36.0`
+- update `tslint` to `^5.18.0`
+
+##### `v2.5.2`
+- refactor(AppHeader): add reactive toggler class based on breakpoint   
+usage: set toggler breakpoint
+```html
+<app-header
+  [sidebarToggler]="'lg'"
+  [asideMenuToggler]="'md'">
+</app-header>
+```
+###### dependencies update
+- update `@angular/animations` to `^8.0.2`
+- update `@angular/common` to `^8.0.2`
+- update `@angular/compiler` to `^8.0.2`
+- update `@angular/core` to `^8.0.2`
+- update `@angular/forms` to `^8.0.2`
+- update `@angular/platform-browser` to `^8.0.2`
+- update `@angular/platform-browser-dynamic` to `^8.0.2`
+- update `@angular/router` to `^8.0.2`
+- update `@angular-devkit/build-angular` to `^0.800.3`
+- update `@angular-devkit/build-ng-packagr` to `^0.800.3`
+- update `@angular/cli` to `^8.0.3`
+- update `@angular/compiler-cli` to `^8.0.2`
+- update `@angular/language-service` to `^8.0.2`
+- update `@types/node` to `^11.13.14`
+- update `ts-node` to `^8.3.0`
+- update `tslib` to `^1.10.0`
+
+##### `v2.5.1`
+- fix(appHtmlAttr): cannot remove html attribute,   
+  ex: `attributes: {hidden: null}` removes attribute `hidden`  
+
+###### dependencies update
+- update `@angular-devkit/build-angular` to `^0.800.2`
+- update `@angular-devkit/build-ng-packagr` to `^0.800.2`
+- update `@angular/cli` to `^8.0.2`
+- update `ng-packagr` to `^5.3.0`
+
+##### `v2.5.0`
+- chore: upgrade to Angular 8.0 - thanks @dennisameling
+- chore: move browserslist file
+- chore(tslint): cleanup unused/deprecated rules
+- chore(tsconfig): target update 
+
+###### dependencies update
+- update `@angular/animations` to `^8.0.0`
+- update `@angular/common` to `^8.0.0`
+- update `@angular/compiler` to `^8.0.0`
+- update `@angular/core` to `^8.0.0`
+- update `@angular/forms` to `^8.0.0`
+- update `@angular/platform-browser` to `^8.0.0`
+- update `@angular/platform-browser-dynamic` to `^8.0.0`
+- update `@angular/router` to `^8.0.0`
+- update `core-js` to `^2.6.9`
+- update `rxjs` to `^6.5.2`
+- update `zone.js` to `~0.9.1`
+- update `@angular-devkit/build-angular` to `~0.800.1`
+- update `@angular-devkit/build-ng-packagr` to `~0.800.1`
+- update `@angular/cli` to `^8.0.1`
+- update `@angular/compiler-cli` to `^8.0.0`
+- update `@angular/language-service` to `^8.0.0`
+- update `@types/jasmine` to `^3.3.13`
+- update `@types/node` to `^11.13.13`
+- update `codelyzer` to `^5.0.1`
+- update `jasmine-core` to `~3.4.0`
+- update `ng-packagr` to `^5.2.0`
+- update `tsickle` to `^0.35.0`
+- update `typescript` to `~3.4.5`
+
+##### `v2.4.5`
+- chore(readme): npm badges 
+- chore(readme): prerequisites 
+- update: `@angular/animations` to `^7.2.10`
+- update: `@angular/common` to `^7.2.10`
+- update: `@angular/compiler` to `^7.2.10`
+- update: `@angular/core` to `^7.2.10`
+- update: `@angular/forms` to `^7.2.10`
+- update: `@angular/http` to `^7.2.10`
+- update: `@angular/platform-browser` to `^7.2.10`
+- update: `@angular/platform-browser-dynamic` to `^7.2.10`
+- update: `@angular/router` to `^7.2.10`
+- update: `@angular/compiler-cli` to `^7.2.10`
+- update: `@angular/language-service` to `^7.2.10`
+- update: `@types/jasmine` to `^3.3.12`
+- update: `@types/node` to `^11.11.4`
+
+##### `v2.4.4`
+- fix(breadcrumb.service): wrong import from `rxjs` causes overhead in resulted bundle - fixes #22 thanks @sparun160782 @lscorcia @nazar-kuzo
+- update: `@angular/animations` to `^7.2.9`
+- update: `@angular/common` to `^7.2.9`
+- update: `@angular/compiler` to `^7.2.9`
+- update: `@angular/core` to `^7.2.9`
+- update: `@angular/forms` to `^7.2.9`
+- update: `@angular/http` to `^7.2.9`
+- update: `@angular/platform-browser` to `^7.2.9`
+- update: `@angular/platform-browser-dynamic` to `^7.2.9`
+- update: `@angular/router` to `^7.2.9`
+- update: `@angular-devkit/build-angular` to `^0.13.6`
+- update: `@angular-devkit/build-ng-packagr` to `^0.13.6`
+- update: `@angular/cli` to `^7.3.6`
+- update: `@angular/compiler-cli` to `^7.2.9`
+- update: `@angular/language-service` to `^7.2.9`
+- update: `@types/jasmine` to `^3.3.10`
+- update: `@types/node` to `^11.11.3`
+- update: `karma` to `^4.0.1`
+- update: `ts-node` to `^8.0.3`
+- update: `tslint` to `^5.14.0`
+
+##### `v2.4.3`
+- update: `@coreui/coreui` to `^2.1.7`
+- update: `@angular/animations` to `^7.2.6`
+- update: `@angular/common` to `^7.2.6`
+- update: `@angular/compiler` to `^7.2.6`
+- update: `@angular/core` to `^7.2.6`
+- update: `@angular/forms` to `^7.2.6`
+- update: `@angular/http` to `^7.2.6`
+- update: `@angular/platform-browser` to `^7.2.6`
+- update: `@angular/platform-browser-dynamic` to `^7.2.6`
+- update: `@angular/router` to `^7.2.6`
+- update: `@angular-devkit/build-angular` to `^0.13.3`
+- update: `@angular-devkit/build-ng-packagr` to `^0.13.3`
+- update: `@angular/cli` to `^7.3.3`
+- update: `@angular/compiler-cli` to `^7.2.6`
+- update: `@angular/language-service` to `^7.2.6`
+    
+##### `v2.4.2`
+- feat(header): use routerLink for brand instead of href attribute #51 - thanks @Hagith
+
+##### `v2.4.1`
+- fix(sidebar-nav): ie issues
+
+##### `v2.4.0`
+`dist` is the same as `v2.4.0-beta.1`
+- update: `@angular/animations` to `^7.2.5`
+- update: `@angular/common` to `^7.2.5`
+- update: `@angular/compiler` to `^7.2.5`
+- update: `@angular/core` to `^7.2.5`
+- update: `@angular/forms` to `^7.2.5`
+- update: `@angular/http` to `^7.2.5`
+- update: `@angular/platform-browser` to `^7.2.5`
+- update: `@angular/platform-browser-dynamic` to `^7.2.5`
+- update: `@angular/router` to `^7.2.5`
+- update: `@angular-devkit/build-angular` to `^0.13.2`
+- update: `@angular-devkit/build-ng-packagr` to `^0.13.2`
+- update: `@angular/cli` to `^7.3.2`
+- update: `@angular/compiler-cli` to `^7.2.5`
+- update: `@angular/language-service` to `^7.2.5`
+- update: `@types/node` to `^11.9.4`
+- update: `karma` to `^4.0.0`
+- update: `karma-coverage-istanbul-reporter` to `^2.0.5`
+
+##### `v2.4.0-beta.1`
+- fix(sidebar): navItems reassignment bug [#126](https://github.com/coreui/coreui-free-angular-admin-template/issues/126), [#42](https://github.com/coreui/coreui-free-angular-admin-template/issues/42), #12
+- refactor(aside): drop `Replace`
+- refactor(breadcrumb): drop `Replace` new component `cui-breadcrumb` (migration needed)
+- refactor(footer): minor changes
+- refactor(header): drop `Replace`
+- refactor(layout): cleanup
+- refactor(sidebar-nav): drop `Replace`, redesign
+- update: `@angular/animations` to `^7.2.4`
+- update: `@angular/common` to `^7.2.4`
+- update: `@angular/compiler` to `^7.2.4`
+- update: `@angular/core` to `^7.2.4`
+- update: `@angular/forms` to `^7.2.4`
+- update: `@angular/http` to `^7.2.4`
+- update: `@angular/platform-browser` to `^7.2.4`
+- update: `@angular/platform-browser-dynamic` to `^7.2.4`
+- update: `@angular/router` to `^7.2.4`
+- update: `core-js` to `^2.6.5`
+- update: `@angular-devkit/build-angular` to `^0.13.1`
+- update: `@angular-devkit/build-ng-packagr` to `^0.13.1`
+- update: `@angular/cli` to `^7.3.1`
+- update: `@angular/compiler-cli` to `^7.2.4`
+- update: `@angular/language-service` to `^7.2.4`
+- update: `@types/jasmine` to `^3.3.9`
+- update: `@types/node` to `^10.12.26`
+- update: `ng-packagr` to `^4.7.1`
+
+##### `v2.3.1`
+- fix: faulty LayoutModule import causes: Unexpected value 'undefined' imported by the module #47
+- refactor(appSidebarToggler): inject `ClassToggler` instead of ToggleClasses function
+- fix: should not throw errors when navItems are undefined - #46 thanks @fluffynuts 
+
+##### `v2.3.0`
+- feat(app-header): navbarBrand img use appHtmlAttr instead of attr.*
+- refactor: directive appLinkAttributes -> appHtmlAttr, moved to layout
+- refactor(app-header): drop unused methods
+- refactor(sidebar-nav): directive appLinkAttributes -> appHtmlAttr
+- refactor(app-footer): drop Replace footer
+- update: `@angular-devkit/build-angular` to `^0.13.0`
+- update: `@angular-devkit/build-ng-packagr` to `^0.13.0`
+- update: `@types/node` to `^10.12.21`
+
+##### `v2.2.5`
+- refactor: use Renderer2 instead of direct DOM manipulation
+- refactor: use DOCUMENT dependency injection 
+- update: `@angular/animations` to `^7.2.3`
+- update: `@angular/common` to `^7.2.3`
+- update: `@angular/compiler` to `^7.2.3`
+- update: `@angular/core` to `^7.2.3`
+- update: `@angular/forms` to `^7.2.3`
+- update: `@angular/http` to `^7.2.3`
+- update: `@angular/platform-browser` to `^7.2.3`
+- update: `@angular/platform-browser-dynamic` to `^7.2.3`
+- update: `@angular/router` to `^7.2.3`
+- update: `core-js` to `^2.6.3`
+- update: `rxjs` to `^6.4.0`
+- update: `zone.js` to `^0.8.29`
+- update: `@angular-devkit/build-angular` to `^0.12.4`
+- update: `@angular-devkit/build-ng-packagr` to `^0.12.4`
+- update: `@angular/cli` to `^7.3.0`
+- update: `@angular/compiler-cli` to `^7.2.3`
+- update: `@angular/language-service` to `^7.2.3`
+- update: `@types/jasmine` to `^3.3.8`
+- update: `@types/node` to `^10.12.20`
+- update: `ng-packagr` to `^4.7.0`
+
+##### `v2.2.4`
+- update: `typescript` to `~3.2.4`
+- update: `@angular/animations` to `^7.2.1`
+- update: `@angular/common` to `^7.2.1`
+- update: `@angular/compiler` to `^7.2.1`
+- update: `@angular/core` to `^7.2.1`
+- update: `@angular/forms` to `^7.2.1`
+- update: `@angular/http` to `^7.2.1`
+- update: `@angular/platform-browser` to `^7.2.1`
+- update: `@angular/platform-browser-dynamic` to `^7.2.1`
+- update: `@angular/router` to `^7.2.1`
+- update: `zone.js` to `^0.8.28`
+- update: `@angular-devkit/build-angular` to `^0.12.2`
+- update: `@angular-devkit/build-ng-packagr` to `^0.12.2`
+- update: `@angular/cli` to `^7.2.2`
+- update: `@angular/compiler-cli` to `^7.2.1`
+- update: `@angular/language-service` to `^7.2.1`
+- update: `@types/jasmine` to `^3.3.6`
+- update: `ng-packagr` to `^4.6.0`
+
+##### `v2.2.3`
+- refactor(app-sidebar-nav): minor changes
+- update: `@coreui/coreui` to `^2.1.6`
+- update: `@angular/animations` to `^7.2.0`
+- update: `@angular/common` to `^7.2.0`
+- update: `@angular/compiler` to `^7.2.0`
+- update: `@angular/core` to `^7.2.0`
+- update: `@angular/forms` to `^7.2.0`
+- update: `@angular/http` to `^7.2.0`
+- update: `@angular/platform-browser` to `^7.2.0`
+- update: `@angular/platform-browser-dynamic` to `^7.2.0`
+- update: `@angular/router` to `^7.2.0`
+- update: `core-js` to `^2.6.2`
+- update: `zone.js` to `^0.8.27`
+- update: `@angular-devkit/build-angular` to `^0.12.1`
+- update: `@angular-devkit/build-ng-packagr` to `^0.12.1`
+- update: `@angular/cli` to `^7.2.1`
+- update: `@angular/compiler-cli` to `^7.2.0`
+- update: `@angular/language-service` to `^7.2.0`
+- update: `@types/jasmine` to `^3.3.5`
+- update: `@types/node` to `^10.12.18`
+
+##### `v2.2.2`
+- refactor(app-header): new prop `navbarBrandText` = {icon: 'C', text: 'CoreUI'} render as innerHTML
+- refactor(app-header): new prop `navbarBrandHref` = ''
+- refactor(app-header): `navbarBrandImg`: Boolean
+- fix(app-sidebar): missing semicolon
+- fix(angular.json): missing css path
+- update: `@angular/animations` to `7.1.4`
+- update: `@angular/common` to `7.1.4`
+- update: `@angular/compiler` to `7.1.4`
+- update: `@angular/core` to `7.1.4`
+- update: `@angular/forms` to `7.1.4`
+- update: `@angular/http` to `7.1.4`
+- update: `@angular/platform-browser` to `7.1.4`
+- update: `@angular/platform-browser-dynamic` to `7.1.4`
+- update: `@angular/router` to `7.1.4`
+- update: `core-js` to `2.6.1`
+- update: `@angular-devkit/build-angular` to `0.11.3`
+- update: `@angular-devkit/build-ng-packagr` to `0.11.3`
+- update: `@angular/cli` to `7.1.3`
+- update: `@angular/compiler-cli` to `7.1.4`
+- update: `@angular/language-service` to `7.1.4`
+- update: `@types/jasmine` to `3.3.4`
+- update: `@types/node` to `10.12.17`
+- update: `karma` to `3.1.4`
+- update: `tslint` to `5.12.0`
+
+##### `v2.2.1`
+- fix: remove `-fixed` class on layout components destroy
+- chore: commit `package-lock.json`
+- chore: add [README](./projects/coreui/angular/README.md) 
+- update: `core-js` to `2.6.0`
+- update: `@angular-devkit/build-angular` to `0.11.1`
+- update: `@angular-devkit/build-ng-packagr` to `0.11.1`
+- update: `@angular/cli` to `7.1.1`
+- update: `@types/jasmine` to `3.3.1`
+- update: `@types/node` to `10.12.12`
+
+##### `v2.2.0`
+- chore: build with Angular 7 
+- chore: update Angular to `^7.1.0` see: https://update.angular.io/
+  - update: `@angular/animations` to `^7.1.1`
+  - update: `@angular/common` to `^7.1.1`
+  - update: `@angular/compiler` to `^7.1.1`
+  - update: `@angular/core` to `^7.1.1`
+  - update: `@angular/forms` to `^7.1.1`
+  - update: `@angular/http` to `^7.1.1`
+  - update: `@angular/platform-browser` to `^7.1.1`
+  - update: `@angular/platform-browser-dynamic` to `^7.1.1`
+  - update: `@angular/router` to `^7.1.1`
+  - update: `@angular-devkit/build-angular` to `~0.11.0`
+  - update: `@angular-devkit/build-ng-packagr` to `~0.11.0`
+  - update: `@angular/cli` to `^7.1.0`
+  - update: `@angular/compiler-cli` to `^7.1.1`
+  - update: `@angular/language-service` to `^7.1.1`
+  - update: `@types/jasmine` to `~3.3.0`
+  - update: `karma` to `^3.1.3`
+  - update: `karma-jasmine` to `~2.0.1`
+  - update: `ng-packagr` to `^4.4.5`
+  - update: `ts-node` to `~7.0.1`
+  - update: `typescript` to `^3.1.6"
+
+##### `v2.1.0`
+- feat: sidebar nav-link  `attributes` - optional JS object with valid JS API naming:
+  - valid attributes: `rel`, `target`, `hidden`, `disabled`, etc...
+  - item example:
+```
+...
+{
+  name: 'Try CoreUI PRO',
+  url: 'https://coreui.io/pro/react/',
+  icon: 'cui-layers icons',
+  variant: 'danger',
+  attributes: { target: '_blank', rel: "noopener" },
+},
+....
+```
+- update `@coreui/coreui` to `2.1.3`
+- update `rxjs` to `^6.3.3`
+- update `@angular-devkit/build-angular` to `~0.8.8`
+- update `@angular-devkit/build-ng-packagr` to `~0.8.8`
+- update `@angular/cli` to `^6.2.8`
+- update `@types/jasmine` to `~2.8.12`
+- update `@types/jasminewd2` to `~2.0.6`
+- update `@types/node` to `~10.12.10`
+- update `jasmine-core` to `~3.3.0`
+- update `karma-jasmine-html-reporter` to `^1.4.0`
+- update `ng-packagr` to `^3.0.6`
+- update `shelljs` to `^0.8.3`
+- update `ts-node` to `~6.2.0`
+- update `tsickle` to `^0.34.0`
+- update `typescript` to `~2.9.2`
+
