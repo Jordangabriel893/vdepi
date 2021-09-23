@@ -1,21 +1,21 @@
-import { Component, OnInit } from '@angular/core';
-import { Router, NavigationEnd } from '@angular/router';
+import { Component } from '@angular/core';
+import { setTheme } from 'ngx-bootstrap/utils';
 
 @Component({
   // tslint:disable-next-line
   selector: 'body',
-  template: '<router-outlet></router-outlet>'
+  template: '<router-outlet></router-outlet><notifier-container></notifier-container><jaspero-confirmations [defaultSettings]="confirmationOptions"></jaspero-confirmations>'
 })
-export class AppComponent implements OnInit {
-  title = 'CoreUI 2 for Angular 8';
-  constructor(private router: Router) { }
-
-  ngOnInit() {
-    this.router.events.subscribe((evt) => {
-      if (!(evt instanceof NavigationEnd)) {
-        return;
-      }
-      window.scrollTo(0, 0);
-    });
+export class AppComponent
+{
+  constructor() {
+    setTheme('bs4'); // or 'bs4'
+  }
+  public confirmationOptions = {
+    overlay: true,
+    overlayClickToClose: true,
+    showCloseButton: true,
+    confirmText: "Sim",
+    declineText: "Não"
   }
 }

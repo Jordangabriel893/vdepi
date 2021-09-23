@@ -1,0 +1,156 @@
+<ngx-loading [show]="loading" [config]="{ backdropBrecolhimentoRadius: '0px' }"></ngx-loading>
+<div class="animated fadeIn">
+  <div class="dashboard-bar">
+    <div class="row justify-content-end">
+      <div class="col-md-5 text-right">
+        <i class="far fa-calendar"></i>
+        <span #dp="bsDatepicker"
+              [(bsValue)]="bsValue"
+              (bsValueChange)="bsPeriodoChange()"
+              bsDatepicker
+              [bsConfig]="bsConfig"
+              title="Data"
+              id="bsValue"
+              class="dash-periodo">{{bsValue | amDateFormat:'MMM YYYY'}}</span>
+      </div>
+      <div class="col-md-auto text-right">
+        <div class="dropdown" dropdown title="Cliente">
+          <div class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false" dropdownToggle>
+            <i class="far fa-user"></i>
+            <span class="d-md-down-none">{{clienteSelected?.nome}}</span>
+          </div>
+          <div class="dropdown-menu dropdown-menu-right scrollable-dropdown" *dropdownMenu aria-labelledby="simple-dropdown">
+            <div class="dropdown-header text-center"><strong>CLIENTE</strong></div>
+            <div class="dropdown-item" *ngFor="let cli of clientes; let i = index" (click)="setCliente(cli)" style="cursor:pointer">{{cli.nome}}</div>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-auto text-right pr-5">
+        <div class="dropdown" dropdown title="Deposito">
+          <div class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false" dropdownToggle>
+            <i class="far fa-building"></i>
+            <span class="d-md-down-none">{{depositoSelected?.descricao}}</span>
+          </div>
+          <div class="dropdown-menu dropdown-menu-right scrollable-dropdown " *dropdownMenu aria-labelledby="simple-dropdown">
+            <div class="dropdown-header text-center"><strong>DEPÓSITO</strong></div>
+            <div class="dropdown-item" *ngFor="let dep of clienteSelected.depositos; let i = index" (click)="setDeposito(dep)" style="cursor:pointer">{{dep.descricao}}</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row" *ngIf="contador">
+    <div class="col-md-3">
+      <div class="card text-white bg-success">
+        <div class="card-header">
+          <h3>Ticket Médio</h3>
+        </div>
+        <div class="card-body">
+          <div style="font-size: 1.4rem;">
+            <span class="fa-layers fa-fw">
+              <i class="fas fa-tachometer-alt fa-sm"></i>
+            </span>
+            <strong>{{contador.ticket_medio | currency:'R$ '}}</strong>
+          </div>
+        </div>
+      </div>
+    </div><!--/.col-->
+    <div class="col-md-3">
+      <div class="card text-white bg-info">
+        <div class="card-header">
+          <h3>Receita Taxa</h3>
+        </div>
+        <div class="card-body">
+          <div style="font-size: 1.4rem;">
+            <span class="fa-layers fa-fw">
+              <i class="fas fa-chart-line fa-sm" data-fa-transform="grow-2"></i>
+            </span>
+            <strong>{{contador.receita_taxa | currency:'R$ '}}</strong>
+          </div>
+        </div>
+      </div>
+    </div><!--/.col-->
+    <div class="col-md-3">
+      <div class="card text-white bg-danger">
+        <div class="card-header">
+          <h3>Receita Diárias</h3>
+        </div>
+        <div class="card-body">
+          <div style="font-size: 1.4rem;">
+            <span class="fa-layers fa-fw">
+              <i class="far fa-credit-card"></i>
+              <i class="fa fa-check-circle stroke-danger" data-fa-transform="shrink-8 up-5.3 right-8"></i>
+            </span>
+            <strong>{{contador.receita_diarias | currency:'R$ '}}</strong>
+          </div>
+        </div>
+      </div>
+    </div><!--/.col-->
+    <div class="col-md-3">
+      <div class="card text-white bg-warning">
+        <div class="card-header">
+          <h3>Faturamento Total</h3>
+        </div>
+        <div class="card-body">
+          <div style="font-size: 1.4rem;">
+            <span class="fa-layers fa-fw">
+              <i class="far fa-credit-card"></i>
+            </span>
+            <strong>{{contador.receita_total | currency:'R$ '}}</strong>
+          </div>
+        </div>
+      </div>
+    </div><!--/.col-->
+  </div><!--/.row-->
+  <div class="row">
+    <div class="col-md-12">
+      <div class="card">
+        <div class="card-body">
+          <div class="rounded" *ngIf="barChartData">
+            <canvas baseChart class="chart" #formaTaxaDiaria
+                    height="100"
+                    [colors]="barChartColor"
+                    [datasets]="barChartData"
+                    [labels]="barChartLabels"
+                    [options]="barChartOptions"
+                    [legend]="barChartLegend"
+                    [chartType]="barChartType"></canvas>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-4">
+      <div class="card">
+        <div class="card-body">
+          <div class="rounded" *ngIf="doughnutChartData">
+            <canvas baseChart class="chart" #formaPagamentoChart 
+                    height="340"
+                    [data]="doughnutChartData"
+                    [labels]="doughnutChartLabels"
+                    [colors]="doughnutChartColors"
+                    [chartType]="doughnutChartType"
+                    [options]="doughnutChartOptions"></canvas>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-8">
+      <div class="card">
+        <div class="card-body">
+          <div class="rounded" *ngIf="barChartData">
+            <canvas baseChart class="chart" #formDiarias
+                    height="150"
+                    [colors]="barDiariasColor"
+                    [datasets]="barDiariasData"
+                    [labels]="barDiariasLabels"
+                    [options]="barDiariasOptions"
+                    [legend]="barDiariasLegend"
+                    [chartType]="barDiariasType"></canvas>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

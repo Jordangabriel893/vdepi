@@ -1,0 +1,132 @@
+<ngx-loading [show]="loading" [config]="{ backdropBrecolhimentoRadius: '0px' }"></ngx-loading>
+<div class="animated fadeIn">
+  <div class="dashboard-bar">
+    <div class="row justify-content-end">
+      <!-- <div class="col-md-5 text-right">
+        <i class="far fa-calendar"></i> <span #dp="bsDaterangepicker" [(bsValue)]="periodo" (bsValueChange)="bsPeriodoChange()" bsDaterangepicker [bsConfig]="bsConfig" title="Periodo" class="dash-periodo">{{periodo[0] | amDateFormat:'DD MMM YY' }} - {{periodo[1] | amDateFormat:'DD MMM YY' }}</span>
+      </div> -->
+      <div class="col-md-auto text-right">
+        <div class="dropdown" dropdown title="Cliente">
+          <div class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false" dropdownToggle>
+            <i class="far fa-user"></i>&nbsp;
+            <span class="d-md-down-none">{{clienteSelected?.nome}}</span>
+          </div>
+          <div class="dropdown-menu dropdown-menu-right scrollable-dropdown" *dropdownMenu aria-labelledby="simple-dropdown">
+            <div class="dropdown-header text-center"><strong>CLIENTE</strong></div>
+            <div class="dropdown-item" *ngFor="let cli of clientes; let i = index" (click)="setCliente(cli)" style="cursor:pointer">{{cli.nome}}</div>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-auto text-right">
+        <div class="dropdown" dropdown title="Deposito">
+          <div class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false" dropdownToggle>
+            <i class="far fa-building"></i>&nbsp;
+            <span class="d-md-down-none">{{depositoSelected?.descricao}}</span>
+          </div>
+          <div class="dropdown-menu dropdown-menu-right scrollable-dropdown " *dropdownMenu aria-labelledby="simple-dropdown">
+            <div class="dropdown-header text-center"><strong>DEPÓSITO</strong></div>
+            <div class="dropdown-item" *ngFor="let dep of clienteSelected.depositos; let i = index" (click)="setDeposito(dep)" style="cursor:pointer">{{dep.descricao}}</div>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-auto text-right pr-5">
+        <div class="dropdown" dropdown title="Cliente">
+          <div class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false" dropdownToggle>
+            <i class="far fa-bookmark"></i>&nbsp;
+            <span class="d-md-down-none">{{statusSelected?.descricao}}</span>
+          </div>
+          <div class="dropdown-menu dropdown-menu-right scrollable-dropdown" *dropdownMenu aria-labelledby="simple-dropdown">
+            <div class="dropdown-header text-center"><strong>Status</strong></div>
+            <div class="dropdown-item" (click)="setStatus({ id_status_operacao: 0, descricao: 'TODOS'})" style="cursor:pointer">TODOS</div>
+            <div class="dropdown-item" *ngFor="let st of listStatus; let i = index" (click)="setStatus(st)" style="cursor:pointer">{{st.descricao}}</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="card">
+    <div class="card-body">
+      <div class="row" *ngIf="estoque?.length > 0">
+        <div class="col text-right">
+          <button   type="button"
+                    (click)="exportAsPDF()"
+                    class="btn btn-danger ml-3"
+                    title="Exportar para PDF">
+              <i class="fas fa-file-pdf"></i>&nbsp;PDF
+          </button>
+          <button type="button"
+                  (click)="exportAsExcel()"
+                  class="btn btn-success ml-2"
+                  title="Exportar para Excel">
+            <i class="fas fa-file-excel"></i>&nbsp;Excel
+        </button>
+        </div>
+      </div>
+      <div class="table-responsive mt-4">
+        <div class="table-responsive mt-1">
+          <table class="table table-striped table-sm table-responsive-sm" [mfData]="estoque" #mfEstoque="mfDataTable" [mfRowsOnPage]="10">
+            <thead>
+              <tr>
+                <th>
+                  <mfDefaultSorter by="numero_formulario_grv">GRV</mfDefaultSorter>
+                </th>
+                <th>
+                  <mfDefaultSorter by="placa">Placa</mfDefaultSorter>
+                </th>
+                <th>
+                  <mfDefaultSorter by="status">Status</mfDefaultSorter>
+                </th>
+                <th>
+                  <mfDefaultSorter by="cor">Cor</mfDefaultSorter>
+                </th>
+                <th>
+                  <mfDefaultSorter by="chassi">Chassi</mfDefaultSorter>
+                </th>
+                <th>
+                  <mfDefaultSorter by="marca_modelo">Marca/Modelo</mfDefaultSorter>
+                </th>
+                <th>
+                  <mfDefaultSorter by="tipo_veiculo">Tipo</mfDefaultSorter>
+                </th>
+                <th>
+                  <mfDefaultSorter by="data_hora_remocao">Data Remoção</mfDefaultSorter>
+                </th>
+                <th>
+                  <mfDefaultSorter by="estacionamento_setor">Localização</mfDefaultSorter>
+                </th>
+                <th>
+                  <mfDefaultSorter by="leilao">Leilão</mfDefaultSorter>
+                </th>
+                <th>
+                  <mfDefaultSorter by="status_lote">Status Leilão</mfDefaultSorter>
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let item of mfEstoque.data">
+                <td>{{item.numero_formulario_grv }}</td>
+                <td>{{item.placa}}</td>
+                <td>{{item.status}}</td>
+                <td>{{item.cor}}</td>
+                <td>{{item.chassi}}</td>
+                <td>{{item.marca_modelo}}</td>
+                <td>{{item.tipo_veiculo}}</td>
+                <td>{{item.data_hora_remocao | amDateFormat:'DD/MM/YYYY HH:mm'}}</td>
+                <td>{{item.estacionamento_setor}}</td>
+                <td>{{item.leilao}}</td>
+                <td>{{item.status_lote}}</td>
+              </tr>
+            </tbody>
+            <tfoot>
+              <tr>
+                <td colspan="11">
+                  <mfBootstrapPaginator [rowsOnPageSet]="[5,10,25]"></mfBootstrapPaginator>
+                </td>
+              </tr>
+            </tfoot>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

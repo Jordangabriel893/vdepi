@@ -1,0 +1,30 @@
+label {
+  width: 100%;
+  margin: 0;
+  padding-top: 10px;
+  font-size: 10px;
+  font-weight: 700;
+}
+
+hr {
+  border: 1px solid rgb(133, 133, 133);
+}
+
+.square {
+  width: 20px;
+  height: 20px;
+  padding: 0 10px;
+  margin: 0 10px;
+  border: 1px solid #000;
+  border-radius: 5px;
+}
+
+.rodape {
+  padding-top: 80px;
+}
+
+h5 {
+  background-color: #000;
+  color: #fff;
+  padding: 5px 10px;
+}

@@ -1,0 +1,78 @@
+<ngx-loading [show]="loading" [config]="{ backdropBrecolhimentoRadius: '0px' }"></ngx-loading>
+<div class="animated fadeIn">
+  <div class="col-md-12">
+    <div class="card">
+      <div class="card-header">
+        <form class="form-inline">
+          <div class="input-group mb-3">
+            <div class="input-group-prepend">
+              <span class="input-group-text" id="basic-addon1">P.E</span>
+              <span class="input-group-text" id="basic-addon1">R$ </span>
+            </div>
+            <input type="number"
+                   class="form-control"
+                   id="PE"
+                   [(ngModel)]="pe"
+                   (change)="atualizaPe()"
+                   name="PE"
+                   #pequilibrio>
+          </div>
+          <div class="input-group mx-sm-3 mb-3">
+            <div class="input-group-prepend">
+              <span class="input-group-text" id="basic-addon1">Meta</span>
+              <span class="input-group-text" id="basic-addon1">R$ </span>
+            </div>
+            <input type="number"
+                   class="form-control"
+                   id="Meta"
+                   [(ngModel)]="meta"
+                   (change)="atualizaMeta()"
+                   name="Meta"
+                   #MetaContrato>
+          </div>
+          <div class="input-group mx-sm-3 mb-3">
+            <div class="btn-group" dropdown>
+              <button type="button" class="btn btn-primary">{{clienteSelected?.nome}}</button>
+              <button id="button-split" type="button" dropdownToggle class="btn btn-primary dropdown-toggle dropdown-toggle-split"
+                      aria-controls="dropdown-split">
+                <span class="caret"></span>
+                <span class="sr-only">Split button!</span>
+              </button>
+              <ul id="dropdown-split" *dropdownMenu class="dropdown-menu scrollable-dropdown"
+                  role="menu" aria-labelledby="button-split">
+                <li role="menuitem" *ngFor="let cli of clientes; let i = index" (click)="setCliente(cli)" style="cursor:pointer">
+                  <span class="dropdown-item">{{cli.nome}}</span>
+                </li>
+              </ul>
+            </div>
+          </div>
+          <div class="input-group mx-sm-3 mb-3">
+            <span #dp="bsDatepicker"
+                  [(bsValue)]="bsValue"
+                  (bsValueChange)="atualizaData()"
+                  bsDatepicker
+                  [bsConfig]="bsConfig"
+                  title="Data"
+                  id="bsValue"
+                  class="btn btn-primary">
+              <i class="far fa-calendar"></i>
+              {{bsValue | amDateFormat: 'MMM YYYY'}}
+            </span>
+          </div>
+        </form>
+      </div>
+      <div class="card-body">
+        <div class="rounded" *ngIf="lineChartData">
+          <canvas baseChart width="400" height="400"
+                  [datasets]="lineChartData"
+                  [labels]="lineChartLabels"
+                  [options]="lineChartOptions"
+                  [colors]="lineChartColors"
+                  [legend]="lineChartLegend"
+                  [chartType]="lineChartType"
+                  [plugins]="lineChartPlugins"></canvas>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

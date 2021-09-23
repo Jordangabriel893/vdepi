@@ -1,0 +1,84 @@
+<header class="app-header navbar">
+  <button class="navbar-toggler d-lg-none" type="button" appMobileSidebarToggler>
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <a class="navbar-brand" href="#">
+  </a>
+  <button class="navbar-toggler d-md-down-none mr-auto" type="button" appSidebarToggler>
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <ul class="nav navbar-nav ml-auto" style="padding-right:20px">
+    <li class="nav-item dropdown px-3 d-none d-md-block" dropdown>
+      <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false" dropdownToggle (click)="toggleDropdown($event)">
+        <span class="img-user">{{ user.username.toUpperCase() | shorten: 1 : '' }}</span>&nbsp;
+        <span class="hidden-md-down">{{user.username}}</span>
+      </a>
+      <div class="dropdown-menu dropdown-menu-right" *dropdownMenu aria-labelledby="simple-dropdown">
+        <div class="dropdown-header text-center"><strong>USUÁRIO</strong></div>
+        <!--<a class="dropdown-item" href="#" [routerLink]="['/my-account']"><i class="fa fa-user"></i> Conta</a>
+        <div class="divider"></div>-->
+        <a class="dropdown-item" href="#" (click)="logout()"><i class="icon-logout"></i> Sair</a>
+      </div>
+    </li>
+  </ul>
+</header>
+<div class="app-body">
+  <app-sidebar></app-sidebar>
+  <!-- Main content -->
+  <main class="main" style="position:relative">
+    <!-- Breadcrumb -->
+    <ol class="breadcrumb">
+      <app-breadcrumbs></app-breadcrumbs>
+      <li class="breadcrumb-menu d-md-down-none" *ngIf="isMonitorView">
+        <div aria-label="Button group with nested dropdown" class="btn-group" role="group">
+          <a class="btn btn-lg mr-2" href="#" (click)="showFilter($event)" [attr.title]="countFilter ? countFilter + ' Filtros Aplicados' : 'Filtro'">
+            <i class="fa fa-filter"></i>
+            <span class="badge badge-pill badge-warning">{{countFilter}}</span>
+          </a>
+          <a class="btn btn-lg mr-3" href="#" appAsideMenuToggler title="Lista de Veículos">
+            <i class="fa fa-list"></i>
+            <span class="badge badge-pill badge-info">{{markers.length}}</span>
+          </a>
+        </div>
+      </li>
+    </ol>
+    <div class="container">
+      <router-outlet></router-outlet>
+    </div><!-- /.conainer-fluid -->
+  </main>
+  <aside class="aside-menu" *ngIf="markers">
+    <tabset [justified]="true">
+      <tab>
+        <ng-template tabHeading>
+          <div class="font-weight-bold text-muted">
+            <i class="fa fa-car"></i> &nbsp; Veículos
+          </div>
+        </ng-template>
+        <div class="list-group">
+          <ng-template ngFor let-group [ngForOf]="groupMarkers">
+            <div class="list-group-item list-group-item bg-light text-center font-weight-bold text-muted text-uppercase small sticky">{{group.key}}</div>
+            <div class="list-group-item list-group-item-action list-group-item-divider" *ngFor="let m of group.value" [hidden]="!m.visible" (click)="showInfoWindow(m)" title="Clique para visualizar no mapa">
+              <div class="d-flex">
+                <div class="my-auto mr-2">
+                  <span class="cover" *ngIf="!m.recolhimento.alerta_atividade">
+                    <i class="icon-img" [ngClass]="m.icon"></i>
+                  </span>
+                  <span class="cover bg-{{m.recolhimento.alerta_atividade.alerta.tipo_alerta.cor}}" *ngIf="m.recolhimento.alerta_atividade">
+                    <i class="icon-img" [ngClass]="m.icon"></i>
+                  </span>
+                  <!--<i [ngClass]="m.icon" class="fa-2x"></i>-->
+                </div>
+                <div>
+                  <div><b>{{m.recolhimento.grv.placa != null || m.recolhimento.grv.placa != '' ? m.recolhimento.grv.placa : 'SEM PLACA' }}</b></div>
+                  <div class="small">{{m.recolhimento.grv.marca_modelo}}</div>
+                  <div class="small mt-1"><i class="icon-location-pin"></i> &nbsp;{{m.recolhimento.grv.cidade}} - {{m.recolhimento.grv.estado}}</div>
+                </div>
+              </div>
+            </div>
+          </ng-template>
+        </div>
+      </tab>
+    </tabset>
+  </aside>
+</div>
+

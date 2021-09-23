@@ -1,1 +1,678 @@
 // Here you can add other styles
+
+//Import Weather Icons
+@import "weather-icons/weather-icons.min.scss";
+@import "~@ng-select/ng-select/themes/default.theme.css";
+@import "~angular-notifier/styles.css";
+
+@font-face {
+  font-family: 'mandatory';
+  src: url('../font/mandatory.ttf');
+  font-weight: normal;
+  font-style: normal;
+}
+
+::-webkit-scrollbar {
+  width: 10px;
+  margin-left: -10px;
+  -webkit-appearance: none;
+}
+
+// &::-webkit-scrollbar-button {    }
+
+::-webkit-scrollbar-track {
+  background-color: lighten($aside-menu-bg, 5%);
+  border-right: 1px solid darken($aside-menu-bg, 5%);
+  border-left: 1px solid darken($aside-menu-bg, 5%);
+}
+
+// &::-webkit-scrollbar-track-piece {    }
+
+::-webkit-scrollbar-thumb {
+  height: 50px;
+  background-color: darken($aside-menu-bg, 10%);
+  background-clip: content-box;
+  border-color: transparent;
+  border-style: solid;
+  border-width: 1px 2px;
+}
+
+
+.error-validation {
+  color: rgba(253, 253, 253, 0.9);
+  background: #b91d1d;
+  border-radius: 2px;
+  padding: 2px 5px;
+  float: right;
+  position:relative;
+  margin:0 5px;
+}
+
+.error-validation i {
+  position: absolute;
+  color: #b91d1d;
+  font-size: 22px;
+  right: 46%;
+  top: 11px;
+}
+
+.title-permission {
+  height: 30px;
+  line-height: 30px;
+  margin-bottom: 15px;
+  border-bottom: 2px solid #263238;
+  padding: 0;
+  margin-left: 15px;
+  font-weight: bold;
+}
+
+/*$red: random(100)-1;
+$green: random(100)-1;
+$blue: random(100)-1;*/
+
+.img-user {
+  width: 30px;
+  height: 30px;
+  line-height: 27px;
+  display: inline-block;
+  color: #fff;
+  font-size: 19px;
+  font-weight: bold;
+  border-radius: 50%;
+  background-color: #051860;
+}
+
+.list-group a {
+  color: #607d8b;
+}
+
+.input-uppercase {
+  text-transform: uppercase;
+}
+::-webkit-input-placeholder { /* WebKit browsers */
+  text-transform: none;
+}
+
+:-moz-placeholder { /* Mozilla Firefox 4 to 18 */
+  text-transform: none;
+}
+
+::-moz-placeholder { /* Mozilla Firefox 19+ */
+  text-transform: none;
+}
+
+:-ms-input-placeholder { /* Internet Explorer 10+ */
+  text-transform: none;
+}
+
+table td{
+  vertical-align:middle !important;
+}
+
+.span-text{
+  display:block;
+  font-size: 15px;
+  font-weight:500;
+  padding-left: 10px;
+  color:#676767;
+}
+
+.ngxmdp .selector{
+  top:47px !important
+}
+
+.mask {
+  background: #ffffff;
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 1;
+}
+
+
+/*******************
+    GOOGLE MAPS
+*********************/
+.ngui-map-principal {
+  position: absolute;
+  top: 46px;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  height: calc(100vh - 102px) !important;
+  overflow: hidden;
+}
+
+.filter-bar {
+  position: absolute;
+  width: 100%;
+  left: 0;
+  background: #fff;
+  top: 0;
+  z-index: 10;
+  padding: 0.5rem 1rem;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
+}
+
+.item-filter {
+  padding: 0.5rem 1rem;
+  margin:0;
+}
+
+.boder-bottom {
+  border-bottom: 1px solid #c2cfd6 !important;
+}
+
+.btn-multselect {
+  background: #fff !important;
+  border: 1px solid #c2cfd6 !important;
+  border-radius: 0 0.25rem 0.25rem 0;
+}
+
+ss-multiselect-dropdown .dropdown .dropdown-menu {
+  left: -40px !important;
+}
+
+ss-multiselect-dropdown .dropdown .dropdown-menu .dropdown-item i {
+  color: #fff !important;
+}
+
+ss-multiselect-dropdown .dropdown .dropdown-menu .dropdown-item a {
+  color: #3e515b !important;
+}
+
+
+ss-multiselect-dropdown .dropdown .dropdown-menu .active a {
+  color: #fff !important;
+}
+
+.badge-info, .badge-warning, .btn-warning, .btn-secondary, .btn-info {
+  color: #fff !important;
+}
+
+.btn .badge {
+  position: absolute;
+  top: -3px;
+  right: -3px;
+  font-size: 9px;
+}
+
+.btn:focus, .btn.focus{
+  box-shadow: none !important;
+}
+
+custom-marker:hover, .list-group-item:hover {
+  cursor: pointer !important;
+}
+
+.list-group-item-action:hover {
+  color: #fff !important;
+  background: #59bcec !important;
+}
+
+$pulseSize: 60px;
+$shadowOpacity: .6;
+$pinColor: #488dc7 !default;
+
+.icon-marker {
+  position: relative;
+  width: 40px;
+  height: 48px;
+  display: block;
+  background-image: url('../assets/img/maps/base_pin.png');
+  background-size: 40px;
+  transform: translateY(-24px);
+  text-align: center;
+  z-index: 99;
+
+  &.disabled {
+    background-image: url('../assets/img/maps/base_pin_black.png') !important;
+
+    & > .icon-cover {
+      background-color: #fff !important;
+
+      & > .icon-img {
+        color: #000;
+      }
+    }
+  }
+
+  & > .icon-cover {
+    display: block;
+    border-radius: 50%;
+    width: 30px;
+    height: 29px;
+    position: absolute;
+    top: 6px;
+    left: 5px;
+    border: 1px inset #00000029;
+
+    & > .icon-img {
+      color: #fff;
+      font-size: 16px;
+      margin-top: 5px;
+    }
+  }
+}
+
+.cover {
+  display: block;
+  background: $pinColor;
+  border-radius: 50%;
+  width: 30px;
+  height: 30px;
+  border: 1px inset #00000029;
+  text-align: center;
+
+  & > .icon-img {
+    color: #fff;
+    font-size: 16px;
+    margin-top: 6px;
+  }
+}
+
+  .pulse {
+    position: absolute;
+    margin-top: -10px;
+    margin-left: -10px;
+    transform: rotateX(74deg);
+    z-index: 0;
+    top: 0;
+  }
+
+  .pulse::after {
+    display: block;
+    width: $pulseSize;
+    height: $pulseSize;
+    content: '';
+    animation: pulsate 1.5s ease-out;
+    animation-delay: 1.6s;
+    animation-iteration-count: infinite;
+    opacity: 0;
+    background: $pinColor;
+    border-radius: 50%;
+    box-shadow: 0 0 1px 2px rgba(0, 0, 0, $shadowOpacity);
+    box-shadow: 0 0 6px 3px rgba($pinColor, 1.0);
+  }
+
+  .bg-azul {
+    background: $pinColor;
+  }
+
+  .bg-vermelho {
+    background: $red;
+  }
+
+  .pulse-vermelho::after {
+    background: $red;
+    box-shadow: 0 0 6px 3px rgba($red, 1.0);
+  }
+
+  .bg-laranja {
+    background: $orange;
+  }
+
+  .pulse-laranja::after {
+    background: $orange;
+    box-shadow: 0 0 6px 3px rgba($orange, 1.0);
+  }
+
+  .bg-verde {
+    background: $green;
+  }
+
+  .pulse-verde::after {
+    background: $green;
+    box-shadow: 0 0 6px 3px rgba($green, 1.0);
+  }
+
+  .bg-ciano {
+    background: $cyan;
+  }
+
+  .pulse-ciano::after {
+    background: $cyan;
+    box-shadow: 0 0 6px 3px rgba($cyan, 1.0);
+  }
+
+  .bg-amarelo {
+    background: #e7ec0f;
+  }
+
+  .pulse-amarelo::after {
+    background: #e7ec0f;
+    box-shadow: 0 0 6px 3px rgba(#e7ec0f, 1.0);
+  }
+
+  .bg-cinza {
+    background: $gray-600;
+  }
+
+  .pulse-cinza::after {
+    background: $gray-600;
+    box-shadow: 0 0 6px 3px rgba($gray-600, 1.0);
+  }
+
+  .bg-rosa {
+    background: $pink;
+  }
+
+  .pulse-rosa::after {
+    background: $pink;
+    box-shadow: 0 0 6px 3px rgba($pink, 1.0);
+  }
+
+  .bg-roxo {
+    background: #913c9f;
+  }
+
+  .pulse-roxo::after {
+    background: #913c9f;
+    box-shadow: 0 0 6px 3px rgba(#913c9f, 1.0);
+  }
+
+  @keyframes pulsate {
+    0% {
+      transform: scale(.1, .1);
+      opacity: 0;
+    }
+
+    50% {
+      opacity: 1;
+    }
+
+    100% {
+      transform: scale(1.2, 1.2);
+      opacity: 0;
+    }
+  }
+
+
+.ng-select.ng-select-multiple .ng-select-container .ng-value-container .ng-value .ng-value-label {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  width: 280px;
+  line-height: 1;
+}
+
+  .breadcrumb {
+    border-radius: 0px;
+  }
+
+  .nav-title {
+    line-height: 21px;
+  }
+
+  .notifier__container * {
+    margin: 0;
+  }
+
+  .sticky {
+    position: sticky;
+    top: 0;
+    z-index: 1;
+  }
+
+  .aside-menu .nav-tabs {
+    background: #f0f3f5;
+  }
+
+.refresh-tax > div{
+  font-weight:300;
+
+  &:hover {
+    background-color: $navbar-brand-bg;
+    color: #fff;
+    cursor: pointer;
+  }
+}
+
+.block-icon{
+  font-size: 4em;
+}
+
+.text-value{
+  font-size: 2.5em;
+  font-weight:600;
+}
+
+.stroke-success g g path {
+  stroke: $green;
+  stroke-width: 30;
+}
+
+.stroke-danger g g path {
+  stroke: $red;
+  stroke-width: 30;
+}
+
+.stroke-info g g path {
+  stroke: $cyan;
+  stroke-width: 30;
+}
+
+.dashboard-bar {
+  background-color: #fff;
+  position: absolute;
+  top: 0;
+  right: 0;
+  left: 250px;
+  height: 45px;
+  line-height: 45px;
+  color: #20a8d8;
+}
+
+.dropdown-toggle:hover {
+  text-decoration: underline;
+}
+
+.dash-periodo {
+  font-weight: 600;
+  cursor: pointer;
+
+  &:hover{
+    text-decoration:underline;
+  }
+}
+
+.dropdown{
+  cursor: pointer;
+}
+
+.dropdown-header{
+  position:sticky;
+  top:0;
+  z-index: 99;
+}
+
+.dropdown-footer {
+  position: sticky;
+  bottom: 0;
+  z-index: 9
+}
+
+.scrollable-dropdown {
+  height: auto;
+  max-height: 350px;
+  overflow-x: hidden;
+}
+
+.tooltip{
+  white-space:nowrap;
+}
+
+.tooltip-inner {
+  padding: 5px;
+}
+
+.container-login {
+  background-image: url(../assets/img/bg-06.png);
+  background-repeat: no-repeat;
+  background-size: contain;
+  background-position-y: bottom;
+  padding-bottom: 30px;
+}
+.dropdown-menu-lg{
+  width: 315px !important;
+}
+
+fieldset.scheduler-border {
+  border: 1px solid #c2cfd6 !important;
+  padding: 0 1.4em 1.4em 1.4em !important;
+  margin: 0 0 1.5em 0 !important;
+  -webkit-box-shadow: 0px 0px 0px 0px #000;
+  box-shadow: 0px 0px 0px 0px #000;
+}
+
+legend.scheduler-border {
+  font-size: 13px !important;
+  text-align: left !important;
+  width: auto;
+  padding: 0 10px;
+  border-bottom: none;
+  color: #536c79;
+}
+
+.route-list {
+  position: absolute;
+  left: 9px;
+  top: 120px;
+  max-width: 435px;
+}
+
+.route-list-item .number {
+  display: block;
+  background: rgb(211, 211, 213);
+  border-radius: 50%;
+  width: 30px;
+  height: 30px;
+  border: 1px inset #00000029;
+  text-align: center;
+  color: #fff;
+  line-height: 27px;
+  font-size: 19px;
+}
+
+.has-danger > input {
+  border: 2px solid #b91d1d;
+}
+
+$input-height-base: 34px;
+
+.form-control-feedback-custom {
+  position: absolute;
+  top: 27px;
+  right: 20px;
+  z-index: 9999; // Ensure icon is above input groups
+  display: block;
+  width: $input-height-base;
+  height: $input-height-base;
+  line-height: $input-height-base;
+  text-align: center;
+  pointer-events: none;
+}
+
+
+.special-card {
+  /* create a custom class so you
+   do not run into specificity issues
+   against bootstraps styles
+   which tends to work better than using !important
+   (future you will thank you later)*/
+  background-color: rgba(255,255,255, 1);
+  opacity: .4;
+}
+
+
+/*Layout DAshBoardUF*/
+#map {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+}
+
+.nicebox {
+  position: absolute;
+  text-align: center;
+  font-family: "Roboto", "Arial", sans-serif;
+  font-size: 13px;
+  z-index: 5;
+  box-shadow: 0 4px 6px -4px #333;
+  padding: 5px 10px;
+  background: rgb(255,255,255);
+  background: linear-gradient(to bottom,rgba(255,255,255,1) 0%,rgba(245,245,245,1) 100%);
+  border: rgb(229, 229, 229) 1px solid;
+}
+
+#controls {
+  top: 30px;
+  left: 25px;
+  width: 325px;
+  height: 40px;
+}
+
+#data-box {
+  top: 50px;
+  height: 40px;
+  display: none;
+}
+
+#census-variable {
+  width: 360px;
+  height: 20px;
+}
+
+#legend {
+  display: flex;
+  display: -webkit-box;
+  padding-top: 7px
+}
+
+.color-key {
+  background: linear-gradient(to right, hsl(5, 69%, 54%) 0%, hsl(29, 71%, 51%) 17%, hsl(54, 74%, 47%) 33%, hsl(78, 76%, 44%) 50%, hsl(102, 78%, 41%) 67%, hsl(127, 81%, 37%) 83%, hsl(151, 83%, 34%) 100%);
+  flex: 1;
+  -webkit-box-flex: 1;
+  margin: 0 5px;
+  text-align: left;
+  font-size: 1.0em;
+  line-height: 1.0em;
+}
+
+#data-value {
+  font-size: 2.0em;
+  font-weight: bold
+}
+
+#data-label {
+  font-size: 2.0em;
+  font-weight: normal;
+  padding-right: 10px;
+}
+
+#data-label:after {
+  content: ':'
+}
+
+#data-caret {
+  margin-left: -5px;
+  display: block;
+  font-size: 14px;
+  width: 14px
+}
+
+.list-group {
+  max-height: 300px;
+  margin-bottom: 10px;
+  -webkit-overflow-scrolling: touch;
+}
+
+.multi-select .dropdown .btn {
+  border: none !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  color: #20a8d8 !important;
+  margin-bottom: 4px !important;
+}
