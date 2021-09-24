@@ -35,16 +35,15 @@ import {
 // Import views
 import {
   LoginComponent,
-  FaturamentoUFComponent,
-  OperacoesComponent,
-  FinanceiroComponent,
-  EstoqueComponent,
-  DashboardResultadosComponent,
-  PericiaLeilaoComponent,
-  EstoqueListagemComponent,
-  LiberadosConsolidadoComponent,
-  AccessDeniedComponent,
-  NotasFiscaisComponent
+   AccessDeniedComponent,
+  NotasFiscaisComponent,
+  LeilaoComponent,
+  CreateLeilaoComponent,
+  UpdateLeilaoComponent,
+  CategoriaComponent,
+  CreateCategoriaComponent,
+  UpdateCategoriaComponent
+
 } from './views';
 
 const APP_COMPONENTS = [
@@ -58,17 +57,16 @@ const APP_COMPONENTS = [
   APP_SIDEBAR_NAV,
   LoginComponent,
   LoginComponent,
-  FaturamentoUFComponent,
-  OperacoesComponent,
-  FinanceiroComponent,
-  EstoqueComponent,
-  DashboardResultadosComponent,
-  PericiaLeilaoComponent,
-  EstoqueListagemComponent,
-  LiberadosConsolidadoComponent,
   AccessDeniedComponent,
   HomeComponent,
-  NotasFiscaisComponent
+  NotasFiscaisComponent,
+  LeilaoComponent,
+  CreateLeilaoComponent,
+  UpdateLeilaoComponent,
+  CategoriaComponent,
+  CreateCategoriaComponent,
+  UpdateCategoriaComponent
+
 ]
 
 // Import directives
@@ -156,11 +154,11 @@ import { AuthorizationService } from './_services/authorization.service';
 import { HomeComponent } from './views/home';
 
 export function RestangularConfigFactory(RestangularProvider, NotifierService: NotifierService, Router) {
-  RestangularProvider.setBaseUrl(environment.apiUrl);
+  RestangularProvider.setBaseUrl(environment.apiDados);
 
   let currentUser = JSON.parse(localStorage.getItem('currentUser'));
-  if (currentUser && currentUser.token) {
-    RestangularProvider.setDefaultHeaders({ 'Authorization': 'Bearer ' + currentUser.token, withCredentials: true, 'Access-Control-Allow-Origin': '*', 'Access-Control-Allow-Credentials': true });
+  if (currentUser && currentUser.access_token) {
+    RestangularProvider.setDefaultHeaders({ 'Authorization': 'Bearer ' + currentUser.access_token, withCredentials: true, 'Access-Control-Allow-Origin': '*', 'Access-Control-Allow-Credentials': true });
   }
 
   RestangularProvider.addErrorInterceptor((response, subject, responseHandler) => {

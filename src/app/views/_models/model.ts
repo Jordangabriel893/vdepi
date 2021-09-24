@@ -1,5 +1,6 @@
 import { Moment } from "moment";
 
+
 export class Recolhimento {
   id: number;
   id_dispositivo: number;
@@ -370,4 +371,32 @@ export class DashboardFaturamentoMetas {
   fat_atual: number;
   fat_1ano_anterior: number;
   fat_2ano_anterior: number;
+}
+
+
+export interface Foto {
+  arquivoId: number;
+  nome: string;
+  base64: string;
+  tipo: string;
+  tamanho: number;
+}
+
+export interface Leilao {
+  id: number;
+  nome: string;
+  titulo: string;
+  dataLeilao: Date;
+  categoria: string;
+  status: string;
+  foto: Foto;
+  qtdLotes: number;
+}
+export interface Categoria {
+  categoriaId: number;
+  dataCadastro: Date;
+  ativo: boolean;
+  descricao: string;
+  categoriaPai?: any;
+  categoriaPaiId?: any;
 }

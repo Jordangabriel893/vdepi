@@ -5,5 +5,6 @@
 
 export const environment = {
   production: false,
-  apiUrl: "http://prismapatios.com.br/dashboard/api"
+  apiUrl: "https://id.eblonline.com.br",
+  apiDados: "https://api.eblonline.com.br"
 };

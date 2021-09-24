@@ -9,17 +9,18 @@ import {
 
 import {
   LoginComponent,
-  FaturamentoUFComponent,
-  OperacoesComponent,
-  FinanceiroComponent,
-  EstoqueComponent,
-  DashboardResultadosComponent,
-  EstoqueListagemComponent,
-  LiberadosConsolidadoComponent,
   AccessDeniedComponent,
-  NotasFiscaisComponent
+  NotasFiscaisComponent,
+  LeilaoComponent,
+  CreateLeilaoComponent,
+  UpdateLeilaoComponent,
+  CategoriaComponent,
+  CreateCategoriaComponent,
+  UpdateCategoriaComponent
+
+
 } from './views';
-import { PericiaLeilaoComponent } from './views/relatorios/pericialeilao';
+
 import { SourceGuard } from './_guards/source.guard';
 import { HomeComponent } from './views/home';
 
@@ -42,82 +43,78 @@ export const routes: Routes = [
         },
         canActivate: [AnonyGuard]
       },
-       {
-        path: 'faturamentoUF',
-        component: FaturamentoUFComponent,
-        data: {
-          title: 'Dashboard Faturamento',
-          source: 'Faturamento'
-        },
-        canActivate: [SourceGuard]
-      }, {
-        path: 'dashboardResultado',
-        component: DashboardResultadosComponent,
-        data: {
-          title: 'Resultados Faturamento',
-          source: 'Resultado'
-        },
-        canActivate: [SourceGuard]
-      },{
-        path: 'dash-operation',
-        component: OperacoesComponent,
-        data: {
-          title: 'Dashboard Operações',
-          source: 'Operacoes'
-        },
-        canActivate: [SourceGuard]
-      },
-      {
-        path: 'dash-financial',
-        component: FinanceiroComponent,
-        data: {
-          title: 'Dashboard Financeiro',
-          source: 'Financeiro'
-        },
-        canActivate: [SourceGuard]
-      },
-      {
-        path: 'dash-estoque',
-        component: EstoqueComponent,
-        data: {
-          title: 'Dashboard Estoque',
-          source: 'Estoque'
-        },
-        canActivate: [SourceGuard]
-      },
-      {
-        path: 'relatorios/pericialeilao',
-        component: PericiaLeilaoComponent,
-        data: {
-          title: 'Perícia Leilão',
-          source: 'RelatorioPericiaLeilao'
-        },
-        canActivate: [SourceGuard]
-      },
-      {
-        path: 'relatorios/estoque',
-        component: EstoqueListagemComponent,
-        data: {
-          title: 'Estoque Atual',
-          source: 'RelatorioEstoque'
-        },
-        canActivate: [SourceGuard]
-      },
-      {
-        path: 'relatorios/liberadosConsolidados',
-        component: LiberadosConsolidadoComponent,
-        data: {
-          title: 'Liberados Consolidado',
-          source: 'RelatorioLiberadosConsolidado'
-        },
-        canActivate: [SourceGuard]
-      },
+
+
       {
         path: 'relatorios/notasfiscais',
         component: NotasFiscaisComponent,
         data: {
           title: 'Notas Fiscais',
           source: 'RelatorioNotasFiscais'
+        },
+        canActivate: [SourceGuard]
+      },
+      {
+        path: 'leilao',
+        component: LeilaoComponent,
+        data: {
+          title: 'Leilao',
+          source: 'RelatorioEstoque'
+        },
+        canActivate: [SourceGuard]
+      },
+
+      {
+        path: 'leilao',
+        component: LeilaoComponent,
+        data: {
+          title: 'Leilao',
+          source: 'RelatorioEstoque'
+        },
+        canActivate: [SourceGuard]
+      },
+      {
+        path: 'create-leilao',
+        component: CreateLeilaoComponent,
+        data: {
+          title: 'Novo Leilao',
+          source: 'RelatorioEstoque'
+        },
+        canActivate: [SourceGuard]
+      },
+      {
+        path: 'update-leilao/:id',
+        component: UpdateLeilaoComponent,
+        data: {
+          title: 'Editar Leilao',
+          source: 'RelatorioEstoque'
+        },
+        canActivate: [SourceGuard]
+      },
+      {
+        path: 'categoria',
+        component: CategoriaComponent,
+        data: {
+          title: 'Categoria',
+          source: 'RelatorioEstoque'
+        },
+        canActivate: [SourceGuard]
+      },
+      {
+        path: 'create-categoria',
+        component: CreateCategoriaComponent,
+        data: {
+          title: 'Nova Categoria',
+          source: 'RelatorioEstoque'
+        },
+        canActivate: [SourceGuard]
+      },
+      {
+        path: 'update-categoria/:id',
+        component: UpdateCategoriaComponent,
+        data: {
+          title: 'Editar Categoria',
+          source: 'RelatorioEstoque'
         },
         canActivate: [SourceGuard]
       },
