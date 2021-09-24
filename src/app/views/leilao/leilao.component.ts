@@ -35,5 +35,9 @@ export class LeilaoComponent implements OnInit {
   edit(id) {
     this.router.navigate(['/update-leiloes', id]);
   }
+  verLotes(id){
+    this.router.navigate(['/lotes', id]);
+
+  }
 
 }

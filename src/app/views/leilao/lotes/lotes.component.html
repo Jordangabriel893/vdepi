@@ -1,0 +1,59 @@
+<div class="animated fadeIn">
+  <div class="row">
+    <div class="col-lg-12">
+      <div class="card">
+        <div class="card-header">
+          <i class="fa fa-user-secret"></i> Leilões
+        </div>
+        <div class="card-block">
+          <div class="table-responsive mt-4">
+            <table class="table table-striped" [mfData]="leiloes" #mfLeilao="mfDataTable" [mfRowsOnPage]="5">
+              <thead>
+                <tr>
+
+                  <th>
+                    <mfDefaultSorter by="id">Nº Lote</mfDefaultSorter>
+                  </th>
+                  <th>
+                    <mfDefaultSorter by="categoria">Categoria</mfDefaultSorter>
+                  </th>
+                  <th>
+                    <mfDefaultSorter by="descricao">Descrição</mfDefaultSorter>
+                  </th>
+                  <th>
+                    <mfDefaultSorter by="status">Status</mfDefaultSorter>
+                  </th>
+
+                  <th>
+                    <mfDefaultSorter by="loteJudicial">Lote Judicial</mfDefaultSorter>
+                  </th>
+                  <th>
+                    <mfDefaultSorter by="valorAvalicao">Valor Avaliação</mfDefaultSorter>
+                  </th>
+
+                </tr>
+              </thead>
+              <tbody *ngIf="lotes">
+                <tr *ngFor="let lote of lotes">
+                  <td>{{lote.numeroLote}}</td>
+                  <td>{{lote.categoria}}</td>
+                  <td>{{lote.descricao}}</td>
+                  <td>{{lote.status}}</td>
+                  <td>{{lote.loteJudicial}}</td>
+                  <td>{{lote.valorAvaliacao | currency:'BRL':true}}</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <td colspan="8">
+                    <mfBootstrapPaginator [rowsOnPageSet]="[5,10,25]"></mfBootstrapPaginator>
+                  </td>
+                </tr>
+              </tfoot>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

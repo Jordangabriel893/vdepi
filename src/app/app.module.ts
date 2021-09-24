@@ -1,5 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
+import { CommonModule } from '@angular/common';
 import { LocationStrategy, HashLocationStrategy, registerLocaleData } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/Http';
@@ -152,6 +153,7 @@ import { DataTableModule } from "angular2-datatable";
 import { SourceGuard } from './_guards/source.guard';
 import { AuthorizationService } from './_services/authorization.service';
 import { HomeComponent } from './views/home';
+import { LotesComponent } from './views/leilao/lotes/lotes.component';
 
 export function RestangularConfigFactory(RestangularProvider, NotifierService: NotifierService, Router) {
   RestangularProvider.setBaseUrl(environment.apiDados);
@@ -209,13 +211,15 @@ export function RestangularConfigFactory(RestangularProvider, NotifierService: N
     NgSelectModule,
     AngularMultiSelectModule,
     FlipModule,
-    DataTableModule
+    DataTableModule,
+    CommonModule
   ],
   declarations: [
     AppComponent,
     ...APP_CONTAINERS,
     ...APP_COMPONENTS,
-    ...APP_DIRECTIVES
+    ...APP_DIRECTIVES,
+    LotesComponent
   ],
   providers: [{
     provide: LocationStrategy,

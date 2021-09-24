@@ -16,13 +16,15 @@ import {
   UpdateLeilaoComponent,
   CategoriaComponent,
   CreateCategoriaComponent,
-  UpdateCategoriaComponent
+  UpdateCategoriaComponent,
+  
 
 
 } from './views';
 
 import { SourceGuard } from './_guards/source.guard';
 import { HomeComponent } from './views/home';
+import { LotesComponent } from './views/leilao/lotes/lotes.component';
 
 
 export const routes: Routes = [
@@ -87,6 +89,15 @@ export const routes: Routes = [
         component: UpdateLeilaoComponent,
         data: {
           title: 'Editar Leilao',
+          source: 'RelatorioEstoque'
+        },
+        canActivate: [SourceGuard]
+      },
+      {
+        path: 'lotes/:id',
+        component: LotesComponent,
+        data: {
+          title: 'Ver lotes',
           source: 'RelatorioEstoque'
         },
         canActivate: [SourceGuard]
