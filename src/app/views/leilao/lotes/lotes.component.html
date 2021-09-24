@@ -7,7 +7,7 @@
         </div>
         <div class="card-block">
           <div class="table-responsive mt-4">
-            <table class="table table-striped" [mfData]="leiloes" #mfLeilao="mfDataTable" [mfRowsOnPage]="5">
+            <table class="table table-striped" [mfData]="lotes" #mfLeilao="mfDataTable" [mfRowsOnPage]="5">
               <thead>
                 <tr>
 
@@ -39,7 +39,7 @@
                   <td>{{lote.categoria}}</td>
                   <td>{{lote.descricao}}</td>
                   <td>{{lote.status}}</td>
-                  <td>{{lote.loteJudicial}}</td>
+                  <td>{{lote.loteJudicial ? "Sim" : "Não"}}</td>
                   <td>{{lote.valorAvaliacao | currency:'BRL':true}}</td>
                 </tr>
               </tbody>
