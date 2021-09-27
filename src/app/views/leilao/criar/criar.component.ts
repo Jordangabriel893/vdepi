@@ -82,10 +82,10 @@ export class CriarComponent implements OnInit {
         tamanho:[null, Validators.required]
         
       }),
-      categoriaId: [1, Validators.required],
-      comitenteId: [1, Validators.required],
-      leiloeiroId: [1, Validators.required],
-      empresaId: [1, Validators.required],
+      categoriaId: [null, Validators.required],
+      comitenteId: [null, Validators.required],
+      leiloeiroId: [null, Validators.required],
+      empresaId: [null, Validators.required],
 
     })
 
