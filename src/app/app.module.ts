@@ -154,6 +154,7 @@ import { SourceGuard } from './_guards/source.guard';
 import { AuthorizationService } from './_services/authorization.service';
 import { HomeComponent } from './views/home';
 import { LotesComponent } from './views/leilao/lotes/lotes.component';
+import { CriarComponent } from './views/leilao/criar/criar.component';
 
 export function RestangularConfigFactory(RestangularProvider, NotifierService: NotifierService, Router) {
   RestangularProvider.setBaseUrl(environment.apiDados);
@@ -219,7 +220,8 @@ export function RestangularConfigFactory(RestangularProvider, NotifierService: N
     ...APP_CONTAINERS,
     ...APP_COMPONENTS,
     ...APP_DIRECTIVES,
-    LotesComponent
+    LotesComponent,
+    CriarComponent
   ],
   providers: [{
     provide: LocationStrategy,
