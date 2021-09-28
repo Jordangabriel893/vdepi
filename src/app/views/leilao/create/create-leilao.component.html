@@ -1,88 +1,220 @@
-<div class="animated fadeIn" *ngIf="leiloes">
-  <div class="row">
-    <div class="col-lg-12">
-      <div class="card">
-        <div class="card-header">
-          <i class="fa fa-user-secret"></i> Novo Leilão
-        </div>
-        <form #agentForm="ngForm" (ngSubmit)="save()">
-          <div class="card-block">
-            <div class="row">
-              <div class="form-group col-6" [ngClass]="{'has-danger': !matricula.valid && matricula.dirty}">
-                <label for="tMatricula">Matricula</label>
-                <small *ngIf="matricula.errors?.required && matricula.dirty" class="error-validation">Campo obrigatório<i class="fa fa-caret-down"></i></small>
-                <input type="number" class="form-control" id="tMatricula" placeholder="Matricula" name="Matricula" [(ngModel)]="agent.matricula" required #matricula="ngModel">
-              </div>
-              <div class="form-group col-6" [ngClass]="{'has-danger': !nome.valid && nome.dirty}">
-                <label for="tNome">Nome</label>
-                <small *ngIf="nome.errors?.required && nome.dirty" class="error-validation">Campo obrigatório<i class="fa fa-caret-down"></i></small>
-                <input type="text" class="form-control" id="tNome" placeholder="Nome" name="Nome" [(ngModel)]="agent.nome" required #nome="ngModel" (change)="sugereLogin()">
-              </div>
-            </div>
-            <div class="row">
-              <div class="form-group col-6" [ngClass]="{'has-danger': !orgao.valid && orgao.dirty}">
-                <label for="tOrgao">Orgão</label>
-                <small *ngIf="orgao.errors?.gt && orgao.dirty" class="error-validation">Selecione uma Orgão<i class="fa fa-caret-down"></i></small>
-                <select id="tOrgao" name="orgao" class="form-control" [(ngModel)]="agent.orgao_emissor_id" [gt]="0" #orgao="ngModel" (change)="selectOrgao()">
-                  <option value="0">--- SELECIONE ---</option>
-                  <option *ngFor="let item of orgaos" [ngValue]="item.id_orgao">{{item.sigla}}</option>
-                </select>
-              </div>
-              <div class="form-group col-6" [ngClass]="{'has-danger': !autoridade.valid && autoridade.dirty}">
-                <label for="tAutoridade">Autoridade</label>
+<form [formGroup]="formulario" (ngSubmit)="onSubmit()">
+  <div class="animated fadeIn">
+    <div class="row">
+      <div class="col-lg-12">
+        <div class="card">
+          <div class="card-header">
+            <i class="fa fa-user-secret"></i> Novo Leilão - Informações Obrigatorias*
+          </div>
 
-                <select id="tAutoridade" name="autoridade" class="form-control" [(ngModel)]="agent.autoridade_responsavel_id" #autoridade="ngModel">
-                  <option selected *ngIf="loading">CARREGANDO...</option>
-                  <option value="0">--- SELECIONE ---</option>
-                  <option *ngFor="let item of autoridades" [ngValue]="item.id_autoridade">{{item.nome_autoridade}}</option>
-                </select>
-              </div>
-            </div>
-            <div class="row">
-              <div class="form-group col-6" [ngClass]="{'has-danger': !divisao.valid && divisao.dirty}">
-                <label for="tDivisao">Divisão</label>
-                <select id="tDivisao" name="divisao" class="form-control" [(ngModel)]="agent.autoridade_divisao_id" #divisao="ngModel">
-                  <option value="0">--- SELECIONE ---</option>
-                  <option *ngFor="let item of divisoes" [ngValue]="item.id_divisao">{{item.nome_divisao}}</option>
-                </select>
-              </div>
-              <div class="form-group col-6" [ngClass]="{'has-danger': !cliente.valid && cliente.dirty}">
-                <label for="tCliente">Cliente</label>
-                <select id="tCliente" name="cliente" class="form-control" [(ngModel)]="agent.id_cliente" #cliente="ngModel">
-                  <option selected value="0" >--- SELECIONE ---</option>
-                  <option *ngFor="let item of clientes" [ngValue]="item.id_cliente">{{item.nome}}</option>
-                </select>
-              </div>
-            </div>
-            <div class="row">
-              <div class="form-group col-6" [ngClass]="{'has-danger': !login.valid && login.dirty}">
-                <label for="tLogin">Login</label>
-                <small *ngIf="login.errors?.required && login.dirty" class="error-validation">Campo obrigatório<i class="fa fa-caret-down"></i></small>
-                <input type="text" class="form-control" id="tLogin" placeholder="Login" name="Login" [(ngModel)]="agent.login" required #login="ngModel" autocomplete="off" oninput="this.value = this.value.toUpperCase()">
-              </div>
-              <div class="form-group col-6" [ngClass]="{'has-danger': !password.prioridade && password.dirty}">
-                <label for="tPassword">Senha</label>
-                <small *ngIf="password.errors?.required && password.dirty" class="error-validation">Campo obrigatório<i class="fa fa-caret-down"></i></small>
-                <input type="password" class="form-control" id="tPassword" placeholder="Senha" name="password" [(ngModel)]="agent.senha" required #password="ngModel" autocomplete="off">
-              </div>
-            </div>
-            <div class="row mt-2">
+          <div class="card-block">
+            <div class="row ">
               <div class="form-group col-6">
-                <label for="sms">Ativo</label>
-                <label class="switch switch-text switch-pill switch-primary">
-                  <input type="checkbox" class="switch-input" [checked]="agent.flag_ativo" (change)="agent.flag_ativo = !agent.flag_ativo">
-                  <span class="switch-label" data-on="Sim" data-off="Não"></span>
-                  <span class="switch-handle"></span>
-                </label>
+                <label for="nome">Nome</label>
+                <input type="text" class="form-control" id="nome" placeholder="Nome" formControlName="nome">
+              </div>
+              <div class="form-group col-6">
+                <label for="titulo">Título</label>
+                <input type="text" class="form-control" id="titulo" placeholder="Título" formControlName="titulo">
+              </div>
+
+            </div>
+            <div class="row">
+              <div class="form-group col-6">
+                <label for="dataLeilao">Data Leilão</label>
+                <input type="date" class="form-control" id="dataLeilao" placeholder="dd/mm/aaaa"
+                  formControlName="dataLeilao">
+              </div>
+              <div class="form-group col-6">
+                <label for="dataAberturaLance">Data Abertura de Lances</label>
+                <input type="date" class="form-control" id="dataAberturaLance" placeholder="dd/mm/aaaa"
+                  formControlName="dataAberturaLance">
               </div>
             </div>
+
+
+
+
           </div>
-          <div class="card-footer">
-            <button type="submit" class="btn btn-primary" [disabled]="!agentForm.valid"><i class="fa fa-save"></i> Salvar</button>
-            <button type="reset" class="btn btn-danger" [routerLink]="['/agents']"><i class="fa fa-undo"></i> Cancelar</button>
+          <div class="col-4" formGroupName="foto">
+            <fieldset class="form-group">
+
+              <label>Upload Logo</label>
+              {{imageError}}
+              <div class="custom-file fileInputProfileWrap">
+                <input type="file" (change)="fileChangeEvent($event)" class="fileInputProfile">
+                <div class="img-space">
+
+                  <ng-container *ngIf="isImageSaved; else elseTemplate">
+                    <img [src]="cardImageBase64" />
+                  </ng-container>
+                  <ng-template #elseTemplate>
+
+                    <img src="./../../assets/placeholder.png" class="img-responsive">
+                  </ng-template>
+
+                </div>
+
+              </div>
+            </fieldset>
+            <a class="btn btn-danger col-8" (click)="removeImage()" *ngIf="isImageSaved">Remove</a>
           </div>
-        </form>
+
+
+
+
+
+
+
+        </div>
       </div>
     </div>
   </div>
-</div>
+
+  <div class="animated fadeIn">
+    <div class="row">
+      <div class="col-lg-12">
+        <div class="card">
+          <div class="card-header">
+            <i class="fa fa-user-secret"></i> Datas Opcionais
+          </div>
+
+          <div class="card-block">
+            <div class="row">
+              <div class="form-group col-6">
+                <label for="dataInicioAgendamento">Data Início Agendamento</label>
+                <input type="date" class="form-control" id="dataInicioAgendamento"
+                  formControlName="dataInicioAgendamento">
+              </div>
+              <div class="form-group col-6">
+                <label for="dataFimAgendamento">Data Fim Agendamento</label>
+                <input type="date" class="form-control" id="dataFimAgendamento" formControlName="dataFimAgendamento">
+              </div>
+            </div>
+
+            <div class="row ">
+              <div class="form-group col-6">
+                <label for="dataEdital">Data Edital</label>
+                <input type="date" class="form-control" id="dataEdital" formControlName="dataEdital">
+              </div>
+              <div class="form-group col-6">
+                <label for="dataNotificacao">Data Notificação</label>
+                <input type="date" class="form-control" id="dataNotificacao" formControlName="dataNotificacao">
+              </div>
+            </div>
+            <div class="row">
+              <div class="form-group col-6">
+                <label for="dataIncioLiberacao">Data Início Liberação</label>
+                <input type="date" class="form-control" id="dataIncioLiberacao" placeholder=""
+                  formControlName="dataIncioLiberacao">
+              </div>
+              <div class="form-group col-6">
+                <label for="dataFimLiberacao">Data Fim Liberação</label>
+                <input type="date" class="form-control" id="dataFimLiberacao" formControlName="dataFimLiberacao">
+              </div>
+            </div>
+            <div class="row">
+              <div class="form-group col-6">
+                <label for="emailsNotificacao">Emails</label>
+                <input type="text" class="form-control" id="emailsNotificacao" placeholder="Emails"
+                  formControlName="emailsNotificacao">
+              </div>
+              <div class="form-group col-6">
+                <label for="dataDiarioOficial">Data Diário Oficial</label>
+                <input type="date" class="form-control" id="dataDiarioOficial" formControlName="dataDiarioOficial">
+              </div>
+            </div>
+
+
+
+
+          </div>
+
+
+
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="animated fadeIn">
+    <div class="row">
+      <div class="col-lg-12">
+        <div class="card">
+          <div class="card-header">
+            <i class="fa fa-user-secret"></i> Diário Oficial
+          </div>
+          <div class="card-block">
+            <div class="row">
+
+              <div class="form-group col-6">
+                <label for="dataDiarioOficial">Data Diário Oficial</label>
+                <input type="date" class="form-control" id="dataDiarioOficial" formControlName="dataDiarioOficial">
+              </div>
+              <div class="form-group col-6">
+                <label for="numeroDiarioOficial">Número Diario Oficial</label>
+                <input type="number" class="form-control" id="numeroDiarioOficial"
+                  formControlName="numeroDiarioOficial">
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="animated fadeIn">
+    <div class="row">
+      <div class="col-lg-12">
+        <div class="card">
+          <div class="card-header">
+            <i class="fa fa-user-secret"></i> Identificador - Informações Obrigatórias*
+          </div>
+
+          <div class="card-block">
+            <div class="row">
+              <div class="form-group col-6">
+                <label for="categoriaId">Categoria </label>
+                <select class="form-control" formControlName="categoriaId">
+                  <option *ngFor="let item of categorias" value="{{item.categoriaId}}">{{item.descricao}}</option>
+                </select>
+              </div>
+              <div class="form-group col-6">
+                <label for="comitenteId">Comitente </label>
+                <select class="form-control" formControlName="comitenteId">
+                  <option *ngFor="let item of comitentes" value="{{item.comitenteId}}">{{item.nome}}</option>
+                </select>
+              </div>
+            </div>
+            <div class="row">
+
+              <div class="form-group col-6">
+                <label for="leiloeiroId">Leiloeiro </label>
+                <select class="form-control" formControlName="leiloeiroId">
+                  <option *ngFor="let item of leiloeiros" value="{{item.leiloeiroId}}">{{item.pessoa.nomeCompleto}}
+                  </option>
+
+                </select>
+              </div>
+              <div class="form-group col-6">
+                <label for="empresaId">Empresa </label>
+                <select class="form-control" formControlName="empresaId">
+                  <option *ngFor="let item of empresas" value="{{item.empresaId}}">{{item.nomeFantasia}}</option>
+
+                </select>
+              </div>
+            </div>
+
+
+
+          </div>
+          <div class="card-footer">
+            <button type="submit" class="btn btn-primary"><i class="fa fa-save"></i> Salvar</button>
+            <button type="reset" class="btn btn-danger" [routerLink]="['/agents']"><i class="fa fa-undo"></i>
+              Cancelar</button>
+          </div>
+
+
+        </div>
+      </div>
+    </div>
+  </div>
+</form>

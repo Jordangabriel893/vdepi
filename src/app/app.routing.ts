@@ -25,7 +25,7 @@ import {
 import { SourceGuard } from './_guards/source.guard';
 import { HomeComponent } from './views/home';
 import { LotesComponent } from './views/leilao/lotes/lotes.component';
-import { CriarComponent } from './views/leilao/criar/criar.component';
+
 
 
 
@@ -79,7 +79,7 @@ export const routes: Routes = [
       },
       {
         path: 'create-leilao',
-        component: CriarComponent,
+        component: CreateLeilaoComponent,
         data: {
           title: 'Novo Leilao',
           source: 'RelatorioEstoque'
