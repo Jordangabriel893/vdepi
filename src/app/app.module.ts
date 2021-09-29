@@ -154,6 +154,8 @@ import { SourceGuard } from './_guards/source.guard';
 import { AuthorizationService } from './_services/authorization.service';
 import { HomeComponent } from './views/home';
 import { LotesComponent } from './views/leilao/lotes/lotes.component';
+import { UsuariosComponent } from './views/usuarios/usuarios.component';
+import { UpdateUsuariosComponent } from './views/usuarios/update-usuarios/update-usuarios.component';
 
 
 export function RestangularConfigFactory(RestangularProvider, NotifierService: NotifierService, Router) {
@@ -221,6 +223,8 @@ export function RestangularConfigFactory(RestangularProvider, NotifierService: N
     ...APP_COMPONENTS,
     ...APP_DIRECTIVES,
     LotesComponent,
+    UsuariosComponent,
+    UpdateUsuariosComponent,
 
   ],
   providers: [{

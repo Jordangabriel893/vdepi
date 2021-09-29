@@ -25,8 +25,8 @@ import {
 import { SourceGuard } from './_guards/source.guard';
 import { HomeComponent } from './views/home';
 import { LotesComponent } from './views/leilao/lotes/lotes.component';
-
-
+import { UsuariosComponent } from './views/usuarios/usuarios.component';
+import { UpdateUsuariosComponent } from './views/usuarios/update-usuarios/update-usuarios.component';
 
 
 export const routes: Routes = [
@@ -127,6 +127,24 @@ export const routes: Routes = [
         component: UpdateCategoriaComponent,
         data: {
           title: 'Editar Categoria',
+          source: 'RelatorioEstoque'
+        },
+        canActivate: [SourceGuard]
+      },
+      {
+        path: 'usuarios',
+        component: UsuariosComponent,
+        data: {
+          title: 'Usuários',
+          source: 'RelatorioEstoque'
+        },
+        canActivate: [SourceGuard]
+      },
+      {
+        path: 'update-usuarios/:id',
+        component: UpdateUsuariosComponent,
+        data: {
+          title: 'Editar Usuário',
           source: 'RelatorioEstoque'
         },
         canActivate: [SourceGuard]

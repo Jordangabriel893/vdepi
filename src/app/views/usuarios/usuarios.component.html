@@ -1,0 +1,72 @@
+<div class="animated fadeIn">
+  <div class="row">
+    <div class="col-lg-12">
+      <div class="card">
+        <div class="card-header">
+          <i class="fa fa-user-secret"></i> Usuários
+        </div>
+        <div class="card-block">
+            <div class="table-responsive mt-4">
+              <table class="table table-striped" [mfData]="usuarios" #mfUsuarios="mfDataTable" [mfRowsOnPage]="5">
+                <thead>
+                  <tr>
+
+                    <th>
+                      <mfDefaultSorter by="id">Id</mfDefaultSorter>
+                    </th>
+                    <th>
+                      <mfDefaultSorter by="nome">Nome</mfDefaultSorter>
+                    </th>
+                    <th>
+                      <mfDefaultSorter by="numeroDocumento">Nº Documento</mfDefaultSorter>
+                    </th>
+                    <th>
+                      <mfDefaultSorter by="dataNascimento">Data Nascimento</mfDefaultSorter>
+                    </th>
+                    <th>
+                      <mfDefaultSorter by="genero">Gênero</mfDefaultSorter>
+                    </th>
+                    <th>
+                      <mfDefaultSorter by="email">Email</mfDefaultSorter>
+                    </th>
+                    <th>
+                      <mfDefaultSorter by="tipoPessoa">Tipo de Pessoa</mfDefaultSorter>
+                    </th>
+                    <th>
+                      <mfDefaultSorter by="ativo">Ativo</mfDefaultSorter>
+                    </th>
+
+                    <th class="text-center" >
+                      Editar
+                    </th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let item of mfUsuarios.data">
+                    <td>{{item.usuarioId}}</td>
+                    <td>{{item.nomeCompleto}}</td>
+                    <td>{{item.numeroDocumento}}</td>
+                    <td>{{item.dataNascimento | amDateFormat:'DD/MM/yyyy' }}</td>
+                    <td>{{item.genero}}</td>
+                    <td>{{item.email}}</td>
+                    <td>{{item.tipoPessoa}}</td>
+                    <td>{{item.ativo ? "Sim" : "Não"}}</td>
+                    <td class="text-center" nowrap>
+                      <button type="button" class="btn btn-primary" (click)="edit(item.usuarioId)"><i class="fa fa-edit"></i>&nbsp; Editar</button>
+                    </td>
+                  </tr>
+                </tbody>
+                <tfoot>
+                  <tr>
+                    <td colspan="9">
+                      <mfBootstrapPaginator [rowsOnPageSet]="[5,10,25]"></mfBootstrapPaginator>
+                    </td>
+                  </tr>
+                </tfoot>
+              </table>
+            </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
