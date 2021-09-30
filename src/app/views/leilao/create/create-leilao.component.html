@@ -10,29 +10,32 @@
           <div class="card-block">
             <div class="row ">
               <div class="form-group col-6">
+                <ng-template #nome><app-error-msg [control]="formulario.get('nome')" label="Nome"></app-error-msg></ng-template>
                 <label for="nome">Nome</label>
-                <input type="text" class="form-control" id="nome" placeholder="Nome" formControlName="nome">
-                <app-error-msg [control]="formulario.get('nome')" label="Nome"></app-error-msg>
+                <input type="text" class="form-control" id="nome" placeholder="Nome" formControlName="nome" [popover]="nome" triggers="keypress:focusout">
               </div>
+
               <div class="form-group col-6">
+                <ng-template #titulo><app-error-msg [control]="formulario.get('titulo')" label="Título"></app-error-msg></ng-template>
                 <label for="titulo">Título</label>
-                <input type="text" class="form-control" id="titulo" placeholder="Título" formControlName="titulo">
-                <app-error-msg [control]="formulario.get('titulo')" label="Título"></app-error-msg>
+                <input type="text" class="form-control" id="titulo" placeholder="Título" formControlName="titulo" [popover]="titulo" triggers="keypress:focusout">
               </div>
 
             </div>
             <div class="row">
               <div class="form-group col-6">
+                <ng-template #dataLeilao><app-error-msg [control]="formulario.get('dataLeilao')" label="Data Leilão"></app-error-msg></ng-template>
                 <label for="dataLeilao">Data Leilão</label>
                 <input type="date" class="form-control" id="dataLeilao" placeholder="dd/mm/aaaa"
-                  formControlName="dataLeilao">
-                  <app-error-msg [control]="formulario.get('dataLeilao')" label="Data Leilão"></app-error-msg>
+                  formControlName="dataLeilao" [popover]="dataLeilao" >
+
               </div>
               <div class="form-group col-6">
+                <ng-template #date><app-error-msg [control]="formulario.get('dataAberturaLance')" label="Data Abertura de Lances"></app-error-msg></ng-template>
                 <label for="dataAberturaLance">Data Abertura de Lances</label>
                 <input type="date" class="form-control" id="dataAberturaLance" placeholder="dd/mm/aaaa"
-                  formControlName="dataAberturaLance">
-                  <app-error-msg [control]="formulario.get('dataAberturaLance')" label="Data Abertura de Lances"></app-error-msg>
+                  formControlName="dataAberturaLance" [popover]="date" >
+                  
               </div>
             </div>
           </div>
@@ -151,37 +154,40 @@
           <div class="card-block">
             <div class="row">
               <div class="form-group col-6">
+                <ng-template #categoriaId><app-error-msg [control]="formulario.get('categoriaId')" label="Categoria"></app-error-msg></ng-template>
                 <label for="categoriaId">Categoria </label>
-                <select class="form-control" formControlName="categoriaId">
+                <select class="form-control" formControlName="categoriaId" [popover]="categoriaId" >
                   <option *ngFor="let item of categorias" value="{{item.categoriaId}}">{{item.descricao}}</option>
                 </select>
-                <app-error-msg [control]="formulario.get('categoriaId')" label="Categoria"></app-error-msg>
+                
               </div>
               <div class="form-group col-6">
+                <ng-template #comitenteId><app-error-msg [control]="formulario.get('comitenteId')" label="Comitente" ></app-error-msg></ng-template>
+
                 <label for="comitenteId">Comitente </label>
-                <select class="form-control" formControlName="comitenteId">
+                <select class="form-control" formControlName="comitenteId" [popover]="comitenteId" >
                   <option *ngFor="let item of comitentes" value="{{item.comitenteId}}">{{item.nome}}</option>
                 </select>
-                <app-error-msg [control]="formulario.get('comitenteId')" label="Comitente"></app-error-msg>
+                
               </div>
             </div>
             <div class="row">
 
               <div class="form-group col-6">
+                <ng-template #leiloeiroId><app-error-msg [control]="formulario.get('leiloeiroId')" label="Leiloeiro"></app-error-msg></ng-template>
                 <label for="leiloeiroId">Leiloeiro </label>
-                <select class="form-control" formControlName="leiloeiroId">
+                <select class="form-control" formControlName="leiloeiroId" [popover]="leiloeiroId" >
                   <option *ngFor="let item of leiloeiros" value="{{item.leiloeiroId}}">{{item.pessoa.nomeCompleto}}
                   </option>
                 </select>
-                <app-error-msg [control]="formulario.get('leiloeiroId')" label="Leiloeiro"></app-error-msg>
+                
               </div>
               <div class="form-group col-6">
+                <ng-template #empresaId><app-error-msg [control]="formulario.get('empresaId')" label="Empresa"></app-error-msg></ng-template>
                 <label for="empresaId">Empresa </label>
-                <select class="form-control" formControlName="empresaId">
+                <select class="form-control" formControlName="empresaId" [popover]="empresaId" >
                   <option *ngFor="let item of empresas" value="{{item.empresaId}}">{{item.nomeFantasia}}</option>
-                  
                 </select>
-                <app-error-msg [control]="formulario.get('empresaId')" label="Empresa"></app-error-msg>
               </div>
             </div>
 

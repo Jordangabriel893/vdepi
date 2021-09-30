@@ -12,6 +12,10 @@ import { NotifierService } from 'angular-notifier';
   providers: [DatePipe]
 })
 export class CreateLeilaoComponent implements OnInit {
+
+  context = {
+    message: 'Hello there!'
+  };
   imageError: string;
   isImageSaved: boolean;
   cardImageBase64: string;
@@ -172,6 +176,7 @@ removeImage() {
     this.cardImageBase64 = null;
     this.isImageSaved = false;
 }
+
 
 
 }

@@ -135,6 +135,7 @@ import { TextMaskModule } from 'angular2-text-mask';
 import { NgPipesModule } from 'ngx-pipes';
 import { JasperoConfirmationsModule, ConfirmationService } from '@jaspero/ng-confirmations'
 import { NgxMyDatePickerModule } from 'ngx-mydatepicker';
+import { PopoverModule } from 'ngx-bootstrap/popover';
 import { MomentModule } from 'ngx-moment';
 import { NguiAutoCompleteModule } from '@ngui/auto-complete';
 import { LoadingModule } from 'ngx-loading';
@@ -216,7 +217,8 @@ export function RestangularConfigFactory(RestangularProvider, NotifierService: N
     AngularMultiSelectModule,
     FlipModule,
     DataTableModule,
-    CommonModule
+    CommonModule,
+    PopoverModule.forRoot()
   ],
   declarations: [
     AppComponent,

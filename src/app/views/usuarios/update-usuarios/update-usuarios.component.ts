@@ -23,10 +23,10 @@ export class UpdateUsuariosComponent implements OnInit {
     private cepService: ConsultaCepService,    
   ) {
     this.formulario = this.formBuilder.group({
-      nomeCompleto: [null, Validators.required],
-      numeroDocumento: [null, Validators.required],
+      nomeCompleto: [null, [Validators.required, Validators.minLength(3), Validators.maxLength(35)]],
+      numeroDocumento: [null, [Validators.required, Validators.minLength(6)]],
       dataNascimento: [null, Validators.required],
-      telefone: [null,[Validators.required]],
+      telefone: [null, [Validators.required, Validators.minLength(3)]],
       genero: [null,[Validators.required]],
       tipoPessoa: [null,[Validators.required]],
       endereco: this.formBuilder.group({

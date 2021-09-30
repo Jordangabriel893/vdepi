@@ -10,62 +10,53 @@
           <div class="card-block">
             <div class="row ">
               <div class="form-group col-6">
+                <ng-template #nome><app-error-msg [control]="formulario.get('nome')" label="Nome"></app-error-msg></ng-template>
                 <label for="nome">Nome</label>
-                <input type="text" class="form-control" id="nome" placeholder="Nome" formControlName="nome">
+                <input type="text" class="form-control" id="nome" placeholder="Nome" formControlName="nome" [popover]="nome" triggers="keypress:focusout">
               </div>
+
               <div class="form-group col-6">
+                <ng-template #titulo><app-error-msg [control]="formulario.get('titulo')" label="Título"></app-error-msg></ng-template>
                 <label for="titulo">Título</label>
-                <input type="text" class="form-control" id="titulo" placeholder="Título" formControlName="titulo">
+                <input type="text" class="form-control" id="titulo" placeholder="Título" formControlName="titulo" [popover]="titulo" triggers="keypress:focusout">
               </div>
 
             </div>
             <div class="row">
               <div class="form-group col-6">
+                <ng-template #dataLeilao><app-error-msg [control]="formulario.get('dataLeilao')" label="Data Leilão"></app-error-msg></ng-template>
                 <label for="dataLeilao">Data Leilão</label>
                 <input type="date" class="form-control" id="dataLeilao" placeholder="dd/mm/aaaa"
-                  formControlName="dataLeilao">
+                  formControlName="dataLeilao" [popover]="dataLeilao" >
+
               </div>
               <div class="form-group col-6">
+                <ng-template #date><app-error-msg [control]="formulario.get('dataAberturaLance')" label="Data Abertura de Lances"></app-error-msg></ng-template>
                 <label for="dataAberturaLance">Data Abertura de Lances</label>
                 <input type="date" class="form-control" id="dataAberturaLance" placeholder="dd/mm/aaaa"
-                  formControlName="dataAberturaLance">
+                  formControlName="dataAberturaLance" [popover]="date" >
+                  
               </div>
             </div>
-
-
-
-
           </div>
           <div class="col-4" formGroupName="foto">
             <fieldset class="form-group">
-
               <label>Upload Logo</label>
               {{imageError}}
               <div class="custom-file fileInputProfileWrap">
                 <input type="file" (change)="fileChangeEvent($event)" class="fileInputProfile">
                 <div class="img-space">
-
                   <ng-container *ngIf="isImageSaved; else elseTemplate">
                     <img [src]="cardImageBase64" />
                   </ng-container>
                   <ng-template #elseTemplate>
-
                     <img src="./../../assets/placeholder.png" class="img-responsive">
                   </ng-template>
-
                 </div>
-
               </div>
             </fieldset>
             <a class="btn btn-danger col-8" (click)="removeImage()" *ngIf="isImageSaved">Remove</a>
           </div>
-
-
-
-
-
-
-
         </div>
       </div>
     </div>
@@ -78,7 +69,6 @@
           <div class="card-header">
             <i class="fa fa-user-secret"></i> Datas Opcionais
           </div>
-
           <div class="card-block">
             <div class="row">
               <div class="form-group col-6">
@@ -91,7 +81,6 @@
                 <input type="date" class="form-control" id="dataFimAgendamento" formControlName="dataFimAgendamento">
               </div>
             </div>
-
             <div class="row ">
               <div class="form-group col-6">
                 <label for="dataEdital">Data Edital</label>
@@ -124,14 +113,7 @@
                 <input type="date" class="form-control" id="dataDiarioOficial" formControlName="dataDiarioOficial">
               </div>
             </div>
-
-
-
-
           </div>
-
-
-
         </div>
       </div>
     </div>
@@ -172,33 +154,39 @@
           <div class="card-block">
             <div class="row">
               <div class="form-group col-6">
+                <ng-template #categoriaId><app-error-msg [control]="formulario.get('categoriaId')" label="Categoria"></app-error-msg></ng-template>
                 <label for="categoriaId">Categoria </label>
-                <select class="form-control" formControlName="categoriaId">
+                <select class="form-control" formControlName="categoriaId" [popover]="categoriaId" >
                   <option *ngFor="let item of categorias" value="{{item.categoriaId}}">{{item.descricao}}</option>
                 </select>
+                
               </div>
               <div class="form-group col-6">
+                <ng-template #comitenteId><app-error-msg [control]="formulario.get('comitenteId')" label="Comitente" ></app-error-msg></ng-template>
+
                 <label for="comitenteId">Comitente </label>
-                <select class="form-control" formControlName="comitenteId">
+                <select class="form-control" formControlName="comitenteId" [popover]="comitenteId" >
                   <option *ngFor="let item of comitentes" value="{{item.comitenteId}}">{{item.nome}}</option>
                 </select>
+                
               </div>
             </div>
             <div class="row">
 
               <div class="form-group col-6">
+                <ng-template #leiloeiroId><app-error-msg [control]="formulario.get('leiloeiroId')" label="Leiloeiro"></app-error-msg></ng-template>
                 <label for="leiloeiroId">Leiloeiro </label>
-                <select class="form-control" formControlName="leiloeiroId">
+                <select class="form-control" formControlName="leiloeiroId" [popover]="leiloeiroId" >
                   <option *ngFor="let item of leiloeiros" value="{{item.leiloeiroId}}">{{item.pessoa.nomeCompleto}}
                   </option>
-
                 </select>
+                
               </div>
               <div class="form-group col-6">
+                <ng-template #empresaId><app-error-msg [control]="formulario.get('empresaId')" label="Empresa"></app-error-msg></ng-template>
                 <label for="empresaId">Empresa </label>
-                <select class="form-control" formControlName="empresaId">
+                <select class="form-control" formControlName="empresaId" [popover]="empresaId" >
                   <option *ngFor="let item of empresas" value="{{item.empresaId}}">{{item.nomeFantasia}}</option>
-
                 </select>
               </div>
             </div>
@@ -208,7 +196,7 @@
           </div>
           <div class="card-footer">
             <button type="submit" class="btn btn-primary"><i class="fa fa-save"></i> Salvar</button>
-            <button type="reset" class="btn btn-danger" [routerLink]="['/agents']"><i class="fa fa-undo"></i>
+            <button type="reset" class="btn btn-danger" [routerLink]="['/leilao']"><i class="fa fa-undo"></i>
               Cancelar</button>
           </div>
 
