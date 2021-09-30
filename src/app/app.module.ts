@@ -156,6 +156,7 @@ import { HomeComponent } from './views/home';
 import { LotesComponent } from './views/leilao/lotes/lotes.component';
 import { UsuariosComponent } from './views/usuarios/usuarios.component';
 import { UpdateUsuariosComponent } from './views/usuarios/update-usuarios/update-usuarios.component';
+import { ErrorMsgComponent } from './views/error-msg/error-msg.component';
 
 
 export function RestangularConfigFactory(RestangularProvider, NotifierService: NotifierService, Router) {
@@ -225,6 +226,7 @@ export function RestangularConfigFactory(RestangularProvider, NotifierService: N
     LotesComponent,
     UsuariosComponent,
     UpdateUsuariosComponent,
+    ErrorMsgComponent,
 
   ],
   providers: [{

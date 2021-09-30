@@ -60,8 +60,8 @@ export class CreateLeilaoComponent implements OnInit {
 
 
     this.formulario = this.formBuilder.group({
-      nome: [null, Validators.required],
-      titulo: [null, Validators.required],
+      nome:  [null, [Validators.required, Validators.minLength(3), Validators.maxLength(35)]],
+      titulo: [null, [Validators.required, Validators.minLength(3), Validators.maxLength(35)]],
       dataLeilao: [null,[Validators.required]],
       dataAberturaLance: [null, Validators.required],
       dataInicioAgendamento: [null],
