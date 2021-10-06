@@ -400,3 +400,18 @@ export interface Categoria {
   categoriaPai?: any;
   categoriaPaiId?: any;
 }
+
+export class foto {
+  arquivo:{
+    acesso:any
+    base64:any
+    nome:string
+    tamanho:any
+    tipo:string
+    url:string
+  }
+  tipoFoto:{
+    descricao:string;
+    visivelSite: boolean;
+  }
+}

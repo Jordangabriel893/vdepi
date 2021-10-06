@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Restangular } from 'ngx-restangular';
 
 @Component({
@@ -12,17 +12,14 @@ export class LotesComponent implements OnInit {
   lotes: any
 
   constructor(
-    private route: ActivatedRoute,
     private restangular: Restangular,
+    private route: ActivatedRoute,
+    private router: Router,
   ) {
     this.id = this.route.snapshot.params['id']
     this.restangular.one("lote", '').get({ leilaoId: this.id }).subscribe(
       (lotes) => {
-
-        console.log(lotes.data.loteJudicial)
         this.lotes = lotes.data;
-        console.log(this.lotes)
-        
       }
     )
 
@@ -31,5 +28,7 @@ export class LotesComponent implements OnInit {
   ngOnInit() {
 
   }
-
+  edit(id) {
+    this.router.navigate(['/update-lotes', id], { relativeTo: this.route });
+  }
 }

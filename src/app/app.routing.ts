@@ -27,6 +27,7 @@ import { HomeComponent } from './views/home';
 import { LotesComponent } from './views/leilao/lotes/lotes.component';
 import { UsuariosComponent } from './views/usuarios/usuarios.component';
 import { UpdateUsuariosComponent } from './views/usuarios/update-usuarios/update-usuarios.component';
+import { UpdateLotesComponent } from './views/leilao/lotes/update-lotes/update-lotes.component';
 
 
 export const routes: Routes = [
@@ -100,6 +101,15 @@ export const routes: Routes = [
         component: LotesComponent,
         data: {
           title: 'Ver lotes',
+          source: 'RelatorioEstoque'
+        },
+        canActivate: [SourceGuard]
+      },
+      {
+        path: 'update-lotes/:id',
+        component: UpdateLotesComponent,
+        data: {
+          title: 'Atualizar Lote',
           source: 'RelatorioEstoque'
         },
         canActivate: [SourceGuard]

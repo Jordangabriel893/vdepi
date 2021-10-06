@@ -7,7 +7,7 @@
         </div>
         <div class="card-block">
           <div class="table-responsive mt-4">
-            <table class="table table-striped" [mfData]="lotes" #mfLeilao="mfDataTable" [mfRowsOnPage]="5">
+            <table class="table table-striped" [mfData]="lotes" #mfLotes="mfDataTable" [mfRowsOnPage]="5">
               <thead>
                 <tr>
 
@@ -30,17 +30,22 @@
                   <th>
                     <mfDefaultSorter by="valorAvalicao">Valor Avaliação</mfDefaultSorter>
                   </th>
-
+                  <th class="text-center" >
+                    Editar
+                  </th>
                 </tr>
               </thead>
               <tbody *ngIf="lotes">
-                <tr *ngFor="let lote of lotes">
+                <tr *ngFor="let lote of mfLotes.data">
                   <td>{{lote.numeroLote}}</td>
                   <td>{{lote.categoria}}</td>
                   <td>{{lote.descricao}}</td>
                   <td>{{lote.status}}</td>
                   <td>{{lote.loteJudicial ? "Sim" : "Não"}}</td>
                   <td>{{lote.valorAvaliacao | currency:'BRL':true}}</td>
+                  <td class="text-center" nowrap>
+                    <button type="button" class="btn btn-primary" (click)="edit(lote.loteId)"><i class="fa fa-edit"></i>&nbsp; Editar</button>
+                  </td>
                 </tr>
               </tbody>
               <tfoot>

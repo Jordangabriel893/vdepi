@@ -10,6 +10,7 @@ import { AppComponent } from './app.component';
 import localePt from '@angular/common/locales/pt';
 import { FlipModule } from 'ngx-flip';
 
+
 registerLocaleData(localePt);
 
 // Import containers
@@ -145,6 +146,10 @@ import { NguiMapModule } from '@ngui/map';
 import { MultiselectDropdownModule } from 'angular-2-dropdown-multiselect';
 import { AngularMultiSelectModule } from 'angular2-multiselect-dropdown';
 import { NgSelectModule } from '@ng-select/ng-select';
+import { CarouselModule } from 'ngx-bootstrap/carousel';
+import { HttpClientModule} from '@angular/common/http';
+import { AngularEditorModule } from '@kolkov/angular-editor';
+
 
 import { environment } from '../environments/environment';
 import { AuthGuard, AnonyGuard } from './_guards/index';
@@ -158,6 +163,7 @@ import { LotesComponent } from './views/leilao/lotes/lotes.component';
 import { UsuariosComponent } from './views/usuarios/usuarios.component';
 import { UpdateUsuariosComponent } from './views/usuarios/update-usuarios/update-usuarios.component';
 import { ErrorMsgComponent } from './views/error-msg/error-msg.component';
+import { UpdateLotesComponent } from './views/leilao/lotes/update-lotes/update-lotes.component';
 
 
 export function RestangularConfigFactory(RestangularProvider, NotifierService: NotifierService, Router) {
@@ -218,7 +224,13 @@ export function RestangularConfigFactory(RestangularProvider, NotifierService: N
     FlipModule,
     DataTableModule,
     CommonModule,
-    PopoverModule.forRoot()
+    PopoverModule.forRoot(),
+    CarouselModule.forRoot(),
+    AngularEditorModule,
+    HttpClientModule
+   
+
+   
   ],
   declarations: [
     AppComponent,
@@ -229,6 +241,7 @@ export function RestangularConfigFactory(RestangularProvider, NotifierService: N
     UsuariosComponent,
     UpdateUsuariosComponent,
     ErrorMsgComponent,
+    UpdateLotesComponent,
 
   ],
   providers: [{

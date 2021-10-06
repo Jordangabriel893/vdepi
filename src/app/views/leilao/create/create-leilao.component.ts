@@ -91,8 +91,8 @@ export class CreateLeilaoComponent implements OnInit {
       empresaId: [null, Validators.required],
 
     })
-
   }
+  
   onSubmit(){
     this.datePipe.transform(this.formulario.value.dataLeilao, 'dd/MM/yyyy')
     this.datePipe.transform(this.formulario.value.dataAberturaLance, 'dd/MM/yyyy')
