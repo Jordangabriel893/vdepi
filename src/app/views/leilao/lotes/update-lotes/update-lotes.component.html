@@ -30,7 +30,7 @@
                 <label for="ativo">Tipo de Lote</label>
                 <select class="form-control" formControlName="tipoLoteId">
                   <option *ngFor="let item of tiposLote" value="{{item.tipoLoteId}}">{{item.descricao}}</option>
-                  
+
                 </select>
               </div>
               <div class="form-group col-6" formGroupName="local">
@@ -167,11 +167,11 @@
                   </option>
                 </select>
                 <div class="custom-file fileInputProfileWrap col-5 foto-buttons">
-                  <label for="arquivo" class="labelArquivo">Alterar Foto</label>
-                  <input type="file" name="arquivo" id="arquivo" (change)="fileChangeEvent($event, i)">
+                  <label [for]="'arquivo'+i" class="labelArquivo">Alterar Foto</label>
+                  <input type="file" [name]="'arquivo'+i" [id]="'arquivo'+i" (change)="fileChangeEvent($event, i)">
                   <button type="button" class="btn btn-danger deletarFoto" (click)="deleteFoto(i)">Remover</button>
                 </div>
-   
+
               </div>
 
               <div class="img-space">
@@ -199,11 +199,11 @@
           <div class="card-block">
             <div class="row">
 
-              <div class="col-12" *ngFor="let item of formulario.get('anexos').controls; let i = index"  [formGroupName]="i" (click)="qualquer(i)">
-                <label for="anexo" class="labelArquivo">{{item.value.arquivo.nome === null ? "Adicionar Arquivo" : "Alterar Arquivo"}}</label>
+              <div class="col-12" *ngFor="let item of formulario.get('anexos').controls; let i = index"  [formGroupName]="i">
+                <label [for]="'anexo'+i" class="labelArquivo">{{item.value.arquivo.nome === null ? "Adicionar Arquivo" : "Alterar Arquivo"}}</label>
                 {{i}}
-               <input type="file" name="anexo"  id="anexo" (change)="anexoChangeEvent($event.target.files, i)" >
-               
+               <input type="file" [name]="'anexo'+i"  [id]="'anexo'+i" (change)="anexoChangeEvent($event.target.files, i)" >
+
               </div>
             </div>
           </div>

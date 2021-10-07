@@ -126,7 +126,7 @@ export class UpdateLotesComponent implements OnInit {
         this.restangular.one("tipolote").get().subscribe(
           (dados) => {
             this.tiposLote = dados.data
-          })    
+          })
 
     this.restangular.one('categoria').get().subscribe(dados => {
       this.categorias = dados.data
@@ -144,16 +144,12 @@ export class UpdateLotesComponent implements OnInit {
     this.restangular.one('local').get().subscribe(dados => {
       this.local = dados.data
     })
-      
-
-      
-
-    
   }
 
   onSubmit() {
     console.log(this.formulario.value)
   }
+
   fileChangeEvent(fileInput: any, i ) {
     this.imageError = null;
     if (fileInput.target.files && fileInput.target.files[0]) {
@@ -208,7 +204,7 @@ export class UpdateLotesComponent implements OnInit {
       };
 
       reader.readAsDataURL(fileInput.target.files[0]);
-     
+
     }
 
   }
@@ -217,8 +213,14 @@ export class UpdateLotesComponent implements OnInit {
     this.nome = this.fileToUpload.name
     this.tamanho = this.fileToUpload.size
     this.tipo = this.fileToUpload.type
+    const reader = new FileReader();
+    reader.readAsDataURL(this.fileToUpload);
+    reader.onload = () => {
+        console.log(reader.result);
+    };
     this.atualizarAnexo(i)
   }
+
   adicionarCampo() {
     let campos = this.formulario.get('campos') as FormArray
     campos.push(this.formBuilder.group({
@@ -276,7 +278,7 @@ export class UpdateLotesComponent implements OnInit {
       tamanho: this.tamanho
       }
       }
-    
+
     console.log(this.formulario.controls['anexos'].value[i])
   }
   atualizarFoto(i){
