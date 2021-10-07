@@ -141,7 +141,7 @@ export class UpdateLotesComponent implements OnInit {
         this.restangular.one("tipolote").get().subscribe(
           (dados) => {
             this.tiposLote = dados.data
-          })    
+          })
 
     this.restangular.one('categoria').get().subscribe(dados => {
       this.categorias = dados.data
@@ -159,11 +159,6 @@ export class UpdateLotesComponent implements OnInit {
     this.restangular.one('local').get().subscribe(dados => {
       this.local = dados.data
     })
-      
-
-      
-
-    
   }
 
   onSubmit() {
@@ -227,7 +222,7 @@ export class UpdateLotesComponent implements OnInit {
       };
 
       reader.readAsDataURL(fileInput.target.files[0]);
-     
+
     }
     
   }
@@ -254,6 +249,7 @@ export class UpdateLotesComponent implements OnInit {
  
     
   }
+
   adicionarCampo() {
     let campos = this.formulario.get('campos') as FormArray
     campos.push(this.formBuilder.group({
