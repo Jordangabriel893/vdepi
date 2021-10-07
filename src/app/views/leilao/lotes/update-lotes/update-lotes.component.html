@@ -155,30 +155,33 @@
           <div class="card-header new-campo">
 
             <div><i class="fa fa-user-secret"></i>Fotos</div>
-            <button type="button" class="btn btn-success" (click)="adicionarFoto()"><i
+            <button type="button" class="btn btn-success" (click)="alterarFoto(-1)"><i
                 class="fa fa-plus-circle"></i>&nbsp;
               Nova Foto</button>
+              <input type="file"  #inputFotos (change)="fileChangeEvent($event)">
           </div>
-          <carousel class="col-12">
-            <slide *ngFor="let item of formulario.get('fotos').controls; let i = index" [formGroupName]="i">
+          <div class="row">
+            <fieldset class="form-group col-6" *ngFor="let item of formulario.get('fotos').controls; let i = index" [formGroupName]="i">
               <div class="flex">
-                <select class="form-control col-7" formControlName="tipoFotoId">
+                <select class="form-control col-12" formControlName="tipoFotoId">
                   <option value="true" *ngFor="let tipo of tipoFoto" value="{{tipo.tipoFotoId}}">{{tipo.descricao}}
                   </option>
                 </select>
-                <div class="custom-file fileInputProfileWrap col-5 foto-buttons">
-                  <label for="arquivo" class="labelArquivo">Alterar Foto</label>
-                  <input type="file" name="arquivo" id="arquivo" (change)="fileChangeEvent($event, i)">
-                  <button type="button" class="btn btn-danger deletarFoto" (click)="deleteFoto(i)">Remover</button>
+  
+              </div>
+              <div class="custom-file fileInputProfileWrap">
+                <div class="img-space">
+                  <img [src]="item.value.arquivo.url " class="img-responsive" >
                 </div>
-   
               </div>
-
-              <div class="img-space">
-                  <img src="{{item.value.arquivo.url ? item.value.arquivo.url : cardImageBase64 }}" class="img-responsive" alt="second slide">
+              <div class=" col-6 foto-buttons">
+                <label (click)="alterarAnexo(i)" class="labelArquivo col-12">Alterar Foto</label>
+                
+                <button type="button" class="btn btn-danger deletarFoto col-12" (click)="deleteFoto(i)">Remover</button>
               </div>
-            </slide>
-          </carousel>
+              
+            </fieldset>
+          </div>
         </div>
       </div>
     </div>
@@ -191,19 +194,18 @@
             <div class="card-header new-campo">
 
               <div><i class="fa fa-user-secret"></i>Anexos</div>
-              <button type="button" class="btn btn-success" (click)="adicionarAnexo()"><i
+              <button type="button" class="btn btn-success" (click)="alterarAnexo(-1)"><i
                   class="fa fa-plus-circle"></i>&nbsp;
                 Novo Anexo</button>
+                <input type="file"  #inputAnexos (change)="anexoChangeEvent($event.target.files)">
             </div>
           </div>
           <div class="card-block">
-            <div class="row">
+            <div class="row" >
 
-              <div class="col-12" *ngFor="let item of formulario.get('anexos').controls; let i = index"  [formGroupName]="i" (click)="qualquer(i)">
-                <label for="anexo" class="labelArquivo">{{item.value.arquivo.nome === null ? "Adicionar Arquivo" : "Alterar Arquivo"}}</label>
-                {{i}}
-               <input type="file" name="anexo"  id="anexo" (change)="anexoChangeEvent($event.target.files, i)" >
-               
+              <div class="col-6 anexo" *ngFor="let item of formulario.get('anexos').controls; let i = index"   [formGroupName]="i" >
+                <label (click)="alterarAnexo(i)" class="labelArquivo">{{item.value.arquivo.nome  ? "Alterar Arquivo" : "Adicionar Arquivo"}}</label>
+                <p>{{item.value.arquivo.nome ? item.value.arquivo.nome : 'Selecione um arquivo'}}</p>
               </div>
             </div>
           </div>
@@ -223,9 +225,9 @@
 
           <div class="card-block">
             <div class="row">
-              <div class="form-group col-12" formGroupName="observacao">
+              <div class="form-group col-12" >
                 <label for="exampleFormControlTextarea1">Observação</label>
-                <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+                <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" formControlName="observacao"></textarea>
               </div>
             </div>
 

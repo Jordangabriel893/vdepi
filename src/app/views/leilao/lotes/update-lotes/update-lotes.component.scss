@@ -71,7 +71,8 @@ input[type="file"] {
 }
 .foto-buttons{
     display: flex;
-    align-items:center
+    align-items:center;
+    justify-content: space-between;
 
 }
 .deletarFoto{
@@ -79,4 +80,14 @@ input[type="file"] {
     width: 50%;
     height: 2.9em;
     
+}
+.anexo{
+    display: flex;
+    align-items: center;
+   
+
+    p{
+        margin-left: 1%;
+        margin-bottom: 0%;
+    }
 }

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators, FormArray } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Restangular } from 'ngx-restangular';
@@ -10,6 +10,9 @@ import { AngularEditorConfig } from '@kolkov/angular-editor';
   styleUrls: ['./update-lotes.component.scss']
 })
 export class UpdateLotesComponent implements OnInit {
+  
+  @ViewChild ('inputFotos') inputFotos: ElementRef;
+  @ViewChild ('inputAnexos') inputAnexos: ElementRef;
 
   formulario: FormGroup
   id: any
@@ -24,10 +27,21 @@ export class UpdateLotesComponent implements OnInit {
   cardImageBase64: string;
   tipoFoto:any
   fileToUpload: File | null = null;
-  base64:any
-  nome:any
-  tamanho:any
-  tipo:any
+
+  //fotos
+  fotosbase64:any
+  fotosnome:any
+  fotostamanho:any
+  fotostipo:any
+  numeroAdcFoto:number
+
+  //anexos
+  anexosbase64:any
+  anexosnome:any
+  anexostamanho:any
+  anexostipo:any
+  numeroAdcAnexo:number
+
   local:any
   editorConfig: AngularEditorConfig = {
     editable: true,
@@ -66,6 +80,7 @@ export class UpdateLotesComponent implements OnInit {
       },
     ],
 };
+  
   constructor(
     private restangular: Restangular,
     private route: ActivatedRoute,
@@ -154,7 +169,7 @@ export class UpdateLotesComponent implements OnInit {
   onSubmit() {
     console.log(this.formulario.value)
   }
-  fileChangeEvent(fileInput: any, i ) {
+  fileChangeEvent(fileInput: any) {
     this.imageError = null;
     if (fileInput.target.files && fileInput.target.files[0]) {
       // Size Filter Bytes
@@ -194,15 +209,19 @@ export class UpdateLotesComponent implements OnInit {
             return false;
           } else {
             const imgBase64Path = e.target.result;
-            this.cardImageBase64 = imgBase64Path;
-            this.isImageSaved = true;
-            this.base64 = this.cardImageBase64.substring(23, 100000)
-            this.nome = fileInput.target.files[0].name
-            this.tamanho = fileInput.target.files[0].size
-            this.tipo = fileInput.target.files[0].type
-            console.log(fileInput.target.files[0])
-            // this.previewImagePath = imgBase64Path;
-            this.atualizarFoto(i)
+            const arquivo = 
+            {
+              url:imgBase64Path,
+              nome:fileInput.target.files[0].name,
+              base64:imgBase64Path.substring(23, 100000),
+              tipo:fileInput.target.files[0].type,
+              tamanho:fileInput.target.files[0].size
+            }
+
+            
+          this.atualizarFoto(arquivo, this.numeroAdcFoto)
+            
+            
           }
         };
       };
@@ -210,14 +229,30 @@ export class UpdateLotesComponent implements OnInit {
       reader.readAsDataURL(fileInput.target.files[0]);
      
     }
-
+    
   }
-  anexoChangeEvent(anexoInput:FileList, i){
+  anexoChangeEvent(anexoInput:FileList){
     this.fileToUpload = anexoInput.item(0);
-    this.nome = this.fileToUpload.name
-    this.tamanho = this.fileToUpload.size
-    this.tipo = this.fileToUpload.type
-    this.atualizarAnexo(i)
+    this.fileToUpload.name
+    this.fileToUpload.size
+    this.fileToUpload.type
+    const reader = new FileReader();
+    reader.readAsDataURL(this.fileToUpload);
+    reader.onload = () => {
+      this.anexosbase64 = reader.result
+    };
+    console.log(this.formulario.controls['anexos'].value)
+    const arquivo = {
+          arquivoId: 0,
+          nome: this.fileToUpload.name,
+          base64: this.anexosbase64,
+          tipo: this.fileToUpload.type,
+          tamanho: this.fileToUpload.size
+          }
+          
+    this.atualizarAnexo(arquivo, this.numeroAdcAnexo)
+ 
+    
   }
   adicionarCampo() {
     let campos = this.formulario.get('campos') as FormArray
@@ -231,21 +266,6 @@ export class UpdateLotesComponent implements OnInit {
     }))
 
     console.log(this.formulario.value.campos)
-  }
-  adicionarFoto(){
-    let fotos = this.formulario.get('fotos') as FormArray
-    fotos.push(this.formBuilder.group({
-      tipoFotoId: "",
-      loteFotoId: 0,
-      arquivo: this.formBuilder.group({
-        url:"",
-        tipo:"",
-        base64:"",
-        arquivoId:"",
-        nome:"",
-        tamanho:""
-    })})
-    )
   }
   adicionarAnexo(){
     let anexos = this.formulario.get('anexos') as FormArray
@@ -264,33 +284,82 @@ export class UpdateLotesComponent implements OnInit {
   qualquer(i){
     console.log(i)
   }
-  atualizarAnexo(i){
-    this.formulario.controls['anexos'].value[i] = {
-      loteId: this.id,
-      arquivoId: 0,
-      arquivo: {
-      arquivoId: 0,
-      nome: this.nome,
-      base64: null,
-      tipo: this.tipo,
-      tamanho: this.tamanho
-      }
-      }
+  // atualizarAnexo(i){
     
-    console.log(this.formulario.controls['anexos'].value[i])
+  //   this.formulario.controls['anexos'].value[i] = {
+  //     loteId: this.id,
+  //     arquivoId: 0,
+  //     arquivo: {
+  //     arquivoId: 0,
+  //     nome: this.anexosnome,
+  //     base64: this.anexosbase64,
+  //     tipo: this.anexostipo,
+  //     tamanho: this.anexostamanho
+  //     }
+  //     }
+    
+  //   console.log(this.formulario.controls['anexos'].value)
+  // }
+  atualizarFoto(obj, i){
+    console.log(i)
+    let fotos = this.formulario.get('fotos') as FormArray
+
+    if(i < 0){
+      fotos.push(this.formBuilder.group({
+        tipoFotoId: "",
+        loteFotoId: 0,
+        arquivoId:[0],
+        arquivo: obj
+        }))
+    }else{
+      console.log(fotos)
+      const valor = fotos.value[i]
+      fotos.removeAt(i)
+      fotos.insert(i, this.formBuilder.group({
+        tipoFotoId: valor.tipoFotoId,
+        loteFotoId: valor.loteFotoId,
+        arquivoId:  valor.arquivoId,
+        arquivo: obj,
+      }))
+      
+      console.log(fotos)
+    }
   }
-  atualizarFoto(i){
-    this.formulario.controls['fotos'].value[i] = {
-      arquivoId:[0],
-      arquivo:{
-        nome:this.nome,
-        base64:this.base64,
-        tipo:this.tipo,
-        tamanho:this.tamanho
-      }
-      }
-    console.log(this.formulario.controls['fotos'].value[i])
+  alterarFoto(i){
+    console.log(i)
+    this.numeroAdcFoto = i
+    this.inputFotos.nativeElement.click()
   }
+  atualizarAnexo(obj, i){
+    console.log(i)
+    let anexos = this.formulario.get('anexos') as FormArray
+
+    if(i < 0){
+      anexos.push(this.formBuilder.group({
+        loteId: this.id,
+        arquivoId: 0,
+        arquivo: obj
+        }))
+    }else{
+      console.log(anexos)
+      const valor = anexos.value[i]
+      anexos.removeAt(i)
+      anexos.insert(i, this.formBuilder.group({
+        loteId: this.id,
+        arquivoId: 0,
+        arquivo: obj,
+      }))
+      
+      console.log(anexos)
+    }
+  }
+  alterarAnexo(i){
+    console.log(i)
+    this.numeroAdcAnexo = i
+    this.inputAnexos.nativeElement.click()
+  }
+
+
   updateFormArrays(dados) {
     let campos = dados.campos
     campos.forEach(obj => (this.formulario.controls['campos'] as FormArray).push(this.formBuilder.group(obj)))
