@@ -129,6 +129,7 @@ export class UpdateLotesComponent implements OnInit {
     this.id = this.route.snapshot.params['id']
     this.restangular.one("lote", this.id).get({}).subscribe(
       (lote) => {
+        this.lote = lote.data
         console.log(lote.data)
         this.categoriaPaiId = lote.data.categoria.categoriaPaiId
         this.updateForm(lote.data)
@@ -145,16 +146,13 @@ export class UpdateLotesComponent implements OnInit {
 
     this.restangular.one('categoria').get().subscribe(dados => {
       this.categorias = dados.data
-    })
-    this.restangular.one('tipofoto').get().subscribe(dados => {
-      this.tipoFoto = dados.data
-    })
-    this.restangular.one('categoria').get().subscribe(dados => {
       const categorias = dados.data
       const filtrarCategorias = categoria => categoria.categoriaPaiId === this.categoriaPaiId;
       const categoriasFilhas = categorias.filter(filtrarCategorias)
       this.categoriasFilhas = categoriasFilhas
-
+    })
+    this.restangular.one('tipofoto').get().subscribe(dados => {
+      this.tipoFoto = dados.data
     })
     this.restangular.one('local').get().subscribe(dados => {
       this.local = dados.data
@@ -162,7 +160,20 @@ export class UpdateLotesComponent implements OnInit {
   }
 
   onSubmit() {
-    console.log(this.formulario.value)
+  //   let anexos = this.formulario.value.fotos
+  //   let objServidor = this.lote.fotos
+  //   let r1 = [2,4,6,8];
+  //   let r2 = [3,4,5,7,9];
+  //   let r3 = []  
+  //   objServidor.forEach((element, index, array)=> {
+  //     if(anexos.indexOf(element) == -1)
+  //        r3.push(element);
+  // });     
+    // let r3 = anexos.filter( a => !objServidor.includes( a ) );
+    
+    // console.log( r3 );
+    // this.formulario.value.anexo 
+    // console.log(this.formulario.value)
   }
   fileChangeEvent(fileInput: any) {
     this.imageError = null;
