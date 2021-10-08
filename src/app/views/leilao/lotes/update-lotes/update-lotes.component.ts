@@ -1,3 +1,4 @@
+
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators, FormArray } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -10,61 +11,61 @@ import { AngularEditorConfig } from '@kolkov/angular-editor';
   styleUrls: ['./update-lotes.component.scss']
 })
 export class UpdateLotesComponent implements OnInit {
-  
-  @ViewChild ('inputFotos') inputFotos: ElementRef;
-  @ViewChild ('inputAnexos') inputAnexos: ElementRef;
+
+  @ViewChild('inputFotos') inputFotos: ElementRef;
+  @ViewChild('inputAnexos') inputAnexos: ElementRef;
 
   formulario: FormGroup
   id: any
   lote: any
-  tiposLote:any
-  loteCampos:any
+  tiposLote: any
+  loteCampos: any
   categorias: any
-  categoriaPaiId:any
-  categoriasFilhas:any
+  categoriaPaiId: any
+  categoriasFilhas: any
   imageError: string;
   isImageSaved: boolean;
   cardImageBase64: string;
-  tipoFoto:any
+  tipoFoto: any
   fileToUpload: File | null = null;
 
   //fotos
-  fotosbase64:any
-  fotosnome:any
-  fotostamanho:any
-  fotostipo:any
-  numeroAdcFoto:number
+  fotosbase64: any
+  fotosnome: any
+  fotostamanho: any
+  fotostipo: any
+  numeroAdcFoto: number
 
   //anexos
-  anexosbase64:any
-  anexosnome:any
-  anexostamanho:any
-  anexostipo:any
-  numeroAdcAnexo:number
+  anexosbase64: any
+  anexosnome: any
+  anexostamanho: any
+  anexostipo: any
+  numeroAdcAnexo: number
 
-  local:any
+  local: any
   editorConfig: AngularEditorConfig = {
     editable: true,
-      spellcheck: true,
-      height: 'auto',
-      minHeight: '0',
-      maxHeight: 'auto',
-      width: 'auto',
-      minWidth: '0',
-      translate: 'yes',
-      enableToolbar: true,
-      showToolbar: true,
-      placeholder: 'Enter text here...',
-      defaultParagraphSeparator: '',
-      defaultFontName: '',
-      defaultFontSize: '',
-      fonts: [
-        {class: 'arial', name: 'Arial'},
-        {class: 'times-new-roman', name: 'Times New Roman'},
-        {class: 'calibri', name: 'Calibri'},
-        {class: 'comic-sans-ms', name: 'Comic Sans MS'}
-      ],
-      customClasses: [
+    spellcheck: true,
+    height: 'auto',
+    minHeight: '0',
+    maxHeight: 'auto',
+    width: 'auto',
+    minWidth: '0',
+    translate: 'yes',
+    enableToolbar: true,
+    showToolbar: true,
+    placeholder: 'Enter text here...',
+    defaultParagraphSeparator: '',
+    defaultFontName: '',
+    defaultFontSize: '',
+    fonts: [
+      { class: 'arial', name: 'Arial' },
+      { class: 'times-new-roman', name: 'Times New Roman' },
+      { class: 'calibri', name: 'Calibri' },
+      { class: 'comic-sans-ms', name: 'Comic Sans MS' }
+    ],
+    customClasses: [
       {
         name: 'quote',
         class: 'quote',
@@ -79,8 +80,8 @@ export class UpdateLotesComponent implements OnInit {
         tag: 'h1',
       },
     ],
-};
-  
+  };
+
   constructor(
     private restangular: Restangular,
     private route: ActivatedRoute,
@@ -109,7 +110,7 @@ export class UpdateLotesComponent implements OnInit {
       }),
       campos: this.formBuilder.array([]),
       anexos: this.formBuilder.array([]),
-
+      fotos: this.formBuilder.array([]),
       valorLanceInicial: [null, [Validators.required, Validators.email]],
       valorMinimoVenda: [null, [Validators.required]],
       valorAvaliacao: [null, [Validators.required]],
@@ -119,9 +120,10 @@ export class UpdateLotesComponent implements OnInit {
       observacao: [null, [Validators.required]],
       judicial: [null, [Validators.required]],
       loteJudicial: [null, [Validators.required]],
-      fotos: this.formBuilder.array([]),
-      tipoLoteId:[],
-      tipoLote:[],
+      tipoLoteId: [],
+      tipoLote: [],
+      loteId:[],
+
     })
   }
 
@@ -135,14 +137,14 @@ export class UpdateLotesComponent implements OnInit {
         this.updateForm(lote.data)
         this.updateFormArrays(lote.data)
       })
-      this.restangular.one("lotecampo").get().subscribe(
-        (dados) => {
-          this.loteCampos=dados.data
-        })
-        this.restangular.one("tipolote").get().subscribe(
-          (dados) => {
-            this.tiposLote = dados.data
-          })
+    this.restangular.one("lotecampo").get().subscribe(
+      (dados) => {
+        this.loteCampos = dados.data
+      })
+    this.restangular.one("tipolote").get().subscribe(
+      (dados) => {
+        this.tiposLote = dados.data
+      })
 
     this.restangular.one('categoria').get().subscribe(dados => {
       this.categorias = dados.data
@@ -160,18 +162,25 @@ export class UpdateLotesComponent implements OnInit {
   }
 
   onSubmit() {
-  //   let anexos = this.formulario.value.fotos
-  //   let objServidor = this.lote.fotos
-  //   let r1 = [2,4,6,8];
-  //   let r2 = [3,4,5,7,9];
-  //   let r3 = []  
-  //   objServidor.forEach((element, index, array)=> {
-  //     if(anexos.indexOf(element) == -1)
-  //        r3.push(element);
-  // });     
-    // let r3 = anexos.filter( a => !objServidor.includes( a ) );
+    let fotos = this.formulario.value.fotos
+    const fotosAlterado = fotos.filter(obj => obj.modificado)
+    const formulario = this.formulario.value
+    formulario.fotos = fotosAlterado
+
+    let anexos = this.formulario.value.anexos
+    const anexosAlterados = anexos.filter(obj => obj.modificado)
+    formulario.anexos = anexosAlterados
+    console.log(formulario)
     
-    // console.log( r3 );
+    this.restangular.all('lote').customPUT(formulario,  this.id ) .subscribe(a => {
+      console.log(a)
+      // this.notifierService.notify('success', 'Leilão Criado com sucesso');
+      // this.router.navigateByUrl('/leilao');
+    })
+
+    // let r3 = anexos.filter( a => !objServidor.includes( a ) );
+
+
     // this.formulario.value.anexo 
     // console.log(this.formulario.value)
   }
@@ -215,19 +224,19 @@ export class UpdateLotesComponent implements OnInit {
             return false;
           } else {
             const imgBase64Path = e.target.result;
-            const arquivo = 
+            const arquivo =
             {
-              url:imgBase64Path,
-              nome:fileInput.target.files[0].name,
-              base64:imgBase64Path.substring(23, 100000),
-              tipo:fileInput.target.files[0].type,
-              tamanho:fileInput.target.files[0].size
+              url: imgBase64Path,
+              nome: fileInput.target.files[0].name,
+              base64: imgBase64Path,
+              tipo: fileInput.target.files[0].type,
+              tamanho: fileInput.target.files[0].size
             }
 
-            
-          this.atualizarFoto(arquivo, this.numeroAdcFoto)
-            
-            
+
+            this.atualizarFoto(arquivo, this.numeroAdcFoto)
+
+
           }
         };
       };
@@ -235,9 +244,9 @@ export class UpdateLotesComponent implements OnInit {
       reader.readAsDataURL(fileInput.target.files[0]);
 
     }
-    
+
   }
-  anexoChangeEvent(anexoInput:FileList){
+  anexoChangeEvent(anexoInput: FileList) {
     this.fileToUpload = anexoInput.item(0);
     this.fileToUpload.name
     this.fileToUpload.size
@@ -249,16 +258,16 @@ export class UpdateLotesComponent implements OnInit {
     };
     console.log(this.formulario.controls['anexos'].value)
     const arquivo = {
-          arquivoId: 0,
-          nome: this.fileToUpload.name,
-          base64: this.anexosbase64,
-          tipo: this.fileToUpload.type,
-          tamanho: this.fileToUpload.size
-          }
-          
+      arquivoId: 0,
+      nome: this.fileToUpload.name,
+      base64: this.anexosbase64,
+      tipo: this.fileToUpload.type,
+      tamanho: this.fileToUpload.size
+    }
+
     this.atualizarAnexo(arquivo, this.numeroAdcAnexo)
- 
-    
+
+
   }
 
   adicionarCampo() {
@@ -267,87 +276,60 @@ export class UpdateLotesComponent implements OnInit {
       tipoFotoId: this.id,
       loteCampoId: 0,
       valor: "",
-      loteCampo:this.formBuilder.group({
-        descricao:"--",
+      loteCampo: this.formBuilder.group({
+        descricao: "--",
       }),
     }))
 
     console.log(this.formulario.value.campos)
   }
-  adicionarAnexo(){
-    let anexos = this.formulario.get('anexos') as FormArray
-    anexos.push(this.formBuilder.group({
-      loteId: this.id,
-      arquivoId: 0,
-      arquivo: {
-      arquivoId: 0,
-      nome: null,
-      base64: null,
-      tipo: null,
-      tamanho: null
-      }
-    }))
-  }
-  qualquer(i){
+  qualquer(i) {
     console.log(i)
   }
-  // atualizarAnexo(i){
-    
-  //   this.formulario.controls['anexos'].value[i] = {
-  //     loteId: this.id,
-  //     arquivoId: 0,
-  //     arquivo: {
-  //     arquivoId: 0,
-  //     nome: this.anexosnome,
-  //     base64: this.anexosbase64,
-  //     tipo: this.anexostipo,
-  //     tamanho: this.anexostamanho
-  //     }
-  //     }
-    
-  //   console.log(this.formulario.controls['anexos'].value)
-  // }
-  atualizarFoto(obj, i){
+  atualizarFoto(obj, i) {
     console.log(i)
     let fotos = this.formulario.get('fotos') as FormArray
 
-    if(i < 0){
+    if (i < 0) {
       fotos.push(this.formBuilder.group({
         tipoFotoId: "",
         loteFotoId: 0,
-        arquivoId:[0],
-        arquivo: obj
-        }))
-    }else{
+        arquivoId: [0],
+        arquivo: obj,
+        modificado: true
+      }))
+    } else {
       console.log(fotos)
       const valor = fotos.value[i]
       fotos.removeAt(i)
       fotos.insert(i, this.formBuilder.group({
         tipoFotoId: valor.tipoFotoId,
         loteFotoId: valor.loteFotoId,
-        arquivoId:  valor.arquivoId,
+        arquivoId: valor.arquivoId,
         arquivo: obj,
+        modificado: true
       }))
-      
+
       console.log(fotos)
     }
   }
-  alterarFoto(i){
+  alterarFoto(i) {
     console.log(i)
     this.numeroAdcFoto = i
     this.inputFotos.nativeElement.click()
   }
-  atualizarAnexo(obj, i){
+  atualizarAnexo(obj, i) {
     console.log(i)
     let anexos = this.formulario.get('anexos') as FormArray
 
-    if(i < 0){
+    if (i < 0) {
       anexos.push(this.formBuilder.group({
         loteId: this.id,
         arquivoId: 0,
-        arquivo: obj
-        }))
-    }else{
+        arquivo: obj,
+        modificado: true
+      }))
+    } else {
       console.log(anexos)
       const valor = anexos.value[i]
       anexos.removeAt(i)
@@ -355,12 +337,13 @@ export class UpdateLotesComponent implements OnInit {
         loteId: this.id,
         arquivoId: 0,
         arquivo: obj,
+        modificado: true
       }))
-      
+
       console.log(anexos)
     }
   }
-  alterarAnexo(i){
+  alterarAnexo(i) {
     console.log(i)
     this.numeroAdcAnexo = i
     this.inputAnexos.nativeElement.click()
@@ -371,8 +354,13 @@ export class UpdateLotesComponent implements OnInit {
     let campos = dados.campos
     campos.forEach(obj => (this.formulario.controls['campos'] as FormArray).push(this.formBuilder.group(obj)))
 
+    if(dados.anexos != null){
+     let anexos = dados.anexos
+     anexos.forEach(obj => (this.formulario.controls['anexos'] as FormArray).push(this.formBuilder.group({ ...obj, modificado: false })))
+    }
+    
     let objetos = dados.fotos
-    objetos.forEach(obj => (this.formulario.controls['fotos'] as FormArray).push(this.formBuilder.group(obj)))
+    objetos.forEach(obj => (this.formulario.controls['fotos'] as FormArray).push(this.formBuilder.group({ ...obj, modificado: false })))
     console.log(this.formulario.value.campos)
     console.log(this.formulario.value.fotos)
   }
@@ -396,15 +384,16 @@ export class UpdateLotesComponent implements OnInit {
       loteJudicial: dados.loteJudicial,
       tipoLoteId: dados.tipoLoteId,
       tipoLote: dados.tipoLote,
+      loteId:dados.loteId
 
     })
 
   }
-  deleteCampo(indexCampo:number) {
+  deleteCampo(indexCampo: number) {
     let campos = this.formulario.controls['campos'] as FormArray
     campos.removeAt(indexCampo)
   }
-  deleteFoto(indexFoto:number){
+  deleteFoto(indexFoto: number) {
     let fotos = this.formulario.controls['fotos'] as FormArray
     fotos.removeAt(indexFoto)
   }
