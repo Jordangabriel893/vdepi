@@ -1,15 +1,15 @@
-<form [formGroup]="formulario" (ngSubmit)="onSubmit()">
+<form [formGroup]="formulario" (ngSubmit)="onSubmit()" *ngIf="formulario">
   <div class="animated fadeIn">
     <div class="row">
       <div class="col-lg-12">
         <div class="card">
           <div class="card-header">
-            <i class="fa fa-user-secret"></i> Editar Lote
+            <i class="fa fa-user-secret"></i> Dados do Lote
           </div>
 
           <div class="card-block">
             <div class="row ">
-              <div class="form-group col-6">
+              <div class="form-group col-4">
                 <ng-template #descricao>
                   <app-error-msg [control]="formulario.get('descricao')" label="Descrição"></app-error-msg>
                 </ng-template>
@@ -17,32 +17,51 @@
                 <input type="text" class="form-control" id="descricao" placeholder="Descrição"
                   formControlName="descricao" [popover]="descricao" triggers="keypress:focusout">
               </div>
-
-              <div class="form-group col-6" formGroupName="categoria">
-                <label for="descricao">Categoria</label>
-                <select class="form-control" formControlName="descricao" >
-                  <option value="true" *ngFor="let item of categoriasFilhas" value="{{item.descricao}}">{{item.descricao}}</option>
+              <div class="form-group col-4">
+                <ng-template #numeroLote>
+                  <app-error-msg [control]="formulario.get('numeroLote')" label="Descrição"></app-error-msg>
+                </ng-template>
+                <label for="numeroLote">Numero do Lote</label>
+                <input type="text" class="form-control" id="numeroLote" placeholder="Numero do Lote"
+                  formControlName="numeroLote" [popover]="numeroLote" triggers="keypress:focusout">
+              </div>
+              <div class="form-group col-4">
+                <ng-template #status>
+                  <app-error-msg [control]="formulario.get('statusId')" label="Status"></app-error-msg>
+                </ng-template>
+                <label for="statusId">Status</label>
+                <select class="form-control" formControlName="statusId" >
+                  <option *ngFor="let item of loteStatus" [value]="item.loteStatusId">{{item.descricao}}</option>
                 </select>
               </div>
             </div>
             <div class="row">
-              <div class="form-group col-6" >
-                <label for="ativo">Tipo de Lote</label>
-                <select class="form-control" formControlName="tipoLoteId">
-                  <option *ngFor="let item of tiposLote" value="{{item.tipoLoteId}}">{{item.descricao}}</option>
-
+              <div class="form-group col-4">
+                <label for="descricao">Categoria</label>
+                <select class="form-control" formControlName="categoriaId" >
+                  <option *ngFor="let item of categoriasFilhas" [value]="item.categoriaId">{{item.descricao}}</option>
                 </select>
               </div>
-              <div class="form-group col-6" formGroupName="local">
-
-                <label for="descricao">Local</label>
-                <select class="form-control" formControlName="descricao">
-                  <option value="{{item.localLoteId}}" *ngFor="let item of local">{{item.descricao}}</option>
+              <div class="form-group col-4" >
+                <label for="ativo">Tipo de Lote</label>
+                <select class="form-control" formControlName="tipoLoteId">
+                  <option *ngFor="let item of tiposLote" [value]="item.tipoLoteId">{{item.descricao}}</option>
+                </select>
+              </div>
+              <div class="form-group col-4">
+                <label for="descricao">Localização</label>
+                <select class="form-control" formControlName="localId">
+                  <option [value]="item.localLoteId" *ngFor="let item of local">{{item.descricao}}</option>
                 </select>
               </div>
             </div>
+            <div class="row">
+              <div class="col-12">
+                <label for="editor1">Descrição Detalhada</label>
+                <angular-editor id="editor1" formControlName="descricaoDetalhada" [config]="editorConfig"></angular-editor>
+              </div>
+            </div>
           </div>
-
         </div>
       </div>
     </div>
@@ -57,36 +76,33 @@
           </div>
           <div class="card-block">
             <div class="row">
-
-              <div class="form-group col-4">
-                <label for="valorLanceInicial">Valor do Lance Inicial</label>
-                <input type="number" class="form-control" id="valorLanceInicial" formControlName="valorLanceInicial">
-              </div>
-              <div class="form-group col-4">
-                <label for="valorMinimoVenda">Valor Mínimo de Venda</label>
-                <input type="number" class="form-control" id="valorMinimoVenda" formControlName="valorMinimoVenda">
-              </div>
               <div class="form-group col-4">
                 <label for="valorAvaliacao">Valor Avaliação</label>
-                <input type="number" class="form-control" id="valorAvaliacao" formControlName="valorAvaliacao">
+                <input type="text" class="form-control" id="valorAvaliacao" formControlName="valorAvaliacao" currencyMask [options]="{ prefix: 'R$ ', thousands: '.', decimal: ',' }">
+              </div>
+              <div class="form-group col-4">
+                <label for="valorLanceInicial">Valor do Lance Inicial</label>
+                <input type="text" class="form-control" id="valorLanceInicial" formControlName="valorLanceInicial" currencyMask [options]="{ prefix: 'R$ ', thousands: '.', decimal: ',' }">
+              </div>
+              <div class="form-group col-4">
+                <label for="valorIncremento">Valor Incremento</label>
+                <input type="text" class="form-control" id="valorIncremento" formControlName="valorIncremento" currencyMask [options]="{ prefix: 'R$ ', thousands: '.', decimal: ',' }">
               </div>
             </div>
             <div class="row">
               <div class="form-group col-4">
-                <label for="valorIncremento">Valor Incremento</label>
-                <input type="number" class="form-control" id="valorIncremento" formControlName="valorIncremento">
+                <label for="valorMinimoVenda">Valor Mínimo de Venda</label>
+                <input type="text" class="form-control" id="valorMinimoVenda" formControlName="valorMinimoVenda" currencyMask [options]="{ prefix: 'R$ ', thousands: '.', decimal: ',' }">
               </div>
               <div class="form-group col-4">
                 <label for="valorTaxaAdministrativa">Valor da Taxa Administrativa</label>
-                <input type="number" class="form-control" id="valorTaxaAdministrativa"
-                  formControlName="valorTaxaAdministrativa">
+                <input type="text" class="form-control" id="valorTaxaAdministrativa" formControlName="valorTaxaAdministrativa" currencyMask [options]="{ prefix: 'R$ ', thousands: '.', decimal: ',' }">
               </div>
               <div class="form-group col-4">
                 <label for="valorOutrasTaxas">Valor de Outras Taxas</label>
-                <input type="number" class="form-control" id="valorOutrasTaxas" formControlName="valorOutrasTaxas">
+                <input type="text" class="form-control" id="valorOutrasTaxas" formControlName="valorOutrasTaxas" currencyMask [options]="{ prefix: 'R$ ', thousands: '.', decimal: ',' }">
               </div>
             </div>
-
           </div>
         </div>
       </div>
@@ -100,53 +116,51 @@
           <div class="card-header new-campo">
             <div><i class="fa fa-user-secret"></i>Campos</div>
 
-            <button type="button" class="btn btn-success" (click)="adicionarCampo()"><i
+            <button type="button" class="btn btn-success btn-sm" (click)="adicionarCampo()"><i
                 class="fa fa-plus-circle"></i>&nbsp;
               Novo Campo</button>
           </div>
 
           <div class="card-block" formArrayName="campos">
-
-            <div class="col-12 campo">
-              <div class="col-6 campo" *ngFor="let campo of formulario.get('campos').controls; let i = index">
+            <table class="table">
+              <thead>
+                <tr>
+                  <th width="25%">Tipo</th>
+                  <th width="60%">Valor</th>
+                  <th width="15%"></th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let campo of filterList('campos'); let i = index" [formGroupName]="i">
+                  <td>
+                    <select class="form-control" formControlName="loteCampoId">
+                      <option value="true" *ngFor="let item of loteCampos" value="{{item.loteCampoId}}">{{item.descricao}}
+                      </option>
+                    </select>
+                  </td>
+                  <td>
+                    <input type="text" class="form-control" id="dataAberturaLance" formControlName="valor">
+                  </td>
+                  <td class="text-center">
+                    <button type="button" class="btn btn-danger " (click)="deleteCampo(i)">Remover</button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+            <!-- <div class="col-12 campo">
+              <div class="col-6 campo" *ngFor="let campo of filterList('campos'); let i = index">
                 <div class="form-group col-8 campo__alinhar" [formGroupName]="i">
-                  <select class="form-control" formControlName="loteCampoId">
-                    <option value="true" *ngFor="let item of loteCampos" value="{{item.loteCampoId}}">{{item.descricao}}
-                    </option>
-                  </select>
-                  <input type="text" class="form-control" id="dataAberturaLance" formControlName="valor">
+
                 </div>
                 <div class="form-group col-4 remover">
-                  <button type="button" class="btn btn-danger " (click)="deleteCampo(i)">Remover</button>
                 </div>
               </div>
-
-
-            </div>
+            </div> -->
           </div>
         </div>
       </div>
     </div>
   </div>
-
-
-  <div class="animated fadeIn">
-    <div class="row">
-      <div class="col-lg-12">
-        <div class="card">
-          <div class="card-header">
-            <i class="fa fa-user-secret"></i> Descrição Detalhada
-          </div>
-          <div class="card-block">
-            <div class="row">
-              <angular-editor id="editor1" formControlName="descricaoDetalhada" [config]="editorConfig"></angular-editor>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-
 
   <div class="animated fadeIn" formArrayName="fotos">
     <div class="row">
@@ -155,32 +169,31 @@
           <div class="card-header new-campo">
 
             <div><i class="fa fa-user-secret"></i>Fotos</div>
-            <button type="button" class="btn btn-success" (click)="alterarFoto(-1)"><i
-                class="fa fa-plus-circle"></i>&nbsp;
-              Nova Foto</button>
+            <button type="button" class="btn btn-success btn-sm" (click)="alterarFoto(-1)">
+              <i class="fa fa-plus-circle"></i>&nbsp;Nova Foto</button>
               <input type="file"  #inputFotos (change)="fileChangeEvent($event)">
           </div>
-          <div class="row">
-            <fieldset class="form-group col-6" *ngFor="let item of formulario.get('fotos').controls; let i = index" [formGroupName]="i">
-              <div class="flex">
-                <select class="form-control col-12" formControlName="tipoFotoId">
-                  <option value="true" *ngFor="let tipo of tipoFoto" value="{{tipo.tipoFotoId}}">{{tipo.descricao}}
-                  </option>
-                </select>
-  
-              </div>
-              <div class="custom-file fileInputProfileWrap">
-                <div class="img-space">
-                  <img [src]="item.value.arquivo.url " class="img-responsive" >
+          <div class="card-block">
+            <div class="row">
+              <fieldset class="form-group col-3" *ngFor="let item of filterList('fotos'); let i = index" [formGroupName]="i">
+                <div class="flex">
+                  <select class="form-control col-12" formControlName="tipoFotoId">
+                    <option value="true" *ngFor="let tipo of tipoFoto" value="{{tipo.tipoFotoId}}">{{tipo.descricao}}
+                    </option>
+                  </select>
+
                 </div>
-              </div>
-              <div class=" col-6 foto-buttons">
-                <label (click)="alterarFoto(i)" class="labelArquivo col-12">Alterar Foto</label>
-                
-                <button type="button" class="btn btn-danger deletarFoto col-12" (click)="deleteFoto(i)">Remover</button>
-              </div>
-              
-            </fieldset>
+                <div class="custom-file fileInputProfileWrap">
+                  <div class="img-space">
+                    <img [src]="item.value.arquivo.url " class="img-responsive" >
+                  </div>
+                </div>
+                <div class="foto-buttons">
+                  <label (click)="alterarFoto(i)" class="labelArquivo">Alterar Foto</label>
+                  <label (click)="deleteFoto(i)" class="btn btn-danger labelRemove">Remover</label>
+                </div>
+              </fieldset>
+            </div>
           </div>
         </div>
       </div>
@@ -190,31 +203,42 @@
     <div class="row">
       <div class="col-lg-12">
         <div class="card">
-          <div class="card-header">
-            <div class="card-header new-campo">
-
-              <div><i class="fa fa-user-secret"></i>Anexos</div>
-              <button type="button" class="btn btn-success" (click)="alterarAnexo(-1)"><i
-                  class="fa fa-plus-circle"></i>&nbsp;
-                Novo Anexo</button>
-                <input type="file"  #inputAnexos (change)="anexoChangeEvent($event.target.files)">
-            </div>
+          <div class="card-header new-campo">
+            <div><i class="fa fa-user-secret"></i>Anexos</div>
+            <button type="button" class="btn btn-success btn-sm" (click)="alterarAnexo(-1)">
+              <i class="fa fa-plus-circle"></i>&nbsp;Novo Anexo</button>
+              <input type="file" #inputAnexos (change)="anexoChangeEvent($event.target.files)">
           </div>
           <div class="card-block">
-            <div class="row" >
-
-              <div class="col-6 anexo" *ngFor="let item of formulario.get('anexos').controls; let i = index"   [formGroupName]="i" >
-                <label (click)="alterarAnexo(i)" class="labelArquivo">{{item.value.arquivo.nome  ? "Alterar Arquivo" : "Adicionar Arquivo"}}</label>
-                <p>{{item.value.arquivo.nome ? item.value.arquivo.nome : 'Selecione um arquivo'}}</p>
-              </div>
-            </div>
+            <table class="table">
+              <thead>
+                <tr>
+                  <th width="40%">Arquivo</th>
+                  <th width="30%">Descrição</th>
+                  <th width="15%">Criado em</th>
+                  <th width="15%"></th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let item of filterList('anexos'); let i = index" [formGroupName]="i">
+                  <td><a [href]="item.value.arquivo.url" target="_blank">{{item.value.arquivo.nome}}</a></td>
+                  <td>
+                    <input type="text" formControlName="nome" class="form-control" [value]="item.value.nome" placeholder="Descricao" *ngIf="item.value.acao === 'I'">
+                    <span *ngIf="item.value.acao === ''">{{item.value.nome}}</span>
+                  </td>
+                  <td>{{item.value.arquivo.dataCadastro | amFromUtc | amLocal | amDateFormat: 'DD/MM/YYYY HH:mm'}}</td>
+                  <td class="text-center">
+                    <!-- <label (click)="alterarAnexo(i)" class="btn btn-black">Alterar</label> -->
+                    <label class="btn btn-danger m-0" (click)="deleteAnexo(i)">Remover</label>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
           </div>
         </div>
       </div>
     </div>
   </div>
-
-
   <div class="animated fadeIn">
     <div class="row">
       <div class="col-lg-12">
@@ -234,11 +258,9 @@
           </div>
           <div class="card-footer">
             <button type="submit" class="btn btn-primary"><i class="fa fa-save"></i> Salvar</button>
-            <button type="reset" class="btn btn-danger" [routerLink]="['/leilao']"><i class="fa fa-undo"></i>
+            <button type="reset" class="btn btn-danger" [routerLink]="['/lotes', leilaoId]"><i class="fa fa-undo"></i>
               Cancelar</button>
           </div>
-
-
         </div>
       </div>
     </div>

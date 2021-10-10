@@ -36,7 +36,7 @@ let options = {
           //let user = response.json();
           if (user && user.access_token) {
             // store user details and jwt token in local storage to keep user logged in between page refreshes
-            localStorage.removeItem('currentUser');
+            //localStorage.removeItem('currentUser');
             localStorage.setItem('currentUser', JSON.stringify(user));
           }
 

@@ -56,8 +56,8 @@ input[type="file"] {
 }
 .labelArquivo{
     padding: 10px;
-    width: 50%;
     background-color: #333;
+    width: 50%;
     color: #FFF;
     text-transform: uppercase;
     text-align: center;
@@ -79,15 +79,31 @@ input[type="file"] {
     margin-left: 10px;
     width: 50%;
     height: 2.9em;
-    
 }
 .anexo{
     display: flex;
     align-items: center;
-   
+
 
     p{
         margin-left: 1%;
         margin-bottom: 0%;
     }
+}
+
+.labelRemove{
+  padding: 10px;
+  color: #FFF;
+  width: 50%;
+  text-transform: uppercase;
+  text-align: center;
+  margin-top: 10px;
+  cursor: pointer;
+  border-radius:5px;
+  margin-left: 10px;
+}
+
+.btn-black {
+  background-color: #333;
+  color: #fff
 }

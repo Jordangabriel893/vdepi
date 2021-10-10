@@ -5,6 +5,11 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Restangular } from 'ngx-restangular';
 import * as _ from 'lodash';
 import { AngularEditorConfig } from '@kolkov/angular-editor';
+import { tap } from 'rxjs/operators';
+import { forkJoin } from 'rxjs';
+import * as moment from 'moment';
+import { NotifierService } from 'angular-notifier';
+
 @Component({
   selector: 'app-update-lotes',
   templateUrl: './update-lotes.component.html',
@@ -18,6 +23,7 @@ export class UpdateLotesComponent implements OnInit {
   formulario: FormGroup
   id: any
   lote: any
+  leilaoId;
   tiposLote: any
   loteCampos: any
   categorias: any
@@ -28,6 +34,7 @@ export class UpdateLotesComponent implements OnInit {
   cardImageBase64: string;
   tipoFoto: any
   fileToUpload: File | null = null;
+  loteStatus;
 
   //fotos
   fotosbase64: any
@@ -87,103 +94,50 @@ export class UpdateLotesComponent implements OnInit {
     private route: ActivatedRoute,
     private router: Router,
     private formBuilder: FormBuilder,
-  ) {
-
-    this.formulario = this.formBuilder.group({
-      descricao: [null, [Validators.required, Validators.minLength(3), Validators.maxLength(35)]],
-      descricaoDetalhada: [null, [Validators.required, Validators.minLength(6)]],
-      itemLote: [null, Validators.required],
-      leilao: [null, [Validators.required]],
-      status: this.formBuilder.group({
-        ativo: [true, [Validators.required]],
-        descricao: [null, Validators.required],
-      }),
-      categoria: this.formBuilder.group({
-        descricao: [null, Validators.required],
-        categoriaPaiId: [null],
-
-      }),
-      local: this.formBuilder.group({
-        descricao: [null, [Validators.required]],
-        localLoteId: [null],
-
-      }),
-      campos: this.formBuilder.array([]),
-      anexos: this.formBuilder.array([]),
-      fotos: this.formBuilder.array([]),
-      valorLanceInicial: [null, [Validators.required, Validators.email]],
-      valorMinimoVenda: [null, [Validators.required]],
-      valorAvaliacao: [null, [Validators.required]],
-      valorIncremento: ["null"],
-      valorTaxaAdministrativa: ["null"],
-      valorOutrasTaxas: [null, [Validators.required]],
-      observacao: [null, [Validators.required]],
-      judicial: [null, [Validators.required]],
-      loteJudicial: [null, [Validators.required]],
-      tipoLoteId: [],
-      tipoLote: [],
-      loteId:[],
-
-    })
-  }
+    private notifierService: NotifierService
+  ) { }
 
   ngOnInit() {
-    this.id = this.route.snapshot.params['id']
-    this.restangular.one("lote", this.id).get({}).subscribe(
-      (lote) => {
-        this.lote = lote.data
-        console.log(lote.data)
-        this.categoriaPaiId = lote.data.categoria.categoriaPaiId
-        this.updateForm(lote.data)
-        this.updateFormArrays(lote.data)
-      })
-    this.restangular.one("lotecampo").get().subscribe(
-      (dados) => {
-        this.loteCampos = dados.data
-      })
-    this.restangular.one("tipolote").get().subscribe(
-      (dados) => {
-        this.tiposLote = dados.data
-      })
+    this.id = this.route.snapshot.params['id'];
 
-    this.restangular.one('categoria').get().subscribe(dados => {
-      this.categorias = dados.data
-      const categorias = dados.data
-      const filtrarCategorias = categoria => categoria.categoriaPaiId === this.categoriaPaiId;
-      const categoriasFilhas = categorias.filter(filtrarCategorias)
-      this.categoriasFilhas = categoriasFilhas
-    })
-    this.restangular.one('tipofoto').get().subscribe(dados => {
-      this.tipoFoto = dados.data
-    })
-    this.restangular.one('local').get().subscribe(dados => {
-      this.local = dados.data
-    })
+    forkJoin([
+      this.restangular.one("lotecampo").get().pipe(),
+      this.restangular.one("tipolote").get().pipe(),
+      this.restangular.one('tipofoto').get().pipe(),
+      this.restangular.one('local').get().pipe(),
+      this.restangular.one("lote", this.id).get().pipe(),
+      this.restangular.one('categoria').get().pipe(),
+      this.restangular.one('lotestatus').get().pipe()
+    ]).subscribe((allResp: any[]) => {
+      this.loteCampos = allResp[0].data;
+      this.tiposLote = allResp[1].data;
+      this.tipoFoto = allResp[2].data;
+      this.local = allResp[3].data;
+
+      this.lote = allResp[4].data;
+      this.leilaoId = this.lote.leilaoId;
+      this.updateForm(this.lote);
+
+      this.categorias = allResp[5].data;
+      this.categoriasFilhas = this.categorias.filter(categoria => categoria.categoriaPaiId === this.lote.categoria.categoriaPaiId);
+
+      this.loteStatus = allResp[6].data;
+    });
   }
 
   onSubmit() {
-    let fotos = this.formulario.value.fotos
-    const fotosAlterado = fotos.filter(obj => obj.modificado)
+    console.log(this.formulario);
+    if(this.formulario.invalid){
+      this.notifierService.notify('error', 'Preencha todos os campos obrigatórios')
+      return;
+    }
+
     const formulario = this.formulario.value
-    formulario.fotos = fotosAlterado
-
-    let anexos = this.formulario.value.anexos
-    const anexosAlterados = anexos.filter(obj => obj.modificado)
-    formulario.anexos = anexosAlterados
-    console.log(formulario)
-    
-    this.restangular.all('lote').customPUT(formulario,  this.id ) .subscribe(a => {
-      console.log(a)
-      // this.notifierService.notify('success', 'Leilão Criado com sucesso');
-      // this.router.navigateByUrl('/leilao');
+    this.restangular.all('lote').customPUT(formulario, this.id ).subscribe(a => {
+      this.router.navigate(['lotes', this.leilaoId])
     })
-
-    // let r3 = anexos.filter( a => !objServidor.includes( a ) );
-
-
-    // this.formulario.value.anexo 
-    // console.log(this.formulario.value)
   }
+
   fileChangeEvent(fileInput: any) {
     this.imageError = null;
     if (fileInput.target.files && fileInput.target.files[0]) {
@@ -233,10 +187,7 @@ export class UpdateLotesComponent implements OnInit {
               tamanho: fileInput.target.files[0].size
             }
 
-
             this.atualizarFoto(arquivo, this.numeroAdcFoto)
-
-
           }
         };
       };
@@ -246,6 +197,7 @@ export class UpdateLotesComponent implements OnInit {
     }
 
   }
+
   anexoChangeEvent(anexoInput: FileList) {
     this.fileToUpload = anexoInput.item(0);
     this.fileToUpload.name
@@ -255,19 +207,17 @@ export class UpdateLotesComponent implements OnInit {
     reader.readAsDataURL(this.fileToUpload);
     reader.onload = () => {
       this.anexosbase64 = reader.result
+      const arquivo = {
+        arquivoId: 0,
+        nome: this.fileToUpload.name,
+        base64: this.anexosbase64,
+        tipo: this.fileToUpload.type,
+        tamanho: this.fileToUpload.size,
+        dataCadastro: moment().utc().toISOString()
+      }
+
+      this.atualizarAnexo(arquivo, this.numeroAdcAnexo)
     };
-    console.log(this.formulario.controls['anexos'].value)
-    const arquivo = {
-      arquivoId: 0,
-      nome: this.fileToUpload.name,
-      base64: this.anexosbase64,
-      tipo: this.fileToUpload.type,
-      tamanho: this.fileToUpload.size
-    }
-
-    this.atualizarAnexo(arquivo, this.numeroAdcAnexo)
-
-
   }
 
   adicionarCampo() {
@@ -279,27 +229,22 @@ export class UpdateLotesComponent implements OnInit {
       loteCampo: this.formBuilder.group({
         descricao: "--",
       }),
+      acao: "I"
     }))
+  }
 
-    console.log(this.formulario.value.campos)
-  }
-  qualquer(i) {
-    console.log(i)
-  }
   atualizarFoto(obj, i) {
-    console.log(i)
     let fotos = this.formulario.get('fotos') as FormArray
 
     if (i < 0) {
-      fotos.push(this.formBuilder.group({
-        tipoFotoId: "",
+      fotos.insert(0, this.formBuilder.group({
+        tipoFotoId: ['', Validators.required],
         loteFotoId: 0,
-        arquivoId: [0],
+        arquivoId: 0,
         arquivo: obj,
-        modificado: true
+        acao: 'I'
       }))
     } else {
-      console.log(fotos)
       const valor = fotos.value[i]
       fotos.removeAt(i)
       fotos.insert(i, this.formBuilder.group({
@@ -307,94 +252,116 @@ export class UpdateLotesComponent implements OnInit {
         loteFotoId: valor.loteFotoId,
         arquivoId: valor.arquivoId,
         arquivo: obj,
-        modificado: true
+        acao: 'A'
       }))
-
-      console.log(fotos)
     }
   }
+
   alterarFoto(i) {
-    console.log(i)
+    // console.log(i)
     this.numeroAdcFoto = i
     this.inputFotos.nativeElement.click()
   }
+
   atualizarAnexo(obj, i) {
-    console.log(i)
     let anexos = this.formulario.get('anexos') as FormArray
 
     if (i < 0) {
       anexos.push(this.formBuilder.group({
         loteId: this.id,
         arquivoId: 0,
+        nome: [null, Validators.required],
         arquivo: obj,
-        modificado: true
+        acao: 'I'
       }))
     } else {
-      console.log(anexos)
+
       const valor = anexos.value[i]
       anexos.removeAt(i)
       anexos.insert(i, this.formBuilder.group({
         loteId: this.id,
         arquivoId: 0,
+        nome: valor.nome,
         arquivo: obj,
-        modificado: true
+        acao: 'A'
       }))
 
       console.log(anexos)
     }
   }
+
   alterarAnexo(i) {
-    console.log(i)
     this.numeroAdcAnexo = i
     this.inputAnexos.nativeElement.click()
   }
 
-
-  updateFormArrays(dados) {
-    let campos = dados.campos
-    campos.forEach(obj => (this.formulario.controls['campos'] as FormArray).push(this.formBuilder.group(obj)))
-
-    if(dados.anexos != null){
-     let anexos = dados.anexos
-     anexos.forEach(obj => (this.formulario.controls['anexos'] as FormArray).push(this.formBuilder.group({ ...obj, modificado: false })))
-    }
-    
-    let objetos = dados.fotos
-    objetos.forEach(obj => (this.formulario.controls['fotos'] as FormArray).push(this.formBuilder.group({ ...obj, modificado: false })))
-    console.log(this.formulario.value.campos)
-    console.log(this.formulario.value.fotos)
-  }
   updateForm(dados) {
-    this.formulario.patchValue({
-      descricao: dados.descricao,
-      descricaoDetalhada: dados.descricaoDetalhada,
-      itemLote: dados.itemLote,
-      leilao: dados.leilao,
-      status: dados.status,
-      categoria: dados.categoria,
-      local: dados.local,
-      valorLanceInicial: dados.valorLanceInicial,
-      valorMinimoVenda: dados.valorMinimoVenda,
-      valorAvaliacao: dados.valorAvaliacao,
-      valorIncremento: dados.valorIncremento,
-      valorTaxaAdministrativa: dados.valorTaxaAdministrativa,
-      valorOutrasTaxas: dados.valorOutrasTaxas,
-      observacao: dados.observacao,
-      judicial: dados.judicial,
-      loteJudicial: dados.loteJudicial,
-      tipoLoteId: dados.tipoLoteId,
-      tipoLote: dados.tipoLote,
-      loteId:dados.loteId
-
+    console.log(dados);
+    this.formulario = this.formBuilder.group({
+      loteId:[dados.loteId, Validators.required],
+      descricao: [dados.descricao, Validators.required],
+      descricaoDetalhada: [dados.descricaoDetalhada, Validators.required],
+      dataEncerramento: [dados.dataEncerramento],
+      itemLote: [dados.itemLote],
+      numeroLote: [dados.numeroLote, Validators.required],
+      leilaoId: [dados.leilaoId, Validators.required],
+      statusId: [dados.statusId, Validators.required],
+      categoriaId: [dados.categoriaId, Validators.required],
+      localId: [dados.localId, Validators.required],
+      valorLanceInicial: [dados.valorLanceInicial, Validators.required],
+      valorMinimoVenda: [dados.valorMinimoVenda, Validators.required],
+      valorAvaliacao: [dados.valorAvaliacao, Validators.required],
+      valorIncremento: [dados.valorIncremento, Validators.required],
+      valorTaxaAdministrativa: [dados.valorTaxaAdministrativa, Validators.required],
+      valorOutrasTaxas: [dados.valorOutrasTaxas],
+      observacao: [dados.observacao],
+      judicial: [dados.judicial],
+      loteJudicial: [dados.loteJudicial],
+      loteJudicialId: [dados.loteJudicialId],
+      tipoLoteId: [dados.tipoLoteId, Validators.required],
+      campos: this.formBuilder.array(dados.campos ? dados.campos.map(x => this.formBuilder.group({...x, acao: ''})) : [], Validators.required),
+      anexos: this.formBuilder.array(dados.anexos ? dados.anexos.map(x => this.formBuilder.group({...x, acao: ''})) : []),
+      fotos: this.formBuilder.array(dados.fotos ? dados.fotos.map(x => this.formBuilder.group({...x, acao: ''})) : [], Validators.required),
     })
-
   }
+
+  filterList(campo: string) {
+    const fotos = this.formulario.get(campo) as FormArray;
+    return fotos.controls.filter(x => (x as FormGroup).controls['acao'].value !== 'D');
+  }
+
   deleteCampo(indexCampo: number) {
     let campos = this.formulario.controls['campos'] as FormArray
-    campos.removeAt(indexCampo)
+    let campo = campos.at(indexCampo) as FormGroup;
+    if(campo.controls['acao'].value !== 'I') {
+      campo.controls['acao'].setValue('D');
+    }
+    else {
+      campos.removeAt(indexCampo)
+    }
+
   }
+
+  deleteAnexo(indexAnexo: number) {
+    let anexos = this.formulario.controls['anexos'] as FormArray;
+    let anexo = anexos.at(indexAnexo) as FormGroup;
+    if(anexo.controls['acao'].value !== 'I') {
+      anexo.controls['acao'].setValue('D');
+    }
+    else {
+      anexos.removeAt(indexAnexo)
+    }
+  }
+
+
   deleteFoto(indexFoto: number) {
-    let fotos = this.formulario.controls['fotos'] as FormArray
-    fotos.removeAt(indexFoto)
+    let fotos = this.formulario.controls['fotos'] as FormArray;
+    let foto = fotos.at(indexFoto) as FormGroup;
+    if(foto.controls['acao'].value !== 'I') {
+      foto.controls['acao'].setValue('D');
+    }
+    else {
+      fotos.removeAt(indexFoto)
+    }
   }
 }
