@@ -1,28 +1,28 @@
+import { filter } from 'rxjs/operators';
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, Validators, FormArray } from '@angular/forms';
+import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
+import { AngularEditorConfig } from '@kolkov/angular-editor';
+import { forkJoin } from 'rxjs';
 import { Restangular } from 'ngx-restangular';
 import * as _ from 'lodash';
-import { AngularEditorConfig } from '@kolkov/angular-editor';
-import { tap } from 'rxjs/operators';
-import { forkJoin } from 'rxjs';
 import * as moment from 'moment';
 import { NotifierService } from 'angular-notifier';
 
 @Component({
-  selector: 'app-update-lotes',
-  templateUrl: './update-lotes.component.html',
-  styleUrls: ['./update-lotes.component.scss']
+  selector: 'app-create-lotes',
+  templateUrl: './create-lotes.component.html',
+  styleUrls: ['./create-lotes.component.scss']
 })
-export class UpdateLotesComponent implements OnInit {
-
+export class CreateLotesComponent implements OnInit {
   @ViewChild('inputFotos') inputFotos: ElementRef;
   @ViewChild('inputAnexos') inputAnexos: ElementRef;
 
   formulario: FormGroup
   id: any
-  lote: any
   leilaoId;
+  loteStatus;
+  lote: any
   tiposLote: any
   loteCampos: any
   categorias: any
@@ -33,8 +33,6 @@ export class UpdateLotesComponent implements OnInit {
   cardImageBase64: string;
   tipoFoto: any
   fileToUpload: File | null = null;
-  loteStatus;
-  mostrarCampoJudicial: boolean = false
 
   //fotos
   fotosbase64: any
@@ -95,10 +93,52 @@ export class UpdateLotesComponent implements OnInit {
     private router: Router,
     private formBuilder: FormBuilder,
     private notifierService: NotifierService
-  ) { }
-
-  ngOnInit() {
+  ) {
     this.id = this.route.snapshot.params['id'];
+
+    this.formulario = this.formBuilder.group({
+      loteId:[null, ],
+      descricao: [null, Validators.required],
+      descricaoDetalhada: [null,Validators.required],
+      itemLote: [],
+      numeroLote: [null, Validators.required],
+      leilaoId: [this.id],
+      statusId: [ Validators.required],
+      categoriaId: [ Validators.required],
+      localId: [ ],
+      valorLanceInicial: [ Validators.required],
+      valorMinimoVenda: [ Validators.required],
+      valorAvaliacao: [ Validators.required],
+      valorIncremento: [ Validators.required],
+      valorTaxaAdministrativa: [ Validators.required],
+      valorOutrasTaxas: [Validators.required],
+      observacao: [],
+      judicial: [false],
+      loteJudicial: this.formBuilder.group({
+        loteJudicialId:[0],
+        numProcesso:[null],
+        autor:[null],
+        reu: [null],
+        depositario:[null],
+        localDepositario:[null],
+        recursoPendente: [false],
+        anoProcesso:[null],
+        tipoAcao: [null],
+        recursos:[false],
+        comarca:[null],
+        natureza:[null]
+      }),
+      loteJudicialId: [null],
+      tipoLoteId: [],
+      campos: this.formBuilder.array([], Validators.required),
+      anexos: this.formBuilder.array([]),
+      fotos: this.formBuilder.array([], Validators.required),
+
+
+    })
+  }
+  ngOnInit() {
+    
 
     forkJoin([
       this.restangular.one("lotecampo").get().pipe(),
@@ -116,7 +156,7 @@ export class UpdateLotesComponent implements OnInit {
 
       this.lote = allResp[4].data;
       this.leilaoId = this.lote.leilaoId;
-      this.updateForm(this.lote);
+
 
       this.categorias = allResp[5].data;
       this.categoriasFilhas = this.categorias.filter(categoria => categoria.categoriaPaiId === this.lote.categoria.categoriaPaiId);
@@ -124,22 +164,22 @@ export class UpdateLotesComponent implements OnInit {
       this.loteStatus = allResp[6].data;
     });
   }
-
   onSubmit() {
-    console.log(this.formulario);
-    if (this.formulario.value.judicial == false) {
+    console.log(this.formulario.value);
+    if(this.formulario.value.judicial == false){
       this.removeControls()
       console.log(this.formulario.value)
-
+           
     }
-    if (this.formulario.invalid) {
+    if(this.formulario.invalid){
       this.notifierService.notify('error', 'Preencha todos os campos obrigatórios')
       return;
     }
 
     const formulario = this.formulario.value
-    this.restangular.all('lote').customPUT(formulario, this.id).subscribe(a => {
-      this.router.navigate(['lotes', this.leilaoId])
+    this.restangular.all('lote').post(formulario).subscribe(a => {
+      // this.router.navigate(['lotes', this.id])
+     
     })
   }
 
@@ -261,7 +301,6 @@ export class UpdateLotesComponent implements OnInit {
       }))
     }
   }
-
   alterarFoto(i) {
     // console.log(i)
     this.numeroAdcFoto = i
@@ -299,38 +338,6 @@ export class UpdateLotesComponent implements OnInit {
     this.numeroAdcAnexo = i
     this.inputAnexos.nativeElement.click()
   }
-
-  updateForm(dados) {
-    console.log(dados);
-    this.formulario = this.formBuilder.group({
-      loteId: [dados.loteId, Validators.required],
-      descricao: [dados.descricao, Validators.required],
-      descricaoDetalhada: [dados.descricaoDetalhada, Validators.required],
-      dataEncerramento: [dados.dataEncerramento],
-      itemLote: [dados.itemLote],
-      numeroLote: [dados.numeroLote, Validators.required],
-      leilaoId: [dados.leilaoId, Validators.required],
-      statusId: [dados.statusId, Validators.required],
-      categoriaId: [dados.categoriaId, Validators.required],
-      localId: [dados.localId, Validators.required],
-      valorLanceInicial: [dados.valorLanceInicial, Validators.required],
-      valorMinimoVenda: [dados.valorMinimoVenda, Validators.required],
-      valorAvaliacao: [dados.valorAvaliacao, Validators.required],
-      valorIncremento: [dados.valorIncremento, Validators.required],
-      valorTaxaAdministrativa: [dados.valorTaxaAdministrativa, Validators.required],
-      valorOutrasTaxas: [dados.valorOutrasTaxas],
-      observacao: [dados.observacao],
-      judicial: [dados.judicial],
-      loteJudicial: this.formBuilder.group(dados.loteJudicial == null ? this.criarCampoJudicial() : dados.loteJudicial),
-      loteJudicialId: [dados.loteJudicialId],
-      tipoLoteId: [dados.tipoLoteId, Validators.required],
-      campos: this.formBuilder.array(dados.campos ? dados.campos.map(x => this.formBuilder.group({ ...x, acao: '' })) : [], Validators.required),
-      anexos: this.formBuilder.array(dados.anexos ? dados.anexos.map(x => this.formBuilder.group({ ...x, acao: '' })) : []),
-      fotos: this.formBuilder.array(dados.fotos ? dados.fotos.map(x => this.formBuilder.group({ ...x, acao: '' })) : [], Validators.required),
-    })
-    setTimeout(() => { this.mostrarCampoJudicial = true }, 3000)
-  }
-
   filterList(campo: string) {
     const fotos = this.formulario.get(campo) as FormArray;
     return fotos.controls.filter(x => (x as FormGroup).controls['acao'].value !== 'D');
@@ -339,7 +346,7 @@ export class UpdateLotesComponent implements OnInit {
   deleteCampo(indexCampo: number) {
     let campos = this.formulario.controls['campos'] as FormArray
     let campo = campos.at(indexCampo) as FormGroup;
-    if (campo.controls['acao'].value !== 'I') {
+    if(campo.controls['acao'].value !== 'I') {
       campo.controls['acao'].setValue('D');
     }
     else {
@@ -351,7 +358,7 @@ export class UpdateLotesComponent implements OnInit {
   deleteAnexo(indexAnexo: number) {
     let anexos = this.formulario.controls['anexos'] as FormArray;
     let anexo = anexos.at(indexAnexo) as FormGroup;
-    if (anexo.controls['acao'].value !== 'I') {
+    if(anexo.controls['acao'].value !== 'I') {
       anexo.controls['acao'].setValue('D');
     }
     else {
@@ -363,7 +370,7 @@ export class UpdateLotesComponent implements OnInit {
   deleteFoto(indexFoto: number) {
     let fotos = this.formulario.controls['fotos'] as FormArray;
     let foto = fotos.at(indexFoto) as FormGroup;
-    if (foto.controls['acao'].value !== 'I') {
+    if(foto.controls['acao'].value !== 'I') {
       foto.controls['acao'].setValue('D');
     }
     else {
@@ -371,25 +378,7 @@ export class UpdateLotesComponent implements OnInit {
     }
   }
 
-  criarCampoJudicial() {
-
-
-    return {
-      loteJudicialId: 0,
-      numProcesso: null,
-      autor: null,
-      reu: null,
-      depositario: null,
-      localDepositario: null,
-      recursoPendente: false,
-      anoProcesso: null,
-      tipoAcao: null,
-      recursos: false,
-      comarca: null,
-      natureza: null
-    }
-  }
-  removeControls() {
+  removeControls(){
     let loteJudicial = this.formulario.get('loteJudicial') as FormGroup
     loteJudicial.removeControl('loteJudicialId');
     loteJudicial.removeControl('numProcesso');

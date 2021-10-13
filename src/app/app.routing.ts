@@ -28,7 +28,8 @@ import { LotesComponent } from './views/leilao/lotes/lotes.component';
 import { UsuariosComponent } from './views/usuarios/usuarios.component';
 import { UpdateUsuariosComponent } from './views/usuarios/update-usuarios/update-usuarios.component';
 import { UpdateLotesComponent } from './views/leilao/lotes/update-lotes/update-lotes.component';
-
+import { HabilitacaoComponent } from './views/habilitacao/habilitacao.component';
+import { CreateLotesComponent } from './views/leilao/lotes/create-lotes/create-lotes.component';
 
 export const routes: Routes = [
   { path: '', redirectTo: '/home', pathMatch: 'full' },
@@ -106,6 +107,15 @@ export const routes: Routes = [
         canActivate: [SourceGuard]
       },
       {
+        path: 'create-lotes/:id',
+        component: CreateLotesComponent,
+        data: {
+          title: 'Criar Lote',
+          source: 'RelatorioEstoque'
+        },
+        canActivate: [SourceGuard]
+      },
+      {
         path: 'update-lotes/:id',
         component: UpdateLotesComponent,
         data: {
@@ -155,6 +165,15 @@ export const routes: Routes = [
         component: UpdateUsuariosComponent,
         data: {
           title: 'Editar Usuário',
+          source: 'RelatorioEstoque'
+        },
+        canActivate: [SourceGuard]
+      },
+      {
+        path: 'habilitacao',
+        component: HabilitacaoComponent,
+        data: {
+          title: 'Habilitação',
           source: 'RelatorioEstoque'
         },
         canActivate: [SourceGuard]

@@ -30,7 +30,7 @@
                   <app-error-msg [control]="formulario.get('statusId')" label="Status"></app-error-msg>
                 </ng-template>
                 <label for="statusId">Status</label>
-                <select class="form-control" formControlName="statusId" >
+                <select class="form-control" formControlName="statusId">
                   <option *ngFor="let item of loteStatus" [value]="item.loteStatusId">{{item.descricao}}</option>
                 </select>
               </div>
@@ -38,11 +38,11 @@
             <div class="row">
               <div class="form-group col-4">
                 <label for="descricao">Categoria</label>
-                <select class="form-control" formControlName="categoriaId" >
+                <select class="form-control" formControlName="categoriaId">
                   <option *ngFor="let item of categoriasFilhas" [value]="item.categoriaId">{{item.descricao}}</option>
                 </select>
               </div>
-              <div class="form-group col-4" >
+              <div class="form-group col-4">
                 <label for="ativo">Tipo de Lote</label>
                 <select class="form-control" formControlName="tipoLoteId">
                   <option *ngFor="let item of tiposLote" [value]="item.tipoLoteId">{{item.descricao}}</option>
@@ -64,7 +64,8 @@
             <div class="row">
               <div class="col-12">
                 <label for="editor1">Descrição Detalhada</label>
-                <angular-editor id="editor1" formControlName="descricaoDetalhada" [config]="editorConfig"></angular-editor>
+                <angular-editor id="editor1" formControlName="descricaoDetalhada" [config]="editorConfig">
+                </angular-editor>
               </div>
             </div>
           </div>
@@ -72,7 +73,8 @@
       </div>
     </div>
   </div>
-  <div class="animated fadeIn" formGroupName="loteJudicial" *ngIf="this.formulario.value.judicial == true">
+
+  <div class="animated fadeIn" formGroupName="loteJudicial" *ngIf="formulario.value.judicial == true">
     <div class="row">
       <div class="col-lg-12">
         <div class="card">
@@ -185,6 +187,7 @@
     </div>
   </div>
 
+
   <div class="animated fadeIn">
     <div class="row">
       <div class="col-lg-12">
@@ -196,25 +199,31 @@
             <div class="row">
               <div class="form-group col-4">
                 <label for="valorAvaliacao">Valor Avaliação</label>
-                <input type="text" class="form-control" id="valorAvaliacao" formControlName="valorAvaliacao" currencyMask [options]="{ prefix: 'R$ ', thousands: '.', decimal: ',' }">
+                <input type="text" class="form-control" id="valorAvaliacao" formControlName="valorAvaliacao"
+                  currencyMask [options]="{ prefix: 'R$ ', thousands: '.', decimal: ',' }">
               </div>
               <div class="form-group col-4">
                 <label for="valorLanceInicial">Valor do Lance Inicial</label>
-                <input type="text" class="form-control" id="valorLanceInicial" formControlName="valorLanceInicial" currencyMask [options]="{ prefix: 'R$ ', thousands: '.', decimal: ',' }">
+                <input type="text" class="form-control" id="valorLanceInicial" formControlName="valorLanceInicial"
+                  currencyMask [options]="{ prefix: 'R$ ', thousands: '.', decimal: ',' }">
               </div>
               <div class="form-group col-4">
                 <label for="valorIncremento">Valor Incremento</label>
-                <input type="text" class="form-control" id="valorIncremento" formControlName="valorIncremento" currencyMask [options]="{ prefix: 'R$ ', thousands: '.', decimal: ',' }">
+                <input type="text" class="form-control" id="valorIncremento" formControlName="valorIncremento"
+                  currencyMask [options]="{ prefix: 'R$ ', thousands: '.', decimal: ',' }">
               </div>
             </div>
             <div class="row">
               <div class="form-group col-4">
                 <label for="valorMinimoVenda">Valor Mínimo de Venda</label>
-                <input type="text" class="form-control" id="valorMinimoVenda" formControlName="valorMinimoVenda" currencyMask [options]="{ prefix: 'R$ ', thousands: '.', decimal: ',' }">
+                <input type="text" class="form-control" id="valorMinimoVenda" formControlName="valorMinimoVenda"
+                  currencyMask [options]="{ prefix: 'R$ ', thousands: '.', decimal: ',' }">
               </div>
               <div class="form-group col-4">
                 <label for="valorTaxaAdministrativa">Valor da Taxa Administrativa</label>
-                <input type="text" class="form-control" id="valorTaxaAdministrativa" formControlName="valorTaxaAdministrativa" currencyMask [options]="{ prefix: 'R$ ', thousands: '.', decimal: ',' }">
+                <input type="text" class="form-control" id="valorTaxaAdministrativa"
+                  formControlName="valorTaxaAdministrativa" currencyMask
+                  [options]="{ prefix: 'R$ ', thousands: '.', decimal: ',' }">
               </div>
               <div class="form-group col-4">
                 <label for="valorOutrasTaxas">Valor de Outras Taxas</label>
@@ -252,7 +261,8 @@
                 <tr *ngFor="let campo of filterList('campos'); let i = index" [formGroupName]="i">
                   <td>
                     <select class="form-control" formControlName="loteCampoId">
-                      <option value="true" *ngFor="let item of loteCampos" value="{{item.loteCampoId}}">{{item.descricao}}
+                      <option value="true" *ngFor="let item of loteCampos" value="{{item.loteCampoId}}">
+                        {{item.descricao}}
                       </option>
                     </select>
                   </td>
@@ -268,6 +278,7 @@
             <!-- <div class="col-12 campo">
               <div class="col-6 campo" *ngFor="let campo of filterList('campos'); let i = index">
                 <div class="form-group col-8 campo__alinhar" [formGroupName]="i">
+
                 </div>
                 <div class="form-group col-4 remover">
                 </div>
@@ -288,11 +299,12 @@
             <div><i class="fa fa-user-secret"></i>Fotos</div>
             <button type="button" class="btn btn-success btn-sm" (click)="alterarFoto(-1)">
               <i class="fa fa-plus-circle"></i>&nbsp;Nova Foto</button>
-              <input type="file"  #inputFotos (change)="fileChangeEvent($event)">
+            <input type="file" #inputFotos (change)="fileChangeEvent($event)">
           </div>
           <div class="card-block">
             <div class="row">
-              <fieldset class="form-group col-3" *ngFor="let item of filterList('fotos'); let i = index" [formGroupName]="i">
+              <fieldset class="form-group col-3" *ngFor="let item of filterList('fotos'); let i = index"
+                [formGroupName]="i">
                 <div class="flex">
                   <select class="form-control col-12" formControlName="tipoFotoId">
                     <option value="true" *ngFor="let tipo of tipoFoto" value="{{tipo.tipoFotoId}}">{{tipo.descricao}}
@@ -302,7 +314,7 @@
                 </div>
                 <div class="custom-file fileInputProfileWrap">
                   <div class="img-space">
-                    <img [src]="item.value.arquivo.url " class="img-responsive" >
+                    <img [src]="item.value.arquivo.url " class="img-responsive">
                   </div>
                 </div>
                 <div class="foto-buttons">
@@ -316,7 +328,7 @@
       </div>
     </div>
   </div>
-<div class="animated fadeIn" formArrayName="anexos">
+  <div class="animated fadeIn" formArrayName="anexos">
     <div class="row">
       <div class="col-lg-12">
         <div class="card">
@@ -324,7 +336,7 @@
             <div><i class="fa fa-user-secret"></i>Anexos</div>
             <button type="button" class="btn btn-success btn-sm" (click)="alterarAnexo(-1)">
               <i class="fa fa-plus-circle"></i>&nbsp;Novo Anexo</button>
-              <input type="file" #inputAnexos (change)="anexoChangeEvent($event.target.files)">
+            <input type="file" #inputAnexos (change)="anexoChangeEvent($event.target.files)">
           </div>
           <div class="card-block">
             <table class="table">
@@ -340,7 +352,8 @@
                 <tr *ngFor="let item of filterList('anexos'); let i = index" [formGroupName]="i">
                   <td><a [href]="item.value.arquivo.url" target="_blank">{{item.value.arquivo.nome}}</a></td>
                   <td>
-                    <input type="text" formControlName="nome" class="form-control" [value]="item.value.nome" placeholder="Descricao" *ngIf="item.value.acao === 'I'">
+                    <input type="text" formControlName="nome" class="form-control" [value]="item.value.nome"
+                      placeholder="Descricao" *ngIf="item.value.acao === 'I'">
                     <span *ngIf="item.value.acao === ''">{{item.value.nome}}</span>
                   </td>
                   <td>{{item.value.arquivo.dataCadastro | amFromUtc | amLocal | amDateFormat: 'DD/MM/YYYY HH:mm'}}</td>
@@ -356,6 +369,7 @@
       </div>
     </div>
   </div>
+
   <div class="animated fadeIn">
     <div class="row">
       <div class="col-lg-12">
@@ -366,9 +380,10 @@
 
           <div class="card-block">
             <div class="row">
-              <div class="form-group col-12" >
+              <div class="form-group col-12">
                 <label for="exampleFormControlTextarea1">Observação</label>
-                <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" formControlName="observacao"></textarea>
+                <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"
+                  formControlName="observacao"></textarea>
               </div>
             </div>
 

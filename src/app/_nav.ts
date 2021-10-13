@@ -31,5 +31,11 @@ export const navigation = [
     url: '/usuarios',
     icon: 'fa fa-user-secret',
     source: 'RelatorioEstoque'
+  },
+  {
+    name: 'Habilitação',
+    url: '/habilitacao',
+    icon: 'fa fa-user-secret',
+    source: 'RelatorioEstoque'
   }
 ];

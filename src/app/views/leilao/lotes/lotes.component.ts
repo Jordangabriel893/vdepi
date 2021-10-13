@@ -20,6 +20,7 @@ export class LotesComponent implements OnInit {
     this.restangular.one("lote", '').get({ leilaoId: this.id }).subscribe(
       (lotes) => {
         this.lotes = lotes.data;
+        console.log(this.lotes)
       }
     )
 
@@ -27,6 +28,9 @@ export class LotesComponent implements OnInit {
 
   ngOnInit() {
 
+  }
+  create(){
+    this.router.navigate(['/create-lotes', this.id], { relativeTo: this.route });
   }
   edit(id) {
     this.router.navigate(['/update-lotes', id], { relativeTo: this.route });

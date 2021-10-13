@@ -164,6 +164,8 @@ import { UsuariosComponent } from './views/usuarios/usuarios.component';
 import { UpdateUsuariosComponent } from './views/usuarios/update-usuarios/update-usuarios.component';
 import { ErrorMsgComponent } from './views/error-msg/error-msg.component';
 import { UpdateLotesComponent } from './views/leilao/lotes/update-lotes/update-lotes.component';
+import { HabilitacaoComponent } from './views/habilitacao/habilitacao.component';
+import { CreateLotesComponent } from './views/leilao/lotes/create-lotes/create-lotes.component';
 
 
 export function RestangularConfigFactory(RestangularProvider, NotifierService: NotifierService, Router) {
@@ -242,6 +244,8 @@ export function RestangularConfigFactory(RestangularProvider, NotifierService: N
     UpdateUsuariosComponent,
     ErrorMsgComponent,
     UpdateLotesComponent,
+    HabilitacaoComponent,
+    CreateLotesComponent,
 
   ],
   providers: [{
