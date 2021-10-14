@@ -1,6 +1,7 @@
-import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, OnInit, TemplateRef, ViewChild } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators, FormArray } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
+import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
 import { Restangular } from 'ngx-restangular';
 import * as _ from 'lodash';
 import { AngularEditorConfig } from '@kolkov/angular-editor';
@@ -8,6 +9,7 @@ import { tap } from 'rxjs/operators';
 import { forkJoin } from 'rxjs';
 import * as moment from 'moment';
 import { NotifierService } from 'angular-notifier';
+
 
 @Component({
   selector: 'app-update-lotes',
@@ -18,7 +20,9 @@ export class UpdateLotesComponent implements OnInit {
 
   @ViewChild('inputFotos') inputFotos: ElementRef;
   @ViewChild('inputAnexos') inputAnexos: ElementRef;
-
+  isCollapsed = false;
+  modalRef: BsModalRef;
+  message = 'expanded';
   formulario: FormGroup
   id: any
   lote: any
@@ -49,6 +53,14 @@ export class UpdateLotesComponent implements OnInit {
   anexostamanho: any
   anexostipo: any
   numeroAdcAnexo: number
+
+  //Valor Avaliação
+  modalValorAvalicao: FormGroup
+  tipos
+  periodoReferencia
+  marcas
+  modelos
+  ano
 
   local: any
   editorConfig: AngularEditorConfig = {
@@ -94,8 +106,19 @@ export class UpdateLotesComponent implements OnInit {
     private route: ActivatedRoute,
     private router: Router,
     private formBuilder: FormBuilder,
-    private notifierService: NotifierService
-  ) { }
+    private notifierService: NotifierService,
+    private modalService: BsModalService,
+  ) { 
+    this.modalValorAvalicao = this.formBuilder.group({
+      tipo:[, Validators.required],
+      referencia: [, Validators.required ],
+      marcas: [, Validators.required],
+      modelos: [, Validators.required ],
+      ano:[Validators.required],
+      combustivel:[]
+
+    })
+  }
 
   ngOnInit() {
     this.id = this.route.snapshot.params['id'];
@@ -107,7 +130,8 @@ export class UpdateLotesComponent implements OnInit {
       this.restangular.one('local').get().pipe(),
       this.restangular.one("lote", this.id).get().pipe(),
       this.restangular.one('categoria').get().pipe(),
-      this.restangular.one('lotestatus').get().pipe()
+      this.restangular.one('lotestatus').get().pipe(),
+      this.restangular.one("tabelafipe/tipos").get().pipe(),
     ]).subscribe((allResp: any[]) => {
       this.loteCampos = allResp[0].data;
       this.tiposLote = allResp[1].data;
@@ -122,6 +146,7 @@ export class UpdateLotesComponent implements OnInit {
       this.categoriasFilhas = this.categorias.filter(categoria => categoria.categoriaPaiId === this.lote.categoria.categoriaPaiId);
 
       this.loteStatus = allResp[6].data;
+      this.tipos = allResp[7].data
     });
   }
 
@@ -403,5 +428,85 @@ export class UpdateLotesComponent implements OnInit {
     loteJudicial.removeControl('recursos');
     loteJudicial.removeControl('comarca');
     loteJudicial.removeControl('natureza');
+  }
+  openModal(template: TemplateRef<any>) {
+    this.modalRef = this.modalService.show(template);
+    
+  }
+
+  collapsed(): void {
+    this.message = 'collapsed';
+  }
+
+  collapses(): void {
+    this.message = 'collapses';
+  }
+
+  expanded(): void {
+    this.message = 'expanded';
+  }
+
+  expands(): void {
+    this.message = 'expands';
+  }
+
+  buscarReferencias(){
+    const tipo = this.modalValorAvalicao.value.tipo
+    this.restangular.one(`tabelafipe/referencias`,).get({tipo:tipo}).subscribe((response) => {
+       console.log(response.data[0])
+       this.periodoReferencia = response.data[0]
+       this.modalValorAvalicao.patchValue({
+        referencia: response.data[0]
+       })
+      
+    });
+  }
+  buscarMarcas(){
+    const tipo = this.modalValorAvalicao.value.tipo
+    const referencia = this.periodoReferencia
+    this.restangular.one(`tabelafipe/marcas`,).get( {referencia:referencia, tipo:tipo}).subscribe((response) => {
+       this.marcas = response.data
+    });
+  }
+  buscarModelos(){
+    const tipo = this.modalValorAvalicao.value.tipo
+    const referencia = this.periodoReferencia
+    const marca = this.modalValorAvalicao.value.marcas
+    this.restangular.one(`tabelafipe/modelos`,).get( {referencia:referencia, tipo:tipo, marca:marca}).subscribe((response) => {
+      this.modelos = response.data
+   });
+  }
+  buscarAno(){
+    const tipo = this.modalValorAvalicao.value.tipo
+    const referencia = this.periodoReferencia
+    const marca = this.modalValorAvalicao.value.marcas
+    const modelo = this.modalValorAvalicao.value.modelos
+    this.restangular.one(`tabelafipe/anos`,).get( {referencia:referencia, tipo:tipo, marca:marca, modelo:modelo}).subscribe((response) => {
+      this.ano = response.data
+   });
+  }
+
+  consultaFipe(){
+    const anoString = this.modalValorAvalicao.value.ano.substring(0, 4)
+    const anoFormatado = parseInt(anoString)
+    const combustivel = this.modalValorAvalicao.value.ano.substring(7, 15)
+    const automovel = {
+      loteId: this.formulario.value.loteId,
+      referencia:this.periodoReferencia,
+      tipo:this.modalValorAvalicao.value.tipo,
+      marca:this.modalValorAvalicao.value.marcas,
+      modelo:this.modalValorAvalicao.value.modelos,
+      ano:anoFormatado,
+      combustivel: combustivel
+
+    }
+    console.log(automovel)
+    this.restangular.all('tabelafipe/consultar').post(automovel).subscribe(a => {
+     this.formulario.patchValue({
+      valorAvaliacao:a.data.valor
+     })
+    })
+    
+    
   }
 }

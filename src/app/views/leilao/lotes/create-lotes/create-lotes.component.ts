@@ -1,13 +1,15 @@
-import { filter } from 'rxjs/operators';
-import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+
+import { Component, ElementRef, Input, OnInit, TemplateRef, ViewChild } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
+import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
 import { AngularEditorConfig } from '@kolkov/angular-editor';
 import { forkJoin } from 'rxjs';
 import { Restangular } from 'ngx-restangular';
 import * as _ from 'lodash';
 import * as moment from 'moment';
 import { NotifierService } from 'angular-notifier';
+
 
 @Component({
   selector: 'app-create-lotes',
@@ -33,7 +35,7 @@ export class CreateLotesComponent implements OnInit {
   cardImageBase64: string;
   tipoFoto: any
   fileToUpload: File | null = null;
-
+  codigoComum:boolean = true
   //fotos
   fotosbase64: any
   fotosnome: any
@@ -92,6 +94,7 @@ export class CreateLotesComponent implements OnInit {
     private route: ActivatedRoute,
     private router: Router,
     private formBuilder: FormBuilder,
+    private modalService: BsModalService,
     private notifierService: NotifierService
   ) {
     this.id = this.route.snapshot.params['id'];
@@ -136,6 +139,7 @@ export class CreateLotesComponent implements OnInit {
 
 
     })
+
   }
   ngOnInit() {
     
@@ -147,7 +151,9 @@ export class CreateLotesComponent implements OnInit {
       this.restangular.one('local').get().pipe(),
       this.restangular.one("lote", this.id).get().pipe(),
       this.restangular.one('categoria').get().pipe(),
-      this.restangular.one('lotestatus').get().pipe()
+      this.restangular.one('lotestatus').get().pipe(),
+
+      
     ]).subscribe((allResp: any[]) => {
       this.loteCampos = allResp[0].data;
       this.tiposLote = allResp[1].data;
@@ -162,6 +168,9 @@ export class CreateLotesComponent implements OnInit {
       this.categoriasFilhas = this.categorias.filter(categoria => categoria.categoriaPaiId === this.lote.categoria.categoriaPaiId);
 
       this.loteStatus = allResp[6].data;
+
+      
+ 
     });
   }
   onSubmit() {
@@ -393,4 +402,6 @@ export class CreateLotesComponent implements OnInit {
     loteJudicial.removeControl('comarca');
     loteJudicial.removeControl('natureza');
   }
+
+
 }
