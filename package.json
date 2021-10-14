@@ -1,10 +1,10 @@
 {
   "name": "@dashboard/angular",
   "version": "1.0.0",
-  "description": "Dashboard",
+  "description": "Admin - Empresa Brasileira de Leilões",
   "author": "Leonardo Oliveira",
   "homepage": "",
-  "copyright": "Copyright 2020",
+  "copyright": "Copyright 2021",
   "license": "MIT",
   "scripts": {
     "ng": "ng",

@@ -24,8 +24,7 @@ export class HabilitacaoComponent implements OnInit {
   constructor(
     private restangular: Restangular,
     private modalService: BsModalService,
-    private formBuilder: FormBuilder,
-  ) {
+    private formBuilder: FormBuilder  ) {
     this.formulario = this.formBuilder.group({
       limiteCredito:[null, Validators.required],
       observacao:[null]
@@ -39,11 +38,19 @@ export class HabilitacaoComponent implements OnInit {
     });
   }
   //submit
-  aprovar(solicitacaoHabilitacaoId, i) {
+  aprovarSolicitacao(solicitacaoHabilitacaoId, i) {
     this.documentosUsuario = this.habilitacao[i]
     this.documentosUsuario.habilitado = true
-    this.restangular.all(`habilitacao/${solicitacaoHabilitacaoId}/aprovar`).post(this.documentosUsuario).subscribe(a =>console.log(a) )
+    this.restangular.all(`habilitacao/${solicitacaoHabilitacaoId}/aprovar`).post(this.documentosUsuario)
+    .subscribe(a =>console.log(a) )
   }
+
+    //submit
+  reprovarSolicitacao(solicitacaoHabilitacaoId, i) {
+    this.restangular.all(`habilitacao/${solicitacaoHabilitacaoId}/reprovar`).post()
+    .subscribe(a => console.log(a) )
+  }
+
   aprovarLimiteDeCredito(){
     this.documentosUsuario = this.habilitacao[this.posicaoI]
     this.solicitacaoHabilitacaoId = this.habilitacao[this.posicaoI].solicitacaoHabilitacaoId
@@ -75,6 +82,23 @@ export class HabilitacaoComponent implements OnInit {
 
   expands(): void {
     this.message = 'expands';
+  }
+
+  getTipoRegra(tipoRegra) {
+    let regra = '';
+    switch(tipoRegra){
+      case 'TEL':
+        regra = 'Telefone';
+        break;
+      case 'EMAIL':
+        regra = 'Email';
+        break;
+      case 'DOC':
+          regra = 'Documentos';
+          break;
+    }
+
+    return regra;
   }
 
 }
