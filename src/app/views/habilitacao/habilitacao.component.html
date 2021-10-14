@@ -3,69 +3,71 @@
     <div class="col-lg-12">
       <div class="card">
         <div class="card-header">
-          <i class="fa fa-user-secret"></i> Usuários
+          <i class="fa fa-user-secret"></i> Solicitação de Habilitação
         </div>
         <div class="card-block">
           <div class="table-responsive mt-4">
             <table class="table table-striped" [mfData]="habilitacao" #mfHabilitacao="mfDataTable" [mfRowsOnPage]="5">
               <thead>
                 <tr>
-
-                  <th>
-                    <mfDefaultSorter by="usuarioId">Id</mfDefaultSorter>
-                  </th>
-                  <th>
-                    <mfDefaultSorter by="leilao">Leilão</mfDefaultSorter>
-                  </th>
-                  <th>
-                    <mfDefaultSorter by="pessoa">Usuário</mfDefaultSorter>
-                  </th>
                   <th>
                     <mfDefaultSorter by="dataCadastro">Data Cadastro</mfDefaultSorter>
                   </th>
                   <th>
+                    <mfDefaultSorter by="leilao.nome">Leilão</mfDefaultSorter>
+                  </th>
+                  <th>
+                    <mfDefaultSorter by="pessoa.pessoa.nomeCompleto">Usuário</mfDefaultSorter>
+                  </th>
+                  <!-- <th>
                     <mfDefaultSorter by="para">Para</mfDefaultSorter>
+                  </th> -->
+                  <th>
+                    <mfDefaultSorter by="regraHabilitacao.tipoValidacaoRegra">Regra</mfDefaultSorter>
                   </th>
                   <th>
-                    <mfDefaultSorter by="tipoValidacaoRegra">Regra de Validação</mfDefaultSorter>
+                    <mfDefaultSorter by="status.descricao">Status</mfDefaultSorter>
                   </th>
                   <th>
-                    <mfDefaultSorter by="ativo">Aprovado</mfDefaultSorter>
+                    <mfDefaultSorter by="statusCodigo">Status Código</mfDefaultSorter>
                   </th>
                   <th>
                     <mfDefaultSorter by="documentos">Documentos</mfDefaultSorter>
                   </th>
                   <th>
-                    <mfDefaultSorter by="aprovar">Aprovar</mfDefaultSorter>
+                    Ação
                   </th>
                 </tr>
               </thead>
               <tbody>
                 <tr *ngFor="let item of mfHabilitacao.data; let i = index">
-                  <td>{{item.solicitacaoHabilitacaoId}}</td>
+                  <td>{{item.dataCadastro | amDateFormat:'DD/MM/yyyy HH:mm' }}</td>
                   <td>{{item.leilao.nome}}</td>
-                  <td>{{item.usuario.pessoa}}</td>
-                  <td>{{item.dataCadastro | amDateFormat:'DD/MM/yyyy' }}</td>
-                  <td>{{item.para}}</td>
-                  <td>{{item.regraHabilitacao.tipoValidacaoRegra === 'TEL'? 'Telefone' : '' }}</td>
-                  <td>{{item.habilitado ? 'Sim' : 'Não' }}</td>
+                  <td>{{item.usuario.pessoa.nomeCompleto}}</td>
+                  <!-- <td>{{item.para}}</td> -->
+                  <td>{{getTipoRegra(item.regraHabilitacao.tipoValidacaoRegra) }}</td>
+                  <td>{{item.status.descricao }}</td>
+                  <td>{{item.statusCodigo }}</td>
                   <td class="text-center" nowrap>
-                    <p *ngIf="item.documentos.length == 0">Sem Documentos</p>
+                    <span *ngIf="item.documentos.length == 0">Sem Documentos</span>
                     <button *ngIf="item.documentos.length > 0" type="button" class="btn btn-primary"
-                      (click)="openModal(documento, i)"><i class="fa fa-edit"></i>&nbsp; Documentos</button>
+                      (click)="openModal(documento, i)"><i class="fa fa-edit"></i>&nbsp; Documentos({{item.documentos.length}})</button>
                   </td>
                   <td class="text-center" nowrap>
-                    <button type="button" *ngIf="item.leilao.temAnaliseCadastral" class="btn btn-primary"
-                      (click)="openModal(aprovar, i)"><i class="fa fa-edit"></i>&nbsp; Aprovar</button>
-                    <button type="button" *ngIf="!item.leilao.temAnaliseCadastral" class="btn btn-primary"
-                      (click)="aprovar(item.solicitacaoHabilitacaoId, i)" [disabled]="item.habilitado"><i
-                        class="fa fa-edit"></i>&nbsp; Aprovar</button>
-                  </td>
+                    <button type="button" *ngIf="item.leilao.temAnaliseCadastral" class="btn btn-warning"
+                      (click)="openModal(aprovar, i)"><i class="fa fa-edit"></i>&nbsp; Análisar Crédito</button>
+                      <button type="button" *ngIf="!item.leilao.temAnaliseCadastral && !item.habilitado" class="btn btn-success"
+                      (click)="aprovarSolicitacao(item.solicitacaoHabilitacaoId, i)"><i
+                        class="fa fa-edit"></i>&nbsp; Habilitar</button>
+                      <button type="button" *ngIf="!item.leilao.temAnaliseCadastral && item.habilitado" class="btn btn-danger"
+                      (click)="reprovarSolicitacao(item.solicitacaoHabilitacaoId, i)"><i
+                        class="fa fa-edit"></i>&nbsp; Desabilitar</button>
+                    </td>
                 </tr>
               </tbody>
               <tfoot>
                 <tr>
-                  <td colspan="9">
+                  <td colspan="10">
                     <mfBootstrapPaginator [rowsOnPageSet]="[5,10,25]"></mfBootstrapPaginator>
                   </td>
                 </tr>
@@ -80,8 +82,7 @@
               </button>
             </div>
             <div class="modal-body">
-              {{documentosUsuario.documentos.length > 0 ? documentosUsuario.documentos : 'Não existem documentos para
-              serem listados'}}
+              {{documentosUsuario.documentos.length > 0 ? documentosUsuario.documentos : 'Não existem documentos para serem listados'}}
 
             </div>
           </ng-template>
@@ -93,14 +94,14 @@
               </button>
             </div>
             <div class="modal-body">
-              <form [formGroup]="formulario" (ngSubmit)="aprovar()">
+              <form [formGroup]="formulario" (ngSubmit)="aprovarSolicitacao()">
                 <div class="card-block">
                   <div class="row">
-  
+
                     <div class="form-group col-12">
                       <label>Limite de Crédito</label>
                       <input type="number" class="form-control" formControlName="limiteCredito">
-  
+
                     </div>
                   </div>
                   <div class="row">
@@ -110,18 +111,17 @@
                     </div>
                   </div>
                 </div>
-  
+
                 <div class="row">
                   <div class="form-group col-4">
-                    <button type="button"  class="btn btn-primary form-control"
-                        (click)="aprovarLimiteDeCredito()" ><i
-                          ></i>&nbsp; Aprovar</button>
+                    <button type="button"  class="btn btn-success form-control"
+                        (click)="aprovarLimiteDeCredito()" >Habilitar</button>
                   </div>
-  
+
                 </div>
-  
+
               </form>
-              
+
 
             </div>
           </ng-template>

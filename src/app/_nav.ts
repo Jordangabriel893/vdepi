@@ -21,12 +21,6 @@ export const navigation = [
     source: 'RelatorioEstoque'
   },
   {
-    name: 'Categoria',
-    url: '/categoria',
-    icon: 'fa fa-user-secret',
-    source: 'RelatorioEstoque'
-  },
-  {
     name: 'Usuarios',
     url: '/usuarios',
     icon: 'fa fa-user-secret',

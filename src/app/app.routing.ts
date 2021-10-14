@@ -14,12 +14,6 @@ import {
   LeilaoComponent,
   CreateLeilaoComponent,
   UpdateLeilaoComponent,
-  CategoriaComponent,
-  CreateCategoriaComponent,
-  UpdateCategoriaComponent,
-  
-
-
 } from './views';
 
 import { SourceGuard } from './_guards/source.guard';
@@ -120,33 +114,6 @@ export const routes: Routes = [
         component: UpdateLotesComponent,
         data: {
           title: 'Atualizar Lote',
-          source: 'RelatorioEstoque'
-        },
-        canActivate: [SourceGuard]
-      },
-      {
-        path: 'categoria',
-        component: CategoriaComponent,
-        data: {
-          title: 'Categoria',
-          source: 'RelatorioEstoque'
-        },
-        canActivate: [SourceGuard]
-      },
-      {
-        path: 'create-categoria',
-        component: CreateCategoriaComponent,
-        data: {
-          title: 'Nova Categoria',
-          source: 'RelatorioEstoque'
-        },
-        canActivate: [SourceGuard]
-      },
-      {
-        path: 'update-categoria/:id',
-        component: UpdateCategoriaComponent,
-        data: {
-          title: 'Editar Categoria',
           source: 'RelatorioEstoque'
         },
         canActivate: [SourceGuard]

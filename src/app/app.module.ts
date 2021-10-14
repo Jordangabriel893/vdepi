@@ -41,10 +41,7 @@ import {
   NotasFiscaisComponent,
   LeilaoComponent,
   CreateLeilaoComponent,
-  UpdateLeilaoComponent,
-  CategoriaComponent,
-  CreateCategoriaComponent,
-  UpdateCategoriaComponent
+  UpdateLeilaoComponent
 
 } from './views';
 
@@ -65,10 +62,6 @@ const APP_COMPONENTS = [
   LeilaoComponent,
   CreateLeilaoComponent,
   UpdateLeilaoComponent,
-  CategoriaComponent,
-  CreateCategoriaComponent,
-  UpdateCategoriaComponent
-
 ]
 
 // Import directives
@@ -230,9 +223,9 @@ export function RestangularConfigFactory(RestangularProvider, NotifierService: N
     CarouselModule.forRoot(),
     AngularEditorModule,
     HttpClientModule
-   
 
-   
+
+
   ],
   declarations: [
     AppComponent,
