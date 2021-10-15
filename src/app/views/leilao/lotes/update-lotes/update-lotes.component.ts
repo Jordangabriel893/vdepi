@@ -9,6 +9,7 @@ import { tap } from 'rxjs/operators';
 import { forkJoin } from 'rxjs';
 import * as moment from 'moment';
 import { NotifierService } from 'angular-notifier';
+import 'moment/locale/pt-br';
 
 
 @Component({
@@ -61,6 +62,7 @@ export class UpdateLotesComponent implements OnInit {
   marcas
   modelos
   ano
+  valor
 
   local: any
   editorConfig: AngularEditorConfig = {
@@ -115,7 +117,8 @@ export class UpdateLotesComponent implements OnInit {
       marcas: [, Validators.required],
       modelos: [, Validators.required ],
       ano:[Validators.required],
-      combustivel:[]
+      combustivel:[],
+      valor:[],
 
     })
   }
@@ -140,7 +143,10 @@ export class UpdateLotesComponent implements OnInit {
 
       this.lote = allResp[4].data;
       this.leilaoId = this.lote.leilaoId;
-      this.updateForm(this.lote);
+      const fotos = this.lote.fotos.filter(x => x.tipoFoto.visivelSite  == true )
+      
+      console.log(fotos)
+      this.updateForm(this.lote, fotos);
 
       this.categorias = allResp[5].data;
       this.categoriasFilhas = this.categorias.filter(categoria => categoria.categoriaPaiId === this.lote.categoria.categoriaPaiId);
@@ -164,8 +170,13 @@ export class UpdateLotesComponent implements OnInit {
 
     const formulario = this.formulario.value
     this.restangular.all('lote').customPUT(formulario, this.id).subscribe(a => {
+      this.notifierService.notify('success', 'Lote Alterado com sucesso');
       this.router.navigate(['lotes', this.leilaoId])
-    })
+    },
+      error => {
+        this.notifierService.notify('error', 'Erro ao atualizar o Lote!');
+      }); 
+
   }
 
   fileChangeEvent(fileInput: any) {
@@ -325,7 +336,7 @@ export class UpdateLotesComponent implements OnInit {
     this.inputAnexos.nativeElement.click()
   }
 
-  updateForm(dados) {
+  updateForm(dados, fotos) {
     console.log(dados);
     this.formulario = this.formBuilder.group({
       loteId: [dados.loteId, Validators.required],
@@ -351,7 +362,7 @@ export class UpdateLotesComponent implements OnInit {
       tipoLoteId: [dados.tipoLoteId, Validators.required],
       campos: this.formBuilder.array(dados.campos ? dados.campos.map(x => this.formBuilder.group({ ...x, acao: '' })) : [], Validators.required),
       anexos: this.formBuilder.array(dados.anexos ? dados.anexos.map(x => this.formBuilder.group({ ...x, acao: '' })) : []),
-      fotos: this.formBuilder.array(dados.fotos ? dados.fotos.map(x => this.formBuilder.group({ ...x, acao: '' })) : [], Validators.required),
+      fotos: this.formBuilder.array(fotos ? fotos.map(x => this.formBuilder.group({ ...x, acao: '' })) : [], Validators.required),
     })
     setTimeout(() => { this.mostrarCampoJudicial = true }, 3000)
   }
@@ -485,8 +496,7 @@ export class UpdateLotesComponent implements OnInit {
       this.ano = response.data
    });
   }
-
-  consultaFipe(){
+  buscarValor(){
     const anoString = this.modalValorAvalicao.value.ano.substring(0, 4)
     const anoFormatado = parseInt(anoString)
     const combustivel = this.modalValorAvalicao.value.ano.substring(7, 15)
@@ -502,10 +512,18 @@ export class UpdateLotesComponent implements OnInit {
     }
     console.log(automovel)
     this.restangular.all('tabelafipe/consultar').post(automovel).subscribe(a => {
-     this.formulario.patchValue({
-      valorAvaliacao:a.data.valor
-     })
+      this.valor = a.data.valor
+      this.modalValorAvalicao.patchValue({
+        valor:this.valor
+       })
     })
+  }
+
+  consultaFipe(){
+    
+    this.formulario.patchValue({
+      valorAvaliacao:this.valor
+     })
     
     
   }

@@ -10,6 +10,7 @@ import { Restangular } from 'ngx-restangular';
 export class LotesComponent implements OnInit {
   id: any
   lotes: any
+  leilao
 
   constructor(
     private restangular: Restangular,
@@ -17,12 +18,19 @@ export class LotesComponent implements OnInit {
     private router: Router,
   ) {
     this.id = this.route.snapshot.params['id']
+    console.log(this.id)
     this.restangular.one("lote", '').get({ leilaoId: this.id }).subscribe(
       (lotes) => {
         this.lotes = lotes.data;
         console.log(this.lotes)
       }
     )
+    this.restangular.one(`leilao`).get({id:this.id}).subscribe((response) => {
+     const leilao =  response.data.filter(x => x.id == this.id)
+     console.log(leilao[0])
+     this.leilao = leilao[0]
+      
+    });
 
   }
 

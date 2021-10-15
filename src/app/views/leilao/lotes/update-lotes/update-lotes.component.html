@@ -4,7 +4,13 @@
       <div class="col-lg-12">
         <div class="card">
           <div class="card-header">
-            <i class="fa fa-user-secret"></i> Dados do Lote
+            
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-house-fill" viewBox="0 0 16 16">
+                <path fill-rule="evenodd" d="m8 3.293 6 6V13.5a1.5 1.5 0 0 1-1.5 1.5h-9A1.5 1.5 0 0 1 2 13.5V9.293l6-6zm5-.793V6l-2-2V2.5a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5z"/>
+                <path fill-rule="evenodd" d="M7.293 1.5a1 1 0 0 1 1.414 0l6.647 6.646a.5.5 0 0 1-.708.708L8 2.207 1.354 8.854a.5.5 0 1 1-.708-.708L7.293 1.5z"/>
+              </svg> Dados do Lote - - Obrigatório
+         
+            
           </div>
 
           <div class="card-block">
@@ -13,7 +19,7 @@
                 <ng-template #descricao>
                   <app-error-msg [control]="formulario.get('descricao')" label="Descrição"></app-error-msg>
                 </ng-template>
-                <label for="descricao">Descrição</label>
+                <label for="descricao">Descrição - Obrigatório</label>
                 <input type="text" class="form-control" id="descricao" placeholder="Descrição"
                   formControlName="descricao" [popover]="descricao" triggers="keypress:focusout">
               </div>
@@ -21,7 +27,7 @@
                 <ng-template #numeroLote>
                   <app-error-msg [control]="formulario.get('numeroLote')" label="Descrição"></app-error-msg>
                 </ng-template>
-                <label for="numeroLote">Numero do Lote</label>
+                <label for="numeroLote">Numero do Lote - Obrigatório</label>
                 <input type="text" class="form-control" id="numeroLote" placeholder="Numero do Lote"
                   formControlName="numeroLote" [popover]="numeroLote" triggers="keypress:focusout">
               </div>
@@ -29,7 +35,7 @@
                 <ng-template #status>
                   <app-error-msg [control]="formulario.get('statusId')" label="Status"></app-error-msg>
                 </ng-template>
-                <label for="statusId">Status</label>
+                <label for="statusId">Status - Obrigatório</label>
                 <select class="form-control" formControlName="statusId" >
                   <option *ngFor="let item of loteStatus" [value]="item.loteStatusId">{{item.descricao}}</option>
                 </select>
@@ -37,33 +43,27 @@
             </div>
             <div class="row">
               <div class="form-group col-4">
-                <label for="descricao">Categoria</label>
+                <label for="descricao">Categoria - Obrigatório</label>
                 <select class="form-control" formControlName="categoriaId" >
                   <option *ngFor="let item of categoriasFilhas" [value]="item.categoriaId">{{item.descricao}}</option>
                 </select>
               </div>
               <div class="form-group col-4" >
-                <label for="ativo">Tipo de Lote</label>
+                <label for="ativo">Tipo de Lote - Obrigatório</label>
                 <select class="form-control" formControlName="tipoLoteId">
                   <option *ngFor="let item of tiposLote" [value]="item.tipoLoteId">{{item.descricao}}</option>
                 </select>
               </div>
               <div class="form-group col-4">
-                <label for="descricao">Localização</label>
+                <label for="descricao">Localização - Obrigatório</label>
                 <select class="form-control" formControlName="localId">
                   <option [value]="item.localLoteId" *ngFor="let item of local">{{item.descricao}}</option>
                 </select>
               </div>
             </div>
             <div class="row">
-              <div class="form-group col-4 checkbox" >
-                <label class="checkbox-inline">Judicial</label>
-                <input type="checkbox"  formControlName="judicial">
-              </div>
-            </div>  
-            <div class="row">
               <div class="col-12">
-                <label for="editor1">Descrição Detalhada</label>
+                <label for="editor1">Descrição Detalhada - Obrigatório</label>
                 <angular-editor id="editor1" formControlName="descricaoDetalhada" [config]="editorConfig"></angular-editor>
               </div>
             </div>
@@ -72,22 +72,22 @@
       </div>
     </div>
   </div>
-  <div class="animated fadeIn" formGroupName="loteJudicial" *ngIf="this.formulario.value.judicial == true">
+  <div class="animated fadeIn"  >
     <div class="row">
       <div class="col-lg-12">
         <div class="card">
           <div class="card-header">
-            <i class="fa fa-user-secret"></i> Judicial
+            <input type="checkbox"  formControlName="judicial"> Judicial
           </div>
 
-          <div class="card-block">
+          <div class="card-block" formGroupName="loteJudicial" *ngIf="this.formulario.value.judicial == true">
             <div class="row">
               <div class="form-group col-4">
                 <ng-template #descricao>
                   <app-error-msg [control]="formulario.get('loteJudicial').get('numProcesso')" label="Descrição"></app-error-msg>
                 </ng-template>
 
-                <label for="numProcesso">Nº Processo</label>
+                <label for="numProcesso">Nº Processo - Obrigatório</label>
                 <input type="number" class="form-control" id="numProcesso" placeholder="Nº Processo"
                   formControlName="numProcesso" [popover]="numProcesso" triggers="keypress:focusout">
               </div>
@@ -95,7 +95,7 @@
                 <ng-template #autor>
                   <app-error-msg [control]="formulario.get('loteJudicial').get('autor')" label="Autor"></app-error-msg>
                 </ng-template>
-                <label for="autor">Autor</label>
+                <label for="autor">Autor - Obrigatório</label>
                 <input type="text" class="form-control" id="autor" placeholder="Autor" formControlName="autor"
                   [popover]="autor" triggers="keypress:focusout">
               </div>
@@ -103,7 +103,7 @@
                 <ng-template #reu>
                   <app-error-msg [control]="formulario.get('loteJudicial').get('reu')" label="Réu"></app-error-msg>
                 </ng-template>
-                <label for="reu">Réu</label>
+                <label for="reu">Réu - Obrigatório</label>
                 <input type="text" class="form-control" id="reu" placeholder="Réu" formControlName="reu" [popover]="reu"
                   triggers="keypress:focusout">
               </div>
@@ -114,7 +114,7 @@
                 <ng-template #depositario>
                   <app-error-msg [control]="formulario.get('loteJudicial').get('depositario')" label="Depositário"></app-error-msg>
                 </ng-template>
-                <label for="depositario">Depositário</label>
+                <label for="depositario">Depositário - Obrigatório</label>
                 <input type="text" class="form-control" id="depositario" placeholder="Depositário"
                   formControlName="depositario" [popover]="depositario" triggers="keypress:focusout">
               </div>
@@ -123,7 +123,7 @@
                   <app-error-msg [control]="formulario.get('loteJudicial').get('localDepositario')" label="Local Depositário">
                   </app-error-msg>
                 </ng-template>
-                <label for="localDepositario">Local Depositário</label>
+                <label for="localDepositario">Local Depositário - Obrigatório</label>
                 <input type="text" class="form-control" id="localDepositario" placeholder="Local Depositário"
                   formControlName="localDepositario" [popover]="localDepositario" triggers="keypress:focusout">
               </div>
@@ -132,7 +132,7 @@
                   <app-error-msg [control]="formulario.get('loteJudicial').get('anoProcesso')" label="Ano do Processo">
                   </app-error-msg>
                 </ng-template>
-                <label for="anoProcesso">Ano do Processo</label>
+                <label for="anoProcesso">Ano do Processo - Obrigatório</label>
                 <input type="text" class="form-control" id="anoProcesso" placeholder="Ano do Processo"
                   formControlName="anoProcesso" [popover]="anoProcesso" triggers="keypress:focusout">
               </div>
@@ -144,7 +144,7 @@
                 <ng-template #depositario>
                   <app-error-msg [control]="formulario.get('tipoAcao')" label="Tipo de Ação"></app-error-msg>
                 </ng-template>
-                <label for="tipoAcao">Tipo de Ação</label>
+                <label for="tipoAcao">Tipo de Ação - Obrigatório</label>
                 <input type="text" class="form-control" id="tipoAcao" placeholder="Tipo de Ação"
                   formControlName="tipoAcao" [popover]="tipoAcao" triggers="keypress:focusout">
               </div>
@@ -153,7 +153,7 @@
                   <app-error-msg [control]="formulario.get('comarca')" label="Comarca">
                   </app-error-msg>
                 </ng-template>
-                <label for="comarca">Comarca</label>
+                <label for="comarca">Comarca - Obrigatório</label>
                 <input type="text" class="form-control" id="comarca" placeholder="Comarca"
                   formControlName="comarca" [popover]="comarca" triggers="keypress:focusout">
               </div>
@@ -162,7 +162,7 @@
                   <app-error-msg [control]="formulario.get('natureza')" label="Natureza">
                   </app-error-msg>
                 </ng-template>
-                <label for="natureza">Natureza</label>
+                <label for="natureza">Natureza - Obrigatório</label>
                 <input type="text" class="form-control" id="natureza" placeholder="Natureza"
                   formControlName="natureza" [popover]="natureza" triggers="keypress:focusout">
               </div>
@@ -190,12 +190,15 @@
       <div class="col-lg-12">
         <div class="card">
           <div class="card-header">
-            <i class="fa fa-user-secret"></i> Valores
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-cash" viewBox="0 0 16 16">
+              <path d="M8 10a2 2 0 1 0 0-4 2 2 0 0 0 0 4z"/>
+              <path d="M0 4a1 1 0 0 1 1-1h14a1 1 0 0 1 1 1v8a1 1 0 0 1-1 1H1a1 1 0 0 1-1-1V4zm3 0a2 2 0 0 1-2 2v4a2 2 0 0 1 2 2h10a2 2 0 0 1 2-2V6a2 2 0 0 1-2-2H3z"/>
+            </svg> Valores
           </div>
           <div class="card-block">
             <div class="row">
               <div class="form-group col-4">
-                <label for="valorAvaliacao">Valor Avaliação</label>
+                <label for="valorAvaliacao">Valor Avaliação - Obrigatório</label>
                 <div class="flex">
                   <input type="text" class="form-control" id="valorAvaliacao" formControlName="valorAvaliacao"
                     currencyMask [options]="{ prefix: 'R$ ', thousands: '.', decimal: ',' }">
@@ -210,25 +213,25 @@
                 </div>
               </div>
               <div class="form-group col-4">
-                <label for="valorLanceInicial">Valor do Lance Inicial</label>
+                <label for="valorLanceInicial">Valor do Lance Inicial - Obrigatório</label>
                 <input type="text" class="form-control" id="valorLanceInicial" formControlName="valorLanceInicial" currencyMask [options]="{ prefix: 'R$ ', thousands: '.', decimal: ',' }">
               </div>
               <div class="form-group col-4">
-                <label for="valorIncremento">Valor Incremento</label>
+                <label for="valorIncremento">Valor Incremento - Obrigatório</label>
                 <input type="text" class="form-control" id="valorIncremento" formControlName="valorIncremento" currencyMask [options]="{ prefix: 'R$ ', thousands: '.', decimal: ',' }">
               </div>
             </div>
             <div class="row">
               <div class="form-group col-4">
-                <label for="valorMinimoVenda">Valor Mínimo de Venda</label>
+                <label for="valorMinimoVenda">Valor Mínimo de Venda - Obrigatório</label>
                 <input type="text" class="form-control" id="valorMinimoVenda" formControlName="valorMinimoVenda" currencyMask [options]="{ prefix: 'R$ ', thousands: '.', decimal: ',' }">
               </div>
               <div class="form-group col-4">
-                <label for="valorTaxaAdministrativa">Valor da Taxa Administrativa</label>
+                <label for="valorTaxaAdministrativa">Valor da Taxa Administrativa - Obrigatório</label>
                 <input type="text" class="form-control" id="valorTaxaAdministrativa" formControlName="valorTaxaAdministrativa" currencyMask [options]="{ prefix: 'R$ ', thousands: '.', decimal: ',' }">
               </div>
               <div class="form-group col-4">
-                <label for="valorOutrasTaxas">Valor de Outras Taxas</label>
+                <label for="valorOutrasTaxas">Valor de Outras Taxas - Obrigatório</label>
                 <input type="text" class="form-control" id="valorOutrasTaxas" formControlName="valorOutrasTaxas" currencyMask [options]="{ prefix: 'R$ ', thousands: '.', decimal: ',' }">
               </div>
             </div>
@@ -260,7 +263,7 @@
               <label>Sua pesquisa será realizada de acordo com seguinte período de referência:</label>
               <select class="custom-select" id="inputGroupSelect01" (change)="buscarMarcas()" formControlName="referencia" >
                 <option selected>Selecione o período</option>
-                <option>{{modalValorAvalicao.get('referencia').value | date: 'MMMM/ y' : locale: 'pt-BR'   }}</option>      
+                <option>{{modalValorAvalicao.get('referencia').value }}</option>      
               </select>
             </div>
           </div>
@@ -281,11 +284,15 @@
               <option >Selecione o modelo do veiculo</option>
               <option  *ngFor="let item of modelos">{{item}}</option>
             </select>
-            <select class="custom-select group-combobox" id="inputGroupSelect01" formControlName="ano">
+            <select class="custom-select group-combobox" id="inputGroupSelect01" formControlName="ano" (change)="buscarValor()">
               <option >Selecione o ano modelo do veiculo</option>
               <option  *ngFor="let item of ano" >{{item.ano}} - {{item.combustivel}}</option>
             </select>
+            
+              <input type="text" class="form-control" id="valor" formControlName="valor" currencyMask [options]="{ prefix: 'R$ ', thousands: '.', decimal: ',' }">
+            
           </div>
+          
         </div>  
   
   
@@ -294,7 +301,7 @@
     </form>
     <div class="row">
       <div class="col-12 consultar">
-        <button class="btn btn-primary" (click)="consultaFipe()" (click)="modalRef?.hide()">Pesquisar</button>
+        <button class="btn btn-primary" (click)="consultaFipe()" (click)="modalRef?.hide()">Concluir</button>
         <button class="btn btn-danger" (click)="modalRef?.hide()">Cancelar</button>
       </div>
 
@@ -307,7 +314,10 @@
       <div class="col-lg-12">
         <div class="card">
           <div class="card-header new-campo">
-            <div><i class="fa fa-user-secret"></i>Campos</div>
+            <div class="cabecalho"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil-square" viewBox="0 0 16 16">
+              <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"/>
+              <path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z"/>
+            </svg><p>Campos - Obrigatório</p></div>
 
             <button type="button" class="btn btn-success btn-sm" (click)="adicionarCampo()"><i
                 class="fa fa-plus-circle"></i>&nbsp;
@@ -360,7 +370,13 @@
         <div class="card">
           <div class="card-header new-campo">
 
-            <div><i class="fa fa-user-secret"></i>Fotos</div>
+            <div class="cabecalho">
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-card-image" viewBox="0 0 16 16">
+              <path d="M6.002 5.5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0z"/>
+              <path d="M1.5 2A1.5 1.5 0 0 0 0 3.5v9A1.5 1.5 0 0 0 1.5 14h13a1.5 1.5 0 0 0 1.5-1.5v-9A1.5 1.5 0 0 0 14.5 2h-13zm13 1a.5.5 0 0 1 .5.5v6l-3.775-1.947a.5.5 0 0 0-.577.093l-3.71 3.71-2.66-1.772a.5.5 0 0 0-.63.062L1.002 12v.54A.505.505 0 0 1 1 12.5v-9a.5.5 0 0 1 .5-.5h13z"/>
+            </svg>
+            <p>  Fotos - Obrigatório</p>
+          </div>
             <button type="button" class="btn btn-success btn-sm" (click)="alterarFoto(-1)">
               <i class="fa fa-plus-circle"></i>&nbsp;Nova Foto</button>
               <input type="file"  #inputFotos (change)="fileChangeEvent($event)">
@@ -396,7 +412,11 @@
       <div class="col-lg-12">
         <div class="card">
           <div class="card-header new-campo">
-            <div><i class="fa fa-user-secret"></i>Anexos</div>
+            <div class="cabecalho"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-file-earmark-text" viewBox="0 0 16 16">
+              <path d="M5.5 7a.5.5 0 0 0 0 1h5a.5.5 0 0 0 0-1h-5zM5 9.5a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1-.5-.5zm0 2a.5.5 0 0 1 .5-.5h2a.5.5 0 0 1 0 1h-2a.5.5 0 0 1-.5-.5z"/>
+              <path d="M9.5 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V4.5L9.5 0zm0 1v2A1.5 1.5 0 0 0 11 4.5h2V14a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h5.5z"/>
+            </svg>
+            <p>Anexos - Obrigatório</p></div>
             <button type="button" class="btn btn-success btn-sm" (click)="alterarAnexo(-1)">
               <i class="fa fa-plus-circle"></i>&nbsp;Novo Anexo</button>
               <input type="file" #inputAnexos (change)="anexoChangeEvent($event.target.files)">
@@ -436,7 +456,10 @@
       <div class="col-lg-12">
         <div class="card">
           <div class="card-header">
-            <i class="fa fa-user-secret"></i> Observação
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil-square" viewBox="0 0 16 16">
+              <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"/>
+              <path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z"/>
+            </svg> Observação
           </div>
 
           <div class="card-block">
@@ -449,7 +472,7 @@
 
           </div>
           <div class="card-footer">
-            <button type="submit" class="btn btn-primary"><i class="fa fa-save"></i> Salvar</button>
+            <button type="submit" class="btn btn-primary saveCancel"><i class="fa fa-save"></i> Salvar</button>
             <button type="reset" class="btn btn-danger" [routerLink]="['/lotes', leilaoId]"><i class="fa fa-undo"></i>
               Cancelar</button>
           </div>

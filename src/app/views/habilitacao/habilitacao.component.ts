@@ -2,7 +2,9 @@ import { Component, OnInit, TemplateRef } from '@angular/core';
 import { Restangular } from 'ngx-restangular';
 import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-
+import { NotifierService } from 'angular-notifier';
+import { ActivatedRoute, Router } from '@angular/router';
+import { Location } from '@angular/common';
 @Component({
   selector: 'app-habilitacao',
   templateUrl: './habilitacao.component.html',
@@ -17,6 +19,7 @@ export class HabilitacaoComponent implements OnInit {
   message = 'expanded';
   modalRef: BsModalRef;
   solicitacaoHabilitacaoId: any
+  solicitacaoHabilitacaoIdDesabilitar:any
   posicaoI:any
 
   documentosUsuario:any
@@ -24,7 +27,11 @@ export class HabilitacaoComponent implements OnInit {
   constructor(
     private restangular: Restangular,
     private modalService: BsModalService,
-    private formBuilder: FormBuilder  ) {
+    private formBuilder: FormBuilder,
+    private notifierService: NotifierService,
+    private route: ActivatedRoute,
+    private router: Router,
+    private location: Location  ) {
     this.formulario = this.formBuilder.group({
       limiteCredito:[null, Validators.required],
       observacao:[null]
@@ -42,13 +49,29 @@ export class HabilitacaoComponent implements OnInit {
     this.documentosUsuario = this.habilitacao[i]
     this.documentosUsuario.habilitado = true
     this.restangular.all(`habilitacao/${solicitacaoHabilitacaoId}/aprovar`).post(this.documentosUsuario)
-    .subscribe(a =>console.log(a) )
+    .subscribe(a =>{
+      this.notifierService.notify('success', 'Solicitação Aprovada com sucesso');
+      setTimeout(()=>{location.reload()}, 3000)
+    },
+      error => {
+        this.notifierService.notify('error', 'Erro ao solicitar aprovação');
+      });   
   }
 
     //submit
-  reprovarSolicitacao(solicitacaoHabilitacaoId, i) {
-    this.restangular.all(`habilitacao/${solicitacaoHabilitacaoId}/reprovar`).post()
-    .subscribe(a => console.log(a) )
+  reprovarSolicitacao() {
+    
+    this.restangular.all(`habilitacao/${this.solicitacaoHabilitacaoIdDesabilitar}/reprovar`).post()
+    .subscribe(a => {
+      this.notifierService.notify('success', 'Solicitação Aprovada com sucesso');
+      setTimeout(()=>{location.reload()}, 3000)
+      
+    },
+      error => {
+        this.notifierService.notify('error', 'Erro ao solicitar reprovação');
+      });
+      
+      
   }
 
   aprovarLimiteDeCredito(){
@@ -58,14 +81,21 @@ export class HabilitacaoComponent implements OnInit {
     this.documentosUsuario.observacao = this.formulario.value.observacao
     this.documentosUsuario.habilitado = true
     console.log(this.documentosUsuario)
-    this.restangular.all(`habilitacao/${this.solicitacaoHabilitacaoId}/aprovar`).post(this.documentosUsuario).subscribe(a =>console.log(a) )
+    this.restangular.all(`habilitacao/${this.solicitacaoHabilitacaoId}/aprovar`).post(this.documentosUsuario).subscribe(a =>{
+      this.notifierService.notify('success', 'Limite Aprovado com sucesso');
+      setTimeout(()=>{location.reload()}, 3000)
+    },
+      error => {
+        this.notifierService.notify('error', 'Erro ao aprovar Limite de Crédito');
+      }); 
   }
 
   //modal
-  openModal(template: TemplateRef<any>, i) {
+  openModal(template: TemplateRef<any>, i, solicitacaoHabilitacaoId) {
     this.modalRef = this.modalService.show(template);
     this.documentosUsuario = this.habilitacao[i]
     this.posicaoI = i
+    this.solicitacaoHabilitacaoIdDesabilitar = solicitacaoHabilitacaoId
   }
 
   collapsed(): void {

@@ -2,14 +2,14 @@
   <div class="row">
     <div class="col-lg-12">
       <div class="card">
-        <div class="card-header">
-          <i class="fa fa-user-secret"></i> Lotes
+        <div class="card-header" *ngIf="leilao">
+          <i class="fa fa-user-secret"></i> Lotes - {{leilao.nome }}
         </div>
         <div class="card-block">
           <button type="button" class="btn btn-success" (click)="create()"><i class="fa fa-plus-circle"></i>&nbsp; Novo Lote</button>
 
           <div class="table-responsive mt-4">
-            <table class="table table-striped" [mfData]="lotes" #mfLotes="mfDataTable" [mfRowsOnPage]="5">
+            <table class="table table-striped" [mfData]="lotes" #mfLotes="mfDataTable" [mfRowsOnPage]="100">
               <thead>
                 <tr>
 

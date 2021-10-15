@@ -4,20 +4,23 @@
       <div class="col-lg-12">
         <div class="card">
           <div class="card-header">
-            <i class="fa fa-user-secret"></i> Novo Leilão - Informações Obrigatorias*
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-house-fill" viewBox="0 0 16 16">
+              <path fill-rule="evenodd" d="m8 3.293 6 6V13.5a1.5 1.5 0 0 1-1.5 1.5h-9A1.5 1.5 0 0 1 2 13.5V9.293l6-6zm5-.793V6l-2-2V2.5a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5z"/>
+              <path fill-rule="evenodd" d="M7.293 1.5a1 1 0 0 1 1.414 0l6.647 6.646a.5.5 0 0 1-.708.708L8 2.207 1.354 8.854a.5.5 0 1 1-.708-.708L7.293 1.5z"/>
+            </svg> Novo Leilão - Informações Obrigatorias*
           </div>
 
           <div class="card-block">
             <div class="row ">
               <div class="form-group col-6">
                 <ng-template #nome><app-error-msg [control]="formulario.get('nome')" label="Nome"></app-error-msg></ng-template>
-                <label for="nome">Nome</label>
+                <label for="nome">Nome - Campo Obrigatório</label>
                 <input type="text" class="form-control" id="nome" placeholder="Nome" formControlName="nome" [popover]="nome" triggers="keypress:focusout">
               </div>
 
               <div class="form-group col-6">
                 <ng-template #titulo><app-error-msg [control]="formulario.get('titulo')" label="Título"></app-error-msg></ng-template>
-                <label for="titulo">Título</label>
+                <label for="titulo">Título - Campo Obrigatório</label>
                 <input type="text" class="form-control" id="titulo" placeholder="Título" formControlName="titulo" [popover]="titulo" triggers="keypress:focusout">
               </div>
 
@@ -25,23 +28,63 @@
             <div class="row">
               <div class="form-group col-6">
                 <ng-template #dataLeilao><app-error-msg [control]="formulario.get('dataLeilao')" label="Data Leilão"></app-error-msg></ng-template>
-                <label for="dataLeilao">Data Leilão</label>
+                <label for="dataLeilao">Data Leilão - Campo Obrigatório</label>
                 <input type="date" class="form-control" id="dataLeilao" placeholder="dd/mm/aaaa"
                   formControlName="dataLeilao" [popover]="dataLeilao" >
 
               </div>
               <div class="form-group col-6">
                 <ng-template #date><app-error-msg [control]="formulario.get('dataAberturaLance')" label="Data Abertura de Lances"></app-error-msg></ng-template>
-                <label for="dataAberturaLance">Data Abertura de Lances</label>
+                <label for="dataAberturaLance">Data Abertura de Lances - Campo Obrigatório</label>
                 <input type="date" class="form-control" id="dataAberturaLance" placeholder="dd/mm/aaaa"
                   formControlName="dataAberturaLance" [popover]="date" >
                   
               </div>
             </div>
+            <div class="row">
+              <div class="form-group col-6">
+                <ng-template #categoriaId><app-error-msg [control]="formulario.get('categoriaId')" label="Categoria"></app-error-msg></ng-template>
+                <label for="categoriaId">Categoria - Campo Obrigatório </label>
+                <select class="form-control" formControlName="categoriaId" [popover]="categoriaId" >
+                  <option *ngFor="let item of categorias" value="{{item.categoriaId}}">{{item.descricao}}</option>
+                </select>
+                
+              </div>
+              <div class="form-group col-6">
+                <ng-template #comitenteId><app-error-msg [control]="formulario.get('comitenteId')" label="Comitente" ></app-error-msg></ng-template>
+
+                <label for="comitenteId">Comitente - Campo Obrigatório </label>
+                <select class="form-control" formControlName="comitenteId" [popover]="comitenteId" >
+                  <option *ngFor="let item of comitentes" value="{{item.comitenteId}}">{{item.nome}}</option>
+                </select>
+                
+              </div>
+            </div>
+            <div class="row">
+
+              <div class="form-group col-6">
+                <ng-template #leiloeiroId><app-error-msg [control]="formulario.get('leiloeiroId')" label="Leiloeiro"></app-error-msg></ng-template>
+                <label for="leiloeiroId">Leiloeiro - Campo Obrigatório </label>
+                <select class="form-control" formControlName="leiloeiroId" [popover]="leiloeiroId" >
+                  <option *ngFor="let item of leiloeiros" value="{{item.leiloeiroId}}">{{item.pessoa.nomeCompleto}}
+                  </option>
+                </select>
+                
+              </div>
+              <div class="form-group col-6">
+                <ng-template #empresaId><app-error-msg [control]="formulario.get('empresaId')" label="Empresa"></app-error-msg></ng-template>
+                <label for="empresaId">Empresa - Campo Obrigatório </label>
+                <select class="form-control" formControlName="empresaId" [popover]="empresaId" >
+                  <option *ngFor="let item of empresas" value="{{item.empresaId}}">{{item.nomeFantasia}}</option>
+                </select>
+              </div>
+            </div>
+
+
           </div>
           <div class="col-4" formGroupName="foto">
             <fieldset class="form-group">
-              <label>Upload Logo</label>
+              <label>Upload Logo - Campo Obrigatório</label>
               {{imageError}}
               <div class="custom-file fileInputProfileWrap">
                 <input type="file" (change)="fileChangeEvent($event)" class="fileInputProfile">
@@ -50,7 +93,7 @@
                     <img [src]="cardImageBase64" />
                   </ng-container>
                   <ng-template #elseTemplate>
-                    <img src="./../../assets/placeholder.png" class="img-responsive">
+                    <img src="../../../../assets/img/logo-generica.png" class="img-responsive">
                   </ng-template>
                 </div>
               </div>
@@ -67,7 +110,11 @@
       <div class="col-lg-12">
         <div class="card">
           <div class="card-header">
-            <i class="fa fa-user-secret"></i> Datas Opcionais
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-calendar3" viewBox="0 0 16 16">
+              <path d="M14 0H2a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2zM1 3.857C1 3.384 1.448 3 2 3h12c.552 0 1 .384 1 .857v10.286c0 .473-.448.857-1 .857H2c-.552 0-1-.384-1-.857V3.857z"/>
+              <path d="M6.5 7a1 1 0 1 0 0-2 1 1 0 0 0 0 2zm3 0a1 1 0 1 0 0-2 1 1 0 0 0 0 2zm3 0a1 1 0 1 0 0-2 1 1 0 0 0 0 2zm-9 3a1 1 0 1 0 0-2 1 1 0 0 0 0 2zm3 0a1 1 0 1 0 0-2 1 1 0 0 0 0 2zm3 0a1 1 0 1 0 0-2 1 1 0 0 0 0 2zm3 0a1 1 0 1 0 0-2 1 1 0 0 0 0 2zm-9 3a1 1 0 1 0 0-2 1 1 0 0 0 0 2zm3 0a1 1 0 1 0 0-2 1 1 0 0 0 0 2zm3 0a1 1 0 1 0 0-2 1 1 0 0 0 0 2z"/>
+            </svg>
+             Datas Opcionais
           </div>
           <div class="card-block">
             <div class="row">
@@ -103,15 +150,12 @@
               </div>
             </div>
             <div class="row">
-              <div class="form-group col-6">
+              <div class="form-group col-12">
                 <label for="emailsNotificacao">Emails</label>
                 <input type="text" class="form-control" id="emailsNotificacao" placeholder="Emails"
                   formControlName="emailsNotificacao">
               </div>
-              <div class="form-group col-6">
-                <label for="dataDiarioOficial">Data Diário Oficial</label>
-                <input type="date" class="form-control" id="dataDiarioOficial" formControlName="dataDiarioOficial">
-              </div>
+              
             </div>
           </div>
         </div>
@@ -123,7 +167,10 @@
       <div class="col-lg-12">
         <div class="card">
           <div class="card-header">
-            <i class="fa fa-user-secret"></i> Diário Oficial
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-bank" viewBox="0 0 16 16">
+              <path d="M8 .95 14.61 4h.89a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-.5.5H15v7a.5.5 0 0 1 .485.379l.5 2A.5.5 0 0 1 15.5 17H.5a.5.5 0 0 1-.485-.621l.5-2A.5.5 0 0 1 1 14V7H.5a.5.5 0 0 1-.5-.5v-2A.5.5 0 0 1 .5 4h.89L8 .95zM3.776 4h8.447L8 2.05 3.776 4zM2 7v7h1V7H2zm2 0v7h2.5V7H4zm3.5 0v7h1V7h-1zm2 0v7H12V7H9.5zM13 7v7h1V7h-1zm2-1V5H1v1h14zm-.39 9H1.39l-.25 1h13.72l-.25-1z"/>
+            </svg> 
+            Diário Oficial
           </div>
           <div class="card-block">
             <div class="row">
@@ -139,68 +186,11 @@
               </div>
             </div>
           </div>
-        </div>
-      </div>
-    </div>
-  </div>
-  <div class="animated fadeIn">
-    <div class="row">
-      <div class="col-lg-12">
-        <div class="card">
-          <div class="card-header">
-            <i class="fa fa-user-secret"></i> Identificador - Informações Obrigatórias*
-          </div>
-
-          <div class="card-block">
-            <div class="row">
-              <div class="form-group col-6">
-                <ng-template #categoriaId><app-error-msg [control]="formulario.get('categoriaId')" label="Categoria"></app-error-msg></ng-template>
-                <label for="categoriaId">Categoria </label>
-                <select class="form-control" formControlName="categoriaId" [popover]="categoriaId" >
-                  <option *ngFor="let item of categorias" value="{{item.categoriaId}}">{{item.descricao}}</option>
-                </select>
-                
-              </div>
-              <div class="form-group col-6">
-                <ng-template #comitenteId><app-error-msg [control]="formulario.get('comitenteId')" label="Comitente" ></app-error-msg></ng-template>
-
-                <label for="comitenteId">Comitente </label>
-                <select class="form-control" formControlName="comitenteId" [popover]="comitenteId" >
-                  <option *ngFor="let item of comitentes" value="{{item.comitenteId}}">{{item.nome}}</option>
-                </select>
-                
-              </div>
-            </div>
-            <div class="row">
-
-              <div class="form-group col-6">
-                <ng-template #leiloeiroId><app-error-msg [control]="formulario.get('leiloeiroId')" label="Leiloeiro"></app-error-msg></ng-template>
-                <label for="leiloeiroId">Leiloeiro </label>
-                <select class="form-control" formControlName="leiloeiroId" [popover]="leiloeiroId" >
-                  <option *ngFor="let item of leiloeiros" value="{{item.leiloeiroId}}">{{item.pessoa.nomeCompleto}}
-                  </option>
-                </select>
-                
-              </div>
-              <div class="form-group col-6">
-                <ng-template #empresaId><app-error-msg [control]="formulario.get('empresaId')" label="Empresa"></app-error-msg></ng-template>
-                <label for="empresaId">Empresa </label>
-                <select class="form-control" formControlName="empresaId" [popover]="empresaId" >
-                  <option *ngFor="let item of empresas" value="{{item.empresaId}}">{{item.nomeFantasia}}</option>
-                </select>
-              </div>
-            </div>
-
-
-
-          </div>
           <div class="card-footer">
-            <button type="submit" class="btn btn-primary"><i class="fa fa-save"></i> Salvar</button>
+            <button type="submit" class="btn btn-primary saveCancel"><i class="fa fa-save"></i> Salvar</button>
             <button type="reset" class="btn btn-danger" [routerLink]="['/leilao']"><i class="fa fa-undo"></i>
               Cancelar</button>
           </div>
-
-
         </div>
       </div>
     </div>

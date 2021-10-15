@@ -187,9 +187,12 @@ export class CreateLotesComponent implements OnInit {
 
     const formulario = this.formulario.value
     this.restangular.all('lote').post(formulario).subscribe(a => {
-      // this.router.navigate(['lotes', this.id])
-     
-    })
+      this.notifierService.notify('success', 'Lote Criado com sucesso');
+      this.router.navigate(['lotes', this.leilaoId])
+    },
+      error => {
+        this.notifierService.notify('error', 'Erro ao Criar o Lote!');
+      }); 
   }
 
   fileChangeEvent(fileInput: any) {

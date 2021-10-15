@@ -17,19 +17,19 @@ export const navigation = [
   {
     name: 'Leilao',
     url: '/leilao',
-    icon: 'fa fa-user-secret',
+    icon: 'fa fa-list',
     source: 'RelatorioEstoque'
   },
   {
     name: 'Usuarios',
     url: '/usuarios',
-    icon: 'fa fa-user-secret',
+    icon: 'fa fa-user',
     source: 'RelatorioEstoque'
   },
   {
     name: 'Habilitação',
     url: '/habilitacao',
-    icon: 'fa fa-user-secret',
+    icon: 'fa fa-check',
     source: 'RelatorioEstoque'
   }
 ];

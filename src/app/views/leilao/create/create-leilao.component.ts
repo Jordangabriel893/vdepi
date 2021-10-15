@@ -40,8 +40,8 @@ export class CreateLeilaoComponent implements OnInit {
   ngOnInit() {
 
     this.restangular.one('categoria').get().subscribe(dados =>{
-     
-      this.categorias = dados.data
+     const categoriaPai = dados.data.filter(x => x.categoriaPaiId == null)
+      this.categorias = categoriaPai
     } 
     )
     this.restangular.one('comitente').get().subscribe(

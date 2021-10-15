@@ -145,3 +145,15 @@ input[type="file"] {
         margin-right: 2%;
     }
 }
+.cabecalho{
+    display: flex;
+    align-items:center;
+    justify-content: center;
+    p{
+        margin: 0;
+    }
+}
+.saveCancel{
+    margin-right: 1em;
+    height: auto;
+}
