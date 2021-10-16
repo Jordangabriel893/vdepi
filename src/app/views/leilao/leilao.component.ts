@@ -29,13 +29,14 @@ export class LeilaoComponent implements OnInit {
   ngOnInit() {
     this.restangular.one("leilao", '').get().subscribe((response) => {
         this.leiloes = response.data;
-        
+
       });
   }
 
   edit(id) {
     this.router.navigate(['/update-leilao', id], { relativeTo: this.route });
   }
+
   verLotes(id){
     this.router.navigate(['/lotes', id]);
 

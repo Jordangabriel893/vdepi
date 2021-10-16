@@ -37,22 +37,22 @@ export class UpdateLeilaoComponent implements OnInit {
     this.restangular.one('categoria').get().subscribe(dados =>{
       const categoriaPai = dados.data.filter(x => x.categoriaPaiId == null)
       this.categorias = categoriaPai
-    } 
+    }
     )
     this.restangular.one('comitente').get().subscribe(
       dados =>{
         this.comitentes = dados.data
-      } 
+      }
     )
     this.restangular.one('leiloeiro').get().subscribe(
       dados =>{
         this.leiloeiros = dados.data
-      } 
+      }
     )
     this.restangular.one('empresa').get().subscribe(
       dados =>{
         this.empresas= dados.data
-      } 
+      }
     )
 
 
@@ -77,20 +77,20 @@ export class UpdateLeilaoComponent implements OnInit {
         nome:[null, Validators.required],
         base64:[null, Validators.required],
         tipo:[null, Validators.required],
-        tamanho:[null, Validators.required]
-        
+        tamanho:[0, Validators.required]
+
       }),
       categoriaId: [null, Validators.required],
       comitenteId: [null, Validators.required],
       leiloeiroId: [null, Validators.required],
       empresaId: [null, Validators.required],
-      leilaoId: [null]
-
+      leilaoId: [null, Validators.required],
+      statusId: [null, Validators.required]
     })
 
 
 
-    
+
 
   }
 
@@ -101,7 +101,7 @@ export class UpdateLeilaoComponent implements OnInit {
      console.log(dados),
      this.updateForm(dados)
    })
-   
+
 
   }
 
@@ -137,8 +137,7 @@ export class UpdateLeilaoComponent implements OnInit {
       leiloeiroId:dados.leiloeiroId,
       empresaId:dados.empresaId,
       leilaoId:dados.leilaoId,
-
-
+      statusId: dados.statusId
     })
   }
 
@@ -190,7 +189,7 @@ export class UpdateLeilaoComponent implements OnInit {
                     const imgBase64Path = e.target.result;
                     this.cardImageBase64 = imgBase64Path;
                     this.isImageSaved = true;
-                    this.formulario.value.foto.base64 = this.cardImageBase64.substring(23, 100000) 
+                    this.formulario.value.foto.base64 = this.cardImageBase64
                     this.formulario.value.foto.nome = fileInput.target.files[0].name
                     this.formulario.value.foto.tamanho = fileInput.target.files[0].size
                     this.formulario.value.foto.tipo = fileInput.target.files[0].type
@@ -208,6 +207,6 @@ removeImage() {
     this.cardImageBase64 = null;
     this.isImageSaved = false;
 }
- 
+
 
 }
