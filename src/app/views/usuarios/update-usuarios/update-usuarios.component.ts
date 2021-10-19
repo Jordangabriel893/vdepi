@@ -29,7 +29,7 @@ export class UpdateUsuariosComponent implements OnInit {
     private cepService: ConsultaCepService,
   ) {
     this.mask = ['(', /[1-9]/, /\d/, ')', ' ', /\d/,/\d/,/\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/]
-    this.maskCep = [ /\d/,/\d/,  '-', /\d/,/\d/,/\d/, '-', /\d/, /\d/, /\d/, ]
+    this.maskCep = [ /\d/,/\d/,/\d/,/\d/,/\d/, '-', /\d/, /\d/, /\d/, ]
     this.maskCpf = [ /\d/,/\d/,/\d/,  '.', /\d/,/\d/,/\d/, '.', /\d/, /\d/, /\d/, '-', /\d/,/\d/ ]
     this.maskCnpj = [ /\d/,/\d/,'.',/\d/,/\d/,/\d/,'.',/\d/,/\d/,/\d/,'/', /\d/,/\d/,/\d/,/\d/,'-',/\d/,/\d/, ]
     this.formulario = this.formBuilder.group({
@@ -42,7 +42,7 @@ export class UpdateUsuariosComponent implements OnInit {
       tipoPessoa: [null,[Validators.required]],
       endereco: this.formBuilder.group({
         enderecoId: [null, Validators.required],
-        cep: [null, [Validators.required,  FormValidations.cepValidator]],
+        cep: [null, [Validators.required]],
         numero: [null, Validators.required],
         complemento: [null, Validators.required],
         bairro: [null, Validators.required],
@@ -68,14 +68,26 @@ export class UpdateUsuariosComponent implements OnInit {
 
   onSubmit(){
 
-    // console.log(this.formulario.value)
-    // console.log(this.id)
+    if(!this.formulario.valid){
+      Object.keys(this.formulario.controls).forEach((campo)=>{
+        const controle = this.formulario.get(campo)
+        controle.markAsTouched()
+        
+      })
+      this.notifierService.notify('error', 'Preencha todos os campos obrigatórios');
+      return
+    }
     this.restangular.all('usuario').customPUT(this.formulario.value,  this.id ).subscribe(a => {
       this.notifierService.notify('success', 'Usuário alterado com sucesso');
       this.router.navigateByUrl('/usuarios');
     },
     error => {
       this.notifierService.notify('error', 'Erro ao atualizar o usuário!');
+      Object.keys(this.formulario.controls).forEach((campo)=>{
+        const controle = this.formulario.get(campo)
+        controle.markAsTouched()
+        
+      })
     })
   }
 
@@ -128,5 +140,14 @@ export class UpdateUsuariosComponent implements OnInit {
   }
 
 
-
+  verificaValidTouched(campo){
+    return !this.formulario.get(campo).valid && this.formulario.get(campo).touched;
+  }
+  
+  aplicaCssErro(campo){
+    return{
+      'has-error': this.verificaValidTouched(campo),
+      
+    }
+  }
 }

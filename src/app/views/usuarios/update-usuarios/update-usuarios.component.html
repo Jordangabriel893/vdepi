@@ -16,7 +16,7 @@
               <div class="form-group col-12">
                 <ng-template #nome><app-error-msg [control]="formulario.get('nomeCompleto')" label="Nome Completo"></app-error-msg></ng-template>
                 <label for="nomeCompleto">Nome Completo</label>
-                <input type="text" class="form-control" id="nomeCompleto" placeholder="Nome Completo" formControlName="nomeCompleto"
+                <input type="text" class="form-control"  [ngClass]="aplicaCssErro('nomeCompleto')" id="nomeCompleto" placeholder="Nome Completo" formControlName="nomeCompleto"
                 [popover]="nome" triggers="keypress:focusout">
               </div>
             </div>
@@ -24,13 +24,13 @@
               <div class="form-group col-6">
                 <ng-template #dataNascimento><app-error-msg [control]="formulario.get('dataNascimento')" label="Data de Nacimento"></app-error-msg></ng-template>
                 <label for="dataNascimento">Data de Nacimento</label>
-                <input type="date" class="form-control" id="dataNascimento" placeholder="dd/mm/aaaa"
+                <input type="date" class="form-control" [ngClass]="aplicaCssErro('dataNascimento')" id="dataNascimento" placeholder="dd/mm/aaaa"
                   formControlName="dataNascimento" [popover]="dataNascimento">
               </div>
               <div class="form-group col-6">
                 <ng-template #telefone><app-error-msg [control]="formulario.get('telefone')" label="Telefone"></app-error-msg></ng-template>
                 <label for="telefone">Telefone</label>
-                <input type="text" class="form-control" id="titulo"  formControlName="telefone"
+                <input type="text" class="form-control" [ngClass]="aplicaCssErro('telefone')" id="titulo"  formControlName="telefone"
                  [popover]="telefone" triggers="keypress:focusout" [textMask]="{mask: mask}">
               </div>
 
@@ -38,7 +38,7 @@
             <div class="row">
               <div class="form-group col-4">
                 <label for="genero">Gênero </label>
-                <select class="form-control" formControlName="genero" >
+                <select class="form-control" [ngClass]="aplicaCssErro('genero')" formControlName="genero" >
                   <option value="M">Masculino</option>
                   <option value="F">Feminino</option>
                 </select>
@@ -46,9 +46,9 @@
               <div class="form-group col-4">
                 <ng-template #numeroDocumento><app-error-msg [control]="formulario.get('numeroDocumento')" label="Nº Documento"></app-error-msg></ng-template>
                 <label for="numeroDocumento">Nº Documento</label>
-                <input *ngIf="formulario.controls['tipoPessoa'].value == 'PF'"  type="text" class="form-control" id="numeroDocumento" placeholder="CPF ou CNPJ" formControlName="numeroDocumento"
+                <input *ngIf="formulario.controls['tipoPessoa'].value == 'PF'" [ngClass]="aplicaCssErro('numeroDocumento')"  type="text" class="form-control" id="numeroDocumento" placeholder="CPF ou CNPJ" formControlName="numeroDocumento"
                 [popover]="numeroDocumento" triggers="keypress:focusout" [textMask]="{mask: maskCpf}">
-                <input *ngIf="formulario.controls['tipoPessoa'].value == 'PJ'"  type="text" class="form-control" id="numeroDocumento" placeholder="CPF ou CNPJ" formControlName="numeroDocumento"
+                <input *ngIf="formulario.controls['tipoPessoa'].value == 'PJ'" [ngClass]="aplicaCssErro('numeroDocumento')"  type="text" class="form-control" id="numeroDocumento" placeholder="CPF ou CNPJ" formControlName="numeroDocumento"
                 [popover]="numeroDocumento" triggers="keypress:focusout" [textMask]="{mask: maskCnpj}">
               </div>
               <div class="form-group col-4">
@@ -63,7 +63,7 @@
             <div class="row">
               <div class="form-group col-12">
                 <label for="ativo">Ativo</label>
-                <select class="form-control" formControlName="ativo" >
+                <select class="form-control" [ngClass]="aplicaCssErro('ativo')" formControlName="ativo" >
                   <option value="true">Sim</option>
                   <option value="false">Não</option>
                 </select>
@@ -91,7 +91,7 @@
               <div class="form-group col-12">
                 <ng-template #email><app-error-msg [control]="formulario.get('email')" label="Email"></app-error-msg></ng-template>
                 <label for="email">Email</label>
-                <input type="text" class="form-control" id="email" placeholder="xxxxx@xxxx.com"
+                <input type="text" class="form-control" [ngClass]="aplicaCssErro('email')" id="email" placeholder="xxxxx@xxxx.com"
                   formControlName="email" [popover]="email" triggers="keypress:focusout">
               </div>
             </div>
@@ -117,20 +117,20 @@
               <div class="form-group col-4">
                 <ng-template #cep><app-error-msg [control]="formulario.get('endereco.cep')" label="Cep"></app-error-msg></ng-template>
                 <label for="cep">Cep</label>
-                <input type="text" class="form-control" id="cep"
+                <input type="text" class="form-control" id="cep" [ngClass]="aplicaCssErro('endereco.cep')"
                   formControlName="cep" (blur)="consultaCEP()" [popover]="cep" triggers="keypress:focusout" [textMask]="{mask: maskCep}">
               </div>
               <div class="form-group col-4">
                 <ng-template #logradouro><app-error-msg [control]="formulario.get('endereco.logradouro')" label="Logradouro"></app-error-msg></ng-template>
                 <label for="logradouro">Logradouro</label>
-                <input type="text" class="form-control" id="logradouro"
+                <input type="text" class="form-control" [ngClass]="aplicaCssErro('endereco.logradouro')" id="logradouro"
                   formControlName="logradouro" [popover]="logradouro" triggers="keypress:focusout">
               </div>
 
               <div class="form-group col-4">
                 <ng-template #numero><app-error-msg [control]="formulario.get('endereco.numero')" label="Número"></app-error-msg></ng-template>
                 <label for="numero">Número</label>
-                <input type="text" class="form-control" id="numero"
+                <input type="text" class="form-control" [ngClass]="aplicaCssErro('endereco.numero')" id="numero"
                   formControlName="numero" [popover]="numero" triggers="keypress:focusout">
               </div>
             </div>
@@ -139,26 +139,26 @@
               <ng-template #complemento><app-error-msg [control]="formulario.get('endereco.complemento')" label="Complemento"></app-error-msg></ng-template>
               <div class="form-group col-3">
                 <label for="complemento">Complemento</label>
-                <input type="text" class="form-control" id="complemento"
+                <input type="text" class="form-control" [ngClass]="aplicaCssErro('endereco.complemento')" id="complemento"
                   formControlName="complemento" [popover]="complemento" triggers="keypress:focusout">
               </div>
               <div class="form-group col-3">
                 <ng-template #bairro><app-error-msg [control]="formulario.get('endereco.bairro')" label="Bairro"></app-error-msg></ng-template>
                 <label for="bairro">Bairro</label>
-                <input type="text" class="form-control" id="bairro"
+                <input type="text" class="form-control" [ngClass]="aplicaCssErro('endereco.bairro')" id="bairro"
                   formControlName="bairro" [popover]="bairro" triggers="keypress:focusout">
               </div>
               <div class="form-group col-3">
                 <ng-template #cidade><app-error-msg [control]="formulario.get('endereco.cidade')" label="Cidade"></app-error-msg></ng-template>
                 <label for="cidade">Cidade</label>
                 <input type="text" class="form-control" id="cidade"
-                  formControlName="cidade" [popover]="cidade" triggers="keypress:focusout">
+                  formControlName="cidade" [ngClass]="aplicaCssErro('endereco.cidade')" [popover]="cidade" triggers="keypress:focusout">
               </div>
               <div class="form-group col-3">
                 <ng-template #estado><app-error-msg [control]="formulario.get('endereco.estado')" label="Estado"></app-error-msg></ng-template>
                 <label for="estado">Estado</label>
                 <input type="text" class="form-control" id="estado"
-                  formControlName="estado" [popover]="estado" triggers="keypress:focusout" maxlength="2">
+                  formControlName="estado" [ngClass]="aplicaCssErro('endereco.estado')" [popover]="estado" triggers="keypress:focusout" maxlength="2">
               </div>
             </div>
           </div>

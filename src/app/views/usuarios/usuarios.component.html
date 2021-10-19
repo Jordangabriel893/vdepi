@@ -50,9 +50,9 @@
                     <td>{{item.nomeCompleto}}</td>
                     <td>{{item.numeroDocumento}}</td>
                     <td>{{item.dataNascimento | amDateFormat:'DD/MM/yyyy' }}</td>
-                    <td>{{item.genero}}</td>
+                    <td>{{item.genero == 'M'? "Masculino" : Feminino}}</td>
                     <td>{{item.email}}</td>
-                    <td>{{item.tipoPessoa}}</td>
+                    <td>{{item.tipoPessoa == 'PF'? "Pessoa Física" : "Pessoa Jurídica"}}</td>
                     <td>{{item.ativo ? "Sim" : "Não"}}</td>
                     <td class="text-center" nowrap>
                       <button type="button" class="btn btn-primary" (click)="edit(item.usuarioId)"><i class="fa fa-edit"></i>&nbsp; Editar</button>
