@@ -7,8 +7,8 @@
             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-person-circle" viewBox="0 0 16 16">
               <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0z"/>
               <path fill-rule="evenodd" d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8zm8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1z"/>
-            </svg> 
-            Atualizar Informações de Cadastro - Identificação
+            </svg>
+            Dados Pessoais
           </div>
 
           <div class="card-block">
@@ -16,7 +16,7 @@
               <div class="form-group col-12">
                 <ng-template #nome><app-error-msg [control]="formulario.get('nomeCompleto')" label="Nome Completo"></app-error-msg></ng-template>
                 <label for="nomeCompleto">Nome Completo</label>
-                <input type="text" class="form-control" id="nomeCompleto" placeholder="Nome Completo" formControlName="nomeCompleto" 
+                <input type="text" class="form-control" id="nomeCompleto" placeholder="Nome Completo" formControlName="nomeCompleto"
                 [popover]="nome" triggers="keypress:focusout">
               </div>
             </div>
@@ -33,7 +33,7 @@
                 <input type="text" class="form-control" id="titulo" placeholder="(xx)xxxx-xxxx" formControlName="telefone"
                  [popover]="telefone" triggers="keypress:focusout">
               </div>
-              
+
             </div>
             <div class="row">
               <div class="form-group col-4">
@@ -69,7 +69,7 @@
                   <option value="false">Não</option>
                 </select>
               </div>
-            </div>  
+            </div>
           </div>
         </div>
       </div>
@@ -118,20 +118,20 @@
               <div class="form-group col-4">
                 <ng-template #cep><app-error-msg [control]="formulario.get('endereco.cep')" label="Cep"></app-error-msg></ng-template>
                 <label for="cep">Cep</label>
-                <input type="text" class="form-control" id="cep" 
+                <input type="text" class="form-control" id="cep"
                   formControlName="cep" (blur)="consultaCEP()" [popover]="cep" triggers="keypress:focusout">
               </div>
               <div class="form-group col-4">
                 <ng-template #logradouro><app-error-msg [control]="formulario.get('endereco.logradouro')" label="Logradouro"></app-error-msg></ng-template>
                 <label for="logradouro">Logradouro</label>
-                <input type="text" class="form-control" id="logradouro" 
+                <input type="text" class="form-control" id="logradouro"
                   formControlName="logradouro" [popover]="logradouro" triggers="keypress:focusout">
               </div>
-              
+
               <div class="form-group col-4">
                 <ng-template #numero><app-error-msg [control]="formulario.get('endereco.numero')" label="Número"></app-error-msg></ng-template>
                 <label for="numero">Número</label>
-                <input type="text" class="form-control" id="numero" 
+                <input type="text" class="form-control" id="numero"
                   formControlName="numero" [popover]="numero" triggers="keypress:focusout">
               </div>
             </div>
@@ -140,25 +140,25 @@
               <ng-template #complemento><app-error-msg [control]="formulario.get('endereco.complemento')" label="Complemento"></app-error-msg></ng-template>
               <div class="form-group col-3">
                 <label for="complemento">Complemento</label>
-                <input type="text" class="form-control" id="complemento" 
+                <input type="text" class="form-control" id="complemento"
                   formControlName="complemento" [popover]="complemento" triggers="keypress:focusout">
               </div>
               <div class="form-group col-3">
                 <ng-template #bairro><app-error-msg [control]="formulario.get('endereco.bairro')" label="Bairro"></app-error-msg></ng-template>
                 <label for="bairro">Bairro</label>
-                <input type="text" class="form-control" id="bairro" 
+                <input type="text" class="form-control" id="bairro"
                   formControlName="bairro" [popover]="bairro" triggers="keypress:focusout">
               </div>
               <div class="form-group col-3">
                 <ng-template #cidade><app-error-msg [control]="formulario.get('endereco.cidade')" label="Cidade"></app-error-msg></ng-template>
                 <label for="cidade">Cidade</label>
-                <input type="text" class="form-control" id="cidade" 
+                <input type="text" class="form-control" id="cidade"
                   formControlName="cidade" [popover]="cidade" triggers="keypress:focusout">
               </div>
               <div class="form-group col-3">
                 <ng-template #estado><app-error-msg [control]="formulario.get('endereco.estado')" label="Estado"></app-error-msg></ng-template>
                 <label for="estado">Estado</label>
-                <input type="text" class="form-control" id="estado" 
+                <input type="text" class="form-control" id="estado"
                   formControlName="estado" [popover]="estado" triggers="keypress:focusout">
               </div>
             </div>
@@ -172,8 +172,8 @@
       </div>
     </div>
   </div>
- 
-  
- 
-  
+
+
+
+
 </form>
