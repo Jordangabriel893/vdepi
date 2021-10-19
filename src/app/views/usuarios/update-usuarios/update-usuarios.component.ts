@@ -14,6 +14,12 @@ import { FormValidations } from '../shared/form-validation/form-validations';
 export class UpdateUsuariosComponent implements OnInit {
   formulario:FormGroup
   id:any
+  public mask: Array<string | RegExp>
+  public maskCep: Array<string | RegExp>
+  public maskCpf: Array<string | RegExp>
+  public maskCnpj: Array<string | RegExp>
+
+  
   constructor(
     private route: ActivatedRoute,
     private router: Router,
@@ -22,6 +28,10 @@ export class UpdateUsuariosComponent implements OnInit {
     private notifierService: NotifierService,
     private cepService: ConsultaCepService,    
   ) {
+    this.mask = ['(', /[1-9]/, /\d/, ')', ' ', /\d/,/\d/,/\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/]
+    this.maskCep = [ /\d/,/\d/,  '-', /\d/,/\d/,/\d/, '-', /\d/, /\d/, /\d/, ]
+    this.maskCpf = [ /\d/,/\d/,/\d/,  '.', /\d/,/\d/,/\d/, '.', /\d/, /\d/, /\d/, '-', /\d/,/\d/ ]
+    this.maskCnpj = [ /\d/,/\d/,'.',/\d/,/\d/,/\d/,'.',/\d/,/\d/,/\d/,'/', /\d/,/\d/,/\d/,/\d/,'-',/\d/,/\d/, ]
     this.formulario = this.formBuilder.group({
       nomeCompleto: [null, [Validators.required, Validators.minLength(3), Validators.maxLength(35)]],
       numeroDocumento: [null, [Validators.required, Validators.minLength(6)]],

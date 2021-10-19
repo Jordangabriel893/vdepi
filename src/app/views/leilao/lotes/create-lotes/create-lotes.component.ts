@@ -106,15 +106,15 @@ export class CreateLotesComponent implements OnInit {
       itemLote: [],
       numeroLote: [null, Validators.required],
       leilaoId: [this.id],
-      statusId: [ Validators.required],
-      categoriaId: [ Validators.required],
-      localId: [ ],
-      valorLanceInicial: [ Validators.required],
-      valorMinimoVenda: [ Validators.required],
-      valorAvaliacao: [ Validators.required],
-      valorIncremento: [ Validators.required],
-      valorTaxaAdministrativa: [ Validators.required],
-      valorOutrasTaxas: [Validators.required],
+      statusId: [null , Validators.required],
+      categoriaId: [null ,Validators.required],
+      localId: [null, Validators.required ],
+      valorLanceInicial: [null, Validators.required],
+      valorMinimoVenda: [null, Validators.required],
+      valorAvaliacao: [null, Validators.required],
+      valorIncremento: [null, Validators.required],
+      valorTaxaAdministrativa: [null, Validators.required],
+      valorOutrasTaxas: [null,Validators.required],
       observacao: [],
       judicial: [false],
       loteJudicial: this.formBuilder.group({
@@ -132,7 +132,7 @@ export class CreateLotesComponent implements OnInit {
         natureza:[null]
       }),
       loteJudicialId: [null],
-      tipoLoteId: [],
+      tipoLoteId: [null, Validators.required],
       campos: this.formBuilder.array([], Validators.required),
       anexos: this.formBuilder.array([]),
       fotos: this.formBuilder.array([], Validators.required),
@@ -181,7 +181,14 @@ export class CreateLotesComponent implements OnInit {
            
     }
     if(this.formulario.invalid){
-      this.notifierService.notify('error', 'Preencha todos os campos obrigatórios')
+      if(!this.formulario.valid){
+        Object.keys(this.formulario.controls).forEach((campo)=>{
+          const controle = this.formulario.get(campo)
+          controle.markAsTouched()
+          
+        })
+        this.notifierService.notify('error', 'Preencha todos os campos obrigatórios');
+      }
       return;
     }
 
@@ -192,6 +199,12 @@ export class CreateLotesComponent implements OnInit {
     },
       error => {
         this.notifierService.notify('error', 'Erro ao Criar o Lote!');
+        Object.keys(this.formulario.controls).forEach((campo)=>{
+          const controle = this.formulario.get(campo)
+          controle.markAsTouched()
+          
+        })
+        this.notifierService.notify('error', 'Preencha todos os campos obrigatórios');
       }); 
   }
 
@@ -405,6 +418,16 @@ export class CreateLotesComponent implements OnInit {
     loteJudicial.removeControl('comarca');
     loteJudicial.removeControl('natureza');
   }
+  verificaValidTouched(campo){
 
+    return !this.formulario.get(campo).valid && this.formulario.get(campo).touched;
+  }
+  
+  aplicaCssErro(campo){
+    return{
+      'has-error': this.verificaValidTouched(campo),
+      
+    }
+  }
 
 }

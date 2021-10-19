@@ -63,7 +63,7 @@ export class HabilitacaoComponent implements OnInit {
     
     this.restangular.all(`habilitacao/${this.solicitacaoHabilitacaoIdDesabilitar}/reprovar`).post()
     .subscribe(a => {
-      this.notifierService.notify('success', 'Solicitação Aprovada com sucesso');
+      this.notifierService.notify('success', 'Reprovado com sucesso');
       setTimeout(()=>{location.reload()}, 3000)
       
     },

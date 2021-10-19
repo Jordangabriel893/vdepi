@@ -464,10 +464,11 @@ export class UpdateLotesComponent implements OnInit {
   buscarReferencias(){
     const tipo = this.modalValorAvalicao.value.tipo
     this.restangular.one(`tabelafipe/referencias`,).get({tipo:tipo}).subscribe((response) => {
-       console.log(response.data[0])
+       console.log(moment(response.data[0]).format("MMMM Do YYYY") )
+       const referencia = moment(response.data[0]).format("MMMM/YYYY")
        this.periodoReferencia = response.data[0]
        this.modalValorAvalicao.patchValue({
-        referencia: response.data[0]
+        referencia: referencia
        })
       
     });
@@ -527,4 +528,20 @@ export class UpdateLotesComponent implements OnInit {
     
     
   }
+  verificaValidTouched(campo){
+    this.formulario.controls [campo].valueChanges.subscribe ((val) => {
+      if (String (val) === "NaN") {
+      this.formulario.controls [campo].setValue(null);
+      }
+      });
+    return !this.formulario.get(campo).valid && this.formulario.get(campo).touched;
+  }
+  
+  aplicaCssErro(campo){
+    return{
+      'has-error': this.verificaValidTouched(campo),
+      
+    }
+  }
+
 }

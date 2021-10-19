@@ -100,6 +100,14 @@ export class CreateLeilaoComponent implements OnInit {
     const ehMaiorOuIgualLeilao = moment(this.formulario.value.dataLeilao).isSameOrAfter(this.today);
     const ehMaiorOuIgualLances = moment(this.formulario.value.dataAberturaLance).isSameOrAfter(this.today);
     const ehMenorOuIgualLancesToday = moment(this.formulario.value.dataAberturaLance).isSameOrBefore(this.formulario.value.dataLeilao);
+    if(!this.formulario.valid){
+      Object.keys(this.formulario.controls).forEach((campo)=>{
+        const controle = this.formulario.get(campo)
+        controle.markAsTouched()
+        
+      })
+      this.notifierService.notify('error', 'Preencha todos os campos obrigatórios');
+    }
 
     if(ehMaiorOuIgualLeilao === true && ehMaiorOuIgualLances === true && ehMenorOuIgualLancesToday === true){
 
@@ -109,6 +117,11 @@ export class CreateLeilaoComponent implements OnInit {
       },
         error => {
           this.notifierService.notify('error', 'Erro ao atualizar o Leilão!');
+
+          Object.keys(this.formulario.controls).forEach((campo)=>{
+            const controle = this.formulario.get(campo)
+            controle.markAsTouched()
+          })
         });
     }
     
@@ -177,6 +190,15 @@ removeImage() {
     this.isImageSaved = false;
 }
 
+verificaValidTouched(campo){
 
+  return !this.formulario.get(campo).valid && this.formulario.get(campo).touched;
+}
 
+aplicaCssErro(campo){
+  return{
+    'has-error': this.verificaValidTouched(campo),
+    
+  }
+}
 }
