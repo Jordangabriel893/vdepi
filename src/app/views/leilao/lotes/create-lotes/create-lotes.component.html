@@ -19,51 +19,51 @@
                 <ng-template #descricao>
                   <app-error-msg [control]="formulario.get('descricao')" label="Descrição"></app-error-msg>
                 </ng-template>
-                <label for="descricao">Descrição - Obrigatório</label>
-                <input type="text" class="form-control" id="descricao" placeholder="Descrição"
+                <label for="descricao">Descrição</label>
+                <input type="text" class="form-control"  [ngClass]="aplicaCssErro('descricao')" id="descricao" placeholder="Descrição"
                   formControlName="descricao" [popover]="descricao" triggers="keypress:focusout">
               </div>
               <div class="form-group col-4">
                 <ng-template #numeroLote>
                   <app-error-msg [control]="formulario.get('numeroLote')" label="Descrição"></app-error-msg>
                 </ng-template>
-                <label for="numeroLote">Numero do Lote - Obrigatório</label>
-                <input type="text" class="form-control" id="numeroLote" placeholder="Numero do Lote"
+                <label for="numeroLote">Numero do Lote </label>
+                <input type="text" class="form-control" [ngClass]="aplicaCssErro('numeroLote')" id="numeroLote" placeholder="Numero do Lote"
                   formControlName="numeroLote" [popover]="numeroLote" triggers="keypress:focusout">
               </div>
               <div class="form-group col-4">
                 <ng-template #status>
                   <app-error-msg [control]="formulario.get('statusId')" label="Status"></app-error-msg>
                 </ng-template>
-                <label for="statusId">Status - Obrigatório</label>
-                <select class="form-control" formControlName="statusId">
+                <label for="statusId">Status </label>
+                <select class="form-control" [ngClass]="aplicaCssErro('statusId')" formControlName="statusId">
                   <option *ngFor="let item of loteStatus" [value]="item.loteStatusId">{{item.descricao}}</option>
                 </select>
               </div>
             </div>
             <div class="row">
               <div class="form-group col-4">
-                <label for="descricao">Categoria - Obrigatório</label>
-                <select class="form-control" formControlName="categoriaId">
+                <label for="descricao">Categoria </label>
+                <select class="form-control" [ngClass]="aplicaCssErro('categoriaId')" formControlName="categoriaId">
                   <option *ngFor="let item of categoriasFilhas" [value]="item.categoriaId">{{item.descricao}}</option>
                 </select>
               </div>
               <div class="form-group col-4">
-                <label for="ativo">Tipo de Lote - Obrigatório</label>
-                <select class="form-control" formControlName="tipoLoteId">
+                <label for="tipoLoteId">Tipo de Lote </label>
+                <select class="form-control" [ngClass]="aplicaCssErro('tipoLoteId')" formControlName="tipoLoteId">
                   <option *ngFor="let item of tiposLote" [value]="item.tipoLoteId">{{item.descricao}}</option>
                 </select>
               </div>
               <div class="form-group col-4">
-                <label for="descricao">Localização - Obrigatório</label>
-                <select class="form-control" formControlName="localId">
+                <label for="localId">Localização </label>
+                <select class="form-control" [ngClass]="aplicaCssErro('localId')" formControlName="localId">
                   <option [value]="item.localLoteId" *ngFor="let item of local">{{item.descricao}}</option>
                 </select>
               </div>
             </div>
-            <div class="row">
+            <div class="row" [ngClass]="aplicaCssErro('descricaoDetalhada')">
               <div class="col-12">
-                <label for="editor1">Descrição Detalhada - Obrigatório</label>
+                <label for="editor1" >Descrição Detalhada </label>
                 <angular-editor id="editor1" formControlName="descricaoDetalhada" [config]="editorConfig">
                 </angular-editor>
               </div>
@@ -90,7 +90,7 @@
                   </app-error-msg>
                 </ng-template>
 
-                <label for="numProcesso">Nº Processo - Obrigatório</label>
+                <label for="numProcesso">Nº Processo </label>
                 <input type="number" class="form-control" id="numProcesso" placeholder="Nº Processo"
                   formControlName="numProcesso" [popover]="numProcesso" triggers="keypress:focusout">
               </div>
@@ -98,7 +98,7 @@
                 <ng-template #autor>
                   <app-error-msg [control]="formulario.get('loteJudicial').get('autor')" label="Autor"></app-error-msg>
                 </ng-template>
-                <label for="autor">Autor - Obrigatório</label>
+                <label for="autor">Autor </label>
                 <input type="text" class="form-control" id="autor" placeholder="Autor" formControlName="autor"
                   [popover]="autor" triggers="keypress:focusout">
               </div>
@@ -106,7 +106,7 @@
                 <ng-template #reu>
                   <app-error-msg [control]="formulario.get('loteJudicial').get('reu')" label="Réu"></app-error-msg>
                 </ng-template>
-                <label for="reu">Réu - Obrigatório</label>
+                <label for="reu">Réu </label>
                 <input type="text" class="form-control" id="reu" placeholder="Réu" formControlName="reu" [popover]="reu"
                   triggers="keypress:focusout">
               </div>
@@ -118,8 +118,8 @@
                   <app-error-msg [control]="formulario.get('loteJudicial').get('depositario')" label="Depositário">
                   </app-error-msg>
                 </ng-template>
-                <label for="depositario">Depositário - Obrigatório</label>
-                <input type="text" class="form-control" id="depositario" placeholder="Depositário"
+                <label for="depositario">Depositário </label>
+                <input type="text" class="form-control" [ngClass]="aplicaCssErro('depositario')" id="depositario" placeholder="Depositário"
                   formControlName="depositario" [popover]="depositario" triggers="keypress:focusout">
               </div>
               <div class="form-group col-4">
@@ -128,8 +128,8 @@
                     label="Local Depositário">
                   </app-error-msg>
                 </ng-template>
-                <label for="localDepositario">Local Depositário - Obrigatório</label>
-                <input type="text" class="form-control" id="localDepositario" placeholder="Local Depositário"
+                <label for="localDepositario">Local Depositário </label>
+                <input type="text" class="form-control" [ngClass]="aplicaCssErro('localDepositario')" id="localDepositario" placeholder="Local Depositário"
                   formControlName="localDepositario" [popover]="localDepositario" triggers="keypress:focusout">
               </div>
               <div class="form-group col-4">
@@ -137,8 +137,8 @@
                   <app-error-msg [control]="formulario.get('loteJudicial').get('anoProcesso')" label="Ano do Processo">
                   </app-error-msg>
                 </ng-template>
-                <label for="anoProcesso">Ano do Processo - Obrigatório</label>
-                <input type="text" class="form-control" id="anoProcesso" placeholder="Ano do Processo"
+                <label for="anoProcesso">Ano do Processo </label>
+                <input type="text" class="form-control" [ngClass]="aplicaCssErro('anoProcesso')" id="anoProcesso" placeholder="Ano do Processo"
                   formControlName="anoProcesso" [popover]="anoProcesso" triggers="keypress:focusout">
               </div>
 
@@ -149,8 +149,8 @@
                 <ng-template #depositario>
                   <app-error-msg [control]="formulario.get('tipoAcao')" label="Tipo de Ação"></app-error-msg>
                 </ng-template>
-                <label for="tipoAcao">Tipo de Ação - Obrigatório</label>
-                <input type="text" class="form-control" id="tipoAcao" placeholder="Tipo de Ação"
+                <label for="tipoAcao">Tipo de Ação </label>
+                <input type="text" class="form-control" [ngClass]="aplicaCssErro('tipoAcao')" id="tipoAcao" placeholder="Tipo de Ação"
                   formControlName="tipoAcao" [popover]="tipoAcao" triggers="keypress:focusout">
               </div>
               <div class="form-group col-4">
@@ -158,8 +158,8 @@
                   <app-error-msg [control]="formulario.get('comarca')" label="Comarca">
                   </app-error-msg>
                 </ng-template>
-                <label for="comarca">Comarca - Obrigatório</label>
-                <input type="text" class="form-control" id="comarca" placeholder="Comarca" formControlName="comarca"
+                <label for="comarca">Comarca </label>
+                <input type="text" class="form-control" [ngClass]="aplicaCssErro('comarca')" id="comarca" placeholder="Comarca" formControlName="comarca"
                   [popover]="comarca" triggers="keypress:focusout">
               </div>
               <div class="form-group col-4">
@@ -167,8 +167,8 @@
                   <app-error-msg [control]="formulario.get('natureza')" label="Natureza">
                   </app-error-msg>
                 </ng-template>
-                <label for="natureza">Natureza - Obrigatório</label>
-                <input type="text" class="form-control" id="natureza" placeholder="Natureza" formControlName="natureza"
+                <label for="natureza">Natureza </label>
+                <input type="text" class="form-control" [ngClass]="aplicaCssErro('natureza')" id="natureza" placeholder="Natureza" formControlName="natureza"
                   [popover]="natureza" triggers="keypress:focusout">
               </div>
 
@@ -204,38 +204,38 @@
           <div class="card-block">
             <div class="row">
               <div class="form-group col-4">
-                <label for="valorAvaliacao">Valor Avaliação - Obrigatório</label>
+                <label for="valorAvaliacao">Valor Avaliação </label>
       
-                  <input type="text" class="form-control" id="valorAvaliacao" formControlName="valorAvaliacao"
+                  <input type="text" class="form-control" [ngClass]="aplicaCssErro('valorAvaliacao')" id="valorAvaliacao" formControlName="valorAvaliacao"
                     currencyMask [options]="{ prefix: 'R$ ', thousands: '.', decimal: ',' }">
  
               </div>
               <div class="form-group col-4">
-                <label for="valorLanceInicial">Valor do Lance Inicial - Obrigatório</label>
-                <input type="text" class="form-control" id="valorLanceInicial" formControlName="valorLanceInicial"
+                <label for="valorLanceInicial">Valor do Lance Inicial </label>
+                <input type="text" class="form-control" [ngClass]="aplicaCssErro('valorLanceInicial')" id="valorLanceInicial" formControlName="valorLanceInicial"
                   currencyMask [options]="{ prefix: 'R$ ', thousands: '.', decimal: ',' }">
               </div>
               <div class="form-group col-4">
-                <label for="valorIncremento">Valor Incremento - Obrigatório</label>
-                <input type="text" class="form-control" id="valorIncremento" formControlName="valorIncremento"
+                <label for="valorIncremento">Valor Incremento </label>
+                <input type="text" class="form-control" [ngClass]="aplicaCssErro('valorIncremento')" id="valorIncremento" formControlName="valorIncremento"
                   currencyMask [options]="{ prefix: 'R$ ', thousands: '.', decimal: ',' }">
               </div>
             </div>
             <div class="row">
               <div class="form-group col-4">
-                <label for="valorMinimoVenda">Valor Mínimo de Venda -  Obrigatório </label>
-                <input type="text" class="form-control" id="valorMinimoVenda" formControlName="valorMinimoVenda"
+                <label for="valorMinimoVenda">Valor Mínimo de Venda</label>
+                <input type="text" class="form-control" [ngClass]="aplicaCssErro('valorMinimoVenda')" id="valorMinimoVenda" formControlName="valorMinimoVenda"
                   currencyMask [options]="{ prefix: 'R$ ', thousands: '.', decimal: ',' }">
               </div>
               <div class="form-group col-4">
-                <label for="valorTaxaAdministrativa">Valor da Taxa Administrativa -  Obrigatório</label>
-                <input type="text" class="form-control" id="valorTaxaAdministrativa"
+                <label for="valorTaxaAdministrativa">Valor da Taxa Administrativa </label>
+                <input type="text" class="form-control" [ngClass]="aplicaCssErro('valorTaxaAdministrativa')" id="valorTaxaAdministrativa"
                   formControlName="valorTaxaAdministrativa" currencyMask
                   [options]="{ prefix: 'R$ ', thousands: '.', decimal: ',' }">
               </div>
               <div class="form-group col-4">
-                <label for="valorOutrasTaxas">Valor de Outras Taxas -  Obrigatório</label>
-                <input type="text" class="form-control" id="valorOutrasTaxas" formControlName="valorOutrasTaxas"
+                <label for="valorOutrasTaxas">Valor de Outras Taxas</label>
+                <input type="text" class="form-control" [ngClass]="aplicaCssErro('valorOutrasTaxas')" id="valorOutrasTaxas" formControlName="valorOutrasTaxas"
                   currencyMask [options]="{ prefix: 'R$ ', thousands: '.', decimal: ',' }">
               </div>
             </div>
@@ -262,7 +262,7 @@
               Novo Campo</button>
           </div>
 
-          <div class="card-block" formArrayName="campos">
+          <div class="card-block" formArrayName="campos" *ngIf="this.formulario.value.campos.length > 0">
             <table class="table">
               <thead>
                 <tr>
@@ -274,14 +274,14 @@
               <tbody>
                 <tr *ngFor="let campo of filterList('campos'); let i = index" [formGroupName]="i">
                   <td>
-                    <select class="form-control" formControlName="loteCampoId">
+                    <select class="form-control"  formControlName="loteCampoId">
                       <option value="true" *ngFor="let item of loteCampos" value="{{item.loteCampoId}}">
                         {{item.descricao}}
                       </option>
                     </select>
                   </td>
                   <td>
-                    <input type="text" class="form-control" id="dataAberturaLance" formControlName="valor">
+                    <input type="text" class="form-control"  id="valor" formControlName="valor">
                   </td>
                   <td class="text-center">
                     <button type="button" class="btn btn-danger " (click)="deleteCampo(i)">Remover</button>
@@ -289,6 +289,11 @@
                 </tr>
               </tbody>
             </table>
+          </div>
+          <div class="card-block" *ngIf="this.formulario.value.campos.length == 0">
+            <alert type="danger">
+              <strong>Campo Obrigatório</strong> É necessário inserir no mínimo um campo
+            </alert>
           </div>
         </div>
       </div>
@@ -312,7 +317,7 @@
               <i class="fa fa-plus-circle"></i>&nbsp;Nova Foto</button>
               <input type="file"  #inputFotos (change)="fileChangeEvent($event)">
           </div>
-          <div class="card-block">
+          <div class="card-block" *ngIf="this.formulario.value.fotos.length > 0">
             <div class="row">
               <fieldset class="form-group col-3" *ngFor="let item of filterList('fotos'); let i = index"
                 [formGroupName]="i">
@@ -335,6 +340,11 @@
               </fieldset>
             </div>
           </div>
+          <div class="card-block"  *ngIf="this.formulario.value.fotos.length == 0">
+            <alert type="danger">
+              <strong>Campo Obrigatório</strong> É necessário no mínimo uma foto
+            </alert>
+          </div>
         </div>
       </div>
     </div>
@@ -353,7 +363,7 @@
               <i class="fa fa-plus-circle"></i>&nbsp;Novo Anexo</button>
               <input type="file" #inputAnexos (change)="anexoChangeEvent($event.target.files)">
           </div>
-          <div class="card-block">
+          <div class="card-block" *ngIf="this.formulario.value.anexos.length > 0">
             <table class="table">
               <thead>
                 <tr>
@@ -379,6 +389,11 @@
                 </tr>
               </tbody>
             </table>
+          </div>
+          <div class="card-block" *ngIf="this.formulario.value.anexos.length == 0">
+            <alert type="danger">
+              <strong>Campo Obrigatório</strong> É necessário no mínimo um anexo
+            </alert>
           </div>
         </div>
       </div>

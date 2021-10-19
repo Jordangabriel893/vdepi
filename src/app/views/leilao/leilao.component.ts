@@ -27,7 +27,7 @@ export class LeilaoComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.restangular.one("leilao", '').get().subscribe((response) => {
+    this.restangular.one("leilao", '').get({PageSize:100}).subscribe((response) => {
         this.leiloes = response.data;
 
       });

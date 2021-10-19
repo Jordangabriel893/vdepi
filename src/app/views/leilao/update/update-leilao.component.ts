@@ -77,8 +77,8 @@ export class UpdateLeilaoComponent implements OnInit {
         nome:[null, Validators.required],
         base64:[null, Validators.required],
         tipo:[null, Validators.required],
-        tamanho:[0, Validators.required]
-
+        tamanho:[0, Validators.required],
+        url:[]
       }),
       categoriaId: [null, Validators.required],
       comitenteId: [null, Validators.required],
@@ -107,16 +107,30 @@ export class UpdateLeilaoComponent implements OnInit {
 
   onSubmit(){
     console.log(this.formulario.value)
+    if(!this.formulario.valid){
+      Object.keys(this.formulario.controls).forEach((campo)=>{
+        const controle = this.formulario.get(campo)
+        controle.markAsTouched()
+        
+      })
+      this.notifierService.notify('error', 'Preencha todos os campos obrigatórios');
+    }
     this.restangular.all('leilao').customPUT(this.formulario.value,  this.id ) .subscribe(a => {
-      this.notifierService.notify('success', 'Leilão Criado com sucesso');
+      this.notifierService.notify('success', 'Leilão editado com sucesso');
       this.router.navigateByUrl('/leilao');
     },
       error => {
         this.notifierService.notify('error', 'Erro ao atualizar o Leilão!');
+        Object.keys(this.formulario.controls).forEach((campo)=>{
+          const controle = this.formulario.get(campo)
+          controle.markAsTouched()
+        })
       });
   }
 
   updateForm(dados) {
+    this.isImageSaved = true
+    this.cardImageBase64 = dados.foto.url
     this.formulario.patchValue({
       nome: dados.nome,
       titulo:dados.titulo,
@@ -132,6 +146,9 @@ export class UpdateLeilaoComponent implements OnInit {
       dataDiarioOficial:moment(dados.dataDiarioOficial).format("YYYY-MM-DD"),
       numeroDiarioOficial:dados.numeroDiarioOficial,
       arquivoId:dados.arquivoId,
+      foto:{
+        url: dados.foto.url
+      },
       categoriaId:dados.categoriaId,
       comitenteId:dados.comitenteId,
       leiloeiroId:dados.leiloeiroId,
@@ -149,6 +166,7 @@ export class UpdateLeilaoComponent implements OnInit {
 
   fileChangeEvent(fileInput: any) {
     this.imageError = null;
+    console.log(fileInput.target.files[0])
     if (fileInput.target.files && fileInput.target.files[0]) {
         // Size Filter Bytes
         const max_size = 20971520;
@@ -193,7 +211,8 @@ export class UpdateLeilaoComponent implements OnInit {
                     this.formulario.value.foto.nome = fileInput.target.files[0].name
                     this.formulario.value.foto.tamanho = fileInput.target.files[0].size
                     this.formulario.value.foto.tipo = fileInput.target.files[0].type
-                    console.log(fileInput.target.files[0])
+                    this.formulario.value.foto.url = imgBase64Path
+                    
                     // this.previewImagePath = imgBase64Path;
                 }
             };
@@ -206,7 +225,18 @@ export class UpdateLeilaoComponent implements OnInit {
 removeImage() {
     this.cardImageBase64 = null;
     this.isImageSaved = false;
+    
+}
+verificaValidTouched(campo){
+
+  return !this.formulario.get(campo).valid && this.formulario.get(campo).touched;
 }
 
+aplicaCssErro(campo){
+  return{
+    'has-error': this.verificaValidTouched(campo),
+    
+  }
+}
 
 }

@@ -142,6 +142,7 @@ import { NgSelectModule } from '@ng-select/ng-select';
 import { CarouselModule } from 'ngx-bootstrap/carousel';
 import { HttpClientModule} from '@angular/common/http';
 import { AngularEditorModule } from '@kolkov/angular-editor';
+import { AlertModule } from 'ngx-bootstrap/alert';
 
 
 import { environment } from '../environments/environment';
@@ -222,7 +223,8 @@ export function RestangularConfigFactory(RestangularProvider, NotifierService: N
     PopoverModule.forRoot(),
     CarouselModule.forRoot(),
     AngularEditorModule,
-    HttpClientModule
+    HttpClientModule,
+    AlertModule.forRoot()
 
 
 

@@ -19,7 +19,7 @@ export class LotesComponent implements OnInit {
   ) {
     this.id = this.route.snapshot.params['id']
     console.log(this.id)
-    this.restangular.one("lote", '').get({ leilaoId: this.id }).subscribe(
+    this.restangular.one("lote", '').get({ leilaoId: this.id, PageSize:100 }).subscribe(
       (lotes) => {
         this.lotes = lotes.data;
         console.log(this.lotes)

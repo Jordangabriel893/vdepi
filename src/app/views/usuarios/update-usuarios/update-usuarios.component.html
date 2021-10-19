@@ -30,41 +30,40 @@
               <div class="form-group col-6">
                 <ng-template #telefone><app-error-msg [control]="formulario.get('telefone')" label="Telefone"></app-error-msg></ng-template>
                 <label for="telefone">Telefone</label>
-                <input type="text" class="form-control" id="titulo" placeholder="(xx)xxxx-xxxx" formControlName="telefone"
-                 [popover]="telefone" triggers="keypress:focusout">
+                <input type="text" class="form-control" id="titulo"  formControlName="telefone"
+                 [popover]="telefone" triggers="keypress:focusout" [textMask]="{mask: mask}">
               </div>
 
             </div>
             <div class="row">
               <div class="form-group col-4">
-                <ng-template #genero><app-error-msg [control]="formulario.get('genero')" label="Gênero"></app-error-msg></ng-template>
                 <label for="genero">Gênero </label>
-                <select class="form-control" formControlName="genero" [popover]="genero">
-                  <option >M</option>
-                  <option >F</option>
+                <select class="form-control" formControlName="genero" >
+                  <option value="M">Masculino</option>
+                  <option value="F">Feminino</option>
                 </select>
               </div>
               <div class="form-group col-4">
                 <ng-template #numeroDocumento><app-error-msg [control]="formulario.get('numeroDocumento')" label="Nº Documento"></app-error-msg></ng-template>
                 <label for="numeroDocumento">Nº Documento</label>
-                <input type="text" class="form-control" id="numeroDocumento" placeholder="CPF ou CNPJ" formControlName="numeroDocumento"
-                [popover]="numeroDocumento" triggers="keypress:focusout">
+                <input *ngIf="formulario.controls['tipoPessoa'].value == 'PF'"  type="text" class="form-control" id="numeroDocumento" placeholder="CPF ou CNPJ" formControlName="numeroDocumento"
+                [popover]="numeroDocumento" triggers="keypress:focusout" [textMask]="{mask: maskCpf}">
+                <input *ngIf="formulario.controls['tipoPessoa'].value == 'PJ'"  type="text" class="form-control" id="numeroDocumento" placeholder="CPF ou CNPJ" formControlName="numeroDocumento"
+                [popover]="numeroDocumento" triggers="keypress:focusout" [textMask]="{mask: maskCnpj}">
               </div>
               <div class="form-group col-4">
-                <ng-template #tipoPessoa><app-error-msg [control]="formulario.get('tipoPessoa')" label="Tipo de Pessoa"></app-error-msg></ng-template>
                 <label for="tipoPessoa">Tipo de Pessoa </label>
-                <select class="form-control" formControlName="tipoPessoa" [popover]="tipoPessoa">
-                  <option >PF</option>
-                  <option >PJ</option>
+                <select class="form-control" formControlName="tipoPessoa" >
+                  <option value="PF">Pessoa Física</option>
+                  <option value="PJ">Pessoa Jurídica</option>
                 </select>
               </div>
 
             </div>
             <div class="row">
               <div class="form-group col-12">
-                <ng-template #ativo><app-error-msg [control]="formulario.get('ativo')" label="Ativo"></app-error-msg></ng-template>
                 <label for="ativo">Ativo</label>
-                <select class="form-control" formControlName="ativo" [popover]="ativo">
+                <select class="form-control" formControlName="ativo" >
                   <option value="true">Sim</option>
                   <option value="false">Não</option>
                 </select>
@@ -119,7 +118,7 @@
                 <ng-template #cep><app-error-msg [control]="formulario.get('endereco.cep')" label="Cep"></app-error-msg></ng-template>
                 <label for="cep">Cep</label>
                 <input type="text" class="form-control" id="cep"
-                  formControlName="cep" (blur)="consultaCEP()" [popover]="cep" triggers="keypress:focusout">
+                  formControlName="cep" (blur)="consultaCEP()" [popover]="cep" triggers="keypress:focusout" [textMask]="{mask: maskCep}">
               </div>
               <div class="form-group col-4">
                 <ng-template #logradouro><app-error-msg [control]="formulario.get('endereco.logradouro')" label="Logradouro"></app-error-msg></ng-template>
@@ -159,7 +158,7 @@
                 <ng-template #estado><app-error-msg [control]="formulario.get('endereco.estado')" label="Estado"></app-error-msg></ng-template>
                 <label for="estado">Estado</label>
                 <input type="text" class="form-control" id="estado"
-                  formControlName="estado" [popover]="estado" triggers="keypress:focusout">
+                  formControlName="estado" [popover]="estado" triggers="keypress:focusout" maxlength="2">
               </div>
             </div>
           </div>
