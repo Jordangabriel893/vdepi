@@ -3,43 +3,27 @@
     <div class="row">
       <div class="col-lg-12">
         <div class="card">
-          <div class="card-header">
-
-            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-house-fill"
-              viewBox="0 0 16 16">
-              <path fill-rule="evenodd"
-                d="m8 3.293 6 6V13.5a1.5 1.5 0 0 1-1.5 1.5h-9A1.5 1.5 0 0 1 2 13.5V9.293l6-6zm5-.793V6l-2-2V2.5a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5z" />
-              <path fill-rule="evenodd"
-                d="M7.293 1.5a1 1 0 0 1 1.414 0l6.647 6.646a.5.5 0 0 1-.708.708L8 2.207 1.354 8.854a.5.5 0 1 1-.708-.708L7.293 1.5z" />
-            </svg> Dados do Lote - Informações Obrigatórias
-
-
+          <div class="card-header d-flex align-items-center justify-content-between">
+            <div><i class="fa fa-list"></i>&nbsp;Dados do Lote - Obrigatórios</div>
+            <div *ngIf="leilao">Leilão: <b>{{leilao.nome}}</b></div>
           </div>
 
           <div class="card-block">
             <div class="row ">
               <div class="form-group col-4">
-                <ng-template #descricao>
-                  <app-error-msg [control]="formulario.get('descricao')" label="Descrição"></app-error-msg>
-                </ng-template>
                 <label for="descricao">Descrição </label>
                 <input type="text" class="form-control" [ngClass]="aplicaCssErro('descricao')" id="descricao"
-                  placeholder="Descrição" formControlName="descricao" [popover]="descricao"
+                  placeholder="Descrição" formControlName="descricao"
                   triggers="keypress:focusout">
               </div>
               <div class="form-group col-4">
-                <ng-template #numeroLote>
-                  <app-error-msg [control]="formulario.get('numeroLote')" label="Descrição"></app-error-msg>
-                </ng-template>
                 <label for="numeroLote">Numero do Lote </label>
                 <input type="text" class="form-control" [ngClass]="aplicaCssErro('numeroLote')" id="numeroLote"
-                  placeholder="Numero do Lote" formControlName="numeroLote" [popover]="numeroLote"
+                  placeholder="Numero do Lote" formControlName="numeroLote"
                   triggers="keypress:focusout">
               </div>
               <div class="form-group col-4">
-                <ng-template #status>
-                  <app-error-msg [control]="formulario.get('statusId')" label="Status"></app-error-msg>
-                </ng-template>
+
                 <label for="statusId">Status </label>
                 <select class="form-control" [ngClass]="aplicaCssErro('statusId')" formControlName="statusId">
                   <option *ngFor="let item of loteStatus" [value]="item.loteStatusId">{{item.descricao}}</option>
@@ -82,98 +66,63 @@
     <div class="row">
       <div class="col-lg-12">
         <div class="card">
-          <div class="card-header">
-            <input type="checkbox" formControlName="judicial"> Judicial
+          <div class="card-header d-flex align-items-center">
+            <input type="checkbox" formControlName="judicial">&nbsp;Lote Judicial?
           </div>
 
           <div class="card-block" formGroupName="loteJudicial" *ngIf="this.formulario.value.judicial == true">
             <div class="row">
               <div class="form-group col-4">
-                <ng-template #descricao>
-                  <app-error-msg [control]="formulario.get('loteJudicial').get('numProcesso')" label="Descrição">
-                  </app-error-msg>
-                </ng-template>
-
                 <label for="numProcesso">Nº Processo </label>
                 <input type="number" class="form-control" id="numProcesso" placeholder="Nº Processo"
-                  formControlName="numProcesso" [popover]="numProcesso" triggers="keypress:focusout">
+                  formControlName="numProcesso"  triggers="keypress:focusout">
               </div>
               <div class="form-group col-4">
-                <ng-template #autor>
-                  <app-error-msg [control]="formulario.get('loteJudicial').get('autor')" label="Autor"></app-error-msg>
-                </ng-template>
                 <label for="autor">Autor </label>
                 <input type="text" class="form-control" id="autor" placeholder="Autor" formControlName="autor"
-                  [popover]="autor" triggers="keypress:focusout">
+                  triggers="keypress:focusout">
               </div>
               <div class="form-group col-4">
-                <ng-template #reu>
-                  <app-error-msg [control]="formulario.get('loteJudicial').get('reu')" label="Réu"></app-error-msg>
-                </ng-template>
                 <label for="reu">Réu </label>
-                <input type="text" class="form-control" id="reu" placeholder="Réu" formControlName="reu" [popover]="reu"
+                <input type="text" class="form-control" id="reu" placeholder="Réu" formControlName="reu"
                   triggers="keypress:focusout">
               </div>
             </div>
 
             <div class="row">
               <div class="form-group col-4">
-                <ng-template #depositario>
-                  <app-error-msg [control]="formulario.get('loteJudicial').get('depositario')" label="Depositário">
-                  </app-error-msg>
-                </ng-template>
                 <label for="depositario">Depositário </label>
                 <input type="text" class="form-control" id="depositario" placeholder="Depositário"
-                  formControlName="depositario" [popover]="depositario" triggers="keypress:focusout">
+                  formControlName="depositario"  triggers="keypress:focusout">
               </div>
               <div class="form-group col-4">
-                <ng-template #localDepositario>
-                  <app-error-msg [control]="formulario.get('loteJudicial').get('localDepositario')"
-                    label="Local Depositário">
-                  </app-error-msg>
-                </ng-template>
                 <label for="localDepositario">Local Depositário </label>
                 <input type="text" class="form-control" id="localDepositario" placeholder="Local Depositário"
-                  formControlName="localDepositario" [popover]="localDepositario" triggers="keypress:focusout">
+                  formControlName="localDepositario" triggers="keypress:focusout">
               </div>
               <div class="form-group col-4">
-                <ng-template #anoProcesso>
-                  <app-error-msg [control]="formulario.get('loteJudicial').get('anoProcesso')" label="Ano do Processo">
-                  </app-error-msg>
-                </ng-template>
                 <label for="anoProcesso">Ano do Processo </label>
                 <input type="text" class="form-control" id="anoProcesso" placeholder="Ano do Processo"
-                  formControlName="anoProcesso" [popover]="anoProcesso" triggers="keypress:focusout">
+                  formControlName="anoProcesso" triggers="keypress:focusout">
               </div>
 
             </div>
 
             <div class="row">
               <div class="form-group col-4">
-                <ng-template #depositario>
-                  <app-error-msg [control]="formulario.get('tipoAcao')" label="Tipo de Ação"></app-error-msg>
-                </ng-template>
                 <label for="tipoAcao">Tipo de Ação </label>
                 <input type="text" class="form-control" id="tipoAcao" placeholder="Tipo de Ação"
-                  formControlName="tipoAcao" [popover]="tipoAcao" triggers="keypress:focusout">
+                  formControlName="tipoAcao"  triggers="keypress:focusout">
               </div>
               <div class="form-group col-4">
-                <ng-template #comarca>
-                  <app-error-msg [control]="formulario.get('comarca')" label="Comarca">
-                  </app-error-msg>
-                </ng-template>
                 <label for="comarca">Comarca</label>
                 <input type="text" class="form-control" id="comarca" placeholder="Comarca" formControlName="comarca"
-                  [popover]="comarca" triggers="keypress:focusout">
+                  triggers="keypress:focusout">
               </div>
               <div class="form-group col-4">
-                <ng-template #natureza>
-                  <app-error-msg [control]="formulario.get('natureza')" label="Natureza">
-                  </app-error-msg>
-                </ng-template>
                 <label for="natureza">Natureza </label>
                 <input type="text" class="form-control" id="natureza" placeholder="Natureza" formControlName="natureza"
-                  [popover]="natureza" triggers="keypress:focusout">
+                   triggers="keypress:focusout">
               </div>
 
             </div>
@@ -198,20 +147,21 @@
     <div class="row">
       <div class="col-lg-12">
         <div class="card">
-          <div class="card-header">
+          <div class="card-header d-flex align-items-center">
             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-cash"
               viewBox="0 0 16 16">
               <path d="M8 10a2 2 0 1 0 0-4 2 2 0 0 0 0 4z" />
               <path
                 d="M0 4a1 1 0 0 1 1-1h14a1 1 0 0 1 1 1v8a1 1 0 0 1-1 1H1a1 1 0 0 1-1-1V4zm3 0a2 2 0 0 1-2 2v4a2 2 0 0 1 2 2h10a2 2 0 0 1 2-2V6a2 2 0 0 1-2-2H3z" />
-            </svg> Valores
+            </svg>
+            &nbsp;Valores
           </div>
           <div class="card-block">
             <div class="row">
               <div class="form-group col-4">
                 <label for="valorAvaliacao">Valor Avaliação</label>
                 <div class="flex">
-                  <input type="text" class="form-control"   (blur)="verifica()"
+                  <input type="text" class="form-control"
                     id="valorAvaliacao" formControlName="valorAvaliacao" currencyMask
                     [options]="{ prefix: 'R$ ', thousands: '.', decimal: ',' }" [ngClass]="aplicaCssErro('valorAvaliacao')" >
 
@@ -322,14 +272,11 @@
           </div>
 
         </div>
-
-
-
       </div>
     </form>
     <div class="row">
       <div class="col-12 consultar">
-        <button class="btn btn-primary" (click)="consultaFipe()" (click)="modalRef?.hide()">Concluir</button>
+        <button class="btn btn-primary" (click)="consultaFipe()" (click)="modalRef?.hide()">Usar Valor</button>
         <button class="btn btn-danger" (click)="modalRef?.hide()">Cancelar</button>
       </div>
 
@@ -341,7 +288,7 @@
     <div class="row">
       <div class="col-lg-12">
         <div class="card">
-          <div class="card-header new-campo">
+          <div class="card-header new-campo d-flex align-items-center">
             <div class="cabecalho"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                 class="bi bi-pencil-square" viewBox="0 0 16 16">
                 <path
@@ -349,7 +296,7 @@
                 <path fill-rule="evenodd"
                   d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z" />
               </svg>
-              <p>Campos </p>
+              &nbsp;Campos
             </div>
 
             <button type="button" class="btn btn-success btn-sm" (click)="adicionarCampo()"><i
@@ -369,14 +316,14 @@
               <tbody>
                 <tr *ngFor="let campo of filterList('campos'); let i = index" [formGroupName]="i">
                   <td>
-                    <select class="form-control" formControlName="loteCampoId">
+                    <select class="form-control" formControlName="loteCampoId" [ngClass]="aplicaCssErroLista('campos','loteCampoId', i)">
                       <option value="true" *ngFor="let item of loteCampos" value="{{item.loteCampoId}}">
                         {{item.descricao}}
                       </option>
                     </select>
                   </td>
                   <td>
-                    <input type="text" class="form-control" id="dataAberturaLance" formControlName="valor">
+                    <input type="text" class="form-control" formControlName="valor" [ngClass]="aplicaCssErroLista('campos','valor', i)">
                   </td>
                   <td class="text-center">
                     <button type="button" class="btn btn-danger " (click)="deleteCampo(i)">Remover</button>
@@ -407,7 +354,7 @@
     <div class="row">
       <div class="col-lg-12">
         <div class="card">
-          <div class="card-header new-campo">
+          <div class="card-header new-campo d-flex align-items-center">
 
             <div class="cabecalho">
               <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
@@ -416,7 +363,7 @@
                 <path
                   d="M1.5 2A1.5 1.5 0 0 0 0 3.5v9A1.5 1.5 0 0 0 1.5 14h13a1.5 1.5 0 0 0 1.5-1.5v-9A1.5 1.5 0 0 0 14.5 2h-13zm13 1a.5.5 0 0 1 .5.5v6l-3.775-1.947a.5.5 0 0 0-.577.093l-3.71 3.71-2.66-1.772a.5.5 0 0 0-.63.062L1.002 12v.54A.505.505 0 0 1 1 12.5v-9a.5.5 0 0 1 .5-.5h13z" />
               </svg>
-              <p> Fotos </p>
+              &nbsp;Fotos
             </div>
             <button type="button" class="btn btn-success btn-sm" (click)="alterarFoto(-1)">
               <i class="fa fa-plus-circle"></i>&nbsp;Nova Foto</button>
@@ -426,8 +373,8 @@
             <div class="row">
               <fieldset class="form-group col-3" *ngFor="let item of filterList('fotos'); let i = index"
                 [formGroupName]="i">
-                <div class="flex">
-                  <select class="form-control col-12" formControlName="tipoFotoId">
+                <div class="flex mb-2">
+                  <select class="form-control col-12" formControlName="tipoFotoId" [ngClass]="aplicaCssErroLista('fotos','tipoFotoId', i)">
                     <option value="true" *ngFor="let tipo of tipoFoto" value="{{tipo.tipoFotoId}}">{{tipo.descricao}}
                     </option>
                   </select>
@@ -447,7 +394,7 @@
           </div>
           <div class="card-block"  *ngIf="this.formulario.value.fotos.length == 0">
             <alert type="danger">
-              <strong>Campo Obrigatório</strong> É necessário no mínimo uma foto
+              <strong>Campo Obrigatório</strong> É necessário adicionar as fodos do lote
             </alert>
           </div>
         </div>
@@ -458,7 +405,7 @@
     <div class="row">
       <div class="col-lg-12">
         <div class="card">
-          <div class="card-header new-campo">
+          <div class="card-header new-campo d-flex align-items-center">
             <div class="cabecalho"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                 class="bi bi-file-earmark-text" viewBox="0 0 16 16">
                 <path
@@ -466,7 +413,7 @@
                 <path
                   d="M9.5 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V4.5L9.5 0zm0 1v2A1.5 1.5 0 0 0 11 4.5h2V14a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h5.5z" />
               </svg>
-              <p>Anexos </p>
+              &nbsp;Anexos
             </div>
             <button type="button" class="btn btn-success btn-sm" (click)="alterarAnexo(-1)">
               <i class="fa fa-plus-circle"></i>&nbsp;Novo Anexo</button>
@@ -499,11 +446,6 @@
               </tbody>
             </table>
           </div>
-          <div class="card-block" *ngIf="this.formulario.value.anexos.length == 0">
-            <alert type="danger">
-              <strong>Campo Obrigatório</strong> É necessário no mínimo um anexo
-            </alert>
-          </div>
         </div>
       </div>
     </div>
@@ -512,14 +454,15 @@
     <div class="row">
       <div class="col-lg-12">
         <div class="card">
-          <div class="card-header">
+          <div class="card-header d-flex align-items-center">
             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
               class="bi bi-pencil-square" viewBox="0 0 16 16">
               <path
                 d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z" />
               <path fill-rule="evenodd"
                 d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z" />
-            </svg> Observação
+            </svg>
+            &nbsp;Observação
           </div>
 
           <div class="card-block">

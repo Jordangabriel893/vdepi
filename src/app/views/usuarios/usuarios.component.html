@@ -49,13 +49,18 @@
                     <td>{{item.usuarioId}}</td>
                     <td>{{item.nomeCompleto}}</td>
                     <td>{{item.numeroDocumento}}</td>
-                    <td>{{item.dataNascimento | amDateFormat:'DD/MM/yyyy' }}</td>
-                    <td>{{item.genero == 'M'? "Masculino" : Feminino}}</td>
+                    <td>{{item.dataNascimento | amDateFormat:'DD/MM/YYYY' }}</td>
+                    <td>{{item.genero == 'M'? 'Masculino' : 'Feminino'}}</td>
                     <td>{{item.email}}</td>
                     <td>{{item.tipoPessoa == 'PF'? "Pessoa Física" : "Pessoa Jurídica"}}</td>
                     <td>{{item.ativo ? "Sim" : "Não"}}</td>
                     <td class="text-center" nowrap>
                       <button type="button" class="btn btn-primary" (click)="edit(item.usuarioId)"><i class="fa fa-edit"></i>&nbsp; Editar</button>
+                    </td>
+                  </tr>
+                  <tr *ngIf="loading">
+                    <td class="text-center text-muted" colspan="9">
+                      <h5><i class="fa fa-spin fa-spinner"></i>&nbsp;Carregando...</h5>
                     </td>
                   </tr>
                 </tbody>

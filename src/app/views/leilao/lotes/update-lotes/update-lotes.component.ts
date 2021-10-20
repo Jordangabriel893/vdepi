@@ -28,6 +28,7 @@ export class UpdateLotesComponent implements OnInit {
   id: any
   lote: any
   leilaoId;
+  leilao: any
   tiposLote: any
   loteCampos: any
   categorias: any
@@ -110,7 +111,7 @@ export class UpdateLotesComponent implements OnInit {
     private formBuilder: FormBuilder,
     private notifierService: NotifierService,
     private modalService: BsModalService,
-  ) { 
+  ) {
     this.modalValorAvalicao = this.formBuilder.group({
       tipo:[, Validators.required],
       referencia: [, Validators.required ],
@@ -119,7 +120,6 @@ export class UpdateLotesComponent implements OnInit {
       ano:[Validators.required],
       combustivel:[],
       valor:[],
-
     })
   }
 
@@ -134,18 +134,16 @@ export class UpdateLotesComponent implements OnInit {
       this.restangular.one("lote", this.id).get().pipe(),
       this.restangular.one('categoria').get().pipe(),
       this.restangular.one('lotestatus').get().pipe(),
-      this.restangular.one("tabelafipe/tipos").get().pipe(),
+      this.restangular.one("tabelafipe/tipos").get().pipe()
     ]).subscribe((allResp: any[]) => {
       this.loteCampos = allResp[0].data;
-      this.tiposLote = allResp[1].data;
-      this.tipoFoto = allResp[2].data;
+      this.tiposLote = allResp[1].data
+      this.tipoFoto = allResp[2].data.filter(x => x.visivelSite);;
       this.local = allResp[3].data;
 
       this.lote = allResp[4].data;
       this.leilaoId = this.lote.leilaoId;
-      const fotos = this.lote.fotos.filter(x => x.tipoFoto.visivelSite  == true )
-      
-      console.log(fotos)
+      const fotos = this.lote.fotos.filter(x => x.tipoFoto.visivelSite)
       this.updateForm(this.lote, fotos);
 
       this.categorias = allResp[5].data;
@@ -153,6 +151,9 @@ export class UpdateLotesComponent implements OnInit {
 
       this.loteStatus = allResp[6].data;
       this.tipos = allResp[7].data
+
+      this.restangular.one("leilao", this.leilaoId).get()
+      .subscribe((resp) => this.leilao = resp.data)
     });
   }
 
@@ -175,7 +176,7 @@ export class UpdateLotesComponent implements OnInit {
     },
       error => {
         this.notifierService.notify('error', 'Erro ao atualizar o Lote!');
-      }); 
+      });
 
   }
 
@@ -264,12 +265,8 @@ export class UpdateLotesComponent implements OnInit {
   adicionarCampo() {
     let campos = this.formulario.get('campos') as FormArray
     campos.push(this.formBuilder.group({
-      tipoFotoId: this.id,
-      loteCampoId: 0,
-      valor: "",
-      loteCampo: this.formBuilder.group({
-        descricao: "--",
-      }),
+      loteCampoId: [null, Validators.required],
+      valor: ['', Validators.required],
       acao: "I"
     }))
   }
@@ -293,7 +290,7 @@ export class UpdateLotesComponent implements OnInit {
         loteFotoId: valor.loteFotoId,
         arquivoId: valor.arquivoId,
         arquivo: obj,
-        acao: 'A'
+        acao: valor.acao !== 'I' ? 'A' : 'I'
       }))
     }
   }
@@ -442,7 +439,7 @@ export class UpdateLotesComponent implements OnInit {
   }
   openModal(template: TemplateRef<any>) {
     this.modalRef = this.modalService.show(template);
-    
+
   }
 
   collapsed(): void {
@@ -470,7 +467,7 @@ export class UpdateLotesComponent implements OnInit {
        this.modalValorAvalicao.patchValue({
         referencia: referencia
        })
-      
+
     });
   }
   buscarMarcas(){
@@ -521,27 +518,40 @@ export class UpdateLotesComponent implements OnInit {
   }
 
   consultaFipe(){
-    
     this.formulario.patchValue({
       valorAvaliacao:this.valor
      })
-    
-    
   }
+
   verificaValidTouched(campo){
     this.formulario.controls [campo].valueChanges.subscribe ((val) => {
       if (String (val) === "NaN") {
-      this.formulario.controls [campo].setValue(null);
+        this.formulario.controls [campo].setValue(null);
       }
-      });
+    });
     return !this.formulario.get(campo).valid && this.formulario.get(campo).touched;
   }
-  
-  aplicaCssErro(campo){
-    return{
-      'has-error': this.verificaValidTouched(campo),
-      
-    }
+
+  verificaValidList(campoArray, campo, i){
+    var lista = this.formulario.get(campoArray) as FormArray;
+    var item = lista.controls[i] as FormGroup;
+    return !item.get(campo).valid;
   }
 
+  aplicaCssErro(campo){
+    return{ 'has-error': this.verificaValidTouched(campo) }
+  }
+
+  aplicaCssErroLista(campoArray, campo, i){
+    return{ 'has-error': this.verificaValidList(campoArray, campo, i) }
+  }
+
+  getFormatacao(i) {
+    var campos = this.formulario.get("campos") as FormArray;
+    var campo = campos.controls[i] as FormGroup;
+    var loteCampoId = campo.get("loteCampoId").value;
+    var loteCampo = this.loteCampos.find(x => x.loteCampoId == loteCampoId);
+    var formatacao = loteCampo && loteCampo.formatacao ? loteCampo.formatacao.split('').map(x => x === '#' ? new RegExp(x.replace('#', '\\w')) : x) : false;
+    return formatacao;
+  }
 }

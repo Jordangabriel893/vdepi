@@ -95,7 +95,7 @@ export const routes: Routes = [
         path: 'lotes/:id',
         component: LotesComponent,
         data: {
-          title: 'Ver lotes',
+          title: 'Lotes',
           source: 'RelatorioEstoque'
         },
         canActivate: [SourceGuard]
@@ -104,7 +104,7 @@ export const routes: Routes = [
         path: 'create-lotes/:id',
         component: CreateLotesComponent,
         data: {
-          title: 'Criar Lote',
+          title: 'Novo Lote',
           source: 'RelatorioEstoque'
         },
         canActivate: [SourceGuard]
@@ -113,7 +113,7 @@ export const routes: Routes = [
         path: 'update-lotes/:id',
         component: UpdateLotesComponent,
         data: {
-          title: 'Atualizar Lote',
+          title: 'Editar Lote',
           source: 'RelatorioEstoque'
         },
         canActivate: [SourceGuard]

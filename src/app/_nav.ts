@@ -12,24 +12,24 @@ export const navigation = [
 
   {
     title: true,
-    name: 'RELATORIOS'
+    name: 'OPERAÇÃO'
   },
   {
     name: 'Leilao',
     url: '/leilao',
-    icon: 'fa fa-list',
-    source: 'RelatorioEstoque'
-  },
-  {
-    name: 'Usuarios',
-    url: '/usuarios',
-    icon: 'fa fa-user',
+    icon: 'fa fa-gavel',
     source: 'RelatorioEstoque'
   },
   {
     name: 'Habilitação',
     url: '/habilitacao',
     icon: 'fa fa-check',
+    source: 'RelatorioEstoque'
+  },
+  {
+    name: 'Usuarios',
+    url: '/usuarios',
+    icon: 'fa fa-user',
     source: 'RelatorioEstoque'
   }
 ];

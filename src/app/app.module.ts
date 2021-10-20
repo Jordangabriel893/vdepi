@@ -4,15 +4,12 @@ import { CommonModule } from '@angular/common';
 import { LocationStrategy, HashLocationStrategy, registerLocaleData } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/Http';
-import { CurrencyPipe } from '@angular/common';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AppComponent } from './app.component';
 import localePt from '@angular/common/locales/pt';
 import { FlipModule } from 'ngx-flip';
 
-
 registerLocaleData(localePt);
-
 // Import containers
 import {
   FullLayoutComponent
@@ -81,7 +78,7 @@ import { NotLink } from './directives/not-link-directive'
 import { FormatCpfCnpjPipe } from './directives/format-cpfcnpj.pipe';
 import { FormatPhonePipe } from './directives/format-phone.pipe';
 import { KeyEnterDirective } from './directives/keyenter.directive';
-import { InputFocusDirective } from './directives/inputFocus.directive';
+import { AppFocusDirective } from './directives/appFocus.directive';
 import { DisableControlDirective } from './directives/disable-control.directive';
 import { CurrencyFormatPipe } from './directives/currency-format.pipe';
 
@@ -101,7 +98,7 @@ const APP_DIRECTIVES = [
   SumByPipe,
   GroupByPipe2,
   KeyEnterDirective,
-  InputFocusDirective,
+  AppFocusDirective,
   DisableControlDirective,
   CurrencyFormatPipe
 ]
@@ -224,10 +221,7 @@ export function RestangularConfigFactory(RestangularProvider, NotifierService: N
     CarouselModule.forRoot(),
     AngularEditorModule,
     HttpClientModule,
-    AlertModule.forRoot()
-
-
-
+    AlertModule.forRoot(),
   ],
   declarations: [
     AppComponent,

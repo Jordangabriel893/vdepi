@@ -14,6 +14,7 @@ import * as Model from '../_models/model'
 export class LeilaoComponent implements OnInit {
 
   leiloes: Model.Leilao[];
+  loading = true;
 
   constructor(
     private route: ActivatedRoute,
@@ -29,8 +30,9 @@ export class LeilaoComponent implements OnInit {
   ngOnInit() {
     this.restangular.one("leilao", '').get({PageSize:100}).subscribe((response) => {
         this.leiloes = response.data;
-
-      });
+        this.loading = false;
+      },
+      () => this.loading = false);
   }
 
   edit(id) {

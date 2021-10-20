@@ -11,6 +11,7 @@ export class LotesComponent implements OnInit {
   id: any
   lotes: any
   leilao
+  loading = true;
 
   constructor(
     private restangular: Restangular,
@@ -18,18 +19,15 @@ export class LotesComponent implements OnInit {
     private router: Router,
   ) {
     this.id = this.route.snapshot.params['id']
-    console.log(this.id)
     this.restangular.one("lote", '').get({ leilaoId: this.id, PageSize:100 }).subscribe(
       (lotes) => {
+       this.loading = false;
         this.lotes = lotes.data;
-        console.log(this.lotes)
-      }
+      },
+      () => this.loading = false
     )
-    this.restangular.one(`leilao`).get({id:this.id}).subscribe((response) => {
-     const leilao =  response.data.filter(x => x.id == this.id)
-     console.log(leilao[0])
-     this.leilao = leilao[0]
-      
+    this.restangular.one('leilao', this.id).get().subscribe((response) => {
+      this.leilao = response.data
     });
 
   }

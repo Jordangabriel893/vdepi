@@ -10,13 +10,13 @@
   <ul class="nav navbar-nav ml-auto" style="padding-right:20px">
     <li class="nav-item dropdown px-3 d-none d-md-block" dropdown>
        <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false" dropdownToggle (click)="toggleDropdown($event)">
-        <span class="img-user">{{ user.username | shorten: 1 : '' }}</span>&nbsp;
+        <span class="img-user">{{ user.username | shorten: 1 : '' | uppercase }}</span>&nbsp;
         <span class="hidden-md-down">{{user.username}}</span>
       </a>
       <div class="dropdown-menu dropdown-menu-right" *dropdownMenu aria-labelledby="simple-dropdown">
         <div class="dropdown-header text-center"><strong>USUÁRIO</strong></div>
-        <a class="dropdown-item" href="#" [routerLink]="['/my-account']"><i class="fa fa-user"></i> Conta</a>
-        <div class="divider"></div>
+        <!-- <a class="dropdown-item" href="#" [routerLink]="['/my-account']"><i class="fa fa-user"></i> Conta</a>
+        <div class="divider"></div> -->
         <a class="dropdown-item" href="#" (click)="logout()"><i class="icon-logout"></i> Sair</a>
       </div>
     </li>

@@ -23,6 +23,7 @@ export class HabilitacaoComponent implements OnInit {
   posicaoI:any
 
   documentosUsuario:any
+  loading = true;
 
   constructor(
     private restangular: Restangular,
@@ -40,9 +41,10 @@ export class HabilitacaoComponent implements OnInit {
 
   ngOnInit() {
     this.restangular.one("habilitacao").get().subscribe((response) => {
-      console.log(response.data)
       this.habilitacao = response.data;
-    });
+      this.loading = false;
+    },
+    () => this.loading = false);
   }
   //submit
   aprovarSolicitacao(solicitacaoHabilitacaoId, i) {
@@ -55,23 +57,21 @@ export class HabilitacaoComponent implements OnInit {
     },
       error => {
         this.notifierService.notify('error', 'Erro ao solicitar aprovação');
-      });   
+      });
   }
 
     //submit
   reprovarSolicitacao() {
-    
+
     this.restangular.all(`habilitacao/${this.solicitacaoHabilitacaoIdDesabilitar}/reprovar`).post()
     .subscribe(a => {
       this.notifierService.notify('success', 'Reprovado com sucesso');
       setTimeout(()=>{location.reload()}, 3000)
-      
+
     },
       error => {
         this.notifierService.notify('error', 'Erro ao solicitar reprovação');
       });
-      
-      
   }
 
   aprovarLimiteDeCredito(){
@@ -87,12 +87,12 @@ export class HabilitacaoComponent implements OnInit {
     },
       error => {
         this.notifierService.notify('error', 'Erro ao aprovar Limite de Crédito');
-      }); 
+      });
   }
 
   //modal
   openModal(template: TemplateRef<any>, i, solicitacaoHabilitacaoId) {
-    this.modalRef = this.modalService.show(template);
+    this.modalRef = this.modalService.show(template, { class: 'modal-lg'});
     this.documentosUsuario = this.habilitacao[i]
     this.posicaoI = i
     this.solicitacaoHabilitacaoIdDesabilitar = solicitacaoHabilitacaoId
@@ -129,6 +129,25 @@ export class HabilitacaoComponent implements OnInit {
     }
 
     return regra;
+  }
+
+  formatBytes(bytes, decimals = 2) {
+    if (bytes === 0) return '0 Bytes';
+
+    const k = 1024;
+    const dm = decimals < 0 ? 0 : decimals;
+    const sizes = ['Bytes', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB'];
+
+    const i = Math.floor(Math.log(bytes) / Math.log(k));
+
+    return parseFloat((bytes / Math.pow(k, i)).toFixed(dm)) + ' ' + sizes[i];
+  }
+
+  downloadFile(arquivoId) {
+    this.restangular.one(`Arquivo/${arquivoId}/download`).get()
+    .subscribe((resp) => {
+      window.open(resp.data.urlArquivo);
+    })
   }
 
 }

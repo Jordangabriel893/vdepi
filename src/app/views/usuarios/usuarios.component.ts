@@ -9,6 +9,7 @@ import { Restangular } from 'ngx-restangular';
 })
 export class UsuariosComponent implements OnInit {
   usuarios:any
+  loading = true;
 
   constructor(
     private restangular: Restangular,
@@ -17,9 +18,10 @@ export class UsuariosComponent implements OnInit {
 
   ngOnInit() {
     this.restangular.one("usuario").get().subscribe((response) => {
-      console.log(response.data)
       this.usuarios = response.data;
-    });
+      this.loading = false;
+    },
+    () => this.loading = false);
   }
   edit(id) {
     this.router.navigate(['/update-usuarios', id], { relativeTo: this.route });

@@ -19,7 +19,7 @@ export class UpdateUsuariosComponent implements OnInit {
   public maskCpf: Array<string | RegExp>
   public maskCnpj: Array<string | RegExp>
 
-  
+
   constructor(
     private route: ActivatedRoute,
     private router: Router,
@@ -72,7 +72,7 @@ export class UpdateUsuariosComponent implements OnInit {
       Object.keys(this.formulario.controls).forEach((campo)=>{
         const controle = this.formulario.get(campo)
         controle.markAsTouched()
-        
+
       })
       this.notifierService.notify('error', 'Preencha todos os campos obrigatórios');
       return
@@ -86,7 +86,7 @@ export class UpdateUsuariosComponent implements OnInit {
       Object.keys(this.formulario.controls).forEach((campo)=>{
         const controle = this.formulario.get(campo)
         controle.markAsTouched()
-        
+
       })
     })
   }
@@ -129,7 +129,7 @@ export class UpdateUsuariosComponent implements OnInit {
         complemento: dados.endereco ? dados.endereco.complemento : '',
         bairro: dados.endereco ? dados.endereco.bairro : '',
         cidade: dados.endereco ? dados.endereco.cidade : '',
-        estado: dados.endereco ? dados.endereco.cidade : '',
+        estado: dados.endereco ? dados.endereco.estado : '',
         logradouro: dados.endereco ? dados.endereco.logradouro : ''
       },
       email: dados.email,
@@ -143,11 +143,11 @@ export class UpdateUsuariosComponent implements OnInit {
   verificaValidTouched(campo){
     return !this.formulario.get(campo).valid && this.formulario.get(campo).touched;
   }
-  
+
   aplicaCssErro(campo){
     return{
       'has-error': this.verificaValidTouched(campo),
-      
+
     }
   }
 }

@@ -24,7 +24,7 @@ export class CreateLotesComponent implements OnInit {
   id: any
   leilaoId;
   loteStatus;
-  lote: any
+  leilao: any
   tiposLote: any
   loteCampos: any
   categorias: any
@@ -94,13 +94,13 @@ export class CreateLotesComponent implements OnInit {
     private route: ActivatedRoute,
     private router: Router,
     private formBuilder: FormBuilder,
-    private modalService: BsModalService,
     private notifierService: NotifierService
   ) {
     this.id = this.route.snapshot.params['id'];
+    this.leilaoId = this.id;
 
     this.formulario = this.formBuilder.group({
-      loteId:[null, ],
+      loteId:[0],
       descricao: [null, Validators.required],
       descricaoDetalhada: [null,Validators.required],
       itemLote: [],
@@ -108,13 +108,13 @@ export class CreateLotesComponent implements OnInit {
       leilaoId: [this.id],
       statusId: [null , Validators.required],
       categoriaId: [null ,Validators.required],
-      localId: [null, Validators.required ],
+      localId: [null, Validators.required],
       valorLanceInicial: [null, Validators.required],
       valorMinimoVenda: [null, Validators.required],
       valorAvaliacao: [null, Validators.required],
       valorIncremento: [null, Validators.required],
-      valorTaxaAdministrativa: [null, Validators.required],
-      valorOutrasTaxas: [null,Validators.required],
+      valorTaxaAdministrativa: [0],
+      valorOutrasTaxas: [0],
       observacao: [],
       judicial: [false],
       loteJudicial: this.formBuilder.group({
@@ -135,77 +135,64 @@ export class CreateLotesComponent implements OnInit {
       tipoLoteId: [null, Validators.required],
       campos: this.formBuilder.array([], Validators.required),
       anexos: this.formBuilder.array([]),
-      fotos: this.formBuilder.array([], Validators.required),
-
-
+      fotos: this.formBuilder.array([], Validators.required)
     })
 
   }
   ngOnInit() {
-    
-
     forkJoin([
       this.restangular.one("lotecampo").get().pipe(),
       this.restangular.one("tipolote").get().pipe(),
       this.restangular.one('tipofoto').get().pipe(),
       this.restangular.one('local').get().pipe(),
-      this.restangular.one("lote", this.id).get().pipe(),
+      this.restangular.one("leilao", this.id).get().pipe(),
       this.restangular.one('categoria').get().pipe(),
-      this.restangular.one('lotestatus').get().pipe(),
-
-      
+      this.restangular.one('lotestatus').get().pipe()
     ]).subscribe((allResp: any[]) => {
       this.loteCampos = allResp[0].data;
+
+      this.loteCampos.forEach(x => {
+        if(x.destaqueSite) {
+          this.adicionarCampo(x.loteCampoId);
+        }
+      });
+
       this.tiposLote = allResp[1].data;
-      this.tipoFoto = allResp[2].data;
+      this.tipoFoto = allResp[2].data.filter(x => x.visivelSite);
       this.local = allResp[3].data;
 
-      this.lote = allResp[4].data;
-      this.leilaoId = this.lote.leilaoId;
-
+      this.leilao = allResp[4].data;
 
       this.categorias = allResp[5].data;
-      this.categoriasFilhas = this.categorias.filter(categoria => categoria.categoriaPaiId === this.lote.categoria.categoriaPaiId);
+      this.categoriasFilhas = this.categorias.filter(categoria => categoria.categoriaPaiId === this.leilao.categoriaId);
 
       this.loteStatus = allResp[6].data;
-
-      
- 
     });
+
   }
+
   onSubmit() {
-    console.log(this.formulario.value);
     if(this.formulario.value.judicial == false){
       this.removeControls()
-      console.log(this.formulario.value)
-           
     }
-    if(this.formulario.invalid){
-      if(!this.formulario.valid){
-        Object.keys(this.formulario.controls).forEach((campo)=>{
-          const controle = this.formulario.get(campo)
-          controle.markAsTouched()
-          
-        })
-        this.notifierService.notify('error', 'Preencha todos os campos obrigatórios');
-      }
-      return;
+
+    if(!this.formulario.valid) {
+      Object.keys(this.formulario.controls).forEach((campo)=>{
+        const controle = this.formulario.get(campo)
+        controle.markAsTouched()
+      })
+      this.notifierService.notify('error', 'Preencha todos os campos obrigatórios');
+      return false;
     }
 
     const formulario = this.formulario.value
     this.restangular.all('lote').post(formulario).subscribe(a => {
       this.notifierService.notify('success', 'Lote Criado com sucesso');
-      this.router.navigate(['lotes', this.leilaoId])
+      this.router.navigate(['/lotes', this.leilaoId]);
     },
       error => {
         this.notifierService.notify('error', 'Erro ao Criar o Lote!');
-        Object.keys(this.formulario.controls).forEach((campo)=>{
-          const controle = this.formulario.get(campo)
-          controle.markAsTouched()
-          
-        })
-        this.notifierService.notify('error', 'Preencha todos os campos obrigatórios');
-      }); 
+      });
   }
 
   fileChangeEvent(fileInput: any) {
@@ -290,15 +277,11 @@ export class CreateLotesComponent implements OnInit {
     };
   }
 
-  adicionarCampo() {
+  adicionarCampo(loteCampoId = null) {
     let campos = this.formulario.get('campos') as FormArray
     campos.push(this.formBuilder.group({
-      tipoFotoId: this.id,
-      loteCampoId: 0,
-      valor: "",
-      loteCampo: this.formBuilder.group({
-        descricao: "--",
-      }),
+      loteCampoId: [loteCampoId, Validators.required],
+      valor: ['', Validators.required],
       acao: "I"
     }))
   }
@@ -308,7 +291,7 @@ export class CreateLotesComponent implements OnInit {
 
     if (i < 0) {
       fotos.insert(0, this.formBuilder.group({
-        tipoFotoId: ['', Validators.required],
+        tipoFotoId: [null, Validators.required],
         loteFotoId: 0,
         arquivoId: 0,
         arquivo: obj,
@@ -318,16 +301,16 @@ export class CreateLotesComponent implements OnInit {
       const valor = fotos.value[i]
       fotos.removeAt(i)
       fotos.insert(i, this.formBuilder.group({
-        tipoFotoId: valor.tipoFotoId,
+        tipoFotoId: [valor.tipoFotoId, Validators.required],
         loteFotoId: valor.loteFotoId,
         arquivoId: valor.arquivoId,
         arquivo: obj,
-        acao: 'A'
+        acao: 'I'
       }))
     }
   }
+
   alterarFoto(i) {
-    // console.log(i)
     this.numeroAdcFoto = i
     this.inputFotos.nativeElement.click()
   }
@@ -344,7 +327,6 @@ export class CreateLotesComponent implements OnInit {
         acao: 'I'
       }))
     } else {
-
       const valor = anexos.value[i]
       anexos.removeAt(i)
       anexos.insert(i, this.formBuilder.group({
@@ -354,8 +336,6 @@ export class CreateLotesComponent implements OnInit {
         arquivo: obj,
         acao: 'A'
       }))
-
-      console.log(anexos)
     }
   }
 
@@ -418,16 +398,31 @@ export class CreateLotesComponent implements OnInit {
     loteJudicial.removeControl('comarca');
     loteJudicial.removeControl('natureza');
   }
-  verificaValidTouched(campo){
 
+  verificaValidTouched(campo){
     return !this.formulario.get(campo).valid && this.formulario.get(campo).touched;
   }
-  
-  aplicaCssErro(campo){
-    return{
-      'has-error': this.verificaValidTouched(campo),
-      
-    }
+
+  verificaValidList(campoArray, campo, i){
+    var lista = this.formulario.get(campoArray) as FormArray;
+    var item = lista.controls[i] as FormGroup;
+    return !item.get(campo).valid;
   }
 
+  aplicaCssErro(campo){
+    return{ 'has-error': this.verificaValidTouched(campo) }
+  }
+
+  aplicaCssErroLista(campoArray, campo, i){
+    return{ 'has-error': this.verificaValidList(campoArray, campo, i) }
+  }
+
+  getFormatacao(i) {
+    var campos = this.formulario.get("campos") as FormArray;
+    var campo = campos.controls[i] as FormGroup;
+    var loteCampoId = campo.get("loteCampoId").value;
+    var loteCampo = this.loteCampos.find(x => x.loteCampoId == loteCampoId);
+    var formatacao = loteCampo && loteCampo.formatacao ? loteCampo.formatacao.split('').map(x => x === '#' ? new RegExp(x.replace('#', '\\w')) : x) : false;
+    return formatacao;
+  }
 }

@@ -5,6 +5,8 @@ import { Component, OnInit } from '@angular/core';
 import * as _ from 'lodash';
 import { Restangular } from 'ngx-restangular';
 import { NotifierService } from 'angular-notifier';
+import {  Router } from '@angular/router';
+import { BsLocaleService } from 'ngx-bootstrap/datepicker';
 @Component({
   selector: 'app-create-leilao',
   templateUrl: './create-leilao.component.html',
@@ -22,51 +24,59 @@ export class CreateLeilaoComponent implements OnInit {
 
   formulario:FormGroup
 
-  today: string = moment().format();
+  today = moment().utc();
   dataAtual:any;
   categorias:any
   comitentes:any
   leiloeiros:any
   empresas:any
+  status:any
+  minDate: Date;
 
-  constructor( 
+  constructor(
     private formBuilder: FormBuilder,
     private restangular: Restangular,
-    private datePipe: DatePipe,
-    private notifierService: NotifierService
-  
-    ) { }
+    private notifierService: NotifierService,
+    private router: Router,
+    private localeService: BsLocaleService
+    ) {
+      localeService.use('pt-br');
+      this.minDate = new Date();
+      this.minDate.setDate(this.minDate.getDate() + 1);
+    }
 
   ngOnInit() {
-
     this.restangular.one('categoria').get().subscribe(dados =>{
-     const categoriaPai = dados.data.filter(x => x.categoriaPaiId == null)
-      this.categorias = categoriaPai
-    } 
+      const categoriaPai = dados.data.filter(x => x.categoriaPaiId == null)
+        this.categorias = categoriaPai
+      }
     )
     this.restangular.one('comitente').get().subscribe(
       dados =>{
         this.comitentes = dados.data
-      } 
+      }
     )
     this.restangular.one('leiloeiro').get().subscribe(
       dados =>{
-        
+
         this.leiloeiros = dados.data
-      } 
+      }
     )
     this.restangular.one('empresa').get().subscribe(
       dados =>{
         this.empresas= dados.data
-      } 
+      }
     )
-
-
+    this.restangular.all('leilao').one('status').get().subscribe(
+      dados =>{
+        this.status= dados.data
+      }
+    )
 
     this.formulario = this.formBuilder.group({
       nome:  [null, [Validators.required, Validators.minLength(3), Validators.maxLength(35)]],
       titulo: [null, [Validators.required, Validators.minLength(3), Validators.maxLength(35)]],
-      dataLeilao: [null,[Validators.required]],
+      dataLeilao: [null, Validators.required],
       dataAberturaLance: [null, Validators.required],
       dataInicioAgendamento: [null],
       dataFimAgendamento: [null],
@@ -79,55 +89,63 @@ export class CreateLeilaoComponent implements OnInit {
       numeroDiarioOficial: [null],
       foto: this.formBuilder.group({
         arquivoId:[0],
-        nome:[null, Validators.required],
-        base64:[this.cardImageBase64, Validators.required],
-        tipo:[null, Validators.required],
-        tamanho:[null, Validators.required]
-        
-      }),
+        nome:[null],
+        base64:[null, Validators.required],
+        tipo:[null],
+        tamanho:[0]
+      }, Validators.required),
       categoriaId: [null, Validators.required],
       comitenteId: [null, Validators.required],
       leiloeiroId: [null, Validators.required],
       empresaId: [null, Validators.required],
-
+      statusId: [null, Validators.required],
     })
   }
-  
-  onSubmit(){
-    this.datePipe.transform(this.formulario.value.dataLeilao, 'dd/MM/yyyy')
-    this.datePipe.transform(this.formulario.value.dataAberturaLance, 'dd/MM/yyyy')
-    
-    const ehMaiorOuIgualLeilao = moment(this.formulario.value.dataLeilao).isSameOrAfter(this.today);
-    const ehMaiorOuIgualLances = moment(this.formulario.value.dataAberturaLance).isSameOrAfter(this.today);
-    const ehMenorOuIgualLancesToday = moment(this.formulario.value.dataAberturaLance).isSameOrBefore(this.formulario.value.dataLeilao);
+
+  onSubmit() {
     if(!this.formulario.valid){
       Object.keys(this.formulario.controls).forEach((campo)=>{
         const controle = this.formulario.get(campo)
         controle.markAsTouched()
-        
       })
       this.notifierService.notify('error', 'Preencha todos os campos obrigatórios');
+      return false;
     }
 
-    if(ehMaiorOuIgualLeilao === true && ehMaiorOuIgualLances === true && ehMenorOuIgualLancesToday === true){
+    const dataLeilao = moment(this.formulario.value.dataLeilao).utc();
+    const dataAberturaLance = moment(this.formulario.value.dataAberturaLance).utc();
+    const dataLeilaoMaiorHoje = dataLeilao.isSameOrAfter(this.today);
+    const dataAberturaLanceMaior = dataAberturaLance.isSameOrAfter(this.today);
+    const ehMenorOuIgualLancesToday = dataAberturaLance.isSameOrBefore(dataLeilao);
 
-      this.restangular.all('leilao').post(this.formulario.value).subscribe(a => {
-        this.notifierService.notify('success', 'Leilão Criado com sucesso');
-        
-      },
-        error => {
-          this.notifierService.notify('error', 'Erro ao atualizar o Leilão!');
-
-          Object.keys(this.formulario.controls).forEach((campo)=>{
-            const controle = this.formulario.get(campo)
-            controle.markAsTouched()
-          })
-        });
+    if(!dataLeilao.isSameOrAfter(this.today)) {
+      this.notifierService.notify('error', 'Data do Leilão deve ser maior que hoje');
+      return false;
     }
-    
+
+    if(!dataAberturaLance.isSameOrAfter(this.today)) {
+      this.notifierService.notify('error', 'Data da Abertura de Lances deve ser maior que hoje');
+      return false;
+    }
+
+    if(!dataAberturaLance.isSameOrBefore(dataLeilao)) {
+      this.notifierService.notify('error', 'Data da Abertura de Lances deve ser menor que a Data do leilão');
+      return false;
+    }
+
+    this.restangular.all('leilao').post(this.formulario.value).subscribe(a => {
+      this.notifierService.notify('success', 'Leilão Criado com sucesso');
+      this.router.navigate(['/leilao']);
+    },
+      error => {
+        this.notifierService.notify('error', 'Erro ao atualizar o Leilão!');
+
+        Object.keys(this.formulario.controls).forEach((campo)=>{
+          const controle = this.formulario.get(campo)
+          controle.markAsTouched()
+        })
+      });
   }
-
-
 
   fileChangeEvent(fileInput: any) {
     this.imageError = null;
@@ -140,13 +158,13 @@ export class CreateLeilaoComponent implements OnInit {
 
         if (fileInput.target.files[0].size > max_size) {
             this.imageError =
-                'Maximum size allowed is ' + max_size / 1000 + 'Mb';
+                'O tamanho máximo permitido é ' + max_size / 1000 + 'Mb';
 
             return false;
         }
 
         if (!_.includes(allowed_types, fileInput.target.files[0].type)) {
-            this.imageError = 'Only Images are allowed ( JPG | PNG )';
+            this.imageError = 'Somente imagens são permitidas ( JPG | PNG )';
             return false;
         }
         const reader = new FileReader();
@@ -157,11 +175,9 @@ export class CreateLeilaoComponent implements OnInit {
                 const img_height = rs.currentTarget['height'];
                 const img_width = rs.currentTarget['width'];
 
-
-
                 if (img_height > max_height && img_width > max_width) {
                     this.imageError =
-                        'Maximum dimentions allowed ' +
+                        'Tamanho máximo permitido ' +
                         max_height +
                         '*' +
                         max_width +
@@ -171,11 +187,11 @@ export class CreateLeilaoComponent implements OnInit {
                     const imgBase64Path = e.target.result;
                     this.cardImageBase64 = imgBase64Path;
                     this.isImageSaved = true;
-                    this.formulario.value.foto.base64 = this.cardImageBase64.substring(23, 100000) 
-                    this.formulario.value.foto.nome = fileInput.target.files[0].name
-                    this.formulario.value.foto.tamanho = fileInput.target.files[0].size
-                    this.formulario.value.foto.tipo = fileInput.target.files[0].type
-                    console.log(fileInput.target.files[0])
+                    var foto = this.formulario.get('foto') as FormGroup;
+                    foto.get('base64').setValue(imgBase64Path);
+                    foto.get('nome').setValue(fileInput.target.files[0].name);
+                    foto.get('tamanho').setValue(fileInput.target.files[0].size);
+                    foto.get('tipo').setValue(fileInput.target.files[0].type);
                     // this.previewImagePath = imgBase64Path;
                 }
             };
@@ -183,22 +199,24 @@ export class CreateLeilaoComponent implements OnInit {
 
         reader.readAsDataURL(fileInput.target.files[0]);
     }
-}
+  }
 
-removeImage() {
+  removeImage(input) {
     this.cardImageBase64 = null;
     this.isImageSaved = false;
-}
-
-verificaValidTouched(campo){
-
-  return !this.formulario.get(campo).valid && this.formulario.get(campo).touched;
-}
-
-aplicaCssErro(campo){
-  return{
-    'has-error': this.verificaValidTouched(campo),
-    
+    input.value = "";
   }
-}
+
+  verificaValidTouched(campo){
+    return !this.formulario.get(campo).valid && this.formulario.get(campo).touched;
+  }
+
+  aplicaCssErro(campo){
+    return { 'has-error': this.verificaValidTouched(campo) }
+  }
+
+  onValueChange(event, campo) {
+    this.formulario.get(campo).markAsTouched();
+    this.formulario.get(campo).setValue(event);
+  }
 }
