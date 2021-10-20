@@ -123,8 +123,9 @@
 
                     <div class="form-group col-12">
                       <label>Limite de Crédito</label>
-                      <input type="number" class="form-control" formControlName="limiteCredito">
-
+                      <input type="text" class="form-control"
+                      id="valorOutrasTaxas" formControlName="limiteCredito" currencyMask
+                      [options]="{ prefix: 'R$ ', thousands: '.', decimal: ',' }">
                     </div>
                   </div>
                   <div class="row">

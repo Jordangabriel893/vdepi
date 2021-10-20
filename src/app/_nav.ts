@@ -31,5 +31,11 @@ export const navigation = [
     url: '/usuarios',
     icon: 'fa fa-user',
     source: 'RelatorioEstoque'
+  },
+  {
+    name: 'Dashboard',
+    url: '/dashboard',
+    icon: 'fa fa-bar-chart',
+    source: 'RelatorioEstoque'
   }
 ];
