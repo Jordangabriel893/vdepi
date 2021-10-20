@@ -44,6 +44,9 @@
                     <th class="text-center">
                       Ver Lotes
                     </th>
+                    <th class="text-center">
+                      Dashboard
+                    </th>
                   </tr>
                 </thead>
                 <tbody>
@@ -56,10 +59,13 @@
                     <td>{{item.status}}</td>
                     <td>{{item.qtdLotes}}</td>
                     <td class="text-center" nowrap>
-                      <button type="button" class="btn btn-primary" (click)="edit(item.id)"><i class="fa fa-edit"></i>&nbsp; Editar</button>
+                      <button type="button" class="btn btn-primary" (click)="edit(item.id)"><i class="fa fa-edit"></i>&nbsp;Editar</button>
                     </td>
                     <td class="text-center" nowrap>
-                      <button type="button" class="btn btn-primary" (click)="verLotes(item.id)"><i class="fa fa-edit"></i>&nbsp; Ver Lotes</button>
+                      <button type="button" class="btn btn-primary" (click)="verLotes(item.id)"><i class="fa fa-edit"></i>&nbsp;Ver Lotes</button>
+                    </td>
+                    <td class="text-center" nowrap>
+                      <button type="button" class="btn btn-primary" (click)="dashboard(item.id)"><i class="fa fa-edit"></i>&nbsp;Dashboard</button>
                     </td>
                   </tr>
                 </tbody>

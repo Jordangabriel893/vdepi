@@ -145,6 +145,7 @@ import { AngularEditorModule } from '@kolkov/angular-editor';
 import { AlertModule } from 'ngx-bootstrap/alert';
 
 
+
 import { environment } from '../environments/environment';
 import { AuthGuard, AnonyGuard } from './_guards/index';
 import { AuthenticationService, StoreService, ComponentService, DataService } from './_services/index';
@@ -160,6 +161,7 @@ import { ErrorMsgComponent } from './views/error-msg/error-msg.component';
 import { UpdateLotesComponent } from './views/leilao/lotes/update-lotes/update-lotes.component';
 import { HabilitacaoComponent } from './views/habilitacao/habilitacao.component';
 import { CreateLotesComponent } from './views/leilao/lotes/create-lotes/create-lotes.component';
+import { DashboardComponent } from './views/leilao/dashboard/dashboard.component';
 
 
 export function RestangularConfigFactory(RestangularProvider, NotifierService: NotifierService, Router) {
@@ -224,7 +226,8 @@ export function RestangularConfigFactory(RestangularProvider, NotifierService: N
     CarouselModule.forRoot(),
     AngularEditorModule,
     HttpClientModule,
-    AlertModule.forRoot()
+    AlertModule.forRoot(),
+
 
 
 
@@ -241,6 +244,7 @@ export function RestangularConfigFactory(RestangularProvider, NotifierService: N
     UpdateLotesComponent,
     HabilitacaoComponent,
     CreateLotesComponent,
+    DashboardComponent,
 
   ],
   providers: [{

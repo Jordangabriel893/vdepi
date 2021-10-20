@@ -41,5 +41,8 @@ export class LeilaoComponent implements OnInit {
     this.router.navigate(['/lotes', id]);
 
   }
+  dashboard(id){
+    this.router.navigate(['/dashboard', id]);
+  }
 
 }

@@ -24,6 +24,7 @@ import { UpdateUsuariosComponent } from './views/usuarios/update-usuarios/update
 import { UpdateLotesComponent } from './views/leilao/lotes/update-lotes/update-lotes.component';
 import { HabilitacaoComponent } from './views/habilitacao/habilitacao.component';
 import { CreateLotesComponent } from './views/leilao/lotes/create-lotes/create-lotes.component';
+import { DashboardComponent } from './views/leilao/dashboard/dashboard.component';
 
 export const routes: Routes = [
   { path: '', redirectTo: '/home', pathMatch: 'full' },
@@ -87,6 +88,15 @@ export const routes: Routes = [
         component: UpdateLeilaoComponent,
         data: {
           title: 'Editar Leilao',
+          source: 'RelatorioEstoque'
+        },
+        canActivate: [SourceGuard]
+      },
+      {
+        path: 'dashboard/:id',
+        component: DashboardComponent,
+        data: {
+          title: 'Dashboard Leilão',
           source: 'RelatorioEstoque'
         },
         canActivate: [SourceGuard]
