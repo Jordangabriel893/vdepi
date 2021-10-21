@@ -1,10 +1,15 @@
 .linha-seletor{
-    display: flex;
-    justify-content: end;
+    position: absolute;
+  z-index: 10;
+  width: 100%;
+  top: -8px;
+  right: 20px;
+  display: flex;
+  align-items: flex-start;
+  justify-content: flex-end;
 }
 .seletor{
-    
-    margin-bottom: 2%;
+
 }
 .bg-light{
     padding: 0%;
