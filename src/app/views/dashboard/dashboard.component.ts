@@ -46,6 +46,10 @@ export class DashboardComponent implements OnInit {
 
   ];
   public doughnutChartType: ChartType = 'doughnut';
+  doughnutChartOptions = {
+    aspectRatio: 1,
+    responsive: true,
+  }
 
   //Barras  top-10
   public barChartOptions: ChartOptions = {
@@ -70,12 +74,16 @@ export class DashboardComponent implements OnInit {
   public barChartOptionsFinanceiro: ChartOptions = {
     responsive: true,
     maintainAspectRatio: false,
+    title: {
+      display: false
+    }
+
 
   };
   public barChartColorFinanceiro = [{ backgroundColor: ['#191970', ' #15f70e', '#fc7a00', 'red'] }]
   public barChartLabelsFinanceiro: Label[] = ['Arrematado', 'Pago', 'Pendente', 'Expirado'];
   public barChartTypeFinanceiro: ChartType = 'bar';
-  public barChartLegendFinanceiro = true;
+  public barChartLegendFinanceiro = false;
   // public chartColors: Array<any> = [{
   // fillColor: 'rgba(47, 132, 71, 0.8)',
   // strokeColor: 'rgba(47, 132, 71, 0.8)',
@@ -131,7 +139,7 @@ export class DashboardComponent implements OnInit {
     this.restangular.one("dashboard/top10lotes").get({ LeilaoId: this.id }).subscribe((response) => {
       console.log(response.data)
       const top10lotes = response.data
-      
+
       const lances = top10lotes.map(x => x.lances)
       const numeroLote = top10lotes.map(x => x.numeroLote)
       this.barChartData = [{ data: lances.reverse(), label: 'Lances'}]
@@ -178,8 +186,8 @@ export class DashboardComponent implements OnInit {
                     console.log(data.datasets[tooltipItem.datasetIndex])
                     console.log(tooltipItem)
                     const datasetLabel = data.datasets[tooltipItem.datasetIndex].data || '';
-                    
-                    return tooltipItem.xLabel.toLocaleString("pt-BR", { style: "currency", currency: "BRL" }) 
+
+                    return tooltipItem.xLabel.toLocaleString("pt-BR", { style: "currency", currency: "BRL" })
                   }
                 }
               },
@@ -211,15 +219,15 @@ export class DashboardComponent implements OnInit {
                 },
               }],
               // We use this empty structure as a placeholder for dynamic theming.
-             
+
             },
-          
+
 
             }
-            
+
           });
     })
-    
+
   }
 
   // events

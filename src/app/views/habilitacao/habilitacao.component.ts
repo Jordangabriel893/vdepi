@@ -38,33 +38,30 @@ export class HabilitacaoComponent implements OnInit {
     this.formulario = this.formBuilder.group({
       limiteCredito:[null, Validators.required],
       observacao:[null],
-      
+
     })
     this.filtroLeilao = this.formBuilder.group({
       leilao:[null]
-      
     })
   }
 
   ngOnInit() {
     this.restangular.one("habilitacao").get().subscribe((response) => {
-      console.log(response.data)
       this.habilitacao = response.data;
       this.loading = false;
-      this.filtrarPorLeilao()
     },
     () => this.loading = false);
 
-    this.restangular.one("tipolote").get().subscribe((response) => {
-      console.log(response.data)
-    })
     this.restangular.one("leilao", '').get({ PageSize: 100 }).subscribe((response) => {
       console.log(response.data)
-      this.leiloes = response.data
+      this.leiloes = response.data;
+
+      this.filtroLeilao.get('leilao').setValue(response.data[0].nome);
+      this.filtrarPorLeilao();
     })
-    
+
   }
-  
+
   //submit
   aprovarSolicitacao(solicitacaoHabilitacaoId, i) {
     this.documentosUsuario = this.habilitacao[i]
@@ -168,9 +165,9 @@ export class HabilitacaoComponent implements OnInit {
       window.open(resp.data.urlArquivo);
     })
   }
+
   filtrarPorLeilao(){
-   const filtro = this.habilitacao.filter(x => x.leilao.nome == this.filtroLeilao.value.leilao ? x.leilao.nome : '')
-   console.log(filtro)
+    const filtro = this.habilitacao.filter(x => x.leilao.nome === this.filtroLeilao.value.leilao)
     this.filtrado = filtro
   }
 }

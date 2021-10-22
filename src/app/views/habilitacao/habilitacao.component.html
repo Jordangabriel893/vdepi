@@ -1,15 +1,13 @@
 <div class="row linha-seletor">
   <form [formGroup]="filtroLeilao" class="col-4">
     <select class="form-control col-12" aria-label="Default select example" (change)="filtrarPorLeilao()" formControlName="leilao" >
-      <option selected>Selecione o Leilão</option>
-      <option *ngFor="let item of leiloes">{{item.nome}}</option>
-      
+      <option *ngFor="let item of leiloes" [value]="item.nome">{{item.nome}}</option>
     </select>
   </form>
-  
+
 </div>
 <div class="animated fadeIn">
- 
+
   <div class="row">
     <div class="col-lg-12">
       <div class="card">
@@ -20,96 +18,14 @@
           </svg>
           Solicitação de Habilitação
         </div>
-        
-        <div class="card-block" >
-         
-          <div class="table-responsive mt-4" *ngIf="filtrado.length == 0">
-            <table class="table table-striped" [mfData]="habilitacao" #mfHabilitacao="mfDataTable" [mfRowsOnPage]="5">
-              <thead>
-                <tr>
-                  <th>
-                    <mfDefaultSorter by="dataCadastro">Data Cadastro</mfDefaultSorter>
-                  </th>
-                  <th>
-                    <mfDefaultSorter by="leilao.nome">Leilão</mfDefaultSorter>
-                  </th>
-                  <th>
-                    <mfDefaultSorter by="tipoLoteId">Tipo Lote</mfDefaultSorter>
-                  </th>
-                  <th>
-                    <mfDefaultSorter by="pessoa.pessoa.nomeCompleto">Usuário</mfDefaultSorter>
-                  </th>
-                  <!-- <th>
-                    <mfDefaultSorter by="para">Para</mfDefaultSorter>
-                  </th> -->
-                  <th>
-                    <mfDefaultSorter by="regraHabilitacao.tipoValidacaoRegra">Regra</mfDefaultSorter>
-                  </th>
-                  <th>
-                    <mfDefaultSorter by="status.descricao">Status</mfDefaultSorter>
-                  </th>
-                  <th>
-                    <mfDefaultSorter by="statusCodigo">Status Código</mfDefaultSorter>
-                  </th>
-                  <th>
-                    <mfDefaultSorter by="documentos">Documentos</mfDefaultSorter>
-                  </th>
-                  <th>
-                    Ação
-                  </th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr *ngFor="let item of mfHabilitacao.data; let i = index">
-                  <td>{{item.dataCadastro | amDateFormat:'DD/MM/yyyy HH:mm' }}</td>
-                  <td>{{item.leilao.nome}}</td>
-                  <!-- <td>{{item.tipoLoteId}}</td> -->
-                  <td>{{item.tipoLoteId == 1 ? 'Sucatas Aproveitáveis' : item.tipoLoteId == 2 ? 'Sucatas Aproveitáveis com Motor Inservível' : 
-                    item.tipoLoteId == 3 ? 'Sucatas Inservíveis' : item.tipoLoteId == 4 ? 'Veículos Conservados' : ''  }}
 
-                  </td>
-                  <td>{{item.usuario.pessoa.nomeCompleto}}</td>
-                  <!-- <td>{{item.para}}</td> -->
-                  <td>{{getTipoRegra(item.regraHabilitacao.tipoValidacaoRegra) }}</td>
-                  <td>{{item.status.descricao }}</td>
-                  <td>{{item.statusCodigo }}</td>
-                  <td class="text-center" nowrap>
-                    <span *ngIf="item.documentos.length == 0">Sem Documentos</span>
-                    <button *ngIf="item.documentos.length > 0" type="button" class="btn btn-primary"
-                      (click)="openModal(documento, i)"><i class="fa fa-edit"></i>&nbsp; Documentos({{item.documentos.length}})</button>
-                  </td>
-                  <td class="text-center" nowrap>
-                    <button type="button" *ngIf="item.leilao.temAnaliseCadastral && !item.habilitado" class="btn btn-warning"
-                      (click)="openModal(aprovar, i)"><i class="fa fa-edit"></i>&nbsp; Análisar Crédito</button>
-                      <button type="button" *ngIf="!item.leilao.temAnaliseCadastral && !item.habilitado" class="btn btn-success"
-                      (click)="aprovarSolicitacao(item.solicitacaoHabilitacaoId, i)"><i
-                        class="fa fa-edit"></i>&nbsp; Habilitar</button>
-                      <button type="button" *ngIf="item.habilitado" class="btn btn-danger"
-                       (click)="openModal(desabilitar, i, item.solicitacaoHabilitacaoId)"><i
-                        class="fa fa-edit"></i>&nbsp; Desabilitar</button>
-                    </td>
-                </tr>
-                <tr *ngIf="loading">
-                  <td class="text-center text-muted" colspan="8">
-                    <h5><i class="fa fa-spin fa-spinner"></i>&nbsp;Carregando...</h5>
-                  </td>
-                </tr>
-              </tbody>
-              <tfoot>
-                <tr>
-                  <td colspan="10">
-                    <mfBootstrapPaginator [rowsOnPageSet]="[5,10,25]"></mfBootstrapPaginator>
-                  </td>
-                </tr>
-              </tfoot>
-            </table>
-          </div>
-          <div class="table-responsive mt-4"  *ngIf="filtrado.length != 0">
+        <div class="card-block" >
+          <div class="table-responsive mt-4">
             <table class="table table-striped" [mfData]="filtrado" #mfFiltrado="mfDataTable" [mfRowsOnPage]="5">
               <thead>
                 <tr>
                   <th>
-                    <mfDefaultSorter by="dataCadastro">Data Cadastro</mfDefaultSorter>
+                    <mfDefaultSorter by="dataCadastro">Data</mfDefaultSorter>
                   </th>
                   <th>
                     <mfDefaultSorter by="leilao.nome">Leilão</mfDefaultSorter>
@@ -142,36 +58,32 @@
               </thead>
               <tbody>
                 <tr *ngFor="let item of mfFiltrado.data; let i = index">
-                  <td>{{item.dataCadastro | amDateFormat:'DD/MM/yyyy HH:mm' }}</td>
+                  <td class="text-nowrap">{{item.dataCadastro | amDateFormat:'DD/MM/yyyy HH:mm' }}</td>
                   <td>{{item.leilao.nome}}</td>
-                  <!-- <td>{{item.tipoLoteId}}</td> -->
-                  <td>{{item.tipoLoteId == 1 ? 'Sucatas Aproveitáveis' : item.tipoLoteId == 2 ? 'Sucatas Aproveitáveis com Motor Inservível' : 
-                    item.tipoLoteId == 3 ? 'Sucatas Inservíveis' : item.tipoLoteId == 4 ? 'Veículos Conservados' : ''  }}
-
+                  <td>{{item.tipoLote?.descricao}}
                   </td>
-                  <td>{{item.usuario.pessoa.nomeCompleto}}</td>
-                  <!-- <td>{{item.para}}</td> -->
-                  <td>{{getTipoRegra(item.regraHabilitacao.tipoValidacaoRegra) }}</td>
+                  <td><a [routerLink]="['/update-usuarios', item.usuario.usuarioId]">{{item.usuario.email}}</a></td>
+                  <td>{{item.regraHabilitacao.tipoValidacaoRegra }}</td>
                   <td>{{item.status.descricao }}</td>
                   <td>{{item.statusCodigo }}</td>
                   <td class="text-center" nowrap>
                     <span *ngIf="item.documentos.length == 0">Sem Documentos</span>
-                    <button *ngIf="item.documentos.length > 0" type="button" class="btn btn-primary"
-                      (click)="openModal(documento, i)"><i class="fa fa-edit"></i>&nbsp; Documentos({{item.documentos.length}})</button>
+                    <button *ngIf="item.documentos.length > 0" type="button" class="btn btn-primary btn-sm"
+                      (click)="openModal(documento, i)"><i class="fa fa-file"></i>&nbsp; Doc({{item.documentos.length}})</button>
                   </td>
                   <td class="text-center" nowrap>
-                    <button type="button" *ngIf="item.leilao.temAnaliseCadastral && !item.habilitado" class="btn btn-warning"
-                      (click)="openModal(aprovar, i)"><i class="fa fa-edit"></i>&nbsp; Análisar Crédito</button>
-                      <button type="button" *ngIf="!item.leilao.temAnaliseCadastral && !item.habilitado" class="btn btn-success"
+                    <button type="button" *ngIf="item.leilao.temAnaliseCadastral && !item.habilitado" class="btn btn-warning btn-sm"
+                      (click)="openModal(aprovar, i)"><i class="fa fa-money"></i>&nbsp; Análisar Crédito</button>
+                      <button type="button" *ngIf="!item.leilao.temAnaliseCadastral && !item.habilitado" class="btn btn-success btn-sm"
                       (click)="aprovarSolicitacao(item.solicitacaoHabilitacaoId, i)"><i
-                        class="fa fa-edit"></i>&nbsp; Habilitar</button>
-                      <button type="button" *ngIf="item.habilitado" class="btn btn-danger"
+                        class="fa fa-check"></i>&nbsp; Habilitar</button>
+                      <button type="button" *ngIf="item.habilitado" class="btn btn-danger btn-sm"
                        (click)="openModal(desabilitar, i, item.solicitacaoHabilitacaoId)"><i
-                        class="fa fa-edit"></i>&nbsp; Desabilitar</button>
+                        class="fa fa-ban"></i>&nbsp; Desabilitar</button>
                     </td>
                 </tr>
                 <tr *ngIf="loading">
-                  <td class="text-center text-muted" colspan="8">
+                  <td class="text-center text-muted" colspan="9">
                     <h5><i class="fa fa-spin fa-spinner"></i>&nbsp;Carregando...</h5>
                   </td>
                 </tr>
