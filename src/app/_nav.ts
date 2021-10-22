@@ -39,7 +39,7 @@ export const navigation = [
   },
   {
     name: 'Arrematantes',
-    url: '/arrematates',
+    url: '/arrematantes',
     icon: 'fa fa-dollar-sign',
     source: 'Resultado'
   },

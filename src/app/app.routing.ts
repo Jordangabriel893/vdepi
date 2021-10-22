@@ -1,3 +1,4 @@
+import { HistoricoLancesComponent } from './views/historico-lances/historico-lances.component';
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { AnonyGuard, AuthGuard } from './_guards/index';
@@ -26,6 +27,7 @@ import { UpdateLotesComponent } from './views/leilao/lotes/update-lotes/update-l
 import { HabilitacaoComponent } from './views/habilitacao/habilitacao.component';
 import { CreateLotesComponent } from './views/leilao/lotes/create-lotes/create-lotes.component';
 import { DashboardComponent } from './views/dashboard/dashboard.component';
+import { ArrematantesComponent } from './views/arrematantes/arrematantes.component';
 
 export const routes: Routes = [
   { path: '', redirectTo: '/home', pathMatch: 'full' },
@@ -152,6 +154,24 @@ export const routes: Routes = [
         component: HabilitacaoComponent,
         data: {
           title: 'Habilitação',
+          source: 'RelatorioEstoque'
+        },
+        canActivate: [SourceGuard]
+      },
+      {
+        path: 'historicolances',
+        component: HistoricoLancesComponent,
+        data: {
+          title: 'Histórico de Lances',
+          source: 'RelatorioEstoque'
+        },
+        canActivate: [SourceGuard]
+      },
+      {
+        path: 'arrematantes',
+        component: ArrematantesComponent,
+        data: {
+          title: 'Arrematantes',
           source: 'RelatorioEstoque'
         },
         canActivate: [SourceGuard]
