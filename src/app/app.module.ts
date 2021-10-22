@@ -159,6 +159,8 @@ import { UpdateLotesComponent } from './views/leilao/lotes/update-lotes/update-l
 import { HabilitacaoComponent } from './views/habilitacao/habilitacao.component';
 import { CreateLotesComponent } from './views/leilao/lotes/create-lotes/create-lotes.component';
 import { DashboardComponent } from './views/dashboard/dashboard.component';
+import { ArrematantesComponent } from './views/arrematantes/arrematantes.component';
+import { HistoricoLancesComponent } from './views/historico-lances/historico-lances.component';
 
 
 export function RestangularConfigFactory(RestangularProvider, NotifierService: NotifierService, Router) {
@@ -252,6 +254,8 @@ export function RestangularConfigFactory(RestangularProvider, NotifierService: N
     HabilitacaoComponent,
     CreateLotesComponent,
     DashboardComponent,
+    ArrematantesComponent,
+    HistoricoLancesComponent,
 
   ],
   providers: [{
