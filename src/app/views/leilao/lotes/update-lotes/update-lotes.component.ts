@@ -152,31 +152,31 @@ export class UpdateLotesComponent implements OnInit {
       this.loteStatus = allResp[6].data;
       this.tipos = allResp[7].data
 
-      this.restangular.one("leilao", this.leilaoId).get()
+      this.restangular.one("admin/leilao", this.leilaoId).get()
       .subscribe((resp) => this.leilao = resp.data)
     });
   }
 
   onSubmit() {
-    console.log(this.formulario.value);
-    // if (this.formulario.value.judicial == false) {
-    //   this.removeControls()
-    //   console.log(this.formulario.value)
+    // console.log(this.formulario.value);
+    if (this.formulario.value.judicial == false) {
+      this.removeControls()
+      console.log(this.formulario.value)
 
-    // }
-    // if (this.formulario.invalid) {
-    //   this.notifierService.notify('error', 'Preencha todos os campos obrigatórios')
-    //   return;
-    // }
+    }
+    if (this.formulario.invalid) {
+      this.notifierService.notify('error', 'Preencha todos os campos obrigatórios')
+      return;
+    }
 
-    // const formulario = this.formulario.value
-    // this.restangular.all('lote').customPUT(formulario, this.id).subscribe(a => {
-    //   this.notifierService.notify('success', 'Lote Alterado com sucesso');
-    //   this.router.navigate(['lotes', this.leilaoId])
-    // },
-    //   error => {
-    //     this.notifierService.notify('error', 'Erro ao atualizar o Lote!');
-    //   });
+    const formulario = this.formulario.value
+    this.restangular.all('lote').customPUT(formulario, this.id).subscribe(a => {
+      this.notifierService.notify('success', 'Lote Alterado com sucesso');
+      this.router.navigate(['lotes', this.leilaoId])
+    },
+      error => {
+        this.notifierService.notify('error', 'Erro ao atualizar o Lote!');
+      });
 
   }
 

@@ -676,3 +676,85 @@ $input-height-base: 34px;
   color: #20a8d8 !important;
   margin-bottom: 4px !important;
 }
+
+
+/*******************
+    GOOGLE MAPS
+*********************/
+ngui-map {
+  position: absolute;
+  top: 46px;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  height: calc(100vh - 102px) !important;
+  overflow: hidden;
+}
+.filter-bar {
+  position: absolute;
+  width: 100%;
+  left: 0;
+  background: #fff;
+  top: 0;
+  z-index: 10;
+  padding: 0.5rem 1rem;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
+}
+
+.item-filter {
+  padding: 0.5rem 1rem;
+  margin:0;
+}
+
+.boder-bottom {
+  border-bottom: 1px solid #c2cfd6 !important;
+}
+
+.btn-multselect {
+  background: #fff !important;
+  border: 1px solid #c2cfd6 !important;
+  border-radius: 0 0.25rem 0.25rem 0;
+}
+
+.legend {
+  position: absolute;
+  left: 10px;
+  top: 140px;
+  max-width: 435px;
+  background-color: #fff;
+  padding: 10px;
+  font-size: 15px;
+  font-weight: 700;
+  border-radius: 4px;
+}
+
+.legend-item {
+  display: block;
+  height: 30px;
+  line-height: 30px;
+}
+
+.legend-color {
+  margin-right: 10px;
+  height: 30px;
+  width: 30px;
+  display: block;
+  float: left;
+  border: 1px solid #00000038;
+}
+
+span.legend-color-blue {
+  background-color: #008cff;
+}
+
+span.legend-color-orange {
+  background-color: #ffbf00;
+}
+
+span.legend-color-red {
+  background-color: #ff0000;
+}
+
+span.legend-color-pink {
+  background-color: #ff00f2;
+}
