@@ -3,13 +3,11 @@ export const navigation = [
     title: true,
     name: 'DASHBOARDS'
   },{
-    name: 'Resultados',
-    url: '/dashboardResultado',
+    name: 'Resultado Leilão',
+    url: '/dashboard',
     icon: 'fa fa-chart-line',
     source: 'Resultado'
   },
-
-
   {
     title: true,
     name: 'OPERAÇÃO'
@@ -30,12 +28,6 @@ export const navigation = [
     name: 'Usuarios',
     url: '/usuarios',
     icon: 'fa fa-user',
-    source: 'RelatorioEstoque'
-  },
-  {
-    name: 'Dashboard',
-    url: '/dashboard',
-    icon: 'fa fa-bar-chart',
     source: 'RelatorioEstoque'
   }
 ];
