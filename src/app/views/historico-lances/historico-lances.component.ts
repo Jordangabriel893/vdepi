@@ -13,13 +13,13 @@ export class HistoricoLancesComponent implements OnInit {
   idLote:any = ''
   lotes
   lances
+  loading = true;
   constructor(
     private restangular: Restangular,
   ) {
     this.restangular.one("leilao").get({PageSize:100}).subscribe((response) => {
-      console.log(response.data)
       this.leiloes = response.data
-      
+      this.setLeilao(this.leiloes[0].id, this.leiloes[0].nome);
     })
    }
 
@@ -29,7 +29,7 @@ export class HistoricoLancesComponent implements OnInit {
     this.leilaoNome = nome
     this.restangular.one("lote", '').get({ leilaoId: id, PageSize:100 }).subscribe(
       (lotes) => {
-        console.log(lotes.data)
+        this.loading = false;
         this.lotes = lotes.data
       }
 
@@ -41,7 +41,7 @@ export class HistoricoLancesComponent implements OnInit {
       console.log(response.data)
       this.lances = response.data
     })
-  
-  
+
+
   }
 }
