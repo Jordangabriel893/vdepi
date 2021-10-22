@@ -16,6 +16,12 @@ export const navigation = [
     source: 'RelatorioEstoque'
   },
   {
+    name: 'Vistoria',
+    url: '/vistoria',
+    icon: 'fa fa-search',
+    source: 'RelatorioEstoque'
+  },
+  {
     title: true,
     name: 'RELATORIOS'
   },

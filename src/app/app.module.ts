@@ -162,6 +162,14 @@ import { CreateLotesComponent } from './views/leilao/lotes/create-lotes/create-l
 import { DashboardComponent } from './views/dashboard/dashboard.component';
 import { ArrematantesComponent } from './views/arrematantes/arrematantes.component';
 import { HistoricoLancesComponent } from './views/historico-lances/historico-lances.component';
+import { EmpresasComponent } from './views/empresas/empresas.component';
+import { ComitentesComponent } from './views/comitentes/comitentes.component';
+import { LeiloeirosComponent } from './views/leiloeiros/leiloeiros.component';
+import { LocaisComponent } from './views/locais/locais.component';
+import { CategoriasComponent } from './views/categorias/categorias.component';
+import { VistoriaComponent } from './views/vistoria/vistoria.component';
+import { StatusLoteComponent } from './views/status-lote/status-lote.component';
+import { StatusLeilaoComponent } from './views/status-leilao/status-leilao.component';
 
 
 export function RestangularConfigFactory(RestangularProvider, NotifierService: NotifierService, Router) {
@@ -257,6 +265,14 @@ export function RestangularConfigFactory(RestangularProvider, NotifierService: N
     DashboardComponent,
     ArrematantesComponent,
     HistoricoLancesComponent,
+    EmpresasComponent,
+    ComitentesComponent,
+    LeiloeirosComponent,
+    LocaisComponent,
+    CategoriasComponent,
+    VistoriaComponent,
+    StatusLoteComponent,
+    StatusLeilaoComponent,
 
   ],
   providers: [{
