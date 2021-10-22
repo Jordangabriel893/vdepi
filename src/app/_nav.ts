@@ -33,7 +33,7 @@ export const navigation = [
   },
   {
     name: 'Mapa de Lances',
-    url: '/mapalances',
+    url: '/mapa-lance',
     icon: 'fa fa-map',
     source: 'Resultado'
   },

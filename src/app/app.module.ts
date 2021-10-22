@@ -38,7 +38,8 @@ import {
   NotasFiscaisComponent,
   LeilaoComponent,
   CreateLeilaoComponent,
-  UpdateLeilaoComponent
+  UpdateLeilaoComponent,
+  MapaLanceComponent
 
 } from './views';
 
@@ -59,6 +60,7 @@ const APP_COMPONENTS = [
   LeilaoComponent,
   CreateLeilaoComponent,
   UpdateLeilaoComponent,
+  MapaLanceComponent
 ]
 
 // Import directives
@@ -142,7 +144,6 @@ import { AngularEditorModule } from '@kolkov/angular-editor';
 import { AlertModule } from 'ngx-bootstrap/alert';
 
 
-
 import { environment } from '../environments/environment';
 import { AuthGuard, AnonyGuard } from './_guards/index';
 import { AuthenticationService, StoreService, ComponentService, DataService } from './_services/index';
@@ -218,7 +219,7 @@ export function RestangularConfigFactory(RestangularProvider, NotifierService: N
           distance: 12,
           gap: 10
         }
-      
+
       }
     }),
     RestangularModule.forRoot([NotifierService, Router], RestangularConfigFactory),
@@ -234,7 +235,7 @@ export function RestangularConfigFactory(RestangularProvider, NotifierService: N
     CurrencyMaskModule,
     BsDatepickerModule.forRoot(),
     CountoModule,
-    NguiMapModule.forRoot({ apiUrl: 'https://maps.google.com/maps/api/js?libraries=visualization,places,drawing,geometry&key=AIzaSyBQNtJOU4zNBeywPyqUV3VEAjdh58PPkcI' }),
+    NguiMapModule.forRoot({ apiUrl: 'https://maps.google.com/maps/api/js?libraries=visualization,places,drawing,geometry&key=AIzaSyCWTN3uJJPSC5fZSQe7lJd2dLAmEqsKc6c' }),
     MultiselectDropdownModule,
     SortableModule.forRoot(),
     TooltipModule.forRoot(),

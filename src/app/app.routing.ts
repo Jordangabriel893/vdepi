@@ -17,6 +17,7 @@ import {
   LeilaoComponent,
   CreateLeilaoComponent,
   UpdateLeilaoComponent,
+  MapaLanceComponent,
 } from './views';
 
 import { SourceGuard } from './_guards/source.guard';
@@ -261,7 +262,16 @@ export const routes: Routes = [
         data: {
           title: 'Acesso Negado'
         }
-      }
+      },
+      {
+        path: 'mapa-lance',
+        component: MapaLanceComponent,
+        data: {
+          title: 'Mapa de Lances',
+          source: 'RelatorioEstoque'
+        },
+        canActivate: [SourceGuard]
+      },
     ]
   },
   { path: 'login', component: LoginComponent },

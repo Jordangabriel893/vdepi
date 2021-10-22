@@ -145,7 +145,7 @@ export class CreateLotesComponent implements OnInit {
       this.restangular.one("tipolote").get().pipe(),
       this.restangular.one('tipofoto').get().pipe(),
       this.restangular.one('local').get().pipe(),
-      this.restangular.one("leilao", this.id).get().pipe(),
+      this.restangular.one("admin/leilao", this.id).get().pipe(),
       this.restangular.one('categoria').get().pipe(),
       this.restangular.one('lotestatus').get().pipe()
     ]).subscribe((allResp: any[]) => {

@@ -98,7 +98,7 @@ export class UpdateLeilaoComponent implements OnInit {
   ngOnInit() {
   this.id = this.route.snapshot.params['id']
    console.log(this.id )
-   this.restangular.all('leilao').get(this.id).subscribe(dados => {
+   this.restangular.all('admin/leilao').get(this.id).subscribe(dados => {
      this.updateForm(dados.data)
    })
   }

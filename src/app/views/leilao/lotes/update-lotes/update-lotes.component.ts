@@ -152,13 +152,17 @@ export class UpdateLotesComponent implements OnInit {
       this.loteStatus = allResp[6].data;
       this.tipos = allResp[7].data
 
-      this.restangular.one("leilao", this.leilaoId).get()
+      this.restangular.one("admin/leilao", this.leilaoId).get()
       .subscribe((resp) => this.leilao = resp.data)
     });
   }
 
   onSubmit() {
+<<<<<<< HEAD
     console.log(this.formulario.value);
+=======
+    // console.log(this.formulario.value);
+>>>>>>> ab458cca11fedde373110583f82e4636515baa76
     if (this.formulario.value.judicial == false) {
       this.removeControls()
       console.log(this.formulario.value)
