@@ -1,3 +1,5 @@
+import { StatusLeilaoComponent } from './views/status-leilao/status-leilao.component';
+import { StatusLoteComponent } from './views/status-lote/status-lote.component';
 import { HistoricoLancesComponent } from './views/historico-lances/historico-lances.component';
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
@@ -27,6 +29,12 @@ import { HabilitacaoComponent } from './views/habilitacao/habilitacao.component'
 import { CreateLotesComponent } from './views/leilao/lotes/create-lotes/create-lotes.component';
 import { DashboardComponent } from './views/dashboard/dashboard.component';
 import { ArrematantesComponent } from './views/arrematantes/arrematantes.component';
+import { EmpresasComponent } from './views/empresas/empresas.component';
+import { ComitentesComponent } from './views/comitentes/comitentes.component';
+import { LeiloeirosComponent } from './views/leiloeiros/leiloeiros.component';
+import { LocaisComponent } from './views/locais/locais.component';
+import { CategoriasComponent } from './views/categorias/categorias.component';
+import { VistoriaComponent } from './views/vistoria/vistoria.component';
 
 export const routes: Routes = [
   { path: '', redirectTo: '/home', pathMatch: 'full' },
@@ -104,6 +112,15 @@ export const routes: Routes = [
         canActivate: [SourceGuard]
       },
       {
+        path: 'vistoria',
+        component: VistoriaComponent,
+        data: {
+          title: 'Vistoria',
+          source: 'RelatorioEstoque'
+        },
+        canActivate: [SourceGuard]
+      },
+      {
         path: 'lotes/:id',
         component: LotesComponent,
         data: {
@@ -171,6 +188,69 @@ export const routes: Routes = [
         component: ArrematantesComponent,
         data: {
           title: 'Arrematantes',
+          source: 'RelatorioEstoque'
+        },
+        canActivate: [SourceGuard]
+      },
+      {
+        path: 'empresa',
+        component: EmpresasComponent,
+        data: {
+          title: 'Empresas',
+          source: 'RelatorioEstoque'
+        },
+        canActivate: [SourceGuard]
+      },
+      {
+        path: 'comitente',
+        component: ComitentesComponent,
+        data: {
+          title: 'Comitente',
+          source: 'RelatorioEstoque'
+        },
+        canActivate: [SourceGuard]
+      },
+      {
+        path: 'leiloeiro',
+        component: LeiloeirosComponent,
+        data: {
+          title: 'Leiloeiros',
+          source: 'RelatorioEstoque'
+        },
+        canActivate: [SourceGuard]
+      },
+      {
+        path: 'local',
+        component: LocaisComponent,
+        data: {
+          title: 'Locais',
+          source: 'RelatorioEstoque'
+        },
+        canActivate: [SourceGuard]
+      },
+      {
+        path: 'categorias',
+        component: CategoriasComponent,
+        data: {
+          title: 'Categorias',
+          source: 'RelatorioEstoque'
+        },
+        canActivate: [SourceGuard]
+      },
+      {
+        path: 'statusLote',
+        component: StatusLoteComponent,
+        data: {
+          title: 'Status Lote',
+          source: 'RelatorioEstoque'
+        },
+        canActivate: [SourceGuard]
+      },
+      {
+        path: 'statusLeilao',
+        component: StatusLeilaoComponent,
+        data: {
+          title: 'Status Leilão',
           source: 'RelatorioEstoque'
         },
         canActivate: [SourceGuard]
