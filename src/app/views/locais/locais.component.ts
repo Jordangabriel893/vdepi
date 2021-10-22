@@ -8,14 +8,15 @@ import { Restangular } from 'ngx-restangular';
 })
 export class LocaisComponent implements OnInit {
   locais
+  loading = true;
   constructor(
     private restangular: Restangular,
   ) {
     this.restangular.one("local").get().subscribe((response) => {
-      console.log(response.data)
      this.locais = response.data
-      
-    })
+     this.loading = false;
+    },
+    () => this.loading = false)
    }
 
   ngOnInit() {

@@ -10,13 +10,12 @@ export class ArrematantesComponent implements OnInit {
   leiloes
   nomeLeilao:any = 'Leilões'
   arrematantes
-
+  loading = true;
   constructor(
     private restangular: Restangular,
 
   ) {
     this.restangular.one("leilao").get({PageSize:100}).subscribe((response) => {
-      console.log(response.data)
       this.leiloes = response.data
     })
 
@@ -29,9 +28,10 @@ export class ArrematantesComponent implements OnInit {
     console.log(id)
     this.nomeLeilao = nome
     this.restangular.one(`leilao/${id}/arrematantes`).get().subscribe((response) => {
-      console.log(response.data)
       this.arrematantes = response.data
-    })
+      this.loading = false;
+    },
+    () => this.loading = false)
 
   }
 

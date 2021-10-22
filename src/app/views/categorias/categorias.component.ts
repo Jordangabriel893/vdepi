@@ -8,14 +8,15 @@ import { Restangular } from 'ngx-restangular';
 })
 export class CategoriasComponent implements OnInit {
   categorias
+  loading = true;
   constructor(
     private restangular: Restangular,
   ) {
     this.restangular.one("categoria").get().subscribe((response) => {
-      console.log(response.data)
      this.categorias = response.data
-      
-    })
+     this.loading = false;
+    },
+    () => this.loading = false)
    }
 
   ngOnInit() {

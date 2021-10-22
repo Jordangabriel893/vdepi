@@ -8,14 +8,15 @@ import { Restangular } from 'ngx-restangular';
 })
 export class StatusLoteComponent implements OnInit {
   statusLote
+  loading = true;
   constructor(
     private restangular: Restangular,
   ) {
     this.restangular.one("loteStatus").get().subscribe((response) => {
-      console.log(response.data)
      this.statusLote = response.data
-      
-    })
+     this.loading = false;
+    },
+    () => this.loading = false)
    }
   ngOnInit() {
   }

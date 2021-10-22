@@ -8,14 +8,15 @@ import { Restangular } from 'ngx-restangular';
 })
 export class ComitentesComponent implements OnInit {
   comitente
+  loading = true;
   constructor(
     private restangular: Restangular,
   ) {
     this.restangular.one("comitente").get().subscribe((response) => {
-      console.log(response.data)
      this.comitente = response.data
-      
-    })
+     this.loading = false;
+    },
+    () => this.loading = false)
    }
 
   ngOnInit() {

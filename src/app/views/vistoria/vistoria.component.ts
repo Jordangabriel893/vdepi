@@ -8,14 +8,17 @@ import { Restangular } from 'ngx-restangular';
 })
 export class VistoriaComponent implements OnInit {
   vistoria
+  loading = true;
   constructor(
     private restangular: Restangular,
   ) {
     this.restangular.one("vistoria").get().subscribe((response) => {
       console.log(response.data)
      this.vistoria = response.data
-      
-    })
+     this.loading = false;
+    },
+    () => this.loading = false)
+  
    }
 
   ngOnInit() {
