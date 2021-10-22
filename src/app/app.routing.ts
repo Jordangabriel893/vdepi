@@ -55,8 +55,6 @@ export const routes: Routes = [
         },
         canActivate: [AnonyGuard]
       },
-
-
       {
         path: 'relatorios/notasfiscais',
         component: NotasFiscaisComponent,

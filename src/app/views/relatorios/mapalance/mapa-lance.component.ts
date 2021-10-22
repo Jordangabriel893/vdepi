@@ -80,6 +80,9 @@ export class MapaLanceComponent implements OnInit, OnDestroy {
   filtro: FormGroup;
   infoWindowEventSub: Subscription;
   countFilter: number = 0;
+  leiloes;
+  leilaoId;
+  leilaoNome;
 
   constructor(
     private notifierService: NotifierService,
@@ -110,8 +113,13 @@ export class MapaLanceComponent implements OnInit, OnDestroy {
       autoridade: []
     });
 
-    this.filtro.controls["periodo"].setValue([moment().subtract(1, 'months').toDate(), moment().toDate()]);
-    this.refreshLances();
+    this.restangular.one("leilao").get({PageSize:100}).subscribe((response) => {
+      this.leiloes = response.data
+      this.setLeilao(this.leiloes[0].id, this.leiloes[0].nome);
+    })
+
+    // this.filtro.controls["periodo"].setValue([moment().subtract(1, 'months').toDate(), moment().toDate()]);
+    // this.refreshLances();
   }
 
   ngOnDestroy() {
@@ -128,6 +136,12 @@ export class MapaLanceComponent implements OnInit, OnDestroy {
     $event.stopPropagation();
   }
 
+  setLeilao(id, nome){
+    this.leilaoId = id;
+    this.leilaoNome = nome;
+    this.refreshLances();
+  }
+
   setCenterOriginalMap() {
     this.mapObject.setCenter(this.latLng);
     this.mapObject.setZoom(this.zoom);
@@ -135,9 +149,8 @@ export class MapaLanceComponent implements OnInit, OnDestroy {
 
   getLances(): Promise<any> {
     return new Promise((resolve, reject) => {
-
       let filtro = this.filtro !== undefined ? this.filtro.value : null;
-      this.restangular.one(`leilao/1/Lances`).get().subscribe(
+      this.restangular.one(`leilao/${this.leilaoId}/Lances`).get().subscribe(
         (lances) => {
           this.lances = lances.data;
           resolve(lances.data);
@@ -196,9 +209,8 @@ export class MapaLanceComponent implements OnInit, OnDestroy {
         this.markerCluster = new MarkerCluster(this.mapObject, markers, mcOptions);
 
         this.setCenterOriginalMap();
-
-        console.log(this.heatmap);
       }).catch(error => {
+        this.loading = false;
         this.notifierService.notify('error', 'Erro ao buscar dados do mapa')
       });
   }
