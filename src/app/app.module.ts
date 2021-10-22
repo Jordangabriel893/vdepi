@@ -196,7 +196,21 @@ export function RestangularConfigFactory(RestangularProvider, NotifierService: N
     ReactiveFormsModule,
     HttpModule,
     CustomFormsModule,
-    NotifierModule,
+    NotifierModule.withConfig({
+      position: {
+
+        horizontal: {
+          position: 'right',
+          distance: 12
+        },
+        vertical: {
+          position: 'top',
+          distance: 12,
+          gap: 10
+        }
+      
+      }
+    }),
     RestangularModule.forRoot([NotifierService, Router], RestangularConfigFactory),
     TextMaskModule,
     NgPipesModule,

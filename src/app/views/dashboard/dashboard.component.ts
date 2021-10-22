@@ -131,11 +131,11 @@ export class DashboardComponent implements OnInit {
     this.restangular.one("dashboard/top10lotes").get({ LeilaoId: this.id }).subscribe((response) => {
       console.log(response.data)
       const top10lotes = response.data
+      
       const lances = top10lotes.map(x => x.lances)
-      console.log(lances)
       const numeroLote = top10lotes.map(x => x.numeroLote)
-      this.barChartData = [{ data: lances.reverse(), label: `Lote:${numeroLote}` }]
-      this.barChartLabels = lances
+      this.barChartData = [{ data: lances.reverse(), label: 'Lances'}]
+      this.barChartLabels = numeroLote
 
     })
     this.restangular.one("dashboard/financeiro").get({ LeilaoId: this.id }).subscribe((response) => {
@@ -153,98 +153,73 @@ export class DashboardComponent implements OnInit {
 //       //previsto x arrematado
           this.previsto = response.data.previsto
           this.arrematados = response.data.arrematado
+          const data =  {
+            labels: ["Previsto", "Arrematado"],
+            datasets: [
+              {
+                label: "R$",
+                backgroundColor: ["rgb(38, 1, 250)", " rgb(10, 250, 1)"],
+                data: [this.previsto, this.arrematados, 0]
+              }
+            ]
+          }
           new Chart(this.barrasHorizontal.nativeElement, {
             type: 'horizontalBar',
-            data: {
-              labels: ["Previsto", "Arrematado"],
-              datasets: [
-                {
-                  label: "",
-                  backgroundColor: ["rgb(38, 1, 250)", " rgb(10, 250, 1)"],
-                  data: [this.previsto, this.arrematados, 0]
-                }
-              ]
-            },
+            data:data,
             options: {
               legend: { display: false },
               title: {
                 display: false,
-                text: 'Predicted world population (millions) in 2050'
-              }
+                text: 'Predicted world population (millions) in 2050',
+              },
+              tooltips: {
+                callbacks: {
+                  label: function (tooltipItem, data) {
+                    console.log(data.datasets[tooltipItem.datasetIndex])
+                    console.log(tooltipItem)
+                    const datasetLabel = data.datasets[tooltipItem.datasetIndex].data || '';
+                    
+                    return tooltipItem.xLabel.toLocaleString("pt-BR", { style: "currency", currency: "BRL" }) 
+                  }
+                }
+              },
+              // tooltips: {
+              //   callbacks: {
+              //     label: function(context) {
+              //       var label = context.dataset.label || '';
+
+              //       if (label) {
+              //           label += ': ';
+              //       }
+              //       if (context.parsed.y !== null) {
+              //           label += new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(context.parsed.y);
+              //       }
+              //       return label;
+              //   }
+              //   }
+              // },
+            scales: {
+              xAxes: [{
+                stacked: true,
+                gridLines: {
+                  display: false
+                },
+                ticks: {
+                  callback: function (value, index, values) {
+                    return value.toLocaleString("pt-BR", { style: "currency", currency: "BRL" });
+                  }
+                },
+              }],
+              // We use this empty structure as a placeholder for dynamic theming.
+             
+            },
+          
+
             }
+            
           });
     })
-    //     forkJoin([
-
-
-    //       this.restangular.one("dashboard/contadores").get({ LeilaoId: this.id }).pipe(),
-    //       this.restangular.one("dashboard/contadores-lotes").get({ LeilaoId: this.id }).pipe(),
-    //       this.restangular.one("dashboard/top10lotes").get({ LeilaoId: this.id }).pipe(),
-    //       this.restangular.one("dashboard/financeiro").get({ LeilaoId: this.id }).pipe(),
-    //       this.restangular.one("dashboard/previsto-arrematado").get({ LeilaoId: this.id }).pipe(),
-
-    //     ]).subscribe((allResp: any[]) => {
-    // //contador
-    // this.contadorVisitantes = allResp[0].data.visitantes
-    // this.contadorHabilitados = allResp[0].data.habilitados
-    // this.contadorParticipantes = allResp[0].data.participantes
-    // this.contadorLances = allResp[0].data.lances
-    // //lotes
-    // this.arrematados = allResp[1].data.arrematados
-    // this.removidos = allResp[1].data.removidos
-    // this.semLances = allResp[1].data.semLances
-    // this.totalLotes = allResp[1].data.total
-    // this.doughnutChartData = [[this.arrematados, this.removidos, this.semLances]]
-    // //top-10 lotes
-    // const top10lotes = allResp[2].data
-    // const lances = top10lotes.map(x => x.lances)
-    // console.log(lances)
-    // const numeroLote = top10lotes.map(x => x.numeroLote)
-    // this.barChartData = [{ data: lances.reverse(), label: 'Top 10 Lotes' }]
-    // this.barChartLabels = lances
-
-    //  //financeiro
-    //  const finaceiro = allResp[3].data
-    //  this.listaExpirados = finaceiro.filter(x => x.status == 'Expirado')
-    //  this.listaPendentes = finaceiro.filter(x => x.status == 'Pendente')
-    //  this.listaPago = finaceiro.filter(x => x.status == 'Pago')
-    //  this.listaArrematados = finaceiro
-    //  this.barChartDataFinanceiro = [{ data: [finaceiro.length, this.listaPago.length, this.listaPendentes.length, this.listaExpirados.length, 0] },]
-
-
-
-    //       //previsto x arrematado
-    //       this.previsto = allResp[4].data.previsto
-    //       this.arrematados = allResp[4].data.arrematado
-    //       new Chart(this.barrasHorizontal.nativeElement, {
-    //         type: 'horizontalBar',
-    //         data: {
-    //           labels: ["Previsto", "Arrematado"],
-    //           datasets: [
-    //             {
-    //               label: "",
-    //               backgroundColor: ["rgb(10, 250, 1)", "rgb(38, 1, 250)"],
-    //               data: [this.previsto, this.arrematados, 0]
-    //             }
-    //           ]
-    //         },
-    //         options: {
-    //           legend: { display: false },
-    //           title: {
-    //             display: false,
-    //             text: 'Predicted world population (millions) in 2050'
-    //           }
-    //         }
-    //       });
-
-
-
-
-
-
-
-
-    //     });
+    
   }
 
   // events

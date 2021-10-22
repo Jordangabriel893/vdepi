@@ -158,25 +158,25 @@ export class UpdateLotesComponent implements OnInit {
   }
 
   onSubmit() {
-    console.log(this.formulario);
-    if (this.formulario.value.judicial == false) {
-      this.removeControls()
-      console.log(this.formulario.value)
+    console.log(this.formulario.value);
+    // if (this.formulario.value.judicial == false) {
+    //   this.removeControls()
+    //   console.log(this.formulario.value)
 
-    }
-    if (this.formulario.invalid) {
-      this.notifierService.notify('error', 'Preencha todos os campos obrigatórios')
-      return;
-    }
+    // }
+    // if (this.formulario.invalid) {
+    //   this.notifierService.notify('error', 'Preencha todos os campos obrigatórios')
+    //   return;
+    // }
 
-    const formulario = this.formulario.value
-    this.restangular.all('lote').customPUT(formulario, this.id).subscribe(a => {
-      this.notifierService.notify('success', 'Lote Alterado com sucesso');
-      this.router.navigate(['lotes', this.leilaoId])
-    },
-      error => {
-        this.notifierService.notify('error', 'Erro ao atualizar o Lote!');
-      });
+    // const formulario = this.formulario.value
+    // this.restangular.all('lote').customPUT(formulario, this.id).subscribe(a => {
+    //   this.notifierService.notify('success', 'Lote Alterado com sucesso');
+    //   this.router.navigate(['lotes', this.leilaoId])
+    // },
+    //   error => {
+    //     this.notifierService.notify('error', 'Erro ao atualizar o Lote!');
+    //   });
 
   }
 
