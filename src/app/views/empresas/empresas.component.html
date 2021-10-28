@@ -14,6 +14,8 @@
         </div>
 
         <div class="card-block" >
+          <button type="button" class="btn btn-success" [routerLink]="['/create-empresa']"><i class="fa fa-plus-circle"></i>&nbsp; Nova Empresa</button>
+
           <div class="table-responsive mt-4">
             <table class="table table-striped" [mfData]="empresa" #mfEmpresa="mfDataTable" [mfRowsOnPage]="5">
               <thead>
@@ -36,6 +38,9 @@
                   <th>
                     <mfDefaultSorter by="endereco">Endereço</mfDefaultSorter>
                   </th>
+                  <th class="text-center" >
+                    Editar
+                  </th>
                   
                 </tr>
               </thead>
@@ -49,6 +54,9 @@
                   
                   <td>{{item.telefone }}</td>
                   <td>{{item.endereco }}</td>
+                  <td class="text-center" nowrap>
+                    <button type="button" class="btn btn-primary" (click)="edit(item.empresaId)"><i class="fa fa-edit"></i>&nbsp;Editar</button>
+                  </td>
                 </tr>
                 <tr *ngIf="loading">
                   <td class="text-center text-muted" colspan="9">

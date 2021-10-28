@@ -1,4 +1,13 @@
 <div class="animated fadeIn">
+  <div class="row linha-seletor">
+    <form [formGroup]="formulario" class="col-4">
+      <select class="form-control col-12 seletor" aria-label="Default select example" (change)="buscarLeilao()" formControlName="leilao" >
+        <option selected>Selecione o Leilão</option>
+        <option *ngFor="let item of selectLeilao">{{item.nome}}</option>
+
+      </select>
+    </form>
+  </div>
   <div class="row">
     <div class="col-lg-12">
       <div class="card">

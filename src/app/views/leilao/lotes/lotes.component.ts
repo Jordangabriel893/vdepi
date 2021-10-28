@@ -10,9 +10,13 @@ import { Restangular } from 'ngx-restangular';
 export class LotesComponent implements OnInit {
   id: any
   lotes: any
+  filtroLotes
   leilao
+  descricao
+  descricaoTitle
+  numeroLote
   loading = true;
-
+  idLote
   constructor(
     private restangular: Restangular,
     private route: ActivatedRoute,
@@ -22,7 +26,12 @@ export class LotesComponent implements OnInit {
     this.restangular.one("lote", '').get({ leilaoId: this.id, PageSize:100 }).subscribe(
       (lotes) => {
        this.loading = false;
-        this.lotes = lotes.data;
+       const lote = lotes.data
+        this.lotes = lote;
+        this.filtroLotes = lote
+        this.numeroLote = lote.map(x => x.loteId)
+        this.descricao = lote.map(x => x.descricao)
+        console.log(this.numeroLote)
       },
       () => this.loading = false
     )
@@ -40,5 +49,19 @@ export class LotesComponent implements OnInit {
   }
   edit(id) {
     this.router.navigate(['/update-lotes', id], { relativeTo: this.route });
+  }
+  setLote(item){
+    this.idLote = item
+    const listaFiltradaPorID = this.filtroLotes.filter(x => x.loteId == item)
+    console.log(listaFiltradaPorID)
+    this.lotes = listaFiltradaPorID
+    this.descricaoTitle=listaFiltradaPorID[0].descricao
+  }
+  setDescricao(item){
+    this.idLote = '' 
+    this.descricaoTitle=item
+    const listaFiltradaPorID = this.filtroLotes.filter(x => x.descricao == item )
+    console.log(listaFiltradaPorID)
+    this.lotes = listaFiltradaPorID
   }
 }

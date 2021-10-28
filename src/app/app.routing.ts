@@ -1,6 +1,3 @@
-import { StatusLeilaoComponent } from './views/status-leilao/status-leilao.component';
-import { StatusLoteComponent } from './views/status-lote/status-lote.component';
-import { HistoricoLancesComponent } from './views/historico-lances/historico-lances.component';
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { AnonyGuard, AuthGuard } from './_guards/index';
@@ -36,6 +33,19 @@ import { LeiloeirosComponent } from './views/leiloeiros/leiloeiros.component';
 import { LocaisComponent } from './views/locais/locais.component';
 import { CategoriasComponent } from './views/categorias/categorias.component';
 import { VistoriaComponent } from './views/vistoria/vistoria.component';
+import { CreateComitenteComponent } from './views/comitentes/create-comitente/create-comitente.component';
+import { UpdateEmpresaComponent } from './views/empresas/update-empresa/update-empresa.component';
+import { CreateEmpresaComponent } from './views/empresas/create-empresa/create-empresa.component';
+import { UpdateComitenteComponent } from './views/comitentes/update-comitente/update-comitente.component';
+import { UpdateLeiloeirosComponent } from './views/leiloeiros/update-leiloeiros/update-leiloeiros.component';
+import { CreateLeiloeirosComponent } from './views/leiloeiros/create-leiloeiros/create-leiloeiros.component';
+import { UpdateLocalComponent } from './views/locais/update-local/update-local.component';
+import { CreateLocalComponent } from './views/locais/create-local/create-local.component';
+import { UpdateCategoriasComponent } from './views/categorias/update-categorias/update-categorias.component';
+import { CreateCategoriasComponent } from './views/categorias/create-categorias/create-categorias.component';
+import { StatusLeilaoComponent } from './views/status-leilao/status-leilao.component';
+import { StatusLoteComponent } from './views/status-lote/status-lote.component';
+import { HistoricoLancesComponent } from './views/historico-lances/historico-lances.component';
 
 export const routes: Routes = [
   { path: '', redirectTo: '/home', pathMatch: 'full' },
@@ -201,10 +211,46 @@ export const routes: Routes = [
         canActivate: [SourceGuard]
       },
       {
+        path: 'create-empresa',
+        component: CreateEmpresaComponent,
+        data: {
+          title: 'Criar empresa',
+          source: 'RelatorioEstoque'
+        },
+        canActivate: [SourceGuard]
+      },
+      {
+        path: 'update-empresa/:id',
+        component: UpdateEmpresaComponent,
+        data: {
+          title: 'Editar empresa',
+          source: 'RelatorioEstoque'
+        },
+        canActivate: [SourceGuard]
+      },
+      {
         path: 'comitente',
         component: ComitentesComponent,
         data: {
           title: 'Comitente',
+          source: 'RelatorioEstoque'
+        },
+        canActivate: [SourceGuard]
+      },
+      {
+        path: 'create-comitente',
+        component: CreateComitenteComponent,
+        data: {
+          title: 'Criar Comitente',
+          source: 'RelatorioEstoque'
+        },
+        canActivate: [SourceGuard]
+      },
+      {
+        path: 'update-comitente/:id',
+        component: UpdateComitenteComponent,
+        data: {
+          title: 'Editar Comitente',
           source: 'RelatorioEstoque'
         },
         canActivate: [SourceGuard]
@@ -219,6 +265,24 @@ export const routes: Routes = [
         canActivate: [SourceGuard]
       },
       {
+        path: 'create-leiloeiro',
+        component: CreateLeiloeirosComponent,
+        data: {
+          title: 'Novo Leiloeiro',
+          source: 'RelatorioEstoque'
+        },
+        canActivate: [SourceGuard]
+      },
+      {
+        path: 'update-leiloeiro',
+        component: UpdateLeiloeirosComponent,
+        data: {
+          title: 'Editar Leiloeiro',
+          source: 'RelatorioEstoque'
+        },
+        canActivate: [SourceGuard]
+      },
+      {
         path: 'local',
         component: LocaisComponent,
         data: {
@@ -228,10 +292,46 @@ export const routes: Routes = [
         canActivate: [SourceGuard]
       },
       {
+        path: 'create-local',
+        component: CreateLocalComponent,
+        data: {
+          title: 'Criar Local',
+          source: 'RelatorioEstoque'
+        },
+        canActivate: [SourceGuard]
+      },
+      {
+        path: 'update-local/:id',
+        component: UpdateLocalComponent,
+        data: {
+          title: 'Editar Local',
+          source: 'RelatorioEstoque'
+        },
+        canActivate: [SourceGuard]
+      },
+      {
         path: 'categorias',
         component: CategoriasComponent,
         data: {
           title: 'Categorias',
+          source: 'RelatorioEstoque'
+        },
+        canActivate: [SourceGuard]
+      },
+      {
+        path: 'create-categoria',
+        component: CreateCategoriasComponent,
+        data: {
+          title: 'Criar Categoria',
+          source: 'RelatorioEstoque'
+        },
+        canActivate: [SourceGuard]
+      },
+      {
+        path: 'update-categorias/:id',
+        component: UpdateCategoriasComponent,
+        data: {
+          title: 'Editar Categoria',
           source: 'RelatorioEstoque'
         },
         canActivate: [SourceGuard]

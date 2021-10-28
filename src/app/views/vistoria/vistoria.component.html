@@ -33,6 +33,9 @@
                   <th>
                     <mfDefaultSorter by="loteId">Lote</mfDefaultSorter>
                   </th>  
+                  <th class="text-center" >
+                    Laudo
+                  </th> 
                 </tr>
               </thead>
               <tbody>
@@ -45,7 +48,9 @@
                   </td>
                   <td>{{item.loteId}}
                   </td>
-     
+                  <td class="text-center" nowrap>
+                    <button type="button" class="btn btn-primary" (click)="laudo(item.numero)"><i class="fa fa-download"></i>&nbsp;Laudo</button>
+                  </td>
                  
                 </tr>
                 <tr *ngIf="loading">

@@ -42,7 +42,12 @@ export class HistoricoLancesComponent implements OnInit {
       this.loading = false;
     },
     () => this.loading = false)
+<<<<<<< HEAD
 
 
+=======
+  
+  
+>>>>>>> 7df1edc032e1e0fe888066bc19276d5c9f14fa9a
   }
 }

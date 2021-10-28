@@ -1,3 +1,46 @@
+<div class="dashboard-bar">
+  <div class="row justify-content-end">
+    <div class="col-md-auto text-right">
+      <div class="dropdown" dropdown title="Nome">
+        <div class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false" dropdownToggle>
+          <i class="fa fa-user"></i>
+          <span *ngIf="!nomeSetado" class="d-md-down-none">Nome</span>
+          <span *ngIf="nomeSetado" class="d-md-down-none">{{nomeSetado}}</span>
+        </div>
+        <div class="dropdown-menu dropdown-menu-right scrollable-dropdown" *dropdownMenu aria-labelledby="simple-dropdown">
+          <div class="dropdown-header text-center"><strong>Nome</strong></div>
+          <div class="dropdown-item" *ngFor="let item of nome; let i = index" (click)="setNome(item)" style="cursor:pointer">{{item}}</div>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-auto text-right">
+      <div class="dropdown" dropdown title="Documento">
+        <div class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false" dropdownToggle>
+          <i class="fa fa-address-card"></i>
+          <span *ngIf="!documentoSetado" class="d-md-down-none">Documento</span>
+          <span *ngIf="documentoSetado" class="d-md-down-none">{{documentoSetado}}</span>
+        </div>
+        <div class="dropdown-menu dropdown-menu-right scrollable-dropdown" *dropdownMenu aria-labelledby="simple-dropdown">
+          <div class="dropdown-header text-center"><strong>Documento</strong></div>
+          <div class="dropdown-item" *ngFor="let item of documento; let i = index" (click)="setDocumento(item)" style="cursor:pointer">{{item}}</div>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-auto text-right pr-5">
+      <div class="dropdown" dropdown title="Email">
+        <div class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false" dropdownToggle>
+          <i class="fa fa-envelope icone"></i>
+          <span *ngIf="!emailSetado" class="d-md-down-none">Email</span>
+          <span *ngIf="emailSetado" class="d-md-down-none">{{emailSetado}}</span>
+        </div>
+        <div class="dropdown-menu dropdown-menu-right scrollable-dropdown " *dropdownMenu aria-labelledby="simple-dropdown">
+          <div class="dropdown-header text-center"><strong>Email</strong></div>
+          <div class="dropdown-item" *ngFor="let item of email; let i = index" (click)="setEmail(item)" style="cursor:pointer">{{item}}</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
 <div class="animated fadeIn">
   <div class="row">
     <div class="col-lg-12">

@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Restangular } from 'ngx-restangular';
 
 @Component({
@@ -11,6 +12,8 @@ export class ComitentesComponent implements OnInit {
   loading = true;
   constructor(
     private restangular: Restangular,
+    private router: Router,
+    private route: ActivatedRoute,
   ) {
     this.restangular.one("comitente").get().subscribe((response) => {
      this.comitente = response.data
@@ -20,6 +23,10 @@ export class ComitentesComponent implements OnInit {
    }
 
   ngOnInit() {
+  }
+  edit(id) {
+    console.log(id)
+    this.router.navigate(['/update-comitente', id], { relativeTo: this.route });
   }
 
 }

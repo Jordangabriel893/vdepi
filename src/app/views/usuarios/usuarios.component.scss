@@ -1,0 +1,15 @@
+.header{
+    display: flex;
+    justify-content: space-between;
+}
+.btn-success{
+    display: flex;
+    align-items: center;
+
+    h6{
+        margin-bottom: 0%;
+    }
+}
+.fa-file-excel, .fa-gavel, .icone, .fa-user, .fa-address-card {
+    margin-right: 10%;
+}

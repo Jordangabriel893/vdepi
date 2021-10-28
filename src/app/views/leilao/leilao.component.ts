@@ -6,16 +6,18 @@ import { Restangular } from 'ngx-restangular';
 import { ConfirmationService } from '@jaspero/ng-confirmations';
 import { ComponentService } from '../../_services/index';
 import * as Model from '../_models/model'
+import { FormBuilder, FormGroup } from '@angular/forms';
 
 @Component({
   selector: 'app-leilao',
-  templateUrl: './leilao.component.html'
+  templateUrl: './leilao.component.html',
+  styleUrls: ['./leilao.component.scss']
 })
 export class LeilaoComponent implements OnInit {
-
+  formulario: FormGroup
   leiloes: Model.Leilao[];
   loading = true;
-
+selectLeilao
   constructor(
     private route: ActivatedRoute,
     private router: Router,
@@ -23,12 +25,18 @@ export class LeilaoComponent implements OnInit {
     private confirmationService: ConfirmationService,
     private restangular: Restangular,
     private componentService: ComponentService,
-    private cdr: ChangeDetectorRef) {
-
+    private cdr: ChangeDetectorRef,
+    private formBuilder: FormBuilder,) {
+      this.formulario = this.formBuilder.group({
+        leilao:[null],
+        
+  
+      })
   }
 
   ngOnInit() {
     this.restangular.one("leilao", '').get({PageSize:100}).subscribe((response) => {
+        this.selectLeilao = response.data
         this.leiloes = response.data;
         console.log(response.data)
         this.loading = false;
@@ -48,4 +56,8 @@ export class LeilaoComponent implements OnInit {
     this.router.navigate(['/dashboard', id]);
   }
 
+  buscarLeilao(){
+    const filtro = this.selectLeilao.filter(x => x.nome === this.formulario.value.leilao)
+    this.leiloes = filtro
+  }
 }

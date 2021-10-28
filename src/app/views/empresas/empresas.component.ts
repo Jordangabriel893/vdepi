@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Restangular } from 'ngx-restangular';
 
 @Component({
@@ -11,6 +12,8 @@ export class EmpresasComponent implements OnInit {
   loading = true;
   constructor(
     private restangular: Restangular,
+    private route: ActivatedRoute,
+    private router: Router
   ) {
     this.restangular.one("empresa").get().subscribe((response) => {
      this.empresa = response.data
@@ -22,4 +25,7 @@ export class EmpresasComponent implements OnInit {
   ngOnInit() {
   }
 
+  edit(id) {
+    this.router.navigate(['/update-empresa', id], { relativeTo: this.route });
+  }
 }

@@ -14,6 +14,8 @@
         </div>
 
         <div class="card-block" >
+          <button type="button" class="btn btn-success" [routerLink]="['/create-categoria']"><i class="fa fa-plus-circle"></i>&nbsp; Nova Categoria</button>
+
           <div class="table-responsive mt-4">
             <table class="table table-striped" [mfData]="categorias" #mfCategorias="mfDataTable" [mfRowsOnPage]="5">
               <thead>
@@ -30,6 +32,9 @@
                   <th>
                     <mfDefaultSorter by="ativo">Ativo</mfDefaultSorter>
                   </th>
+                  <th class="text-center" >
+                    Editar
+                  </th>
                 </tr>
               </thead>
               <tbody>
@@ -39,7 +44,9 @@
                   </td>
                   <td>{{item.dataCadastro | date : 'dd/MM/yyyy' }}</td>
                   <td>{{item.ativo == true ? 'Sim' : 'Não' }}</td>
-     
+                  <td class="text-center" nowrap>
+                    <button type="button" class="btn btn-primary" (click)="edit(item.categoriaId)"><i class="fa fa-edit"></i>&nbsp;Editar</button>
+                  </td>
                  
                 </tr>
                 <tr *ngIf="loading">

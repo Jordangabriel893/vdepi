@@ -170,6 +170,16 @@ import { CategoriasComponent } from './views/categorias/categorias.component';
 import { VistoriaComponent } from './views/vistoria/vistoria.component';
 import { StatusLoteComponent } from './views/status-lote/status-lote.component';
 import { StatusLeilaoComponent } from './views/status-leilao/status-leilao.component';
+import { CreateCategoriasComponent } from './views/categorias/create-categorias/create-categorias.component';
+import { UpdateCategoriasComponent } from './views/categorias/update-categorias/update-categorias.component';
+import { CreateLocalComponent } from './views/locais/create-local/create-local.component';
+import { UpdateLocalComponent } from './views/locais/update-local/update-local.component';
+import { CreateLeiloeirosComponent } from './views/leiloeiros/create-leiloeiros/create-leiloeiros.component';
+import { UpdateLeiloeirosComponent } from './views/leiloeiros/update-leiloeiros/update-leiloeiros.component';
+import { UpdateEmpresaComponent } from './views/empresas/update-empresa/update-empresa.component';
+import { CreateEmpresaComponent } from './views/empresas/create-empresa/create-empresa.component';
+import { CreateComitenteComponent } from './views/comitentes/create-comitente/create-comitente.component';
+import { UpdateComitenteComponent } from './views/comitentes/update-comitente/update-comitente.component';
 
 
 export function RestangularConfigFactory(RestangularProvider, NotifierService: NotifierService, Router) {
@@ -273,6 +283,16 @@ export function RestangularConfigFactory(RestangularProvider, NotifierService: N
     VistoriaComponent,
     StatusLoteComponent,
     StatusLeilaoComponent,
+    CreateCategoriasComponent,
+    UpdateCategoriasComponent,
+    CreateLocalComponent,
+    UpdateLocalComponent,
+    CreateLeiloeirosComponent,
+    UpdateLeiloeirosComponent,
+    UpdateEmpresaComponent,
+    CreateEmpresaComponent,
+    CreateComitenteComponent,
+    UpdateComitenteComponent,
 
   ],
   providers: [{

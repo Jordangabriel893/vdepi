@@ -128,7 +128,7 @@ export class DashboardComponent implements OnInit {
       this.contadorLances = response.data.lances
     })
     this.restangular.one("dashboard/contadores-lotes").get({ LeilaoId: this.id }).subscribe((response) => {
-      console.log(response.data)
+      // console.log(response.data)
       this.arrematados = response.data.arrematados
       this.removidos = response.data.removidos
       this.semLances = response.data.semLances
@@ -137,8 +137,13 @@ export class DashboardComponent implements OnInit {
 
     })
     this.restangular.one("dashboard/top10lotes").get({ LeilaoId: this.id }).subscribe((response) => {
+<<<<<<< HEAD
       console.log(response.data)
       const top10lotes = response.data.reverse();
+=======
+      // console.log(response.data)
+      const top10lotes = response.data
+>>>>>>> 7df1edc032e1e0fe888066bc19276d5c9f14fa9a
 
       const lances = top10lotes.map(x => x.lances)
       const numeroLote = top10lotes.map(x => x.numeroLote)
@@ -147,7 +152,7 @@ export class DashboardComponent implements OnInit {
 
     })
     this.restangular.one("dashboard/financeiro").get({ LeilaoId: this.id }).subscribe((response) => {
-      console.log(response.data)
+      // console.log(response.data)
        const finaceiro = response.data
      this.listaExpirados = finaceiro.filter(x => x.status == 'Expirado')
      this.listaPendentes = finaceiro.filter(x => x.status == 'Pendente')
@@ -157,10 +162,11 @@ export class DashboardComponent implements OnInit {
 
     })
     this.restangular.one("dashboard/previsto-arrematado").get({ LeilaoId: this.id }).subscribe((response) => {
-      console.log(response.data)
+      // console.log(response.data)
 //       //previsto x arrematado
           this.previsto = response.data.previsto
           this.arrematados = response.data.arrematado
+          console.log(this.previsto, this.arrematados)
           const data =  {
             labels: ["Previsto", "Arrematado"],
             datasets: [
@@ -191,21 +197,6 @@ export class DashboardComponent implements OnInit {
                   }
                 }
               },
-              // tooltips: {
-              //   callbacks: {
-              //     label: function(context) {
-              //       var label = context.dataset.label || '';
-
-              //       if (label) {
-              //           label += ': ';
-              //       }
-              //       if (context.parsed.y !== null) {
-              //           label += new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(context.parsed.y);
-              //       }
-              //       return label;
-              //   }
-              //   }
-              // },
             scales: {
               xAxes: [{
                 stacked: true,
@@ -226,7 +217,63 @@ export class DashboardComponent implements OnInit {
             }
 
           });
-    })
+    },
+    error => {
+      this.previsto = 0
+      this.arrematados = 0
+      console.log(this.previsto, this.arrematados)
+      const data =  {
+        labels: ["Previsto", "Arrematado"],
+        datasets: [
+          {
+            label: "R$",
+            backgroundColor: ["rgb(38, 1, 250)", " rgb(10, 250, 1)"],
+            data: [this.previsto, this.arrematados, 0]
+          }
+        ]
+      }
+      new Chart(this.barrasHorizontal.nativeElement, {
+        type: 'horizontalBar',
+        data:data,
+        options: {
+          legend: { display: false },
+          title: {
+            display: false,
+            text: 'Predicted world population (millions) in 2050',
+          },
+          tooltips: {
+            callbacks: {
+              label: function (tooltipItem, data) {
+                console.log(data.datasets[tooltipItem.datasetIndex])
+                console.log(tooltipItem)
+                const datasetLabel = data.datasets[tooltipItem.datasetIndex].data || '';
+
+                return tooltipItem.xLabel.toLocaleString("pt-BR", { style: "currency", currency: "BRL" })
+              }
+            }
+          },
+        scales: {
+          xAxes: [{
+            stacked: true,
+            gridLines: {
+              display: false
+            },
+            ticks: {
+              callback: function (value, index, values) {
+                return value.toLocaleString("pt-BR", { style: "currency", currency: "BRL" });
+              }
+            },
+          }],
+          // We use this empty structure as a placeholder for dynamic theming.
+
+        },
+
+
+        }
+
+      });
+    });
+ 
 
   }
 
