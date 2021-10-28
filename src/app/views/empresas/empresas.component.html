@@ -8,9 +8,9 @@
             <i class="fa fa-university" aria-hidden="true"></i>
             Empresas
           </div>
-          
+
           <button type="button" class="btn btn-success"><i class="fa fa-file-excel" aria-hidden="true"></i><h6>Excel</h6></button>
-          
+
         </div>
 
         <div class="card-block" >
@@ -36,12 +36,12 @@
                     <mfDefaultSorter by="telefone">Telefone</mfDefaultSorter>
                   </th>
                   <th>
-                    <mfDefaultSorter by="endereco">Endereço</mfDefaultSorter>
+                    <mfDefaultSorter by="ativo">Ativo</mfDefaultSorter>
                   </th>
                   <th class="text-center" >
                     Editar
                   </th>
-                  
+
                 </tr>
               </thead>
               <tbody>
@@ -51,9 +51,9 @@
                   </td>
                   <td>{{item.razaoSocial }}</td>
                   <td>{{item.dataCadastro | date: 'dd/MM/yyyy' }}</td>
-                  
+
                   <td>{{item.telefone }}</td>
-                  <td>{{item.endereco }}</td>
+                  <td>{{item.ativo ? 'Sim' : 'Não' }}</td>
                   <td class="text-center" nowrap>
                     <button type="button" class="btn btn-primary" (click)="edit(item.empresaId)"><i class="fa fa-edit"></i>&nbsp;Editar</button>
                   </td>
@@ -73,7 +73,7 @@
               </tfoot>
             </table>
           </div>
-         
+
         </div>
       </div>
     </div>

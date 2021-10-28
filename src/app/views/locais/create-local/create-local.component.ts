@@ -17,17 +17,16 @@ export class CreateLocalComponent implements OnInit {
   public maskCep: Array<string | RegExp>
   public maskCpf: Array<string | RegExp>
   public maskCnpj: Array<string | RegExp>
-  
-  constructor( 
+
+  constructor(
     private formBuilder: FormBuilder,
     private restangular: Restangular,
     private notifierService: NotifierService,
     private router: Router,
     private cepService: ConsultaCepService
-  ) { 
+  ) {
     this.restangular.one("empresa").get().subscribe((response) => {
       this.empresa = response.data
-     console.log(this.empresa)
      })
 
     this.mask = ['(', /[1-9]/, /\d/, ')', ' ', /\d/,/\d/,/\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/]
@@ -37,14 +36,13 @@ export class CreateLocalComponent implements OnInit {
 
     this.formulario = this.formBuilder.group({
       descricao:[null, Validators.required],
-      empresa:[],
       telefone:[null, Validators.required],
       empresaId:[null, Validators.required],
       endereco: this.formBuilder.group({
         enderecoId: [0],
         cep: [null, [Validators.required]],
         numero: [null, Validators.required],
-        complemento: [null, Validators.required],
+        complemento: [null],
         bairro: [null, Validators.required],
         cidade: [null, Validators.required],
         estado: [null, Validators.required],
@@ -70,7 +68,7 @@ export class CreateLocalComponent implements OnInit {
         })
       });
   }
-  
+
   consultaCEP() {
     const cep = this.formulario.get('endereco.cep').value;
 

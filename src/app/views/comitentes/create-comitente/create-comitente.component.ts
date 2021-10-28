@@ -17,29 +17,23 @@ export class CreateComitenteComponent implements OnInit {
   public maskCep: Array<string | RegExp>
   public maskCpf: Array<string | RegExp>
   public maskCnpj: Array<string | RegExp>
-  constructor( 
+  constructor(
     private formBuilder: FormBuilder,
     private restangular: Restangular,
     private notifierService: NotifierService,
     private router: Router
-  ) { 
+  ) {
     this.mask = ['(', /[1-9]/, /\d/, ')', ' ', /\d/,/\d/,/\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/]
     this.maskCep = [ /\d/,/\d/,/\d/,/\d/,/\d/, '-', /\d/, /\d/, /\d/, ]
     this.maskCpf = [ /\d/,/\d/,/\d/,  '.', /\d/,/\d/,/\d/, '.', /\d/, /\d/, /\d/, '-', /\d/,/\d/ ]
     this.maskCnpj = [ /\d/,/\d/,'.',/\d/,/\d/,/\d/,'.',/\d/,/\d/,/\d/,'/', /\d/,/\d/,/\d/,/\d/,'-',/\d/,/\d/, ]
-    this.restangular.one("comitente").get().subscribe((response) => {
-      this.comitente = response.data
-      console.log(this.comitente)
-      
-     })
+
     this.formulario = this.formBuilder.group({
       cnpj:[null, Validators.required],
       ativo:[null, Validators.required],
       comitenteId:[0],
-      dataCadastro:[moment().format()],
       nome:[null, Validators.required],
-      razaoSocial:[null, Validators.required],
-    
+      razaoSocial:[null],
     })
   }
 

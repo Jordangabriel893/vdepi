@@ -15,47 +15,46 @@ export class CreateEmpresaComponent implements OnInit {
 
   formulario:FormGroup
   empresa
+  gruposEconomico;
 
   public mask: Array<string | RegExp>
   public maskCep: Array<string | RegExp>
   public maskCpf: Array<string | RegExp>
   public maskCnpj: Array<string | RegExp>
 
-  constructor( 
+  constructor(
     private formBuilder: FormBuilder,
     private restangular: Restangular,
     private notifierService: NotifierService,
     private router: Router,
     private cepService: ConsultaCepService,
-  ) { 
+  ) {
     this.mask = ['(', /[1-9]/, /\d/, ')', ' ', /\d/,/\d/,/\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/]
     this.maskCep = [ /\d/,/\d/,/\d/,/\d/,/\d/, '-', /\d/, /\d/, /\d/, ]
     this.maskCpf = [ /\d/,/\d/,/\d/,  '.', /\d/,/\d/,/\d/, '.', /\d/, /\d/, /\d/, '-', /\d/,/\d/ ]
     this.maskCnpj = [ /\d/,/\d/,'.',/\d/,/\d/,/\d/,'.',/\d/,/\d/,/\d/,'/', /\d/,/\d/,/\d/,/\d/,'-',/\d/,/\d/, ]
-    this.restangular.one("empresa").get().subscribe((response) => {
-      this.empresa = response.data
-      console.log(this.empresa)
-     })
+
+    this.restangular.one("GrupoEconomico").get().subscribe((response) => {
+      this.gruposEconomico = response.data
+    })
     this.formulario = this.formBuilder.group({
       ativo:[null, Validators.required],
       cnpj:[null, Validators.required],
-      codigoTributarioMunicipio:[null, Validators.required],
-      dataCadastro:[moment().format()],
+      codigoTributarioMunicipio:[null],
       empresaId:[0],
       endereco: this.formBuilder.group({
         enderecoId: [0],
         cep: [null, [Validators.required]],
         numero: [null, Validators.required],
-        complemento: [null, Validators.required],
+        complemento: [null],
         bairro: [null, Validators.required],
         cidade: [null, Validators.required],
         estado: [null, Validators.required],
         logradouro:[null, Validators.required]
       }),
-      grupoEconomico:[null, Validators.required],
       grupoEconomicoId:[0],
-      inscricaoEstadual:[null, Validators.required],
-      inscricaoMunicipal:[null, Validators.required],
+      inscricaoEstadual:[null],
+      inscricaoMunicipal:[null],
       nomeFantasia:[null, Validators.required],
       razaoSocial:[null, Validators.required],
       telefone:[null, Validators.required],

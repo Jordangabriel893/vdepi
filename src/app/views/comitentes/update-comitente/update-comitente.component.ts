@@ -17,13 +17,13 @@ export class UpdateComitenteComponent implements OnInit {
   public maskCep: Array<string | RegExp>
   public maskCpf: Array<string | RegExp>
   public maskCnpj: Array<string | RegExp>
-  constructor( 
+  constructor(
     private formBuilder: FormBuilder,
     private restangular: Restangular,
     private notifierService: NotifierService,
     private router: Router,
     private route: ActivatedRoute,
-  ) { 
+  ) {
     this.id = this.route.snapshot.params['id']
 
     this.mask = ['(', /[1-9]/, /\d/, ')', ' ', /\d/,/\d/,/\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/]
@@ -31,22 +31,16 @@ export class UpdateComitenteComponent implements OnInit {
     this.maskCpf = [ /\d/,/\d/,/\d/,  '.', /\d/,/\d/,/\d/, '.', /\d/, /\d/, /\d/, '-', /\d/,/\d/ ]
     this.maskCnpj = [ /\d/,/\d/,'.',/\d/,/\d/,/\d/,'.',/\d/,/\d/,/\d/,'/', /\d/,/\d/,/\d/,/\d/,'-',/\d/,/\d/, ]
 
-    this.restangular.one("comitente").get().subscribe((response) => {
-      const comitentes = response.data
-      let comitenteCorrespondente = comitentes.filter(x =>x.comitenteId == this.id )
-      this.updateForm(comitenteCorrespondente)
-      console.log(comitenteCorrespondente)
-      
+    this.restangular.one("comitente", this.id).get().subscribe((response) => {
+      this.updateForm(response.data);
      })
 
     this.formulario = this.formBuilder.group({
       cnpj:[null, Validators.required],
       ativo:[null, Validators.required],
       comitenteId:[0],
-      dataCadastro:[],
       nome:[null, Validators.required],
       razaoSocial:[null],
-    
     })
   }
 
@@ -77,12 +71,12 @@ export class UpdateComitenteComponent implements OnInit {
   }
   updateForm(dados){
     this.formulario.patchValue({
-      cnpj:dados[0].cnpj,
-      ativo:dados[0].ativo,
-      comitenteId:dados[0].comitenteId,
-      dataCadastro:dados[0].dataCadastro,
-      nome:dados[0].nome,
-      razaoSocial:dados[0].razaoSocial,
+      cnpj:dados.cnpj,
+      ativo:dados.ativo,
+      comitenteId:dados.comitenteId,
+      dataCadastro:dados.dataCadastro,
+      nome:dados.nome,
+      razaoSocial:dados.razaoSocial,
     })
   }
   verificaValidTouched(campo){

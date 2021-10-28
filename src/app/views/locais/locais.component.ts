@@ -25,6 +25,7 @@ export class LocaisComponent implements OnInit {
 
   ngOnInit() {
   }
+
   edit(id) {
     console.log(id)
     this.router.navigate(['/update-local', id], { relativeTo: this.route });

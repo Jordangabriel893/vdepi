@@ -8,9 +8,9 @@
             <i class="fa fa-tags" aria-hidden="true"></i>
             Categorias
           </div>
-          
+
           <button type="button" class="btn btn-success"><i class="fa fa-file-excel" aria-hidden="true"></i><h6>Excel</h6></button>
-          
+
         </div>
 
         <div class="card-block" >
@@ -24,7 +24,10 @@
                     <mfDefaultSorter by="categoriaId">Id</mfDefaultSorter>
                   </th>
                   <th>
-                    <mfDefaultSorter by="descricao">Nome</mfDefaultSorter>
+                    <mfDefaultSorter by="descricao">Descrição</mfDefaultSorter>
+                  </th>
+                  <th>
+                    <mfDefaultSorter by="categoriaPaiId">CategoriaPai</mfDefaultSorter>
                   </th>
                   <th>
                     <mfDefaultSorter by="dataCadastro">Data Cadastro</mfDefaultSorter>
@@ -40,14 +43,14 @@
               <tbody>
                 <tr *ngFor="let item of mfCategorias.data; let i = index">
                   <td>{{item.categoriaId}}</td>
-                  <td>{{item.descricao}}
-                  </td>
+                  <td>{{item.descricao}}</td>
+                  <td>{{item.categoriaPai && item.categoriaPai.descricao}}</td>
                   <td>{{item.dataCadastro | date : 'dd/MM/yyyy' }}</td>
                   <td>{{item.ativo == true ? 'Sim' : 'Não' }}</td>
                   <td class="text-center" nowrap>
                     <button type="button" class="btn btn-primary" (click)="edit(item.categoriaId)"><i class="fa fa-edit"></i>&nbsp;Editar</button>
                   </td>
-                 
+
                 </tr>
                 <tr *ngIf="loading">
                   <td class="text-center text-muted" colspan="9">
@@ -64,7 +67,7 @@
               </tfoot>
             </table>
           </div>
-         
+
         </div>
       </div>
     </div>

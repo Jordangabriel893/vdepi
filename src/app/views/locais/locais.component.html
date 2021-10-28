@@ -8,9 +8,9 @@
             <i class="fa fa-map-marker" aria-hidden="true"></i>
             Locais
           </div>
-          
+
           <button type="button" class="btn btn-success"><i class="fa fa-file-excel" aria-hidden="true"></i><h6>Excel</h6></button>
-          
+
         </div>
 
         <div class="card-block" >
@@ -27,13 +27,13 @@
                     <mfDefaultSorter by="descricao">Nome</mfDefaultSorter>
                   </th>
                   <th>
+                    <mfDefaultSorter by="empresa.nomeFantasia">Empresa</mfDefaultSorter>
+                  </th>
+                  <th>
                     <mfDefaultSorter by="telefone">Telefone</mfDefaultSorter>
                   </th>
                   <th>
-                    <mfDefaultSorter by="endereco.cep">Cep</mfDefaultSorter>
-                  </th>
-                  <th>
-                    <mfDefaultSorter by="endereco.bairro">Bairro</mfDefaultSorter>
+                    <mfDefaultSorter by="endereco.cidade">Cidade</mfDefaultSorter>
                   </th>
                   <th>
                     <mfDefaultSorter by="endereco.estado">Estado</mfDefaultSorter>
@@ -46,11 +46,10 @@
               <tbody>
                 <tr *ngFor="let item of mfLocais.data; let i = index">
                   <td>{{item.localLoteId}}</td>
-                  <td>{{item.descricao}}
-                  </td>
+                  <td>{{item.descricao}}</td>
+                  <td>{{item.empresa.nomeFantasia}}</td>
                   <td>{{item.telefone }}</td>
-                  <td>{{item.endereco.cep }}</td>
-                  <td>{{item.endereco.bairro }}</td>
+                  <td>{{item.endereco.cidade }}</td>
                   <td>{{item.endereco.estado }}</td>
                   <td class="text-center" nowrap>
                     <button type="button" class="btn btn-primary" (click)="edit(item.localLoteId)"><i class="fa fa-edit"></i>&nbsp;Editar</button>
@@ -71,7 +70,7 @@
               </tfoot>
             </table>
           </div>
-         
+
         </div>
       </div>
     </div>

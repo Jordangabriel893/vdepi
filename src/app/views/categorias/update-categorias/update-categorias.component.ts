@@ -13,29 +13,29 @@ import { Restangular } from 'ngx-restangular';
 export class UpdateCategoriasComponent implements OnInit {
   formulario:FormGroup
   id
+  categoriasPai;
 
-  constructor( 
+  constructor(
     private formBuilder: FormBuilder,
     private restangular: Restangular,
     private notifierService: NotifierService,
     private route: ActivatedRoute,
     private router: Router
-  ) { 
+  ) {
     this.id = this.route.snapshot.params['id']
-    this.restangular.one("categoria").get().subscribe((response) => {
-      const categorias = response.data
-      let categoriaCorrespondente = categorias.filter(x =>x.categoriaId == this.id )
-      this.updateForm(categoriaCorrespondente)
-      console.log(categoriaCorrespondente)
+    this.restangular.one("categoria", this.id).get().subscribe((response) => {
+      this.updateForm(response.data)
     })
 
+    this.restangular.one("categoria").get().subscribe((response) => {
+      this.categoriasPai = response.data.filter(x => x.categoriaPaiId === null);
+    })
 
     this.formulario = this.formBuilder.group({
       categoriaId:[this.id],
+      categoriaPaiId: [null],
       descricao:[null, Validators.required],
       ativo:[null]
-
-
     })
   }
 
@@ -66,9 +66,10 @@ export class UpdateCategoriasComponent implements OnInit {
   }
   updateForm(dados){
     this.formulario.patchValue({
-      categoriaId:dados[0].categoriaId,
-      descricao:dados[0].descricao,
-      ativo:dados[0].ativo
+      categoriaId:dados.categoriaId,
+      categoriaPaiId: dados.categoriaPaiId,
+      descricao:dados.descricao,
+      ativo:dados.ativo
     })
   }
   verificaValidTouched(campo){

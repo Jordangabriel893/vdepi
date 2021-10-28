@@ -274,7 +274,7 @@ export const routes: Routes = [
         canActivate: [SourceGuard]
       },
       {
-        path: 'update-leiloeiro',
+        path: 'update-leiloeiro/:id',
         component: UpdateLeiloeirosComponent,
         data: {
           title: 'Editar Leiloeiro',

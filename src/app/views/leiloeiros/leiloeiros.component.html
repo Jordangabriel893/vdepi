@@ -8,9 +8,9 @@
             <i class="fa fa-gavel" aria-hidden="true"></i>
             Leiloeiros
           </div>
-          
+
           <button type="button" class="btn btn-success"><i class="fa fa-file-excel" aria-hidden="true"></i><h6>Excel</h6></button>
-          
+
         </div>
 
         <div class="card-block" >
@@ -24,16 +24,19 @@
                     <mfDefaultSorter by="leiloeiroId">Id</mfDefaultSorter>
                   </th>
                   <th>
-                    <mfDefaultSorter by="pessoa.nomeCompleto">Nome</mfDefaultSorter>
+                    <mfDefaultSorter by="nome">Nome</mfDefaultSorter>
                   </th>
                   <th>
-                    <mfDefaultSorter by="pessoa.telefone">Telefone</mfDefaultSorter>
+                    <mfDefaultSorter by="cpfCnpj">CPF/CNPJ</mfDefaultSorter>
                   </th>
                   <th>
-                    <mfDefaultSorter by="dataCadastro">Data Cadastro</mfDefaultSorter>
+                    <mfDefaultSorter by="telefone">Telefone</mfDefaultSorter>
                   </th>
                   <th>
                     <mfDefaultSorter by="comissao">Comissão</mfDefaultSorter>
+                  </th>
+                  <th>
+                    <mfDefaultSorter by="dataCadastro">Data Cadastro</mfDefaultSorter>
                   </th>
                   <th>
                     <mfDefaultSorter by="ativo">Ativo</mfDefaultSorter>
@@ -46,12 +49,11 @@
               <tbody>
                 <tr *ngFor="let item of mfLeiloeiros.data; let i = index">
                   <td>{{item.leiloeiroId}}</td>
-                  <td>{{item.pessoa.nomeCompleto}}
-                  </td>
-                  <td>{{item.pessoa.telefone }}</td>
-                  <td>{{item.dataCadastro | date: 'dd/MM/yyyy' }}</td>
-                  
+                  <td>{{item.nome}}</td>
+                  <td>{{item.cpfCnpj}}</td>
+                  <td>{{item.telefone }}</td>
                   <td>{{item.comissao | currency:'BRL':true:'1.2-2' }}</td>
+                  <td>{{item.dataCadastro | date: 'dd/MM/yyyy' }}</td>
                   <td>{{item.ativo == true ? 'Sim' : 'Não' }}</td>
                   <td class="text-center" nowrap>
                     <button type="button" class="btn btn-primary" (click)="edit(item.leiloeiroId)"><i class="fa fa-edit"></i>&nbsp;Editar</button>
@@ -72,7 +74,7 @@
               </tfoot>
             </table>
           </div>
-         
+
         </div>
       </div>
     </div>

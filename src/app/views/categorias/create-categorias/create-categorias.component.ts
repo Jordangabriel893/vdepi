@@ -11,18 +11,21 @@ import { Restangular } from 'ngx-restangular';
 })
 export class CreateCategoriasComponent implements OnInit {
   formulario:FormGroup
+  categoriasPai;
 
-  constructor( 
+  constructor(
     private formBuilder: FormBuilder,
     private restangular: Restangular,
     private notifierService: NotifierService,
     private router: Router
-  ) { 
+  ) {
+    this.restangular.one("categoria").get().subscribe((response) => {
+      this.categoriasPai = response.data.filter(x => x.categoriaPaiId === null);
+    })
+
     this.formulario = this.formBuilder.group({
       descricao:[null, Validators.required],
-      dataCadastro:[moment().format()],
-
-
+      categoriaPaiId: [null],
     })
   }
 

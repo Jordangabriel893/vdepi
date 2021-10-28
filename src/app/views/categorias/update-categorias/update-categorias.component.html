@@ -5,7 +5,7 @@
         <div class="card">
           <div class="card-header d-flex align-items-center">
             <i class="fa fa-tags" aria-hidden="true"></i>
-            &nbsp;Informações da Categoria - Obrigatorios*
+            &nbsp;Informações da Categoria
           </div>
 
           <div class="card-block">
@@ -15,23 +15,30 @@
                 <input type="text" class="form-control" [ngClass]="aplicaCssErro('descricao')" id="descricao" placeholder="Descrição" name="descricao" formControlName="descricao" triggers="keypress:focusout">
               </div>
               <div class="form-group col-4">
+                <label for="categoriaPaiId">Categoria Pai</label>
+                <select class="form-control" [ngClass]="aplicaCssErro('categoriaPaiId')" formControlName="categoriaPaiId" id="categoriaPaiId" name="categoriaPai">
+                  <option >Selecione</option>
+                  <option [value]="categoriaPai.categoriaId" *ngFor="let categoriaPai of categoriasPai">{{categoriaPai.descricao}}</option>
+                </select>
+              </div>
+              <div class="form-group col-4">
                 <label for="ativo">Ativo </label>
                 <select class="form-control" [ngClass]="aplicaCssErro('ativo')" formControlName="ativo" id="ativo" name="ativo">
                   <option  value="true">Sim</option>
                   <option  value="false">Não</option>
                 </select>
               </div>
+          </div>
 
-          </div>
-          <div class="card-footer ">
-            <button type="submit" class="btn btn-primary saveCancel"><i class="fa fa-save"></i> Salvar</button>
-            <button type="reset" class="btn btn-danger" [routerLink]="['/categorias']"><i class="fa fa-undo"></i>
-              Cancelar</button>
-          </div>
+        </div>
+        <div class="card-footer ">
+          <button type="submit" class="btn btn-primary saveCancel mr-2"><i class="fa fa-save"></i> Salvar</button>
+          <button type="reset" class="btn btn-danger" [routerLink]="['/categorias']"><i class="fa fa-undo"></i>
+            Cancelar</button>
         </div>
       </div>
     </div>
   </div>
   </div>
- 
+
 </form>

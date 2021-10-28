@@ -16,13 +16,14 @@ export class UpdateEmpresaComponent implements OnInit {
   formulario:FormGroup
   empresa
   id
+  gruposEconomico;
 
   public mask: Array<string | RegExp>
   public maskCep: Array<string | RegExp>
   public maskCpf: Array<string | RegExp>
   public maskCnpj: Array<string | RegExp>
 
-  constructor( 
+  constructor(
     private formBuilder: FormBuilder,
     private restangular: Restangular,
     private notifierService: NotifierService,
@@ -30,40 +31,39 @@ export class UpdateEmpresaComponent implements OnInit {
     private cepService: ConsultaCepService,
     private route: ActivatedRoute,
 
-  ) { 
+  ) {
     this.mask = ['(', /[1-9]/, /\d/, ')', ' ', /\d/,/\d/,/\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/]
     this.maskCep = [ /\d/,/\d/,/\d/,/\d/,/\d/, '-', /\d/, /\d/, /\d/, ]
     this.maskCpf = [ /\d/,/\d/,/\d/,  '.', /\d/,/\d/,/\d/, '.', /\d/, /\d/, /\d/, '-', /\d/,/\d/ ]
     this.maskCnpj = [ /\d/,/\d/,'.',/\d/,/\d/,/\d/,'.',/\d/,/\d/,/\d/,'/', /\d/,/\d/,/\d/,/\d/,'-',/\d/,/\d/, ]
 
-    this.restangular.one("empresa").get().subscribe((response) => {
-      this.id = this.route.snapshot.params['id']
-      const empresa = response.data
-      console.log(empresa)
-      let empresaCorrespondente = empresa.filter(x =>x.empresaId == this.id )
-      this.updateForm(empresaCorrespondente)
-      console.log(empresaCorrespondente)
-     })
+    this.id = this.route.snapshot.params['id']
+    this.restangular.one("empresa", this.id).get().subscribe((response) => {
+      this.updateForm(response.data)
+    })
+
+    this.restangular.one("GrupoEconomico").get().subscribe((response) => {
+      this.gruposEconomico = response.data
+    })
+
     this.formulario = this.formBuilder.group({
       ativo:[null, Validators.required],
       cnpj:[null, Validators.required],
-      codigoTributarioMunicipio:[null, Validators.required],
-      dataCadastro:[moment().format()],
+      codigoTributarioMunicipio:[null],
       empresaId:[0],
       endereco: this.formBuilder.group({
         enderecoId: [0],
         cep: [null, [Validators.required]],
         numero: [null, Validators.required],
-        complemento: [null, Validators.required],
+        complemento: [null],
         bairro: [null, Validators.required],
         cidade: [null, Validators.required],
         estado: [null, Validators.required],
         logradouro:[null, Validators.required]
       }),
-      grupoEconomico:[null, Validators.required],
       grupoEconomicoId:[0],
-      inscricaoEstadual:[null, Validators.required],
-      inscricaoMunicipal:[null, Validators.required],
+      inscricaoEstadual:[null],
+      inscricaoMunicipal:[null],
       nomeFantasia:[null, Validators.required],
       razaoSocial:[null, Validators.required],
       telefone:[null, Validators.required],
@@ -86,7 +86,7 @@ export class UpdateEmpresaComponent implements OnInit {
     }
     this.restangular.all('empresa').customPUT(this.formulario.value,  this.id ).subscribe(a => {
       this.notifierService.notify('success', 'Empresa alterada com sucesso');
-      // this.router.navigateByUrl('/empresa');
+      this.router.navigate(['/empresa']);
     },
     error => {
       this.notifierService.notify('error', 'Erro ao atualizar a empresa!');
@@ -99,28 +99,26 @@ export class UpdateEmpresaComponent implements OnInit {
   }
   updateForm(dados){
     this.formulario.patchValue({
-      ativo:dados[0].ativo,
-      cnpj:dados[0].cnpj,
-      codigoTributarioMunicipio:dados[0].codigoTributarioMunicipio,
-      dataCadastro:dados[0].dataCadastro,
-      empresaId:dados[0].empresaId,
+      ativo:dados.ativo,
+      cnpj:dados.cnpj,
+      codigoTributarioMunicipio:dados.codigoTributarioMunicipio,
+      empresaId:dados.empresaId,
       endereco: {
-        enderecoId: dados[0].endereco ? dados[0].endereco.enderecoId : 0,
-        cep: dados[0].endereco ? dados[0].endereco.cep : '',
-        numero: dados[0].endereco ? dados[0].endereco.numero : '',
-        complemento: dados[0].endereco ? dados[0].endereco.complemento : '',
-        bairro: dados[0].endereco ? dados[0].endereco.bairro : '',
-        cidade: dados[0].endereco ? dados[0].endereco.cidade : '',
-        estado: dados[0].endereco ? dados[0].endereco.estado : '',
-        logradouro: dados[0].endereco ? dados[0].endereco.logradouro : ''
+        enderecoId: dados.endereco ? dados.endereco.enderecoId : 0,
+        cep: dados.endereco ? dados.endereco.cep : '',
+        numero: dados.endereco ? dados.endereco.numero : '',
+        complemento: dados.endereco ? dados.endereco.complemento : '',
+        bairro: dados.endereco ? dados.endereco.bairro : '',
+        cidade: dados.endereco ? dados.endereco.cidade : '',
+        estado: dados.endereco ? dados.endereco.estado : '',
+        logradouro: dados.endereco ? dados.endereco.logradouro : ''
       },
-      grupoEconomico:dados[0].grupoEconomico,
-      grupoEconomicoId:dados[0].grupoEconomicoId,
-      inscricaoEstadual:dados[0].inscricaoEstadual,
-      inscricaoMunicipal:dados[0].inscricaoMunicipal,
-      nomeFantasia:dados[0].nomeFantasia,
-      razaoSocial:dados[0].razaoSocial,
-      telefone:dados[0].telefone,
+      grupoEconomicoId:dados.grupoEconomicoId,
+      inscricaoEstadual:dados.inscricaoEstadual,
+      inscricaoMunicipal:dados.inscricaoMunicipal,
+      nomeFantasia:dados.nomeFantasia,
+      razaoSocial:dados.razaoSocial,
+      telefone:dados.telefone,
     })
   }
 

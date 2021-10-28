@@ -19,24 +19,19 @@ export class UpdateLocalComponent implements OnInit {
   public maskCep: Array<string | RegExp>
   public maskCpf: Array<string | RegExp>
   public maskCnpj: Array<string | RegExp>
-  
-  constructor( 
+
+  constructor(
     private formBuilder: FormBuilder,
     private restangular: Restangular,
     private notifierService: NotifierService,
     private router: Router,
     private cepService: ConsultaCepService,
     private route: ActivatedRoute,
-  ) { 
+  ) {
     this.id = this.route.snapshot.params['id']
-    this.restangular.one("local").get().subscribe((response) => {
-      const locais = response.data
-      const localCorrespondente = locais.filter(x =>x.localLoteId == this.id )
-      console.log(localCorrespondente)
-      this.updateForm(localCorrespondente)
-     })
-    
-
+    this.restangular.one("local", this.id).get().subscribe((response) => {
+      this.updateForm(response.data)
+    })
 
     this.restangular.one("empresa").get().subscribe((response) => {
       this.empresa = response.data
@@ -48,16 +43,15 @@ export class UpdateLocalComponent implements OnInit {
     this.maskCnpj = [ /\d/,/\d/,'.',/\d/,/\d/,/\d/,'.',/\d/,/\d/,/\d/,'/', /\d/,/\d/,/\d/,/\d/,'-',/\d/,/\d/, ]
 
     this.formulario = this.formBuilder.group({
-      localLoteId: [],
+      localLoteId: [0],
       descricao:[null, Validators.required],
-      empresa:[],
       telefone:[null, Validators.required],
       empresaId:[null, Validators.required],
       endereco: this.formBuilder.group({
         enderecoId: [0],
         cep: [null, [Validators.required]],
         numero: [null, Validators.required],
-        complemento: [null, Validators.required],
+        complemento: [null],
         bairro: [null, Validators.required],
         cidade: [null, Validators.required],
         estado: [null, Validators.required],
@@ -93,17 +87,16 @@ export class UpdateLocalComponent implements OnInit {
   }
   updateForm(dados){
     this.formulario.patchValue({
-      descricao:dados[0].descricao,
-      empresa:dados[0].empresa,
-      telefone:dados[0].telefone,
-      empresaId:dados[0].empresaId,
-      endereco: dados[0].endereco,
-      enderecoId:dados[0].enderecoId,
-      localLoteId:dados[0].localLoteId
+      descricao:dados.descricao,
+      empresa:dados.empresa,
+      telefone:dados.telefone,
+      empresaId:dados.empresaId,
+      endereco: dados.endereco,
+      enderecoId:dados.enderecoId,
+      localLoteId:dados.localLoteId
     })
-    console.log(this.formulario.value)
   }
-  
+
   consultaCEP() {
     const cep = this.formulario.get('endereco.cep').value;
 
