@@ -29,10 +29,7 @@ export class HistoricoLancesComponent implements OnInit {
     this.leilaoNome = nome
     this.restangular.one("lote", '').get({ leilaoId: id, PageSize:100 }).subscribe(
       (lotes) => {
-<<<<<<< HEAD
-=======
         this.loading = false;
->>>>>>> baa6abc05b7d8c422b6c211e7743080a24fe5b87
         this.lotes = lotes.data
       }
 
@@ -42,16 +39,10 @@ export class HistoricoLancesComponent implements OnInit {
     this.idLote = id
     this.restangular.one(`lote/${id}/lances`).get().subscribe((response) => {
       this.lances = response.data
-<<<<<<< HEAD
       this.loading = false;
     },
     () => this.loading = false)
   
   
-=======
-    })
-
-
->>>>>>> baa6abc05b7d8c422b6c211e7743080a24fe5b87
   }
 }

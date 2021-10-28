@@ -1,0 +1,30 @@
+<form [formGroup]="formulario" (ngSubmit)="onSubmit()" appFocus>
+  <div class="animated fadeIn">
+    <div class="row">
+      <div class="col-lg-12">
+        <div class="card">
+          <div class="card-header d-flex align-items-center">
+            <i class="fa fa-tags" aria-hidden="true"></i>
+            &nbsp;Informações da Categoria - Obrigatorios*
+          </div>
+
+          <div class="card-block">
+            <div class="row ">
+              <div class="form-group col-4" >
+                <label for="descricao">Descrição</label>
+                <input type="text" class="form-control" [ngClass]="aplicaCssErro('descricao')" id="descricao" placeholder="Descrição" name="Descrição" formControlName="descricao" triggers="keypress:focusout">
+              </div>
+
+          </div>
+          <div class="card-footer ">
+            <button type="submit" class="btn btn-primary saveCancel"><i class="fa fa-save"></i> Salvar</button>
+            <button type="reset" class="btn btn-danger" [routerLink]="['/categorias']"><i class="fa fa-undo"></i>
+              Cancelar</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  </div>
+ 
+</form>

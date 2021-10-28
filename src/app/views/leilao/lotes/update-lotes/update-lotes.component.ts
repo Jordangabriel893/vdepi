@@ -158,10 +158,6 @@ export class UpdateLotesComponent implements OnInit {
   }
 
   onSubmit() {
-<<<<<<< HEAD
-    // console.log(this.formulario.value);
-=======
->>>>>>> baa6abc05b7d8c422b6c211e7743080a24fe5b87
     if (this.formulario.value.judicial == false) {
       this.removeControls()
       console.log(this.formulario.value)

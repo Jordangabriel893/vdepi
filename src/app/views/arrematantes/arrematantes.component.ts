@@ -11,10 +11,6 @@ export class ArrematantesComponent implements OnInit {
   nomeLeilao:any = 'Leilões'
   arrematantes
   loading = true;
-<<<<<<< HEAD
-=======
-
->>>>>>> baa6abc05b7d8c422b6c211e7743080a24fe5b87
   constructor(
     private restangular: Restangular,
 
@@ -32,10 +28,7 @@ export class ArrematantesComponent implements OnInit {
   setLeilao(id, nome){
     this.nomeLeilao = nome
     this.restangular.one(`leilao/${id}/arrematantes`).get().subscribe((response) => {
-<<<<<<< HEAD
-=======
       this.loading = false;
->>>>>>> baa6abc05b7d8c422b6c211e7743080a24fe5b87
       this.arrematantes = response.data
       this.loading = false;
     },

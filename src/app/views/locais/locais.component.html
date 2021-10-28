@@ -14,6 +14,8 @@
         </div>
 
         <div class="card-block" >
+          <button type="button" class="btn btn-success" [routerLink]="['/create-local']"><i class="fa fa-plus-circle"></i>&nbsp; Novo Local</button>
+
           <div class="table-responsive mt-4">
             <table class="table table-striped" [mfData]="locais" #mfLocais="mfDataTable" [mfRowsOnPage]="5">
               <thead>
@@ -36,7 +38,9 @@
                   <th>
                     <mfDefaultSorter by="endereco.estado">Estado</mfDefaultSorter>
                   </th>
-                  
+                  <th class="text-center" >
+                    Editar
+                  </th>
                 </tr>
               </thead>
               <tbody>
@@ -48,7 +52,9 @@
                   <td>{{item.endereco.cep }}</td>
                   <td>{{item.endereco.bairro }}</td>
                   <td>{{item.endereco.estado }}</td>
-                 
+                  <td class="text-center" nowrap>
+                    <button type="button" class="btn btn-primary" (click)="edit(item.localLoteId)"><i class="fa fa-edit"></i>&nbsp;Editar</button>
+                  </td>
                 </tr>
                 <tr *ngIf="loading">
                   <td class="text-center text-muted" colspan="9">
