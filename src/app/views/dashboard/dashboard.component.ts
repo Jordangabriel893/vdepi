@@ -138,11 +138,11 @@ export class DashboardComponent implements OnInit {
     })
     this.restangular.one("dashboard/top10lotes").get({ LeilaoId: this.id }).subscribe((response) => {
       console.log(response.data)
-      const top10lotes = response.data
+      const top10lotes = response.data.reverse();
 
       const lances = top10lotes.map(x => x.lances)
       const numeroLote = top10lotes.map(x => x.numeroLote)
-      this.barChartData = [{ data: lances.reverse(), label: 'Lances'}]
+      this.barChartData = [{ data: lances, label: 'Lances'}]
       this.barChartLabels = numeroLote
 
     })

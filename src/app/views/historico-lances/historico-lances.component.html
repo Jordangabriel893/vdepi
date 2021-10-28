@@ -20,7 +20,7 @@
         </div>
         <div class="dropdown-menu dropdown-menu-right scrollable-dropdown " *dropdownMenu aria-labelledby="simple-dropdown">
           <div class="dropdown-header text-center"><strong>Lote</strong></div>
-          <div class="dropdown-item" *ngFor="let item of lotes; let i = index" (click)="setLotes(item.loteId)" style="cursor:pointer">{{item.loteId}}</div>
+          <div class="dropdown-item" *ngFor="let item of lotes; let i = index" (click)="setLotes(item.loteId, item.numeroLote)" style="cursor:pointer">{{item.numeroLote}}</div>
         </div>
       </div>
     </div>
@@ -36,9 +36,9 @@
             <i class="fa fa-history" aria-hidden="true"></i>
             Histórico de Lances
           </div>
-          
+
           <button type="button" class="btn btn-success"><i class="fa fa-file-excel" aria-hidden="true"></i><h6>Excel</h6></button>
-          
+
         </div>
 
         <div class="card-block" >
@@ -64,7 +64,7 @@
                   <th>
                     <mfDefaultSorter by="total">Total</mfDefaultSorter>
                   </th>
-                  
+
                 </tr>
               </thead>
               <tbody>
@@ -92,7 +92,7 @@
               </tfoot>
             </table>
           </div>
-         
+
         </div>
       </div>
     </div>
