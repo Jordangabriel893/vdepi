@@ -137,14 +137,8 @@ export class DashboardComponent implements OnInit {
 
     })
     this.restangular.one("dashboard/top10lotes").get({ LeilaoId: this.id }).subscribe((response) => {
-<<<<<<< HEAD
-      console.log(response.data)
-      const top10lotes = response.data.reverse();
-=======
-      // console.log(response.data)
-      const top10lotes = response.data
->>>>>>> 7df1edc032e1e0fe888066bc19276d5c9f14fa9a
 
+      const top10lotes = response.data.reverse();
       const lances = top10lotes.map(x => x.lances)
       const numeroLote = top10lotes.map(x => x.numeroLote)
       this.barChartData = [{ data: lances, label: 'Lances'}]
@@ -273,7 +267,7 @@ export class DashboardComponent implements OnInit {
 
       });
     });
- 
+
 
   }
 
