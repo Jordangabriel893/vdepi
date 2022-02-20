@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { NotifierService } from 'angular-notifier';
 import { Restangular } from 'ngx-restangular';
 
 @Component({
@@ -21,6 +22,7 @@ export class LotesComponent implements OnInit {
     private restangular: Restangular,
     private route: ActivatedRoute,
     private router: Router,
+    private notifierService: NotifierService
   ) {
     this.id = this.route.snapshot.params['id']
     this.restangular.one("lote", '').get({ leilaoId: this.id, PageSize:100 }).subscribe(
@@ -58,10 +60,20 @@ export class LotesComponent implements OnInit {
     this.descricaoTitle=listaFiltradaPorID[0].descricao
   }
   setDescricao(item){
-    this.idLote = '' 
+    this.idLote = ''
     this.descricaoTitle=item
     const listaFiltradaPorID = this.filtroLotes.filter(x => x.descricao == item )
     console.log(listaFiltradaPorID)
     this.lotes = listaFiltradaPorID
+  }
+
+  deleteLote(loteId: number) {
+    this.restangular.one('lote', loteId).remove()
+    .subscribe((resp) => {
+      this.notifierService.notify('success', 'Lote excluido!');
+    },
+    () => {
+      this.notifierService.notify('error', 'Erro ao exclir o Lote!');
+    });
   }
 }

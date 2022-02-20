@@ -62,7 +62,7 @@ export class CreateLotesComponent implements OnInit {
     translate: 'yes',
     enableToolbar: true,
     showToolbar: true,
-    placeholder: 'Enter text here...',
+    placeholder: 'Descrição detalhada...',
     defaultParagraphSeparator: '',
     defaultFontName: '',
     defaultFontSize: '',
