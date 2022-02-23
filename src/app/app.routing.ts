@@ -15,6 +15,7 @@ import {
   CreateLeilaoComponent,
   UpdateLeilaoComponent,
   MapaLanceComponent,
+
 } from './views';
 
 import { SourceGuard } from './_guards/source.guard';
@@ -46,6 +47,8 @@ import { CreateCategoriasComponent } from './views/categorias/create-categorias/
 import { StatusLeilaoComponent } from './views/status-leilao/status-leilao.component';
 import { StatusLoteComponent } from './views/status-lote/status-lote.component';
 import { HistoricoLancesComponent } from './views/historico-lances/historico-lances.component';
+import { LancesConsolidadoComponent} from './views/lances-consolidado/lances-consolidado.component';
+
 
 export const routes: Routes = [
   { path: '', redirectTo: '/home', pathMatch: 'full' },
@@ -188,6 +191,16 @@ export const routes: Routes = [
         component: HistoricoLancesComponent,
         data: {
           title: 'Histórico de Lances',
+          source: 'RelatorioEstoque'
+        },
+        canActivate: [SourceGuard]
+      },
+      ,
+      {
+        path: 'lancesconsolidado',
+        component: LancesConsolidadoComponent,
+        data: {
+          title: 'Lances Consolidados',
           source: 'RelatorioEstoque'
         },
         canActivate: [SourceGuard]

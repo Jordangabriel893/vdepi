@@ -1,0 +1,119 @@
+<div class="dashboard-bar">
+  <div class="row justify-content-end">
+    <div class="col-md-auto text-right">
+      <div class="dropdown" dropdown title="Leilões">
+        <div class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false" dropdownToggle>
+          <i class="fa fa-gavel"></i>
+          <span class="d-md-down-none">{{leilaoNome}}</span>
+        </div>
+        <div class="dropdown-menu dropdown-menu-right scrollable-dropdown" *dropdownMenu aria-labelledby="simple-dropdown">
+          <div class="dropdown-header text-center"><strong>Leilão</strong></div>
+          <div class="dropdown-item" *ngFor="let item of leiloes; let i = index" (click)="setLeilao(item.id, item.nome)" style="cursor:pointer">{{item.nome}}</div>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-auto text-right pr-5">
+      <div class="dropdown" dropdown title="Lotes">
+        <div class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false" dropdownToggle>
+          <i class="fa fa-list"></i>
+          <span class="d-md-down-none">Lote:{{idLote}}</span>
+        </div>
+        <div class="dropdown-menu dropdown-menu-right scrollable-dropdown " *dropdownMenu aria-labelledby="simple-dropdown">
+          <div class="dropdown-header text-center"><strong>Lote</strong></div>
+          <div class="dropdown-item" *ngFor="let item of lotes; let i = index" (click)="setLotes(item.loteId, item.numeroLote)" style="cursor:pointer">{{item.numeroLote}}</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="animated fadeIn">
+
+  <div class="row">
+    <div class="col-lg-12">
+      <div class="card">
+        <div class="card-header header">
+          <div>
+            <i class="fa fa-history" aria-hidden="true"></i>
+            Histórico de Lances
+          </div>
+
+          <button type="button" class="btn btn-success"><i class="fa fa-file-excel" aria-hidden="true"></i><h6>Excel</h6></button>
+
+        </div>
+
+        <div class="card-block" >
+          <div class="table-responsive mt-4">
+            <table class="table table-striped" [mfData]="lances" #mfLances="mfDataTable" [mfRowsOnPage]="5">
+              <thead>
+                <tr>
+                  <th>
+                    <mfDefaultSorter by="numeroLote">NumeroLote</mfDefaultSorter>
+                  </th>
+                  <th>
+                    <mfDefaultSorter by="descrição">Descrição</mfDefaultSorter>
+                  </th>
+                  <th>
+                    <mfDefaultSorter by="categoria">Categoria</mfDefaultSorter>
+                  </th>
+                  <th>
+                    <mfDefaultSorter by="qteLances">QteLances</mfDefaultSorter>
+                  </th>
+                  <th>
+                    <mfDefaultSorter by="qteUsuarios">QteUsuários</mfDefaultSorter>
+                  </th>
+                  <th>
+                    <mfDefaultSorter by="valorAvaliacao">ValorAvaliação</mfDefaultSorter>
+                  </th>
+                  <th>
+                    <mfDefaultSorter by="valorTaxaAdministrativa">Taxa Adm</mfDefaultSorter>
+                  </th>
+                  <th>
+                    <mfDefaultSorter by="comissao">Comissão</mfDefaultSorter>
+                  </th>
+                  <th>
+                    <mfDefaultSorter by="valorMinimoVenda">Mínimo Venda</mfDefaultSorter>
+                  </th>
+                  <th>
+                    <mfDefaultSorter by="lanceAtual">Lance Atual</mfDefaultSorter>
+                  </th>
+                  <th>
+                    <mfDefaultSorter by="meta">Meta</mfDefaultSorter>
+                  </th>
+
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let item of mfLances.data; let i = index">
+                  <td>{{item.numeroLote}}</td>
+                  <td>{{item.descricao}}</td>
+                  <td>{{item.categoria}}</td>
+                  <td>{{item.qteLances}}</td>
+                  <td>{{item.qteUsuarios}}</td>
+                  <td>{{item.valorAvaliacao | currency:'BRL':true:'1.2-2' }}</td>
+                  <td>{{item.valorTaxaAdministrativa | currency:'BRL':true:'1.2-2'}}</td>
+                  <td>{{item.comissao | currency:'BRL':true:'1.2-2'}}</td>
+                  <td>{{item.valorMinimoVenda | currency:'BRL':true:'1.2-2'}}</td>
+                  <td>{{item.lanceAtual | currency:'BRL':true:'1.2-2'}}</td>
+                  <td>{{item.meta | currency:'BRL':true:'1.2-2'}}</td>
+                </tr>
+                <tr *ngIf="loading">
+                  <td class="text-center text-muted" colspan="9">
+                    <h5><i class="fa fa-spin fa-spinner"></i>&nbsp;Carregando...</h5>
+                  </td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <td colspan="10">
+                    <mfBootstrapPaginator [rowsOnPageSet]="[5,10,25]"></mfBootstrapPaginator>
+                  </td>
+                </tr>
+              </tfoot>
+            </table>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

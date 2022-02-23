@@ -44,6 +44,12 @@ export const navigation = [
     source: 'Resultado'
   },
   {
+    name: 'Lances Consolidados',
+    url: '/lancesconsolidado',
+    icon: 'fa fa-history',
+    source: 'Resultado'
+  },
+  {
     name: 'Arrematantes',
     url: '/arrematantes',
     icon: 'fa fa-dollar-sign',
