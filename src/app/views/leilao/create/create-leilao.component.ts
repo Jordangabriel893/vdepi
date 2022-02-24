@@ -7,6 +7,7 @@ import { Restangular } from 'ngx-restangular';
 import { NotifierService } from 'angular-notifier';
 import {  Router } from '@angular/router';
 import { BsLocaleService } from 'ngx-bootstrap/datepicker';
+import { AngularEditorConfig } from '@kolkov/angular-editor';
 @Component({
   selector: 'app-create-leilao',
   templateUrl: './create-leilao.component.html',
@@ -32,6 +33,43 @@ export class CreateLeilaoComponent implements OnInit {
   empresas:any
   status:any
   minDate: Date;
+  editorConfig: AngularEditorConfig = {
+    editable: true,
+    spellcheck: true,
+    height: 'auto',
+    minHeight: '0',
+    maxHeight: 'auto',
+    width: 'auto',
+    minWidth: '0',
+    translate: 'yes',
+    enableToolbar: true,
+    showToolbar: true,
+    placeholder: 'Temos e Condição de Venda...',
+    defaultParagraphSeparator: '',
+    defaultFontName: '',
+    defaultFontSize: '',
+    fonts: [
+      { class: 'arial', name: 'Arial' },
+      { class: 'times-new-roman', name: 'Times New Roman' },
+      { class: 'calibri', name: 'Calibri' },
+      { class: 'comic-sans-ms', name: 'Comic Sans MS' }
+    ],
+    customClasses: [
+      {
+        name: 'quote',
+        class: 'quote',
+      },
+      {
+        name: 'redText',
+        class: 'redText'
+      },
+      {
+        name: 'titleText',
+        class: 'titleText',
+        tag: 'h1',
+      },
+    ],
+  };
 
   constructor(
     private formBuilder: FormBuilder,
@@ -99,6 +137,8 @@ export class CreateLeilaoComponent implements OnInit {
       leiloeiroId: [null, Validators.required],
       empresaId: [null, Validators.required],
       statusId: [null, Validators.required],
+      comissao: ["5", Validators.required],
+      termoCondicaoVenda: [null],
     })
   }
 

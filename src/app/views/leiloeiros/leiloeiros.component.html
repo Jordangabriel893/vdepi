@@ -32,9 +32,9 @@
                   <th>
                     <mfDefaultSorter by="telefone">Telefone</mfDefaultSorter>
                   </th>
-                  <th>
+                  <!-- <th>
                     <mfDefaultSorter by="comissao">Comissão</mfDefaultSorter>
-                  </th>
+                  </th> -->
                   <th>
                     <mfDefaultSorter by="dataCadastro">Data Cadastro</mfDefaultSorter>
                   </th>
@@ -52,7 +52,7 @@
                   <td>{{item.nome}}</td>
                   <td>{{item.cpfCnpj}}</td>
                   <td>{{item.telefone }}</td>
-                  <td>{{item.comissao | currency:'BRL':true:'1.2-2' }}</td>
+                  <!-- <td>{{item.comissao | currency:'BRL':true:'1.2-2' }}</td> -->
                   <td>{{item.dataCadastro | date: 'dd/MM/yyyy' }}</td>
                   <td>{{item.ativo == true ? 'Sim' : 'Não' }}</td>
                   <td class="text-center" nowrap>

@@ -48,7 +48,7 @@
                 <label for="dataAberturaLance">Data Abertura de Lances </label>
                 <input type="text" class="form-control" [ngClass]="aplicaCssErro('dataAberturaLance')" id="dataAberturaLance" placeholder="DD/MM/AAAA hh:mm"
                 formControlName="dataAberturaLance"
-                [bsConfig]="{ dateInputFormat: 'DD/MM/YYYY hh:mm' }"
+                [bsConfig]="{ dateInputFormat: 'DD/MM/YYYY HH:mm' }"
                 bsDatepicker
                 (bsValueChange)="onValueChange($event, 'dataAberturaLance')">
 
@@ -72,12 +72,17 @@
 
               </div>
               <div class="form-group col-4">
-                <label for="leiloeiroId">Leiloeiro </label>
+                <label for="leiloeiroId">Leiloeiro</label>
                 <select class="form-control" [ngClass]="aplicaCssErro('leiloeiroId')" formControlName="leiloeiroId" >
-                  <option *ngFor="let item of leiloeiros" value="{{item.leiloeiroId}}">{{item.pessoa.nomeCompleto}}
+                  <option *ngFor="let item of leiloeiros" value="{{item.leiloeiroId}}">{{item.nome}}
                   </option>
                 </select>
 
+              </div>
+              <div class="form-group col-4">
+                <label for="comissao">Comissão Leiloeiro</label>
+                <input type="percent" class="form-control" [ngClass]="aplicaCssErro('comissao')" id="comissao" formControlName="comissao"
+                currencyMask [options]="{ prefix: '', suffix: '%', thousands: '.', decimal: ',' }">
               </div>
             </div>
             <div class="row">
@@ -185,6 +190,7 @@
       </div>
     </div>
   </div>
+
   <div class="animated fadeIn">
     <div class="row">
       <div class="col-lg-12">
@@ -210,6 +216,33 @@
                 <label for="numeroDiarioOficial">Número Diario Oficial</label>
                 <input type="number" class="form-control" id="numeroDiarioOficial"
                   formControlName="numeroDiarioOficial">
+              </div>
+            </div>
+          </div>
+          <!-- <div class="card-footer">
+            <button type="submit" class="btn btn-primary saveCancel"><i class="fa fa-save"></i> Salvar</button>
+            <button type="reset" class="btn btn-danger" [routerLink]="['/leilao']"><i class="fa fa-undo"></i>
+              Cancelar</button>
+          </div> -->
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="animated fadeIn">
+    <div class="row">
+      <div class="col-lg-12">
+        <div class="card">
+          <div class="card-header d-flex align-items-center">
+            <i class="fa fa-file"></i>
+            &nbsp;Temos e Condições de Venda
+          </div>
+          <div class="card-block">
+            <div class="row" [ngClass]="aplicaCssErro('termoCondicaoVenda')">
+              <div class="col-12">
+                <!-- <label for="editor1" >Temos e Condições de Venda </label> -->
+                <angular-editor id="editor1" formControlName="termoCondicaoVenda" [config]="editorConfig">
+                </angular-editor>
               </div>
             </div>
           </div>
