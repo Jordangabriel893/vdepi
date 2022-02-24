@@ -39,7 +39,7 @@ import {
   LeilaoComponent,
   CreateLeilaoComponent,
   UpdateLeilaoComponent,
-  MapaLanceComponent
+  MapaLanceComponent,
 
 } from './views';
 
@@ -161,6 +161,7 @@ import { HabilitacaoComponent } from './views/habilitacao/habilitacao.component'
 import { CreateLotesComponent } from './views/leilao/lotes/create-lotes/create-lotes.component';
 import { DashboardComponent } from './views/dashboard/dashboard.component';
 import { ArrematantesComponent } from './views/arrematantes/arrematantes.component';
+import { LancesConsolidadoComponent } from './views/lances-consolidado/lances-consolidado.component';
 import { HistoricoLancesComponent } from './views/historico-lances/historico-lances.component';
 import { EmpresasComponent } from './views/empresas/empresas.component';
 import { ComitentesComponent } from './views/comitentes/comitentes.component';
@@ -274,6 +275,7 @@ export function RestangularConfigFactory(RestangularProvider, NotifierService: N
     CreateLotesComponent,
     DashboardComponent,
     ArrematantesComponent,
+    LancesConsolidadoComponent,
     HistoricoLancesComponent,
     EmpresasComponent,
     ComitentesComponent,
@@ -293,6 +295,7 @@ export function RestangularConfigFactory(RestangularProvider, NotifierService: N
     CreateEmpresaComponent,
     CreateComitenteComponent,
     UpdateComitenteComponent,
+    
 
   ],
   providers: [{

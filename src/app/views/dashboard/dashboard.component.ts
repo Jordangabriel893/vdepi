@@ -25,22 +25,22 @@ export class DashboardComponent implements OnInit {
   contadorParticipantes
   contadorLances
   //lotes
-  arrematados
+  comLances
   removidos
   semLances
   totalLotes
 
   //previsto x arrematado
-  previsto
-  arrematado
-
+  minimoVendasPrevisto
+  lancesOfertados
+  
   //financeiro
   listaArrematados
   listaPago
   listaPendentes
   listaExpirados
   // Doughnut
-  public doughnutChartLabels: Label[] = ['Arrematados', 'Removidos', 'Sem Lance'];
+  public doughnutChartLabels: Label[] = ['Com Lances', 'Removidos', 'Sem Lances'];
   public doughnutChartData: MultiDataSet = [
     [300, 450, 100],
 
@@ -70,6 +70,7 @@ export class DashboardComponent implements OnInit {
     { data: [28, 48, 40, 19, 86, 27, 90], label: 'Series B' }
   ];
   public barChartColor = [{ backgroundColor: ['	#87CEFA','#4876FF','#436EEE','#3A5FCD',' #27408B', '#0000FF', '	#0000EE', '#0000CD', '#00008B', '#191970'] }]
+  
   //Barras Financeiro
   public barChartOptionsFinanceiro: ChartOptions = {
     responsive: true,
@@ -129,11 +130,11 @@ export class DashboardComponent implements OnInit {
     })
     this.restangular.one("dashboard/contadores-lotes").get({ LeilaoId: this.id }).subscribe((response) => {
       // console.log(response.data)
-      this.arrematados = response.data.arrematados
+      this.comLances = response.data.comLances
       this.removidos = response.data.removidos
       this.semLances = response.data.semLances
       this.totalLotes = response.data.total
-      this.doughnutChartData = [[this.arrematados, this.removidos, this.semLances]]
+      this.doughnutChartData = [[this.comLances, this.removidos, this.semLances]]
 
     })
     this.restangular.one("dashboard/top10lotes").get({ LeilaoId: this.id }).subscribe((response) => {
@@ -158,16 +159,16 @@ export class DashboardComponent implements OnInit {
     this.restangular.one("dashboard/previsto-arrematado").get({ LeilaoId: this.id }).subscribe((response) => {
       // console.log(response.data)
 //       //previsto x arrematado
-          this.previsto = response.data.previsto
-          this.arrematados = response.data.arrematado
-          console.log(this.previsto, this.arrematados)
+          this.minimoVendasPrevisto = response.data.minimoVendasPrevisto
+          this.lancesOfertados = response.data.lancesOfertados
+          console.log(this.minimoVendasPrevisto, this.lancesOfertados)
           const data =  {
-            labels: ["Previsto", "Arrematado"],
+            labels: ["Mínimo de Vendas Previsto", "Total de Lances ofertados"],
             datasets: [
               {
                 label: "R$",
                 backgroundColor: ["rgb(38, 1, 250)", " rgb(10, 250, 1)"],
-                data: [this.previsto, this.arrematados, 0]
+                data: [this.minimoVendasPrevisto, this.lancesOfertados, 0]
               }
             ]
           }
@@ -213,16 +214,16 @@ export class DashboardComponent implements OnInit {
           });
     },
     error => {
-      this.previsto = 0
-      this.arrematados = 0
-      console.log(this.previsto, this.arrematados)
+      this.minimoVendasPrevisto = 0
+      this.lancesOfertados = 0
+      console.log(this.minimoVendasPrevisto, this.lancesOfertados)
       const data =  {
-        labels: ["Previsto", "Arrematado"],
+        labels: ["Mínimo de Vendas Previsto", "Total de Lances ofertados"],
         datasets: [
           {
             label: "R$",
             backgroundColor: ["rgb(38, 1, 250)", " rgb(10, 250, 1)"],
-            data: [this.previsto, this.arrematados, 0]
+            data: [this.minimoVendasPrevisto, this.lancesOfertados, 0]
           }
         ]
       }
