@@ -195,15 +195,6 @@ export const routes: Routes = [
         },
         canActivate: [SourceGuard]
       },
-      // {
-      //   path: 'lancesconsolidado',
-      //   component: LancesConsolidadoComponent,
-      //   data: {
-      //     title: 'Lances Consolidados',
-      //     source: 'RelatorioEstoque'
-      //   },
-      //   canActivate: [SourceGuard]
-      // },
       {
         path: 'arrematantes',
         component: ArrematantesComponent,
@@ -222,7 +213,7 @@ export const routes: Routes = [
         },
         canActivate: [SourceGuard]
       },
-      
+
       {
         path: 'empresa',
         component: EmpresasComponent,

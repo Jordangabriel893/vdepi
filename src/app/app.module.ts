@@ -183,6 +183,7 @@ import { CreateComitenteComponent } from './views/comitentes/create-comitente/cr
 import { UpdateComitenteComponent } from './views/comitentes/update-comitente/update-comitente.component';
 
 
+
 export function RestangularConfigFactory(RestangularProvider, NotifierService: NotifierService, Router) {
   RestangularProvider.setBaseUrl(environment.apiDados);
 
@@ -295,7 +296,7 @@ export function RestangularConfigFactory(RestangularProvider, NotifierService: N
     CreateEmpresaComponent,
     CreateComitenteComponent,
     UpdateComitenteComponent,
-    
+    LancesConsolidadoComponent,
 
   ],
   providers: [{

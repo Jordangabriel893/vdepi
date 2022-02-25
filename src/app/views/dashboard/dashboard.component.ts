@@ -163,7 +163,7 @@ export class DashboardComponent implements OnInit {
           this.lancesOfertados = response.data.lancesOfertados
           console.log(this.minimoVendasPrevisto, this.lancesOfertados)
           const data =  {
-            labels: ["MÃ­nimo de Vendas Previsto", "Total de Lances ofertados"],
+            labels: ["Mínimo de Vendas Previsto", "Total de Lances ofertados"],
             datasets: [
               {
                 label: "R$",
@@ -218,7 +218,7 @@ export class DashboardComponent implements OnInit {
       this.lancesOfertados = 0
       console.log(this.minimoVendasPrevisto, this.lancesOfertados)
       const data =  {
-        labels: ["MÃ­nimo de Vendas Previsto", "Total de Lances ofertados"],
+        labels: ["Mínimo de Vendas Previsto", "Total de Lances ofertados"],
         datasets: [
           {
             label: "R$",
