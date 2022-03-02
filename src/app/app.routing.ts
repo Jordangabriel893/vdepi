@@ -15,6 +15,7 @@ import {
   CreateLeilaoComponent,
   UpdateLeilaoComponent,
   MapaLanceComponent,
+
 } from './views';
 
 import { SourceGuard } from './_guards/source.guard';
@@ -27,8 +28,12 @@ import { HabilitacaoComponent } from './views/habilitacao/habilitacao.component'
 import { CreateLotesComponent } from './views/leilao/lotes/create-lotes/create-lotes.component';
 import { DashboardComponent } from './views/dashboard/dashboard.component';
 import { ArrematantesComponent } from './views/arrematantes/arrematantes.component';
+<<<<<<< HEAD
 import { NotaComponent } from './views/arrematantes/nota/nota.component';
 import { AutoComponent } from './views/arrematantes/auto/auto.component';
+=======
+import { LancesConsolidadoComponent } from './views/lances-consolidado/lances-consolidado.component';
+>>>>>>> 48f90e69f35ad5c5e44e9bf128eb9b1186cbf4da
 import { EmpresasComponent } from './views/empresas/empresas.component';
 import { ComitentesComponent } from './views/comitentes/comitentes.component';
 import { LeiloeirosComponent } from './views/leiloeiros/leiloeiros.component';
@@ -48,6 +53,7 @@ import { CreateCategoriasComponent } from './views/categorias/create-categorias/
 import { StatusLeilaoComponent } from './views/status-leilao/status-leilao.component';
 import { StatusLoteComponent } from './views/status-lote/status-lote.component';
 import { HistoricoLancesComponent } from './views/historico-lances/historico-lances.component';
+
 
 export const routes: Routes = [
   { path: '', redirectTo: '/home', pathMatch: 'full' },
@@ -204,6 +210,7 @@ export const routes: Routes = [
         canActivate: [SourceGuard]
       },
       {
+<<<<<<< HEAD
         path: 'auto',
         component: AutoComponent,
         data: {
@@ -217,10 +224,20 @@ export const routes: Routes = [
         component: NotaComponent,
         data: {
           title: 'Nota de arrematação',
+=======
+        path: 'lancesconsolidado',
+        component: LancesConsolidadoComponent,
+        data: {
+          title: 'LancesConsolidado',
+>>>>>>> 48f90e69f35ad5c5e44e9bf128eb9b1186cbf4da
           source: 'RelatorioEstoque'
         },
         canActivate: [SourceGuard]
       },
+<<<<<<< HEAD
+=======
+
+>>>>>>> 48f90e69f35ad5c5e44e9bf128eb9b1186cbf4da
       {
         path: 'empresa',
         component: EmpresasComponent,

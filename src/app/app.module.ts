@@ -39,7 +39,7 @@ import {
   LeilaoComponent,
   CreateLeilaoComponent,
   UpdateLeilaoComponent,
-  MapaLanceComponent
+  MapaLanceComponent,
 
 } from './views';
 
@@ -161,6 +161,7 @@ import { HabilitacaoComponent } from './views/habilitacao/habilitacao.component'
 import { CreateLotesComponent } from './views/leilao/lotes/create-lotes/create-lotes.component';
 import { DashboardComponent } from './views/dashboard/dashboard.component';
 import { ArrematantesComponent } from './views/arrematantes/arrematantes.component';
+import { LancesConsolidadoComponent } from './views/lances-consolidado/lances-consolidado.component';
 import { HistoricoLancesComponent } from './views/historico-lances/historico-lances.component';
 import { EmpresasComponent } from './views/empresas/empresas.component';
 import { ComitentesComponent } from './views/comitentes/comitentes.component';
@@ -182,6 +183,7 @@ import { CreateComitenteComponent } from './views/comitentes/create-comitente/cr
 import { UpdateComitenteComponent } from './views/comitentes/update-comitente/update-comitente.component';
 import { NotaComponent } from './views/arrematantes/nota/nota.component';
 import { AutoComponent } from './views/arrematantes/auto/auto.component';
+
 
 
 export function RestangularConfigFactory(RestangularProvider, NotifierService: NotifierService, Router) {
@@ -276,6 +278,7 @@ export function RestangularConfigFactory(RestangularProvider, NotifierService: N
     CreateLotesComponent,
     DashboardComponent,
     ArrematantesComponent,
+    LancesConsolidadoComponent,
     HistoricoLancesComponent,
     EmpresasComponent,
     ComitentesComponent,
@@ -295,8 +298,12 @@ export function RestangularConfigFactory(RestangularProvider, NotifierService: N
     CreateEmpresaComponent,
     CreateComitenteComponent,
     UpdateComitenteComponent,
+<<<<<<< HEAD
     NotaComponent,
     AutoComponent,
+=======
+    LancesConsolidadoComponent,
+>>>>>>> 48f90e69f35ad5c5e44e9bf128eb9b1186cbf4da
 
   ],
   providers: [{

@@ -200,8 +200,8 @@ export class PdfService {
 
       doc.setFontSize(12)
       doc.setFontStyle('bold');
-      doc.text("Cliente:", 20, 75);
-      doc.text("Deposito:", 20, 90);
+      doc.text("Leilão:", 20, 75);
+      //doc.text("Deposito:", 20, 90);
 
       doc.text("Data de Emissão:", 615, 75);
       if(objExtra.periodo && objExtra.periodo.length === 2) {
@@ -209,8 +209,8 @@ export class PdfService {
       }
 
       doc.setFontStyle('normal');
-      doc.text(`${objExtra.cliente}`, 80, 75);
-      doc.text(`${objExtra.deposito}`, 80, 90);
+      doc.text(`${objExtra.leilao}`, 80, 75);
+      //doc.text(`${objExtra.deposito}`, 80, 90);
       doc.text(`${moment().format("DD/MM/YYYY HH:mm")}`, 720, 75);
 
       if(objExtra.periodo && objExtra.periodo.length === 2) {

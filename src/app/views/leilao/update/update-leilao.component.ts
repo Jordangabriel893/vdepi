@@ -6,6 +6,7 @@ import * as _ from 'lodash';
 import * as moment from 'moment';
 import { Restangular } from 'ngx-restangular';
 import { NotifierService } from 'angular-notifier';
+import { AngularEditorConfig } from '@kolkov/angular-editor';
 
 
 @Component({
@@ -27,6 +28,44 @@ export class UpdateLeilaoComponent implements OnInit {
   empresas:any
   status;
   minDate: Date;
+
+  editorConfig: AngularEditorConfig = {
+    editable: true,
+    spellcheck: true,
+    height: 'auto',
+    minHeight: '0',
+    maxHeight: 'auto',
+    width: 'auto',
+    minWidth: '0',
+    translate: 'yes',
+    enableToolbar: true,
+    showToolbar: true,
+    placeholder: 'Temos e Condição de Venda...',
+    defaultParagraphSeparator: '',
+    defaultFontName: '',
+    defaultFontSize: '',
+    fonts: [
+      { class: 'arial', name: 'Arial' },
+      { class: 'times-new-roman', name: 'Times New Roman' },
+      { class: 'calibri', name: 'Calibri' },
+      { class: 'comic-sans-ms', name: 'Comic Sans MS' }
+    ],
+    customClasses: [
+      {
+        name: 'quote',
+        class: 'quote',
+      },
+      {
+        name: 'redText',
+        class: 'redText'
+      },
+      {
+        name: 'titleText',
+        class: 'titleText',
+        tag: 'h1',
+      },
+    ],
+  };
 
   constructor(
     private route: ActivatedRoute,
@@ -91,7 +130,9 @@ export class UpdateLeilaoComponent implements OnInit {
       leiloeiroId: [null, Validators.required],
       empresaId: [null, Validators.required],
       leilaoId: [null, Validators.required],
-      statusId: [null, Validators.required]
+      statusId: [null, Validators.required],
+      comissao: [0, Validators.required],
+      termoCondicaoVenda: [null]
     })
   }
 
@@ -159,7 +200,9 @@ export class UpdateLeilaoComponent implements OnInit {
       leiloeiroId:dados.leiloeiroId,
       empresaId:dados.empresaId,
       leilaoId:dados.leilaoId,
-      statusId: dados.statusId
+      statusId: dados.statusId,
+      comissao: dados.comissaoLeiloeiro,
+      termoCondicaoVenda: dados.termoCondicaoVenda
     })
   }
 
