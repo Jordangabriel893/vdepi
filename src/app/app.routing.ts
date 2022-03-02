@@ -27,6 +27,8 @@ import { HabilitacaoComponent } from './views/habilitacao/habilitacao.component'
 import { CreateLotesComponent } from './views/leilao/lotes/create-lotes/create-lotes.component';
 import { DashboardComponent } from './views/dashboard/dashboard.component';
 import { ArrematantesComponent } from './views/arrematantes/arrematantes.component';
+import { NotaComponent } from './views/arrematantes/nota/nota.component';
+import { AutoComponent } from './views/arrematantes/auto/auto.component';
 import { EmpresasComponent } from './views/empresas/empresas.component';
 import { ComitentesComponent } from './views/comitentes/comitentes.component';
 import { LeiloeirosComponent } from './views/leiloeiros/leiloeiros.component';
@@ -197,6 +199,24 @@ export const routes: Routes = [
         component: ArrematantesComponent,
         data: {
           title: 'Arrematantes',
+          source: 'RelatorioEstoque'
+        },
+        canActivate: [SourceGuard]
+      },
+      {
+        path: 'auto',
+        component: AutoComponent,
+        data: {
+          title: 'Auto de leilão',
+          source: 'RelatorioEstoque'
+        },
+        canActivate: [SourceGuard]
+      },
+      {
+        path: 'nota',
+        component: NotaComponent,
+        data: {
+          title: 'Nota de arrematação',
           source: 'RelatorioEstoque'
         },
         canActivate: [SourceGuard]
