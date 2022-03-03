@@ -181,8 +181,8 @@ import { UpdateEmpresaComponent } from './views/empresas/update-empresa/update-e
 import { CreateEmpresaComponent } from './views/empresas/create-empresa/create-empresa.component';
 import { CreateComitenteComponent } from './views/comitentes/create-comitente/create-comitente.component';
 import { UpdateComitenteComponent } from './views/comitentes/update-comitente/update-comitente.component';
-import { NotaComponent } from './views/arrematantes/nota/nota.component';
 import { AutoComponent } from './views/arrematantes/auto/auto.component';
+import { NotaComponent } from './views/arrematantes/nota/nota.component';
 
 
 
@@ -298,12 +298,9 @@ export function RestangularConfigFactory(RestangularProvider, NotifierService: N
     CreateEmpresaComponent,
     CreateComitenteComponent,
     UpdateComitenteComponent,
-<<<<<<< HEAD
-    NotaComponent,
     AutoComponent,
-=======
-    LancesConsolidadoComponent,
->>>>>>> 48f90e69f35ad5c5e44e9bf128eb9b1186cbf4da
+    NotaComponent,
+
 
   ],
   providers: [{
