@@ -194,6 +194,8 @@ import { CreateTipomeionotificacaoComponent } from './views/tipo-meio-notificaca
 import { EditTipomeionotificacaoComponent } from './views/tipo-meio-notificacao/edit-tipomeionotificacao/edit-tipomeionotificacao.component';
 import { AgendaComponent } from './views/agenda/agenda.component';
 import { CreateAgendaComponent } from './views/agenda/create-agenda/create-agenda.component';
+import { AutoComponent } from './views/arrematantes/auto/auto.component';
+import { NotaComponent } from './views/arrematantes/nota/nota.component';
 
 
 
@@ -323,6 +325,9 @@ export function RestangularConfigFactory(RestangularProvider, NotifierService: N
     EditTipomeionotificacaoComponent,
     AgendaComponent,
     CreateAgendaComponent,
+    AutoComponent,
+    NotaComponent,
+
 
   ],
   providers: [{
