@@ -1,0 +1,46 @@
+<form [formGroup]="formulario" (ngSubmit)="onSubmit()" appFocus>
+  <div class="animated fadeIn">
+    <div class="row">
+      <div class="col-lg-12">
+        <div class="card">
+          <div class="card-header d-flex align-items-center">
+            <i class="fa fa-file"></i>
+            &nbsp;Tipo de notificação
+          </div>
+          <div class="card-block">
+            <div class="row" >
+              <div class="col-12">
+                <div class="row ">
+                  <div class="form-group col-4" >
+                    <label for="descricao">Descrição</label>
+                    <input type="text" class="form-control" [ngClass]="aplicaCssErro('nome')" id="descricao" placeholder="Descrição" name="descricao" formControlName="descricao"  triggers="keypress:focusout">
+                  </div>
+
+
+                  <div class="form-group col-4">
+                    <label for="empresaId">Empresa  </label>
+                    <select class="form-control" [ngClass]="aplicaCssErro('empresaId')" formControlName="empresaId" name="empresa">
+                      <option *ngFor="let item of empresas" value="{{item.empresaId}}">{{item.nomeFantasia}}</option>
+                    </select>
+                  </div>
+
+                  <div class="form-group col-4">
+                    <label for="statusId">Status </label>
+                    <select class="form-control" [ngClass]="aplicaCssErro('statusId')" formControlName="statusId" id="statusId" name="status">
+                      <option *ngFor="let item of status" value="{{item.leilaoStatusId}}">{{item.descricao}}</option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="card-footer">
+            <button type="submit" class="btn btn-primary saveCancel"><i class="fa fa-save"></i> Salvar</button>
+            <button type="reset" class="btn btn-danger" [routerLink]="['/leilao']"><i class="fa fa-undo"></i>
+              Cancelar</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</form>

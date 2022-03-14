@@ -1,3 +1,12 @@
+import { CreateAgendaComponent } from './views/agenda/create-agenda/create-agenda.component';
+import { AgendaComponent } from './views/agenda/agenda.component';
+import { EditTiponotificacaoComponent } from './views/tipo-de-notificacao/edit-tiponotificacao/edit-tiponotificacao.component';
+import { EditTipomeionotificacaoComponent } from './views/tipo-meio-notificacao/edit-tipomeionotificacao/edit-tipomeionotificacao.component';
+import { CreateTiponotificacaoComponent } from './views/tipo-de-notificacao/create-tiponotificacao/create-tiponotificacao.component';
+import { CreateTipomeionotificacaoComponent } from './views/tipo-meio-notificacao/create-tipomeionotificacao/create-tipomeionotificacao.component';
+import { CreateNotificacaoComponent } from './views/notificacoes/create-notificacao/create-notificacao.component';
+import { NotificacoesComponent } from './views/notificacoes/notificacoes.component';
+import { ListaContatosComponent } from './views/lista-contatos/lista-contatos.component';
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { AnonyGuard, AuthGuard } from './_guards/index';
@@ -48,6 +57,10 @@ import { CreateCategoriasComponent } from './views/categorias/create-categorias/
 import { StatusLeilaoComponent } from './views/status-leilao/status-leilao.component';
 import { StatusLoteComponent } from './views/status-lote/status-lote.component';
 import { HistoricoLancesComponent } from './views/historico-lances/historico-lances.component';
+import { ContatosComponent } from './views/contatos/contatos.component';
+import { TipoMeioNotificacaoComponent } from './views/tipo-meio-notificacao/tipo-meio-notificacao.component';
+import { TipoDeNotificacaoComponent } from './views/tipo-de-notificacao/tipo-de-notificacao.component';
+import { EditNotificacaoComponent } from './views/notificacoes/edit-notificacao/edit-notificacao.component';
 
 
 export const routes: Routes = [
@@ -213,7 +226,123 @@ export const routes: Routes = [
         },
         canActivate: [SourceGuard]
       },
-
+      {
+        path: 'listacontatos',
+        component: ListaContatosComponent,
+        data: {
+          title: 'ListaContatos',
+          source: 'RelatorioEstoque'
+        },
+        canActivate: [SourceGuard]
+      },
+      {
+        path: 'contatos',
+        component: ContatosComponent,
+        data: {
+          title: 'Contatos',
+          source: 'RelatorioEstoque'
+        },
+        canActivate: [SourceGuard]
+      },
+      {
+        path: 'notificacoes',
+        component: NotificacoesComponent,
+        data: {
+          title: 'Notificacoes',
+          source: 'RelatorioEstoque'
+        },
+        canActivate: [SourceGuard]
+      },
+      {
+        path: 'update-notificacoes/:id',
+        component: EditNotificacaoComponent,
+        data: {
+          title: 'Editar Notificação',
+          source: 'RelatorioEstoque'
+        },
+        canActivate: [SourceGuard]
+      },
+      {
+        path: 'create-notificacoes',
+        component: CreateNotificacaoComponent,
+        data: {
+          title: 'Criar Notificação',
+          source: 'RelatorioEstoque'
+        },
+        canActivate: [SourceGuard]
+      },
+      {
+        path: 'tipomeionotificao',
+        component: TipoMeioNotificacaoComponent,
+        data: {
+          title: 'Tipo Meio Notificação',
+          source: 'RelatorioEstoque'
+        },
+        canActivate: [SourceGuard]
+      },
+      {
+        path: 'update-tipomeionotificao/:id',
+        component: EditTipomeionotificacaoComponent,
+        data: {
+          title: 'Editar Tipo Meio Notificação',
+          source: 'RelatorioEstoque'
+        },
+        canActivate: [SourceGuard]
+      },
+      {
+        path: 'create-tipomeionotificao',
+        component: CreateTipomeionotificacaoComponent,
+        data: {
+          title: 'Tipo Meio Notificação',
+          source: 'RelatorioEstoque'
+        },
+        canActivate: [SourceGuard]
+      },
+      {
+        path: 'tiponotificacao',
+        component: TipoDeNotificacaoComponent,
+        data: {
+          title: 'Tipo de Notificação',
+          source: 'RelatorioEstoque'
+        },
+        canActivate: [SourceGuard]
+      },
+      {
+        path: 'create-tiponotificacao',
+        component: CreateTiponotificacaoComponent,
+        data: {
+          title: 'Tipo de Notificação',
+          source: 'RelatorioEstoque'
+        },
+        canActivate: [SourceGuard]
+      },
+      {
+        path: 'update-tiponotificacao/:id',
+        component: EditTiponotificacaoComponent,
+        data: {
+          title: 'Editar Tipo De Notificação',
+          source: 'RelatorioEstoque'
+        },
+        canActivate: [SourceGuard]
+      },
+      {
+        path: 'agenda',
+        component: AgendaComponent,
+        data: {
+          title: 'Agenda',
+          source: 'RelatorioEstoque'
+        },
+        canActivate: [SourceGuard]
+      },
+      {
+        path: 'create-agenda',
+        component: CreateAgendaComponent,
+        data: {
+          title: 'Agenda',
+          source: 'RelatorioEstoque'
+        },
+        canActivate: [SourceGuard]
+      },
       {
         path: 'empresa',
         component: EmpresasComponent,

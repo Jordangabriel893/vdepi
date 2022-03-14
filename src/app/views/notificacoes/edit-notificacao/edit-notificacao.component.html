@@ -1,0 +1,111 @@
+<form [formGroup]="formulario" (ngSubmit)="onSubmit()" appFocus>
+  <div class="animated fadeIn">
+    <div class="row">
+      <div class="col-lg-12">
+        <div class="card">
+          <div class="card-header d-flex align-items-center">
+            <i class="fa fa-file"></i>
+            &nbsp;Notificações
+          </div>
+          <div class="card-block">
+            <div class="row" >
+              <div class="col-12">
+                <div class="row ">
+                  <div class="form-group col-4" >
+                    <label for="tituloNotificacao">Titulo da notificação</label>
+                    <input type="text" class="form-control" [ngClass]="aplicaCssErro('tituloNotificacao')" id="tituloNotificacao" name="tituloNotificacao" formControlName="tituloNotificacao"  triggers="keypress:focusout">
+                  </div>
+
+                  <div class="form-group col-4">
+                    <label for="tipoNotificacaoId">Tipo  notificação </label>
+                    <select class="form-control" [ngClass]="aplicaCssErro('tipoNotificacaoId')" formControlName="tipoNotificacaoId" id="tipoNotificacaoId" name="tipoNotificacaoId">
+                      <option *ngFor="let item of status" value="{{item.leilaoStatusId}}">{{item.descricao}}</option>
+                    </select>
+                  </div>
+                  <div class="form-group col-4">
+                    <label for="tipoMeioNotificacaoId">Tipo meio notificação </label>
+                    <select class="form-control" [ngClass]="aplicaCssErro('tipoMeioNotificacaoId')" formControlName="tipoMeioNotificacaoId" id="tipoMeioNotificacaoId" name="tipoMeioNotificacaoId">
+                      <option *ngFor="let item of status" value="{{item.leilaoStatusId}}">{{item.descricao}}</option>
+                    </select>
+                  </div>
+
+
+                </div>
+              </div>
+            </div>
+            <div class="row" >
+              <div class="col-12">
+                <div class="row ">
+                  <div class="form-group col-4" >
+                    <label for="listaContatoId">Lista de contatos</label>
+                    <select class="form-control" [ngClass]="aplicaCssErro('listaContatoId')"
+                    formControlName="listaContatoId" id="listaContatoId" name="listaContatoId">
+                      <option *ngFor="let item of status" value="{{item.leilaoStatusId}}">{{item.descricao}}</option>
+                    </select>
+                  </div>
+                  <div class="form-group col-4" >
+                    <label for="listagemContatos">Listagem Contatos</label>
+                    <input type="text" class="form-control" [ngClass]="aplicaCssErro('listagemContatos')"
+                    id="listagemContatos" name="listagemContatos" formControlName="listagemContatos"  triggers="keypress:focusout">
+                  </div>
+
+                  <div class="form-group col-4">
+                    <label for="leilaoId">Leilao </label>
+                    <select class="form-control" [ngClass]="aplicaCssErro('leilaoId')"
+                    formControlName="leilaoId" id="leilaoId" name="leilaoId">
+                      <option *ngFor="let item of status" value="{{item.leilaoStatusId}}">{{item.descricao}}</option>
+                    </select>
+                  </div>
+
+
+
+                </div>
+              </div>
+            </div>
+            <div class="row" >
+              <div class="col-12">
+                <div class="row ">
+                  <div class="form-group col-3" >
+                    <label for="usuarioId">Usuário</label>
+                    <input type="text" class="form-control" [ngClass]="aplicaCssErro('usuarioId')"
+                    id="usuarioId" name="usuarioId" formControlName="usuarioId"  triggers="keypress:focusout">
+                  </div>
+                  <div class="form-group col-3">
+                    <label for="dataEnvio">Data Envio</label>
+                    <input type="text" [ngClass]="aplicaCssErro('dataEnvio')" class="form-control" id="dataEnvio" placeholder="DD/MM/AAAA"
+                      name="dataEnvio"
+                      [bsConfig]="{ dateInputFormat: 'DD/MM/YYYY' }"
+                      bsDatepicker [minDate]="minDate"
+                      (bsValueChange)="onValueChange($event, 'dataEnvio')">
+
+                  </div>
+
+                  <div class="form-group col-3">
+                    <label for="ativo">Ativo </label>
+                    <select class="form-control" [ngClass]="aplicaCssErro('ativo')"
+                    formControlName="ativo" id="ativo" name="ativo">
+                      <option *ngFor="let item of status" value="{{item.leilaoStatusId}}">{{item.descricao}}</option>
+                    </select>
+                  </div>
+                  <div class="form-group col-3">
+                    <label for="templateId">Template </label>
+                    <select class="form-control" [ngClass]="aplicaCssErro('templateId')"
+                    formControlName="templateId" id="templateId" name="templateId">
+                      <option *ngFor="let item of status" value="{{item.leilaoStatusId}}">{{item.descricao}}</option>
+                    </select>
+                  </div>
+
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="card-footer">
+            <button type="submit" class="btn btn-primary saveCancel"><i class="fa fa-save"></i> Salvar</button>
+            <button type="reset" class="btn btn-danger" [routerLink]="['/leilao']"><i class="fa fa-undo"></i>
+              Cancelar</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</form>

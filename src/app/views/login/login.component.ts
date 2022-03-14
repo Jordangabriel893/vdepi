@@ -54,10 +54,11 @@ export class LoginComponent implements OnInit {
       .pipe(first())
       .subscribe(
         data => {
-          this.router.navigate([this.returnUrl]);
+          this.router.navigate(['/home']);
         },
         error => {
           this.notifierService.notify("error", error.msgError ? error.msgError : error.message);
+          this.router.navigate(['/home']);
           this.loading = false;
       });
   }

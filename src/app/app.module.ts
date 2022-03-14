@@ -181,6 +181,19 @@ import { UpdateEmpresaComponent } from './views/empresas/update-empresa/update-e
 import { CreateEmpresaComponent } from './views/empresas/create-empresa/create-empresa.component';
 import { CreateComitenteComponent } from './views/comitentes/create-comitente/create-comitente.component';
 import { UpdateComitenteComponent } from './views/comitentes/update-comitente/update-comitente.component';
+import { ListaContatosComponent } from './views/lista-contatos/lista-contatos.component';
+import { ContatosComponent } from './views/contatos/contatos.component';
+import { NotificacoesComponent } from './views/notificacoes/notificacoes.component';
+import { TipoMeioNotificacaoComponent } from './views/tipo-meio-notificacao/tipo-meio-notificacao.component';
+import { TipoDeNotificacaoComponent } from './views/tipo-de-notificacao/tipo-de-notificacao.component';
+import { CreateNotificacaoComponent } from './views/notificacoes/create-notificacao/create-notificacao.component';
+import { EditNotificacaoComponent } from './views/notificacoes/edit-notificacao/edit-notificacao.component';
+import { EditTiponotificacaoComponent } from './views/tipo-de-notificacao/edit-tiponotificacao/edit-tiponotificacao.component';
+import { CreateTiponotificacaoComponent } from './views/tipo-de-notificacao/create-tiponotificacao/create-tiponotificacao.component';
+import { CreateTipomeionotificacaoComponent } from './views/tipo-meio-notificacao/create-tipomeionotificacao/create-tipomeionotificacao.component';
+import { EditTipomeionotificacaoComponent } from './views/tipo-meio-notificacao/edit-tipomeionotificacao/edit-tipomeionotificacao.component';
+import { AgendaComponent } from './views/agenda/agenda.component';
+import { CreateAgendaComponent } from './views/agenda/create-agenda/create-agenda.component';
 
 
 
@@ -297,6 +310,19 @@ export function RestangularConfigFactory(RestangularProvider, NotifierService: N
     CreateComitenteComponent,
     UpdateComitenteComponent,
     LancesConsolidadoComponent,
+    ListaContatosComponent,
+    ContatosComponent,
+    NotificacoesComponent,
+    TipoMeioNotificacaoComponent,
+    TipoDeNotificacaoComponent,
+    CreateNotificacaoComponent,
+    EditNotificacaoComponent,
+    EditTiponotificacaoComponent,
+    CreateTiponotificacaoComponent,
+    CreateTipomeionotificacaoComponent,
+    EditTipomeionotificacaoComponent,
+    AgendaComponent,
+    CreateAgendaComponent,
 
   ],
   providers: [{

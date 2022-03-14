@@ -49,15 +49,50 @@ export const navigation = [
      icon: 'fa fa-history',
      source: 'Resultado'
    },
-  {
-    name: 'Lances Consolidados',
-    url: '/lancesconsolidado',
-    icon: 'fa fa-history',
-    source: 'Resultado'
-  },
+
   {
     name: 'Arrematantes',
     url: '/arrematantes',
+    icon: 'fa fa-dollar-sign',
+    source: 'Resultado'
+  },
+  {
+    title: true,
+    name: 'MARKETING'
+  },
+  {
+    name: 'Lista de Contatos',
+    url: '/listacontatos',
+    icon: 'fa fa-dollar-sign',
+    source: 'Resultado'
+  },
+  {
+    name: 'Contatos',
+    url: '/contatos',
+    icon: 'fa fa-dollar-sign',
+    source: 'Resultado'
+  },
+  {
+    name: 'Notificações',
+    url: '/notificacoes',
+    icon: 'fa fa-dollar-sign',
+    source: 'Resultado'
+  },
+  {
+    name: 'Meio Notificação',
+    url: '/tipomeionotificao',
+    icon: 'fa fa-dollar-sign',
+    source: 'Resultado'
+  },
+  {
+    name: 'Tipo Notificação',
+    url: '/tiponotificacao',
+    icon: 'fa fa-dollar-sign',
+    source: 'Resultado'
+  },
+  {
+    name: 'Agenda',
+    url: '/agenda',
     icon: 'fa fa-dollar-sign',
     source: 'Resultado'
   },
