@@ -28,7 +28,7 @@
               <label for="empresaId">Empresa </label>
               <select class="form-control" [ngClass]="aplicaCssErro('empresaId')" formControlName="empresaId" >
                 <option *ngFor="let item of empresa" value="{{item.empresaId}}">{{item.nomeFantasia}}</option>
-                
+
               </select>
             </div>
           </div>
