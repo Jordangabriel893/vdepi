@@ -42,4 +42,7 @@ export class ContatosComponent implements OnInit {
     },
     () => this.loading = false);
   }
+  edit(id) {
+    this.router.navigate(['/edit-contatos', id], { relativeTo: this.route });
+  }
 }

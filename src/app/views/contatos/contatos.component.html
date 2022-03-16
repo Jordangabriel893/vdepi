@@ -8,7 +8,7 @@
           &nbsp;Contatos
         </div>
         <div class="card-block">
-          <button type="button" class="btn btn-success" [routerLink]="['/create-leilao']"><i class="fa fa-plus-circle"></i>&nbsp; Nova Contato</button>
+          <button type="button" class="btn btn-success" [routerLink]="['/create-contatos']"><i class="fa fa-plus-circle"></i>&nbsp; Nova Contato</button>
             <div class="table-responsive mt-4">
               <table class="table table-striped" [mfData]="leiloes" #mfLeilao="mfDataTable" [mfRowsOnPage]="100">
                 <thead>
@@ -35,27 +35,10 @@
                     <th>
                       <mfDefaultSorter by="ativo">Uf</mfDefaultSorter>
                     </th>
-                    <th>
-                      <mfDefaultSorter by="ativo">Cep</mfDefaultSorter>
+                    <th class="text-center" >
+                      Editar
                     </th>
-                    <th>
-                      <mfDefaultSorter by="ativo">DataCadastro</mfDefaultSorter>
-                    </th>
-                    <th>
-                      <mfDefaultSorter by="ativo">Ativo</mfDefaultSorter>
-                    </th>
-                    <th>
-                      <mfDefaultSorter by="ativo">CancelarEnvio</mfDefaultSorter>
-                    </th>
-                    <th>
-                      <mfDefaultSorter by="ativo">FoneWhatsApp</mfDefaultSorter>
-                    </th>
-                    <th>
-                      <mfDefaultSorter by="ativo">FoneConvencional</mfDefaultSorter>
-                    </th>
-                    <th>
-                      <mfDefaultSorter by="ativo">FoneCelular</mfDefaultSorter>
-                    </th>
+
 
 
 
@@ -70,13 +53,9 @@
                     <td>Sim</td>
                     <td>Sim</td>
                     <td>Sim</td>
-                    <td>Sim</td>
-                    <td>Sim</td>
-                    <td>Sim</td>
-                    <td>Sim</td>
-                    <td>Sim</td>
-                    <td>Sim</td>
-                    <td>Sim</td>
+                    <td class="text-center" nowrap>
+                      <button type="button" class="btn btn-primary" (click)="edit(item.id)"><i class="fa fa-edit"></i>&nbsp;Editar</button>
+                    </td>
 
 
                   </tr>

@@ -196,6 +196,10 @@ import { AgendaComponent } from './views/agenda/agenda.component';
 import { CreateAgendaComponent } from './views/agenda/create-agenda/create-agenda.component';
 import { AutoComponent } from './views/arrematantes/auto/auto.component';
 import { NotaComponent } from './views/arrematantes/nota/nota.component';
+import { CreateContatosComponent } from './views/contatos/create-contatos/create-contatos.component';
+import { EditContatosComponent } from './views/contatos/edit-contatos/edit-contatos.component';
+import { EditListacontatosComponent } from './views/lista-contatos/edit-listacontatos/edit-listacontatos.component';
+import { CreateListacontatosComponent } from './views/lista-contatos/create-listacontatos/create-listacontatos.component';
 
 
 
@@ -327,6 +331,10 @@ export function RestangularConfigFactory(RestangularProvider, NotifierService: N
     CreateAgendaComponent,
     AutoComponent,
     NotaComponent,
+    CreateContatosComponent,
+    EditContatosComponent,
+    EditListacontatosComponent,
+    CreateListacontatosComponent,
 
 
   ],

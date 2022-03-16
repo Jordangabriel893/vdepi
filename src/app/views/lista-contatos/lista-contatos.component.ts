@@ -43,5 +43,7 @@ export class ListaContatosComponent implements OnInit {
     },
     () => this.loading = false);
   }
-
+  edit(id) {
+    this.router.navigate(['/edit-listacontatos', id], { relativeTo: this.route });
+  }
 }

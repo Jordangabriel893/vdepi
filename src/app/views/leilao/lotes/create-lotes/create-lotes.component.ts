@@ -172,6 +172,7 @@ export class CreateLotesComponent implements OnInit {
   }
 
   onSubmit() {
+    console.log(this.formulario.value)
     if(this.formulario.value.judicial == false){
       this.removeControls()
     }
@@ -186,6 +187,7 @@ export class CreateLotesComponent implements OnInit {
     }
 
     const formulario = this.formulario.value
+
     this.restangular.all('lote').post(formulario).subscribe(a => {
       this.notifierService.notify('success', 'Lote Criado com sucesso');
       this.router.navigate(['/lotes', this.leilaoId]);
@@ -424,5 +426,8 @@ export class CreateLotesComponent implements OnInit {
     var loteCampo = this.loteCampos.find(x => x.loteCampoId == loteCampoId);
     var formatacao = loteCampo && loteCampo.formatacao ? loteCampo.formatacao.split('').map(x => x === '#' ? new RegExp(x.replace('#', '\\w')) : x) : false;
     return formatacao;
+  }
+  console(){
+    console.log(this.formulario.value.fotos)
   }
 }

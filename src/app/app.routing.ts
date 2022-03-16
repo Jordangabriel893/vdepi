@@ -1,3 +1,7 @@
+import { EditListacontatosComponent } from './views/lista-contatos/edit-listacontatos/edit-listacontatos.component';
+import { EditContatosComponent } from './views/contatos/edit-contatos/edit-contatos.component';
+import { CreateContatosComponent } from './views/contatos/create-contatos/create-contatos.component';
+import { CreateListacontatosComponent } from './views/lista-contatos/create-listacontatos/create-listacontatos.component';
 import { CreateAgendaComponent } from './views/agenda/create-agenda/create-agenda.component';
 import { AgendaComponent } from './views/agenda/agenda.component';
 import { EditTiponotificacaoComponent } from './views/tipo-de-notificacao/edit-tiponotificacao/edit-tiponotificacao.component';
@@ -258,8 +262,44 @@ export const routes: Routes = [
         canActivate: [SourceGuard]
       },
       {
+        path: 'edit-listacontatos/:id',
+        component: EditListacontatosComponent,
+        data: {
+          title: 'ListaContatos',
+          source: 'RelatorioEstoque'
+        },
+        canActivate: [SourceGuard]
+      },
+      {
+        path: 'create-listacontatos',
+        component: CreateListacontatosComponent,
+        data: {
+          title: 'ListaContatos',
+          source: 'RelatorioEstoque'
+        },
+        canActivate: [SourceGuard]
+      },
+      {
         path: 'contatos',
         component: ContatosComponent,
+        data: {
+          title: 'Contatos',
+          source: 'RelatorioEstoque'
+        },
+        canActivate: [SourceGuard]
+      },
+      {
+        path: 'create-contatos',
+        component: CreateContatosComponent,
+        data: {
+          title: 'Contatos',
+          source: 'RelatorioEstoque'
+        },
+        canActivate: [SourceGuard]
+      },
+      {
+        path: 'edit-contatos/:id',
+        component: EditContatosComponent,
         data: {
           title: 'Contatos',
           source: 'RelatorioEstoque'
