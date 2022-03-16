@@ -57,6 +57,26 @@
                 <input type="text" class="form-control" [ngClass]="aplicaCssErro('inscricaoMunicipal')" id="inscricaoMunicipal" placeholder="Inscrição Municipal" name="inscricaoMunicipal" formControlName="inscricaoMunicipal" triggers="keypress:focusout">
               </div>
             </div>
+            <div class="row">
+              <div class="col-4" formGroupName="foto">
+                <fieldset class="form-group">
+                  <label>Imagem Empresa</label>
+                  <div class="custom-file fileInputProfileWrap">
+                    <input type="file" (change)="fileChangeEvent($event)" class="fileInputProfile" #inputFile>
+                    <div class="img-space" [ngClass]="aplicaCssErro('foto')">
+                      <ng-container *ngIf="isImageSaved; else elseTemplate">
+                        <img [src]="cardImageBase64" />
+                      </ng-container>
+                      <ng-template #elseTemplate>
+                        <img src="../../../../assets/img/logo-generica.png" class="img-responsive">
+                      </ng-template>
+                    </div>
+                  </div>
+                </fieldset>
+                <a class="btn btn-danger" (click)="removeImage(inputFile)" *ngIf="isImageSaved">Remover</a>
+                <div class="alert alert-danger" *ngIf="imageError">{{imageError}}</div>
+              </div>
+            </div>
           </div>
         </div>
       </div>
