@@ -44,10 +44,21 @@ export class CreateListacontatosComponent implements OnInit {
 
   }
   onSubmit(){
+    this.restangular.all('marketing/listaContato').post(this.formulario.value).subscribe(a => {
+      this.notifierService.notify('success', 'Lista criada com sucesso');
+      this.router.navigate(['/listacontatos']);
+    },
+      error => {
+        this.notifierService.notify('error', 'Erro ao criar lista de contato!');
 
+        Object.keys(this.formulario.controls).forEach((campo)=>{
+          const controle = this.formulario.get(campo)
+          controle.markAsTouched()
+        })
+      });
   }
   verificaValidTouched(campo){
-    // return !this.formulario.get(campo).valid && this.formulario.get(campo).touched;
+    return !this.formulario.get(campo).valid && this.formulario.get(campo).touched;
   }
 
   aplicaCssErro(campo){

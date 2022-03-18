@@ -19,6 +19,11 @@ export class CreateNotificacaoComponent implements OnInit {
   formulario:FormGroup;
   status: any;
   minDate: Date;
+  listaContato;
+  tipoMeioNotifi;
+  tipoDeNotifi;
+  templateNotifi;
+  leilao;
   constructor(
     private formBuilder: FormBuilder,
     private restangular: Restangular,
@@ -44,14 +49,30 @@ export class CreateNotificacaoComponent implements OnInit {
       ativo: [null, Validators.required],
       templateId: [null, Validators.required],
     })
-    this.restangular.one('empresa').get().subscribe(
+    this.restangular.one('​marketing/ListaContato').get().subscribe(
       dados =>{
-        this.empresas= dados.data
+        this.listaContato= dados.data
+        console.log(this.listaContato)
+      }
+    )
+    this.restangular.one('marketing/tipoNotificacao').get().subscribe(
+      dados =>{
+        this.tipoMeioNotifi= dados.data
+      }
+    )
+    this.restangular.one('marketing/tipoMeioNotificacao').get().subscribe(
+      dados =>{
+        this.tipoDeNotifi= dados.data
+      }
+    )
+    this.restangular.one('marketing​/templateNotificacao').get().subscribe(
+      dados =>{
+        this.templateNotifi= dados.data
       }
     )
     this.restangular.all('leilao').one('status').get().subscribe(
       dados =>{
-        this.status= dados.data
+        this.leilao= dados.data
       }
     )
 

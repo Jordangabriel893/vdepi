@@ -172,7 +172,6 @@ export class CreateLotesComponent implements OnInit {
   }
 
   onSubmit() {
-    console.log(this.formulario.value)
     if(this.formulario.value.judicial == false){
       this.removeControls()
     }

@@ -44,10 +44,21 @@ export class CreateTiponotificacaoComponent implements OnInit {
 
   }
   onSubmit(){
+    this.restangular.all('marketing/tipoNotificacao').post(this.formulario.value).subscribe(a => {
+      this.notifierService.notify('success', 'Tipo de notificação criada com sucesso');
+      this.router.navigate(['/tiponotificacao']);
+    },
+      error => {
+        this.notifierService.notify('error', 'Erro ao criar tipo de notificação!');
 
+        Object.keys(this.formulario.controls).forEach((campo)=>{
+          const controle = this.formulario.get(campo)
+          controle.markAsTouched()
+        })
+      });
   }
   verificaValidTouched(campo){
-    // return !this.formulario.get(campo).valid && this.formulario.get(campo).touched;
+    return !this.formulario.get(campo).valid && this.formulario.get(campo).touched;
   }
 
   aplicaCssErro(campo){

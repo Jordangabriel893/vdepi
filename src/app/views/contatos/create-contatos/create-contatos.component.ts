@@ -13,7 +13,7 @@ import { BsLocaleService } from 'ngx-bootstrap';
 export class CreateContatosComponent implements OnInit {
 
   minDate;
-  formulario:FormGroup
+  formulario: FormGroup
   empresa
   gruposEconomico;
 
@@ -34,50 +34,43 @@ export class CreateContatosComponent implements OnInit {
     this.minDate = new Date();
     this.minDate.setDate(this.minDate.getDate() + 1);
 
-    this.mask = ['(', /[1-9]/, /\d/, ')', ' ', /\d/,/\d/,/\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/]
-    this.maskCep = [ /\d/,/\d/,/\d/,/\d/,/\d/, '-', /\d/, /\d/, /\d/, ]
-    this.maskCpf = [ /\d/,/\d/,/\d/,  '.', /\d/,/\d/,/\d/, '.', /\d/, /\d/, /\d/, '-', /\d/,/\d/ ]
-    this.maskCnpj = [ /\d/,/\d/,'.',/\d/,/\d/,/\d/,'.',/\d/,/\d/,/\d/,'/', /\d/,/\d/,/\d/,/\d/,'-',/\d/,/\d/, ]
+    this.mask = ['(', /[1-9]/, /\d/, ')', ' ', /\d/, /\d/, /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/]
+    this.maskCep = [/\d/, /\d/, /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/,]
+    this.maskCpf = [/\d/, /\d/, /\d/, '.', /\d/, /\d/, /\d/, '.', /\d/, /\d/, /\d/, '-', /\d/, /\d/]
+    this.maskCnpj = [/\d/, /\d/, '.', /\d/, /\d/, /\d/, '.', /\d/, /\d/, /\d/, '/', /\d/, /\d/, /\d/, /\d/, '-', /\d/, /\d/,]
 
     this.restangular.one("GrupoEconomico").get().subscribe((response) => {
       this.gruposEconomico = response.data
     })
     this.formulario = this.formBuilder.group({
-      email:[null, Validators.required],
-      primeiroNome:[null, Validators.required],
-      ultimoNome:[null, Validators.required],
-      dataCadastro:[null, Validators.required],
-      endereco: this.formBuilder.group({
-        enderecoId: [0],
-        cep: [null, [Validators.required]],
-        numero: [null, Validators.required],
-        complemento: [null],
-        bairro: [null, Validators.required],
-        cidade: [null, Validators.required],
-        estado: [null, Validators.required],
-        logradouro:[null, Validators.required]
-      }),
-      cancelarEnvio:[0],
-      ativo:[null],
-      foneWhatsapp:[null],
-      nomeFantasia:[null, Validators.required],
-      foneConvencional:[null, Validators.required],
-      foneCelular:[null, Validators.required],
+
+      email: [null, Validators.required],
+      primeiroNome: [null, Validators.required],
+      ultimoNome: [null, Validators.required],
+      listaContatoId: [0, Validators.required],
+      cep: [null, [Validators.required]],
+      uf: [null, [Validators.required]],
+      bairro: [null, Validators.required],
+      cidade: [null, Validators.required],
+      logradouro: [null, Validators.required],
+      telefoneWhatsapp: [null],
+      telefoneConvencional: [null],
+      telefoneCelular: [null, Validators.required],
     })
   }
 
   ngOnInit() {
   }
-  onSubmit(){
+  onSubmit() {
     console.log(this.formulario.value)
-    this.restangular.all('empresa').post(this.formulario.value).subscribe(a => {
-      this.notifierService.notify('success', 'Empresa criada com sucesso');
-      this.router.navigate(['/empresa']);
+    this.restangular.all('marketing​/Contato').post(this.formulario.value).subscribe(a => {
+      this.notifierService.notify('success', 'Contato criada com sucesso');
+      this.router.navigate(['/contatos']);
     },
       error => {
-        this.notifierService.notify('error', 'Erro ao criar a empresa!');
+        this.notifierService.notify('error', 'Erro ao criar contato!');
 
-        Object.keys(this.formulario.controls).forEach((campo)=>{
+        Object.keys(this.formulario.controls).forEach((campo) => {
           const controle = this.formulario.get(campo)
           controle.markAsTouched()
         })
@@ -88,29 +81,28 @@ export class CreateContatosComponent implements OnInit {
 
     if (cep != null && cep !== '') {
       this.cepService.consultaCEP(cep)
-      .subscribe(dados => this.populaDadosForm(dados));
+        .subscribe(dados => this.populaDadosForm(dados));
     }
   }
   populaDadosForm(dados) {
     // this.formulario.setValue({});
 
     this.formulario.patchValue({
-      endereco: {
+
         logradouro: dados.logradouro,
-        // cep: dados.cep,
         complemento: dados.complemento,
         bairro: dados.bairro,
         cidade: dados.localidade,
         estado: dados.uf
-      }
+
     });
   }
-  verificaValidTouched(campo){
+  verificaValidTouched(campo) {
     return !this.formulario.get(campo).valid && this.formulario.get(campo).touched;
   }
 
-  aplicaCssErro(campo){
-    return {'has-error': this.verificaValidTouched(campo) }
+  aplicaCssErro(campo) {
+    return { 'has-error': this.verificaValidTouched(campo) }
   }
   onValueChange(event, campo) {
     this.formulario.get(campo).markAsTouched();

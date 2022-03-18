@@ -16,6 +16,7 @@ export class ListaContatosComponent implements OnInit {
   formulario: FormGroup
   loading = true;
   selectLeilao;
+  listas;
   leiloes: Model.Leilao[];
   constructor(
     private route: ActivatedRoute,
@@ -35,13 +36,15 @@ export class ListaContatosComponent implements OnInit {
    }
 
   ngOnInit() {
-    this.restangular.one("leilao", '').get({PageSize:100}).subscribe((response) => {
-      this.selectLeilao = response.data
-      this.leiloes = response.data;
-      console.log(response.data)
-      this.loading = false;
-    },
-    () => this.loading = false);
+
+    this.restangular.one('marketing/listacontato').get().subscribe(
+      dados =>{
+        this.listas= dados.data
+        this.loading = false;
+      },
+      () => this.loading = false
+    )
+
   }
   edit(id) {
     this.router.navigate(['/edit-listacontatos', id], { relativeTo: this.route });

@@ -10,13 +10,13 @@
         <div class="card-block">
           <button type="button" class="btn btn-success" [routerLink]="['/create-tipomeionotificao']"><i class="fa fa-plus-circle"></i>&nbsp; Novo Tipo Meio Notificação</button>
             <div class="table-responsive mt-4">
-              <table class="table table-striped" [mfData]="leiloes" #mfLeilao="mfDataTable" [mfRowsOnPage]="100">
+              <table class="table table-striped" [mfData]="tipoMeios" #mftipoMeios="mfDataTable" [mfRowsOnPage]="100">
                 <thead>
                   <tr>
 
 
                     <th>
-                      <mfDefaultSorter by="empresaId">Empresa Id</mfDefaultSorter>
+                      <mfDefaultSorter by="id">Id</mfDefaultSorter>
                     </th>
                     <th>
                       <mfDefaultSorter by="descricao">Descrição</mfDefaultSorter>
@@ -31,12 +31,12 @@
                   </tr>
                 </thead>
                 <tbody>
-                  <tr *ngFor="let item of mfLeilao.data">
-                    <td>{{item.id}}</td>
-                    <td>{{item.nome}}</td>
+                  <tr *ngFor="let item of mftipoMeios.data">
+                    <td>{{item.tipoMeioNotificacaoId}}</td>
+                    <td>{{item.descricao}}</td>
                     <td>Sim</td>
                     <td class="text-center" nowrap>
-                      <button type="button" class="btn btn-primary" (click)="edit(item.id)"><i class="fa fa-edit"></i>&nbsp;Editar</button>
+                      <button type="button" class="btn btn-primary" (click)="edit(item.tipoMeioNotificacaoId)"><i class="fa fa-edit"></i>&nbsp;Editar</button>
                     </td>
                   </tr>
                   <tr *ngIf="loading">

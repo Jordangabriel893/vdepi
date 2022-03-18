@@ -15,6 +15,8 @@ export class CreateAgendaComponent implements OnInit {
   formulario:FormGroup;
   status: any;
   minDate;
+  notificacoes;
+  tiposAgenda;
   constructor(
     private formBuilder: FormBuilder,
     private restangular: Restangular,
@@ -38,20 +40,33 @@ export class CreateAgendaComponent implements OnInit {
       intervaloMinutos: [null, Validators.required],
       dataCadastro: [null, Validators.required],
     })
-    this.restangular.one('empresa').get().subscribe(
+    this.restangular.one('marketing/notificacao').get().subscribe(
       dados =>{
-        this.empresas= dados.data
+        this.notificacoes= dados.data
+        console.log(this.notificacoes)
       }
     )
-    this.restangular.all('leilao').one('status').get().subscribe(
+    this.restangular.one('marketing/tipoAgendaNotificacao').get().subscribe(
       dados =>{
-        this.status= dados.data
+        this.tiposAgenda= dados.data
+        console.log(this.tiposAgenda)
       }
     )
 
   }
   onSubmit(){
+    this.restangular.all('marketing/agendaNotificacao').post(this.formulario.value).subscribe(a => {
+      this.notifierService.notify('success', 'Agenda criada com sucesso');
+      this.router.navigate(['/listacontatos']);
+    },
+      error => {
+        this.notifierService.notify('error', 'Erro ao criar agenda!');
 
+        Object.keys(this.formulario.controls).forEach((campo)=>{
+          const controle = this.formulario.get(campo)
+          controle.markAsTouched()
+        })
+      });
   }
   verificaValidTouched(campo){
     return !this.formulario.get(campo).valid && this.formulario.get(campo).touched;

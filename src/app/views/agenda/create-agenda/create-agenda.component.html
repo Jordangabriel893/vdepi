@@ -11,20 +11,22 @@
             <div class="row" >
               <div class="col-12">
                 <div class="row ">
-                  <div class="form-group col-4" >
+                  <div class="form-group col-4">
                     <label for="agendaNotificacaoId">Agenda Notificação :</label>
-                    <input type="text" class="form-control" [ngClass]="aplicaCssErro('agendaNotificacaoId')" id="agendaNotificacaoId"  name="agendaNotificacaoId" formControlName="agendaNotificacaoId"  triggers="keypress:focusout">
+                    <select class="form-control" [ngClass]="aplicaCssErro('agendaNotificacaoId')" formControlName="agendaNotificacaoId" name="agendaNotificacaoId">
+                      <option *ngFor="let item of tiposAgenda" value="{{item.tipoAgendaNotificacaoId}}">{{item.descricao}}</option>
+                    </select>
                   </div>
                   <div class="form-group col-4">
                     <label for="notificacaoId">Notificação :  </label>
                     <select class="form-control" [ngClass]="aplicaCssErro('notificacaoId')" formControlName="notificacaoId" name="notificacaoId">
-                      <option *ngFor="let item of empresas" value="{{item.empresaId}}">{{item.nomeFantasia}}</option>
+                      <option *ngFor="let item of notificacoes" value="{{item.tipoNotificacaoId}}">{{item.titulo}}</option>
                     </select>
                   </div>
                   <div class="form-group col-4">
                     <label for="tipoAgendaId">Tipo Agenda : </label>
                     <select class="form-control" [ngClass]="aplicaCssErro('tipoAgendaId')" formControlName="tipoAgendaId" id="tipoAgendaId" name="tipoAgendaId">
-                      <option *ngFor="let item of status" value="{{item.leilaoStatusId}}">{{item.descricao}}</option>
+                      <option *ngFor="let item of tiposAgenda" value="{{item.tipoAgendaNotificacaoId}}">{{item.descricao}}</option>
                     </select>
                   </div>
                 </div>
@@ -73,7 +75,7 @@
                 <div class="row ">
                   <div class="form-group col-6" >
                     <label for="intervaloMinutos">Intervalo Minutos:</label>
-                    <input type="text" class="form-control" [ngClass]="aplicaCssErro('intervaloMinutos')" id="intervaloMinutos"  name="intervaloMinutos" formControlName="intervaloMinutos"  triggers="keypress:focusout">
+                    <input type="number" class="form-control" [ngClass]="aplicaCssErro('intervaloMinutos')" id="intervaloMinutos"  name="intervaloMinutos" formControlName="intervaloMinutos"  triggers="keypress:focusout">
                   </div>
                   <div class="form-group col-6">
                     <label for="dataCadastro">Data Cadastro</label>
@@ -81,7 +83,7 @@
                       name="dataCadastro"
                       [bsConfig]="{ dateInputFormat: 'DD/MM/YYYY' }"
                       bsDatepicker [minDate]="minDate"
-                      (bsValueChange)="onValueChange($event, 'intervaloMinutos')">
+                      (bsValueChange)="onValueChange($event, 'dataCadastro')">
 
                   </div>
                 </div>

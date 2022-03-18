@@ -15,6 +15,7 @@ export class TipoMeioNotificacaoComponent implements OnInit {
   formulario: FormGroup
   loading = true;
   selectLeilao;
+  tipoMeios;
   leiloes: Model.Leilao[];
   constructor(
     private route: ActivatedRoute,
@@ -34,10 +35,15 @@ export class TipoMeioNotificacaoComponent implements OnInit {
    }
 
   ngOnInit() {
+    this.restangular.one('marketing/tipoMeioNotificacao').get().subscribe(
+      dados =>{
+        this.tipoMeios= dados.data
+        console.log(this.tipoMeios);
+      }
+    )
     this.restangular.one("leilao", '').get({PageSize:100}).subscribe((response) => {
       this.selectLeilao = response.data
       this.leiloes = response.data;
-      console.log(response.data)
       this.loading = false;
     },
     () => this.loading = false);

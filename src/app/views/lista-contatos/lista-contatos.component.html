@@ -10,18 +10,15 @@
         <div class="card-block">
           <button type="button" class="btn btn-success" [routerLink]="['/create-listacontatos']"><i class="fa fa-plus-circle"></i>&nbsp; Nova Lista de Contatos</button>
             <div class="table-responsive mt-4">
-              <table class="table table-striped" [mfData]="leiloes" #mfLeilao="mfDataTable" [mfRowsOnPage]="100">
+              <table class="table table-striped" [mfData]="listas" #mfLeilao="mfDataTable" [mfRowsOnPage]="100">
                 <thead>
                   <tr>
 
                     <th>
-                      <mfDefaultSorter by="empresaId">Empresa Id</mfDefaultSorter>
+                      <mfDefaultSorter by="listaContatoId">Id</mfDefaultSorter>
                     </th>
                     <th>
                       <mfDefaultSorter by="descricao">Descrição</mfDefaultSorter>
-                    </th>
-                    <th>
-                      <mfDefaultSorter by="ativo">Ativo</mfDefaultSorter>
                     </th>
                     <th class="text-center" >
                       Editar
@@ -32,11 +29,10 @@
                 </thead>
                 <tbody>
                   <tr *ngFor="let item of mfLeilao.data">
-                    <td>{{item.id}}</td>
-                    <td>{{item.nome}}</td>
-                    <td>Sim</td>
+                    <td>{{item.listaContatoId}}</td>
+                    <td>{{item.descricao}}</td>
                     <td class="text-center" nowrap>
-                      <button type="button" class="btn btn-primary" (click)="edit(item.id)"><i class="fa fa-edit"></i>&nbsp;Editar</button>
+                      <button type="button" class="btn btn-primary" (click)="edit(item.listaContatoId)"><i class="fa fa-edit"></i>&nbsp;Editar</button>
                     </td>
 
                   </tr>

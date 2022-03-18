@@ -15,6 +15,7 @@ export class TipoDeNotificacaoComponent implements OnInit {
   formulario: FormGroup
   loading = true;
   selectLeilao;
+  tipoDeNotific;
   leiloes: Model.Leilao[];
   constructor(
     private route: ActivatedRoute,
@@ -34,13 +35,14 @@ export class TipoDeNotificacaoComponent implements OnInit {
    }
 
   ngOnInit() {
-    this.restangular.one("leilao", '').get({PageSize:100}).subscribe((response) => {
-      this.selectLeilao = response.data
-      this.leiloes = response.data;
-      console.log(response.data)
-      this.loading = false;
-    },
-    () => this.loading = false);
+    this.restangular.one('marketing/tipoNotificacao').get().subscribe(
+      dados =>{
+        this.tipoDeNotific= dados.data
+        this.loading = false;
+      },
+      () => this.loading = false
+    )
+
   }
   edit(id) {
     this.router.navigate(['/update-tiponotificacao', id], { relativeTo: this.route });
