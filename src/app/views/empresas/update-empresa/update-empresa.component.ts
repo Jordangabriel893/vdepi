@@ -5,6 +5,7 @@ import { NotifierService } from 'angular-notifier';
 import { ConsultaCepService } from 'app/views/usuarios/shared/consulta-cep/consulta-cep.service';
 import * as moment from 'moment';
 import { Restangular } from 'ngx-restangular';
+import * as _ from 'lodash';
 
 @Component({
   selector: 'app-update-empresa',
@@ -18,6 +19,13 @@ export class UpdateEmpresaComponent implements OnInit {
   id
   gruposEconomico;
 
+  context = {
+    message: 'Hello there!'
+  };
+  imageError: string;
+  isImageSaved: boolean;
+  cardImageBase64: string;
+
   public mask: Array<string | RegExp>
   public maskCep: Array<string | RegExp>
   public maskCpf: Array<string | RegExp>
@@ -29,23 +37,15 @@ export class UpdateEmpresaComponent implements OnInit {
     private notifierService: NotifierService,
     private router: Router,
     private cepService: ConsultaCepService,
-    private route: ActivatedRoute,
-
   ) {
     this.mask = ['(', /[1-9]/, /\d/, ')', ' ', /\d/,/\d/,/\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/]
     this.maskCep = [ /\d/,/\d/,/\d/,/\d/,/\d/, '-', /\d/, /\d/, /\d/, ]
     this.maskCpf = [ /\d/,/\d/,/\d/,  '.', /\d/,/\d/,/\d/, '.', /\d/, /\d/, /\d/, '-', /\d/,/\d/ ]
     this.maskCnpj = [ /\d/,/\d/,'.',/\d/,/\d/,/\d/,'.',/\d/,/\d/,/\d/,'/', /\d/,/\d/,/\d/,/\d/,'-',/\d/,/\d/, ]
 
-    this.id = this.route.snapshot.params['id']
-    this.restangular.one("empresa", this.id).get().subscribe((response) => {
-      this.updateForm(response.data)
-    })
-
     this.restangular.one("GrupoEconomico").get().subscribe((response) => {
       this.gruposEconomico = response.data
     })
-
     this.formulario = this.formBuilder.group({
       ativo:[null, Validators.required],
       cnpj:[null, Validators.required],
@@ -71,55 +71,89 @@ export class UpdateEmpresaComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.formulario = this.formBuilder.group({
+      foto: this.formBuilder.group({
+        arquivoId:[0],
+        nome:[null],
+        base64:[null, Validators.required],
+        tipo:[null],
+        tamanho:[0]
+      }, Validators.required),
+    })
   }
-
   onSubmit(){
     console.log(this.formulario.value)
-    if(!this.formulario.valid){
-      Object.keys(this.formulario.controls).forEach((campo)=>{
-        const controle = this.formulario.get(campo)
-        controle.markAsTouched()
-
-      })
-      this.notifierService.notify('error', 'Preencha todos os campos obrigatórios');
-      return
-    }
-    this.restangular.all('empresa').customPUT(this.formulario.value,  this.id ).subscribe(a => {
-      this.notifierService.notify('success', 'Empresa alterada com sucesso');
+    this.restangular.all('empresa').post(this.formulario.value).subscribe(a => {
+      this.notifierService.notify('success', 'Empresa criada com sucesso');
       this.router.navigate(['/empresa']);
     },
-    error => {
-      this.notifierService.notify('error', 'Erro ao atualizar a empresa!');
-      Object.keys(this.formulario.controls).forEach((campo)=>{
-        const controle = this.formulario.get(campo)
-        controle.markAsTouched()
+      error => {
+        this.notifierService.notify('error', 'Erro ao criar a empresa!');
 
-      })
-    })
+        Object.keys(this.formulario.controls).forEach((campo)=>{
+          const controle = this.formulario.get(campo)
+          controle.markAsTouched()
+        })
+      });
   }
-  updateForm(dados){
-    this.formulario.patchValue({
-      ativo:dados.ativo,
-      cnpj:dados.cnpj,
-      codigoTributarioMunicipio:dados.codigoTributarioMunicipio,
-      empresaId:dados.empresaId,
-      endereco: {
-        enderecoId: dados.endereco ? dados.endereco.enderecoId : 0,
-        cep: dados.endereco ? dados.endereco.cep : '',
-        numero: dados.endereco ? dados.endereco.numero : '',
-        complemento: dados.endereco ? dados.endereco.complemento : '',
-        bairro: dados.endereco ? dados.endereco.bairro : '',
-        cidade: dados.endereco ? dados.endereco.cidade : '',
-        estado: dados.endereco ? dados.endereco.estado : '',
-        logradouro: dados.endereco ? dados.endereco.logradouro : ''
-      },
-      grupoEconomicoId:dados.grupoEconomicoId,
-      inscricaoEstadual:dados.inscricaoEstadual,
-      inscricaoMunicipal:dados.inscricaoMunicipal,
-      nomeFantasia:dados.nomeFantasia,
-      razaoSocial:dados.razaoSocial,
-      telefone:dados.telefone,
-    })
+  fileChangeEvent(fileInput: any) {
+    this.imageError = null;
+    if (fileInput.target.files && fileInput.target.files[0]) {
+        // Size Filter Bytes
+        const max_size = 20971520;
+        const allowed_types = ['image/png', 'image/jpeg'];
+        const max_height = 15200;
+        const max_width = 25600;
+
+        if (fileInput.target.files[0].size > max_size) {
+            this.imageError =
+                'O tamanho máximo permitido é ' + max_size / 1000 + 'Mb';
+
+            return false;
+        }
+
+        if (!_.includes(allowed_types, fileInput.target.files[0].type)) {
+            this.imageError = 'Somente imagens são permitidas ( JPG | PNG )';
+            return false;
+        }
+        const reader = new FileReader();
+        reader.onload = (e: any) => {
+            const image = new Image();
+            image.src = e.target.result;
+            image.onload = rs => {
+                const img_height = rs.currentTarget['height'];
+                const img_width = rs.currentTarget['width'];
+
+                if (img_height > max_height && img_width > max_width) {
+                    this.imageError =
+                        'Tamanho máximo permitido ' +
+                        max_height +
+                        '*' +
+                        max_width +
+                        'px';
+                    return false;
+                } else {
+                    const imgBase64Path = e.target.result;
+                    this.cardImageBase64 = imgBase64Path;
+                    this.isImageSaved = true;
+                    var foto = this.formulario.get('foto') as FormGroup;
+                    foto.get('base64').setValue(imgBase64Path);
+                    foto.get('nome').setValue(fileInput.target.files[0].name);
+                    foto.get('tamanho').setValue(fileInput.target.files[0].size);
+                    foto.get('tipo').setValue(fileInput.target.files[0].type);
+                    // this.previewImagePath = imgBase64Path;
+                }
+            };
+        };
+
+        reader.readAsDataURL(fileInput.target.files[0]);
+    }
+  }
+
+  removeImage(input) {
+    this.cardImageBase64 = null;
+    this.isImageSaved = false;
+    input.value = "";
   }
 
   consultaCEP() {
@@ -151,5 +185,4 @@ export class UpdateEmpresaComponent implements OnInit {
   aplicaCssErro(campo){
     return {'has-error': this.verificaValidTouched(campo) }
   }
-
 }

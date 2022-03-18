@@ -8,7 +8,7 @@
             &nbsp;Informações do Leiloeiro - Obrigatorios*
           </div>
 
-          <!-- <div class="card-block">
+          <div class="card-block">
             <div class="row ">
               <div class="form-group col-6" >
                 <label for="descricao">Descrição</label>
@@ -22,22 +22,42 @@
               </div>
 
 
-          </div>
+            </div>
           <div class="row">
             <div class="form-group col-12">
               <label for="empresaId">Empresa </label>
               <select class="form-control" [ngClass]="aplicaCssErro('empresaId')" formControlName="empresaId" >
                 <option *ngFor="let item of empresa" value="{{item.empresaId}}">{{item.nomeFantasia}}</option>
-                
+
               </select>
             </div>
           </div>
-        </div> -->
+          <div class="row">
+            <div class="col-4" formGroupName="foto">
+              <fieldset class="form-group">
+                <label>Imagem Leiloeiro</label>
+                <div class="custom-file fileInputProfileWrap">
+                  <input type="file" (change)="fileChangeEvent($event)" class="fileInputProfile" #inputFile>
+                  <div class="img-space" [ngClass]="aplicaCssErro('foto')">
+                    <ng-container *ngIf="isImageSaved; else elseTemplate">
+                      <img [src]="cardImageBase64" />
+                    </ng-container>
+                    <ng-template #elseTemplate>
+                      <img src="../../../../assets/img/logo-generica.png" class="img-responsive">
+                    </ng-template>
+                  </div>
+                </div>
+              </fieldset>
+              <a class="btn btn-danger" (click)="removeImage(inputFile)" *ngIf="isImageSaved">Remover</a>
+              <div class="alert alert-danger" *ngIf="imageError">{{imageError}}</div>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </div>
   </div>
-  <!-- <div class="animated fadeIn" formGroupName="endereco">
+  <div class="animated fadeIn" formGroupName="endereco">
     <div class="row">
       <div class="col-lg-12">
         <div class="card">
@@ -107,5 +127,5 @@
         </div>
       </div>
     </div>
-  </div> -->
+  </div>
 </form>
