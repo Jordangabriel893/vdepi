@@ -14,17 +14,18 @@ import * as _ from 'lodash';
 })
 export class UpdateEmpresaComponent implements OnInit {
 
+  imageError: string;
+  isImageSaved: boolean;
+  cardImageBase64: string;
+
   formulario:FormGroup
-  empresa
   id
+  empresa
   gruposEconomico;
 
   context = {
     message: 'Hello there!'
   };
-  imageError: string;
-  isImageSaved: boolean;
-  cardImageBase64: string;
 
   public mask: Array<string | RegExp>
   public maskCep: Array<string | RegExp>
@@ -36,20 +37,34 @@ export class UpdateEmpresaComponent implements OnInit {
     private restangular: Restangular,
     private notifierService: NotifierService,
     private router: Router,
+    private route: ActivatedRoute,
     private cepService: ConsultaCepService,
   ) {
+
+    this.id = this.route.snapshot.params['id']
+    this.restangular.one("empresa", this.id).get().subscribe((response) => {
+    this.updateForm(response.data)
+    })
+
     this.mask = ['(', /[1-9]/, /\d/, ')', ' ', /\d/,/\d/,/\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/]
     this.maskCep = [ /\d/,/\d/,/\d/,/\d/,/\d/, '-', /\d/, /\d/, /\d/, ]
     this.maskCpf = [ /\d/,/\d/,/\d/,  '.', /\d/,/\d/,/\d/, '.', /\d/, /\d/, /\d/, '-', /\d/,/\d/ ]
     this.maskCnpj = [ /\d/,/\d/,'.',/\d/,/\d/,/\d/,'.',/\d/,/\d/,/\d/,'/', /\d/,/\d/,/\d/,/\d/,'-',/\d/,/\d/, ]
 
-    this.restangular.one("GrupoEconomico").get().subscribe((response) => {
+        this.restangular.one("GrupoEconomico").get().subscribe((response) => {
       this.gruposEconomico = response.data
     })
     this.formulario = this.formBuilder.group({
       ativo:[null, Validators.required],
       cnpj:[null, Validators.required],
       codigoTributarioMunicipio:[null],
+      foto: this.formBuilder.group({
+        arquivoId:[0],
+        nome:[null],
+        base64:[null, Validators.required],
+        tipo:[null],
+        tamanho:[0]
+      }, Validators.required),
       empresaId:[0],
       endereco: this.formBuilder.group({
         enderecoId: [0],
@@ -71,18 +86,19 @@ export class UpdateEmpresaComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.formulario = this.formBuilder.group({
-      foto: this.formBuilder.group({
-        arquivoId:[0],
-        nome:[null],
-        base64:[null, Validators.required],
-        tipo:[null],
-        tamanho:[0]
-      }, Validators.required),
-    })
+
   }
   onSubmit(){
     console.log(this.formulario.value)
+    if(!this.formulario.valid){
+      Object.keys(this.formulario.controls).forEach((campo)=>{
+        const controle = this.formulario.get(campo)
+        controle.markAsTouched()
+
+      })
+      this.notifierService.notify('error', 'Preencha todos os campos obrigatórios');
+      return false;
+    }
     this.restangular.all('empresa').post(this.formulario.value).subscribe(a => {
       this.notifierService.notify('success', 'Empresa criada com sucesso');
       this.router.navigate(['/empresa']);
@@ -95,6 +111,17 @@ export class UpdateEmpresaComponent implements OnInit {
           controle.markAsTouched()
         })
       });
+  }
+  updateForm(dados){
+    this.formulario.patchValue({
+      descricao:dados.descricao,
+      empresa:dados.empresa,
+      telefone:dados.telefone,
+      empresaId:dados.empresaId,
+      endereco: dados.endereco,
+      enderecoId:dados.enderecoId,
+      localLoteId:dados.localLoteId
+    })
   }
   fileChangeEvent(fileInput: any) {
     this.imageError = null;

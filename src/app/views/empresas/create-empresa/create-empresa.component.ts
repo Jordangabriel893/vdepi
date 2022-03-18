@@ -36,11 +36,16 @@ export class CreateEmpresaComponent implements OnInit {
     private router: Router,
     private cepService: ConsultaCepService,
   ) {
+    
     this.mask = ['(', /[1-9]/, /\d/, ')', ' ', /\d/,/\d/,/\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/]
     this.maskCep = [ /\d/,/\d/,/\d/,/\d/,/\d/, '-', /\d/, /\d/, /\d/, ]
     this.maskCpf = [ /\d/,/\d/,/\d/,  '.', /\d/,/\d/,/\d/, '.', /\d/, /\d/, /\d/, '-', /\d/,/\d/ ]
     this.maskCnpj = [ /\d/,/\d/,'.',/\d/,/\d/,/\d/,'.',/\d/,/\d/,/\d/,'/', /\d/,/\d/,/\d/,/\d/,'-',/\d/,/\d/, ]
 
+    
+  }
+
+  ngOnInit() {
     this.restangular.one("GrupoEconomico").get().subscribe((response) => {
       this.gruposEconomico = response.data
     })
@@ -48,6 +53,13 @@ export class CreateEmpresaComponent implements OnInit {
       ativo:[null, Validators.required],
       cnpj:[null, Validators.required],
       codigoTributarioMunicipio:[null],
+      foto: this.formBuilder.group({
+        arquivoId:[0],
+        nome:[null],
+        base64:[null, Validators.required],
+        tipo:[null],
+        tamanho:[0]
+      }, Validators.required),
       empresaId:[0],
       endereco: this.formBuilder.group({
         enderecoId: [0],
@@ -65,18 +77,6 @@ export class CreateEmpresaComponent implements OnInit {
       nomeFantasia:[null, Validators.required],
       razaoSocial:[null, Validators.required],
       telefone:[null, Validators.required],
-    })
-  }
-
-  ngOnInit() {
-    this.formulario = this.formBuilder.group({
-      foto: this.formBuilder.group({
-        arquivoId:[0],
-        nome:[null],
-        base64:[null, Validators.required],
-        tipo:[null],
-        tamanho:[0]
-      }, Validators.required),
     })
   }
   onSubmit(){

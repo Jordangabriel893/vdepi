@@ -5,9 +5,10 @@ import { Component, OnInit } from '@angular/core';
 import * as _ from 'lodash';
 import { Restangular } from 'ngx-restangular';
 import { NotifierService } from 'angular-notifier';
-import {  Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { BsLocaleService } from 'ngx-bootstrap/datepicker';
 import { AngularEditorConfig } from '@kolkov/angular-editor';
+import { ConsultaCepService } from 'app/views/usuarios/shared/consulta-cep/consulta-cep.service';
 
 @Component({
   selector: 'app-update-leiloeiros',
@@ -16,29 +17,44 @@ import { AngularEditorConfig } from '@kolkov/angular-editor';
 })
 export class UpdateLeiloeirosComponent implements OnInit {
 
-  context = {
-    message: 'Hello there!'
-  };
   imageError: string;
   isImageSaved: boolean;
   cardImageBase64: string;
 
   formulario:FormGroup
-
+  leiloeiros
+  id
+  public mask: Array<string | RegExp>
+  public maskCep: Array<string | RegExp>
+  public maskCpf: Array<string | RegExp>
+  public maskCnpj: Array<string | RegExp>
 
   constructor(
     private formBuilder: FormBuilder,
     private restangular: Restangular,
     private notifierService: NotifierService,
     private router: Router,
+    private cepService: ConsultaCepService,
+    private route: ActivatedRoute,
     private localeService: BsLocaleService
     ) {
-
-    }
-
-  ngOnInit() {
-
+    
+    this.id = this.route.snapshot.params['id']
+    this.restangular.one("leiloeiro", this.id).get().subscribe((response) => {
+    this.updateForm(response.data)
+    })
+      
+    this.mask = ['(', /[1-9]/, /\d/, ')', ' ', /\d/,/\d/,/\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/]
+    this.maskCep = [ /\d/,/\d/,/\d/,/\d/,/\d/, '-', /\d/, /\d/, /\d/, ]
+    this.maskCpf = [ /\d/,/\d/,/\d/,  '.', /\d/,/\d/,/\d/, '.', /\d/, /\d/, /\d/, '-', /\d/,/\d/ ]
+    this.maskCnpj = [ /\d/,/\d/,'.',/\d/,/\d/,/\d/,'.',/\d/,/\d/,/\d/,'/', /\d/,/\d/,/\d/,/\d/,'-',/\d/,/\d/, ]
+    
     this.formulario = this.formBuilder.group({
+      nome:[null, Validators.required],
+      razaoSocial:[null],
+      cpfCnpj:[null, Validators.required],
+      telefone:[null, Validators.required],
+      email:[null, Validators.required],
       foto: this.formBuilder.group({
         arquivoId:[0],
         nome:[null],
@@ -46,21 +62,76 @@ export class UpdateLeiloeirosComponent implements OnInit {
         tipo:[null],
         tamanho:[0]
       }, Validators.required),
-    })
+        endereco: this.formBuilder.group({
+          enderecoId: [0],
+          cep: [null, [Validators.required]],
+          numero: [null, Validators.required],
+          complemento: [null],
+          bairro: [null, Validators.required],
+          cidade: [null, Validators.required],
+          estado: [null, Validators.required],
+          logradouro:[null, Validators.required]
+        }),
+      })
+    }
+
+  ngOnInit() {
+
   }
 
   onSubmit() {
+    console.log(this.formulario.value)
     if(!this.formulario.valid){
       Object.keys(this.formulario.controls).forEach((campo)=>{
         const controle = this.formulario.get(campo)
         controle.markAsTouched()
+
       })
       this.notifierService.notify('error', 'Preencha todos os campos obrigatórios');
       return false;
     }
-
+    this.restangular.all('leiloeiro').post(this.formulario.value).subscribe(a => {
+      this.notifierService.notify('success', 'Leiloeiro Criado com sucesso');
+      this.router.navigate(['/leiloeiro']);
+    },
+      error => {
+        this.notifierService.notify('error', 'Erro ao criar o Leiloeiro!');
+        Object.keys(this.formulario.controls).forEach((campo)=>{
+          const controle = this.formulario.get(campo)
+          controle.markAsTouched()
+        })
+      });
   }
+  updateForm(dados){
+    this.formulario.patchValue({
+      descricao:dados.descricao,
+      empresa:dados.empresa,
+      telefone:dados.telefone,
+      empresaId:dados.empresaId,
+      endereco: dados.endereco,
+      enderecoId:dados.enderecoId,
+      localLoteId:dados.localLoteId
+    })
+  }
+  consultaCEP() {
+    const cep = this.formulario.get('endereco.cep').value;
 
+    if (cep != null && cep !== '') {
+      this.cepService.consultaCEP(cep)
+      .subscribe(dados => this.populaDadosForm(dados));
+    }
+  }
+  populaDadosForm(dados) {
+    this.formulario.patchValue({
+      endereco: {
+        logradouro: dados.logradouro,
+        complemento: dados.complemento,
+        bairro: dados.bairro,
+        cidade: dados.localidade,
+        estado: dados.uf
+      }
+    });
+  }
   fileChangeEvent(fileInput: any) {
     this.imageError = null;
     if (fileInput.target.files && fileInput.target.files[0]) {
@@ -129,8 +200,4 @@ export class UpdateLeiloeirosComponent implements OnInit {
     return { 'has-error': this.verificaValidTouched(campo) }
   }
 
-  onValueChange(event, campo) {
-    this.formulario.get(campo).markAsTouched();
-    this.formulario.get(campo).setValue(event);
-  }
 }
