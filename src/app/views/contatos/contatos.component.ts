@@ -15,7 +15,7 @@ export class ContatosComponent implements OnInit {
   formulario: FormGroup
   loading = true;
   selectLeilao;
-  leiloes: Model.Leilao[];
+  contatos;
   constructor(
     private route: ActivatedRoute,
     private router: Router,
@@ -34,9 +34,8 @@ export class ContatosComponent implements OnInit {
    }
 
   ngOnInit() {
-    this.restangular.one("leilao", '').get({PageSize:100}).subscribe((response) => {
-      this.selectLeilao = response.data
-      this.leiloes = response.data;
+    this.restangular.one("marketing/Contato", '').get({PageSize:100}).subscribe((response) => {
+     this.contatos = response.data
       console.log(response.data)
       this.loading = false;
     },

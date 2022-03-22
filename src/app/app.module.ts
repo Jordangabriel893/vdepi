@@ -200,6 +200,7 @@ import { CreateContatosComponent } from './views/contatos/create-contatos/create
 import { EditContatosComponent } from './views/contatos/edit-contatos/edit-contatos.component';
 import { EditListacontatosComponent } from './views/lista-contatos/edit-listacontatos/edit-listacontatos.component';
 import { CreateListacontatosComponent } from './views/lista-contatos/create-listacontatos/create-listacontatos.component';
+import { UpdateAgendaComponent } from './views/agenda/update-agenda/update-agenda.component';
 
 
 
@@ -335,6 +336,7 @@ export function RestangularConfigFactory(RestangularProvider, NotifierService: N
     EditContatosComponent,
     EditListacontatosComponent,
     CreateListacontatosComponent,
+    UpdateAgendaComponent,
 
 
   ],

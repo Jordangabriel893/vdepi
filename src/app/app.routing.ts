@@ -68,6 +68,7 @@ import { ContatosComponent } from './views/contatos/contatos.component';
 import { TipoMeioNotificacaoComponent } from './views/tipo-meio-notificacao/tipo-meio-notificacao.component';
 import { TipoDeNotificacaoComponent } from './views/tipo-de-notificacao/tipo-de-notificacao.component';
 import { EditNotificacaoComponent } from './views/notificacoes/edit-notificacao/edit-notificacao.component';
+import { UpdateAgendaComponent } from './views/agenda/update-agenda/update-agenda.component';
 
 
 export const routes: Routes = [
@@ -399,6 +400,15 @@ export const routes: Routes = [
       {
         path: 'create-agenda',
         component: CreateAgendaComponent,
+        data: {
+          title: 'Agenda',
+          source: 'RelatorioEstoque'
+        },
+        canActivate: [SourceGuard]
+      },
+      {
+        path: 'update-agenda/:id',
+        component: UpdateAgendaComponent,
         data: {
           title: 'Agenda',
           source: 'RelatorioEstoque'

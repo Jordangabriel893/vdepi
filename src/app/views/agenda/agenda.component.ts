@@ -46,7 +46,7 @@ export class AgendaComponent implements OnInit {
 
   }
   edit(id) {
-    this.router.navigate(['/update-tiponotificacao', id], { relativeTo: this.route });
+    this.router.navigate(['/update-agenda', id], { relativeTo: this.route });
   }
 
 }

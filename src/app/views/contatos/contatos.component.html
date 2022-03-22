@@ -10,30 +10,26 @@
         <div class="card-block">
           <button type="button" class="btn btn-success" [routerLink]="['/create-contatos']"><i class="fa fa-plus-circle"></i>&nbsp; Nova Contato</button>
             <div class="table-responsive mt-4">
-              <table class="table table-striped" [mfData]="leiloes" #mfLeilao="mfDataTable" [mfRowsOnPage]="100">
+              <table class="table table-striped" [mfData]="contatos" #mfContato="mfDataTable" [mfRowsOnPage]="100">
                 <thead>
                   <tr>
-
                     <th>
-                      <mfDefaultSorter by="empresaId">Email</mfDefaultSorter>
+                      <mfDefaultSorter by="index">Id</mfDefaultSorter>
                     </th>
                     <th>
-                      <mfDefaultSorter by="descricao">Primeiro Nome</mfDefaultSorter>
+                      <mfDefaultSorter by="email">Email</mfDefaultSorter>
                     </th>
                     <th>
-                      <mfDefaultSorter by="ativo">Ultimo Nome</mfDefaultSorter>
+                      <mfDefaultSorter by="primeiroNome">Primeiro Nome</mfDefaultSorter>
                     </th>
                     <th>
-                      <mfDefaultSorter by="ativo">Logradouro</mfDefaultSorter>
+                      <mfDefaultSorter by="ultimoNome">Ultimo Nome</mfDefaultSorter>
                     </th>
                     <th>
-                      <mfDefaultSorter by="ativo">Bairro</mfDefaultSorter>
+                      <mfDefaultSorter by="cidade">Cidade</mfDefaultSorter>
                     </th>
                     <th>
-                      <mfDefaultSorter by="ativo">Cidade</mfDefaultSorter>
-                    </th>
-                    <th>
-                      <mfDefaultSorter by="ativo">Uf</mfDefaultSorter>
+                      <mfDefaultSorter by="uf">Uf</mfDefaultSorter>
                     </th>
                     <th class="text-center" >
                       Editar
@@ -45,16 +41,15 @@
                   </tr>
                 </thead>
                 <tbody>
-                  <tr *ngFor="let item of mfLeilao.data">
-                    <td>{{item.id}}</td>
-                    <td>{{item.nome}}</td>
-                    <td>Sim</td>
-                    <td>Sim</td>
-                    <td>Sim</td>
-                    <td>Sim</td>
-                    <td>Sim</td>
+                  <tr *ngFor="let item of mfContato.data">
+                    <td>{{item.contatoId}}</td>
+                    <td>{{item.email}}</td>
+                    <td>{{item.primeiroNome}}</td>
+                    <td>{{item.ultimoNome}}</td>
+                    <td>{{item.cidade}}</td>
+                    <td>{{item.uf}}</td>
                     <td class="text-center" nowrap>
-                      <button type="button" class="btn btn-primary" (click)="edit(item.id)"><i class="fa fa-edit"></i>&nbsp;Editar</button>
+                      <button type="button" class="btn btn-primary" (click)="edit(item.contatoId)"><i class="fa fa-edit"></i>&nbsp;Editar</button>
                     </td>
 
 

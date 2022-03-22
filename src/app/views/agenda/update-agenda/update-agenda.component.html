@@ -14,7 +14,7 @@
                   <div class="form-group col-4">
                     <label for="agendaNotificacaoId">Agenda Notificação :</label>
                     <select class="form-control" [ngClass]="aplicaCssErro('agendaNotificacaoId')" formControlName="agendaNotificacaoId" name="agendaNotificacaoId">
-                      <option ></option>
+                      <option >{{id}}</option>
                     </select>
                   </div>
                   <div class="form-group col-4">
@@ -50,7 +50,7 @@
                       name="dataExecucao"
                       [bsConfig]="{ dateInputFormat: 'DD/MM/YYYY' }"
                       bsDatepicker [minDate]="minDate"
-                      (bsValueChange)="onValueChange($event, 'dataExecucao')" >
+                      (bsValueChange)="onValueChange($event, 'dataExecucao')" value="{{formulario.value.dataExecucao | date:'dd/mm/yyyy'}}">
 
                   </div>
                   <div class="form-group col-4">
@@ -59,7 +59,7 @@
                       name="dataEncerramento"
                       [bsConfig]="{ dateInputFormat: 'DD/MM/YYYY' }"
                       bsDatepicker [minDate]="minDate"
-                      (bsValueChange)="onValueChange($event, 'dataEncerramento')" >
+                      (bsValueChange)="onValueChange($event, 'dataEncerramento')" value="{{formulario.value.dataEncerramento | date:'dd/mm/yyyy'}}">
 
                   </div>
                   <div class="form-group col-4">
@@ -68,7 +68,7 @@
                       name="dataUltimaExecucao"
                       [bsConfig]="{ dateInputFormat: 'DD/MM/YYYY' }"
                       bsDatepicker [minDate]="minDate"
-                      (bsValueChange)="onValueChange($event, 'dataUltimaExecucao')" >
+                      (bsValueChange)="onValueChange($event, 'dataUltimaExecucao')" value="{{formulario.value.dataUltimaExecucao | date:'dd/mm/yyyy'}}">
 
                   </div>
                 </div>
@@ -83,7 +83,7 @@
                       name="dataCadastro"
                       [bsConfig]="{ dateInputFormat: 'DD/MM/YYYY' }"
                       bsDatepicker [minDate]="minDate"
-                      (bsValueChange)="onValueChange($event, 'dataCadastro')" >
+                      (bsValueChange)="onValueChange($event, 'dataCadastro')" value="{{formulario.value.dataCadastro | date:'dd/mm/yyyy'}}">
 
                   </div>
                 </div>

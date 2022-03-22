@@ -10,28 +10,17 @@
         <div class="card-block">
           <button type="button" class="btn btn-success" [routerLink]="['/create-notificacoes']"><i class="fa fa-plus-circle"></i>&nbsp; Nova Notificação</button>
             <div class="table-responsive mt-4">
-              <table class="table table-striped" [mfData]="leiloes" #mfLeilao="mfDataTable" [mfRowsOnPage]="100">
+              <table class="table table-striped" [mfData]="notificacoes" #mfnotificacoes="mfDataTable" [mfRowsOnPage]="100">
                 <thead>
                   <tr>
 
                     <th>
-                      <mfDefaultSorter by="TipoNotificacaoId">TipoNotificacaoId</mfDefaultSorter>
+                      <mfDefaultSorter by="notificacaoId">Id</mfDefaultSorter>
                     </th>
                     <th>
-                      <mfDefaultSorter by="descricao">TituloNotificacao</mfDefaultSorter>
+                      <mfDefaultSorter by="titulo">Titulo</mfDefaultSorter>
                     </th>
-                    <th>
-                      <mfDefaultSorter by="ativo">EmpresaId</mfDefaultSorter>
-                    </th>
-                    <th>
-                      <mfDefaultSorter by="ativo">ListaContatoId </mfDefaultSorter>
-                    </th>
-                    <th>
-                      <mfDefaultSorter by="ativo">ListagemContatos</mfDefaultSorter>
-                    </th>
-                    <th>
-                      <mfDefaultSorter by="ativo">LeilaoId</mfDefaultSorter>
-                    </th>
+
                     <th class="text-center" >
                       Editar
                     </th>
@@ -40,15 +29,12 @@
                   </tr>
                 </thead>
                 <tbody>
-                  <tr *ngFor="let item of mfLeilao.data">
-                    <td>{{item.id}}</td>
-                    <td>{{item.nome}}</td>
-                    <td>Sim</td>
-                    <td>Sim</td>
-                    <td>Sim</td>
-                    <td>Sim</td>
+                  <tr *ngFor="let item of mfnotificacoes.data">
+                    <td>{{item.notificacaoId}}</td>
+                    <td>{{item.titulo}}</td>
+
                     <td class="text-center" nowrap>
-                      <button type="button" class="btn btn-primary" (click)="edit(item.id)"><i class="fa fa-edit"></i>&nbsp;Editar</button>
+                      <button type="button" class="btn btn-primary" (click)="edit(item.notificacaoId)"><i class="fa fa-edit"></i>&nbsp;Editar</button>
                     </td>
                   </tr>
                   <tr *ngIf="loading">

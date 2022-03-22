@@ -16,6 +16,7 @@ export class NotificacoesComponent implements OnInit {
   loading = true;
   selectLeilao;
   leiloes: Model.Leilao[];
+  notificacoes;
   constructor(
     private route: ActivatedRoute,
     private router: Router,
@@ -34,9 +35,8 @@ export class NotificacoesComponent implements OnInit {
    }
 
   ngOnInit() {
-    this.restangular.one("leilao", '').get({PageSize:100}).subscribe((response) => {
-      this.selectLeilao = response.data
-      this.leiloes = response.data;
+    this.restangular.one("marketing/notificacao", '').get({PageSize:100}).subscribe((response) => {
+      this.notificacoes = response.data
       console.log(response.data)
       this.loading = false;
     },

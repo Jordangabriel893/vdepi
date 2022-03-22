@@ -27,7 +27,8 @@
                   <div class="form-group col-4">
                     <label for="statusId">Status </label>
                     <select class="form-control" [ngClass]="aplicaCssErro('statusId')" formControlName="statusId" id="statusId" name="status">
-                      <option *ngFor="let item of status" value="{{item.leilaoStatusId}}">{{item.descricao}}</option>
+                      <option>Sim</option>
+                      <option>Não</option>
                     </select>
                   </div>
                 </div>
