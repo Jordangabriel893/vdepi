@@ -30,10 +30,10 @@
                     <mfDefaultSorter by="dataCadastro">Razão Social</mfDefaultSorter>
                   </th>
                   <th>
-                    <mfDefaultSorter by="dataCadastro">Data Cadastro</mfDefaultSorter>
+                    <mfDefaultSorter by="telefone">Telefone</mfDefaultSorter>
                   </th>
                   <th>
-                    <mfDefaultSorter by="telefone">Telefone</mfDefaultSorter>
+                    <mfDefaultSorter by="dataCadastro">Data Cadastro</mfDefaultSorter>
                   </th>
                   <th>
                     <mfDefaultSorter by="ativo">Ativo</mfDefaultSorter>
@@ -46,12 +46,10 @@
               <tbody>
                 <tr *ngFor="let item of mfEmpresa.data; let i = index">
                   <td>{{item.empresaId}}</td>
-                  <td>{{item.nomeFantasia}}
-                  </td>
+                  <td>{{item.nomeFantasia}}</td>
                   <td>{{item.razaoSocial }}</td>
-                  <td>{{item.dataCadastro | date: 'dd/MM/yyyy' }}</td>
-
                   <td>{{item.telefone }}</td>
+                  <td>{{item.dataCadastro | date: 'dd/MM/yyyy' }}</td>
                   <td>{{item.ativo ? 'Sim' : 'Não' }}</td>
                   <td class="text-center" nowrap>
                     <button type="button" class="btn btn-primary" (click)="edit(item.empresaId)"><i class="fa fa-edit"></i>&nbsp;Editar</button>

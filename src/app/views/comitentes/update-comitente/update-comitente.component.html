@@ -11,15 +11,13 @@
           <div class="card-block">
             <div class="row ">
               <div class="form-group col-4" >
-                <ng-template #nome><app-error-msg [control]="formulario.get('nome')" label="Nome"></app-error-msg></ng-template>
                 <label for="nome">Nome</label>
-                <input [popover]="nome" type="text" class="form-control" [ngClass]="aplicaCssErro('nome')" id="nome" placeholder="Nome" name="nome" formControlName="nome" triggers="keypress:focusout">
+                <input type="text" class="form-control" [ngClass]="aplicaCssErro('nome')" id="nome" placeholder="Nome" name="nome" formControlName="nome">
               </div>
               <div class="form-group col-4">
-                <ng-template #cnpj><app-error-msg [control]="formulario.get('cnpj')" label="CNPJ"></app-error-msg></ng-template>
                 <label for="cnpj">CNPJ</label>
                 <input [ngClass]="aplicaCssErro('cnpj')"  type="text" class="form-control" id="cnpj" placeholder="CNPJ" formControlName="cnpj"
-                [popover]="cnpj" triggers="keypress:focusout" [textMask]="{mask: maskCnpj}">
+                [textMask]="{mask: maskCnpj}">
               </div>
               <div class="form-group col-4">
                 <label for="ativo">Ativo</label>
@@ -31,9 +29,8 @@
           </div>
           <div class="row">
             <div class="form-group col-12" >
-              <ng-template #razaoSocial><app-error-msg [control]="formulario.get('razaoSocial')" label="Razão Social"></app-error-msg></ng-template>
               <label for="razaoSocial">Razão Social</label>
-              <input [popover]="razaoSocial" type="text" class="form-control" [ngClass]="aplicaCssErro('razaoSocial')" id="razaoSocial" placeholder="Razão Social" name="razaoSocial" formControlName="razaoSocial" triggers="keypress:focusout">
+              <input type="text" class="form-control" [ngClass]="aplicaCssErro('razaoSocial')" id="razaoSocial" placeholder="Razão Social" name="razaoSocial" formControlName="razaoSocial">
             </div>
           </div>
           <div class="row">
@@ -56,16 +53,16 @@
               <div class="alert alert-danger" *ngIf="imageError">{{imageError}}</div>
             </div>
           </div>
-         
+
         </div>
         <div class="card-footer ">
           <button type="submit" class="btn btn-primary saveCancel"><i class="fa fa-save"></i> Salvar</button>
-          <button type="reset" class="btn btn-danger" [routerLink]="['/categorias']"><i class="fa fa-undo"></i>
+          <button type="reset" class="btn btn-danger" [routerLink]="['/comitente']"><i class="fa fa-undo"></i>
             Cancelar</button>
         </div>
       </div>
     </div>
   </div>
   </div>
- 
+
 </form>

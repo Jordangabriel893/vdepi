@@ -61,11 +61,11 @@ export class UpdateEmpresaComponent implements OnInit {
       foto: this.formBuilder.group({
         arquivoId:[0],
         nome:[null],
-        base64:[null, Validators.required],
+        base64:[null],
         tipo:[null],
         tamanho:[0]
       }, Validators.required),
-      empresaId:[0],
+      empresaId:[this.id],
       endereco: this.formBuilder.group({
         enderecoId: [0],
         cep: [null, [Validators.required]],
@@ -99,12 +99,12 @@ export class UpdateEmpresaComponent implements OnInit {
       this.notifierService.notify('error', 'Preencha todos os campos obrigatórios');
       return false;
     }
-    this.restangular.all('empresa').post(this.formulario.value).subscribe(a => {
-      this.notifierService.notify('success', 'Empresa criada com sucesso');
+    this.restangular.all('empresa').customPUT(this.formulario.value, this.id).subscribe(a => {
+      this.notifierService.notify('success', 'Empresa atualizada com sucesso');
       this.router.navigate(['/empresa']);
     },
       error => {
-        this.notifierService.notify('error', 'Erro ao criar a empresa!');
+        this.notifierService.notify('error', 'Erro ao atualizar a empresa!');
 
         Object.keys(this.formulario.controls).forEach((campo)=>{
           const controle = this.formulario.get(campo)
@@ -113,14 +113,23 @@ export class UpdateEmpresaComponent implements OnInit {
       });
   }
   updateForm(dados){
+    if(dados.foto) {
+      this.isImageSaved = true
+      this.cardImageBase64 = dados.foto.url
+    }
     this.formulario.patchValue({
-      descricao:dados.descricao,
-      empresa:dados.empresa,
-      telefone:dados.telefone,
-      empresaId:dados.empresaId,
+      ativo:dados.ativo,
+      cnpj:dados.cnpj,
+      codigoTributarioMunicipio:dados.codigoTributarioMunicipio,
+      foto: [dados.foto],
+      fotoId: dados.fotoId,
       endereco: dados.endereco,
-      enderecoId:dados.enderecoId,
-      localLoteId:dados.localLoteId
+      enderecoId: dados.enderecoId,
+      grupoEconomicoId:dados.gruposEconomicoId,
+      inscricaoEstadual:dados.inscricaoEstadual,
+      inscricaoMunicipal:dados.inscricaoMunicipal,
+      nomeFantasia:dados.nomeFantasia,
+      razaoSocial:dados.razaoSocial
     })
   }
   fileChangeEvent(fileInput: any) {

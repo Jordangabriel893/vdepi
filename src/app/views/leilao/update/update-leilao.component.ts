@@ -156,7 +156,7 @@ export class UpdateLeilaoComponent implements OnInit {
       return false;
     }
 
-    this.restangular.all('leilao').customPUT(this.formulario.value,  this.id ) .subscribe(a => {
+    this.restangular.all('leilao').customPUT(this.formulario.value, this.id) .subscribe(a => {
       this.notifierService.notify('success', 'Leilão editado com sucesso');
       this.router.navigate(['/leilao']);
     },

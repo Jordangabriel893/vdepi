@@ -24,23 +24,16 @@ export class CreateLeiloeirosComponent implements OnInit {
   public maskCep: Array<string | RegExp>
   public maskCpf: Array<string | RegExp>
   public maskCnpj: Array<string | RegExp>
-  
-  constructor( 
+
+  constructor(
     private formBuilder: FormBuilder,
     private restangular: Restangular,
     private notifierService: NotifierService,
     private router: Router,
     private cepService: ConsultaCepService
-  ) { 
-    // this.restangular.one("leiloeiro").get().subscribe((response) => {
-    //   this.leiloeiros = response.data
-    //   console.log(this.leiloeiros)
-    //  })
-    
-    this.mask = ['(', /[1-9]/, /\d/, ')', ' ', /\d/,/\d/,/\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/]
+  ) {
+
     this.maskCep = [ /\d/,/\d/,/\d/,/\d/,/\d/, '-', /\d/, /\d/, /\d/, ]
-    this.maskCpf = [ /\d/,/\d/,/\d/,  '.', /\d/,/\d/,/\d/, '.', /\d/, /\d/, /\d/, '-', /\d/,/\d/ ]
-    this.maskCnpj = [ /\d/,/\d/,'.',/\d/,/\d/,/\d/,'.',/\d/,/\d/,/\d/,'/', /\d/,/\d/,/\d/,/\d/,'-',/\d/,/\d/, ]
 
     this.formulario = this.formBuilder.group({
       nome:[null, Validators.required],
@@ -64,14 +57,13 @@ export class CreateLeiloeirosComponent implements OnInit {
           cidade: [null, Validators.required],
           estado: [null, Validators.required],
           logradouro:[null, Validators.required]
-        }),
+        })
       })
   }
 
   ngOnInit() {
   }
   onSubmit(){
-    console.log(this.formulario.value)
     this.restangular.all('leiloeiro').post(this.formulario.value).subscribe(a => {
       this.notifierService.notify('success', 'Leiloeiro Criado com sucesso');
       this.router.navigate(['/leiloeiro']);
@@ -85,7 +77,7 @@ export class CreateLeiloeirosComponent implements OnInit {
         })
       });
   }
-  
+
   consultaCEP() {
     const cep = this.formulario.get('endereco.cep').value;
 
@@ -170,5 +162,31 @@ export class CreateLeiloeirosComponent implements OnInit {
 
   aplicaCssErro(campo){
     return {'has-error': this.verificaValidTouched(campo) }
+  }
+
+  public maskcpfCnpj = function (rawValue) {
+    var numbers = rawValue.match(/\d/g);
+    var numberLength = 0;
+    if (numbers) {
+      numberLength = numbers.join('').length;
+    }
+    if (numberLength <= 11) {
+      return [/[0-9]/, /[0-9]/, /[0-9]/, '.', /[0-9]/, /[0-9]/, /[0-9]/, '.', /[0-9]/, /[0-9]/, /[0-9]/, '-', /[0-9]/, /[0-9]/];
+    } else {
+      return [/[0-9]/, /[0-9]/, '.', /[0-9]/, /[0-9]/, /[0-9]/, '.', /[0-9]/, /[0-9]/, /[0-9]/, '/', /[0-9]/, /[0-9]/, /[0-9]/,  /[0-9]/, '-', /[0-9]/, /[0-9]/];
+    }
+  }
+
+  public maskTelefone = function (rawValue) {
+    var numbers = rawValue.match(/\d/g);
+    var numberLength = 0;
+    if (numbers) {
+      numberLength = numbers.join('').length;
+    }
+    if (numberLength <= 10) {
+      return ['(', /\d/, /\d/, ')', ' ',/\d/, /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/];
+    } else {
+      return ['(', /\d/, /\d/, ')', ' ',/\d/, /\d/, /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/];
+    }
   }
 }

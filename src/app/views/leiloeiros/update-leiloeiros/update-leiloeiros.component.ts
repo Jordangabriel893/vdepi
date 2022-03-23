@@ -38,40 +38,39 @@ export class UpdateLeiloeirosComponent implements OnInit {
     private route: ActivatedRoute,
     private localeService: BsLocaleService
     ) {
-    
+
     this.id = this.route.snapshot.params['id']
     this.restangular.one("leiloeiro", this.id).get().subscribe((response) => {
     this.updateForm(response.data)
     })
-      
-    this.mask = ['(', /[1-9]/, /\d/, ')', ' ', /\d/,/\d/,/\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/]
+
     this.maskCep = [ /\d/,/\d/,/\d/,/\d/,/\d/, '-', /\d/, /\d/, /\d/, ]
-    this.maskCpf = [ /\d/,/\d/,/\d/,  '.', /\d/,/\d/,/\d/, '.', /\d/, /\d/, /\d/, '-', /\d/,/\d/ ]
-    this.maskCnpj = [ /\d/,/\d/,'.',/\d/,/\d/,/\d/,'.',/\d/,/\d/,/\d/,'/', /\d/,/\d/,/\d/,/\d/,'-',/\d/,/\d/, ]
-    
+
     this.formulario = this.formBuilder.group({
+      leiloeiroId: [this.id, Validators.required],
       nome:[null, Validators.required],
       razaoSocial:[null],
       cpfCnpj:[null, Validators.required],
       telefone:[null, Validators.required],
       email:[null, Validators.required],
       foto: this.formBuilder.group({
-        arquivoId:[0],
+        arquivoId:[null],
         nome:[null],
-        base64:[null, Validators.required],
+        base64:[null],
         tipo:[null],
         tamanho:[0]
       }, Validators.required),
-        endereco: this.formBuilder.group({
-          enderecoId: [0],
-          cep: [null, [Validators.required]],
-          numero: [null, Validators.required],
-          complemento: [null],
-          bairro: [null, Validators.required],
-          cidade: [null, Validators.required],
-          estado: [null, Validators.required],
-          logradouro:[null, Validators.required]
-        }),
+      endereco: this.formBuilder.group({
+        enderecoId: [0],
+        cep: [null, [Validators.required]],
+        numero: [null, Validators.required],
+        complemento: [null],
+        bairro: [null, Validators.required],
+        cidade: [null, Validators.required],
+        estado: [null, Validators.required],
+        logradouro:[null, Validators.required]
+      }),
+      ativo: [null]
       })
     }
 
@@ -80,7 +79,6 @@ export class UpdateLeiloeirosComponent implements OnInit {
   }
 
   onSubmit() {
-    console.log(this.formulario.value)
     if(!this.formulario.valid){
       Object.keys(this.formulario.controls).forEach((campo)=>{
         const controle = this.formulario.get(campo)
@@ -90,8 +88,8 @@ export class UpdateLeiloeirosComponent implements OnInit {
       this.notifierService.notify('error', 'Preencha todos os campos obrigatórios');
       return false;
     }
-    this.restangular.all('leiloeiro').post(this.formulario.value).subscribe(a => {
-      this.notifierService.notify('success', 'Leiloeiro Criado com sucesso');
+    this.restangular.all('leiloeiro').customPUT(this.formulario.value, this.id).subscribe(a => {
+      this.notifierService.notify('success', 'Leiloeiro atualizado com sucesso');
       this.router.navigate(['/leiloeiro']);
     },
       error => {
@@ -103,14 +101,21 @@ export class UpdateLeiloeirosComponent implements OnInit {
       });
   }
   updateForm(dados){
+    if(dados.foto) {
+      this.isImageSaved = true
+      this.cardImageBase64 = dados.foto.url
+    }
     this.formulario.patchValue({
-      descricao:dados.descricao,
-      empresa:dados.empresa,
-      telefone:dados.telefone,
-      empresaId:dados.empresaId,
+      nome:dados.nome,
+      razaoSocial:dados.razaoSocial,
+      cpfCnpj:dados.cpfCnpj,
+      telefone: dados.telefone,
+      email: dados.email,
       endereco: dados.endereco,
       enderecoId:dados.enderecoId,
-      localLoteId:dados.localLoteId
+      foto: [dados.foto],
+      fotoId: dados.fotoId,
+      ativo: dados.ativo
     })
   }
   consultaCEP() {
@@ -200,4 +205,29 @@ export class UpdateLeiloeirosComponent implements OnInit {
     return { 'has-error': this.verificaValidTouched(campo) }
   }
 
+  public maskcpfCnpj = function (rawValue) {
+    var numbers = rawValue.match(/\d/g);
+    var numberLength = 0;
+    if (numbers) {
+      numberLength = numbers.join('').length;
+    }
+    if (numberLength <= 11) {
+      return [/[0-9]/, /[0-9]/, /[0-9]/, '.', /[0-9]/, /[0-9]/, /[0-9]/, '.', /[0-9]/, /[0-9]/, /[0-9]/, '-', /[0-9]/, /[0-9]/];
+    } else {
+      return [/[0-9]/, /[0-9]/, '.', /[0-9]/, /[0-9]/, /[0-9]/, '.', /[0-9]/, /[0-9]/, /[0-9]/, '/', /[0-9]/, /[0-9]/, /[0-9]/,  /[0-9]/, '-', /[0-9]/, /[0-9]/];
+    }
+  }
+
+  public maskTelefone = function (rawValue) {
+    var numbers = rawValue.match(/\d/g);
+    var numberLength = 0;
+    if (numbers) {
+      numberLength = numbers.join('').length;
+    }
+    if (numberLength <= 10) {
+      return ['(', /\d/, /\d/, ')', ' ',/\d/, /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/];
+    } else {
+      return ['(', /\d/, /\d/, ')', ' ',/\d/, /\d/, /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/];
+    }
+  }
 }

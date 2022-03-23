@@ -11,14 +11,14 @@ import * as _ from 'lodash';
   styleUrls: ['./update-comitente.component.scss']
 })
 export class UpdateComitenteComponent implements OnInit {
-  
+
   context = {
     message: 'Hello there!'
   };
   imageError: string;
   isImageSaved: boolean;
   cardImageBase64: string;
-  
+
   formulario:FormGroup
   comitente
   id
@@ -47,15 +47,15 @@ export class UpdateComitenteComponent implements OnInit {
     this.maskCnpj = [ /\d/,/\d/,'.',/\d/,/\d/,/\d/,'.',/\d/,/\d/,/\d/,'/', /\d/,/\d/,/\d/,/\d/,'-',/\d/,/\d/, ]
 
     this.formulario = this.formBuilder.group({
+      comitenteId: [this.id],
       cnpj:[null, Validators.required],
       ativo:[null, Validators.required],
-      comitenteId:[0],
       nome:[null, Validators.required],
-      razaoSocial:[null],
+      razaoSocial:[null, Validators.required],
       foto: this.formBuilder.group({
         arquivoId:[0],
         nome:[null],
-        base64:[null, Validators.required],
+        base64:[null],
         tipo:[null],
         tamanho:[0]
       }, Validators.required),
@@ -63,7 +63,7 @@ export class UpdateComitenteComponent implements OnInit {
   }
 
   ngOnInit() {
-      
+
   }
   onSubmit(){
     console.log(this.formulario.value)
@@ -76,7 +76,7 @@ export class UpdateComitenteComponent implements OnInit {
       this.notifierService.notify('error', 'Preencha todos os campos obrigatórios');
       return false;
     }
-    this.restangular.all('comitente').post(this.formulario.value).subscribe(a => {
+    this.restangular.all('comitente').customPUT(this.formulario.value, this.id).subscribe(a => {
       this.notifierService.notify('success', 'Comitente Criado com sucesso');
       this.router.navigate(['/comitente']);
     },
@@ -90,14 +90,17 @@ export class UpdateComitenteComponent implements OnInit {
       });
   }
   updateForm(dados){
+    if(dados.foto) {
+      this.isImageSaved = true
+      this.cardImageBase64 = dados.foto.url
+    }
     this.formulario.patchValue({
-      descricao:dados.descricao,
-      empresa:dados.empresa,
-      telefone:dados.telefone,
-      empresaId:dados.empresaId,
-      endereco: dados.endereco,
-      enderecoId:dados.enderecoId,
-      localLoteId:dados.localLoteId
+      cnpj:dados.cnpj,
+      ativo:dados.ativo,
+      nome:dados.nome,
+      razaoSocial:dados.razaoSocial,
+      foto: [dados.foto],
+      fotoId: dados.fotoId
     })
   }
   fileChangeEvent(fileInput: any) {
