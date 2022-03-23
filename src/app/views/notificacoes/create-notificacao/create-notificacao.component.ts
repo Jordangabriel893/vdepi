@@ -49,7 +49,7 @@ export class CreateNotificacaoComponent implements OnInit {
       ativo: [null, Validators.required],
       templateId: [null, Validators.required],
     })
-    this.restangular.one('​marketing/ListaContato').get().subscribe(
+    this.restangular.one('marketing/ListaContato').get().subscribe(
       dados =>{
         this.listaContato= dados.data
         console.log(this.listaContato)
@@ -65,7 +65,7 @@ export class CreateNotificacaoComponent implements OnInit {
         this.tipoDeNotifi= dados.data
       }
     )
-    this.restangular.one('marketing​/templateNotificacao').get().subscribe(
+    this.restangular.one('marketing/templateNotificacao').get().subscribe(
       dados =>{
         this.templateNotifi= dados.data
       }
