@@ -11,16 +11,17 @@ import * as _ from 'lodash';
   styleUrls: ['./update-comitente.component.scss']
 })
 export class UpdateComitenteComponent implements OnInit {
-  
+
   context = {
     message: 'Hello there!'
   };
   imageError: string;
   isImageSaved: boolean;
   cardImageBase64: string;
-  
+
   formulario:FormGroup
   comitente
+  id
 
   public mask: Array<string | RegExp>
   public maskCep: Array<string | RegExp>
@@ -31,36 +32,51 @@ export class UpdateComitenteComponent implements OnInit {
     private formBuilder: FormBuilder,
     private restangular: Restangular,
     private notifierService: NotifierService,
+    private route: ActivatedRoute,
     private router: Router
   ) {
+
+    this.id = this.route.snapshot.params['id']
+    this.restangular.one("comitente", this.id).get().subscribe((response) => {
+    this.updateForm(response.data)
+    })
+
     this.mask = ['(', /[1-9]/, /\d/, ')', ' ', /\d/,/\d/,/\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/]
     this.maskCep = [ /\d/,/\d/,/\d/,/\d/,/\d/, '-', /\d/, /\d/, /\d/, ]
     this.maskCpf = [ /\d/,/\d/,/\d/,  '.', /\d/,/\d/,/\d/, '.', /\d/, /\d/, /\d/, '-', /\d/,/\d/ ]
     this.maskCnpj = [ /\d/,/\d/,'.',/\d/,/\d/,/\d/,'.',/\d/,/\d/,/\d/,'/', /\d/,/\d/,/\d/,/\d/,'-',/\d/,/\d/, ]
 
     this.formulario = this.formBuilder.group({
+      comitenteId: [this.id],
       cnpj:[null, Validators.required],
       ativo:[null, Validators.required],
-      comitenteId:[0],
       nome:[null, Validators.required],
-      razaoSocial:[null],
-    })
-  }
-
-  ngOnInit() {
-    this.formulario = this.formBuilder.group({
+      razaoSocial:[null, Validators.required],
       foto: this.formBuilder.group({
         arquivoId:[0],
         nome:[null],
-        base64:[null, Validators.required],
+        base64:[null],
         tipo:[null],
         tamanho:[0]
       }, Validators.required),
     })
   }
+
+  ngOnInit() {
+
+  }
   onSubmit(){
     console.log(this.formulario.value)
-    this.restangular.all('comitente').post(this.formulario.value).subscribe(a => {
+    if(!this.formulario.valid){
+      Object.keys(this.formulario.controls).forEach((campo)=>{
+        const controle = this.formulario.get(campo)
+        controle.markAsTouched()
+
+      })
+      this.notifierService.notify('error', 'Preencha todos os campos obrigatórios');
+      return false;
+    }
+    this.restangular.all('comitente').customPUT(this.formulario.value, this.id).subscribe(a => {
       this.notifierService.notify('success', 'Comitente Criado com sucesso');
       this.router.navigate(['/comitente']);
     },
@@ -72,6 +88,20 @@ export class UpdateComitenteComponent implements OnInit {
           controle.markAsTouched()
         })
       });
+  }
+  updateForm(dados){
+    if(dados.foto) {
+      this.isImageSaved = true
+      this.cardImageBase64 = dados.foto.url
+    }
+    this.formulario.patchValue({
+      cnpj:dados.cnpj,
+      ativo:dados.ativo,
+      nome:dados.nome,
+      razaoSocial:dados.razaoSocial,
+      foto: [dados.foto],
+      fotoId: dados.fotoId
+    })
   }
   fileChangeEvent(fileInput: any) {
     this.imageError = null;

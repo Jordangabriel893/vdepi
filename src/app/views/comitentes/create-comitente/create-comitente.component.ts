@@ -13,13 +13,10 @@ import * as _ from 'lodash';
 })
 export class CreateComitenteComponent implements OnInit {
 
-  context = {
-    message: 'Hello there!'
-  };
   imageError: string;
   isImageSaved: boolean;
   cardImageBase64: string;
-  
+
   formulario:FormGroup
   comitente
 
@@ -44,12 +41,7 @@ export class CreateComitenteComponent implements OnInit {
       ativo:[null, Validators.required],
       comitenteId:[0],
       nome:[null, Validators.required],
-      razaoSocial:[null],
-    })
-  }
-
-  ngOnInit() {
-    this.formulario = this.formBuilder.group({
+      razaoSocial:[null, Validators.required],
       foto: this.formBuilder.group({
         arquivoId:[0],
         nome:[null],
@@ -58,6 +50,10 @@ export class CreateComitenteComponent implements OnInit {
         tamanho:[0]
       }, Validators.required),
     })
+  }
+
+  ngOnInit() {
+
   }
   onSubmit(){
     console.log(this.formulario.value)
