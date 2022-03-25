@@ -38,47 +38,60 @@ export class CreateNotificacaoComponent implements OnInit {
 
   ngOnInit() {
     this.formulario = this.formBuilder.group({
-      tituloNotificacao: [null, Validators.required],
+      titulo: [null, Validators.required],
       tipoNotificacaoId: [null, Validators.required],
       tipoMeioNotificacaoId: [null, Validators.required],
       listaContatoId: [null, Validators.required],
-      listagemContatos: [null, Validators.required],
       leilaoId: [null, Validators.required],
-      usuarioId: [null, Validators.required],
-      dataEnvio: [null, Validators.required],
-      ativo: [null, Validators.required],
-      templateId: [null, Validators.required],
+      usuarioId:[0],
+      templateId:[0],
     })
-    this.restangular.one('​marketing/ListaContato').get().subscribe(
+    this.restangular.one('marketing/ListaContato').get().subscribe(
       dados =>{
         this.listaContato= dados.data
-        console.log(this.listaContato)
+
       }
     )
     this.restangular.one('marketing/tipoNotificacao').get().subscribe(
       dados =>{
-        this.tipoMeioNotifi= dados.data
+        this.tipoDeNotifi= dados.data
+
       }
     )
     this.restangular.one('marketing/tipoMeioNotificacao').get().subscribe(
       dados =>{
-        this.tipoDeNotifi= dados.data
+        this.tipoMeioNotifi= dados.data
+
       }
     )
-    this.restangular.one('marketing​/templateNotificacao').get().subscribe(
+    this.restangular.one('marketing/templateNotificacao').get().subscribe(
       dados =>{
         this.templateNotifi= dados.data
       }
     )
-    this.restangular.all('leilao').one('status').get().subscribe(
+    this.restangular.one('leilao').get().subscribe(
       dados =>{
         this.leilao= dados.data
+        console.log(dados.data)
       }
     )
 
   }
   onSubmit(){
 
+
+    this.restangular.all('marketing/notificacao').post(this.formulario.value).subscribe(a => {
+      this.notifierService.notify('success', 'Notificação criado com sucesso');
+      this.router.navigate(['/contatos']);
+    },
+      error => {
+        this.notifierService.notify('error', 'Erro ao criar notificação!');
+
+        Object.keys(this.formulario.controls).forEach((campo)=>{
+          const controle = this.formulario.get(campo)
+          controle.markAsTouched()
+        })
+      });
   }
   verificaValidTouched(campo){
     return !this.formulario.get(campo).valid && this.formulario.get(campo).touched;

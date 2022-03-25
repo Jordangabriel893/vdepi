@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { NotifierService } from 'angular-notifier';
 import { ConsultaCepService } from 'app/views/usuarios/shared/consulta-cep/consulta-cep.service';
 import { BsLocaleService } from 'ngx-bootstrap';
@@ -17,6 +17,7 @@ export class EditContatosComponent implements OnInit {
   formulario:FormGroup
   empresa
   gruposEconomico;
+  id;
 
   public mask: Array<string | RegExp>
   public maskCep: Array<string | RegExp>
@@ -29,8 +30,10 @@ export class EditContatosComponent implements OnInit {
     private notifierService: NotifierService,
     private router: Router,
     private cepService: ConsultaCepService,
-    private localeService: BsLocaleService
+    private localeService: BsLocaleService,
+    private route: ActivatedRoute,
   ) {
+    this.id = this.route.snapshot.params['id']
     localeService.use('pt-br');
     this.minDate = new Date();
     this.minDate.setDate(this.minDate.getDate() + 1);
@@ -44,39 +47,38 @@ export class EditContatosComponent implements OnInit {
       this.gruposEconomico = response.data
     })
     this.formulario = this.formBuilder.group({
-      email:[null, Validators.required],
-      primeiroNome:[null, Validators.required],
-      ultimoNome:[null, Validators.required],
-      dataCadastro:[null, Validators.required],
-      endereco: this.formBuilder.group({
-        enderecoId: [0],
-        cep: [null, [Validators.required]],
-        numero: [null, Validators.required],
-        complemento: [null],
-        bairro: [null, Validators.required],
-        cidade: [null, Validators.required],
-        estado: [null, Validators.required],
-        logradouro:[null, Validators.required]
-      }),
-      cancelarEnvio:[0],
-      ativo:[null],
-      foneWhatsapp:[null],
-      nomeFantasia:[null, Validators.required],
-      foneConvencional:[null, Validators.required],
-      foneCelular:[null, Validators.required],
+      contatoId:[this.id],
+      email: [null, Validators.required],
+      primeiroNome: [null, Validators.required],
+      ultimoNome: [null, Validators.required],
+      listaContatoId: [0, Validators.required],
+      cep: [null],
+      uf: [null],
+      bairro: [null],
+      cidade: [null],
+      logradouro: [null],
+      numero:[null],
+      telefoneWhatsapp: [null],
+      telefoneConvencional: [null],
+      telefoneCelular: [null, Validators.required],
     })
   }
 
   ngOnInit() {
+    this.restangular.all('marketing/contato').get(this.id).subscribe(dados => {
+      this.updateForm(dados.data);
+      console.log(dados.data)
+    })
+
   }
   onSubmit(){
     console.log(this.formulario.value)
-    this.restangular.all('empresa').post(this.formulario.value).subscribe(a => {
-      this.notifierService.notify('success', 'Empresa criada com sucesso');
-      this.router.navigate(['/empresa']);
+    this.restangular.all('marketing/contato').customPUT(this.formulario.value,  this.id ) .subscribe(a => {
+      this.notifierService.notify('success', 'Contato criado com sucesso');
+      this.router.navigate(['/contato']);
     },
       error => {
-        this.notifierService.notify('error', 'Erro ao criar a empresa!');
+        this.notifierService.notify('error', 'Erro ao criar o contato!');
 
         Object.keys(this.formulario.controls).forEach((campo)=>{
           const controle = this.formulario.get(campo)
@@ -85,26 +87,44 @@ export class EditContatosComponent implements OnInit {
       });
   }
   consultaCEP() {
-    const cep = this.formulario.get('endereco.cep').value;
+    const cep = this.formulario.get('cep').value;
 
     if (cep != null && cep !== '') {
       this.cepService.consultaCEP(cep)
-      .subscribe(dados => this.populaDadosForm(dados));
+        .subscribe(dados => this.populaDadosForm(dados));
     }
   }
   populaDadosForm(dados) {
     // this.formulario.setValue({});
 
     this.formulario.patchValue({
-      endereco: {
+
         logradouro: dados.logradouro,
-        // cep: dados.cep,
         complemento: dados.complemento,
         bairro: dados.bairro,
         cidade: dados.localidade,
         estado: dados.uf
-      }
+
     });
+  }
+  updateForm(dados) {
+
+    this.formulario.patchValue({
+      email: dados.email,
+      primeiroNome: dados.primeiroNome,
+      ultimoNome: dados.ultimoNome,
+      listaContatoId:dados.listaContatoId,
+      cep: dados.cep,
+      uf: dados.uf,
+      bairro: dados.bairro,
+      cidade: dados.cidade,
+      logradouro: dados.logradouro,
+      numero: dados.numero,
+      telefoneWhatsapp: dados.telefoneWhatsapp,
+      telefoneConvencional:dados.telefoneConvencional,
+      telefoneCelular: dados.telefoneCelular,
+      ativo:dados.ativo
+    })
   }
   verificaValidTouched(campo){
     return !this.formulario.get(campo).valid && this.formulario.get(campo).touched;
@@ -116,5 +136,15 @@ export class EditContatosComponent implements OnInit {
   onValueChange(event, campo) {
     this.formulario.get(campo).markAsTouched();
     this.formulario.get(campo).setValue(event);
+  }
+  desativar(){
+    this.restangular.all('marketing/contato/Desativar').customPUT( '',this.id ) .subscribe(a => {
+      this.notifierService.notify('success', 'Contato desativado com sucesso');
+      this.router.navigate(['/listacontatos']);
+    },
+      error => {
+        this.notifierService.notify('error', 'Erro ao desativar contato!');
+
+      });
   }
 }

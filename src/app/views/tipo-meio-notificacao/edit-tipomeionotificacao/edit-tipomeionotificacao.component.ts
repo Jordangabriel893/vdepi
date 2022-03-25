@@ -30,8 +30,9 @@ export class EditTipomeionotificacaoComponent implements OnInit {
   ngOnInit() {
     this.id = this.route.snapshot.params['id']
     this.formulario = this.formBuilder.group({
+      tipoMeioNotificacaoId:[this.id],
       descricao: [null, Validators.required],
-      statusId: [null, Validators.required],
+
     })
     this.restangular.all('marketing/tipomeionotificacao').get(this.id).subscribe(dados => {
       this.updateForm(dados.data);
@@ -39,16 +40,7 @@ export class EditTipomeionotificacaoComponent implements OnInit {
     }
 
     )
-    this.restangular.one('empresa').get().subscribe(
-      dados =>{
-        this.empresas= dados.data
-      }
-    )
-    this.restangular.all('leilao').one('status').get().subscribe(
-      dados =>{
-        this.status= dados.data
-      }
-    )
+
 
   }
   onSubmit(){
@@ -64,11 +56,11 @@ export class EditTipomeionotificacaoComponent implements OnInit {
     }
 
     this.restangular.all('marketing/tipomeionotificacao').customPUT(this.formulario.value,  this.id ) .subscribe(a => {
-      this.notifierService.notify('success', 'Tipo de notificação editado com sucesso');
+      this.notifierService.notify('success', 'Tipo meio notificação editado com sucesso');
       this.router.navigate(['/tipomeionotificao']);
     },
       error => {
-        this.notifierService.notify('error', 'Erro ao atualizar tipo de notificação!');
+        this.notifierService.notify('error', 'Erro ao atualizar tipo meio notificação!');
         Object.keys(this.formulario.controls).forEach((campo)=>{
           const controle = this.formulario.get(campo)
           controle.markAsTouched()
@@ -93,4 +85,15 @@ export class EditTipomeionotificacaoComponent implements OnInit {
       descricao: dados.descricao,
     })
   }
+  desativar(){
+    this.restangular.all('marketing/tipomeionotificacao/Desativar').customPUT( '',this.id ) .subscribe(a => {
+      this.notifierService.notify('success', 'Tipo meio notificação desativada com sucesso');
+      this.router.navigate(['/tipomeionotificao']);
+    },
+      error => {
+        this.notifierService.notify('error', 'Erro ao desativar tipo meio notificação!');
+
+      });
+  }
+
 }

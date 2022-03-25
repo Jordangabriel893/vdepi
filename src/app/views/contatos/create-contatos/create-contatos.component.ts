@@ -48,11 +48,12 @@ export class CreateContatosComponent implements OnInit {
       primeiroNome: [null, Validators.required],
       ultimoNome: [null, Validators.required],
       listaContatoId: [0, Validators.required],
-      cep: [null, [Validators.required]],
-      uf: [null, [Validators.required]],
-      bairro: [null, Validators.required],
-      cidade: [null, Validators.required],
-      logradouro: [null, Validators.required],
+      cep: [null],
+      uf: [null],
+      bairro: [null],
+      cidade: [null],
+      logradouro: [null],
+      numero:[null],
       telefoneWhatsapp: [null],
       telefoneConvencional: [null],
       telefoneCelular: [null, Validators.required],
@@ -63,7 +64,7 @@ export class CreateContatosComponent implements OnInit {
   }
   onSubmit() {
     console.log(this.formulario.value)
-    this.restangular.all('marketing​/Contato').post(this.formulario.value).subscribe(a => {
+    this.restangular.all(​'marketing/contato').post(this.formulario.value).subscribe(a => {
       this.notifierService.notify('success', 'Contato criada com sucesso');
       this.router.navigate(['/contatos']);
     },
@@ -77,7 +78,7 @@ export class CreateContatosComponent implements OnInit {
       });
   }
   consultaCEP() {
-    const cep = this.formulario.get('endereco.cep').value;
+    const cep = this.formulario.get('cep').value;
 
     if (cep != null && cep !== '') {
       this.cepService.consultaCEP(cep)

@@ -27,9 +27,10 @@ export class CreateListacontatosComponent implements OnInit {
 
   ngOnInit() {
     this.formulario = this.formBuilder.group({
+      listaContatoId:[0],
       descricao: [null, Validators.required],
       empresaId: [null, Validators.required],
-      statusId: [null, Validators.required],
+
     })
     this.restangular.one('empresa').get().subscribe(
       dados =>{
@@ -44,7 +45,10 @@ export class CreateListacontatosComponent implements OnInit {
 
   }
   onSubmit(){
-    this.restangular.all('marketing/listaContato').post(this.formulario.value).subscribe(a => {
+    const form = {...this.formulario.value, contatos:[0] }
+    console.log(form)
+
+    this.restangular.all('marketing/listaContato').post(form).subscribe(a => {
       this.notifierService.notify('success', 'Lista criada com sucesso');
       this.router.navigate(['/listacontatos']);
     },

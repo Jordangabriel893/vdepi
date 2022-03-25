@@ -20,16 +20,16 @@
                       <mfDefaultSorter by="email">Email</mfDefaultSorter>
                     </th>
                     <th>
-                      <mfDefaultSorter by="primeiroNome">Primeiro Nome</mfDefaultSorter>
+                      <mfDefaultSorter by="primeiroNome">Nome</mfDefaultSorter>
                     </th>
                     <th>
-                      <mfDefaultSorter by="ultimoNome">Ultimo Nome</mfDefaultSorter>
+                      <mfDefaultSorter by="enderecoFormatado">Endereço</mfDefaultSorter>
                     </th>
                     <th>
-                      <mfDefaultSorter by="cidade">Cidade</mfDefaultSorter>
+                      <mfDefaultSorter by="dataCadastro">dataCadastro</mfDefaultSorter>
                     </th>
                     <th>
-                      <mfDefaultSorter by="uf">Uf</mfDefaultSorter>
+                      <mfDefaultSorter by="ativo">Ativo</mfDefaultSorter>
                     </th>
                     <th class="text-center" >
                       Editar
@@ -44,10 +44,10 @@
                   <tr *ngFor="let item of mfContato.data">
                     <td>{{item.contatoId}}</td>
                     <td>{{item.email}}</td>
-                    <td>{{item.primeiroNome}}</td>
-                    <td>{{item.ultimoNome}}</td>
-                    <td>{{item.cidade}}</td>
-                    <td>{{item.uf}}</td>
+                    <td>{{item.primeiroNome}} {{item.ultimoNome}}</td>
+                    <td>{{item.enderecoFormatado}}</td>
+                    <td>{{item.dataCadastro | date:'dd/MM/yyyy'}}</td>
+                    <td>{{item.ativo == true ? 'Sim' : 'Não'}}</td>
                     <td class="text-center" nowrap>
                       <button type="button" class="btn btn-primary" (click)="edit(item.contatoId)"><i class="fa fa-edit"></i>&nbsp;Editar</button>
                     </td>

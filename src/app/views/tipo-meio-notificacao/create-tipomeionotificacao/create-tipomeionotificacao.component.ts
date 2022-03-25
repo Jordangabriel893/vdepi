@@ -28,19 +28,8 @@ export class CreateTipomeionotificacaoComponent implements OnInit {
   ngOnInit() {
     this.formulario = this.formBuilder.group({
       descricao: [null, Validators.required],
-      empresaId: [null, Validators.required],
-      statusId: [null, Validators.required],
+
     })
-    this.restangular.one('empresa').get().subscribe(
-      dados =>{
-        this.empresas= dados.data
-      }
-    )
-    this.restangular.all('leilao').one('status').get().subscribe(
-      dados =>{
-        this.status= dados.data
-      }
-    )
   }
   onSubmit(){
     this.restangular.all('marketing/tipoMeioNotificacao').post(this.formulario.value).subscribe(a => {

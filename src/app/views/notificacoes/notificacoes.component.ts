@@ -35,12 +35,15 @@ export class NotificacoesComponent implements OnInit {
    }
 
   ngOnInit() {
-    this.restangular.one("marketing/notificacao", '').get({PageSize:100}).subscribe((response) => {
-      this.notificacoes = response.data
-      console.log(response.data)
-      this.loading = false;
-    },
-    () => this.loading = false);
+    this.restangular.one('/Marketing/Notificacao').get().subscribe(
+      dados =>{
+
+        this.notificacoes= dados.data
+        this.loading = false;
+      },
+      () => this.loading = false
+    )
+
   }
   edit(id) {
     this.router.navigate(['/update-notificacoes', id], { relativeTo: this.route });

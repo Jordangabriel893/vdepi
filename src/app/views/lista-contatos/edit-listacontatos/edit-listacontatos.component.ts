@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { FormGroup, FormBuilder, Validators, FormArray } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NotifierService } from 'angular-notifier';
 import { BsLocaleService } from 'ngx-bootstrap';
@@ -31,9 +31,10 @@ export class EditListacontatosComponent implements OnInit {
   ngOnInit() {
     this.id = this.route.snapshot.params['id']
     this.formulario = this.formBuilder.group({
+      listaContatoId:[0],
       descricao: [null, Validators.required],
       empresaId: [null, Validators.required],
-      statusId: [null, Validators.required],
+      contatos: this.formBuilder.array([0])
     })
     this.restangular.one('empresa').get().subscribe(
       dados =>{
@@ -97,4 +98,15 @@ export class EditListacontatosComponent implements OnInit {
       empresaId: dados.empresaId,
     })
   }
+  desativar(){
+    this.restangular.all('marketing/ListaContato/Desativar').customPUT( '',this.id ) .subscribe(a => {
+      this.notifierService.notify('success', 'Lista de contatos desativada com sucesso');
+      this.router.navigate(['/listacontatos']);
+    },
+      error => {
+        this.notifierService.notify('error', 'Erro ao desativar lista de contatos!');
+
+      });
+  }
+
 }
