@@ -30,26 +30,15 @@ export class EditTiponotificacaoComponent implements OnInit {
   ngOnInit() {
     this.id = this.route.snapshot.params['id']
     this.formulario = this.formBuilder.group({
+      tipoNotificacaoId:[this.id],
       descricao: [null, Validators.required],
-      statusId: [null, Validators.required],
+
     })
     this.restangular.all('marketing/TipoNotificacao').get(this.id).subscribe(dados => {
       this.updateForm(dados.data);
       console.log(dados.data)
     }
 
-    )
-
-
-    this.restangular.one('empresa').get().subscribe(
-      dados =>{
-        this.empresas= dados.data
-      }
-    )
-    this.restangular.all('leilao').one('status').get().subscribe(
-      dados =>{
-        this.status= dados.data
-      }
     )
 
   }
@@ -94,6 +83,17 @@ export class EditTiponotificacaoComponent implements OnInit {
 
     this.formulario.patchValue({
       descricao: dados.descricao,
+      tipoNotificacaoId: dados.tipoNotificacaoId
     })
+  }
+  desativar(){
+    this.restangular.all('marketing/TipoNotificacao/Desativar').customPUT( '',this.id ) .subscribe(a => {
+      this.notifierService.notify('success', 'Tipo de notificação desativada com sucesso');
+      this.router.navigate(['/tiponotificacao']);
+    },
+      error => {
+        this.notifierService.notify('error', 'Erro ao desativar tipo de notificação!');
+
+      });
   }
 }

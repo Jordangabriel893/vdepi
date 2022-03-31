@@ -75,7 +75,7 @@ export class EditContatosComponent implements OnInit {
     console.log(this.formulario.value)
     this.restangular.all('marketing/contato').customPUT(this.formulario.value,  this.id ) .subscribe(a => {
       this.notifierService.notify('success', 'Contato criado com sucesso');
-      this.router.navigate(['/contato']);
+      this.router.navigate(['/contatos']);
     },
       error => {
         this.notifierService.notify('error', 'Erro ao criar o contato!');

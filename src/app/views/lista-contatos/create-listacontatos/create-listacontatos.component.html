@@ -1,10 +1,10 @@
-<form [formGroup]="formulario" (ngSubmit)="onSubmit()" appFocus>
+<form [formGroup]="formulario" (ngSubmit)="onSubmit()" appFocus *ngIf="formulario">
   <div class="animated fadeIn">
     <div class="row">
       <div class="col-lg-12">
         <div class="card">
           <div class="card-header d-flex align-items-center">
-            <i class="fa fa-file"></i>
+            <i class="fa fa-users"></i>
             &nbsp;Lista de contatos
           </div>
           <div class="card-block">
@@ -21,6 +21,72 @@
                       <option *ngFor="let item of empresas" value="{{item.empresaId}}">{{item.nomeFantasia}}</option>
                     </select>
                   </div>
+
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="animated fadeIn">
+    <div class="row">
+      <div class="col-lg-12">
+        <div class="card">
+          <div class="card-header d-flex align-items-center">
+            <i class="fa fa-user" aria-hidden="true"></i>
+            &nbsp;Contatos
+          </div>
+          <div class="card-block">
+            <div class="row" >
+              <div class="col-12">
+                <div class="row ">
+                  <table class="table table-striped" [mfData]="contato" #mfContatos="mfDataTable" [mfRowsOnPage]="100">
+                    <thead>
+                      <tr>
+
+                        <th>
+                          <mfDefaultSorter by="nomeCompleto">Nome</mfDefaultSorter>
+                        </th>
+                        <th>
+                          <mfDefaultSorter by="email">Email</mfDefaultSorter>
+                        </th>
+                        <th>
+                          <mfDefaultSorter by="telefoneCelular">Telefone:</mfDefaultSorter>
+                        </th>
+                        <th>
+                          <mfDefaultSorter by="incluir">Incluir:</mfDefaultSorter>
+                        </th>
+
+
+
+                      </tr>
+                    </thead>
+                    <tbody formArrayName="contatos" *ngIf="this.formulario.value.contatos.length > 0">
+                      <tr *ngFor="let item of mfContatos.data; let i = index">
+                        <td>{{item.nomeCompleto}}</td>
+                        <td>{{item.email}}</td>
+                        <td>{{item.telefoneCelular}}</td>
+                        <td id="jstf-cnt" [formGroupName]="i" ><input type="checkbox" formControlName="value" (click)="incluirContato(item, i )" ></td>
+
+
+                      </tr>
+                      <tr *ngIf="loading">
+                        <td class="text-center text-muted" colspan="9">
+                          <h5><i class="fa fa-spin fa-spinner"></i>&nbsp;Carregando...</h5>
+                        </td>
+                      </tr>
+                    </tbody>
+                    <tfoot>
+                      <tr>
+                        <td colspan="9">
+                          <mfBootstrapPaginator [rowsOnPageSet]="[5,10,25]"></mfBootstrapPaginator>
+                        </td>
+                      </tr>
+                    </tfoot>
+                  </table>
 
                 </div>
               </div>

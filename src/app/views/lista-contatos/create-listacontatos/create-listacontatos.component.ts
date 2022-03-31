@@ -14,6 +14,9 @@ export class CreateListacontatosComponent implements OnInit {
   empresas: any;
   formulario:FormGroup;
   status: any;
+  loading = true;
+  contato;
+  contatos = [];
 
   constructor(
     private formBuilder: FormBuilder,
@@ -26,12 +29,7 @@ export class CreateListacontatosComponent implements OnInit {
    }
 
   ngOnInit() {
-    this.formulario = this.formBuilder.group({
-      listaContatoId:[0],
-      descricao: [null, Validators.required],
-      empresaId: [null, Validators.required],
 
-    })
     this.restangular.one('empresa').get().subscribe(
       dados =>{
         this.empresas= dados.data
@@ -42,10 +40,21 @@ export class CreateListacontatosComponent implements OnInit {
         this.status= dados.data
       }
     )
+    this.restangular.one("marketing/Contato", '').get({PageSize:100}).subscribe((response) => {
+      this.contato = response.data
+      this.updateContatos(response.data)
+       console.log(response.data)
+       this.loading = false;
+     },
+     () => this.loading = false);
 
   }
   onSubmit(){
-    const form = {...this.formulario.value, contatos:[0] }
+    const form = {
+       listaContatoId:this.formulario.value.listaContatoId,
+       descricao:this.formulario.value.descricao,
+       empresaId:this.formulario.value.empresaId,
+       contatos:this.contatos }
     console.log(form)
 
     this.restangular.all('marketing/listaContato').post(form).subscribe(a => {
@@ -72,5 +81,28 @@ export class CreateListacontatosComponent implements OnInit {
   onValueChange(event, campo) {
     this.formulario.get(campo).markAsTouched();
     this.formulario.get(campo).setValue(event);
+  }
+  incluirContato(contato, i){
+console.log(this.contatos.includes(contato))
+    if(this.contatos.includes(contato) == false ){
+      this.contatos.push(contato)
+      console.log(this.contatos)
+    }else{
+      const retiraObjeto = this.contatos.filter(x => x.contatoId == contato.contatoId)
+      const novoArray = this.contatos.filter(x => !retiraObjeto.includes(x))
+      this.contatos = novoArray
+      console.log(novoArray)
+    }
+
+
+
+  }
+  updateContatos(contatos){
+    this.formulario = this.formBuilder.group({
+      listaContatoId:[0],
+      descricao: [null, Validators.required],
+      empresaId: [null, Validators.required],
+      contatos: this.formBuilder.array(contatos ? contatos.map(x => this.formBuilder.group({ ...x, value: false })) : [], Validators.required),
+    })
   }
 }

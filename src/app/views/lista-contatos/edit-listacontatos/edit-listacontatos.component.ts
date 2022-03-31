@@ -15,7 +15,9 @@ export class EditListacontatosComponent implements OnInit {
   empresas: any;
   formulario:FormGroup;
   status: any;
-
+  contatos = [];
+  contato = [];
+  loading;
   constructor(
     private formBuilder: FormBuilder,
     private restangular: Restangular,
@@ -30,12 +32,7 @@ export class EditListacontatosComponent implements OnInit {
 
   ngOnInit() {
     this.id = this.route.snapshot.params['id']
-    this.formulario = this.formBuilder.group({
-      listaContatoId:[0],
-      descricao: [null, Validators.required],
-      empresaId: [null, Validators.required],
-      contatos: this.formBuilder.array([0])
-    })
+
     this.restangular.one('empresa').get().subscribe(
       dados =>{
         this.empresas= dados.data
@@ -46,9 +43,16 @@ export class EditListacontatosComponent implements OnInit {
         this.status= dados.data
       }
     )
+    this.restangular.one("marketing/Contato", '').get({PageSize:100}).subscribe((response) => {
+      this.contato = response.data
+      this.updateContatos(response.data)
+       console.log(response.data)
+       this.loading = false;
+     },
+     () => this.loading = false);
 
     this.restangular.all('marketing/ListaContato').get(this.id).subscribe(dados => {
-      this.updateForm(dados.data);
+      this.updateContatos(dados.data);
       console.log(dados.data)
     }
 
@@ -91,13 +95,29 @@ export class EditListacontatosComponent implements OnInit {
     this.formulario.get(campo).markAsTouched();
     this.formulario.get(campo).setValue(event);
   }
-  updateForm(dados) {
+  incluirContato(contato, i){
+    console.log(this.contatos.includes(contato))
+        if(this.contatos.includes(contato) == false ){
+          this.contatos.push(contato)
+          console.log(this.contatos)
+        }else{
+          const retiraObjeto = this.contatos.filter(x => x.contatoId == contato.contatoId)
+          const novoArray = this.contatos.filter(x => !retiraObjeto.includes(x))
+          this.contatos = novoArray
+          console.log(novoArray)
+        }
 
-    this.formulario.patchValue({
-      descricao: dados.descricao,
-      empresaId: dados.empresaId,
-    })
-  }
+
+
+      }
+      updateContatos(contatos){
+        this.formulario = this.formBuilder.group({
+          listaContatoId:[0],
+          descricao: [null, Validators.required],
+          empresaId: [null, Validators.required],
+          contatos: this.formBuilder.array(contatos ? contatos.map(x => this.formBuilder.group({ ...x, value: false })) : [], Validators.required),
+        })
+      }
   desativar(){
     this.restangular.all('marketing/ListaContato/Desativar').customPUT( '',this.id ) .subscribe(a => {
       this.notifierService.notify('success', 'Lista de contatos desativada com sucesso');

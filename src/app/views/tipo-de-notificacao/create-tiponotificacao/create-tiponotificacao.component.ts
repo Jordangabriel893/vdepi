@@ -28,8 +28,7 @@ export class CreateTiponotificacaoComponent implements OnInit {
   ngOnInit() {
     this.formulario = this.formBuilder.group({
       descricao: [null, Validators.required],
-      empresaId: [null, Validators.required],
-      statusId: [null, Validators.required],
+
     })
     this.restangular.one('empresa').get().subscribe(
       dados =>{

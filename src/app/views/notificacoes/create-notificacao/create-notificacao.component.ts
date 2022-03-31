@@ -82,7 +82,7 @@ export class CreateNotificacaoComponent implements OnInit {
 
     this.restangular.all('marketing/notificacao').post(this.formulario.value).subscribe(a => {
       this.notifierService.notify('success', 'Notificação criado com sucesso');
-      this.router.navigate(['/contatos']);
+      this.router.navigate(['/notificacoes']);
     },
       error => {
         this.notifierService.notify('error', 'Erro ao criar notificação!');

@@ -63,37 +63,37 @@ export const navigation = [
   {
     name: 'Lista de Contatos',
     url: '/listacontatos',
-    icon: 'fa fa-dollar-sign',
+    icon: 'fa fa-users',
     source: 'Resultado'
   },
   {
     name: 'Contatos',
     url: '/contatos',
-    icon: 'fa fa-dollar-sign',
+    icon: 'fa fa-user',
     source: 'Resultado'
   },
   {
     name: 'Notificações',
     url: '/notificacoes',
-    icon: 'fa fa-dollar-sign',
+    icon: 'fa fa-comment',
     source: 'Resultado'
   },
   {
     name: 'Meio Notificação',
     url: '/tipomeionotificao',
-    icon: 'fa fa-dollar-sign',
+    icon: 'fa fa-comment',
     source: 'Resultado'
   },
   {
     name: 'Tipo Notificação',
     url: '/tiponotificacao',
-    icon: 'fa fa-dollar-sign',
+    icon: 'fa fa-comment',
     source: 'Resultado'
   },
   {
     name: 'Agenda',
     url: '/agenda',
-    icon: 'fa fa-dollar-sign',
+    icon: 'fa fa-book',
     source: 'Resultado'
   },
   {
