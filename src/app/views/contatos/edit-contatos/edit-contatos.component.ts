@@ -20,6 +20,7 @@ export class EditContatosComponent implements OnInit {
   id;
 
   public mask: Array<string | RegExp>
+  public maskTelefoneFixo: Array<string | RegExp>
   public maskCep: Array<string | RegExp>
   public maskCpf: Array<string | RegExp>
   public maskCnpj: Array<string | RegExp>
@@ -39,6 +40,7 @@ export class EditContatosComponent implements OnInit {
     this.minDate.setDate(this.minDate.getDate() + 1);
 
     this.mask = ['(', /[1-9]/, /\d/, ')', ' ', /\d/,/\d/,/\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/]
+    this.maskTelefoneFixo = ['(', /[1-9]/, /\d/, ')', ' ', /\d/, /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/]
     this.maskCep = [ /\d/,/\d/,/\d/,/\d/,/\d/, '-', /\d/, /\d/, /\d/, ]
     this.maskCpf = [ /\d/,/\d/,/\d/,  '.', /\d/,/\d/,/\d/, '.', /\d/, /\d/, /\d/, '-', /\d/,/\d/ ]
     this.maskCnpj = [ /\d/,/\d/,'.',/\d/,/\d/,/\d/,'.',/\d/,/\d/,/\d/,'/', /\d/,/\d/,/\d/,/\d/,'-',/\d/,/\d/, ]
@@ -57,6 +59,7 @@ export class EditContatosComponent implements OnInit {
       bairro: [null],
       cidade: [null],
       logradouro: [null],
+      complemento:[null],
       numero:[null],
       telefoneWhatsapp: [null],
       telefoneConvencional: [null],

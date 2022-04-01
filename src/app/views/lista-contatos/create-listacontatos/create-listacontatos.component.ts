@@ -50,11 +50,13 @@ export class CreateListacontatosComponent implements OnInit {
 
   }
   onSubmit(){
+    const arrayContatosIds = this.contatos.map(x => x.contatoId)
+
     const form = {
        listaContatoId:this.formulario.value.listaContatoId,
        descricao:this.formulario.value.descricao,
        empresaId:this.formulario.value.empresaId,
-       contatos:this.contatos }
+       contatos:arrayContatosIds }
     console.log(form)
 
     this.restangular.all('marketing/listaContato').post(form).subscribe(a => {

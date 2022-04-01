@@ -112,10 +112,10 @@ export class EditListacontatosComponent implements OnInit {
       }
       updateContatos(contatos){
         this.formulario = this.formBuilder.group({
-          listaContatoId:[0],
-          descricao: [null, Validators.required],
-          empresaId: [null, Validators.required],
-          contatos: this.formBuilder.array(contatos ? contatos.map(x => this.formBuilder.group({ ...x, value: false })) : [], Validators.required),
+          listaContatoId:[contatos.listaContatoId],
+          descricao: [contatos.descricao, Validators.required],
+          empresaId: [contatos.empresaId, Validators.required],
+          contatos: this.formBuilder.array(this.contato ? this.contato.map(x => this.formBuilder.group({ ...x, value: false })) : [], Validators.required),
         })
       }
   desativar(){

@@ -17,6 +17,7 @@ export class CreateAgendaComponent implements OnInit {
   minDate;
   notificacoes;
   tiposAgenda;
+  agendaNotificacao;
   constructor(
     private formBuilder: FormBuilder,
     private restangular: Restangular,
@@ -34,16 +35,18 @@ export class CreateAgendaComponent implements OnInit {
       agendaNotificacaoId: [null, Validators.required],
       notificacaoId: [null, Validators.required],
       tipoAgendaId: [null, Validators.required],
-      dataExecucao: [null, Validators.required],
-      dataEncerramento: [null, Validators.required],
-      dataUltimaExecucao: [null, Validators.required],
       intervaloMinutos: [null, Validators.required],
-      dataCadastro: [null, Validators.required],
     })
     this.restangular.one('marketing/notificacao').get().subscribe(
       dados =>{
         this.notificacoes= dados.data
         console.log(this.notificacoes)
+      }
+    )
+    this.restangular.one('marketing/AgendaNotificacao').get().subscribe(
+      dados =>{
+        this.agendaNotificacao = dados.data
+        console.log(dados.data)
       }
     )
     this.restangular.one('marketing/tipoAgendaNotificacao').get().subscribe(

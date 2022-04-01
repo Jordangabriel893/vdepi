@@ -30,7 +30,7 @@
               </div>
               <div class="form-group col-4" >
                 <label for="telefoneConvencional">Telefone Convencional</label>
-                <input type="text" class="form-control" [textMask]="{mask: mask}"  id="telefoneConvencional" name="telefoneConvencional" formControlName="telefoneConvencional" triggers="keypress:focusout">
+                <input type="text" class="form-control" [textMask]="{mask: maskTelefoneFixo}"  id="telefoneConvencional" name="telefoneConvencional" formControlName="telefoneConvencional" triggers="keypress:focusout">
               </div>
               <div class="form-group col-4" >
                 <label for="telefoneCelular">Telefone Celular</label>
@@ -91,6 +91,13 @@
                   formControlName="numero"   triggers="keypress:focusout">
               </div>
 
+            </div>
+            <div class="row">
+              <div class="form-group col-12">
+                <label for="complemento">Complemento</label>
+                <input type="text" class="form-control" id="complemento"
+                  formControlName="complemento"   triggers="keypress:focusout">
+              </div>
             </div>
           </div>
           <div class="card-footer">
