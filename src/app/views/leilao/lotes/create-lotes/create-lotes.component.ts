@@ -9,6 +9,7 @@ import { Restangular } from 'ngx-restangular';
 import * as _ from 'lodash';
 import * as moment from 'moment';
 import { NotifierService } from 'angular-notifier';
+import { TabHeadingDirective } from 'ngx-bootstrap';
 
 
 @Component({
@@ -42,6 +43,7 @@ export class CreateLotesComponent implements OnInit {
   fotostamanho: any
   fotostipo: any
   numeroAdcFoto: number
+  arrayFotos = [ ];
 
   //anexos
   anexosbase64: any
@@ -49,6 +51,7 @@ export class CreateLotesComponent implements OnInit {
   anexostamanho: any
   anexostipo: any
   numeroAdcAnexo: number
+  arrayAnexos = [];
 
   local: any
   editorConfig: AngularEditorConfig = {
@@ -197,62 +200,76 @@ export class CreateLotesComponent implements OnInit {
   }
 
   fileChangeEvent(fileInput: any) {
+
     this.imageError = null;
-    if (fileInput.target.files && fileInput.target.files[0]) {
-      // Size Filter Bytes
-      const max_size = 20971520;
-      const allowed_types = ['image/png', 'image/jpeg'];
-      const max_height = 15200;
-      const max_width = 25600;
-
-      if (fileInput.target.files[0].size > max_size) {
-        this.imageError =
-          'Maximum size allowed is ' + max_size / 1000 + 'Mb';
-
-        return false;
-      }
-
-      if (!_.includes(allowed_types, fileInput.target.files[0].type)) {
-        this.imageError = 'Only Images are allowed ( JPG | PNG )';
-        return false;
-      }
-      const reader = new FileReader();
-      reader.onload = (e: any) => {
-        const image = new Image();
-        image.src = e.target.result;
-        image.onload = rs => {
-          const img_height = rs.currentTarget['height'];
-          const img_width = rs.currentTarget['width'];
-
-
-
-          if (img_height > max_height && img_width > max_width) {
-            this.imageError =
-              'Maximum dimentions allowed ' +
-              max_height +
-              '*' +
-              max_width +
-              'px';
-            return false;
-          } else {
-            const imgBase64Path = e.target.result;
-            const arquivo =
-            {
-              url: imgBase64Path,
-              nome: fileInput.target.files[0].name,
-              base64: imgBase64Path,
-              tipo: fileInput.target.files[0].type,
-              tamanho: fileInput.target.files[0].size
-            }
-
-            this.atualizarFoto(arquivo, this.numeroAdcFoto)
-          }
-        };
-      };
-
-      reader.readAsDataURL(fileInput.target.files[0]);
-
+    const arrayImagens = fileInput.target.files.length
+    console.log(arrayImagens)
+    for(let i = 0; i < arrayImagens; i ++){
+     console.log(fileInput.target.files[i])
+     this.arrayFotos.push(fileInput.target.files[i])
     }
+    console.log(this.arrayFotos)
+    this.arrayFotos.forEach((x: any)=>{
+      if (x ) {
+        // Size Filter Bytes
+        const max_size = 20971520;
+        const allowed_types = ['image/png', 'image/jpeg'];
+        const max_height = 15200;
+        const max_width = 25600;
+
+        if (x.size > max_size) {
+          this.imageError =
+            'Maximum size allowed is ' + max_size / 1000 + 'Mb';
+            this.arrayFotos = [];
+          return false;
+        }
+
+        if (!_.includes(allowed_types, x.type)) {
+          this.arrayFotos = [];
+          this.imageError = 'Only Images are allowed ( JPG | PNG )';
+          return false;
+
+        }
+        const reader = new FileReader();
+        reader.onload = (e: any) => {
+          const image = new Image();
+          image.src = e.target.result;
+          image.onload = rs => {
+            const img_height = rs.currentTarget['height'];
+            const img_width = rs.currentTarget['width'];
+            this.arrayFotos = [];
+
+
+            if (img_height > max_height && img_width > max_width) {
+              this.imageError =
+                'Maximum dimentions allowed ' +
+                max_height +
+                '*' +
+                max_width +
+                'px';
+              return false;
+            } else {
+              const imgBase64Path = e.target.result;
+              const arquivo =
+              {
+                url: imgBase64Path,
+                nome: x.name,
+                base64: imgBase64Path,
+                tipo: x.type,
+                tamanho: x.size
+              }
+              this.arrayFotos = [];
+              this.atualizarFoto(arquivo, this.numeroAdcFoto)
+
+            }
+          };
+        };
+
+        reader.readAsDataURL(x);
+
+      }
+
+    })
 
   }
 

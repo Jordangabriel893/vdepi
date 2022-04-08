@@ -20,6 +20,21 @@
                     <th>
                       <mfDefaultSorter by="titulo">Titulo</mfDefaultSorter>
                     </th>
+                    <th>
+                      <mfDefaultSorter by="tipoNotificacao">Tipo Notificação</mfDefaultSorter>
+                    </th>
+                    <th>
+                      <mfDefaultSorter by="tipoMeioNotificacao">Tipo Meio</mfDefaultSorter>
+                    </th>
+                    <th>
+                      <mfDefaultSorter by="template">Template</mfDefaultSorter>
+                    </th>
+                    <th>
+                      <mfDefaultSorter by="listaContato">Lista Contato</mfDefaultSorter>
+                    </th>
+                    <th>
+                      <mfDefaultSorter by="leilao">Leilão</mfDefaultSorter>
+                    </th>
 
                     <th class="text-center" >
                       Editar
@@ -32,7 +47,11 @@
                   <tr *ngFor="let item of mfnotificacoes.data">
                     <td>{{item.notificacaoId}}</td>
                     <td>{{item.titulo}}</td>
-
+                    <td>{{item.tipoNotificacao}}</td>
+                    <td>{{item.tipoMeioNotificacao}}</td>
+                    <td>{{item.template}}</td>
+                    <td>{{item.listaContato}}</td>
+                    <td>{{item.leilao}}</td>
                     <td class="text-center" nowrap>
                       <button type="button" class="btn btn-primary" (click)="edit(item.notificacaoId)"><i class="fa fa-edit"></i>&nbsp;Editar</button>
                     </td>

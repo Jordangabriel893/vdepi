@@ -17,10 +17,19 @@
                       <mfDefaultSorter by="agendaNotificacaoId">Id</mfDefaultSorter>
                     </th>
                     <th>
-                      <mfDefaultSorter by="dataCadastro">Data Cadastro</mfDefaultSorter>
+                      <mfDefaultSorter by="tipoAgenda">Tipo Agenda</mfDefaultSorter>
+                    </th>
+                    <th>
+                      <mfDefaultSorter by="notificacao">Notificação</mfDefaultSorter>
                     </th>
                     <th>
                       <mfDefaultSorter by="dataExecucao">Data Execução</mfDefaultSorter>
+                    </th>
+                    <th>
+                      <mfDefaultSorter by="dataEncerramento">Data Encerramento</mfDefaultSorter>
+                    </th>
+                    <th>
+                      <mfDefaultSorter by="dataCadastro">Data Cadastro</mfDefaultSorter>
                     </th>
                     <th class="text-center" >
                       Editar
@@ -31,8 +40,12 @@
                 <tbody>
                   <tr *ngFor="let item of mfagendas.data">
                     <td>{{item.agendaNotificacaoId}}</td>
-                    <td>{{item.dataCadastro | date: 'dd/MM/yyyy'}}</td>
+                    <td>{{item.tipoAgenda }}</td>
+                    <td>{{item.notificacao }}</td>
                     <td>{{item.dataExecucao | date: 'dd/MM/yyyy'}}</td>
+                    <td>{{item.dataEncerramento | date: 'dd/MM/yyyy'}}</td>
+                    <td>{{item.dataCadastro | date: 'dd/MM/yyyy'}}</td>
+
                     <td class="text-center" nowrap>
                       <button type="button" class="btn btn-primary" (click)="edit(item.agendaNotificacaoId)"><i class="fa fa-edit"></i>&nbsp;Editar</button>
                     </td>

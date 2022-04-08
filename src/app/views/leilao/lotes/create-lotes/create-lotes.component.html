@@ -268,7 +268,7 @@
           </div>
             <button type="button" class="btn btn-success btn-sm" (click)="alterarFoto(-1)">
               <i class="fa fa-plus-circle"></i>&nbsp;Nova Foto</button>
-              <input type="file"  #inputFotos (change)="fileChangeEvent($event)">
+              <input type="file"  multiple  #inputFotos (change)="fileChangeEvent($event)">
           </div>
           <div class="card-block" *ngIf="this.formulario.value.fotos.length > 0">
             <div class="row">
@@ -315,7 +315,7 @@
           </div>
             <button type="button" class="btn btn-success btn-sm" (click)="alterarAnexo(-1)">
               <i class="fa fa-plus-circle"></i>&nbsp;Novo Anexo</button>
-              <input type="file" #inputAnexos (change)="anexoChangeEvent($event.target.files)">
+              <input type="file"  #inputAnexos (change)="anexoChangeEvent($event.target.files)">
           </div>
           <div class="card-block" *ngIf="this.formulario.value.anexos.length > 0">
             <table class="table">

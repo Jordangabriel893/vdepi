@@ -38,10 +38,10 @@ export class UpdateAgendaComponent implements OnInit {
       notificacaoId: [null, Validators.required],
       tipoAgendaId: [null, Validators.required],
       dataExecucao: [null, Validators.required],
-      dataEncerramento: [null, Validators.required],
-      dataUltimaExecucao: [null, Validators.required],
+      dataEncerramento: [null],
+      dataUltimaExecucao: [null],
       intervaloMinutos: [null, Validators.required],
-      dataCadastro: [null, Validators.required],
+      dataCadastro: [null],
     })
     this.restangular.all('marketing/AgendaNotificacao').get(this.id).subscribe(dados => {
       this.updateForm(dados.data);
@@ -51,13 +51,12 @@ export class UpdateAgendaComponent implements OnInit {
     this.restangular.one('marketing/notificacao').get().subscribe(
       dados =>{
         this.notificacoes= dados.data
-        console.log(this.notificacoes)
+
       }
     )
     this.restangular.one('marketing/tipoAgendaNotificacao').get().subscribe(
       dados =>{
         this.tiposAgenda= dados.data
-        console.log(this.tiposAgenda)
       }
     )
 

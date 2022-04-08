@@ -31,6 +31,8 @@ export class EditListacontatosComponent implements OnInit {
    }
 
   ngOnInit() {
+    this.contatos = [];
+    this.contato = [];
     this.id = this.route.snapshot.params['id']
 
     this.restangular.one('empresa').get().subscribe(
@@ -45,22 +47,29 @@ export class EditListacontatosComponent implements OnInit {
     )
     this.restangular.one("marketing/Contato", '').get({PageSize:100}).subscribe((response) => {
       this.contato = response.data
-      this.updateContatos(response.data)
-       console.log(response.data)
+
        this.loading = false;
+       this.restangular.all('marketing/ListaContato').get(this.id).subscribe(dados => {
+        this.updateContatos(dados.data);
+        console.log(dados.data)
+      }
+
+      )
      },
      () => this.loading = false);
 
-    this.restangular.all('marketing/ListaContato').get(this.id).subscribe(dados => {
-      this.updateContatos(dados.data);
-      console.log(dados.data)
-    }
 
-    )
 
   }
   onSubmit(){
-    // console.log(this.formulario.value)
+    const contatosSelecionados = this.formulario.value.contatos.filter(x => x.value == true)
+    const arrayContatosIds = contatosSelecionados.map(x => x.contatoId)
+    const form = {
+       listaContatoId:this.formulario.value.listaContatoId,
+       descricao:this.formulario.value.descricao,
+       empresaId:this.formulario.value.empresaId,
+       contatos:arrayContatosIds }
+
     if(!this.formulario.valid){
       Object.keys(this.formulario.controls).forEach((campo)=>{
         const controle = this.formulario.get(campo)
@@ -71,7 +80,7 @@ export class EditListacontatosComponent implements OnInit {
       return false;
     }
 
-    this.restangular.all('marketing/ListaContato').customPUT(this.formulario.value,  this.id ) .subscribe(a => {
+    this.restangular.all('marketing/ListaContato').customPUT(form,  this.id ) .subscribe(a => {
       this.notifierService.notify('success', 'Lista de contatos editado com sucesso');
       this.router.navigate(['/listacontatos']);
     },
@@ -84,7 +93,7 @@ export class EditListacontatosComponent implements OnInit {
       });
   }
   verificaValidTouched(campo){
-    // return !this.formulario.get(campo).valid && this.formulario.get(campo).touched;
+    return !this.formulario.get(campo).valid && this.formulario.get(campo).touched;
   }
 
   aplicaCssErro(campo){
@@ -95,28 +104,27 @@ export class EditListacontatosComponent implements OnInit {
     this.formulario.get(campo).markAsTouched();
     this.formulario.get(campo).setValue(event);
   }
-  incluirContato(contato, i){
-    console.log(this.contatos.includes(contato))
-        if(this.contatos.includes(contato) == false ){
-          this.contatos.push(contato)
-          console.log(this.contatos)
-        }else{
-          const retiraObjeto = this.contatos.filter(x => x.contatoId == contato.contatoId)
-          const novoArray = this.contatos.filter(x => !retiraObjeto.includes(x))
-          this.contatos = novoArray
-          console.log(novoArray)
-        }
 
-
-
-      }
       updateContatos(contatos){
+        let listaContatos = contatos.contatos
+        for(let i = 0; i < this.contato.length; i ++ ){
+          for(let i = 0; i < this.contato.length; i ++ ){
+
+            if(listaContatos[i] == this.contato[i].contatoId){
+              this.contato[i] = {...this.contato[i], value:true}
+            }
+            if(listaContatos[i] != this.contato[i].contatoId){
+              this.contato[i] = {...this.contato[i], value:false}
+            }
+          }
+        }
         this.formulario = this.formBuilder.group({
           listaContatoId:[contatos.listaContatoId],
           descricao: [contatos.descricao, Validators.required],
           empresaId: [contatos.empresaId, Validators.required],
-          contatos: this.formBuilder.array(this.contato ? this.contato.map(x => this.formBuilder.group({ ...x, value: false })) : [], Validators.required),
+          contatos: this.formBuilder.array(this.contato ? this.contato.map(x => this.formBuilder.group({ ...x })) : [], Validators.required),
         })
+
       }
   desativar(){
     this.restangular.all('marketing/ListaContato/Desativar').customPUT( '',this.id ) .subscribe(a => {
@@ -128,5 +136,6 @@ export class EditListacontatosComponent implements OnInit {
 
       });
   }
+
 
 }

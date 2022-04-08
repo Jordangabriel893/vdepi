@@ -1,7 +1,7 @@
-import { Component, OnInit} from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild} from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import * as _ from 'lodash';
 import * as moment from 'moment';
 import { Restangular } from 'ngx-restangular';
@@ -15,7 +15,7 @@ import { AngularEditorConfig } from '@kolkov/angular-editor';
   styleUrls: ['./update-leilao.component.scss'],
 })
 export class UpdateLeilaoComponent implements OnInit {
-
+  @ViewChild('inputAnexos') inputAnexos: ElementRef;
   imageError: string;
   isImageSaved: boolean;
   cardImageBase64: string;
@@ -28,6 +28,14 @@ export class UpdateLeilaoComponent implements OnInit {
   empresas:any
   status;
   minDate: Date;
+
+  anexosbase64: any
+  anexosnome: any
+  anexostamanho: any
+  anexostipo: any
+  numeroAdcAnexo: number
+  arrayAnexos = [];
+  fileToUpload: File | null = null;
 
   editorConfig: AngularEditorConfig = {
     editable: true,
@@ -132,7 +140,8 @@ export class UpdateLeilaoComponent implements OnInit {
       leilaoId: [null, Validators.required],
       statusId: [null, Validators.required],
       comissao: [0, Validators.required],
-      termoCondicaoVenda: [null]
+      termoCondicaoVenda: [null],
+      anexos: this.formBuilder.array([]),
     })
   }
 
@@ -170,6 +179,7 @@ export class UpdateLeilaoComponent implements OnInit {
   }
 
   updateForm(dados) {
+    console.log(dados)
     this.isImageSaved = true
     this.cardImageBase64 = dados.foto.url
     this.formulario.patchValue({
@@ -202,7 +212,8 @@ export class UpdateLeilaoComponent implements OnInit {
       leilaoId:dados.leilaoId,
       statusId: dados.statusId,
       comissao: dados.comissaoLeiloeiro,
-      termoCondicaoVenda: dados.termoCondicaoVenda
+      termoCondicaoVenda: dados.termoCondicaoVenda,
+      anexos: this.formBuilder.array(dados.anexos ? dados.anexos.map(x => this.formBuilder.group({ ...x, acao: '' })) : []),
     })
   }
 
@@ -260,6 +271,69 @@ export class UpdateLeilaoComponent implements OnInit {
         };
 
         reader.readAsDataURL(fileInput.target.files[0]);
+    }
+  }
+  anexoChangeEvent(anexoInput: FileList) {
+    this.fileToUpload = anexoInput.item(0);
+    this.fileToUpload.name
+    this.fileToUpload.size
+    this.fileToUpload.type
+    const reader = new FileReader();
+    reader.readAsDataURL(this.fileToUpload);
+    reader.onload = () => {
+      this.anexosbase64 = reader.result
+      const arquivo = {
+        arquivoId: 0,
+        nome: this.fileToUpload.name,
+        base64: this.anexosbase64,
+        tipo: this.fileToUpload.type,
+        tamanho: this.fileToUpload.size,
+        dataCadastro: moment().utc().toISOString()
+      }
+
+      this.atualizarAnexo(arquivo, this.numeroAdcAnexo)
+    };
+  }
+  atualizarAnexo(obj, i) {
+    let anexos = this.formulario.get('anexos') as FormArray
+
+    if (i < 0) {
+      anexos.push(this.formBuilder.group({
+        arquivoId: 0,
+        nome: [null, Validators.required],
+        arquivo: obj,
+        acao: 'I'
+      }))
+    } else {
+
+      const valor = anexos.value[i]
+      anexos.removeAt(i)
+      anexos.insert(i, this.formBuilder.group({
+        arquivoId: 0,
+        nome: valor.nome,
+        arquivo: obj,
+        acao: 'A'
+      }))
+
+      console.log(anexos)
+    }
+  }
+  alterarAnexo(i) {
+    this.numeroAdcAnexo = i
+    this.inputAnexos.nativeElement.click()
+  }
+  filterList(campo: string) {
+    const fotos = this.formulario.get(campo) as FormArray;
+    return fotos.controls.filter(x => (x as FormGroup).controls['acao'].value !== 'D');
+  }
+  deleteAnexo(indexAnexo: number) {
+    let anexos = this.formulario.controls['anexos'] as FormArray;
+    let anexo = anexos.at(indexAnexo) as FormGroup;
+    if (anexo.controls['acao'].value !== 'I') {
+      anexo.controls['acao'].setValue('D');
+    }
+    else {
+      anexos.removeAt(indexAnexo)
     }
   }
 

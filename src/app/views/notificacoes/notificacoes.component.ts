@@ -37,7 +37,7 @@ export class NotificacoesComponent implements OnInit {
   ngOnInit() {
     this.restangular.one('/Marketing/Notificacao').get().subscribe(
       dados =>{
-
+        console.log(dados.data)
         this.notificacoes= dados.data
         this.loading = false;
       },

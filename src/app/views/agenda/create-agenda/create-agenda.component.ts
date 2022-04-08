@@ -32,10 +32,11 @@ export class CreateAgendaComponent implements OnInit {
 
   ngOnInit() {
     this.formulario = this.formBuilder.group({
-      agendaNotificacaoId: [null, Validators.required],
       notificacaoId: [null, Validators.required],
       tipoAgendaId: [null, Validators.required],
       intervaloMinutos: [null, Validators.required],
+      dataExecucao:[null, Validators.required],
+      dataEncerramento:[null],
     })
     this.restangular.one('marketing/notificacao').get().subscribe(
       dados =>{
@@ -60,7 +61,7 @@ export class CreateAgendaComponent implements OnInit {
   onSubmit(){
     this.restangular.all('marketing/agendaNotificacao').post(this.formulario.value).subscribe(a => {
       this.notifierService.notify('success', 'Agenda criada com sucesso');
-      this.router.navigate(['/listacontatos']);
+      this.router.navigate(['/agenda']);
     },
       error => {
         this.notifierService.notify('error', 'Erro ao criar agenda!');

@@ -39,7 +39,7 @@ export class ListaContatosComponent implements OnInit {
 
     this.restangular.one('marketing/listacontato').get().subscribe(
       dados =>{
-
+        console.log(dados.data)
         this.listas= dados.data
         this.loading = false;
       },

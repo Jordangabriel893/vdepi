@@ -24,25 +24,61 @@
     object-fit: contain;
 }
 
-.fileInputProfileWrap {
-    width: 100%;
-    height: auto;
-}
-
 .fileInputProfile {
-    position: absolute;
-    height: 100%;
-    width: 100%;
-    z-index: 99;
-    opacity: 0;
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  z-index: 99;
+  opacity: 0;
 }
 .fileInputProfile[disabled] + .img-space{
-    pointer-events: none;
-    cursor: not-allowed!important;
+  pointer-events: none;
+  cursor: not-allowed!important;
+}
+input[type="file"] {
+  display: none;
+}
+.labelArquivo{
+  padding: 10px;
+  background-color: #333;
+  width: 50%;
+  color: #FFF;
+  text-transform: uppercase;
+  text-align: center;
+  margin-top: 10px;
+  cursor: pointer;
+  border-radius:5px;
+}
+.flex{
+  display: flex;
+  align-items:center;
+}
+.new-campo{
+  display: flex;
+  justify-content: space-between;
 }
 .saveCancel{
     margin-right: 1em;
 }
 .has-error{
     border: 1px solid red;
+}
+.fileInputProfileWrap {
+  width: 100%;
+  height: auto;
+}
+
+.fileInputProfile {
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  z-index: 99;
+  opacity: 0;
+}
+.fileInputProfile[disabled] + .img-space{
+  pointer-events: none;
+  cursor: not-allowed!important;
+}
+input[type="file"] {
+  display: none;
 }
