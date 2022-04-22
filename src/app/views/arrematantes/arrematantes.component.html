@@ -58,12 +58,14 @@
                   <th>
                     <mfDefaultSorter by="valorTaxas">Valor Taxas</mfDefaultSorter>
                   </th>
-
+                  <th>
+                    Ação
+                  </th>
                 </tr>
               </thead>
               <tbody>
                 <tr *ngFor="let item of mfArrematantes.data; let i = index">
-                  <td>{{item.lote.loteId}}</td>
+                  <td>{{item.lote.numeroLote}}</td>
                   <td>{{item.nome}}</td>
                   <td>{{item.telefone}}
                   </td>
@@ -72,6 +74,10 @@
                   <td>{{item.documento}}</td>
                   <td>{{item.valorArrematado | currency:'BRL':true:'1.2-2'}}</td>
                   <td>{{item.valorTaxas | currency:'BRL':true:'1.2-2'}}</td>
+                  <td class="text-center" nowrap>
+                    <button type="button" class="btn btn-primary" (click)="auto(item.lote.loteId, item.lote.numeroLote)"><i class="fa fa-edit"></i>&nbsp;Auto</button>
+                    <button type="button" class="btn btn-primary" (click)="nota(item.lote.loteId, item.lote.numeroLote)"><i class="fa fa-edit"></i>&nbsp;Nota</button>
+                  </td>
                 </tr>
                 <tr *ngIf="loading">
                   <td class="text-center text-muted" colspan="9">

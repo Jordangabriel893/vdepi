@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Restangular } from 'ngx-restangular';
+import * as fileSaver from 'file-saver';
+import { NotifierService } from 'angular-notifier';
 
 @Component({
   selector: 'app-arrematantes',
@@ -13,7 +15,7 @@ export class ArrematantesComponent implements OnInit {
   loading = true;
   constructor(
     private restangular: Restangular,
-
+    private notifierService: NotifierService
   ) {
     this.restangular.one("leilao").get({PageSize:100}).subscribe((response) => {
       this.leiloes = response.data
@@ -34,6 +36,33 @@ export class ArrematantesComponent implements OnInit {
     },
     () => this.loading = false)
 
+  }
+
+  auto(loteId: number, numerolote: number) {
+    this.restangular.one(`lote/${loteId}/autoarrematacao`, )
+    .withHttpConfig({responseType: 'blob'})
+    .get()
+    .subscribe((response) => {
+      console.log(response);
+      const blob = new Blob([response], { type: 'application/pdf' });
+      fileSaver.saveAs(blob, `AutoArrematacao-Lote${numerolote}.pdf`);
+    },(error) => {
+      this.notifierService.notify('error', 'Não foi possivel fazer o download do comprovante!')
+
+    })
+  }
+
+  nota(loteId: number, numerolote: number) {
+    this.restangular.one(`lote/${loteId}/notaarrematacao`, )
+    .withHttpConfig({responseType: 'blob'})
+    .get()
+    .subscribe((response) => {
+      const blob = new Blob([response], { type: 'application/pdf' });
+      fileSaver.saveAs(blob, `NotaArrematacao-Lote${numerolote}.pdf`);
+    },(error) => {
+      this.notifierService.notify('error', 'Não foi possivel fazer o download do comprovante!')
+
+    })
   }
 
 }
