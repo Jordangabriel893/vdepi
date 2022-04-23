@@ -3,7 +3,6 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { LocationStrategy, HashLocationStrategy, registerLocaleData } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { HttpModule } from '@angular/Http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AppComponent } from './app.component';
 import localePt from '@angular/common/locales/pt';
@@ -237,7 +236,6 @@ export function RestangularConfigFactory(RestangularProvider, NotifierService: N
     ChartsModule,
     FormsModule,
     ReactiveFormsModule,
-    HttpModule,
     CustomFormsModule,
     NotifierModule.withConfig({
       position: {
