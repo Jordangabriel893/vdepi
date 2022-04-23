@@ -2,7 +2,7 @@
 FROM node:14.17.6 as node
 WORKDIR /app
 COPY . .
-RUN npm install
+RUN npm install --save
 RUN npm rebuild node-sass
 RUN npm run build
 #stage 2
