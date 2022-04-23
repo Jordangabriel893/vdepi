@@ -1,8 +1,9 @@
 #stage 1
 FROM node:14.17.6 as node
 WORKDIR /app
-COPY . .
+COPY ./package.json .
 RUN npm install --save
+COPY . .
 RUN npm rebuild node-sass
 RUN npm run build
 #stage 2
