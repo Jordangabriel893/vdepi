@@ -2,7 +2,7 @@
 FROM node:14.17.6 as node
 WORKDIR /app
 COPY . .
-RUN rm pagckage-lock.json
+RUN rm /app/pagckage-lock.json
 RUN npm install
 #RUN npm rebuild node-sass
 RUN npm run build
