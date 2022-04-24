@@ -4,7 +4,7 @@ WORKDIR /app
 COPY ./package.json .
 RUN npm install --save
 COPY . .
-RUN npm rebuild node-sass
+#RUN npm rebuild node-sass
 RUN npm run build
 #stage 2
 FROM nginx:alpine
