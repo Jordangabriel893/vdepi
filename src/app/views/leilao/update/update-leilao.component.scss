@@ -35,9 +35,7 @@
   pointer-events: none;
   cursor: not-allowed!important;
 }
-input[type="file"] {
-  display: none;
-}
+
 .labelArquivo{
   padding: 10px;
   background-color: #333;
@@ -66,19 +64,4 @@ input[type="file"] {
 .fileInputProfileWrap {
   width: 100%;
   height: auto;
-}
-
-.fileInputProfile {
-  position: absolute;
-  height: 100%;
-  width: 100%;
-  z-index: 99;
-  opacity: 0;
-}
-.fileInputProfile[disabled] + .img-space{
-  pointer-events: none;
-  cursor: not-allowed!important;
-}
-input[type="file"] {
-  display: none;
 }

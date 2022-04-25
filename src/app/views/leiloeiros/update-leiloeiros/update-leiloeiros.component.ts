@@ -54,7 +54,6 @@ export class UpdateLeiloeirosComponent implements OnInit {
       telefone:[null, Validators.required],
       email:[null, Validators.required],
       foto: this.formBuilder.group({
-        arquivoId:[null],
         nome:[null],
         base64:[null],
         tipo:[null],
