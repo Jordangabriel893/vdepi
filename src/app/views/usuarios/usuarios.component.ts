@@ -24,6 +24,7 @@ export class UsuariosComponent implements OnInit {
   listaFiltradaPorNomeEEmail
   listaFiltradaPorEmail
 
+
   constructor(
     private restangular: Restangular,
     private route: ActivatedRoute,
@@ -35,9 +36,11 @@ export class UsuariosComponent implements OnInit {
       this.usuarios = usuario;
       this.filtroUsuarios = usuario
       this.nome = usuario.map(x => x.nomeCompleto)
+      this.nome.sort()
       this.documento = usuario.map(x => x.numeroDocumento)
-      this.email = usuario.map(x => x.email)
-      console.log(this.usuarios)
+      this.email = usuario.map(x => x.email.toLowerCase())
+      this.email.sort()
+      console.log(this.email)
       this.loading = false;
     },
     () => this.loading = false);
@@ -62,7 +65,7 @@ export class UsuariosComponent implements OnInit {
     }else{
       this.listaFiltradaPorDocumento = this.filtroUsuarios.filter(x => x.numeroDocumento == item)
     }
-    
+
   }
   setEmail(item){
     this.emailSetado = item
