@@ -52,8 +52,15 @@
            Usuários
         </div>
         <div class="card-block">
+          <div class="col-12 input-search">
+            <div class="input-group col-12 d-flex justify-content-end input-search">
+              <input type="text" class="form-control col-4" (keyup)="onSearch()" placeholder="Buscar " aria-label="Recipient's username" aria-describedby="basic-addon2" [formControl]="queryField">
+            </div>
+          </div>
+
+
             <div class="table-responsive mt-4">
-              <table class="table table-striped" [mfData]="usuarios" #mfUsuarios="mfDataTable" [mfRowsOnPage]="5">
+              <table class="table table-striped" [mfData]="usuarios" #mfUsuarios="mfDataTable" [mfRowsOnPage]="5"  *ngIf="queryField.value == null || queryField.value == ''  ">
                 <thead>
                   <tr>
 
@@ -115,6 +122,69 @@
                   </tr>
                 </tfoot>
               </table>
+              <table class="table table-striped" [mfData]="usuarioSearch" #mfUsuarios="mfDataTable" [mfRowsOnPage]="5" *ngIf="queryField.value != null &&  queryField.value != '' ">
+                <thead>
+                  <tr>
+
+                    <th>
+                      <mfDefaultSorter by="id">Id</mfDefaultSorter>
+                    </th>
+                    <th>
+                      <mfDefaultSorter by="nome">Nome</mfDefaultSorter>
+                    </th>
+                    <th>
+                      <mfDefaultSorter by="numeroDocumento">Nº Documento</mfDefaultSorter>
+                    </th>
+                    <th>
+                      <mfDefaultSorter by="dataNascimento">Data Nascimento</mfDefaultSorter>
+                    </th>
+                    <th>
+                      <mfDefaultSorter by="genero">Gênero</mfDefaultSorter>
+                    </th>
+                    <th>
+                      <mfDefaultSorter by="email">Email</mfDefaultSorter>
+                    </th>
+                    <th>
+                      <mfDefaultSorter by="tipoPessoa">Tipo de Pessoa</mfDefaultSorter>
+                    </th>
+                    <th>
+                      <mfDefaultSorter by="ativo">Ativo</mfDefaultSorter>
+                    </th>
+
+                    <th class="text-center" >
+                      Editar
+                    </th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let item of mfUsuarios.data">
+                    <td>{{item.usuarioId}}</td>
+                    <td>{{item.nomeCompleto}}</td>
+                    <td>{{item.numeroDocumento}}</td>
+                    <td>{{item.dataNascimento | amDateFormat:'DD/MM/YYYY' }}</td>
+                    <td>{{item.genero == 'M'? 'Masculino' : 'Feminino'}}</td>
+                    <td>{{item.email}}</td>
+                    <td>{{item.tipoPessoa == 'PF'? "Pessoa Física" : "Pessoa Jurídica"}}</td>
+                    <td>{{item.ativo ? "Sim" : "Não"}}</td>
+                    <td class="text-center" nowrap>
+                      <button type="button" class="btn btn-primary" (click)="edit(item.usuarioId)"><i class="fa fa-edit"></i>&nbsp; Editar</button>
+                    </td>
+                  </tr>
+                  <tr *ngIf="loading">
+                    <td class="text-center text-muted" colspan="9">
+                      <h5><i class="fa fa-spin fa-spinner"></i>&nbsp;Carregando...</h5>
+                    </td>
+                  </tr>
+                </tbody>
+                <tfoot>
+                  <tr>
+                    <td colspan="9">
+                      <mfBootstrapPaginator [rowsOnPageSet]="[5,10,25]"></mfBootstrapPaginator>
+                    </td>
+                  </tr>
+                </tfoot>
+              </table>
+
             </div>
         </div>
       </div>
