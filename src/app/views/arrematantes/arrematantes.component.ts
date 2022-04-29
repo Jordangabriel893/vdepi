@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Restangular } from 'ngx-restangular';
 import * as fileSaver from 'file-saver';
 import { NotifierService } from 'angular-notifier';
+import { FormControl } from '@angular/forms';
 
 @Component({
   selector: 'app-arrematantes',
@@ -13,6 +14,10 @@ export class ArrematantesComponent implements OnInit {
   nomeLeilao:any = 'Leilões'
   arrematantes
   loading = true;
+  queryField = new FormControl();
+  results:any;
+  arrematanteSearch;
+  arrematantesComLetraMinuscula;
   constructor(
     private restangular: Restangular,
     private notifierService: NotifierService
@@ -32,6 +37,21 @@ export class ArrematantesComponent implements OnInit {
     this.restangular.one(`leilao/${id}/arrematantes`).get().subscribe((response) => {
       this.loading = false;
       this.arrematantes = response.data
+      this.arrematantes.forEach(element => {
+        element.nome =  element.nome.toLowerCase();
+
+      });
+      this.arrematantes.sort( (a, b )=>{
+        if (a.nome > b.nome) {
+          return 1;
+        }
+        if (a.nome < b.nome) {
+          return -1;
+        }
+        return 0;
+      })
+      console.log(this.arrematantes)
+      this.arrematantesComLetraMinuscula = this.arrematantes;
       this.loading = false;
     },
     () => this.loading = false)
@@ -64,5 +84,20 @@ export class ArrematantesComponent implements OnInit {
 
     })
   }
-
+  onSearch(){
+    let value = this.queryField.value
+    //se o usaurio nao digitou nada e a busca é diferente de vazio
+    const arrematanteComLetraMinuscula = this.arrematantesComLetraMinuscula
+    arrematanteComLetraMinuscula.forEach(element => {
+      element.nome =  element.nome.toLowerCase();
+      element.email =  element.email.toLowerCase()
+    });
+    let filtraValorPorNome = arrematanteComLetraMinuscula.filter(objNome => objNome.nome.includes(value))
+    let filtraValorPorDocumento = arrematanteComLetraMinuscula.filter(objDocumento => objDocumento.documento.includes(value))
+    let filtraValorPorEmail = arrematanteComLetraMinuscula.filter(objEmail => objEmail.email.includes(value))
+    if (value && (value = value.trim()) !== '') {
+        let arraySearch = [...filtraValorPorNome, ...filtraValorPorDocumento, ...filtraValorPorEmail]
+        this.arrematanteSearch = arraySearch
+  }
+  }
 }

@@ -30,8 +30,75 @@
         </div>
 
         <div class="card-block" >
+          <div class="col-12 input-search">
+            <div class="input-group col-12 d-flex justify-content-end input-search">
+              <input type="text" class="form-control col-4" (keyup)="onSearch()" placeholder="Buscar " aria-label="Recipient's username" aria-describedby="basic-addon2" [formControl]="queryField">
+            </div>
+          </div>
           <div class="table-responsive mt-4">
-            <table class="table table-striped" [mfData]="arrematantes" #mfArrematantes="mfDataTable" [mfRowsOnPage]="5">
+            <table class="table table-striped" [mfData]="arrematantes" #mfArrematantes="mfDataTable" [mfRowsOnPage]="5" *ngIf="queryField.value == null || queryField.value == ''  ">
+              <thead>
+                <tr>
+                  <th>
+                    <mfDefaultSorter by="lote.loteId">Lote</mfDefaultSorter>
+                  </th>
+                  <th>
+                    <mfDefaultSorter by="nome">Nome</mfDefaultSorter>
+                  </th>
+                  <th>
+                    <mfDefaultSorter by="telefone">Telefone</mfDefaultSorter>
+                  </th>
+                  <th>
+                    <mfDefaultSorter by="email">Email</mfDefaultSorter>
+                  </th>
+                  <th>
+                    <mfDefaultSorter by="tipoPessoa">Tipo Pessoa</mfDefaultSorter>
+                  </th>
+                  <th>
+                    <mfDefaultSorter by="documento">CPF/CNPJ</mfDefaultSorter>
+                  </th>
+                  <th>
+                    <mfDefaultSorter by="valorArrematado">Valor Arrematado</mfDefaultSorter>
+                  </th>
+                  <th>
+                    <mfDefaultSorter by="valorTaxas">Valor Taxas</mfDefaultSorter>
+                  </th>
+                  <th>
+                    Ação
+                  </th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let item of mfArrematantes.data; let i = index">
+                  <td>{{item.lote.numeroLote}}</td>
+                  <td>{{item.nome}}</td>
+                  <td>{{item.telefone}}
+                  </td>
+                  <td>{{item.email }}</td>
+                  <td>{{item.tipoPessoa == 'PF' ? 'Pessoa Física' : item.pessoa.tipoPessoa == 'PJ' ? 'Pessoa Jurídica' : '' }}</td>
+                  <td>{{item.documento}}</td>
+                  <td>{{item.valorArrematado | currency:'BRL':true:'1.2-2'}}</td>
+                  <td>{{item.valorTaxas | currency:'BRL':true:'1.2-2'}}</td>
+                  <td class="text-center" nowrap>
+                    <button type="button" class="btn btn-primary" (click)="auto(item.lote.loteId, item.lote.numeroLote)"><i class="fa fa-edit"></i>&nbsp;Auto</button>
+                    <button type="button" class="btn btn-primary" (click)="nota(item.lote.loteId, item.lote.numeroLote)"><i class="fa fa-edit"></i>&nbsp;Nota</button>
+                  </td>
+                </tr>
+                <tr *ngIf="loading">
+                  <td class="text-center text-muted" colspan="9">
+                    <h5><i class="fa fa-spin fa-spinner"></i>&nbsp;Carregando...</h5>
+                  </td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <td colspan="10">
+                    <mfBootstrapPaginator [rowsOnPageSet]="[5,10,25]"></mfBootstrapPaginator>
+                  </td>
+                </tr>
+              </tfoot>
+            </table>
+            <table class="table table-striped" [mfData]="arrematanteSearch" #mfArrematantes="mfDataTable" [mfRowsOnPage]="5" *ngIf="queryField.value != null &&  queryField.value != '' ">
               <thead>
                 <tr>
                   <th>
