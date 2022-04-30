@@ -92,13 +92,11 @@ export class CreateContatosComponent implements OnInit {
     // this.formulario.setValue({});
 
     this.formulario.patchValue({
-
         logradouro: dados.logradouro,
         complemento: dados.complemento,
         bairro: dados.bairro,
         cidade: dados.localidade,
-        estado: dados.uf
-
+        uf: dados.uf
     });
   }
   verificaValidTouched(campo) {

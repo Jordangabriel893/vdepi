@@ -40,7 +40,7 @@ export class UpdateAgendaComponent implements OnInit {
       dataExecucao: [null, Validators.required],
       dataEncerramento: [null],
       dataUltimaExecucao: [null],
-      intervaloMinutos: [null, Validators.required],
+      intervaloMinutos: [null],
       dataCadastro: [null],
     })
     this.restangular.all('marketing/AgendaNotificacao').get(this.id).subscribe(dados => {

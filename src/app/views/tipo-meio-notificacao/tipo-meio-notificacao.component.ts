@@ -6,11 +6,13 @@ import { NotifierService } from 'angular-notifier';
 import { ComponentService } from 'app/_services';
 import { Restangular } from 'ngx-restangular';
 import * as Model from '../_models/model'
+
 @Component({
   selector: 'app-tipo-meio-notificacao',
   templateUrl: './tipo-meio-notificacao.component.html',
   styleUrls: ['./tipo-meio-notificacao.component.scss']
 })
+
 export class TipoMeioNotificacaoComponent implements OnInit {
   formulario: FormGroup
   loading = true;
@@ -26,27 +28,15 @@ export class TipoMeioNotificacaoComponent implements OnInit {
     private componentService: ComponentService,
     private cdr: ChangeDetectorRef,
     private formBuilder: FormBuilder,
-  ) {
-    this.formulario = this.formBuilder.group({
-      leilao:[null],
-
-
-    })
-   }
+  ) { }
 
   ngOnInit() {
     this.restangular.one('marketing/tipoMeioNotificacao').get().subscribe(
       dados =>{
         this.tipoMeios= dados.data
-        console.log(this.tipoMeios);
+        this.loading = false;
       }
     )
-    this.restangular.one("leilao", '').get({PageSize:100}).subscribe((response) => {
-      this.selectLeilao = response.data
-      this.leiloes = response.data;
-      this.loading = false;
-    },
-    () => this.loading = false);
   }
   edit(id) {
     this.router.navigate(['/update-tipomeionotificao', id], { relativeTo: this.route });

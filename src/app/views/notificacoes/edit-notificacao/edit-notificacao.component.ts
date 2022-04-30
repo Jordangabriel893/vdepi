@@ -119,7 +119,7 @@ export class EditNotificacaoComponent implements OnInit {
       tipoNotificacaoId: [dados.tipoNotificacaoId, Validators.required],
       listaContatoId: [dados.listaContatoId, Validators.required],
       leilaoId: [dados.leilaoId, Validators.required],
-      templateId: [dados.templateId, Validators.required],
+      templateId: [dados.templateId],
       ativo: true
 
 

@@ -193,8 +193,6 @@ import { CreateTipomeionotificacaoComponent } from './views/tipo-meio-notificaca
 import { EditTipomeionotificacaoComponent } from './views/tipo-meio-notificacao/edit-tipomeionotificacao/edit-tipomeionotificacao.component';
 import { AgendaComponent } from './views/agenda/agenda.component';
 import { CreateAgendaComponent } from './views/agenda/create-agenda/create-agenda.component';
-import { AutoComponent } from './views/arrematantes/auto/auto.component';
-import { NotaComponent } from './views/arrematantes/nota/nota.component';
 import { CreateContatosComponent } from './views/contatos/create-contatos/create-contatos.component';
 import { EditContatosComponent } from './views/contatos/edit-contatos/edit-contatos.component';
 import { EditListacontatosComponent } from './views/lista-contatos/edit-listacontatos/edit-listacontatos.component';
@@ -328,8 +326,6 @@ export function RestangularConfigFactory(RestangularProvider, NotifierService: N
     EditTipomeionotificacaoComponent,
     AgendaComponent,
     CreateAgendaComponent,
-    AutoComponent,
-    NotaComponent,
     CreateContatosComponent,
     EditContatosComponent,
     EditListacontatosComponent,

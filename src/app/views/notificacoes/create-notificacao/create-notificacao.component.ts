@@ -44,7 +44,7 @@ export class CreateNotificacaoComponent implements OnInit {
       listaContatoId: [null, Validators.required],
       leilaoId: [null, Validators.required],
       usuarioId:[0],
-      templateId:[0],
+      templateId:[null],
     })
     this.restangular.one('marketing/ListaContato').get().subscribe(
       dados =>{

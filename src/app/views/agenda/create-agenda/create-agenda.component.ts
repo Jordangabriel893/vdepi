@@ -34,26 +34,23 @@ export class CreateAgendaComponent implements OnInit {
     this.formulario = this.formBuilder.group({
       notificacaoId: [null, Validators.required],
       tipoAgendaId: [null, Validators.required],
-      intervaloMinutos: [null, Validators.required],
+      intervaloMinutos: [null],
       dataExecucao:[null, Validators.required],
       dataEncerramento:[null],
     })
     this.restangular.one('marketing/notificacao').get().subscribe(
       dados =>{
         this.notificacoes= dados.data
-        console.log(this.notificacoes)
       }
     )
     this.restangular.one('marketing/AgendaNotificacao').get().subscribe(
       dados =>{
         this.agendaNotificacao = dados.data
-        console.log(dados.data)
       }
     )
     this.restangular.one('marketing/tipoAgendaNotificacao').get().subscribe(
       dados =>{
         this.tiposAgenda= dados.data
-        console.log(this.tiposAgenda)
       }
     )
 
