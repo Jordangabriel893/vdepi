@@ -18,6 +18,11 @@ export class ArrematantesComponent implements OnInit {
   results:any;
   arrematanteSearch;
   arrematantesComLetraMinuscula;
+
+  lotes;
+  loteSetado;
+  listaFiltradaPorLote;
+  filtroLotes;
   constructor(
     private restangular: Restangular,
     private notifierService: NotifierService
@@ -36,6 +41,8 @@ export class ArrematantesComponent implements OnInit {
     this.nomeLeilao = nome
     this.restangular.one(`leilao/${id}/arrematantes`).get().subscribe((response) => {
       this.loading = false;
+      const arrematante = response.data
+      this.filtroLotes = response.data
       this.arrematantes = response.data
       this.arrematantes.forEach(element => {
         element.nome =  element.nome.toLowerCase();
@@ -50,14 +57,20 @@ export class ArrematantesComponent implements OnInit {
         }
         return 0;
       })
-      console.log(this.arrematantes)
+      this.lotes = this.arrematantes.map(x => x.lote)
+      console.log(this.lotes)
       this.arrematantesComLetraMinuscula = this.arrematantes;
       this.loading = false;
     },
     () => this.loading = false)
 
   }
+  setLote(lote:any){
+    this.loteSetado = lote.descricao
+    this.listaFiltradaPorLote =   this.filtroLotes.filter(x => x.loteId == lote.loteId)
+    this.arrematantes = this.listaFiltradaPorLote
 
+  }
   auto(loteId: number, numerolote: number) {
     this.restangular.one(`lote/${loteId}/autoarrematacao`, )
     .withHttpConfig({responseType: 'blob'})
