@@ -336,7 +336,7 @@ export function RestangularConfigFactory(RestangularProvider, NotifierService: N
   ],
   providers: [{
     provide: LocationStrategy,
-    useClass: HashLocationStrategy
+    useClass: HashLocationStrategy,
   },
     AuthGuard,
     AnonyGuard,

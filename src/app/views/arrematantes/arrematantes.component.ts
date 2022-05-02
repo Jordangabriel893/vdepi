@@ -10,14 +10,13 @@ import { FormControl } from '@angular/forms';
   styleUrls: ['./arrematantes.component.scss']
 })
 export class ArrematantesComponent implements OnInit {
-  leiloes
-  nomeLeilao:any = 'Leilões'
-  arrematantes
+  leiloes;
+  nomeLeilao:any = 'Leilões';
+  arrematantes;
+  arremantantesFiltrados;
   loading = true;
   queryField = new FormControl();
-  results:any;
-  arrematanteSearch;
-  arrematantesComLetraMinuscula;
+
   constructor(
     private restangular: Restangular,
     private notifierService: NotifierService
@@ -26,32 +25,18 @@ export class ArrematantesComponent implements OnInit {
       this.leiloes = response.data
       this.setLeilao(this.leiloes[0].id, this.leiloes[0].nome);
     })
-
-
    }
 
   ngOnInit() {
+
   }
+
   setLeilao(id, nome){
     this.nomeLeilao = nome
     this.restangular.one(`leilao/${id}/arrematantes`).get().subscribe((response) => {
       this.loading = false;
-      this.arrematantes = response.data
-      this.arrematantes.forEach(element => {
-        element.nome =  element.nome.toLowerCase();
-
-      });
-      this.arrematantes.sort( (a, b )=>{
-        if (a.nome > b.nome) {
-          return 1;
-        }
-        if (a.nome < b.nome) {
-          return -1;
-        }
-        return 0;
-      })
-      console.log(this.arrematantes)
-      this.arrematantesComLetraMinuscula = this.arrematantes;
+      this.arrematantes = response.data;
+      this.arremantantesFiltrados = response.data;
       this.loading = false;
     },
     () => this.loading = false)
@@ -67,7 +52,7 @@ export class ArrematantesComponent implements OnInit {
       const blob = new Blob([response], { type: 'application/pdf' });
       fileSaver.saveAs(blob, `AutoArrematacao-Lote${numerolote}.pdf`);
     },(error) => {
-      this.notifierService.notify('error', 'Não foi possivel fazer o download do comprovante!')
+      this.notifierService.notify('error', 'Não foi possivel fazer o download!')
 
     })
   }
@@ -80,24 +65,19 @@ export class ArrematantesComponent implements OnInit {
       const blob = new Blob([response], { type: 'application/pdf' });
       fileSaver.saveAs(blob, `NotaArrematacao-Lote${numerolote}.pdf`);
     },(error) => {
-      this.notifierService.notify('error', 'Não foi possivel fazer o download do comprovante!')
+      this.notifierService.notify('error', 'Não foi possivel fazer o download!')
 
     })
   }
+
   onSearch(){
-    let value = this.queryField.value
-    //se o usaurio nao digitou nada e a busca é diferente de vazio
-    const arrematanteComLetraMinuscula = this.arrematantesComLetraMinuscula
-    arrematanteComLetraMinuscula.forEach(element => {
-      element.nome =  element.nome.toLowerCase();
-      element.email =  element.email.toLowerCase()
-    });
-    let filtraValorPorNome = arrematanteComLetraMinuscula.filter(objNome => objNome.nome.includes(value))
-    let filtraValorPorDocumento = arrematanteComLetraMinuscula.filter(objDocumento => objDocumento.documento.includes(value))
-    let filtraValorPorEmail = arrematanteComLetraMinuscula.filter(objEmail => objEmail.email.includes(value))
-    if (value && (value = value.trim()) !== '') {
-        let arraySearch = [...filtraValorPorNome, ...filtraValorPorDocumento, ...filtraValorPorEmail]
-        this.arrematanteSearch = arraySearch
-  }
+    if(this.queryField.value) {
+      let value = this.queryField.value.replace('.', '').replace('-', '').replace('/', '').toLowerCase();
+
+      this.arremantantesFiltrados =
+        this.arrematantes.filter(x => x.nome.toLowerCase().includes(value) ||
+                                  x.documento.replace('.', '').replace('-', '').replace('/', '').includes(value) ||
+                                  x.email.toLowerCase().includes(value));
+    }
   }
 }
