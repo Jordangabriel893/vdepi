@@ -1,7 +1,7 @@
 import * as moment from 'moment';
 import { DatePipe } from '@angular/common';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormArray, FormGroup, Validators } from '@angular/forms';
+import { Component, OnInit, ElementRef, ViewChild } from '@angular/core';
 import * as _ from 'lodash';
 import { Restangular } from 'ngx-restangular';
 import { NotifierService } from 'angular-notifier';
@@ -16,7 +16,10 @@ import { ConsultaCepService } from 'app/views/usuarios/shared/consulta-cep/consu
   styleUrls: ['./update-leiloeiros.component.scss']
 })
 export class UpdateLeiloeirosComponent implements OnInit {
-
+  @ViewChild('inputAnexos') inputAnexos: ElementRef;
+  context = {
+    message: 'Hello there!'
+  };
   imageError: string;
   isImageSaved: boolean;
   cardImageBase64: string;
@@ -28,6 +31,52 @@ export class UpdateLeiloeirosComponent implements OnInit {
   public maskCep: Array<string | RegExp>
   public maskCpf: Array<string | RegExp>
   public maskCnpj: Array<string | RegExp>
+
+  //anexos
+  anexosbase64: any
+  anexosnome: any
+  anexostamanho: any
+  anexostipo: any
+  numeroAdcAnexo: number
+  arrayAnexos = [];
+  fileToUpload: File | null = null;
+  editorConfig: AngularEditorConfig = {
+    editable: true,
+    spellcheck: true,
+    height: 'auto',
+    minHeight: '0',
+    maxHeight: 'auto',
+    width: 'auto',
+    minWidth: '0',
+    translate: 'yes',
+    enableToolbar: true,
+    showToolbar: true,
+    placeholder: 'Temos e Condição de Venda...',
+    defaultParagraphSeparator: '',
+    defaultFontName: '',
+    defaultFontSize: '',
+    fonts: [
+      { class: 'arial', name: 'Arial' },
+      { class: 'times-new-roman', name: 'Times New Roman' },
+      { class: 'calibri', name: 'Calibri' },
+      { class: 'comic-sans-ms', name: 'Comic Sans MS' }
+    ],
+    customClasses: [
+      {
+        name: 'quote',
+        class: 'quote',
+      },
+      {
+        name: 'redText',
+        class: 'redText'
+      },
+      {
+        name: 'titleText',
+        class: 'titleText',
+        tag: 'h1',
+      },
+    ],
+  };
 
   constructor(
     private formBuilder: FormBuilder,
@@ -53,6 +102,12 @@ export class UpdateLeiloeirosComponent implements OnInit {
       cpfCnpj:[null, Validators.required],
       telefone:[null, Validators.required],
       email:[null, Validators.required],
+      orgaoRegistro:[null, Validators.required],
+      uf: [null],
+      matricula: [null],
+      genero:[null],
+      nomeComercial:[null],
+      anexos: this.formBuilder.array([]),
       foto: this.formBuilder.group({
         nome:[null],
         base64:[null],
@@ -107,6 +162,12 @@ export class UpdateLeiloeirosComponent implements OnInit {
     this.formulario.patchValue({
       nome:dados.nome,
       razaoSocial:dados.razaoSocial,
+      genero:dados.genero,
+      orgaoRegistro:dados.orgaoRegistro,
+      uf:dados.uf,
+      matricula:dados.matricula,
+      nomeComercial:dados.nomeComercial,
+      anexos:dados.anexos,
       cpfCnpj:dados.cpfCnpj,
       telefone: dados.telefone,
       email: dados.email,
@@ -187,6 +248,68 @@ export class UpdateLeiloeirosComponent implements OnInit {
         };
 
         reader.readAsDataURL(fileInput.target.files[0]);
+    }
+  }
+
+  anexoChangeEvent(anexoInput: FileList) {
+    this.fileToUpload = anexoInput.item(0);
+    this.fileToUpload.name
+    this.fileToUpload.size
+    this.fileToUpload.type
+    const reader = new FileReader();
+    reader.readAsDataURL(this.fileToUpload);
+    reader.onload = () => {
+      this.anexosbase64 = reader.result
+      const arquivo = {
+        arquivoId: 0,
+        nome: this.fileToUpload.name,
+        base64: this.anexosbase64,
+        tipo: this.fileToUpload.type,
+        tamanho: this.fileToUpload.size,
+        dataCadastro: moment().utc().toISOString()
+      }
+
+      this.atualizarAnexo(arquivo, this.numeroAdcAnexo)
+    };
+  }
+  atualizarAnexo(obj, i) {
+    let anexos = this.formulario.get('anexos') as FormArray
+
+    if (i < 0) {
+      anexos.push(this.formBuilder.group({
+        arquivoId: 0,
+        nome: [null, Validators.required],
+        arquivo: obj,
+        acao: 'I'
+      }))
+    } else {
+      const valor = anexos.value[i]
+      anexos.removeAt(i)
+      anexos.insert(i, this.formBuilder.group({
+        arquivoId: 0,
+        nome: valor.nome,
+        arquivo: obj,
+        acao: 'A'
+      }))
+    }
+  }
+
+  alterarAnexo(i) {
+    this.numeroAdcAnexo = i
+    this.inputAnexos.nativeElement.click()
+  }
+  filterList(campo: string) {
+    const fotos = this.formulario.get(campo) as FormArray;
+    return fotos.controls.filter(x => (x as FormGroup).controls['acao'].value !== 'D');
+  }
+  deleteAnexo(indexAnexo: number) {
+    let anexos = this.formulario.controls['anexos'] as FormArray;
+    let anexo = anexos.at(indexAnexo) as FormGroup;
+    if(anexo.controls['acao'].value !== 'I') {
+      anexo.controls['acao'].setValue('D');
+    }
+    else {
+      anexos.removeAt(indexAnexo)
     }
   }
 
