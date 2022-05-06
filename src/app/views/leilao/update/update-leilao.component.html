@@ -241,7 +241,7 @@
           </div>
             <button type="button" class="btn btn-success btn-sm" (click)="alterarAnexo(-1)">
               <i class="fa fa-plus-circle"></i>&nbsp;Novo Anexo</button>
-              <input type="file" #inputAnexos (change)="anexoChangeEvent($event.target.files)">
+              <input type="file" #inputAnexos (change)="anexoChangeEvent($event.target.files)" style="display: none;">
           </div>
           <div class="card-block" *ngIf="this.formulario.value.anexos.length > 0">
             <table class="table">
@@ -258,7 +258,7 @@
                   <td><a [href]="item.value.arquivo.url" target="_blank">{{item.value.arquivo.nome}}</a></td>
                   <td>
                     <input type="text" formControlName="nome" class="form-control" [value]="item.value.nome"
-                      placeholder="Descricao" *ngIf="item.value.acao === 'I'">
+                      placeholder="Descricao" *ngIf="item.value.acao === 'I'" >
                     <span *ngIf="item.value.acao === ''">{{item.value.nome}}</span>
                   </td>
                   <td>{{item.value.arquivo.dataCadastro | amFromUtc | amLocal | amDateFormat: 'DD/MM/YYYY HH:mm'}}</td>
