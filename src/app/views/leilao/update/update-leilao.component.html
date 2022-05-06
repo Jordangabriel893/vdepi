@@ -39,8 +39,8 @@
                 <label for="dataLeilao">Data Leilão </label>
                 <input type="text" class="form-control" [ngClass]="aplicaCssErro('dataLeilao')" id="dataLeilao" placeholder="DD/MM/AAAA"
                   formControlName="dataLeilao"
-                  [bsConfig]="{ dateInputFormat: 'DD/MM/YYYY' }"
-                  bsDatepicker
+                  [bsConfig]="{ dateInputFormat: 'DD/MM/YYYY HH:mm' }"
+                  bsDatepicker [minDate]="minDate"
                   (bsValueChange)="onValueChange($event, 'dataLeilao')">
 
               </div>

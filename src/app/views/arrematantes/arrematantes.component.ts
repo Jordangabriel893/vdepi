@@ -16,7 +16,6 @@ export class ArrematantesComponent implements OnInit {
   arremantantesFiltrados;
   loading = true;
   queryField = new FormControl();
-
   constructor(
     private restangular: Restangular,
     private notifierService: NotifierService
@@ -40,9 +39,7 @@ export class ArrematantesComponent implements OnInit {
       this.loading = false;
     },
     () => this.loading = false)
-
   }
-
   auto(loteId: number, numerolote: number) {
     this.restangular.one(`lote/${loteId}/autoarrematacao`, )
     .withHttpConfig({responseType: 'blob'})

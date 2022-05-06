@@ -83,7 +83,7 @@ export class UpdateLeilaoComponent implements OnInit {
     private notifierService: NotifierService)
   {
     this.minDate = new Date();
-    this.minDate.setDate(this.minDate.getDate());
+    this.minDate.setDate(this.minDate.getDate() - 1);
 
     this.restangular.one('categoria').get().subscribe(dados =>{
       const categoriaPai = dados.data.filter(x => x.categoriaPaiId == null)
@@ -146,15 +146,13 @@ export class UpdateLeilaoComponent implements OnInit {
   }
 
   ngOnInit() {
-  this.id = this.route.snapshot.params['id']
-   console.log(this.id )
-   this.restangular.all('admin/leilao').get(this.id).subscribe(dados => {
-     this.updateForm(dados.data)
-   })
+    this.id = this.route.snapshot.params['id']
+    this.restangular.all('admin/leilao').get(this.id).subscribe(dados => {
+      this.updateForm(dados.data)
+    })
   }
 
   onSubmit(){
-    // console.log(this.formulario.value)
     if(!this.formulario.valid){
       Object.keys(this.formulario.controls).forEach((campo)=>{
         const controle = this.formulario.get(campo)
@@ -179,7 +177,6 @@ export class UpdateLeilaoComponent implements OnInit {
   }
 
   updateForm(dados) {
-    console.log(dados)
     this.isImageSaved = true
     this.cardImageBase64 = dados.foto.url
     this.formulario.patchValue({
@@ -219,7 +216,6 @@ export class UpdateLeilaoComponent implements OnInit {
 
   fileChangeEvent(fileInput: any) {
     this.imageError = null;
-    console.log(fileInput.target.files[0])
     if (fileInput.target.files && fileInput.target.files[0]) {
         // Size Filter Bytes
         const max_size = 20971520;
