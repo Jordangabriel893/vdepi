@@ -47,7 +47,7 @@ export class CreateLeilaoComponent implements OnInit {
     spellcheck: true,
     height: 'auto',
     minHeight: '0',
-    maxHeight: 'auto',
+    maxHeight: '300px',
     width: 'auto',
     minWidth: '0',
     translate: 'yes',

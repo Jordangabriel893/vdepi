@@ -212,7 +212,7 @@ export function RestangularConfigFactory(RestangularProvider, NotifierService: N
   RestangularProvider.addErrorInterceptor((response, subject, responseHandler) => {
     if (response.status === 401) {
       localStorage.removeItem('currentUser');
-      window.location.href = '/login';
+      window.location.href = '/#/login';
       return false;
     }
 

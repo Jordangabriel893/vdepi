@@ -24,13 +24,15 @@
     object-fit: contain;
 }
 
-.fileInputProfile {
+.fileInputProfile, #inputAnexos {
   position: absolute;
   height: 100%;
   width: 100%;
   z-index: 99;
   opacity: 0;
+  cursor: pointer;
 }
+
 .fileInputProfile[disabled] + .img-space{
   pointer-events: none;
   cursor: not-allowed!important;
