@@ -160,8 +160,6 @@ export class UpdateLotesComponent implements OnInit {
   onSubmit() {
     if (this.formulario.value.judicial == false) {
       this.removeControls()
-      console.log(this.formulario.value)
-
     }
     if (this.formulario.invalid) {
       this.notifierService.notify('error', 'Preencha todos os campos obrigatórios')
@@ -347,7 +345,6 @@ export class UpdateLotesComponent implements OnInit {
   }
 
   updateForm(dados, fotos) {
-    console.log(dados);
     this.formulario = this.formBuilder.group({
       loteId: [dados.loteId, Validators.required],
       descricao: [dados.descricao, Validators.required],

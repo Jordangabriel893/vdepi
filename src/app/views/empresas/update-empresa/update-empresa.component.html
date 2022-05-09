@@ -1,66 +1,64 @@
-<form [formGroup]="formulario" (ngSubmit)="onSubmit()" >
+<form [formGroup]="formulario" (ngSubmit)="onSubmit()" appFocus>
   <div class="animated fadeIn">
     <div class="row">
       <div class="col-lg-12">
         <div class="card">
           <div class="card-header d-flex align-items-center">
             <i class="fa fa-building" aria-hidden="true"></i>
-            &nbsp;Informações da Empresa
+            &nbsp;Informações da Empresa - Obrigatorios*
           </div>
           <div class="card-block">
-            <div class="row ">
-              <div class="form-group col-4" >
-                <label for="nomeFantasia">Nome Fantasia</label>
-                <input type="text" class="form-control" [ngClass]="aplicaCssErro('nomeFantasia')" id="nomeFantasia" placeholder="Nome Fantasia" name="nomeFantasia" formControlName="nomeFantasia" triggers="keypress:focusout">
-              </div>
-              <div class="form-group col-4" >
-                <label for="razaoSocial">Razão Social</label>
-                <input type="text" class="form-control" [ngClass]="aplicaCssErro('razaoSocial')" id="razaoSocial" placeholder="Razão Social" name="razaoSocial" formControlName="razaoSocial" triggers="keypress:focusout">
-              </div>
-              <div class="form-group col-4">
-                <label for="cnpj">CNPJ</label>
-                <input [ngClass]="aplicaCssErro('cnpj')"  type="text" class="form-control" id="cnpj" placeholder="CNPJ" formControlName="cnpj"
-                triggers="keypress:focusout" [textMask]="{mask: maskCnpj}">
-              </div>
-            </div>
             <div class="row">
-              <div class="form-group col-4" >
-                <label for="grupoEconomicoId">Grupo Econômico</label>
-                <select class="form-control" [ngClass]="aplicaCssErro('ativo')" formControlName="grupoEconomicoId" >
-                  <option [value]="gp.grupoEconomicoId" *ngFor="let gp of gruposEconomico">{{gp.descricao}}</option>
-                </select>
+              <div class="col-8">
+                <div class="row ">
+                  <div class="form-group col-6" >
+                    <label for="nomeFantasia">Nome Fantasia</label>
+                    <input type="text" class="form-control" [ngClass]="aplicaCssErro('nomeFantasia')" id="nomeFantasia" placeholder="Nome Fantasia" name="nomeFantasia" formControlName="nomeFantasia" triggers="keypress:focusout">
+                  </div>
+                  <div class="form-group col-6" >
+                    <label for="razaoSocial">Razão Social</label>
+                    <input type="text" class="form-control" [ngClass]="aplicaCssErro('razaoSocial')" id="razaoSocial" placeholder="Razão Social" name="razaoSocial" formControlName="razaoSocial" triggers="keypress:focusout">
+                  </div>
+                  <div class="form-group col-6">
+                    <label for="cnpj">CNPJ</label>
+                    <input [ngClass]="aplicaCssErro('cnpj')"  type="text" class="form-control" id="cnpj" placeholder="CNPJ" formControlName="cnpj"
+                    triggers="keypress:focusout" [textMask]="{mask: maskCnpj}">
+                  </div>
+                  <div class="form-group col-6" >
+                    <label for="grupoEconomicoId">Grupo Econômico</label>
+                    <select class="form-control" [ngClass]="aplicaCssErro('ativo')" formControlName="grupoEconomicoId" >
+                      <option [value]="gp.grupoEconomicoId" *ngFor="let gp of gruposEconomico">{{gp.descricao}}</option>
+                    </select>
+                  </div>
+                  <div class="form-group col-6">
+                    <label for="telefone">Telefone</label>
+                    <input type="text" class="form-control" [ngClass]="aplicaCssErro('telefone')" id="telefone"  formControlName="telefone"
+                    triggers="keypress:focusout" [textMask]="{mask: mask}">
+                  </div>
+                  <div class="form-group col-6" >
+                    <label for="codigoTributarioMunicipio">Código Tributário Município</label>
+                    <input  type="text" class="form-control" [ngClass]="aplicaCssErro('codigoTributarioMunicipio')" id="codigoTributarioMunicipio" placeholder="Código Tributário Município" name="codigoTributarioMunicipio" formControlName="codigoTributarioMunicipio" triggers="keypress:focusout">
+                  </div>
+                  <div class="form-group col-6" >
+                    <label for="inscricaoEstadual">Inscrição Estadual</label>
+                    <input type="text" class="form-control" [ngClass]="aplicaCssErro('inscricaoEstadual')" id="inscricaoEstadual" placeholder="Inscrição Estadual" name="inscricaoEstadual" formControlName="inscricaoEstadual" triggers="keypress:focusout">
+                  </div>
+                  <div class="form-group col-6" >
+                    <label for="inscricaoMunicipal">Inscrição Municipal</label>
+                    <input type="text" class="form-control" [ngClass]="aplicaCssErro('inscricaoMunicipal')" id="inscricaoMunicipal" placeholder="Inscrição Municipal" name="inscricaoMunicipal" formControlName="inscricaoMunicipal" triggers="keypress:focusout">
+                  </div>
+                  <div class="form-group col-6">
+                    <label for="ativo">Ativo</label>
+                    <select class="form-control" [ngClass]="aplicaCssErro('ativo')" formControlName="ativo" >
+                      <option value="true">Sim</option>
+                      <option value="false">Não</option>
+                    </select>
+                  </div>
+                </div>
               </div>
-              <div class="form-group col-4">
-                <label for="telefone">Telefone</label>
-                <input type="text" class="form-control" [ngClass]="aplicaCssErro('telefone')" id="telefone"  formControlName="telefone"
-                triggers="keypress:focusout" [textMask]="{mask: mask}">
-              </div>
-              <div class="form-group col-4">
-                <label for="ativo">Ativo</label>
-                <select class="form-control" [ngClass]="aplicaCssErro('ativo')" formControlName="ativo" >
-                  <option value="true">Sim</option>
-                  <option value="false">Não</option>
-                </select>
-              </div>
-            </div>
-            <div class="row ">
-              <div class="form-group col-4" >
-                <label for="codigoTributarioMunicipio">Código Tributário Município</label>
-                <input  type="text" class="form-control" [ngClass]="aplicaCssErro('codigoTributarioMunicipio')" id="codigoTributarioMunicipio" placeholder="Código Tributário Município" name="codigoTributarioMunicipio" formControlName="codigoTributarioMunicipio" triggers="keypress:focusout">
-              </div>
-              <div class="form-group col-4" >
-                <label for="inscricaoEstadual">Inscrição Estadual</label>
-                <input type="text" class="form-control" [ngClass]="aplicaCssErro('inscricaoEstadual')" id="inscricaoEstadual" placeholder="Inscrição Estadual" name="inscricaoEstadual" formControlName="inscricaoEstadual" triggers="keypress:focusout">
-              </div>
-              <div class="form-group col-4" >
-                <label for="inscricaoMunicipal">Inscrição Municipal</label>
-                <input type="text" class="form-control" [ngClass]="aplicaCssErro('inscricaoMunicipal')" id="inscricaoMunicipal" placeholder="Inscrição Municipal" name="inscricaoMunicipal" formControlName="inscricaoMunicipal" triggers="keypress:focusout">
-              </div>
-            </div>
-            <div class="row">
               <div class="col-4" formGroupName="foto">
                 <fieldset class="form-group">
-                  <label>Imagem Empresa</label>
+                  <label>Logomarca <small class="text-muted">(Tamanho máximo: 5mb)</small></label>
                   <div class="custom-file fileInputProfileWrap">
                     <input type="file" (change)="fileChangeEvent($event)" class="fileInputProfile" #inputFile>
                     <div class="img-space" [ngClass]="aplicaCssErro('foto')">
@@ -78,12 +76,10 @@
               </div>
             </div>
           </div>
-        </div>
       </div>
     </div>
   </div>
-  <div class="animated fadeIn" formGroupName="endereco">
-    <div class="row">
+    <div class="row" formGroupName="endereco">
       <div class="col-lg-12">
         <div class="card">
           <div class="card-header">
@@ -97,7 +93,7 @@
           <div class="card-block">
             <div class="row">
               <div class="form-group col-4">
-                <label for="cep">Cep</label>
+                <label for="cep">CEP</label>
                 <input type="text" class="form-control" id="cep" [ngClass]="aplicaCssErro('endereco.cep')"
                   formControlName="cep" (blur)="consultaCEP()" triggers="keypress:focusout" [textMask]="{mask: maskCep}">
               </div>

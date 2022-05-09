@@ -125,11 +125,12 @@ export class UpdateEmpresaComponent implements OnInit {
       fotoId: dados.fotoId,
       endereco: dados.endereco,
       enderecoId: dados.enderecoId,
-      grupoEconomicoId:dados.gruposEconomicoId,
+      grupoEconomicoId:dados.grupoEconomicoId,
       inscricaoEstadual:dados.inscricaoEstadual,
       inscricaoMunicipal:dados.inscricaoMunicipal,
       nomeFantasia:dados.nomeFantasia,
-      razaoSocial:dados.razaoSocial
+      razaoSocial:dados.razaoSocial,
+      telefone: dados.telefone
     })
   }
   fileChangeEvent(fileInput: any) {

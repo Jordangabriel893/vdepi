@@ -26,7 +26,6 @@ export class LeiloeirosComponent implements OnInit {
   }
 
   edit(id) {
-    console.log(id)
     this.router.navigate(['/update-leiloeiro', id], { relativeTo: this.route });
   }
 

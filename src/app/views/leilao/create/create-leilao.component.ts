@@ -53,7 +53,7 @@ export class CreateLeilaoComponent implements OnInit {
     translate: 'yes',
     enableToolbar: true,
     showToolbar: true,
-    placeholder: 'Temos e Condição de Venda...',
+    placeholder: 'Termos e Condições de Venda...',
     defaultParagraphSeparator: '',
     defaultFontName: '',
     defaultFontSize: '',

@@ -1,5 +1,4 @@
 import * as moment from 'moment';
-import { DatePipe } from '@angular/common';
 import { FormBuilder, FormArray, FormGroup, Validators } from '@angular/forms';
 import { Component, OnInit, ElementRef, ViewChild } from '@angular/core';
 import * as _ from 'lodash';
@@ -7,7 +6,6 @@ import { Restangular } from 'ngx-restangular';
 import { NotifierService } from 'angular-notifier';
 import { ActivatedRoute, Router } from '@angular/router';
 import { BsLocaleService } from 'ngx-bootstrap/datepicker';
-import { AngularEditorConfig } from '@kolkov/angular-editor';
 import { ConsultaCepService } from 'app/views/usuarios/shared/consulta-cep/consulta-cep.service';
 
 @Component({
@@ -16,13 +14,13 @@ import { ConsultaCepService } from 'app/views/usuarios/shared/consulta-cep/consu
   styleUrls: ['./update-leiloeiros.component.scss']
 })
 export class UpdateLeiloeirosComponent implements OnInit {
-  @ViewChild('inputAnexos') inputAnexos: ElementRef;
-  context = {
-    message: 'Hello there!'
-  };
   imageError: string;
   isImageSaved: boolean;
   cardImageBase64: string;
+
+  imageErrorAss: string;
+  isImageSavedAss: boolean;
+  cardImageBase64Ass: string;
 
   formulario:FormGroup
   leiloeiros
@@ -32,65 +30,17 @@ export class UpdateLeiloeirosComponent implements OnInit {
   public maskCpf: Array<string | RegExp>
   public maskCnpj: Array<string | RegExp>
 
-  //anexos
-  anexosbase64: any
-  anexosnome: any
-  anexostamanho: any
-  anexostipo: any
-  numeroAdcAnexo: number
-  arrayAnexos = [];
-  fileToUpload: File | null = null;
-  editorConfig: AngularEditorConfig = {
-    editable: true,
-    spellcheck: true,
-    height: 'auto',
-    minHeight: '0',
-    maxHeight: 'auto',
-    width: 'auto',
-    minWidth: '0',
-    translate: 'yes',
-    enableToolbar: true,
-    showToolbar: true,
-    placeholder: 'Temos e Condição de Venda...',
-    defaultParagraphSeparator: '',
-    defaultFontName: '',
-    defaultFontSize: '',
-    fonts: [
-      { class: 'arial', name: 'Arial' },
-      { class: 'times-new-roman', name: 'Times New Roman' },
-      { class: 'calibri', name: 'Calibri' },
-      { class: 'comic-sans-ms', name: 'Comic Sans MS' }
-    ],
-    customClasses: [
-      {
-        name: 'quote',
-        class: 'quote',
-      },
-      {
-        name: 'redText',
-        class: 'redText'
-      },
-      {
-        name: 'titleText',
-        class: 'titleText',
-        tag: 'h1',
-      },
-    ],
-  };
-
   constructor(
     private formBuilder: FormBuilder,
     private restangular: Restangular,
     private notifierService: NotifierService,
     private router: Router,
     private cepService: ConsultaCepService,
-    private route: ActivatedRoute,
-    private localeService: BsLocaleService
+    private route: ActivatedRoute
     ) {
-
-    this.id = this.route.snapshot.params['id']
-    this.restangular.one("leiloeiro", this.id).get().subscribe((response) => {
-    this.updateForm(response.data)
+      this.id = this.route.snapshot.params['id']
+      this.restangular.one("leiloeiro", this.id).get().subscribe((response) => {
+      this.updateForm(response.data)
     })
 
     this.maskCep = [ /\d/,/\d/,/\d/,/\d/,/\d/, '-', /\d/, /\d/, /\d/, ]
@@ -103,12 +53,17 @@ export class UpdateLeiloeirosComponent implements OnInit {
       telefone:[null, Validators.required],
       email:[null, Validators.required],
       orgaoRegistro:[null, Validators.required],
-      uf: [null],
-      matricula: [null],
-      genero:[null],
+      ufRegistro: [null, Validators.required],
+      matricula: [null, Validators.required],
+      genero:[null, Validators.required],
       nomeComercial:[null],
-      anexos: this.formBuilder.array([]),
       foto: this.formBuilder.group({
+        nome:[null],
+        base64:[null],
+        tipo:[null],
+        tamanho:[0]
+      }, Validators.required),
+      assinatura: this.formBuilder.group({
         nome:[null],
         base64:[null],
         tipo:[null],
@@ -116,17 +71,17 @@ export class UpdateLeiloeirosComponent implements OnInit {
       }, Validators.required),
       endereco: this.formBuilder.group({
         enderecoId: [0],
-        cep: [null, [Validators.required]],
-        numero: [null, Validators.required],
+        cep: [null],
+        numero: [null],
         complemento: [null],
-        bairro: [null, Validators.required],
-        cidade: [null, Validators.required],
-        estado: [null, Validators.required],
-        logradouro:[null, Validators.required]
+        bairro: [null],
+        cidade: [null],
+        estado: [null],
+        logradouro:[null]
       }),
       ativo: [null]
-      })
-    }
+    })
+  }
 
   ngOnInit() {
 
@@ -159,12 +114,16 @@ export class UpdateLeiloeirosComponent implements OnInit {
       this.isImageSaved = true
       this.cardImageBase64 = dados.foto.url
     }
+    if(dados.assinatura) {
+      this.isImageSavedAss = true
+      this.cardImageBase64Ass = dados.assinatura.url
+    }
     this.formulario.patchValue({
       nome:dados.nome,
       razaoSocial:dados.razaoSocial,
       genero:dados.genero,
       orgaoRegistro:dados.orgaoRegistro,
-      uf:dados.uf,
+      UfRegistro:dados.UfRegistro,
       matricula:dados.matricula,
       nomeComercial:dados.nomeComercial,
       anexos:dados.anexos,
@@ -251,71 +210,69 @@ export class UpdateLeiloeirosComponent implements OnInit {
     }
   }
 
-  anexoChangeEvent(anexoInput: FileList) {
-    this.fileToUpload = anexoInput.item(0);
-    this.fileToUpload.name
-    this.fileToUpload.size
-    this.fileToUpload.type
-    const reader = new FileReader();
-    reader.readAsDataURL(this.fileToUpload);
-    reader.onload = () => {
-      this.anexosbase64 = reader.result
-      const arquivo = {
-        arquivoId: 0,
-        nome: this.fileToUpload.name,
-        base64: this.anexosbase64,
-        tipo: this.fileToUpload.type,
-        tamanho: this.fileToUpload.size,
-        dataCadastro: moment().utc().toISOString()
-      }
+  fileChangeEventAss(fileInput: any) {
+    this.imageErrorAss = null;
+    if (fileInput.target.files && fileInput.target.files[0]) {
+        // Size Filter Bytes
+        const max_size = 5242880;
+        const allowed_types = ['image/png', 'image/jpeg'];
+        const max_height = 15200;
+        const max_width = 25600;
 
-      this.atualizarAnexo(arquivo, this.numeroAdcAnexo)
-    };
-  }
-  atualizarAnexo(obj, i) {
-    let anexos = this.formulario.get('anexos') as FormArray
+        if (fileInput.target.files[0].size > max_size) {
+            this.imageErrorAss =
+                'O tamanho máximo permitido é ' + max_size / 1000 + 'Mb';
 
-    if (i < 0) {
-      anexos.push(this.formBuilder.group({
-        arquivoId: 0,
-        nome: [null, Validators.required],
-        arquivo: obj,
-        acao: 'I'
-      }))
-    } else {
-      const valor = anexos.value[i]
-      anexos.removeAt(i)
-      anexos.insert(i, this.formBuilder.group({
-        arquivoId: 0,
-        nome: valor.nome,
-        arquivo: obj,
-        acao: 'A'
-      }))
-    }
-  }
+            return false;
+        }
 
-  alterarAnexo(i) {
-    this.numeroAdcAnexo = i
-    this.inputAnexos.nativeElement.click()
-  }
-  filterList(campo: string) {
-    const fotos = this.formulario.get(campo) as FormArray;
-    return fotos.controls.filter(x => (x as FormGroup).controls['acao'].value !== 'D');
-  }
-  deleteAnexo(indexAnexo: number) {
-    let anexos = this.formulario.controls['anexos'] as FormArray;
-    let anexo = anexos.at(indexAnexo) as FormGroup;
-    if(anexo.controls['acao'].value !== 'I') {
-      anexo.controls['acao'].setValue('D');
-    }
-    else {
-      anexos.removeAt(indexAnexo)
+        if (!_.includes(allowed_types, fileInput.target.files[0].type)) {
+            this.imageErrorAss = 'Somente imagens são permitidas ( JPG | PNG )';
+            return false;
+        }
+        const reader = new FileReader();
+        reader.onload = (e: any) => {
+            const image = new Image();
+            image.src = e.target.result;
+            image.onload = rs => {
+                const img_height = rs.currentTarget['height'];
+                const img_width = rs.currentTarget['width'];
+
+                if (img_height > max_height && img_width > max_width) {
+                    this.imageErrorAss =
+                        'Tamanho máximo permitido ' +
+                        max_height +
+                        '*' +
+                        max_width +
+                        'px';
+                    return false;
+                } else {
+                    const imgBase64Path = e.target.result;
+                    this.cardImageBase64Ass = imgBase64Path;
+                    this.isImageSavedAss = true;
+                    var assinatura = this.formulario.get('assinatura') as FormGroup;
+                    assinatura.get('base64').setValue(imgBase64Path);
+                    assinatura.get('nome').setValue(fileInput.target.files[0].name);
+                    assinatura.get('tamanho').setValue(fileInput.target.files[0].size);
+                    assinatura.get('tipo').setValue(fileInput.target.files[0].type);
+                    // this.previewImagePath = imgBase64Path;
+                }
+            };
+        };
+
+        reader.readAsDataURL(fileInput.target.files[0]);
     }
   }
 
   removeImage(input) {
     this.cardImageBase64 = null;
     this.isImageSaved = false;
+    input.value = "";
+  }
+
+  removeImageAss(input) {
+    this.cardImageBase64Ass = null;
+    this.isImageSavedAss = false;
     input.value = "";
   }
 
