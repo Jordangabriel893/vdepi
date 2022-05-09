@@ -367,7 +367,7 @@
             </div>
             <button type="button" class="btn btn-success btn-sm" (click)="alterarFoto(-1)">
               <i class="fa fa-plus-circle"></i>&nbsp;Nova Foto</button>
-            <input type="file" #inputFotos (change)="fileChangeEvent($event)">
+            <input type="file" #inputFotos multiple (change)="fileChangeEvent($event)">
           </div>
           <div class="card-block" *ngIf="this.formulario.value.fotos.length > 0">
             <div class="row">
