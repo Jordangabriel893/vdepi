@@ -83,6 +83,14 @@
                 currencyMask [options]="{ prefix: '', suffix: '%', thousands: '.', decimal: ',' }">
 
               </div>
+              <div class="form-group col-4">
+                <label for="habilitacao">Regra Habilitação </label>
+                <select class="form-control" [ngClass]="aplicaCssErro('habilitacao')" formControlName="habilitacao" name="habilitacao">
+                  <option *ngFor="let item of habilitacoes" value="{{item.regraHabilitacaoId}}">{{item.regraHabilitacao.tipoValidacaoRegra}}
+                  </option>
+                </select>
+
+              </div>
 
             </div>
             <div class="row">

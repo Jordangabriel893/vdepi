@@ -31,6 +31,7 @@ export class CreateLeilaoComponent implements OnInit {
   comitentes:any
   leiloeiros:any
   empresas:any
+  habilitacoes:any;
   status:any
   minDate: Date;
 
@@ -119,6 +120,15 @@ export class CreateLeilaoComponent implements OnInit {
         this.status= dados.data
       }
     )
+    this.restangular.one('habilitacao').get().subscribe(
+      dados =>{
+
+        const habilitac = dados.data
+        const regras = habilitac.map(x => x.regraHabilitacao)
+        console.log(regras)
+        this.habilitacoes = dados.data
+      }
+    )
 
     this.formulario = this.formBuilder.group({
       nome:  [null, [Validators.required, Validators.minLength(3), Validators.maxLength(35)]],
@@ -149,6 +159,7 @@ export class CreateLeilaoComponent implements OnInit {
       comissao: ["5", Validators.required],
       termoCondicaoVenda: [null],
       anexos: this.formBuilder.array([]),
+      habilitacao:[null, Validators.required]
     })
   }
 
