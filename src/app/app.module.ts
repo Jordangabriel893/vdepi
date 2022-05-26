@@ -145,7 +145,7 @@ import { AlertModule } from 'ngx-bootstrap/alert';
 
 import { environment } from '../environments/environment';
 import { AuthGuard, AnonyGuard } from './_guards/index';
-import { AuthenticationService, StoreService, ComponentService, DataService } from './_services/index';
+import { AuthenticationService } from './_services/index';
 import { PdfService } from './_services/pdf.service';
 import { DataTableModule } from "angular2-datatable";
 import { SourceGuard } from './_guards/source.guard';
@@ -345,11 +345,8 @@ export function RestangularConfigFactory(RestangularProvider, NotifierService: N
     AuthenticationService,
     AuthorizationService,
     ConfirmationService,
-    StoreService,
-    ComponentService,
     FormatPhonePipe,
     CurrencyFormatPipe,
-    DataService,
     PdfService,
     GroupByPipe2
   ],
