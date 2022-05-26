@@ -21,8 +21,8 @@ export class AuthenticationService {
     }
 
     let grant_type = 'password';
-    let client_id = 'mvc-client';
-    let client_secret = 'secret';
+    let client_id = 'admin-eblonline';
+    let client_secret = 'X3l5h0UhDy7F0xE2sMpSPREcTyqgtZNO';
 
     let body = `grant_type=${grant_type}&client_id=${client_id}&client_secret=${client_secret}&username=${username}&password=${password}`;
 

@@ -56,36 +56,17 @@
 
           <div class="card-block">
             <div class="row">
-              <div class="form-group col-5">
-                <label for="cep">Cep</label>
+              <div class="form-group col-3">
+                <label for="cep">CEP</label>
                 <input type="text" class="form-control" id="cep"
                   formControlName="cep" (blur)="consultaCEP()" triggers="keypress:focusout" [textMask]="{mask: maskCep}">
               </div>
-              <div class="form-group col-5">
+              <div class="form-group col-7">
                 <label for="logradouro">Logradouro</label>
                 <input type="text" class="form-control"  id="logradouro"
                   formControlName="logradouro"  triggers="keypress:focusout">
               </div>
-
               <div class="form-group col-2">
-                <label for="uf">UF:</label>
-                <input type="text" class="form-control" id="uf"
-                  formControlName="uf"  triggers="keypress:focusout">
-              </div>
-            </div>
-
-            <div class="row">
-              <div class="form-group col-4">
-                <label for="bairro">Bairro</label>
-                <input type="text" class="form-control"  id="bairro"
-                  formControlName="bairro"  triggers="keypress:focusout">
-              </div>
-              <div class="form-group col-4">
-                <label for="cidade">Cidade</label>
-                <input type="text" class="form-control" id="cidade"
-                  formControlName="cidade"   triggers="keypress:focusout">
-              </div>
-              <div class="form-group col-4">
                 <label for="numero">Número</label>
                 <input type="text" class="form-control" id="numero"
                   formControlName="numero"   triggers="keypress:focusout">
@@ -93,12 +74,28 @@
 
             </div>
             <div class="row">
-              <div class="form-group col-12">
+              <div class="form-group col-4">
                 <label for="complemento">Complemento</label>
                 <input type="text" class="form-control" id="complemento"
                   formControlName="complemento"   triggers="keypress:focusout">
               </div>
+              <div class="form-group col-3">
+                <label for="bairro">Bairro</label>
+                <input type="text" class="form-control"  id="bairro"
+                  formControlName="bairro"  triggers="keypress:focusout">
+              </div>
+              <div class="form-group col-3">
+                <label for="cidade">Cidade</label>
+                <input type="text" class="form-control" id="cidade"
+                  formControlName="cidade"   triggers="keypress:focusout">
+              </div>
+              <div class="form-group col-2">
+                <label for="uf">Estado</label>
+                <input type="text" class="form-control" id="uf"
+                  formControlName="uf"  triggers="keypress:focusout">
+              </div>
             </div>
+
           </div>
           <div class="card-footer">
             <button type="submit" class="btn btn-primary saveCancel"><i class="fa fa-save"></i> Salvar</button>

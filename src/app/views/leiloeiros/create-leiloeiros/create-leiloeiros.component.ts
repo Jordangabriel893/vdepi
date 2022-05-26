@@ -1,11 +1,12 @@
-import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Component,ElementRef, OnInit, ViewChild } from '@angular/core';
+import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { NotifierService } from 'angular-notifier';
 import { ConsultaCepService } from 'app/views/usuarios/shared/consulta-cep/consulta-cep.service';
 import { Restangular } from 'ngx-restangular';
 import * as moment from 'moment';
 import * as _ from 'lodash';
+
 
 
 @Component({
@@ -17,6 +18,10 @@ export class CreateLeiloeirosComponent implements OnInit {
   imageError: string;
   isImageSaved: boolean;
   cardImageBase64: string;
+
+  imageErrorAss: string;
+  isImageSavedAss: boolean;
+  cardImageBase64Ass: string;
 
   formulario:FormGroup
   leiloeiros
@@ -41,6 +46,11 @@ export class CreateLeiloeirosComponent implements OnInit {
       cpfCnpj:[null, Validators.required],
       telefone:[null, Validators.required],
       email:[null, Validators.required],
+      orgaoRegistro:[null, Validators.required],
+      ufRegistro: [null, Validators.required],
+      matricula: [null, Validators.required],
+      genero:[null, Validators.required],
+      nomeComercial:[null],
       foto: this.formBuilder.group({
         arquivoId:[0],
         nome:[null],
@@ -48,17 +58,25 @@ export class CreateLeiloeirosComponent implements OnInit {
         tipo:[null],
         tamanho:[0]
       }, Validators.required),
-        endereco: this.formBuilder.group({
-          enderecoId: [0],
-          cep: [null, [Validators.required]],
-          numero: [null, Validators.required],
-          complemento: [null],
-          bairro: [null, Validators.required],
-          cidade: [null, Validators.required],
-          estado: [null, Validators.required],
-          logradouro:[null, Validators.required]
-        })
-      })
+      assinatura: this.formBuilder.group({
+        arquivoId:[0],
+        nome:[null],
+        base64:[null, Validators.required],
+        tipo:[null],
+        tamanho:[0]
+      }, Validators.required),
+      endereco: this.formBuilder.group({
+        enderecoId: [0],
+        cep: [null, [Validators.required]],
+        numero: [null, Validators.required],
+        complemento: [null],
+        bairro: [null, Validators.required],
+        cidade: [null, Validators.required],
+        estado: [null, Validators.required],
+        logradouro:[null, Validators.required]
+      }),
+      ativo: [null]
+    })
   }
 
   ngOnInit() {
@@ -97,6 +115,7 @@ export class CreateLeiloeirosComponent implements OnInit {
       }
     });
   }
+
   fileChangeEvent(fileInput: any) {
     this.imageError = null;
     if (fileInput.target.files && fileInput.target.files[0]) {
@@ -151,11 +170,72 @@ export class CreateLeiloeirosComponent implements OnInit {
     }
   }
 
+  fileChangeEventAss(fileInput: any) {
+    this.imageErrorAss = null;
+    if (fileInput.target.files && fileInput.target.files[0]) {
+        // Size Filter Bytes
+        const max_size = 5242880;
+        const allowed_types = ['image/png', 'image/jpeg'];
+        const max_height = 15200;
+        const max_width = 25600;
+
+        if (fileInput.target.files[0].size > max_size) {
+            this.imageErrorAss =
+                'O tamanho máximo permitido é ' + max_size / 1000 + 'Mb';
+
+            return false;
+        }
+
+        if (!_.includes(allowed_types, fileInput.target.files[0].type)) {
+            this.imageErrorAss = 'Somente imagens são permitidas ( JPG | PNG )';
+            return false;
+        }
+        const reader = new FileReader();
+        reader.onload = (e: any) => {
+            const image = new Image();
+            image.src = e.target.result;
+            image.onload = rs => {
+                const img_height = rs.currentTarget['height'];
+                const img_width = rs.currentTarget['width'];
+
+                if (img_height > max_height && img_width > max_width) {
+                    this.imageErrorAss =
+                        'Tamanho máximo permitido ' +
+                        max_height +
+                        '*' +
+                        max_width +
+                        'px';
+                    return false;
+                } else {
+                    const imgBase64Path = e.target.result;
+                    this.cardImageBase64Ass = imgBase64Path;
+                    this.isImageSavedAss = true;
+                    var assinatura = this.formulario.get('assinatura') as FormGroup;
+                    assinatura.get('base64').setValue(imgBase64Path);
+                    assinatura.get('nome').setValue(fileInput.target.files[0].name);
+                    assinatura.get('tamanho').setValue(fileInput.target.files[0].size);
+                    assinatura.get('tipo').setValue(fileInput.target.files[0].type);
+                    // this.previewImagePath = imgBase64Path;
+                }
+            };
+        };
+
+        reader.readAsDataURL(fileInput.target.files[0]);
+    }
+  }
+
   removeImage(input) {
     this.cardImageBase64 = null;
     this.isImageSaved = false;
     input.value = "";
   }
+
+  removeImageAss(input) {
+    this.cardImageBase64Ass = null;
+    this.isImageSavedAss = false;
+    input.value = "";
+  }
+
   verificaValidTouched(campo){
     return !this.formulario.get(campo).valid && this.formulario.get(campo).touched;
   }

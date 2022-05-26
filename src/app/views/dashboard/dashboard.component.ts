@@ -19,6 +19,7 @@ export class DashboardComponent implements OnInit {
   formulario: FormGroup
   flipDiv: boolean = false;
   @ViewChild("barrasHorizontal") barrasHorizontal: ElementRef
+  chartFinanceiro;
   //contadores
   contadorVisitantes
   contadorHabilitados
@@ -33,7 +34,7 @@ export class DashboardComponent implements OnInit {
   //previsto x arrematado
   minimoVendasPrevisto
   lancesOfertados
-  
+
   //financeiro
   listaArrematados
   listaPago
@@ -70,7 +71,7 @@ export class DashboardComponent implements OnInit {
     { data: [28, 48, 40, 19, 86, 27, 90], label: 'Series B' }
   ];
   public barChartColor = [{ backgroundColor: ['	#87CEFA','#4876FF','#436EEE','#3A5FCD',' #27408B', '#0000FF', '	#0000EE', '#0000CD', '#00008B', '#191970'] }]
-  
+
   //Barras Financeiro
   public barChartOptionsFinanceiro: ChartOptions = {
     responsive: true,
@@ -85,12 +86,7 @@ export class DashboardComponent implements OnInit {
   public barChartLabelsFinanceiro: Label[] = ['Arrematado', 'Pago', 'Pendente', 'Expirado'];
   public barChartTypeFinanceiro: ChartType = 'bar';
   public barChartLegendFinanceiro = false;
-  // public chartColors: Array<any> = [{
-  // fillColor: 'rgba(47, 132, 71, 0.8)',
-  // strokeColor: 'rgba(47, 132, 71, 0.8)',
-  // }
 
-  //   ];
   public barChartDataFinanceiro: ChartDataSets[] = [
     { data: [65, 59, 80, 81, 56, 55, 40], label: 'Series A' },
 
@@ -103,25 +99,22 @@ export class DashboardComponent implements OnInit {
     private formBuilder: FormBuilder,) {
 
     this.restangular.one("leilao", '').get({ PageSize: 100 }).subscribe((response) => {
-      console.log(response.data)
       this.leiloes = response.data
     })
 
     this.formulario = this.formBuilder.group({
       id: [this.id]
     })
-    this.buscarLeilao()
-
-
+    this.buscarLeilao();
   }
 
 
   ngOnInit() {
 
   }
+
   buscarLeilao() {
     this.id = this.formulario.value.id
-    console.log(this.id)
     this.restangular.one("dashboard/contadores").get({ LeilaoId: this.id }).subscribe((response) => {
       this.contadorVisitantes = response.data.visitantes
       this.contadorHabilitados = response.data.habilitados
@@ -142,7 +135,7 @@ export class DashboardComponent implements OnInit {
       const top10lotes = response.data.reverse();
       const lances = top10lotes.map(x => x.lances)
       const numeroLote = top10lotes.map(x => x.numeroLote)
-      this.barChartData = [{ data: lances, label: 'Lances'}]
+      this.barChartData = [{ data: lances, label: 'Qtd de Lances'}]
       this.barChartLabels = numeroLote
 
     })
@@ -157,37 +150,35 @@ export class DashboardComponent implements OnInit {
 
     })
     this.restangular.one("dashboard/previsto-arrematado").get({ LeilaoId: this.id }).subscribe((response) => {
-      // console.log(response.data)
-//       //previsto x arrematado
+          if(this.chartFinanceiro) {
+             this.chartFinanceiro.clear();
+             this.chartFinanceiro.destroy();
+          }
+
           this.minimoVendasPrevisto = response.data.minimoVendasPrevisto
           this.lancesOfertados = response.data.lancesOfertados
-          console.log(this.minimoVendasPrevisto, this.lancesOfertados)
           const data =  {
-            labels: ["Mínimo de Vendas Previsto", "Total de Lances ofertados"],
+            labels: ["MÃ­nimo de Vendas Previsto", "Total de Lances ofertados"],
             datasets: [
               {
                 label: "R$",
-                backgroundColor: ["rgb(38, 1, 250)", " rgb(10, 250, 1)"],
+                backgroundColor: ["rgb(38, 1, 250)", "rgb(10, 250, 1)"],
                 data: [this.minimoVendasPrevisto, this.lancesOfertados, 0]
               }
             ]
           }
-          new Chart(this.barrasHorizontal.nativeElement, {
+          this.chartFinanceiro = new Chart(this.barrasHorizontal.nativeElement, {
             type: 'horizontalBar',
             data:data,
             options: {
               legend: { display: false },
               title: {
                 display: false,
-                text: 'Predicted world population (millions) in 2050',
               },
               tooltips: {
                 callbacks: {
                   label: function (tooltipItem, data) {
-                    console.log(data.datasets[tooltipItem.datasetIndex])
-                    console.log(tooltipItem)
                     const datasetLabel = data.datasets[tooltipItem.datasetIndex].data || '';
-
                     return tooltipItem.xLabel.toLocaleString("pt-BR", { style: "currency", currency: "BRL" })
                   }
                 }
@@ -214,59 +205,7 @@ export class DashboardComponent implements OnInit {
           });
     },
     error => {
-      this.minimoVendasPrevisto = 0
-      this.lancesOfertados = 0
-      console.log(this.minimoVendasPrevisto, this.lancesOfertados)
-      const data =  {
-        labels: ["Mínimo de Vendas Previsto", "Total de Lances ofertados"],
-        datasets: [
-          {
-            label: "R$",
-            backgroundColor: ["rgb(38, 1, 250)", " rgb(10, 250, 1)"],
-            data: [this.minimoVendasPrevisto, this.lancesOfertados, 0]
-          }
-        ]
-      }
-      new Chart(this.barrasHorizontal.nativeElement, {
-        type: 'horizontalBar',
-        data:data,
-        options: {
-          legend: { display: false },
-          title: {
-            display: false,
-            text: 'Predicted world population (millions) in 2050',
-          },
-          tooltips: {
-            callbacks: {
-              label: function (tooltipItem, data) {
-                console.log(data.datasets[tooltipItem.datasetIndex])
-                console.log(tooltipItem)
-                const datasetLabel = data.datasets[tooltipItem.datasetIndex].data || '';
 
-                return tooltipItem.xLabel.toLocaleString("pt-BR", { style: "currency", currency: "BRL" })
-              }
-            }
-          },
-        scales: {
-          xAxes: [{
-            stacked: true,
-            gridLines: {
-              display: false
-            },
-            ticks: {
-              callback: function (value, index, values) {
-                return value.toLocaleString("pt-BR", { style: "currency", currency: "BRL" });
-              }
-            },
-          }],
-          // We use this empty structure as a placeholder for dynamic theming.
-
-        },
-
-
-        }
-
-      });
     });
 
 

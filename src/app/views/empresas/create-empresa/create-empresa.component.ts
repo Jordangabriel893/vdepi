@@ -36,13 +36,13 @@ export class CreateEmpresaComponent implements OnInit {
     private router: Router,
     private cepService: ConsultaCepService,
   ) {
-    
+
     this.mask = ['(', /[1-9]/, /\d/, ')', ' ', /\d/,/\d/,/\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/]
     this.maskCep = [ /\d/,/\d/,/\d/,/\d/,/\d/, '-', /\d/, /\d/, /\d/, ]
     this.maskCpf = [ /\d/,/\d/,/\d/,  '.', /\d/,/\d/,/\d/, '.', /\d/, /\d/, /\d/, '-', /\d/,/\d/ ]
     this.maskCnpj = [ /\d/,/\d/,'.',/\d/,/\d/,/\d/,'.',/\d/,/\d/,/\d/,'/', /\d/,/\d/,/\d/,/\d/,'-',/\d/,/\d/, ]
 
-    
+
   }
 
   ngOnInit() {
@@ -50,7 +50,6 @@ export class CreateEmpresaComponent implements OnInit {
       this.gruposEconomico = response.data
     })
     this.formulario = this.formBuilder.group({
-      ativo:[null, Validators.required],
       cnpj:[null, Validators.required],
       codigoTributarioMunicipio:[null],
       foto: this.formBuilder.group({

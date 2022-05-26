@@ -1,10 +1,6 @@
 import { Component, OnInit, ViewChild, ChangeDetectorRef } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
-
-import { NotifierService } from 'angular-notifier';
 import { Restangular } from 'ngx-restangular';
-import { ConfirmationService } from '@jaspero/ng-confirmations';
-import { ComponentService } from '../../_services/index';
 import * as Model from '../_models/model'
 import { FormBuilder, FormGroup } from '@angular/forms';
 
@@ -21,16 +17,10 @@ selectLeilao
   constructor(
     private route: ActivatedRoute,
     private router: Router,
-    private notifierService: NotifierService,
-    private confirmationService: ConfirmationService,
     private restangular: Restangular,
-    private componentService: ComponentService,
-    private cdr: ChangeDetectorRef,
     private formBuilder: FormBuilder,) {
       this.formulario = this.formBuilder.group({
-        leilao:[null],
-        
-  
+        leilao:[null]
       })
   }
 

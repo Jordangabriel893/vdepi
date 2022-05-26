@@ -42,13 +42,13 @@ export class UpdateLeilaoComponent implements OnInit {
     spellcheck: true,
     height: 'auto',
     minHeight: '0',
-    maxHeight: 'auto',
+    maxHeight: '300px',
     width: 'auto',
     minWidth: '0',
     translate: 'yes',
     enableToolbar: true,
     showToolbar: true,
-    placeholder: 'Temos e Condição de Venda...',
+    placeholder: 'Termos e Condições de Venda...',
     defaultParagraphSeparator: '',
     defaultFontName: '',
     defaultFontSize: '',
@@ -75,6 +75,8 @@ export class UpdateLeilaoComponent implements OnInit {
     ],
   };
 
+  maskhora = [ /\d/,/\d/, ':', /\d/, /\d/, ]
+
   constructor(
     private route: ActivatedRoute,
     private router: Router,
@@ -83,7 +85,7 @@ export class UpdateLeilaoComponent implements OnInit {
     private notifierService: NotifierService)
   {
     this.minDate = new Date();
-    this.minDate.setDate(this.minDate.getDate());
+    this.minDate.setDate(this.minDate.getDate() - 1);
 
     this.restangular.one('categoria').get().subscribe(dados =>{
       const categoriaPai = dados.data.filter(x => x.categoriaPaiId == null)
@@ -110,51 +112,16 @@ export class UpdateLeilaoComponent implements OnInit {
         this.status= dados.data
       }
     )
-
-    this.formulario = this.formBuilder.group({
-      nome:  [null, [Validators.required, Validators.minLength(3), Validators.maxLength(35)]],
-      titulo: [null, [Validators.required, Validators.minLength(3), Validators.maxLength(35)]],
-      dataLeilao: [null,[Validators.required]],
-      dataAberturaLance: [null, Validators.required],
-      dataInicioAgendamento: [null],
-      dataFimAgendamento: [null],
-      dataEdital: [null],
-      dataNotificacao: [null],
-      dataIncioLiberacao: [null],
-      dataFimLiberacao: [null],
-      emailsNotificacao: [null],
-      dataDiarioOficial: [null],
-      numeroDiarioOficial: [null],
-      foto: this.formBuilder.group({
-        arquivoId:[null, [Validators.required]],
-        nome:[null],
-        base64:[null],
-        tipo:[null],
-        tamanho:[0],
-        url:[]
-      }, Validators.required),
-      categoriaId: [null, Validators.required],
-      comitenteId: [null, Validators.required],
-      leiloeiroId: [null, Validators.required],
-      empresaId: [null, Validators.required],
-      leilaoId: [null, Validators.required],
-      statusId: [null, Validators.required],
-      comissao: [0, Validators.required],
-      termoCondicaoVenda: [null],
-      anexos: this.formBuilder.array([]),
-    })
   }
 
   ngOnInit() {
-  this.id = this.route.snapshot.params['id']
-   console.log(this.id )
-   this.restangular.all('admin/leilao').get(this.id).subscribe(dados => {
-     this.updateForm(dados.data)
-   })
+    this.id = this.route.snapshot.params['id']
+    this.restangular.all('admin/leilao').get(this.id).subscribe(dados => {
+      this.updateForm(dados.data)
+    })
   }
 
   onSubmit(){
-    // console.log(this.formulario.value)
     if(!this.formulario.valid){
       Object.keys(this.formulario.controls).forEach((campo)=>{
         const controle = this.formulario.get(campo)
@@ -179,47 +146,44 @@ export class UpdateLeilaoComponent implements OnInit {
   }
 
   updateForm(dados) {
-    console.log(dados)
     this.isImageSaved = true
     this.cardImageBase64 = dados.foto.url
-    this.formulario.patchValue({
-      nome: dados.nome,
-      titulo:dados.titulo,
-      dataLeilao: moment.utc(dados.dataLeilao).local().toDate(),
-      dataAberturaLance: moment.utc(dados.dataAberturaLance).local().toDate(),
-      dataInicioAgendamento: dados.dataInicioAgendamento ? moment.utc(dados.dataInicioAgendamento).local().toDate() : null,
-      dataFimAgendamento: dados.dataFimAgendamento ? moment.utc(dados.dataFimAgendamento).local().toDate() : null,
-      dataEdital: dados.dataEdital ? moment.utc(dados.dataEdital).local().toDate() : null,
-      dataNotificacao: dados.dataNotificacao ? moment.utc(dados.dataNotificacao).local().toDate() : null,
-      dataIncioLiberacao: dados.dataInicioLiberacao ? moment.utc(dados.dataInicioLiberacao).local().toDate() : null,
-      dataFimLiberacao: dados.dataFimLiberacao ? moment.utc(dados.dataFimLiberacao).local().toDate() : null,
-      dataDiarioOficial: dados.dataDiarioOficial ? moment.utc(dados.dataDiarioOficial).local().toDate() : null,
-      emailsNotificacao: dados.emailsNotificacao,
-      numeroDiarioOficial:dados.numeroDiarioOficial,
-      arquivoId:dados.arquivoId,
-      foto:{
-        url: dados.foto.url,
-        arquivoId: dados.foto.arquivoId,
-        nome:dados.foto.nome,
-        base64:dados.foto.base64,
-        tipo:dados.foto.tipo,
-        tamanho:dados.foto.tamanho,
-      },
-      categoriaId:dados.categoriaId,
-      comitenteId:dados.comitenteId,
-      leiloeiroId:dados.leiloeiroId,
-      empresaId:dados.empresaId,
-      leilaoId:dados.leilaoId,
-      statusId: dados.statusId,
-      comissao: dados.comissaoLeiloeiro,
-      termoCondicaoVenda: dados.termoCondicaoVenda,
+
+    this.formulario = this.formBuilder.group({
+      nome: [dados.nome, [Validators.required, Validators.minLength(3), Validators.maxLength(35)]],
+      titulo:[dados.titulo, [Validators.required, Validators.minLength(3), Validators.maxLength(35)]],
+      dataLeilao: [moment.utc(dados.dataLeilao).local().toDate(), [Validators.required]],
+      dataAberturaLance: [moment.utc(dados.dataAberturaLance).local().toDate(), Validators.required],
+      dataInicioAgendamento: [dados.dataInicioAgendamento ? moment.utc(dados.dataInicioAgendamento).local().toDate() : null],
+      dataFimAgendamento: [dados.dataFimAgendamento ? moment.utc(dados.dataFimAgendamento).local().toDate() : null],
+      dataEdital: [dados.dataEdital ? moment.utc(dados.dataEdital).local().toDate() : null],
+      dataNotificacao: [dados.dataNotificacao ? moment.utc(dados.dataNotificacao).local().toDate() : null],
+      dataIncioLiberacao: [dados.dataInicioLiberacao ? moment.utc(dados.dataInicioLiberacao).local().toDate() : null],
+      dataFimLiberacao: [dados.dataFimLiberacao ? moment.utc(dados.dataFimLiberacao).local().toDate() : null],
+      dataDiarioOficial: [dados.dataDiarioOficial ? moment.utc(dados.dataDiarioOficial).local().toDate() : null],
+      emailsNotificacao: [dados.emailsNotificacao],
+      numeroDiarioOficial:[dados.numeroDiarioOficial],
+      foto: this.formBuilder.group({
+        url: [dados.foto.url],
+        nome:[dados.foto.nome],
+        base64:[dados.foto.base64],
+        tipo:[dados.foto.tipo],
+        tamanho:[dados.foto.tamanho],
+      }),
+      categoriaId: [dados.categoriaId, Validators.required],
+      comitenteId: [dados.comitenteId, Validators.required],
+      leiloeiroId: [dados.leiloeiroId, Validators.required],
+      empresaId: [dados.empresaId, Validators.required],
+      leilaoId: [dados.leilaoId, Validators.required],
+      statusId: [dados.statusId, Validators.required],
+      comissao: [dados.comissaoLeiloeiro, Validators.required],
+      termoCondicaoVenda: [dados.termoCondicaoVenda],
       anexos: this.formBuilder.array(dados.anexos ? dados.anexos.map(x => this.formBuilder.group({ ...x, acao: '' })) : []),
-    })
+    });
   }
 
   fileChangeEvent(fileInput: any) {
     this.imageError = null;
-    console.log(fileInput.target.files[0])
     if (fileInput.target.files && fileInput.target.files[0]) {
         // Size Filter Bytes
         const max_size = 20971520;
@@ -322,10 +286,12 @@ export class UpdateLeilaoComponent implements OnInit {
     this.numeroAdcAnexo = i
     this.inputAnexos.nativeElement.click()
   }
+
   filterList(campo: string) {
     const fotos = this.formulario.get(campo) as FormArray;
     return fotos.controls.filter(x => (x as FormGroup).controls['acao'].value !== 'D');
   }
+
   deleteAnexo(indexAnexo: number) {
     let anexos = this.formulario.controls['anexos'] as FormArray;
     let anexo = anexos.at(indexAnexo) as FormGroup;

@@ -3,7 +3,6 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { LocationStrategy, HashLocationStrategy, registerLocaleData } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { HttpModule } from '@angular/Http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AppComponent } from './app.component';
 import localePt from '@angular/common/locales/pt';
@@ -146,7 +145,7 @@ import { AlertModule } from 'ngx-bootstrap/alert';
 
 import { environment } from '../environments/environment';
 import { AuthGuard, AnonyGuard } from './_guards/index';
-import { AuthenticationService, StoreService, ComponentService, DataService } from './_services/index';
+import { AuthenticationService } from './_services/index';
 import { PdfService } from './_services/pdf.service';
 import { DataTableModule } from "angular2-datatable";
 import { SourceGuard } from './_guards/source.guard';
@@ -194,8 +193,6 @@ import { CreateTipomeionotificacaoComponent } from './views/tipo-meio-notificaca
 import { EditTipomeionotificacaoComponent } from './views/tipo-meio-notificacao/edit-tipomeionotificacao/edit-tipomeionotificacao.component';
 import { AgendaComponent } from './views/agenda/agenda.component';
 import { CreateAgendaComponent } from './views/agenda/create-agenda/create-agenda.component';
-import { AutoComponent } from './views/arrematantes/auto/auto.component';
-import { NotaComponent } from './views/arrematantes/nota/nota.component';
 import { CreateContatosComponent } from './views/contatos/create-contatos/create-contatos.component';
 import { EditContatosComponent } from './views/contatos/edit-contatos/edit-contatos.component';
 import { EditListacontatosComponent } from './views/lista-contatos/edit-listacontatos/edit-listacontatos.component';
@@ -214,7 +211,8 @@ export function RestangularConfigFactory(RestangularProvider, NotifierService: N
 
   RestangularProvider.addErrorInterceptor((response, subject, responseHandler) => {
     if (response.status === 401) {
-      Router.navigate(['/login']);
+      localStorage.removeItem('currentUser');
+      window.location.href = '/#/login';
       return false;
     }
 
@@ -237,7 +235,6 @@ export function RestangularConfigFactory(RestangularProvider, NotifierService: N
     ChartsModule,
     FormsModule,
     ReactiveFormsModule,
-    HttpModule,
     CustomFormsModule,
     NotifierModule.withConfig({
       position: {
@@ -330,8 +327,6 @@ export function RestangularConfigFactory(RestangularProvider, NotifierService: N
     EditTipomeionotificacaoComponent,
     AgendaComponent,
     CreateAgendaComponent,
-    AutoComponent,
-    NotaComponent,
     CreateContatosComponent,
     EditContatosComponent,
     EditListacontatosComponent,
@@ -342,7 +337,7 @@ export function RestangularConfigFactory(RestangularProvider, NotifierService: N
   ],
   providers: [{
     provide: LocationStrategy,
-    useClass: HashLocationStrategy
+    useClass: HashLocationStrategy,
   },
     AuthGuard,
     AnonyGuard,
@@ -350,11 +345,8 @@ export function RestangularConfigFactory(RestangularProvider, NotifierService: N
     AuthenticationService,
     AuthorizationService,
     ConfirmationService,
-    StoreService,
-    ComponentService,
     FormatPhonePipe,
     CurrencyFormatPipe,
-    DataService,
     PdfService,
     GroupByPipe2
   ],

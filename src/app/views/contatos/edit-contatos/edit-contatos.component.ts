@@ -45,9 +45,6 @@ export class EditContatosComponent implements OnInit {
     this.maskCpf = [ /\d/,/\d/,/\d/,  '.', /\d/,/\d/,/\d/, '.', /\d/, /\d/, /\d/, '-', /\d/,/\d/ ]
     this.maskCnpj = [ /\d/,/\d/,'.',/\d/,/\d/,/\d/,'.',/\d/,/\d/,/\d/,'/', /\d/,/\d/,/\d/,/\d/,'-',/\d/,/\d/, ]
 
-    this.restangular.one("GrupoEconomico").get().subscribe((response) => {
-      this.gruposEconomico = response.data
-    })
     this.formulario = this.formBuilder.group({
       contatoId:[this.id],
       email: [null, Validators.required],
@@ -97,21 +94,17 @@ export class EditContatosComponent implements OnInit {
         .subscribe(dados => this.populaDadosForm(dados));
     }
   }
+
   populaDadosForm(dados) {
-    // this.formulario.setValue({});
-
     this.formulario.patchValue({
-
         logradouro: dados.logradouro,
         complemento: dados.complemento,
         bairro: dados.bairro,
         cidade: dados.localidade,
-        estado: dados.uf
-
+        uf: dados.uf
     });
   }
   updateForm(dados) {
-
     this.formulario.patchValue({
       email: dados.email,
       primeiroNome: dados.primeiroNome,
@@ -123,6 +116,7 @@ export class EditContatosComponent implements OnInit {
       cidade: dados.cidade,
       logradouro: dados.logradouro,
       numero: dados.numero,
+      complemento: dados.complemento,
       telefoneWhatsapp: dados.telefoneWhatsapp,
       telefoneConvencional:dados.telefoneConvencional,
       telefoneCelular: dados.telefoneCelular,

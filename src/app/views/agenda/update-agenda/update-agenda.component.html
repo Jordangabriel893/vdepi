@@ -12,19 +12,19 @@
               <div class="col-12">
                 <div class="row ">
                   <div class="form-group col-4">
-                    <label for="notificacaoId">Notificação:  </label>
+                    <label for="notificacaoId">Notificação </label>
                     <select class="form-control" [ngClass]="aplicaCssErro('notificacaoId')" formControlName="notificacaoId" name="notificacaoId">
                       <option *ngFor="let item of notificacoes" value="{{item.notificacaoId}}">{{item.titulo}}</option>
                     </select>
                   </div>
                   <div class="form-group col-4">
-                    <label for="tipoAgendaId">Tipo Agenda : </label>
+                    <label for="tipoAgendaId">Tipo Agenda</label>
                     <select class="form-control" [ngClass]="aplicaCssErro('tipoAgendaId')" formControlName="tipoAgendaId" id="tipoAgendaId" name="tipoAgendaId">
                       <option *ngFor="let item of tiposAgenda" value="{{item.tipoAgendaNotificacaoId}}">{{item.descricao}}</option>
                     </select>
                   </div>
                   <div class="form-group col-4" >
-                    <label for="intervaloMinutos">Intervalo Minutos:</label>
+                    <label for="intervaloMinutos">Intervalo Minutos</label>
                     <input type="number" class="form-control" [ngClass]="aplicaCssErro('intervaloMinutos')" id="intervaloMinutos"  name="intervaloMinutos" formControlName="intervaloMinutos"  triggers="keypress:focusout">
                   </div>
 
@@ -33,14 +33,14 @@
                   <div class="form-group col-6">
                     <label for="dataExecucao">Data Execução</label>
                     <input type="text" class="form-control" id="dataExecucao"
-                      [bsConfig]="{ dateInputFormat: 'DD/MM/YYYY' }"
+                      [bsConfig]="{ dateInputFormat: 'DD/MM/YYYY HH:mm' }"
                       bsDatepicker
                       (bsValueChange)="onValueChange($event, 'dataExecucao')">
                   </div>
                   <div class="form-group col-6">
                     <label for="dataEncerramento">Data Encerramento</label>
                     <input type="text" class="form-control" id="dataEncerramento"
-                      [bsConfig]="{ dateInputFormat: 'DD/MM/YYYY' }"
+                      [bsConfig]="{ dateInputFormat: 'DD/MM/YYYY HH:mm' }"
                       bsDatepicker
                       (bsValueChange)="onValueChange($event, 'dataEncerramento')">
                   </div>
@@ -51,7 +51,7 @@
             </div>
           </div>
           <div class="card-footer">
-            <button type="submit" class="btn btn-primary saveCancel"><i class="fa fa-save"></i> Salvar</button>
+            <button type="submit" class="btn btn-primary saveCancel"><i class="fa fa-save"></i> Salvar</button>&nbsp;&nbsp;
             <button type="reset" class="btn btn-danger" [routerLink]="['/agenda']"><i class="fa fa-undo"></i>
               Cancelar</button>
           </div>

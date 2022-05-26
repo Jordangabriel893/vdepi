@@ -12,7 +12,7 @@
         </div>
       </div>
     </div>
-    <div class="col-md-auto text-right">
+    <!-- <div class="col-md-auto text-right">
       <div class="dropdown" dropdown title="Lotes">
         <div class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false" dropdownToggle>
           <i class="fa fa-address-card"></i>
@@ -24,7 +24,7 @@
           <div class="dropdown-item" *ngFor="let item of lotes; let i = index" (click)="setLote(item)" style="cursor:pointer">{{item.descricao}}</div>
         </div>
       </div>
-    </div>
+    </div> -->
   </div>
 </div>
 <div class="animated fadeIn">
@@ -45,7 +45,10 @@
         <div class="card-block" >
           <div class="col-12 input-search">
             <div class="input-group col-12 d-flex justify-content-end input-search">
-              <input type="text" class="form-control col-4" (keyup)="onSearch()" placeholder="Buscar " aria-label="Recipient's username" aria-describedby="basic-addon2" [formControl]="queryField">
+              <div class="input-group-prepend">
+                <span class="input-group-text" id="inputGroup-sizing-sm">Buscar</span>
+              </div>
+              <input type="text" class="form-control col-4" (keyup)="onSearch()" placeholder="por Nome, Email ou Documento" aria-describedby="basic-addon2" [formControl]="queryField">
             </div>
           </div>
           <div class="table-responsive mt-4">
@@ -168,17 +171,25 @@
                 <tr *ngFor="let item of mfArrematantes.data; let i = index">
                   <td>{{item.lote.numeroLote}}</td>
                   <td>{{item.nome}}</td>
-                  <td>{{item.telefone}}
-                  </td>
+                  <td nowrap>{{item.telefone}}</td>
                   <td>{{item.email }}</td>
                   <td>{{item.tipoPessoa == 'PF' ? 'Pessoa Física' : item.pessoa.tipoPessoa == 'PJ' ? 'Pessoa Jurídica' : '' }}</td>
-                  <td>{{item.documento}}</td>
+                  <td nowrap>{{item.documento}}</td>
                   <td>{{item.valorArrematado | currency:'BRL':true:'1.2-2'}}</td>
                   <td>{{item.valorTaxas | currency:'BRL':true:'1.2-2'}}</td>
                   <td>{{item.valorTaxas + item.valorArrematado | currency:'BRL':true:'1.2-2'}}</td>
                   <td class="text-center" nowrap>
-                    <button type="button" class="btn btn-primary" (click)="auto(item.lote.loteId, item.lote.numeroLote)"><i class="fa fa-edit"></i>&nbsp;Auto</button>
-                    <button type="button" class="btn btn-primary" (click)="nota(item.lote.loteId, item.lote.numeroLote)"><i class="fa fa-edit"></i>&nbsp;Nota</button>
+                    <div class="dropdown" dropdown>
+                      <button class="btn" id="dropdownMenuButton" type="button" data-toggle="dropdown" aria-expanded="false" dropdownToggle>
+                        <i class="fa fa-ellipsis-v"></i>
+                      </button>
+                      <ul class="dropdown-menu dropdown-menu-left" *dropdownMenu>
+                        <li><a class="dropdown-item" (click)="auto(item.lote.loteId, item.lote.numeroLote)">Auto de Arrematação</a></li>
+                        <li><a class="dropdown-item" (click)="nota(item.lote.loteId, item.lote.numeroLote)">Nota de Arrematação</a></li>
+                      </ul>
+                    </div>
+                    <!-- <button type="button" class="btn btn-primary" (click)="auto(item.lote.loteId, item.lote.numeroLote)"><i class="fa fa-edit"></i>Auto</button>&nbsp;&nbsp;
+                    <button type="button" class="btn btn-primary" (click)="nota(item.lote.loteId, item.lote.numeroLote)"><i class="fa fa-edit"></i>Nota</button> -->
                   </td>
                 </tr>
                 <tr *ngIf="loading">
@@ -198,11 +209,6 @@
           </div>
 
         </div>
-      </div>
-      <div class="card-footer ">
-        <button type="button" class="btn btn-info autoLeilao" [routerLink]="['/auto']"><i class="fa fa-file"></i> Auto de Leilão</button>
-        <button type="button" class="btn btn-info" [routerLink]="['/nota']"><i class="fa fa-file"></i>
-          Nota de arrematação</button>
       </div>
     </div>
   </div>
