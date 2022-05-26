@@ -53,7 +53,7 @@
               <thead>
                 <tr>
                   <th>
-                    <mfDefaultSorter by="lote.loteId">Lote</mfDefaultSorter>
+                    <mfDefaultSorter by="lote.numeroLote">Número do lote</mfDefaultSorter>
                   </th>
                   <th>
                     <mfDefaultSorter by="nome">Nome</mfDefaultSorter>
@@ -77,7 +77,16 @@
                     <mfDefaultSorter by="valorTaxas">Valor Taxas</mfDefaultSorter>
                   </th>
                   <th>
-                    Ação
+                    <mfDefaultSorter by="valorTotal">Valor Total</mfDefaultSorter>
+                  </th>
+                  <th>
+                    Visualizar Fatura
+                  </th>
+                  <th>
+                    Agendar Retirada
+                  </th>
+                  <th>
+                    Download
                   </th>
                 </tr>
               </thead>
@@ -92,6 +101,15 @@
                   <td>{{item.documento}}</td>
                   <td>{{item.valorArrematado | currency:'BRL':true:'1.2-2'}}</td>
                   <td>{{item.valorTaxas | currency:'BRL':true:'1.2-2'}}</td>
+                  <td>{{item.valorTaxas + item.valorArrematado | currency:'BRL':true:'1.2-2'}}</td>
+                  <td class="text-center" nowrap>
+                    <button type="button" class="btn btn-primary" (click)="auto(item.lote.loteId, item.lote.numeroLote)"><i class="fa fa-edit"></i>&nbsp;Vizualizar</button>
+
+                  </td>
+                  <td class="text-center" nowrap>
+                    <button type="button" class="btn btn-primary" ><i class="fa fa-edit"></i>&nbsp;Agendar</button>
+
+                  </td>
                   <td class="text-center" nowrap>
                     <button type="button" class="btn btn-primary" (click)="auto(item.lote.loteId, item.lote.numeroLote)"><i class="fa fa-edit"></i>&nbsp;Auto</button>
                     <button type="button" class="btn btn-primary" (click)="nota(item.lote.loteId, item.lote.numeroLote)"><i class="fa fa-edit"></i>&nbsp;Nota</button>
@@ -115,7 +133,7 @@
               <thead>
                 <tr>
                   <th>
-                    <mfDefaultSorter by="lote.loteId">Lote</mfDefaultSorter>
+                    <mfDefaultSorter by="lote.numeroLote">Número do lote</mfDefaultSorter>
                   </th>
                   <th>
                     <mfDefaultSorter by="nome">Nome</mfDefaultSorter>
@@ -139,6 +157,9 @@
                     <mfDefaultSorter by="valorTaxas">Valor Taxas</mfDefaultSorter>
                   </th>
                   <th>
+                    <mfDefaultSorter by="valorTotal">Valor Total</mfDefaultSorter>
+                  </th>
+                  <th>
                     Ação
                   </th>
                 </tr>
@@ -154,6 +175,7 @@
                   <td>{{item.documento}}</td>
                   <td>{{item.valorArrematado | currency:'BRL':true:'1.2-2'}}</td>
                   <td>{{item.valorTaxas | currency:'BRL':true:'1.2-2'}}</td>
+                  <td>{{item.valorTaxas + item.valorArrematado | currency:'BRL':true:'1.2-2'}}</td>
                   <td class="text-center" nowrap>
                     <button type="button" class="btn btn-primary" (click)="auto(item.lote.loteId, item.lote.numeroLote)"><i class="fa fa-edit"></i>&nbsp;Auto</button>
                     <button type="button" class="btn btn-primary" (click)="nota(item.lote.loteId, item.lote.numeroLote)"><i class="fa fa-edit"></i>&nbsp;Nota</button>

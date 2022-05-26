@@ -23,6 +23,7 @@ export class ArrematantesComponent implements OnInit {
   loteSetado;
   listaFiltradaPorLote;
   filtroLotes;
+
   constructor(
     private restangular: Restangular,
     private notifierService: NotifierService
@@ -31,8 +32,6 @@ export class ArrematantesComponent implements OnInit {
       this.leiloes = response.data
       this.setLeilao(this.leiloes[0].id, this.leiloes[0].nome);
     })
-
-
    }
 
   ngOnInit() {
@@ -57,8 +56,9 @@ export class ArrematantesComponent implements OnInit {
         }
         return 0;
       })
+      console.log(this.arrematantes)
       this.lotes = this.arrematantes.map(x => x.lote)
-      console.log(this.lotes)
+      // console.log(this.lotes)
       this.arrematantesComLetraMinuscula = this.arrematantes;
       this.loading = false;
     },
@@ -103,14 +103,17 @@ export class ArrematantesComponent implements OnInit {
     const arrematanteComLetraMinuscula = this.arrematantesComLetraMinuscula
     arrematanteComLetraMinuscula.forEach(element => {
       element.nome =  element.nome.toLowerCase();
-      element.email =  element.email.toLowerCase()
+      element.email =  element.email.toLowerCase();
+      element.lote.numeroLote = element.lote.numeroLote.toString()
     });
     let filtraValorPorNome = arrematanteComLetraMinuscula.filter(objNome => objNome.nome.includes(value))
-    let filtraValorPorDocumento = arrematanteComLetraMinuscula.filter(objDocumento => objDocumento.documento.includes(value))
     let filtraValorPorEmail = arrematanteComLetraMinuscula.filter(objEmail => objEmail.email.includes(value))
+    let filtraValorPorDocumento = arrematanteComLetraMinuscula.filter(objDocumento => objDocumento.documento.includes(value))
+    let filtraValorPorLote = arrematanteComLetraMinuscula.filter(objLote => objLote.lote.numeroLote.includes(value))
     if (value && (value = value.trim()) !== '') {
-        let arraySearch = [...filtraValorPorNome, ...filtraValorPorDocumento, ...filtraValorPorEmail]
+        let arraySearch = [...filtraValorPorNome, ...filtraValorPorEmail, ...filtraValorPorDocumento, ...filtraValorPorLote]
         this.arrematanteSearch = arraySearch
   }
   }
 }
+// objLote.lote.numeroLote.includes(value
