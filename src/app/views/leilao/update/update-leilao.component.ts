@@ -186,14 +186,14 @@ export class UpdateLeilaoComponent implements OnInit {
     this.imageError = null;
     if (fileInput.target.files && fileInput.target.files[0]) {
         // Size Filter Bytes
-        const max_size = 20971520;
+        const max_size = 5242880;
         const allowed_types = ['image/png', 'image/jpeg'];
         const max_height = 15200;
         const max_width = 25600;
 
         if (fileInput.target.files[0].size > max_size) {
             this.imageError =
-                'Maximum size allowed is ' + max_size / 1000 + 'Mb';
+                'Maximum size allowed is 5Mb';
 
             return false;
         }

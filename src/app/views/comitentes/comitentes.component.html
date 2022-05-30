@@ -5,12 +5,12 @@
       <div class="card">
         <div class="card-header header">
           <div>
-            <i class="fa fa-building" aria-hidden="true"></i>
+            <i class="fa fa-university" aria-hidden="true"></i>
             Comitentes
           </div>
-          
+
           <button type="button" class="btn btn-success"><i class="fa fa-file-excel" aria-hidden="true"></i><h6>Excel</h6></button>
-          
+
         </div>
 
         <div class="card-block" >
@@ -41,7 +41,7 @@
                   <th class="text-center" >
                     Editar
                   </th>
-                  
+
                 </tr>
               </thead>
               <tbody>
@@ -51,7 +51,7 @@
                   </td>
                   <td>{{item.razaoSocial }}</td>
                   <td>{{item.dataCadastro | date: 'dd/MM/yyyy' }}</td>
-                  
+
                   <td>{{item.cnpj }}</td>
                   <td>{{item.ativo == true ? 'Sim' : 'Não' }}</td>
                   <td class="text-center" nowrap>
@@ -73,7 +73,7 @@
               </tfoot>
             </table>
           </div>
-         
+
         </div>
       </div>
     </div>

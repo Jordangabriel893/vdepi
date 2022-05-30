@@ -50,13 +50,14 @@ export class UpdateLeiloeirosComponent implements OnInit {
       nome:[null, Validators.required],
       razaoSocial:[null],
       cpfCnpj:[null, Validators.required],
-      telefone:[null, Validators.required],
+      telefone:[null],
       email:[null, Validators.required],
       orgaoRegistro:[null, Validators.required],
       ufRegistro: [null, Validators.required],
       matricula: [null, Validators.required],
       genero:[null, Validators.required],
       nomeComercial:[null],
+      senha: [null],
       foto: this.formBuilder.group({
         nome:[null],
         base64:[null],
@@ -79,7 +80,8 @@ export class UpdateLeiloeirosComponent implements OnInit {
         estado: [null],
         logradouro:[null]
       }),
-      ativo: [null]
+      ativo: [null],
+      usuarioId: [null]
     })
   }
 
@@ -97,18 +99,19 @@ export class UpdateLeiloeirosComponent implements OnInit {
       this.notifierService.notify('error', 'Preencha todos os campos obrigatórios');
       return false;
     }
+
     this.restangular.all('leiloeiro').customPUT(this.formulario.value, this.id).subscribe(a => {
       this.notifierService.notify('success', 'Leiloeiro atualizado com sucesso');
       this.router.navigate(['/leiloeiro']);
     },
-      error => {
-        this.notifierService.notify('error', 'Erro ao criar o Leiloeiro!');
-        Object.keys(this.formulario.controls).forEach((campo)=>{
-          const controle = this.formulario.get(campo)
-          controle.markAsTouched()
-        })
+      err => {
+        const errors = err.data.Errors;
+        for (var key in errors) {
+          this.notifierService.notify('error', errors[key]);
+        }
       });
   }
+
   updateForm(dados){
     if(dados.foto) {
       this.isImageSaved = true
@@ -123,7 +126,7 @@ export class UpdateLeiloeirosComponent implements OnInit {
       razaoSocial:dados.razaoSocial,
       genero:dados.genero,
       orgaoRegistro:dados.orgaoRegistro,
-      UfRegistro:dados.UfRegistro,
+      ufRegistro:dados.ufRegistro,
       matricula:dados.matricula,
       nomeComercial:dados.nomeComercial,
       anexos:dados.anexos,
@@ -133,8 +136,10 @@ export class UpdateLeiloeirosComponent implements OnInit {
       endereco: dados.endereco,
       enderecoId:dados.enderecoId,
       foto: [dados.foto],
+      assinatura: [dados.assinatura],
       fotoId: dados.fotoId,
-      ativo: dados.ativo
+      ativo: dados.ativo,
+      usuarioId: dados.usuarioId
     })
   }
   consultaCEP() {
@@ -160,14 +165,14 @@ export class UpdateLeiloeirosComponent implements OnInit {
     this.imageError = null;
     if (fileInput.target.files && fileInput.target.files[0]) {
         // Size Filter Bytes
-        const max_size = 20971520;
+        const max_size = 5242880;
         const allowed_types = ['image/png', 'image/jpeg'];
         const max_height = 15200;
         const max_width = 25600;
 
         if (fileInput.target.files[0].size > max_size) {
             this.imageError =
-                'O tamanho máximo permitido é ' + max_size / 1000 + 'Mb';
+                'O tamanho máximo permitido é 5Mb';
 
             return false;
         }
@@ -221,7 +226,7 @@ export class UpdateLeiloeirosComponent implements OnInit {
 
         if (fileInput.target.files[0].size > max_size) {
             this.imageErrorAss =
-                'O tamanho máximo permitido é ' + max_size / 1000 + 'Mb';
+                'O tamanho máximo permitido é 5Mb';
 
             return false;
         }

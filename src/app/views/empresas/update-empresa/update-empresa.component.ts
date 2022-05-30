@@ -58,6 +58,8 @@ export class UpdateEmpresaComponent implements OnInit {
       ativo:[null, Validators.required],
       cnpj:[null, Validators.required],
       codigoTributarioMunicipio:[null],
+      email: [null, Validators.required],
+      senha: [null],
       foto: this.formBuilder.group({
         arquivoId:[0],
         nome:[null],
@@ -68,20 +70,21 @@ export class UpdateEmpresaComponent implements OnInit {
       empresaId:[this.id],
       endereco: this.formBuilder.group({
         enderecoId: [0],
-        cep: [null, [Validators.required]],
-        numero: [null, Validators.required],
+        cep: [null],
+        numero: [null],
         complemento: [null],
-        bairro: [null, Validators.required],
-        cidade: [null, Validators.required],
-        estado: [null, Validators.required],
-        logradouro:[null, Validators.required]
+        bairro: [null],
+        cidade: [null],
+        estado: [null],
+        logradouro:[null]
       }),
       grupoEconomicoId:[0],
       inscricaoEstadual:[null],
       inscricaoMunicipal:[null],
       nomeFantasia:[null, Validators.required],
-      razaoSocial:[null, Validators.required],
-      telefone:[null, Validators.required],
+      razaoSocial:[null],
+      telefone:[null],
+      usuarioId: [null]
     })
   }
 
@@ -89,7 +92,6 @@ export class UpdateEmpresaComponent implements OnInit {
 
   }
   onSubmit(){
-    console.log(this.formulario.value)
     if(!this.formulario.valid){
       Object.keys(this.formulario.controls).forEach((campo)=>{
         const controle = this.formulario.get(campo)
@@ -99,17 +101,16 @@ export class UpdateEmpresaComponent implements OnInit {
       this.notifierService.notify('error', 'Preencha todos os campos obrigatórios');
       return false;
     }
+
     this.restangular.all('empresa').customPUT(this.formulario.value, this.id).subscribe(a => {
       this.notifierService.notify('success', 'Empresa atualizada com sucesso');
       this.router.navigate(['/empresa']);
     },
-      error => {
-        this.notifierService.notify('error', 'Erro ao atualizar a empresa!');
-
-        Object.keys(this.formulario.controls).forEach((campo)=>{
-          const controle = this.formulario.get(campo)
-          controle.markAsTouched()
-        })
+     err => {
+        const errors = err.data.Errors;
+        for (var key in errors) {
+          this.notifierService.notify('error', errors[key]);
+        }
       });
   }
   updateForm(dados){
@@ -130,21 +131,23 @@ export class UpdateEmpresaComponent implements OnInit {
       inscricaoMunicipal:dados.inscricaoMunicipal,
       nomeFantasia:dados.nomeFantasia,
       razaoSocial:dados.razaoSocial,
-      telefone: dados.telefone
+      telefone: dados.telefone,
+      email: dados.usuario.email,
+      usuarioId: dados.usuarioId
     })
   }
   fileChangeEvent(fileInput: any) {
     this.imageError = null;
     if (fileInput.target.files && fileInput.target.files[0]) {
         // Size Filter Bytes
-        const max_size = 20971520;
+        const max_size = 5242880;
         const allowed_types = ['image/png', 'image/jpeg'];
         const max_height = 15200;
         const max_width = 25600;
 
         if (fileInput.target.files[0].size > max_size) {
             this.imageError =
-                'O tamanho máximo permitido é ' + max_size / 1000 + 'Mb';
+                'O tamanho máximo permitido é 5Mb';
 
             return false;
         }
