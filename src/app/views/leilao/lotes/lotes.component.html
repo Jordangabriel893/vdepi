@@ -34,7 +34,11 @@
           <i class="fa fa-list"></i>&nbsp;Lotes - {{leilao.nome}}
         </div>
         <div class="card-block">
-          <button type="button" class="btn btn-success" (click)="create()"><i class="fa fa-plus-circle"></i>&nbsp; Novo Lote</button>
+          <div class="d-flex justify-content-between">
+            <button type="button" class="btn btn-success" (click)="create()"><i class="fa fa-plus-circle"></i>&nbsp; Novo Lote</button>
+            <button type="button" class="btn btn-success" (click)="getAnexo()"><i class="fa fa-file-excel" aria-hidden="true" ></i><h6>Excel</h6></button>
+            <input type="file" class="inputAnexos" accept=".xls,.xlsx"  #inputAnexos  (change)="fileChangeEvent($event)">
+          </div>
 
           <div class="table-responsive mt-4">
             <table class="table table-striped" [mfData]="lotes" #mfLotes="mfDataTable" [mfRowsOnPage]="10">
@@ -59,9 +63,7 @@
                   <th>
                     <mfDefaultSorter by="valorAvalicao">Valor Avaliação</mfDefaultSorter>
                   </th>
-                  <th class="text-center" >
-                    Upload
-                  </th>
+
                   <th class="text-center" >
                     Editar
                   </th>
@@ -78,9 +80,6 @@
                   <td>{{lote.status}}</td>
                   <td>{{lote.loteJudicial ? "Sim" : "Não"}}</td>
                   <td>{{lote.valorAvaliacao | currency:'BRL':true}}</td>
-                  <td class="text-center" nowrap>
-                    <button type="button" class="btn btn-primary" (click)="edit(lote.loteId)"><i class="fa fa-upload"></i>&nbsp; Upload</button>
-                  </td>
                   <td class="text-center" nowrap>
                     <button type="button" class="btn btn-primary" (click)="edit(lote.loteId)"><i class="fa fa-edit"></i>&nbsp; Editar</button>
                   </td>
@@ -108,3 +107,4 @@
     </div>
   </div>
 </div>
+<!-- <input type="file" accept=".xls,.xlsx" /> -->

@@ -178,7 +178,7 @@ selectedCity = this.cities[1].name;
       comissao: ["5", Validators.required],
       termoCondicaoVenda: [null],
       anexos: this.formBuilder.array([]),
-      habilitacao:[null, Validators.required]
+      // habilitacao:[null, Validators.required]
     })
   }
 
