@@ -38,10 +38,11 @@ export class CreateComitenteComponent implements OnInit {
 
     this.formulario = this.formBuilder.group({
       cnpj:[null, Validators.required],
-      ativo:[null, Validators.required],
       comitenteId:[0],
       nome:[null, Validators.required],
-      razaoSocial:[null, Validators.required],
+      razaoSocial:[null],
+      email:[null, Validators.required],
+      senha: [null],
       foto: this.formBuilder.group({
         arquivoId:[0],
         nome:[null],
@@ -56,32 +57,39 @@ export class CreateComitenteComponent implements OnInit {
 
   }
   onSubmit(){
-    console.log(this.formulario.value)
+    if(!this.formulario.valid){
+      Object.keys(this.formulario.controls).forEach((campo)=>{
+        const controle = this.formulario.get(campo)
+        controle.markAsTouched()
+      })
+      this.notifierService.notify('error', 'Preencha todos os campos obrigatórios');
+      return false;
+    }
+
     this.restangular.all('comitente').post(this.formulario.value).subscribe(a => {
       this.notifierService.notify('success', 'Comitente Criado com sucesso');
       this.router.navigate(['/comitente']);
     },
-      error => {
-        this.notifierService.notify('error', 'Erro ao criar o Comitente!');
-
-        Object.keys(this.formulario.controls).forEach((campo)=>{
-          const controle = this.formulario.get(campo)
-          controle.markAsTouched()
-        })
-      });
+    err => {
+      const errors = err.data.Errors;
+      for (var key in errors) {
+        this.notifierService.notify('error', errors[key]);
+      }
+    });
   }
+
   fileChangeEvent(fileInput: any) {
     this.imageError = null;
     if (fileInput.target.files && fileInput.target.files[0]) {
         // Size Filter Bytes
-        const max_size = 20971520;
+        const max_size = 5242880;
         const allowed_types = ['image/png', 'image/jpeg'];
         const max_height = 15200;
         const max_width = 25600;
 
         if (fileInput.target.files[0].size > max_size) {
             this.imageError =
-                'O tamanho máximo permitido é ' + max_size / 1000 + 'Mb';
+                'O tamanho máximo permitido é 5Mb';
 
             return false;
         }

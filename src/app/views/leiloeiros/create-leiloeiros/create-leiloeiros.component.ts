@@ -41,16 +41,17 @@ export class CreateLeiloeirosComponent implements OnInit {
     this.maskCep = [ /\d/,/\d/,/\d/,/\d/,/\d/, '-', /\d/, /\d/, /\d/, ]
 
     this.formulario = this.formBuilder.group({
-      nome:[null, Validators.required],
+      nome:[null],
       razaoSocial:[null],
       cpfCnpj:[null, Validators.required],
-      telefone:[null, Validators.required],
+      telefone:[null],
       email:[null, Validators.required],
       orgaoRegistro:[null, Validators.required],
       ufRegistro: [null, Validators.required],
       matricula: [null, Validators.required],
       genero:[null, Validators.required],
       nomeComercial:[null],
+      senha: [null, Validators.required],
       foto: this.formBuilder.group({
         arquivoId:[0],
         nome:[null],
@@ -67,32 +68,40 @@ export class CreateLeiloeirosComponent implements OnInit {
       }, Validators.required),
       endereco: this.formBuilder.group({
         enderecoId: [0],
-        cep: [null, [Validators.required]],
-        numero: [null, Validators.required],
+        cep: [null],
+        numero: [null],
         complemento: [null],
-        bairro: [null, Validators.required],
-        cidade: [null, Validators.required],
-        estado: [null, Validators.required],
-        logradouro:[null, Validators.required]
-      }),
-      ativo: [null]
+        bairro: [null],
+        cidade: [null],
+        estado: [null],
+        logradouro:[null]
+      })
     })
   }
 
   ngOnInit() {
   }
-  onSubmit(){
+
+  onSubmit() {
+    if(!this.formulario.valid){
+      Object.keys(this.formulario.controls).forEach((campo)=>{
+        const controle = this.formulario.get(campo)
+        controle.markAsTouched()
+
+      })
+      this.notifierService.notify('error', 'Preencha todos os campos obrigatórios');
+      return false;
+    }
+
     this.restangular.all('leiloeiro').post(this.formulario.value).subscribe(a => {
       this.notifierService.notify('success', 'Leiloeiro Criado com sucesso');
       this.router.navigate(['/leiloeiro']);
     },
-      error => {
-        this.notifierService.notify('error', 'Erro ao criar o Leiloeiro!');
-
-        Object.keys(this.formulario.controls).forEach((campo)=>{
-          const controle = this.formulario.get(campo)
-          controle.markAsTouched()
-        })
+      err => {
+        const errors = err.data.Errors;
+        for (var key in errors) {
+          this.notifierService.notify('error', errors[key]);
+        }
       });
   }
 
@@ -120,14 +129,14 @@ export class CreateLeiloeirosComponent implements OnInit {
     this.imageError = null;
     if (fileInput.target.files && fileInput.target.files[0]) {
         // Size Filter Bytes
-        const max_size = 20971520;
+        const max_size = 5242880;
         const allowed_types = ['image/png', 'image/jpeg'];
         const max_height = 15200;
         const max_width = 25600;
 
         if (fileInput.target.files[0].size > max_size) {
             this.imageError =
-                'O tamanho máximo permitido é ' + max_size / 1000 + 'Mb';
+                'O tamanho máximo permitido é 5Mb';
 
             return false;
         }
@@ -181,7 +190,7 @@ export class CreateLeiloeirosComponent implements OnInit {
 
         if (fileInput.target.files[0].size > max_size) {
             this.imageErrorAss =
-                'O tamanho máximo permitido é ' + max_size / 1000 + 'Mb';
+                'O tamanho máximo permitido é 5Mb';
 
             return false;
         }

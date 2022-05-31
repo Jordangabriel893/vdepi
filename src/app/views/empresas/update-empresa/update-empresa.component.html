@@ -4,63 +4,56 @@
       <div class="col-lg-12">
         <div class="card">
           <div class="card-header d-flex align-items-center">
-            <i class="fa fa-building" aria-hidden="true"></i>
-            &nbsp;Informações da Empresa - Obrigatorios*
+              <i class="fa fa-building" aria-hidden="true"></i>
+              &nbsp;Informações da Empresa - Obrigatorias*
           </div>
           <div class="card-block">
             <div class="row">
               <div class="col-8">
                 <div class="row ">
                   <div class="form-group col-6" >
-                    <label for="nomeFantasia">Nome Fantasia</label>
-                    <input type="text" class="form-control" [ngClass]="aplicaCssErro('nomeFantasia')" id="nomeFantasia" placeholder="Nome Fantasia" name="nomeFantasia" formControlName="nomeFantasia" triggers="keypress:focusout">
+                    <label for="nomeFantasia">Nome Fantasia*</label>
+                    <input type="text" class="form-control" [ngClass]="aplicaCssErro('nomeFantasia')" id="nomeFantasia" placeholder="Nome Fantasia" name="nomeFantasia" formControlName="nomeFantasia" >
                   </div>
                   <div class="form-group col-6" >
                     <label for="razaoSocial">Razão Social</label>
-                    <input type="text" class="form-control" [ngClass]="aplicaCssErro('razaoSocial')" id="razaoSocial" placeholder="Razão Social" name="razaoSocial" formControlName="razaoSocial" triggers="keypress:focusout">
+                    <input type="text" class="form-control" [ngClass]="aplicaCssErro('razaoSocial')" id="razaoSocial" placeholder="Razão Social" name="razaoSocial" formControlName="razaoSocial" >
                   </div>
                   <div class="form-group col-6">
-                    <label for="cnpj">CNPJ</label>
+                    <label for="cnpj">CNPJ*</label>
                     <input [ngClass]="aplicaCssErro('cnpj')"  type="text" class="form-control" id="cnpj" placeholder="CNPJ" formControlName="cnpj"
-                    triggers="keypress:focusout" [textMask]="{mask: maskCnpj}">
+                    [textMask]="{mask: maskCnpj}">
                   </div>
                   <div class="form-group col-6" >
                     <label for="grupoEconomicoId">Grupo Econômico</label>
-                    <select class="form-control" [ngClass]="aplicaCssErro('ativo')" formControlName="grupoEconomicoId" >
+                    <select class="form-control" [ngClass]="aplicaCssErro('grupoEconomicoId')" formControlName="grupoEconomicoId" >
                       <option [value]="gp.grupoEconomicoId" *ngFor="let gp of gruposEconomico">{{gp.descricao}}</option>
                     </select>
                   </div>
                   <div class="form-group col-6">
                     <label for="telefone">Telefone</label>
                     <input type="text" class="form-control" [ngClass]="aplicaCssErro('telefone')" id="telefone"  formControlName="telefone"
-                    triggers="keypress:focusout" [textMask]="{mask: mask}">
+                    [textMask]="{mask: mask}">
                   </div>
                   <div class="form-group col-6" >
                     <label for="codigoTributarioMunicipio">Código Tributário Município</label>
-                    <input  type="text" class="form-control" [ngClass]="aplicaCssErro('codigoTributarioMunicipio')" id="codigoTributarioMunicipio" placeholder="Código Tributário Município" name="codigoTributarioMunicipio" formControlName="codigoTributarioMunicipio" triggers="keypress:focusout">
+                    <input  type="text" class="form-control" [ngClass]="aplicaCssErro('codigoTributarioMunicipio')" id="codigoTributarioMunicipio" placeholder="Código Tributário Município" name="codigoTributarioMunicipio" formControlName="codigoTributarioMunicipio" >
                   </div>
                   <div class="form-group col-6" >
                     <label for="inscricaoEstadual">Inscrição Estadual</label>
-                    <input type="text" class="form-control" [ngClass]="aplicaCssErro('inscricaoEstadual')" id="inscricaoEstadual" placeholder="Inscrição Estadual" name="inscricaoEstadual" formControlName="inscricaoEstadual" triggers="keypress:focusout">
+                    <input type="text" class="form-control" [ngClass]="aplicaCssErro('inscricaoEstadual')" id="inscricaoEstadual" placeholder="Inscrição Estadual" name="inscricaoEstadual" formControlName="inscricaoEstadual" >
                   </div>
                   <div class="form-group col-6" >
                     <label for="inscricaoMunicipal">Inscrição Municipal</label>
-                    <input type="text" class="form-control" [ngClass]="aplicaCssErro('inscricaoMunicipal')" id="inscricaoMunicipal" placeholder="Inscrição Municipal" name="inscricaoMunicipal" formControlName="inscricaoMunicipal" triggers="keypress:focusout">
-                  </div>
-                  <div class="form-group col-6">
-                    <label for="ativo">Ativo</label>
-                    <select class="form-control" [ngClass]="aplicaCssErro('ativo')" formControlName="ativo" >
-                      <option value="true">Sim</option>
-                      <option value="false">Não</option>
-                    </select>
+                    <input type="text" class="form-control" [ngClass]="aplicaCssErro('inscricaoMunicipal')" id="inscricaoMunicipal" placeholder="Inscrição Municipal" name="inscricaoMunicipal" formControlName="inscricaoMunicipal" >
                   </div>
                 </div>
               </div>
               <div class="col-4" formGroupName="foto">
                 <fieldset class="form-group">
-                  <label>Logomarca <small class="text-muted">(Tamanho máximo: 5mb)</small></label>
+                  <label>Logomarca* <small class="text-muted">(Tamanho máximo: 5mb)</small></label>
                   <div class="custom-file fileInputProfileWrap">
-                    <input type="file" (change)="fileChangeEvent($event)" class="fileInputProfile" #inputFile>
+                    <input type="file" (change)="fileChangeEvent($event)" class="fileInputProfile" #inputFile accept="image/*">
                     <div class="img-space" [ngClass]="aplicaCssErro('foto')">
                       <ng-container *ngIf="isImageSaved; else elseTemplate">
                         <img [src]="cardImageBase64" />
@@ -76,18 +69,37 @@
               </div>
             </div>
           </div>
+        </div>
       </div>
     </div>
-  </div>
+    <div class="row">
+      <div class="col-lg-12">
+        <div class="card">
+          <div class="card-header">
+            <i class="fa fa-user" ></i>
+            &nbsp;Login - Obrigatório
+          </div>
+          <div class="card-block">
+            <div class="row">
+              <div class="form-group col-6">
+                <label for="email">Email</label>
+                <input type="text" class="form-control" [ngClass]="aplicaCssErro('email')" id="email" formControlName="email">
+              </div>
+              <div class="form-group col-6">
+                <label for="numero">Senha</label>
+                <input type="password" class="form-control" [ngClass]="aplicaCssErro('senha')" id="senha" formControlName="senha" >
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
     <div class="row" formGroupName="endereco">
       <div class="col-lg-12">
         <div class="card">
           <div class="card-header">
-            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-house" viewBox="0 0 16 16">
-              <path fill-rule="evenodd" d="M2 13.5V7h1v6.5a.5.5 0 0 0 .5.5h9a.5.5 0 0 0 .5-.5V7h1v6.5a1.5 1.5 0 0 1-1.5 1.5h-9A1.5 1.5 0 0 1 2 13.5zm11-11V6l-2-2V2.5a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5z"/>
-              <path fill-rule="evenodd" d="M7.293 1.5a1 1 0 0 1 1.414 0l6.647 6.646a.5.5 0 0 1-.708.708L8 2.207 1.354 8.854a.5.5 0 1 1-.708-.708L7.293 1.5z"/>
-            </svg>
-            Endereço
+            <i class="fa fa-home"></i>
+            &nbsp;Endereço
           </div>
 
           <div class="card-block">
@@ -95,18 +107,18 @@
               <div class="form-group col-4">
                 <label for="cep">CEP</label>
                 <input type="text" class="form-control" id="cep" [ngClass]="aplicaCssErro('endereco.cep')"
-                  formControlName="cep" (blur)="consultaCEP()" triggers="keypress:focusout" [textMask]="{mask: maskCep}">
+                  formControlName="cep" (blur)="consultaCEP()"  [textMask]="{mask: maskCep}">
               </div>
               <div class="form-group col-4">
                 <label for="logradouro">Logradouro</label>
                 <input type="text" class="form-control" [ngClass]="aplicaCssErro('endereco.logradouro')" id="logradouro"
-                  formControlName="logradouro"  triggers="keypress:focusout">
+                  formControlName="logradouro"  >
               </div>
 
               <div class="form-group col-4">
                 <label for="numero">Número</label>
                 <input type="text" class="form-control" [ngClass]="aplicaCssErro('endereco.numero')" id="numero"
-                  formControlName="numero"  triggers="keypress:focusout">
+                  formControlName="numero"  >
               </div>
             </div>
 
@@ -114,22 +126,22 @@
               <div class="form-group col-3">
                 <label for="complemento">Complemento</label>
                 <input type="text" class="form-control" [ngClass]="aplicaCssErro('endereco.complemento')" id="complemento"
-                  formControlName="complemento"  triggers="keypress:focusout">
+                  formControlName="complemento"  >
               </div>
               <div class="form-group col-3">
                 <label for="bairro">Bairro</label>
                 <input type="text" class="form-control" [ngClass]="aplicaCssErro('endereco.bairro')" id="bairro"
-                  formControlName="bairro"  triggers="keypress:focusout">
+                  formControlName="bairro"  >
               </div>
               <div class="form-group col-3">
                 <label for="cidade">Cidade</label>
                 <input type="text" class="form-control" id="cidade"
-                  formControlName="cidade" [ngClass]="aplicaCssErro('endereco.cidade')"  triggers="keypress:focusout">
+                  formControlName="cidade" [ngClass]="aplicaCssErro('endereco.cidade')"  >
               </div>
               <div class="form-group col-3">
                 <label for="estado">Estado</label>
                 <input type="text" class="form-control" id="estado"
-                  formControlName="estado" [ngClass]="aplicaCssErro('endereco.estado')"  triggers="keypress:focusout" maxlength="2">
+                  formControlName="estado" [ngClass]="aplicaCssErro('endereco.estado')"   maxlength="2">
               </div>
             </div>
           </div>

@@ -11,30 +11,30 @@
             <div class="row ">
               <div class="form-group col-4" >
                 <label for="email">Email</label>
-                <input type="text" class="form-control" [ngClass]="aplicaCssErro('email')" id="email"  name="email" formControlName="email" triggers="keypress:focusout">
+                <input type="text" class="form-control" [ngClass]="aplicaCssErro('email')" id="email"  name="email" formControlName="email" >
               </div>
               <div class="form-group col-4" >
                 <label for="primeiroNome">Primeiro Nome</label>
-                <input type="text" class="form-control" [ngClass]="aplicaCssErro('primeiroNome')" id="primeiroNome"  name="primeiroNome" formControlName="primeiroNome" triggers="keypress:focusout">
+                <input type="text" class="form-control" [ngClass]="aplicaCssErro('primeiroNome')" id="primeiroNome"  name="primeiroNome" formControlName="primeiroNome" >
               </div>
               <div class="form-group col-4">
                 <label for="ultimoNome">Último nome</label>
                 <input [ngClass]="aplicaCssErro('ultimoNome')"  type="text" class="form-control" id="ultimoNome"  formControlName="ultimoNome"
-                triggers="keypress:focusout">
+                >
               </div>
             </div>
             <div class="row ">
               <div class="form-group col-4" >
                 <label for="telefoneWhatsapp">Telefone WhatsApp</label>
-                <input  type="text" class="form-control" [textMask]="{mask: mask}"  id="telefoneWhatsapp"  name="telefoneWhatsapp" formControlName="telefoneWhatsapp" triggers="keypress:focusout">
+                <input  type="text" class="form-control" [textMask]="{mask: mask}"  id="telefoneWhatsapp"  name="telefoneWhatsapp" formControlName="telefoneWhatsapp" >
               </div>
               <div class="form-group col-4" >
                 <label for="telefoneConvencional">Telefone Convencional</label>
-                <input type="text" class="form-control" [textMask]="{mask: maskTelefoneFixo}"  id="telefoneConvencional" name="telefoneConvencional" formControlName="telefoneConvencional" triggers="keypress:focusout">
+                <input type="text" class="form-control" [textMask]="{mask: maskTelefoneFixo}"  id="telefoneConvencional" name="telefoneConvencional" formControlName="telefoneConvencional" >
               </div>
               <div class="form-group col-4" >
                 <label for="telefoneCelular">Telefone Celular</label>
-                <input type="text" class="form-control" [textMask]="{mask: mask}" [ngClass]="aplicaCssErro('telefoneCelular')" id="telefoneCelular"  name="telefoneCelular" formControlName="telefoneCelular" triggers="keypress:focusout">
+                <input type="text" class="form-control" [textMask]="{mask: mask}" [ngClass]="aplicaCssErro('telefoneCelular')" id="telefoneCelular"  name="telefoneCelular" formControlName="telefoneCelular" >
               </div>
             </div>
           </div>
@@ -59,17 +59,17 @@
               <div class="form-group col-3">
                 <label for="cep">CEP</label>
                 <input type="text" class="form-control" id="cep"
-                  formControlName="cep" (blur)="consultaCEP()" triggers="keypress:focusout" [textMask]="{mask: maskCep}">
+                  formControlName="cep" (blur)="consultaCEP()"  [textMask]="{mask: maskCep}">
               </div>
               <div class="form-group col-7">
                 <label for="logradouro">Logradouro</label>
                 <input type="text" class="form-control"  id="logradouro"
-                  formControlName="logradouro"  triggers="keypress:focusout">
+                  formControlName="logradouro"  >
               </div>
               <div class="form-group col-2">
                 <label for="numero">Número</label>
                 <input type="text" class="form-control" id="numero"
-                  formControlName="numero"   triggers="keypress:focusout">
+                  formControlName="numero"   >
               </div>
 
             </div>
@@ -77,22 +77,22 @@
               <div class="form-group col-4">
                 <label for="complemento">Complemento</label>
                 <input type="text" class="form-control" id="complemento"
-                  formControlName="complemento"   triggers="keypress:focusout">
+                  formControlName="complemento"   >
               </div>
               <div class="form-group col-3">
                 <label for="bairro">Bairro</label>
                 <input type="text" class="form-control"  id="bairro"
-                  formControlName="bairro"  triggers="keypress:focusout">
+                  formControlName="bairro"  >
               </div>
               <div class="form-group col-3">
                 <label for="cidade">Cidade</label>
                 <input type="text" class="form-control" id="cidade"
-                  formControlName="cidade"   triggers="keypress:focusout">
+                  formControlName="cidade"   >
               </div>
               <div class="form-group col-2">
                 <label for="uf">Estado</label>
                 <input type="text" class="form-control" id="uf"
-                  formControlName="uf"  triggers="keypress:focusout">
+                  formControlName="uf"  >
               </div>
             </div>
 
