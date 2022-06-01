@@ -13,11 +13,11 @@
               <div class="col-8">
                 <div class="row ">
                   <div class="form-group col-6" >
-                    <label for="descricao">Nome</label>
-                    <input type="text" class="form-control" [ngClass]="aplicaCssErro('nome')" id="nome" placeholder="Nome" name="Nome" formControlName="nome" triggers="keypress:focusout">
+                    <label for="descricao">Nome*</label>
+                    <input type="text" class="form-control" [ngClass]="aplicaCssErro('nome')" id="nome" placeholder="Nome" name="Nome" formControlName="nome" >
                   </div>
                   <div class="form-group col-6">
-                    <label for="cpfCnpj">CPF/CNPJ</label>
+                    <label for="cpfCnpj">CPF/CNPJ*</label>
                     <input type="text" class="form-control" [ngClass]="aplicaCssErro('cpfCnpj')" id="cpfCnpj"  formControlName="cpfCnpj" [textMask]="{mask: maskcpfCnpj}">
                   </div>
                   <div class="form-group col-6">
@@ -25,15 +25,11 @@
                     <input type="text" class="form-control" [ngClass]="aplicaCssErro('razaoSocial')" id="razaoSocial"  formControlName="razaoSocial">
                   </div>
                   <div class="form-group col-6">
-                    <label for="genero">Gênero</label>
+                    <label for="genero">Gênero*</label>
                     <select class="form-control" [ngClass]="aplicaCssErro('genero')" formControlName="genero" name="genero">
                       <option>Feminino</option>
                       <option>Masculino</option>
                     </select>
-                  </div>
-                  <div class="form-group col-6">
-                    <label for="email">Email</label>
-                    <input type="text" class="form-control" [ngClass]="aplicaCssErro('email')" id="email"  formControlName="email">
                   </div>
                   <div class="form-group col-6">
                     <label for="telefone">Telefone </label>
@@ -43,9 +39,9 @@
               </div>
               <div class="col-4" formGroupName="foto">
                 <fieldset class="form-group">
-                  <label>Logomarca <small class="text-muted">(Tamanho máximo: 5mb)</small></label>
+                  <label>Logomarca* <small class="text-muted">(Tamanho máximo: 5mb)</small></label>
                   <div class="custom-file fileInputProfileWrap">
-                    <input type="file" (change)="fileChangeEvent($event)" class="fileInputProfile" #inputFile accept="image/png, image/jpeg">
+                    <input type="file" (change)="fileChangeEvent($event)" class="fileInputProfile" #inputFile accept="image/*">
                     <div class="img-space" [ngClass]="aplicaCssErro('foto')">
                       <ng-container *ngIf="isImageSaved; else elseTemplate">
                         <img [src]="cardImageBase64" />
@@ -63,17 +59,13 @@
         </div>
       </div>
     </div>
-  </div>
+    </div>
     <div class="row">
       <div class="col-lg-12">
         <div class="card">
-          <div class="card-header new-campo">
-            <div class="cabecalho d-flex align-items-center"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-file-earmark-text" viewBox="0 0 16 16">
-              <path d="M5.5 7a.5.5 0 0 0 0 1h5a.5.5 0 0 0 0-1h-5zM5 9.5a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1-.5-.5zm0 2a.5.5 0 0 1 .5-.5h2a.5.5 0 0 1 0 1h-2a.5.5 0 0 1-.5-.5z"/>
-              <path d="M9.5 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V4.5L9.5 0zm0 1v2A1.5 1.5 0 0 0 11 4.5h2V14a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h5.5z"/>
-            </svg>
+          <div class="card-header">
+              <i class="fa fa-file-alt" ></i>
               &nbsp;Informações para Auto e Nota de Arrematação - Obrigatorias*
-            </div>
           </div>
           <div class="card-block">
             <div class="row">
@@ -84,21 +76,21 @@
                     <input type="text" class="form-control" [ngClass]="aplicaCssErro('nomeComercial')" id="nomeComercial"  formControlName="nomeComercial">
                   </div>
                   <div class="form-group col-6">
-                    <label for="matricula">Matrícula</label>
+                    <label for="matricula">Matrícula*</label>
                     <input type="number" class="form-control" id="matricula"
-                      formControlName="matricula"  triggers="keypress:focusout">
+                      formControlName="matricula"  [ngClass]="aplicaCssErro('matricula')">
                   </div>
                   <div class="form-group col-4">
-                    <label for="orgaoRegistro">Orgão de registro</label>
+                    <label for="orgaoRegistro">Orgão de registro*</label>
                     <select class="form-control" [ngClass]="aplicaCssErro('orgaoRegistro')" formControlName="orgaoRegistro" name="orgaoRegistro">
                       <option>DREI</option>
                       <option>Juntas Comerciais</option>
                     </select>
                   </div>
                   <div class="form-group col-2">
-                    <label for="ufRegistro">UF</label>
+                    <label for="ufRegistro">UF*</label>
                     <input type="text" class="form-control text-uppercase" id="ufRegistro" maxlength="2"
-                      formControlName="ufRegistro"  triggers="keypress:focusout">
+                      formControlName="ufRegistro"  [ngClass]="aplicaCssErro('ufRegistro')">
                   </div>
                 </div>
               </div>
@@ -106,7 +98,7 @@
                 <fieldset class="form-group">
                   <label>Assinatura <small class="text-muted">(Tamanho máximo: 5mb)</small></label>
                   <div class="custom-file fileInputProfileWrap">
-                    <input type="file" (change)="fileChangeEventAss($event)" class="fileInputProfile" #inputFileAss accept="image/png, image/jpeg">
+                    <input type="file" (change)="fileChangeEventAss($event)" class="fileInputProfile" #inputFileAss accept="image/*">
                     <div class="img-space" [ngClass]="aplicaCssErro('assinatura')">
                       <ng-container *ngIf="isImageSavedAss; else elseTemplate">
                         <img [src]="cardImageBase64Ass" />
@@ -125,16 +117,35 @@
         </div>
       </div>
     </div>
+    <div class="row">
+      <div class="col-lg-12">
+        <div class="card">
+          <div class="card-header">
+            <i class="fa fa-user" ></i>
+            &nbsp;Login - Obrigatório
+          </div>
 
+          <div class="card-block">
+            <div class="row">
+              <div class="form-group col-6">
+                <label for="email">Email</label>
+                <input type="text" class="form-control" [ngClass]="aplicaCssErro('email')" id="email"  formControlName="email">
+              </div>
+              <div class="form-group col-6">
+                <label for="numero">Senha</label>
+                <input type="password" class="form-control" [ngClass]="aplicaCssErro('senha')" id="senha" formControlName="senha" >
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
     <div class="row" formGroupName="endereco">
       <div class="col-lg-12">
         <div class="card">
           <div class="card-header">
-            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-house" viewBox="0 0 16 16">
-              <path fill-rule="evenodd" d="M2 13.5V7h1v6.5a.5.5 0 0 0 .5.5h9a.5.5 0 0 0 .5-.5V7h1v6.5a1.5 1.5 0 0 1-1.5 1.5h-9A1.5 1.5 0 0 1 2 13.5zm11-11V6l-2-2V2.5a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5z"/>
-              <path fill-rule="evenodd" d="M7.293 1.5a1 1 0 0 1 1.414 0l6.647 6.646a.5.5 0 0 1-.708.708L8 2.207 1.354 8.854a.5.5 0 1 1-.708-.708L7.293 1.5z"/>
-            </svg>
-            Endereço
+            <i class="fa fa-home" ></i>
+            &nbsp;Endereço
           </div>
 
           <div class="card-block">
@@ -176,7 +187,7 @@
           </div>
           <div class="card-footer">
             <button type="submit" class="btn btn-primary saveCancel"><i class="fa fa-save"></i> Salvar</button>
-            <button type="reset" class="btn btn-danger" [routerLink]="['/leiloeiro']"><i class="fa fa-undo"></i>Cancelar</button>
+            <button type="reset" class="btn btn-danger" [routerLink]="['/leiloeiro']"><i class="fa fa-undo"></i> Cancelar</button>
           </div>
         </div>
       </div>
