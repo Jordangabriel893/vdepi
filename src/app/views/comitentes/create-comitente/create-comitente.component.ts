@@ -56,7 +56,7 @@ export class CreateComitenteComponent implements OnInit {
 
   }
   onSubmit(){
-    console.log(this.formulario.value)
+
     this.restangular.all('comitente').post(this.formulario.value).subscribe(a => {
       this.notifierService.notify('success', 'Comitente Criado com sucesso');
       this.router.navigate(['/comitente']);

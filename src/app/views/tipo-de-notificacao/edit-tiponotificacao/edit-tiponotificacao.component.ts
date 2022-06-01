@@ -36,7 +36,6 @@ export class EditTiponotificacaoComponent implements OnInit {
     })
     this.restangular.all('marketing/TipoNotificacao').get(this.id).subscribe(dados => {
       this.updateForm(dados.data);
-      console.log(dados.data)
     }
 
     )

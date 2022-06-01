@@ -53,7 +53,6 @@ export class HabilitacaoComponent implements OnInit {
     () => this.loading = false);
 
     this.restangular.one("leilao", '').get({ PageSize: 100 }).subscribe((response) => {
-      console.log(response.data)
       this.leiloes = response.data;
 
       this.filtroLeilao.get('leilao').setValue(response.data[0].nome);
@@ -96,7 +95,6 @@ export class HabilitacaoComponent implements OnInit {
     this.documentosUsuario.limiteCredito = this.formulario.value.limiteCredito
     this.documentosUsuario.observacao = this.formulario.value.observacao
     this.documentosUsuario.habilitado = true
-    console.log(this.documentosUsuario)
     this.restangular.all(`habilitacao/${this.solicitacaoHabilitacaoId}/aprovar`).post(this.documentosUsuario).subscribe(a =>{
       this.notifierService.notify('success', 'Limite Aprovado com sucesso');
       setTimeout(()=>{location.reload()}, 3000)

@@ -190,7 +190,6 @@ export class MapaLanceComponent implements OnInit, OnDestroy {
     this.loading = true;
     this.getLances()
       .then(m => {
-        console.log(m);
         this.points = m.map(lance => {
           return new google.maps.LatLng(lance.latitude, lance.longitude)
         });

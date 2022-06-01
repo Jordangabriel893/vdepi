@@ -98,7 +98,10 @@ export class CreateLeilaoComponent implements OnInit {
         avatar: '//www.gravatar.com/avatar/b0d8c6e5ea589e6fc3d3e08afb1873bb?d=retro&r=g&s=30 2x'
     },
 ];
+
 selectedCity = this.cities[1].name;
+
+selectedHabilitacao ;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -139,13 +142,11 @@ selectedCity = this.cities[1].name;
         this.status= dados.data
       }
     )
-    this.restangular.one('habilitacao').get().subscribe(
+    this.restangular.one('Habilitacao/Regras').get().subscribe(
       dados =>{
-        const habilitac = dados.data
-        const regras = habilitac.map(x => x.regraHabilitacao)
-        console.log(regras)
-        this.habilitacoes = dados.data
+         this.habilitacoes = dados.data
       }
+
     )
 
 
@@ -178,6 +179,7 @@ selectedCity = this.cities[1].name;
       comissao: ["5", Validators.required],
       termoCondicaoVenda: [null],
       anexos: this.formBuilder.array([]),
+      regrasHabilitacao:[null, Validators.required]
       // habilitacao:[null, Validators.required]
     })
   }

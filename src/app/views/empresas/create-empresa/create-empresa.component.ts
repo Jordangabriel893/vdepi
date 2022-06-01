@@ -79,7 +79,7 @@ export class CreateEmpresaComponent implements OnInit {
     })
   }
   onSubmit(){
-    console.log(this.formulario.value)
+
     this.restangular.all('empresa').post(this.formulario.value).subscribe(a => {
       this.notifierService.notify('success', 'Empresa criada com sucesso');
       this.router.navigate(['/empresa']);

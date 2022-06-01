@@ -43,7 +43,6 @@ export class CreateListacontatosComponent implements OnInit {
     this.restangular.one("marketing/Contato", '').get({PageSize:100}).subscribe((response) => {
       this.contato = response.data
       this.updateContatos(response.data)
-       console.log(response.data)
        this.loading = false;
      },
      () => this.loading = false);
@@ -57,7 +56,6 @@ export class CreateListacontatosComponent implements OnInit {
        descricao:this.formulario.value.descricao,
        empresaId:this.formulario.value.empresaId,
        contatos:arrayContatosIds }
-    console.log(form)
 
     this.restangular.all('marketing/listaContato').post(form).subscribe(a => {
       this.notifierService.notify('success', 'Lista criada com sucesso');
@@ -85,15 +83,12 @@ export class CreateListacontatosComponent implements OnInit {
     this.formulario.get(campo).setValue(event);
   }
   incluirContato(contato, i){
-console.log(this.contatos.includes(contato))
     if(this.contatos.includes(contato) == false ){
       this.contatos.push(contato)
-      console.log(this.contatos)
     }else{
       const retiraObjeto = this.contatos.filter(x => x.contatoId == contato.contatoId)
       const novoArray = this.contatos.filter(x => !retiraObjeto.includes(x))
       this.contatos = novoArray
-      console.log(novoArray)
     }
 
 

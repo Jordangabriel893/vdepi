@@ -63,7 +63,6 @@ export class UpdateLocalComponent implements OnInit {
   ngOnInit() {
   }
   onSubmit(){
-    console.log(this.formulario.value)
     if(!this.formulario.valid){
       Object.keys(this.formulario.controls).forEach((campo)=>{
         const controle = this.formulario.get(campo)

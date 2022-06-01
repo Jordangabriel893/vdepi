@@ -181,12 +181,9 @@ export class UpdateLotesComponent implements OnInit {
 
     this.imageError = null;
     const arrayImagens = fileInput.target.files.length
-    console.log(arrayImagens)
     for(let i = 0; i < arrayImagens; i ++){
-     console.log(fileInput.target.files[i])
      this.arrayFotos.push(fileInput.target.files[i])
     }
-    console.log(this.arrayFotos)
     this.arrayFotos.forEach((x: any)=>{
       if (x ) {
         // Size Filter Bytes
@@ -335,7 +332,6 @@ export class UpdateLotesComponent implements OnInit {
         acao: 'A'
       }))
 
-      console.log(anexos)
     }
   }
 
@@ -471,7 +467,6 @@ export class UpdateLotesComponent implements OnInit {
   buscarReferencias(){
     const tipo = this.modalValorAvalicao.value.tipo
     this.restangular.one(`tabelafipe/referencias`,).get({tipo:tipo}).subscribe((response) => {
-       console.log(moment(response.data[0]).format("MMMM Do YYYY") )
        const referencia = moment(response.data[0]).format("MMMM/YYYY")
        this.periodoReferencia = response.data[0]
        this.modalValorAvalicao.patchValue({
@@ -518,7 +513,6 @@ export class UpdateLotesComponent implements OnInit {
       combustivel: combustivel
 
     }
-    console.log(automovel)
     this.restangular.all('tabelafipe/consultar').post(automovel).subscribe(a => {
       this.valor = a.data.valor
       this.modalValorAvalicao.patchValue({

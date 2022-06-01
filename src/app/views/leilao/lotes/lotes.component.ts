@@ -1,7 +1,7 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NotifierService } from 'angular-notifier';
-import _ = require('lodash');
+import * as _ from 'lodash';
 import { Restangular } from 'ngx-restangular';
 
 @Component({
@@ -23,6 +23,7 @@ export class LotesComponent implements OnInit {
   arquivo: any;
   formData = new FormData();
   fileError: any;
+  fileLoading = false;
   cardImageBase64: any;
   isImageSaved: boolean;
   formulario: any;
@@ -108,6 +109,7 @@ export class LotesComponent implements OnInit {
   }
   fileChangeEvent(fileInput: any) {
     this.fileError = null;
+    this.fileLoading = true;
     if (fileInput.target.files && fileInput.target.files[0]) {
       // Size Filter Bytes
       const max_size = 20971520;
@@ -126,13 +128,18 @@ export class LotesComponent implements OnInit {
       let formData:FormData = new FormData();
       formData.append('file', fileInput.target.files[0])
 
-      console.log(formData.getAll('file'))
-      this.restangular.all('lote').customPOST(formData, 'ImportacaoPlanilha', { leilaoId: this.id }, { 'content-type': undefined }).subscribe(a => {
+      this.restangular.all('lote').customPOST(formData, 'ImportacaoPlanilha', { leilaoId: this.id }, { 'content-type': 'multipart/form-data' }).subscribe(a => {
         this.notifierService.notify('success', 'Upload de planilha com sucesso');
+        this.fileLoading = false
+        location.reload()
         // this.router.navigate(['/lotes', this.id]);
+
       },
         error => {
           this.notifierService.notify('error', 'Upload de planilha erro!');
+          fileInput.target.value = "";
+          this.fileLoading = false;
+
         });
     }
 

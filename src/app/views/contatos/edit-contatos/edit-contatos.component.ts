@@ -67,12 +67,10 @@ export class EditContatosComponent implements OnInit {
   ngOnInit() {
     this.restangular.all('marketing/contato').get(this.id).subscribe(dados => {
       this.updateForm(dados.data);
-      console.log(dados.data)
     })
 
   }
   onSubmit(){
-    console.log(this.formulario.value)
     this.restangular.all('marketing/contato').customPUT(this.formulario.value,  this.id ) .subscribe(a => {
       this.notifierService.notify('success', 'Contato criado com sucesso');
       this.router.navigate(['/contatos']);

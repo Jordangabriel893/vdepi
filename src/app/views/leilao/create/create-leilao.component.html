@@ -10,7 +10,7 @@
 
           <div class="card-block">
             <div class="row">
-              <div class="col-8">
+              <div class="col-12">
                 <div class="row">
                   <div class="form-group col-6">
                     <label for="nome">Nome </label>
@@ -81,36 +81,27 @@
                     <input type="percent" class="form-control" [ngClass]="aplicaCssErro('comissao')" id="comissao" formControlName="comissao"
                     currencyMask [options]="{ prefix: '', suffix: '%', thousands: '.', decimal: ',' }">
                   </div>
-                </div>
-              </div>
-              <div class="form-group col-4">
-                <label for="habilitacao">Regra Habilitação </label>
-                <!-- <ng-select [items]="cities"  bindLabel="name" bindValue="name">
-                  <ng-template ng-option-tmp let-item="item" let-index="index" let-search="searchTerm">
-                      <div *ngIf="item.name === 'Kaunas'">{{item.name}}</div>
-                      <div style="margin: 10px 0;" class="card" *ngIf="item.name !== 'Kaunas'">
-                          <div class="card-body">
-                              <h5 class="card-title" [ngOptionHighlight]="search">{{item.name}}</h5>
-                              <h6 class="card-subtitle mb-2 text-muted">Card subtitle</h6>
-                              <p class="card-text">
-                                  <img height="15" width="15" [src]="item.avatar"/>
-                                  Some quick example text to build
-                              </p>
-                              <div *ngIf="item.name === 'Pavilnys'">
-                                  <a href="#" class="card-link">Card link</a>
-                                  <a href="#" class="card-link">Another link</a>
+                  <div class="form-group col-6">
+                    <label for="regraHabilitacao">Regra Habilitação </label>
+                    <ng-select [items]="habilitacoes" formControlName="regrasHabilitacao" [multiple]="true" bindLabel="tipoValidacaoRegra" bindValue="regraHabilitacaoId">
+                      <ng-template  ng-option-tmp let-item="item" let-index="index" let-search="searchTerm" >
+                          <!-- <div *ngIf="item.name === 'Kaunas'">{{item.name}}</div> -->
+                          <div style="margin: 10px 0; white-space: normal;" class="card" >
+                              <div class="card-body">
+                                  <h5 class="card-title" [ngOptionHighlight]="search">{{item.tipoValidacaoRegra}}</h5>
+                                  <h6 class="card-subtitle mb-2 text-muted">{{item.textoExplicativo}}</h6>
+                                  <p class="card-text">
+                                    Automática:  {{item.automatica ? 'Sim' : 'Não'}}
+                                  </p>
                               </div>
                           </div>
-                      </div>
-                  </ng-template>
-              </ng-select> -->
-                <!-- <label for="habilitacao">Regra Habilitação </label>
-                <select class="form-control" [ngClass]="aplicaCssErro('habilitacao')" formControlName="habilitacao" name="habilitacao">
-                  <option *ngFor="let item of habilitacoes" value="{{item.regraHabilitacaoId}}">{{item.regraHabilitacao.tipoValidacaoRegra}}
-                  </option>
-                </select> -->
+                      </ng-template>
+                  </ng-select>
 
+                  </div>
+                </div>
               </div>
+
 
             </div>
             <div class="row">

@@ -76,6 +76,7 @@ export class UpdateLeilaoComponent implements OnInit {
   };
 
   maskhora = [ /\d/,/\d/, ':', /\d/, /\d/, ]
+  habilitacoes: any;
 
   constructor(
     private route: ActivatedRoute,
@@ -112,6 +113,12 @@ export class UpdateLeilaoComponent implements OnInit {
         this.status= dados.data
       }
     )
+    this.restangular.one('Habilitacao/Regras').get().subscribe(
+      dados =>{
+        // const habilitac = dados.data
+        // const regras = habilitac.map(x => x.regraHabilitacao)
+         this.habilitacoes = dados.data
+      })
   }
 
   ngOnInit() {
@@ -122,6 +129,7 @@ export class UpdateLeilaoComponent implements OnInit {
   }
 
   onSubmit(){
+    console.log(this.formulario.value)
     if(!this.formulario.valid){
       Object.keys(this.formulario.controls).forEach((campo)=>{
         const controle = this.formulario.get(campo)
@@ -148,6 +156,9 @@ export class UpdateLeilaoComponent implements OnInit {
   updateForm(dados) {
     this.isImageSaved = true
     this.cardImageBase64 = dados.foto.url
+
+
+    const arrayRegraHabiliacaoId = dados.regrasHabilitacao.map(regra=> regra.regraHabilitacao.regraHabilitacaoId)
 
     this.formulario = this.formBuilder.group({
       nome: [dados.nome, [Validators.required, Validators.minLength(3), Validators.maxLength(35)]],
@@ -179,6 +190,7 @@ export class UpdateLeilaoComponent implements OnInit {
       comissao: [dados.comissaoLeiloeiro, Validators.required],
       termoCondicaoVenda: [dados.termoCondicaoVenda],
       anexos: this.formBuilder.array(dados.anexos ? dados.anexos.map(x => this.formBuilder.group({ ...x, acao: '' })) : []),
+      regrasHabilitacao: this.formBuilder.control([...arrayRegraHabiliacaoId])
     });
   }
 
@@ -279,7 +291,6 @@ export class UpdateLeilaoComponent implements OnInit {
         acao: 'A'
       }))
 
-      console.log(anexos)
     }
   }
   alterarAnexo(i) {

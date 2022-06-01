@@ -28,7 +28,7 @@ export class ContatosComponent implements OnInit {
   ngOnInit() {
     this.restangular.one("marketing/Contato", '').get({PageSize:100}).subscribe((response) => {
      this.contatos = response.data
-      console.log(response.data)
+
       this.loading = false;
     },
     () => this.loading = false);

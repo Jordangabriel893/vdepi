@@ -63,19 +63,16 @@ export class EditNotificacaoComponent implements OnInit {
     this.restangular.one('leilao').get().subscribe(
       dados =>{
         this.leilao= dados.data
-        console.log(dados.data)
       }
     )
     this.restangular.all('marketing/notificacao').get(this.id).subscribe(dados => {
       this.updateForm(dados.data)
-      console.log(dados.data)
     })
 
 
 
   }
   onSubmit(){
-    console.log(this.formulario.value)
     if(!this.formulario.valid){
       Object.keys(this.formulario.controls).forEach((campo)=>{
         const controle = this.formulario.get(campo)

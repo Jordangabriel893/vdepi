@@ -17,7 +17,6 @@ export class CategoriasComponent implements OnInit {
   ) {
     this.restangular.one("categoria").get().subscribe((response) => {
      this.categorias = response.data
-     console.log(response.data)
      this.loading = false;
     },
     () => this.loading = false)
@@ -26,7 +25,6 @@ export class CategoriasComponent implements OnInit {
   ngOnInit() {
   }
   edit(id) {
-    console.log(id)
     this.router.navigate(['/update-categorias', id], { relativeTo: this.route });
   }
 }
