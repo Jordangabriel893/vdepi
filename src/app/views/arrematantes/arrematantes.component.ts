@@ -3,6 +3,7 @@ import { Restangular } from 'ngx-restangular';
 import * as fileSaver from 'file-saver';
 import { NotifierService } from 'angular-notifier';
 import { FormControl } from '@angular/forms';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-arrematantes',
@@ -16,13 +17,29 @@ export class ArrematantesComponent implements OnInit {
   arremantantesFiltrados;
   loading = true;
   queryField = new FormControl();
+  results:any;
+  arrematanteSearch;
+  arrematantesComLetraMinuscula;
+
+  lotes;
+  loteSetado;
+  listaFiltradaPorLote;
+  filtroLotes;
+  usuarios: any;
+
   constructor(
     private restangular: Restangular,
-    private notifierService: NotifierService
+    private notifierService: NotifierService,
+    private router: Router,
   ) {
     this.restangular.one("leilao").get({PageSize:100}).subscribe((response) => {
+
       this.leiloes = response.data
       this.setLeilao(this.leiloes[0].id, this.leiloes[0].nome);
+    })
+    this.restangular.one("usuario").get().subscribe((response) => {
+      this.usuarios = response.data;
+
     })
    }
 
@@ -45,7 +62,6 @@ export class ArrematantesComponent implements OnInit {
     .withHttpConfig({responseType: 'blob'})
     .get()
     .subscribe((response) => {
-      console.log(response);
       const blob = new Blob([response], { type: 'application/pdf' });
       fileSaver.saveAs(blob, `AutoArrematacao-Lote${numerolote}.pdf`);
     },(error) => {
@@ -77,4 +93,12 @@ export class ArrematantesComponent implements OnInit {
                                   x.email.toLowerCase().includes(value));
     }
   }
+  goUsuario(nome, email){
+    const usuario = this.usuarios.find(x => x.nomeCompleto == nome )
+    this.router.navigate(['/update-usuarios', usuario.usuarioId]);
+  }
+  goLote(id){
+    this.router.navigate(['/update-lotes', id]);
+  }
 }
+// objLote.lote.numeroLote.includes(value

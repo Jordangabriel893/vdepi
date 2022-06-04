@@ -203,12 +203,12 @@ export class CreateLotesComponent implements OnInit {
 
     this.imageError = null;
     const arrayImagens = fileInput.target.files.length
-    console.log(arrayImagens)
+
     for(let i = 0; i < arrayImagens; i ++){
-     console.log(fileInput.target.files[i])
+
      this.arrayFotos.push(fileInput.target.files[i])
     }
-    console.log(this.arrayFotos)
+
     this.arrayFotos.forEach((x: any)=>{
       if (x ) {
         // Size Filter Bytes
@@ -443,7 +443,5 @@ export class CreateLotesComponent implements OnInit {
     var formatacao = loteCampo && loteCampo.formatacao ? loteCampo.formatacao.split('').map(x => x === '#' ? new RegExp(x.replace('#', '\\w')) : x) : false;
     return formatacao;
   }
-  console(){
-    console.log(this.formulario.value.fotos)
-  }
+
 }

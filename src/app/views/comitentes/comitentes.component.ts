@@ -25,7 +25,7 @@ export class ComitentesComponent implements OnInit {
   ngOnInit() {
   }
   edit(id) {
-    console.log(id)
+
     this.router.navigate(['/update-comitente', id], { relativeTo: this.route });
   }
 

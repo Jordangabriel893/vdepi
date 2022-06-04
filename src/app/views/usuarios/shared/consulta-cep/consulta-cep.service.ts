@@ -12,7 +12,6 @@ export class ConsultaCepService {
 
   consultaCEP(cep: string) {
 
-    console.log(cep);
 
     // Nova variável "cep" somente com dígitos.
     cep = cep.replace(/\D/g, '');

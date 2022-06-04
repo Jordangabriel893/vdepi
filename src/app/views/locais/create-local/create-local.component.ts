@@ -54,7 +54,6 @@ export class CreateLocalComponent implements OnInit {
   ngOnInit() {
   }
   onSubmit(){
-    console.log(this.formulario.value)
     this.restangular.all('local').post(this.formulario.value).subscribe(a => {
       this.notifierService.notify('success', 'Local Criado com sucesso');
       this.router.navigate(['/local']);

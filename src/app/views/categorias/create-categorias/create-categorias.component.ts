@@ -32,7 +32,6 @@ export class CreateCategoriasComponent implements OnInit {
   ngOnInit() {
   }
   onSubmit(){
-    console.log(this.formulario.value.dataCadastro)
     this.restangular.all('categoria').post(this.formulario.value).subscribe(a => {
       this.notifierService.notify('success', 'Categoria Criada com sucesso');
       this.router.navigate(['/categorias']);

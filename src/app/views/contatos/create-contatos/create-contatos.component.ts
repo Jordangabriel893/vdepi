@@ -66,7 +66,6 @@ export class CreateContatosComponent implements OnInit {
   ngOnInit() {
   }
   onSubmit() {
-    console.log(this.formulario.value)
     this.restangular.all(​'marketing/contato').post(this.formulario.value).subscribe(a => {
       this.notifierService.notify('success', 'Contato criada com sucesso');
       this.router.navigate(['/contatos']);

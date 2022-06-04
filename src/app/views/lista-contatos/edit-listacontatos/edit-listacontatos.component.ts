@@ -51,7 +51,6 @@ export class EditListacontatosComponent implements OnInit {
        this.loading = false;
        this.restangular.all('marketing/ListaContato').get(this.id).subscribe(dados => {
         this.updateContatos(dados.data);
-        console.log(dados.data)
       }
 
       )

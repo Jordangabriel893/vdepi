@@ -17,7 +17,6 @@ export class LocaisComponent implements OnInit {
   ) {
     this.restangular.one("local").get().subscribe((response) => {
      this.locais = response.data
-     console.log(this.locais)
      this.loading = false;
     },
     () => this.loading = false)
@@ -27,7 +26,6 @@ export class LocaisComponent implements OnInit {
   }
 
   edit(id) {
-    console.log(id)
     this.router.navigate(['/update-local', id], { relativeTo: this.route });
   }
 

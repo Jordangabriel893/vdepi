@@ -81,6 +81,22 @@
                     <input type="percent" class="form-control" [ngClass]="aplicaCssErro('comissao')" id="comissao" formControlName="comissao"
                     currencyMask [options]="{ prefix: '', suffix: '%', thousands: '.', decimal: ',' }">
                   </div>
+                  <div class="form-group col-12">
+                    <label for="regraHabilitacao">Regra Habilitação </label>
+                    <ng-select [items]="habilitacoes" formControlName="regrasHabilitacao" [multiple]="true" bindLabel="tipoValidacaoRegra" bindValue="regraHabilitacaoId">
+                      <ng-template ng-option-tmp let-item="item" let-index="index" let-search="searchTerm">
+                          <div style="margin: 10px 0; white-space: normal;" class="card" >
+                              <div class="card-body">
+                                  <h5 class="card-title" [ngOptionHighlight]="search">{{item.tipoValidacaoRegra}}</h5>
+                                  <h6 class="card-subtitle mb-2 text-muted">{{item.textoExplicativo}}</h6>
+                                  <p class="card-text text-muted">
+                                    Validação Automática:  {{item.automatica ? 'Sim' : 'Não'}}
+                                  </p>
+                              </div>
+                          </div>
+                      </ng-template>
+                    </ng-select>
+                  </div>
                 </div>
               </div>
               <div class="col-4" formGroupName="foto">
@@ -266,7 +282,7 @@
                   <td><a [href]="item.value.arquivo.url" target="_blank">{{item.value.arquivo.nome}}</a></td>
                   <td>
                     <input type="text" formControlName="nome" class="form-control" [value]="item.value.nome"
-                      placeholder="Descricao" *ngIf="item.value.acao === 'I'">
+                      placeholder="Descricao" *ngIf="item.value.acao === 'I'" >
                     <span *ngIf="item.value.acao === ''">{{item.value.nome}}</span>
                   </td>
                   <td>{{item.value.arquivo.dataCadastro | amFromUtc | amLocal | amDateFormat: 'DD/MM/YYYY HH:mm'}}</td>

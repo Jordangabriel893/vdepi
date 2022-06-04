@@ -72,7 +72,6 @@ export class CreateNotificacaoComponent implements OnInit {
     this.restangular.one('leilao').get().subscribe(
       dados =>{
         this.leilao= dados.data
-        console.log(dados.data)
       }
     )
 

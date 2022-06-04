@@ -19,12 +19,11 @@ export class VistoriaComponent implements OnInit {
     private notifierService: NotifierService,
   ) {
     this.restangular.one("vistoria").get().subscribe((response) => {
-      console.log(response.data)
      this.vistoria = response.data
      this.loading = false;
     },
     () => this.loading = false)
-  
+
    }
 
   ngOnInit() {
@@ -39,12 +38,12 @@ export class VistoriaComponent implements OnInit {
       fileSaver.saveAs(blob, `Comprovante_${id}.pdf`);
     },(error) => {
       this.notifierService.notify('error', 'Não foi possivel fazer o download do comprovante!')
-      
-    }) 
 
-  
+    })
+
+
    }
-   getFile(id): Observable<Blob> {   
+   getFile(id): Observable<Blob> {
     return  this.restangular.one(`vistoria/${id}/laudo`, ).get({ responseType: 'blob' });
 }
 }

@@ -34,7 +34,16 @@
           <i class="fa fa-list"></i>&nbsp;Lotes - {{leilao.nome}}
         </div>
         <div class="card-block">
-          <button type="button" class="btn btn-success" (click)="create()"><i class="fa fa-plus-circle"></i>&nbsp; Novo Lote</button>
+          <div class="d-flex justify-content-between">
+            <button type="button" class="btn btn-success" (click)="create()"><i class="fa fa-plus-circle"></i>&nbsp; Novo Lote</button>
+            <button type="button" class="btn btn-success text-nowrap" (click)="getAnexo()" *ngIf="!fileLoading">
+              <i class="fa fa-file-excel" aria-hidden="true"></i>&nbsp;Importar Lotes
+            </button>
+            <button type="button" class="btn btn-warning text-nowrap" *ngIf="fileLoading">
+              <i class="fa fa-spin fa-spinner" ></i>&nbsp;Importando Lotes...
+            </button>
+            <input type="file" class="inputAnexos" accept=".xls,.xlsx"  #inputAnexos  (change)="fileChangeEvent($event)">
+          </div>
 
           <div class="table-responsive mt-4">
             <table class="table table-striped" [mfData]="lotes" #mfLotes="mfDataTable" [mfRowsOnPage]="10">
@@ -59,6 +68,7 @@
                   <th>
                     <mfDefaultSorter by="valorAvalicao">Valor Avaliação</mfDefaultSorter>
                   </th>
+
                   <th class="text-center" >
                     Editar
                   </th>
@@ -84,7 +94,7 @@
                 </tr>
                 <tr *ngIf="loading">
                   <td class="text-center text-muted" colspan="8">
-                    <h5><i class="fa fa-spin fa-spinner"></i>&nbsp;Carregando...</h5>
+                    <h5>&nbsp;Carregando...</h5>
                   </td>
                 </tr>
               </tbody>
@@ -102,3 +112,4 @@
     </div>
   </div>
 </div>
+<!-- <input type="file" accept=".xls,.xlsx" /> -->

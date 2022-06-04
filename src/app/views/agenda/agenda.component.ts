@@ -30,7 +30,7 @@ export class AgendaComponent implements OnInit {
   ngOnInit() {
     this.restangular.one('marketing/agendaNotificacao').get().subscribe(
       dados =>{
-        console.log(dados.data)
+
         this.agendas= dados.data
         this.loading = false;
       },
