@@ -36,7 +36,7 @@ export class LotesComponent implements OnInit {
     private notifierService: NotifierService
   ) {
     this.id = this.route.snapshot.params['id']
-    this.restangular.one("lote", '').get({ leilaoId: this.id, PageSize: 100 }).subscribe(
+    this.restangular.one("lote", '').get({ leilaoId: this.id, PageSize: 500 }).subscribe(
       (lotes) => {
         this.loading = false;
         const lote = lotes.data
@@ -51,11 +51,11 @@ export class LotesComponent implements OnInit {
       this.leilao = response.data
 
     });
-    this.restangular.all('admin/leilao').get(this.id).subscribe(dados => {
-      const arquivoPlanilha = dados.data.anexos.filter(element => element.arquivo.nome.includes('xlsx'))
-      this.formData.append('file', arquivoPlanilha[0])
+    // this.restangular.all('admin/leilao').get(this.id).subscribe(dados => {
+    //   const arquivoPlanilha = dados.data.anexos.filter(element => element.arquivo.nome.includes('xlsx'))
+    //   this.formData.append('file', arquivoPlanilha[0])
 
-    })
+    // })
 
 
   }

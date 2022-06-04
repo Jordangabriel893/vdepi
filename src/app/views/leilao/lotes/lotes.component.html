@@ -36,16 +36,11 @@
         <div class="card-block">
           <div class="d-flex justify-content-between">
             <button type="button" class="btn btn-success" (click)="create()"><i class="fa fa-plus-circle"></i>&nbsp; Novo Lote</button>
-            <button type="button" class="btn btn-success" (click)="getAnexo()" *ngIf="fileLoading == false">
-
-              <i class="fa fa-file-excel" aria-hidden="true"></i>
-              <h6>Excel</h6>
-
+            <button type="button" class="btn btn-success text-nowrap" (click)="getAnexo()" *ngIf="!fileLoading">
+              <i class="fa fa-file-excel" aria-hidden="true"></i>&nbsp;Importar Lotes
             </button>
-            <button type="button" class="btn btn-success" (click)="getAnexo()" *ngIf="fileLoading == true">
-              <i  class="fa fa-spin fa-spinner" ></i>
-              <h6>   Importando...</h6>
-
+            <button type="button" class="btn btn-warning text-nowrap" *ngIf="fileLoading">
+              <i class="fa fa-spin fa-spinner" ></i>&nbsp;Importando Lotes...
             </button>
             <input type="file" class="inputAnexos" accept=".xls,.xlsx"  #inputAnexos  (change)="fileChangeEvent($event)">
           </div>
