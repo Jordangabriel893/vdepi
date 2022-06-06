@@ -1,4 +1,4 @@
-import { Component, ElementRef, Input, OnInit, Renderer2 } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, Input, OnChanges, OnInit, Renderer2, SimpleChanges } from '@angular/core';
 
 // Import navigation elements
 import { navigation } from './../../_nav';
@@ -10,9 +10,12 @@ import { navigation } from './../../_nav';
       <ul class="nav">
         <ng-template ngFor let-navitem [ngForOf]="navigation">
           <li *ngIf="isDivider(navitem)" class="nav-divider"></li>
-          <ng-template [ngIf]="isTitle(navitem)">
-            <app-sidebar-nav-title [title]='navitem'></app-sidebar-nav-title>
+          <ng-template [ngIf]="showTitle(navitem)">
+            <ng-template [ngIf]="isTitle(navitem)">
+              <app-sidebar-nav-title [title]='navitem'></app-sidebar-nav-title>
+            </ng-template>
           </ng-template>
+
           <ng-template [ngIf]="!isDivider(navitem)&&!isTitle(navitem)">
             <ng-template [ngIf]="showMenuItem(navitem)">
               <app-sidebar-nav-item [item]='navitem'></app-sidebar-nav-item>
@@ -35,14 +38,21 @@ export class AppSidebarNavComponent {
   }
 
   public showMenuItem(item) {
+
     return item.source ? this.auth.hasSourceAccess(item.source) : true;
   }
+  public showTitle(item){
+    // const user = this.authentication.getUser()
+    // console.log(user.permission ? true : false)
+    return this.auth.hasPermissions() ? true : false
+  }
 
-  constructor(private auth: AuthorizationService) { }
+  constructor(private auth: AuthorizationService, private authentication: AuthenticationService) { }
 }
 
 import { Router } from '@angular/router';
 import { AuthorizationService } from 'app/_services/authorization.service';
+import { AuthenticationService } from 'app/_services/authentication.service';
 
 @Component({
   selector: 'app-sidebar-nav-item',
@@ -158,33 +168,45 @@ export class AppSidebarNavDropdownComponent {
   selector: 'app-sidebar-nav-title',
   template: ''
 })
-export class AppSidebarNavTitleComponent implements OnInit {
+export class AppSidebarNavTitleComponent implements OnInit, OnChanges {
   @Input() title: any;
+  user:any;
+  constructor(private el: ElementRef, private renderer: Renderer2, private auth: AuthorizationService, private authentication: AuthenticationService) { }
 
-  constructor(private el: ElementRef, private renderer: Renderer2) { }
 
   ngOnInit() {
-    const nativeElement: HTMLElement = this.el.nativeElement;
-    const li = this.renderer.createElement('li');
-    const name = this.renderer.createText(this.title.name);
+    if(this.auth.hasItem(this.title)){
+      // console.log('passou', this.title)
+      const nativeElement: HTMLElement = this.el.nativeElement;
+      const li = this.renderer.createElement('li');
+      const name = this.renderer.createText(this.title.name);
 
-    this.renderer.addClass(li, 'nav-title');
+      this.renderer.addClass(li, 'nav-title');
 
-    if ( this.title.class ) {
-      const classes = this.title.class;
-      this.renderer.addClass(li, classes);
+      if ( this.title.class ) {
+        const classes = this.title.class;
+        this.renderer.addClass(li, classes);
+      }
+
+      if ( this.title.wrapper ) {
+        const wrapper = this.renderer.createElement(this.title.wrapper.element);
+
+        this.renderer.appendChild(wrapper, name);
+        this.renderer.appendChild(li, wrapper);
+      } else {
+        this.renderer.appendChild(li, name);
+      }
+      this.renderer.appendChild(nativeElement, li)
+    }
+    }
+    ngAfterViewInit(): void {
+
+    }
+    ngOnChanges(changes: SimpleChanges): void {
+
+
     }
 
-    if ( this.title.wrapper ) {
-      const wrapper = this.renderer.createElement(this.title.wrapper.element);
-
-      this.renderer.appendChild(wrapper, name);
-      this.renderer.appendChild(li, wrapper);
-    } else {
-      this.renderer.appendChild(li, name);
-    }
-    this.renderer.appendChild(nativeElement, li)
-  }
 }
 
 export const APP_SIDEBAR_NAV = [

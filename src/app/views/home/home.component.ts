@@ -1,11 +1,16 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { AuthenticationService } from 'app/_services';
 
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html'
 })
-export class HomeComponent {
+export class HomeComponent  {
 
-  constructor() { }
+  constructor(private authService: AuthenticationService) {
+
+   }
+
+
 
 }

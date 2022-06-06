@@ -92,7 +92,7 @@ export class User {
   username: string;
   password: string;
   token: string;
-  acessos: Acesso[]
+  permission: [];
 }
 
 export class Acesso {

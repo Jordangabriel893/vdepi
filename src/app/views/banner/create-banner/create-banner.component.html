@@ -1,0 +1,68 @@
+<form [formGroup]="formulario" (ngSubmit)="onSubmit()" appFocus *ngIf="formulario">
+  <div class="animated fadeIn" formArrayName="banners">
+    <div class="row">
+      <div class="col-lg-12">
+        <div class="card">
+          <div class="card-header new-campo">
+
+            <div class="cabecalho d-flex align-items-center">
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-card-image" viewBox="0 0 16 16">
+              <path d="M6.002 5.5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0z"/>
+              <path d="M1.5 2A1.5 1.5 0 0 0 0 3.5v9A1.5 1.5 0 0 0 1.5 14h13a1.5 1.5 0 0 0 1.5-1.5v-9A1.5 1.5 0 0 0 14.5 2h-13zm13 1a.5.5 0 0 1 .5.5v6l-3.775-1.947a.5.5 0 0 0-.577.093l-3.71 3.71-2.66-1.772a.5.5 0 0 0-.63.062L1.002 12v.54A.505.505 0 0 1 1 12.5v-9a.5.5 0 0 1 .5-.5h13z"/>
+            </svg>
+            &nbsp;Banner
+          </div>
+            <button type="button" class="btn btn-success btn-sm" (click)="alterarFoto(-1)">
+              <i class="fa fa-plus-circle"></i>&nbsp;  Novo Banner</button>
+              <input type="file"  multiple  #inputBanners (change)="fileChangeEvent($event)" accept="image/*">
+          </div>
+          <div class="card-block" *ngIf="this.formulario.value.banners.length > 0">
+            <table class="table">
+              <thead>
+                <tr>
+                  <th width="25%">Imagem</th>
+                  <th width="35%">Arquivo</th>
+                  <th width="25%">Link</th>
+                  <th width="15%"></th>
+                </tr>
+              </thead>
+              <tbody >
+                <tr *ngFor="let item of filterList('banners'); let i = index" [formGroupName]="i">
+
+                  <td class="row-img"><img [src]="item.value.arquivo.url " class="img-table"></td>
+
+                  <td><a [href]="item.value.arquivo.url" target="_blank">{{item.value.arquivo.nome}}</a></td>
+
+                  <td>
+                    <input type="text"  class="form-control"  formControlName="linkUrl" [value]="item.value.linkUrl"
+                      placeholder="Link" >
+                    <span *ngIf="item.value.acao === ''"></span>
+                  </td>
+
+                  <td class="text-center">
+                    <label class="btn btn-danger m-0" (click)="deleteFoto(i)">Remover</label>
+                  </td>
+
+                </tr>
+
+              </tbody>
+
+            </table>
+
+          </div>
+          <div class="card-block"  *ngIf="this.formulario.value.banners.length == 0">
+            <alert type="danger">
+              <strong>Campo Obrigatório</strong> É necessário no mínimo um banner
+            </alert>
+          </div>
+          <div class="card-footer">
+            <!-- <button  class="btn btn-primary saveCancel" (click)="console()"><i class="fa fa-save"></i> Console</button> -->
+            <button type="submit" class="btn btn-primary saveCancel"><i class="fa fa-save"></i> Salvar</button>
+            <button type="reset" class="btn btn-danger" [routerLink]="['/banner']"><i class="fa fa-undo"></i>
+              Cancelar</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</form>

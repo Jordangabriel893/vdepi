@@ -1,0 +1,21 @@
+.header{
+    display: flex;
+    justify-content: space-between;
+}
+.btn-success{
+    display: flex;
+    align-items: center;
+
+    h6{
+        margin-bottom: 0%;
+    }
+}
+.fa-file-excel,  .fa-list {
+    margin-right: 10%;
+}
+.row-img{
+  width: 25%;
+  .img-table{
+    width: 40%;
+  }
+}
