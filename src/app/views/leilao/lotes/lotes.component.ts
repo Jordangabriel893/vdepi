@@ -38,11 +38,12 @@ export class LotesComponent implements OnInit {
     this.id = this.route.snapshot.params['id']
     this.restangular.one("lote", '').get({ leilaoId: this.id, PageSize: 500 }).subscribe(
       (lotes) => {
+        console.log(lotes.data)
         this.loading = false;
         const lote = lotes.data
         this.lotes = lote;
         this.filtroLotes = lote
-        this.numeroLote = lote.map(x => x.loteId)
+        this.numeroLote = lote.map(x => x.numeroLote)
         this.descricao = lote.map(x => x.descricao)
       },
       () => this.loading = false

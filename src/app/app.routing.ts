@@ -1,3 +1,4 @@
+import { PermissoesComponent } from './views/permissoes/permissoes.component';
 import { EditBannerComponent } from './views/banner/edit-banner/edit-banner.component';
 import { CreateBannerComponent } from './views/banner/create-banner/create-banner.component';
 import { BannerComponent } from './views/banner/banner.component';
@@ -376,6 +377,15 @@ export const routes: Routes = [
         data: {
           title: 'Agenda',
           source: 'AGENDA'
+        },
+        canActivate: [SourceGuard]
+      },
+      {
+        path: 'permissao',
+        component: PermissoesComponent,
+        data: {
+          title: 'Permissão',
+          source: 'USUARIO'
         },
         canActivate: [SourceGuard]
       },

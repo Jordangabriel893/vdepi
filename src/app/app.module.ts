@@ -201,6 +201,7 @@ import { UpdateAgendaComponent } from './views/agenda/update-agenda/update-agend
 import { BannerComponent } from './views/banner/banner.component';
 import { EditBannerComponent } from './views/banner/edit-banner/edit-banner.component';
 import { CreateBannerComponent } from './views/banner/create-banner/create-banner.component';
+import { PermissoesComponent } from './views/permissoes/permissoes.component';
 
 
 
@@ -338,6 +339,7 @@ export function RestangularConfigFactory(RestangularProvider, NotifierService: N
     BannerComponent,
     EditBannerComponent,
     CreateBannerComponent,
+    PermissoesComponent,
 
 
   ],

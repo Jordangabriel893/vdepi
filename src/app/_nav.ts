@@ -119,6 +119,13 @@ export const navigation = [
     grupo:'CADASTROS'
   },
   {
+    name: 'Permissão',
+    url: '/permissao',
+    icon: 'fa fa-user',
+    source: 'PERMISSAO',
+    grupo:'CADASTROS'
+  },
+  {
     name: 'Usuarios',
     url: '/usuarios',
     icon: 'fa fa-user',
