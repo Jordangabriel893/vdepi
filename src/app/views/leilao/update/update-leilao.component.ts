@@ -168,7 +168,7 @@ export class UpdateLeilaoComponent implements OnInit {
       dataFimAgendamento: [dados.dataFimAgendamento ? moment.utc(dados.dataFimAgendamento).local().toDate() : null],
       dataEdital: [dados.dataEdital ? moment.utc(dados.dataEdital).local().toDate() : null],
       dataNotificacao: [dados.dataNotificacao ? moment.utc(dados.dataNotificacao).local().toDate() : null],
-      dataIncioLiberacao: [dados.dataInicioLiberacao ? moment.utc(dados.dataInicioLiberacao).local().toDate() : null],
+      dataInicioLiberacao: [dados.dataInicioLiberacao ? moment.utc(dados.dataInicioLiberacao).local().toDate() : null],
       dataFimLiberacao: [dados.dataFimLiberacao ? moment.utc(dados.dataFimLiberacao).local().toDate() : null],
       dataDiarioOficial: [dados.dataDiarioOficial ? moment.utc(dados.dataDiarioOficial).local().toDate() : null],
       emailsNotificacao: [dados.emailsNotificacao],

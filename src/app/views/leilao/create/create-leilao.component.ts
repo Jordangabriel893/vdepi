@@ -159,7 +159,7 @@ selectedHabilitacao ;
       dataFimAgendamento: [null],
       dataEdital: [null],
       dataNotificacao: [null],
-      dataIncioLiberacao: [null],
+      dataInicioLiberacao: [null],
       dataFimLiberacao: [null],
       emailsNotificacao: [null],
       dataDiarioOficial: [null],

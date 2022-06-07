@@ -177,7 +177,7 @@ export const navigation = [
   {
     name: 'Banner',
     url: '/banner',
-    icon: 'fa fa-bars',
+    icon: 'fa fa-images',
     source: 'STATUS_LEILAO',
     grupo:'CADASTROS'
   },
