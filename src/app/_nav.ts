@@ -1,151 +1,191 @@
 export const navigation = [
   {
     title: true,
-    name: 'OPERAÇÃO'
+    name: 'OPERAÇÃO',
+    grupo:'OPERACAO'
   },
   {
     name: 'Leilões',
     url: '/leilao',
     icon: 'fa fa-gavel',
-    source: 'RelatorioEstoque'
+    source: 'LEILOES',
+    grupo:'OPERACAO'
   },
   {
     name: 'Habilitação',
     url: '/habilitacao',
     icon: 'fa fa-check',
-    source: 'RelatorioEstoque'
+    source: 'HABILITACAO',
+    grupo:'OPERACAO'
   },
   {
     name: 'Vistoria',
     url: '/vistoria',
     icon: 'fa fa-search',
-    source: 'RelatorioEstoque'
+    source: 'VISTORIA',
+    grupo:'OPERACAO'
   },
   {
     title: true,
-    name: 'RELATORIOS'
+    name: 'RELATORIOS',
+    grupo:'RELATORIOS'
   },
   {
     name: 'Dashboard',
     url: '/dashboard',
     icon: 'fa fa-chart-line',
-    source: 'Resultado'
+    source: 'DASHBOARD',
+    grupo:'RELATORIOS'
   },
   {
     name: 'Mapa de Lances',
     url: '/mapa-lance',
     icon: 'fa fa-map',
-    source: 'Resultado'
+    source: 'MAPA_LANCES',
+    grupo:'RELATORIOS'
   },
   {
     name: 'Histórico de Lances',
     url: '/historicolances',
     icon: 'fa fa-history',
-    source: 'Resultado'
+    source: 'HISTORICO_LANCES',
+    grupo:'RELATORIOS'
   },
    {
      name: 'Lances Consolidados',
      url: '/lancesconsolidado',
      icon: 'fa fa-history',
-     source: 'Resultado'
+     source: 'LANCES_CONSOLIDADOS',
+     grupo:'RELATORIOS'
    },
 
   {
     name: 'Arrematantes',
     url: '/arrematantes',
     icon: 'fa fa-dollar-sign',
-    source: 'Resultado'
+    source: 'ARREMATANTES',
+    grupo:'RELATORIOS'
   },
   {
     title: true,
-    name: 'MARKETING'
+    name: 'MARKETING',
+    grupo:'MARKETING'
   },
   {
     name: 'Lista de Contatos',
     url: '/listacontatos',
     icon: 'fa fa-users',
-    source: 'Resultado'
+    source: 'LISTA_CONTATOS',
+    grupo:'MARKETING'
   },
   {
     name: 'Contatos',
     url: '/contatos',
     icon: 'fa fa-user',
-    source: 'Resultado'
+    source: 'CONTATOS',
+    grupo:'MARKETING'
   },
   {
     name: 'Notificações',
     url: '/notificacoes',
     icon: 'fa fa-comment',
-    source: 'Resultado'
+    source: 'NOTIFICACOES',
+    grupo:'MARKETING'
   },
   {
     name: 'Meio Notificação',
     url: '/tipomeionotificao',
     icon: 'fa fa-comment',
-    source: 'Resultado'
+    source: 'MEIO_NOTIFICACAO',
+    grupo:'MARKETING'
   },
   {
     name: 'Tipo Notificação',
     url: '/tiponotificacao',
     icon: 'fa fa-comment',
-    source: 'Resultado'
+    source: 'TIPO_NOTIFICACAO',
+    grupo:'MARKETING'
   },
   {
     name: 'Agenda',
     url: '/agenda',
     icon: 'fa fa-book',
-    source: 'Resultado'
+    source: 'AGENDA',
+    grupo:'MARKETING'
   },
   {
     title: true,
-    name: 'CADASTROS'
+    name: 'CADASTROS',
+    grupo:'CADASTROS'
+  },
+  {
+    name: 'Permissão',
+    url: '/permissao',
+    icon: 'fa fa-user',
+    source: 'PERMISSAO',
+    grupo:'CADASTROS'
   },
   {
     name: 'Usuarios',
     url: '/usuarios',
     icon: 'fa fa-user',
-    source: 'RelatorioEstoque'
+    source: 'USUARIO',
+    grupo:'CADASTROS'
   },
   {
     name: 'Empresas',
     url: '/empresa',
     icon: 'fa fa-building',
-    source: 'RelatorioEstoque'
+    source: 'EMPRESAS',
+    grupo:'CADASTROS'
   },
   {
     name: 'Comitentes',
     url: '/comitente',
     icon: 'fa fa-university',
-    source: 'RelatorioEstoque'
+    source: 'COMITENTES',
+    grupo:'CADASTROS'
   },
   {
     name: 'Leiloeiros',
     url: '/leiloeiro',
     icon: 'fa fa-gavel',
-    source: 'RelatorioEstoque'
+    source: 'LEILOEIROS',
+    grupo:'CADASTROS'
   },
   {
     name: 'Locais',
     url: '/local',
     icon: 'fa fa-map-marker',
-    source: 'RelatorioEstoque'
+    source: 'LOCAIS',
+    grupo:'CADASTROS'
   },
   {
     name: 'Categorias',
     url: '/categorias',
     icon: 'fa fa-tags',
-    source: 'RelatorioEstoque'
+    source: 'CATEGORIAS',
+    grupo:'CADASTROS'
   },
   {
     name: 'Status Lote',
     url: '/statusLote',
     icon: 'fa fa-bars',
-    source: 'RelatorioEstoque'
+    source: 'STATUS_LOTE',
+    grupo:'CADASTROS'
   },
   {
     name: 'Status Leilão',
     url: '/statusLeilao',
     icon: 'fa fa-bars',
-    source: 'RelatorioEstoque'
+    source: 'STATUS_LEILAO',
+    grupo:'CADASTROS'
+  },
+  {
+    name: 'Banner',
+    url: '/banner',
+    icon: 'fa fa-images',
+    source: 'STATUS_LEILAO',
+    grupo:'CADASTROS'
   },
 ];

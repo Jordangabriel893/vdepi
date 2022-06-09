@@ -125,6 +125,25 @@
     <div class="row">
       <div class="col-lg-12">
         <div class="card">
+          <div class="card-header d-flex align-items-center">
+            <i class="fa fa-file"></i>
+            &nbsp;Descrição
+          </div>
+          <div class="card-block">
+            <div class="row" [ngClass]="aplicaCssErro('observacao')">
+              <div class="col-12">
+                <!-- <label for="editor1" >Temos e Condições de Venda </label> -->
+                <angular-editor id="editor2" formControlName="observacao" [config]="editorConfig">
+                </angular-editor>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-lg-12">
+        <div class="card">
           <div class="card-header d-flex align-items-center" >
             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-calendar3" viewBox="0 0 16 16">
               <path d="M14 0H2a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2zM1 3.857C1 3.384 1.448 3 2 3h12c.552 0 1 .384 1 .857v10.286c0 .473-.448.857-1 .857H2c-.552 0-1-.384-1-.857V3.857z"/>
@@ -171,12 +190,12 @@
             </div>
             <div class="row">
               <div class="form-group col-6">
-                <label for="dataIncioLiberacao">Data Início Liberação</label>
-                <input type="text" class="form-control" id="dataIncioLiberacao" placeholder=""
-                  formControlName="dataIncioLiberacao"
+                <label for="dataInicioLiberacao">Data Início Liberação</label>
+                <input type="text" class="form-control" id="dataInicioLiberacao" placeholder=""
+                  formControlName="dataInicioLiberacao"
                   [bsConfig]="{ dateInputFormat: 'DD/MM/YYYY' }"
                   bsDatepicker
-                  (bsValueChange)="onValueChange($event, 'dataIncioLiberacao')">
+                  (bsValueChange)="onValueChange($event, 'dataInicioLiberacao')">
               </div>
               <div class="form-group col-6">
                 <label for="dataFimLiberacao">Data Fim Liberação</label>

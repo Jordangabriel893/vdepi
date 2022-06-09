@@ -1,3 +1,7 @@
+import { PermissoesComponent } from './views/permissoes/permissoes.component';
+import { EditBannerComponent } from './views/banner/edit-banner/edit-banner.component';
+import { CreateBannerComponent } from './views/banner/create-banner/create-banner.component';
+import { BannerComponent } from './views/banner/banner.component';
 import { EditListacontatosComponent } from './views/lista-contatos/edit-listacontatos/edit-listacontatos.component';
 import { EditContatosComponent } from './views/contatos/edit-contatos/edit-contatos.component';
 import { CreateContatosComponent } from './views/contatos/create-contatos/create-contatos.component';
@@ -101,17 +105,7 @@ export const routes: Routes = [
         component: LeilaoComponent,
         data: {
           title: 'Leilao',
-          source: 'RelatorioEstoque'
-        },
-        canActivate: [SourceGuard]
-      },
-
-      {
-        path: 'leilao',
-        component: LeilaoComponent,
-        data: {
-          title: 'Leilao',
-          source: 'RelatorioEstoque'
+          source: 'LEILOES'
         },
         canActivate: [SourceGuard]
       },
@@ -120,7 +114,7 @@ export const routes: Routes = [
         component: CreateLeilaoComponent,
         data: {
           title: 'Novo Leilao',
-          source: 'RelatorioEstoque'
+          source: 'LEILOES'
         },
         canActivate: [SourceGuard]
       },
@@ -129,25 +123,7 @@ export const routes: Routes = [
         component: UpdateLeilaoComponent,
         data: {
           title: 'Editar Leilao',
-          source: 'RelatorioEstoque'
-        },
-        canActivate: [SourceGuard]
-      },
-      {
-        path: 'dashboard',
-        component: DashboardComponent,
-        data: {
-          title: 'Dashboard',
-          source: 'RelatorioEstoque'
-        },
-        canActivate: [SourceGuard]
-      },
-      {
-        path: 'vistoria',
-        component: VistoriaComponent,
-        data: {
-          title: 'Vistoria',
-          source: 'RelatorioEstoque'
+          source: 'LEILOES'
         },
         canActivate: [SourceGuard]
       },
@@ -156,7 +132,7 @@ export const routes: Routes = [
         component: LotesComponent,
         data: {
           title: 'Lotes',
-          source: 'RelatorioEstoque'
+          source: 'LEILOES'
         },
         canActivate: [SourceGuard]
       },
@@ -165,7 +141,7 @@ export const routes: Routes = [
         component: CreateLotesComponent,
         data: {
           title: 'Novo Lote',
-          source: 'RelatorioEstoque'
+          source: 'LEILOES'
         },
         canActivate: [SourceGuard]
       },
@@ -174,25 +150,7 @@ export const routes: Routes = [
         component: UpdateLotesComponent,
         data: {
           title: 'Editar Lote',
-          source: 'RelatorioEstoque'
-        },
-        canActivate: [SourceGuard]
-      },
-      {
-        path: 'usuarios',
-        component: UsuariosComponent,
-        data: {
-          title: 'Usuários',
-          source: 'RelatorioEstoque'
-        },
-        canActivate: [SourceGuard]
-      },
-      {
-        path: 'update-usuarios/:id',
-        component: UpdateUsuariosComponent,
-        data: {
-          title: 'Editar Usuário',
-          source: 'RelatorioEstoque'
+          source: 'LEILOES'
         },
         canActivate: [SourceGuard]
       },
@@ -201,7 +159,34 @@ export const routes: Routes = [
         component: HabilitacaoComponent,
         data: {
           title: 'Habilitação',
-          source: 'RelatorioEstoque'
+          source: 'HABILITACAO'
+        },
+        canActivate: [SourceGuard]
+      },
+      {
+        path: 'vistoria',
+        component: VistoriaComponent,
+        data: {
+          title: 'Vistoria',
+          source: 'VISTORIA'
+        },
+        canActivate: [SourceGuard]
+      },
+      {
+        path: 'dashboard',
+        component: DashboardComponent,
+        data: {
+          title: 'Dashboard',
+          source: 'DASHBOARD'
+        },
+        canActivate: [SourceGuard]
+      },
+      {
+        path: 'mapa-lance',
+        component: MapaLanceComponent,
+        data: {
+          title: 'Mapa de Lances',
+          source: 'MAPA_LANCES'
         },
         canActivate: [SourceGuard]
       },
@@ -210,16 +195,7 @@ export const routes: Routes = [
         component: HistoricoLancesComponent,
         data: {
           title: 'Histórico de Lances',
-          source: 'RelatorioEstoque'
-        },
-        canActivate: [SourceGuard]
-      },
-      {
-        path: 'arrematantes',
-        component: ArrematantesComponent,
-        data: {
-          title: 'Arrematantes',
-          source: 'RelatorioEstoque'
+          source: 'HISTORICO_LANCES'
         },
         canActivate: [SourceGuard]
       },
@@ -228,7 +204,16 @@ export const routes: Routes = [
         component: LancesConsolidadoComponent,
         data: {
           title: 'LancesConsolidado',
-          source: 'RelatorioEstoque'
+          source: 'LANCES_CONSOLIDADOS'
+        },
+        canActivate: [SourceGuard]
+      },
+      {
+        path: 'arrematantes',
+        component: ArrematantesComponent,
+        data: {
+          title: 'Arrematantes',
+          source: 'ARREMATANTES'
         },
         canActivate: [SourceGuard]
       },
@@ -237,7 +222,7 @@ export const routes: Routes = [
         component: ListaContatosComponent,
         data: {
           title: 'ListaContatos',
-          source: 'RelatorioEstoque'
+          source: 'LISTA_CONTATOS'
         },
         canActivate: [SourceGuard]
       },
@@ -246,7 +231,7 @@ export const routes: Routes = [
         component: EditListacontatosComponent,
         data: {
           title: 'ListaContatos',
-          source: 'RelatorioEstoque'
+          source: 'LISTA_CONTATOS'
         },
         canActivate: [SourceGuard]
       },
@@ -255,16 +240,17 @@ export const routes: Routes = [
         component: CreateListacontatosComponent,
         data: {
           title: 'ListaContatos',
-          source: 'RelatorioEstoque'
+          source: 'LISTA_CONTATOS'
         },
         canActivate: [SourceGuard]
       },
+
       {
         path: 'contatos',
         component: ContatosComponent,
         data: {
           title: 'Contatos',
-          source: 'RelatorioEstoque'
+          source: 'CONTATOS'
         },
         canActivate: [SourceGuard]
       },
@@ -273,7 +259,7 @@ export const routes: Routes = [
         component: CreateContatosComponent,
         data: {
           title: 'Contatos',
-          source: 'RelatorioEstoque'
+          source: 'CONTATOS'
         },
         canActivate: [SourceGuard]
       },
@@ -282,7 +268,7 @@ export const routes: Routes = [
         component: EditContatosComponent,
         data: {
           title: 'Contatos',
-          source: 'RelatorioEstoque'
+          source: 'CONTATOS'
         },
         canActivate: [SourceGuard]
       },
@@ -291,7 +277,7 @@ export const routes: Routes = [
         component: NotificacoesComponent,
         data: {
           title: 'Notificacoes',
-          source: 'RelatorioEstoque'
+          source: 'NOTIFICACOES'
         },
         canActivate: [SourceGuard]
       },
@@ -300,7 +286,7 @@ export const routes: Routes = [
         component: EditNotificacaoComponent,
         data: {
           title: 'Editar Notificação',
-          source: 'RelatorioEstoque'
+          source: 'NOTIFICACOES'
         },
         canActivate: [SourceGuard]
       },
@@ -309,7 +295,7 @@ export const routes: Routes = [
         component: CreateNotificacaoComponent,
         data: {
           title: 'Criar Notificação',
-          source: 'RelatorioEstoque'
+          source: 'NOTIFICACOES'
         },
         canActivate: [SourceGuard]
       },
@@ -318,7 +304,7 @@ export const routes: Routes = [
         component: TipoMeioNotificacaoComponent,
         data: {
           title: 'Tipo Meio Notificação',
-          source: 'RelatorioEstoque'
+          source: 'MEIO_NOTIFICACAO'
         },
         canActivate: [SourceGuard]
       },
@@ -327,7 +313,7 @@ export const routes: Routes = [
         component: EditTipomeionotificacaoComponent,
         data: {
           title: 'Editar Tipo Meio Notificação',
-          source: 'RelatorioEstoque'
+          source: 'MEIO_NOTIFICACAO'
         },
         canActivate: [SourceGuard]
       },
@@ -336,7 +322,7 @@ export const routes: Routes = [
         component: CreateTipomeionotificacaoComponent,
         data: {
           title: 'Tipo Meio Notificação',
-          source: 'RelatorioEstoque'
+          source: 'MEIO_NOTIFICACAO'
         },
         canActivate: [SourceGuard]
       },
@@ -345,7 +331,7 @@ export const routes: Routes = [
         component: TipoDeNotificacaoComponent,
         data: {
           title: 'Tipo de Notificação',
-          source: 'RelatorioEstoque'
+          source: 'TIPO_NOTIFICACAO'
         },
         canActivate: [SourceGuard]
       },
@@ -354,7 +340,7 @@ export const routes: Routes = [
         component: CreateTiponotificacaoComponent,
         data: {
           title: 'Tipo de Notificação',
-          source: 'RelatorioEstoque'
+          source: 'TIPO_NOTIFICACAO'
         },
         canActivate: [SourceGuard]
       },
@@ -363,7 +349,7 @@ export const routes: Routes = [
         component: EditTiponotificacaoComponent,
         data: {
           title: 'Editar Tipo De Notificação',
-          source: 'RelatorioEstoque'
+          source: 'TIPO_NOTIFICACAO'
         },
         canActivate: [SourceGuard]
       },
@@ -372,7 +358,7 @@ export const routes: Routes = [
         component: AgendaComponent,
         data: {
           title: 'Agenda',
-          source: 'RelatorioEstoque'
+          source: 'AGENDA'
         },
         canActivate: [SourceGuard]
       },
@@ -381,7 +367,7 @@ export const routes: Routes = [
         component: CreateAgendaComponent,
         data: {
           title: 'Agenda',
-          source: 'RelatorioEstoque'
+          source: 'AGENDA'
         },
         canActivate: [SourceGuard]
       },
@@ -390,7 +376,34 @@ export const routes: Routes = [
         component: UpdateAgendaComponent,
         data: {
           title: 'Agenda',
-          source: 'RelatorioEstoque'
+          source: 'AGENDA'
+        },
+        canActivate: [SourceGuard]
+      },
+      {
+        path: 'permissao',
+        component: PermissoesComponent,
+        data: {
+          title: 'Permissão',
+          source: 'USUARIO'
+        },
+        canActivate: [SourceGuard]
+      },
+      {
+        path: 'usuarios',
+        component: UsuariosComponent,
+        data: {
+          title: 'Usuários',
+          source: 'USUARIO'
+        },
+        canActivate: [SourceGuard]
+      },
+      {
+        path: 'update-usuarios/:id',
+        component: UpdateUsuariosComponent,
+        data: {
+          title: 'Editar Usuário',
+          source: 'USUARIO'
         },
         canActivate: [SourceGuard]
       },
@@ -399,7 +412,7 @@ export const routes: Routes = [
         component: EmpresasComponent,
         data: {
           title: 'Empresas',
-          source: 'RelatorioEstoque'
+          source: 'EMPRESAS'
         },
         canActivate: [SourceGuard]
       },
@@ -408,7 +421,7 @@ export const routes: Routes = [
         component: CreateEmpresaComponent,
         data: {
           title: 'Criar empresa',
-          source: 'RelatorioEstoque'
+          source: 'EMPRESAS'
         },
         canActivate: [SourceGuard]
       },
@@ -417,7 +430,7 @@ export const routes: Routes = [
         component: UpdateEmpresaComponent,
         data: {
           title: 'Editar empresa',
-          source: 'RelatorioEstoque'
+          source: 'EMPRESAS'
         },
         canActivate: [SourceGuard]
       },
@@ -426,7 +439,7 @@ export const routes: Routes = [
         component: ComitentesComponent,
         data: {
           title: 'Comitente',
-          source: 'RelatorioEstoque'
+          source: 'COMITENTES'
         },
         canActivate: [SourceGuard]
       },
@@ -435,7 +448,7 @@ export const routes: Routes = [
         component: CreateComitenteComponent,
         data: {
           title: 'Criar Comitente',
-          source: 'RelatorioEstoque'
+          source: 'COMITENTES'
         },
         canActivate: [SourceGuard]
       },
@@ -444,7 +457,7 @@ export const routes: Routes = [
         component: UpdateComitenteComponent,
         data: {
           title: 'Editar Comitente',
-          source: 'RelatorioEstoque'
+          source: 'COMITENTES'
         },
         canActivate: [SourceGuard]
       },
@@ -453,7 +466,7 @@ export const routes: Routes = [
         component: LeiloeirosComponent,
         data: {
           title: 'Leiloeiros',
-          source: 'RelatorioEstoque'
+          source: 'LEILOEIROS'
         },
         canActivate: [SourceGuard]
       },
@@ -462,7 +475,7 @@ export const routes: Routes = [
         component: CreateLeiloeirosComponent,
         data: {
           title: 'Novo Leiloeiro',
-          source: 'RelatorioEstoque'
+          source: 'LEILOEIROS'
         },
         canActivate: [SourceGuard]
       },
@@ -471,7 +484,7 @@ export const routes: Routes = [
         component: UpdateLeiloeirosComponent,
         data: {
           title: 'Editar Leiloeiro',
-          source: 'RelatorioEstoque'
+          source: 'LEILOEIROS'
         },
         canActivate: [SourceGuard]
       },
@@ -480,7 +493,7 @@ export const routes: Routes = [
         component: LocaisComponent,
         data: {
           title: 'Locais',
-          source: 'RelatorioEstoque'
+          source: 'LOCAIS'
         },
         canActivate: [SourceGuard]
       },
@@ -489,7 +502,7 @@ export const routes: Routes = [
         component: CreateLocalComponent,
         data: {
           title: 'Criar Local',
-          source: 'RelatorioEstoque'
+          source: 'LOCAIS'
         },
         canActivate: [SourceGuard]
       },
@@ -498,7 +511,7 @@ export const routes: Routes = [
         component: UpdateLocalComponent,
         data: {
           title: 'Editar Local',
-          source: 'RelatorioEstoque'
+          source: 'LOCAIS'
         },
         canActivate: [SourceGuard]
       },
@@ -507,7 +520,7 @@ export const routes: Routes = [
         component: CategoriasComponent,
         data: {
           title: 'Categorias',
-          source: 'RelatorioEstoque'
+          source: 'CATEGORIAS'
         },
         canActivate: [SourceGuard]
       },
@@ -516,7 +529,7 @@ export const routes: Routes = [
         component: CreateCategoriasComponent,
         data: {
           title: 'Criar Categoria',
-          source: 'RelatorioEstoque'
+          source: 'CATEGORIAS'
         },
         canActivate: [SourceGuard]
       },
@@ -525,7 +538,7 @@ export const routes: Routes = [
         component: UpdateCategoriasComponent,
         data: {
           title: 'Editar Categoria',
-          source: 'RelatorioEstoque'
+          source: 'CATEGORIAS'
         },
         canActivate: [SourceGuard]
       },
@@ -534,7 +547,7 @@ export const routes: Routes = [
         component: StatusLoteComponent,
         data: {
           title: 'Status Lote',
-          source: 'RelatorioEstoque'
+          source: 'STATUS_LOTE'
         },
         canActivate: [SourceGuard]
       },
@@ -543,7 +556,34 @@ export const routes: Routes = [
         component: StatusLeilaoComponent,
         data: {
           title: 'Status Leilão',
-          source: 'RelatorioEstoque'
+          source: 'STATUS_LEILAO'
+        },
+        canActivate: [SourceGuard]
+      },
+      {
+        path: 'banner',
+        component: BannerComponent,
+        data: {
+          title: 'Banner',
+          source: 'STATUS_LEILAO'
+        },
+        canActivate: [SourceGuard]
+      },
+      {
+        path: 'create-banner',
+        component: CreateBannerComponent,
+        data: {
+          title: 'Banner',
+          source: 'STATUS_LEILAO'
+        },
+        canActivate: [SourceGuard]
+      },
+      {
+        path: 'edit-banner/:id',
+        component: EditBannerComponent,
+        data: {
+          title: 'Banner',
+          source: 'STATUS_LEILAO'
         },
         canActivate: [SourceGuard]
       },
@@ -554,15 +594,7 @@ export const routes: Routes = [
           title: 'Acesso Negado'
         }
       },
-      {
-        path: 'mapa-lance',
-        component: MapaLanceComponent,
-        data: {
-          title: 'Mapa de Lances',
-          source: 'RelatorioEstoque'
-        },
-        canActivate: [SourceGuard]
-      },
+
     ]
   },
   { path: 'login', component: LoginComponent },

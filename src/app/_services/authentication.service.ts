@@ -1,15 +1,20 @@
 import { Injectable } from '@angular/core';
 //import { RequestOptions, Headers } from '@angular/http';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { map } from 'rxjs/operators';
+import { map, tap } from 'rxjs/operators';
 import { Observable } from 'rxjs';
 import { environment } from '../../environments/environment';
 import * as Model from './../views/_models/model'
 import jwt_decode from "jwt-decode";
+import { Restangular } from 'ngx-restangular';
 
  @Injectable()
 export class AuthenticationService {
-  constructor(private http: HttpClient) { }
+  permissoes;
+  constructor(
+    private http: HttpClient,
+    private restangular: Restangular,
+    ) { }
 
   login(username: string, password: string) {
 
@@ -34,12 +39,42 @@ export class AuthenticationService {
           // store user details and jwt token in local storage to keep user logged in between page refreshes
           localStorage.removeItem('currentUser');
           const decodedToken: any = jwt_decode(user.access_token);
-          localStorage.setItem('currentUser', JSON.stringify({ access_token: user.access_token, username: decodedToken.email}));
+
+          const opcoes = {
+            headers: new HttpHeaders({
+               'Authorization': 'Bearer ' + user.access_token,
+                'withCredentials': 'true', 'Access-Control-Allow-Origin': '*', 'Access-Control-Allow-Credentials': 'true'
+            })
+          }
+
+          localStorage.setItem('currentUser', JSON.stringify({ access_token: user.access_token, username: decodedToken.email, }))
+
         }
 
-        return user;
-      }));
+        return user
+
+      }),
+      tap(user => {
+
+        const opcoes = {
+          headers: new HttpHeaders({
+             'Authorization': 'Bearer ' + user.access_token,
+              'withCredentials': 'true', 'Access-Control-Allow-Origin': '*', 'Access-Control-Allow-Credentials': 'true'
+          })
+        }
+
+        this.http.get<any>(environment.apiDados + '/permissao', opcoes).subscribe(permissao =>{
+          const getItem = this.getUser()
+
+          localStorage.setItem('currentUser', JSON.stringify({ ...getItem, permission: permissao.data.permissoes}))
+
+        })
+      })
+      );
+
   }
+
+
 
     logout() {
       //var options = this.getRequestOptions();
@@ -57,7 +92,6 @@ export class AuthenticationService {
     getUser() : Model.User {
       return JSON.parse(localStorage.getItem('currentUser'));
     }
-
 
     //private getRequestOptions() {
     //  const headers = new Headers({

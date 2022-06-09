@@ -48,11 +48,11 @@ export class UpdateLeilaoComponent implements OnInit {
     translate: 'yes',
     enableToolbar: true,
     showToolbar: true,
-    placeholder: 'Termos e Condições de Venda...',
     defaultParagraphSeparator: '',
     defaultFontName: '',
     defaultFontSize: '',
     fonts: [
+      { class: 'roboto', name: 'Roboto' },
       { class: 'arial', name: 'Arial' },
       { class: 'times-new-roman', name: 'Times New Roman' },
       { class: 'calibri', name: 'Calibri' },
@@ -129,7 +129,6 @@ export class UpdateLeilaoComponent implements OnInit {
   }
 
   onSubmit(){
-    console.log(this.formulario.value)
     if(!this.formulario.valid){
       Object.keys(this.formulario.controls).forEach((campo)=>{
         const controle = this.formulario.get(campo)
@@ -169,7 +168,7 @@ export class UpdateLeilaoComponent implements OnInit {
       dataFimAgendamento: [dados.dataFimAgendamento ? moment.utc(dados.dataFimAgendamento).local().toDate() : null],
       dataEdital: [dados.dataEdital ? moment.utc(dados.dataEdital).local().toDate() : null],
       dataNotificacao: [dados.dataNotificacao ? moment.utc(dados.dataNotificacao).local().toDate() : null],
-      dataIncioLiberacao: [dados.dataInicioLiberacao ? moment.utc(dados.dataInicioLiberacao).local().toDate() : null],
+      dataInicioLiberacao: [dados.dataInicioLiberacao ? moment.utc(dados.dataInicioLiberacao).local().toDate() : null],
       dataFimLiberacao: [dados.dataFimLiberacao ? moment.utc(dados.dataFimLiberacao).local().toDate() : null],
       dataDiarioOficial: [dados.dataDiarioOficial ? moment.utc(dados.dataDiarioOficial).local().toDate() : null],
       emailsNotificacao: [dados.emailsNotificacao],
@@ -190,7 +189,8 @@ export class UpdateLeilaoComponent implements OnInit {
       comissao: [dados.comissaoLeiloeiro, Validators.required],
       termoCondicaoVenda: [dados.termoCondicaoVenda],
       anexos: this.formBuilder.array(dados.anexos ? dados.anexos.map(x => this.formBuilder.group({ ...x, acao: '' })) : []),
-      regrasHabilitacao: this.formBuilder.control([...arrayRegraHabiliacaoId])
+      regrasHabilitacao: this.formBuilder.control([...arrayRegraHabiliacaoId]),
+      observacao: dados.observacao
     });
   }
 

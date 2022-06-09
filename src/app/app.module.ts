@@ -198,6 +198,10 @@ import { EditContatosComponent } from './views/contatos/edit-contatos/edit-conta
 import { EditListacontatosComponent } from './views/lista-contatos/edit-listacontatos/edit-listacontatos.component';
 import { CreateListacontatosComponent } from './views/lista-contatos/create-listacontatos/create-listacontatos.component';
 import { UpdateAgendaComponent } from './views/agenda/update-agenda/update-agenda.component';
+import { BannerComponent } from './views/banner/banner.component';
+import { EditBannerComponent } from './views/banner/edit-banner/edit-banner.component';
+import { CreateBannerComponent } from './views/banner/create-banner/create-banner.component';
+import { PermissoesComponent } from './views/permissoes/permissoes.component';
 
 
 
@@ -332,6 +336,10 @@ export function RestangularConfigFactory(RestangularProvider, NotifierService: N
     EditListacontatosComponent,
     CreateListacontatosComponent,
     UpdateAgendaComponent,
+    BannerComponent,
+    EditBannerComponent,
+    CreateBannerComponent,
+    PermissoesComponent,
 
 
   ],

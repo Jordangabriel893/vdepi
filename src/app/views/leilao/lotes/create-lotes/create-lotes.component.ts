@@ -59,7 +59,7 @@ export class CreateLotesComponent implements OnInit {
     spellcheck: true,
     height: 'auto',
     minHeight: '0',
-    maxHeight: 'auto',
+    maxHeight: '300px',
     width: 'auto',
     minWidth: '0',
     translate: 'yes',
@@ -70,6 +70,7 @@ export class CreateLotesComponent implements OnInit {
     defaultFontName: '',
     defaultFontSize: '',
     fonts: [
+      { class: 'roboto', name: 'Roboto' },
       { class: 'arial', name: 'Arial' },
       { class: 'times-new-roman', name: 'Times New Roman' },
       { class: 'calibri', name: 'Calibri' },
