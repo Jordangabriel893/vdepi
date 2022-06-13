@@ -1,7 +1,9 @@
 <div class="row linha-seletor">
   <form [formGroup]="filtroLeilao" class="col-4">
     <select class="form-control col-12" aria-label="Default select example" (change)="filtrarPorLeilao()" formControlName="leilao" >
-      <option *ngFor="let item of leiloes" [value]="item.nome">{{item.nome}}</option>
+      <option value="0" *ngIf="loadingLeilao">CARREGANDO...</option>
+      <option value="0">SELECIONE</option>
+      <option *ngFor="let item of leiloes" [value]="item.id">{{item.nome}}</option>
     </select>
   </form>
 
@@ -18,18 +20,18 @@
 
         <div class="card-block" >
           <div class="table-responsive mt-4">
-            <table class="table table-striped" [mfData]="filtrado" #mfFiltrado="mfDataTable" [mfRowsOnPage]="5">
+            <table class="table table-striped" [mfData]="habilitacao" #mfFiltrado="mfDataTable" [mfRowsOnPage]="5">
               <thead>
                 <tr>
                   <th>
                     <mfDefaultSorter by="dataCadastro">Data</mfDefaultSorter>
                   </th>
-                  <th>
+                  <!-- <th>
                     <mfDefaultSorter by="leilao.nome">Leilão</mfDefaultSorter>
                   </th>
                   <th>
                     <mfDefaultSorter by="tipoLoteId">Tipo Lote</mfDefaultSorter>
-                  </th>
+                  </th> -->
                   <th>
                     <mfDefaultSorter by="pessoa.pessoa.nomeCompleto">Usuário</mfDefaultSorter>
                   </th>
@@ -45,10 +47,10 @@
                   <th>
                     <mfDefaultSorter by="statusCodigo">Status Código</mfDefaultSorter>
                   </th>
-                  <th>
+                  <th class="text-center">
                     <mfDefaultSorter by="documentos">Documentos</mfDefaultSorter>
                   </th>
-                  <th>
+                  <th class="text-center">
                     Ação
                   </th>
                 </tr>
@@ -56,9 +58,8 @@
               <tbody>
                 <tr *ngFor="let item of mfFiltrado.data; let i = index">
                   <td class="text-nowrap">{{item.dataCadastro | amDateFormat:'DD/MM/yyyy HH:mm' }}</td>
-                  <td>{{item.leilao.nome}}</td>
-                  <td>{{item.tipoLote?.descricao}}
-                  </td>
+                  <!-- <td>{{item.leilao.nome}}</td>
+                  <td>{{item.tipoLote?.descricao}}</td> -->
                   <td><a [routerLink]="['/update-usuarios', item.usuario.usuarioId]">{{item.usuario.email}}</a></td>
                   <td>{{item.regraHabilitacao.tipoValidacaoRegra }}</td>
                   <td>{{item.status.descricao }}</td>
@@ -66,7 +67,7 @@
                   <td class="text-center" nowrap>
                     <span *ngIf="item.documentos.length == 0">Sem Documentos</span>
                     <button *ngIf="item.documentos.length > 0" type="button" class="btn btn-primary btn-sm"
-                      (click)="openModal(documento, i)"><i class="fa fa-file"></i>&nbsp; Doc({{item.documentos.length}})</button>
+                      (click)="openModal(documento, i)"><i class="fa fa-file"></i>&nbsp; {{item.documentos.length}} Documentos</button>
                   </td>
                   <td class="text-center" nowrap>
                     <button type="button" *ngIf="item.leilao.temAnaliseCadastral && !item.habilitado" class="btn btn-warning btn-sm"
@@ -82,6 +83,12 @@
                 <tr *ngIf="loading">
                   <td class="text-center text-muted" colspan="9">
                     <h5><i class="fa fa-spin fa-spinner"></i>&nbsp;Carregando...</h5>
+                  </td>
+                </tr>
+                <tr *ngIf="mfFiltrado.data.length === 0">
+                  <td class="text-center text-muted" colspan="9">
+                    <h6 *ngIf="habilitacao">Não há Habilitações para este Leilão</h6>
+                    <h6 *ngIf="!habilitacao">Selecione um leilão</h6>
                   </td>
                 </tr>
               </tbody>
@@ -165,9 +172,8 @@
               <h3>Deseja realmente desabilitar o usuario?</h3>
             </div>
             <div class="modal-footer">
-              <button type="submit" class="btn btn-primary "(click)="reprovarSolicitacao()"(click)="modalRef?.hide()"><i class="fa fa-save"></i>Sim</button>
-              <button type="reset" class="btn btn-danger" (click)="modalRef?.hide()"><i class="fa fa-undo"></i>
-                Não</button>
+              <button type="submit" class="btn btn-primary "(click)="reprovarSolicitacao()"(click)="modalRef?.hide()">Sim</button>
+              <button type="reset" class="btn btn-danger" (click)="modalRef?.hide()">Não</button>
             </div>
           </ng-template>
 

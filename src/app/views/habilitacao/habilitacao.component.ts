@@ -13,11 +13,9 @@ import { Location } from '@angular/common';
 export class HabilitacaoComponent implements OnInit {
   formulario: FormGroup
   filtroLeilao:FormGroup
-  habilitacao: any
+  habilitacao: any = null;
   //modal
   openPopup: boolean = true
-  isCollapsed = false;
-  message = 'expanded';
   modalRef: BsModalRef;
   solicitacaoHabilitacaoId: any
   solicitacaoHabilitacaoIdDesabilitar:any
@@ -25,7 +23,8 @@ export class HabilitacaoComponent implements OnInit {
   leiloes
   filtrado= []
   documentosUsuario:any
-  loading = true;
+  loading = false;
+  loadingLeilao = true;
 
   constructor(
     private restangular: Restangular,
@@ -41,24 +40,15 @@ export class HabilitacaoComponent implements OnInit {
 
     })
     this.filtroLeilao = this.formBuilder.group({
-      leilao:[null]
+      leilao:[0]
     })
   }
 
   ngOnInit() {
-    this.restangular.one("habilitacao").get().subscribe((response) => {
-      this.habilitacao = response.data;
-      this.loading = false;
-    },
-    () => this.loading = false);
-
     this.restangular.one("leilao", '').get({ PageSize: 100 }).subscribe((response) => {
       this.leiloes = response.data;
-
-      this.filtroLeilao.get('leilao').setValue(response.data[0].nome);
-      this.filtrarPorLeilao();
+      this.loadingLeilao = false;
     })
-
   }
 
   //submit
@@ -112,22 +102,6 @@ export class HabilitacaoComponent implements OnInit {
     this.solicitacaoHabilitacaoIdDesabilitar = solicitacaoHabilitacaoId
   }
 
-  collapsed(): void {
-    this.message = 'collapsed';
-  }
-
-  collapses(): void {
-    this.message = 'collapses';
-  }
-
-  expanded(): void {
-    this.message = 'expanded';
-  }
-
-  expands(): void {
-    this.message = 'expands';
-  }
-
   getTipoRegra(tipoRegra) {
     let regra = '';
     switch(tipoRegra){
@@ -164,8 +138,14 @@ export class HabilitacaoComponent implements OnInit {
     })
   }
 
-  filtrarPorLeilao(){
-    const filtro = this.habilitacao.filter(x => x.leilao.nome === this.filtroLeilao.value.leilao)
-    this.filtrado = filtro
+  filtrarPorLeilao() {
+    this.habilitacao = [];
+    this.loading = true;
+    this.restangular.one("habilitacao").get({leilaoId:this.filtroLeilao.value.leilao})
+    .subscribe((response) => {
+      this.habilitacao = response.data;
+      this.loading = false;
+    },
+    () => this.loading = false);
   }
 }
