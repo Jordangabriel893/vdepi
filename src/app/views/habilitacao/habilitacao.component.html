@@ -85,7 +85,7 @@
                     <h5><i class="fa fa-spin fa-spinner"></i>&nbsp;Carregando...</h5>
                   </td>
                 </tr>
-                <tr *ngIf="mfFiltrado.data.length === 0">
+                <tr *ngIf="mfFiltrado.data.length === 0 && !loading" >
                   <td class="text-center text-muted" colspan="9">
                     <h6 *ngIf="habilitacao">Não há Habilitações para este Leilão</h6>
                     <h6 *ngIf="!habilitacao">Selecione um leilão</h6>
