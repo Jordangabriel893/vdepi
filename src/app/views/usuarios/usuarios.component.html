@@ -20,18 +20,14 @@
               <table class="table table-striped" [mfData]="usuariosFiltrados" #mfUsuarios="mfDataTable" [mfRowsOnPage]="5">
                 <thead>
                   <tr>
-
                     <th>
-                      <mfDefaultSorter by="id">Id</mfDefaultSorter>
+                      <mfDefaultSorter by="dataCadastro">Data Cadastro</mfDefaultSorter>
                     </th>
                     <th>
                       <mfDefaultSorter by="nome">Nome</mfDefaultSorter>
                     </th>
                     <th>
                       <mfDefaultSorter by="numeroDocumento">Nº Documento</mfDefaultSorter>
-                    </th>
-                    <th>
-                      <mfDefaultSorter by="dataNascimento">Data Nascimento</mfDefaultSorter>
                     </th>
                     <th>
                       <mfDefaultSorter by="genero">Gênero</mfDefaultSorter>
@@ -53,10 +49,9 @@
                 </thead>
                 <tbody>
                   <tr *ngFor="let item of mfUsuarios.data">
-                    <td>{{item.usuarioId}}</td>
+                    <td nowrap>{{item.dataCadastro | amDateFormat:'DD/MM/YYYY HH:mm'}}</td>
                     <td>{{item.nomeCompleto}}</td>
                     <td>{{item.numeroDocumento}}</td>
-                    <td>{{item.dataNascimento | amDateFormat:'DD/MM/YYYY' }}</td>
                     <td>{{item.genero == 'M'? 'Masculino' : 'Feminino'}}</td>
                     <td>{{item.email}}</td>
                     <td>{{item.tipoPessoa == 'PF'? "Pessoa Física" : "Pessoa Jurídica"}}</td>
