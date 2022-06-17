@@ -8,25 +8,26 @@ import { Restangular } from 'ngx-restangular';
   styleUrls: ['./conta.component.scss']
 })
 export class ContaComponent implements OnInit {
-  comitente
+  contas
   loading = true;
   constructor(
     private restangular: Restangular,
     private router: Router,
     private route: ActivatedRoute,
   ) {
-    this.restangular.one("comitente").get().subscribe((response) => {
-     this.comitente = response.data
+    this.restangular.one("conta").get().subscribe((response) => {
+     this.contas = response.data
      this.loading = false;
     },
     () => this.loading = false)
+
    }
 
   ngOnInit() {
   }
   edit(id) {
 
-    this.router.navigate(['/update-comitente', id], { relativeTo: this.route });
+    this.router.navigate(['/update-conta', id], { relativeTo: this.route });
   }
 
 }

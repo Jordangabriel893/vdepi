@@ -136,7 +136,7 @@ export const navigation = [
     name: 'Conta',
     url: '/conta',
     icon: 'fa fa-user',
-    source: 'USUARIO',
+    source: 'CONTA',
     grupo:'CADASTROS'
   },
   {

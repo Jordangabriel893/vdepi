@@ -440,15 +440,15 @@ export const routes: Routes = [
         },
         canActivate: [SourceGuard]
       },
-      // {
-      //   path: '/update-conta',
-      //   component: UpdateContaComponent,
-      //   data: {
-      //     title: 'Editar conta',
-      //     source: 'USUARIO'
-      //   },
-      //   canActivate: [SourceGuard]
-      // },
+      {
+        path: 'update-conta/:id',
+        component: UpdateContaComponent,
+        data: {
+          title: 'Editar conta',
+          source: 'USUARIO'
+        },
+        canActivate: [SourceGuard]
+      },
       {
         path: 'usuarios',
         component: UsuariosComponent,

@@ -84,7 +84,7 @@ export class CreateContaComponent implements OnInit {
       return false;
     }
 
-    this.restangular.all('api/conta').post(this.formulario.value).subscribe(a => {
+    this.restangular.all('conta').post(this.formulario.value).subscribe(a => {
       this.notifierService.notify('success', 'Conta criada com sucesso');
       this.router.navigate(['/conta']);
     },
