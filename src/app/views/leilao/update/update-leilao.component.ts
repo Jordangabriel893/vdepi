@@ -48,11 +48,11 @@ export class UpdateLeilaoComponent implements OnInit {
     translate: 'yes',
     enableToolbar: true,
     showToolbar: true,
-    placeholder: 'Termos e Condições de Venda...',
     defaultParagraphSeparator: '',
     defaultFontName: '',
     defaultFontSize: '',
     fonts: [
+      { class: 'roboto', name: 'Roboto' },
       { class: 'arial', name: 'Arial' },
       { class: 'times-new-roman', name: 'Times New Roman' },
       { class: 'calibri', name: 'Calibri' },
@@ -189,7 +189,8 @@ export class UpdateLeilaoComponent implements OnInit {
       comissao: [dados.comissaoLeiloeiro, Validators.required],
       termoCondicaoVenda: [dados.termoCondicaoVenda],
       anexos: this.formBuilder.array(dados.anexos ? dados.anexos.map(x => this.formBuilder.group({ ...x, acao: '' })) : []),
-      regrasHabilitacao: this.formBuilder.control([...arrayRegraHabiliacaoId])
+      regrasHabilitacao: this.formBuilder.control([...arrayRegraHabiliacaoId]),
+      observacao: dados.observacao
     });
   }
 

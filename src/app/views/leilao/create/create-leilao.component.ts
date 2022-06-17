@@ -59,6 +59,7 @@ export class CreateLeilaoComponent implements OnInit {
     defaultFontName: '',
     defaultFontSize: '',
     fonts: [
+      { class: 'roboto', name: 'Roboto' },
       { class: 'arial', name: 'Arial' },
       { class: 'times-new-roman', name: 'Times New Roman' },
       { class: 'calibri', name: 'Calibri' },

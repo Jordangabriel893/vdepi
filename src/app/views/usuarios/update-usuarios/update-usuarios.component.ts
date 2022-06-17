@@ -18,7 +18,7 @@ export class UpdateUsuariosComponent implements OnInit {
   public maskCep: Array<string | RegExp>
   public maskCpf: Array<string | RegExp>
   public maskCnpj: Array<string | RegExp>
-
+  public maskRg: Array<string | RegExp>
 
   constructor(
     private route: ActivatedRoute,
@@ -32,19 +32,22 @@ export class UpdateUsuariosComponent implements OnInit {
     this.maskCep = [ /\d/,/\d/,/\d/,/\d/,/\d/, '-', /\d/, /\d/, /\d/, ]
     this.maskCpf = [ /\d/,/\d/,/\d/,  '.', /\d/,/\d/,/\d/, '.', /\d/, /\d/, /\d/, '-', /\d/,/\d/ ]
     this.maskCnpj = [ /\d/,/\d/,'.',/\d/,/\d/,/\d/,'.',/\d/,/\d/,/\d/,'/', /\d/,/\d/,/\d/,/\d/,'-',/\d/,/\d/, ]
+    this.maskRg = [ /\d/,/\d/, '.', /\d/,/\d/,/\d/, '.', /\d/, /\d/, /\d/, '-', /\d/ ]
     this.formulario = this.formBuilder.group({
       usuarioId: [null, Validators.required],
       nomeCompleto: [null, [Validators.required, Validators.minLength(3), Validators.maxLength(35)]],
       numeroDocumento: [null, [Validators.required, Validators.minLength(6)]],
-      dataNascimento: [null, Validators.required],
-      telefone: [null, [Validators.required, Validators.minLength(3)]],
-      genero: [null,[Validators.required]],
+      dataNascimento: [null],
+      telefoneCelular: [null, [Validators.required, Validators.minLength(3)]],
+      telefoneConvencional: [null],
+      telefoneWhatsapp: [null],
+      genero: [null],
       tipoPessoa: [null,[Validators.required]],
       endereco: this.formBuilder.group({
         enderecoId: [null, Validators.required],
         cep: [null, [Validators.required]],
         numero: [null, Validators.required],
-        complemento: [null, Validators.required],
+        complemento: [null],
         bairro: [null, Validators.required],
         cidade: [null, Validators.required],
         estado: [null, Validators.required],
@@ -52,7 +55,10 @@ export class UpdateUsuariosComponent implements OnInit {
       }),
       email:[null,[Validators.required, Validators.email]],
       ativo: [null,[Validators.required]],
-      perfilId:[null, Validators.required]
+      perfilId:[null],
+      rg: [null, Validators.required],
+      dataEmissao: [null, Validators.required],
+      orgaoEmissor: [null, Validators.required],
     })
    }
 
@@ -78,7 +84,7 @@ export class UpdateUsuariosComponent implements OnInit {
       return
     }
     this.restangular.all('usuario').customPUT(this.formulario.value,  this.id ).subscribe(a => {
-      this.notifierService.notify('success', 'Usuário alterado com sucesso');
+      this.notifierService.notify('success', 'Usuário atualizado com sucesso');
       this.router.navigateByUrl('/usuarios');
     },
     error => {
@@ -118,8 +124,10 @@ export class UpdateUsuariosComponent implements OnInit {
       usuarioId: dados.usuarioId,
       nomeCompleto: dados.nomeCompleto,
       numeroDocumento: dados.numeroDocumento,
-      dataNascimento: moment(dados.dataNascimento).format("YYYY-MM-DD"),
-      telefone: dados.telefone,
+      dataNascimento: moment.utc(dados.dataNascimento).local().toDate(),
+      telefoneCelular: dados.telefoneCelular,
+      telefoneConvencional: dados.telefoneConvencional,
+      telefoneWhatsapp: dados.telefoneWhatsapp,
       genero: dados.genero,
       tipoPessoa: dados.tipoPessoa,
       endereco: {
@@ -134,7 +142,10 @@ export class UpdateUsuariosComponent implements OnInit {
       },
       email: dados.email,
       ativo: dados.ativo,
-      perfilId: dados.perfilId
+      perfilId: dados.perfilId,
+      rg: dados.rg,
+      dataEmissao: moment.utc(dados.dataEmissao).local().toDate(),
+      orgaoEmissor: dados.orgaoEmissor
     })
 
   }
@@ -149,5 +160,10 @@ export class UpdateUsuariosComponent implements OnInit {
       'has-error': this.verificaValidTouched(campo),
 
     }
+  }
+
+  onValueChange(event, campo) {
+    this.formulario.get(campo).markAsTouched();
+    this.formulario.get(campo).setValue(event);
   }
 }

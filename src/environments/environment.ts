@@ -5,8 +5,8 @@
 
 export const environment = {
   production: false,
-  apiUrl: "https://hml.id.eblonline.com.br",
-  apiDados: "https://hml.api.eblonline.com.br"
-  // apiUrl: "https://localhost:5001",
-  // apiDados: "https://localhost:4001"
+  // apiUrl: "https://hml.id.eblonline.com.br",
+  // apiDados: "https://hml.api.eblonline.com.br"
+  apiUrl: "https://localhost:5001",
+  apiDados: "https://localhost:4001"
 };

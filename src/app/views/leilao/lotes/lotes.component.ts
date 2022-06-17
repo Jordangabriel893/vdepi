@@ -129,7 +129,7 @@ export class LotesComponent implements OnInit {
       let formData:FormData = new FormData();
       formData.append('file', fileInput.target.files[0])
 
-      this.restangular.all('lote').customPOST(formData, 'ImportacaoPlanilha', { leilaoId: this.id }, { 'content-type': 'multipart/form-data' }).subscribe(a => {
+      this.restangular.all('lote').customPOST(formData, 'ImportacaoPlanilha', { leilaoId: this.id }, { 'content-type': undefined }).subscribe(a => {
         this.notifierService.notify('success', 'Upload de planilha com sucesso');
         this.fileLoading = false
         location.reload()

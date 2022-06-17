@@ -4,6 +4,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { NotifierService } from 'angular-notifier';
 import { BsLocaleService } from 'ngx-bootstrap';
 import { Restangular } from 'ngx-restangular';
+import * as moment from 'moment';
 
 @Component({
   selector: 'app-update-agenda',
@@ -62,14 +63,13 @@ export class UpdateAgendaComponent implements OnInit {
 
   }
   updateForm(dados) {
-
     this.formulario.patchValue({
       agendaNotificacaoId: this.id,
       notificacaoId: dados.notificacaoId,
       tipoAgendaId: dados.tipoAgendaId,
-      dataExecucao: dados.dataExecucao,
-      dataEncerramento: dados.dataEncerramento,
-      dataUltimaExecucao: dados.dataUltimaExecucao,
+      dataExecucao: moment.utc(dados.dataExecucao).local().toDate(),
+      dataEncerramento: moment.utc(dados.dataEncerramento).local().toDate(),
+      dataUltimaExecucao: moment.utc(dados.dataUltimaExecucao).local().toDate(),
       intervaloMinutos:dados.intervaloMinutos,
       dataCadastro: dados.dataCadastro,
     })
