@@ -114,6 +114,13 @@ export const navigation = [
     grupo:'MARKETING'
   },
   {
+    name: 'Template',
+    url: '/template',
+    icon: 'fa fa-images',
+    source: 'AGENDA',
+    grupo:'MARKETING'
+  },
+  {
     title: true,
     name: 'CADASTROS',
     grupo:'CADASTROS'
@@ -123,6 +130,13 @@ export const navigation = [
     url: '/permissao',
     icon: 'fa fa-user',
     source: 'PERMISSAO',
+    grupo:'CADASTROS'
+  },
+  {
+    name: 'Conta',
+    url: '/conta',
+    icon: 'fa fa-user',
+    source: 'USUARIO',
     grupo:'CADASTROS'
   },
   {

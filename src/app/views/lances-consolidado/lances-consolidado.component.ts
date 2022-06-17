@@ -23,7 +23,7 @@ export class LancesConsolidadoComponent implements OnInit {
     private currency: CurrencyFormatPipe
 
   ) {
-    this.restangular.one("leilao").get({PageSize:100}).subscribe((response) => {
+    this.restangular.one("admin/leilao").get({PageSize:100}).subscribe((response) => {
       this.leiloes = response.data
       this.setLeilao(this.leiloes[0].id, this.leiloes[0].nome);
     })
@@ -43,7 +43,7 @@ export class LancesConsolidadoComponent implements OnInit {
     () => this.loading = false)
 
   }
-  
+
   exportAsExcel() {
     const ws: XLSX.WorkSheet = XLSX.utils.json_to_sheet(this.lancesconsolidados);
 
@@ -68,7 +68,7 @@ exportAsPDF() {
     { title: "Mínimo Vendas", dataKey: "valorMinimoVenda" },
     { title: "Lance Atual", dataKey: "lanceAtual" },
     { title: "Meta", dataKey: "meta" },
-      
+
   ];
 
   const columStyles = {
@@ -83,7 +83,7 @@ exportAsPDF() {
     valorMinimoVenda: { columnWidth: 'wrap', overflow: 'linebreak', valign: 'middle', halign: 'left' },
     lanceAtual: { columnWidth: 'wrap', overflow: 'linebreak', valign: 'middle', halign: 'left' },
     meta: { columnWidth: 'wrap', overflow: 'linebreak', valign: 'middle', halign: 'left' },
-    
+
   };
 
   const rows = this.lancesconsolidados.map(e => {
@@ -100,14 +100,14 @@ exportAsPDF() {
       lanceAtual: this.currency.transform(e.lanceAtual) || "",
       //boletoPago: e.boletoPago === 'S' ? 'SIM' : 'NÃO',
       meta: e.meta || ""
-      
-      
+
+
     }
   });
 
   const header = {
     leilao: this.nomeLeilao
-  
+
   }
 
   // const groupRows = this.groupBy.transform(rows, 'tipo_veiculo');

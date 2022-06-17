@@ -43,6 +43,7 @@
     "@tinymce/tinymce-angular": "^4.2.4",
     "@types/googlemaps": "^3.43.3",
     "angular-2-dropdown-multiselect": "^1.6.3",
+    "angular-email-editor": "^0.9.0",
     "angular-froala-wysiwyg": "^4.0.5",
     "angular-notifier": "^4.1.1",
     "angular2-counto": "^1.2.5",

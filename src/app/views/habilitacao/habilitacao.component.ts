@@ -52,7 +52,7 @@ export class HabilitacaoComponent implements OnInit {
     },
     () => this.loading = false);
 
-    this.restangular.one("leilao", '').get({ PageSize: 100 }).subscribe((response) => {
+    this.restangular.one("admin/leilao", '').get({ PageSize: 100 }).subscribe((response) => {
       this.leiloes = response.data;
 
       this.filtroLeilao.get('leilao').setValue(response.data[0].nome);

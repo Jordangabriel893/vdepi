@@ -98,7 +98,7 @@ export class DashboardComponent implements OnInit {
     private cdr: ChangeDetectorRef,
     private formBuilder: FormBuilder,) {
 
-    this.restangular.one("leilao", '').get({ PageSize: 100 }).subscribe((response) => {
+    this.restangular.one("admin/leilao", '').get({ PageSize: 100 }).subscribe((response) => {
       this.leiloes = response.data
     })
 
