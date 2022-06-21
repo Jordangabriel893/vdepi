@@ -67,6 +67,7 @@ import { TipoMeioNotificacaoComponent } from './views/tipo-meio-notificacao/tipo
 import { TipoDeNotificacaoComponent } from './views/tipo-de-notificacao/tipo-de-notificacao.component';
 import { EditNotificacaoComponent } from './views/notificacoes/edit-notificacao/edit-notificacao.component';
 import { UpdateAgendaComponent } from './views/agenda/update-agenda/update-agenda.component';
+import { LotesVistoriaComponent } from './views/vistoria/lotes/lotes-vistoria.component';
 
 
 export const routes: Routes = [
@@ -147,6 +148,24 @@ export const routes: Routes = [
         component: VistoriaComponent,
         data: {
           title: 'Vistoria',
+          source: 'RelatorioEstoque'
+        },
+        canActivate: [SourceGuard]
+      },
+      {
+        path: 'lotes/:id',
+        component: LotesComponent,
+        data: {
+          title: 'Lotes',
+          source: 'RelatorioEstoque'
+        },
+        canActivate: [SourceGuard]
+      },
+      {
+        path: 'vistoria-lotes/:id',
+        component: LotesVistoriaComponent,
+        data: {
+          title: 'Vistoria Lotes',
           source: 'RelatorioEstoque'
         },
         canActivate: [SourceGuard]

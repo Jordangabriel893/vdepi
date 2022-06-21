@@ -198,7 +198,8 @@ import { EditContatosComponent } from './views/contatos/edit-contatos/edit-conta
 import { EditListacontatosComponent } from './views/lista-contatos/edit-listacontatos/edit-listacontatos.component';
 import { CreateListacontatosComponent } from './views/lista-contatos/create-listacontatos/create-listacontatos.component';
 import { UpdateAgendaComponent } from './views/agenda/update-agenda/update-agenda.component';
-
+import { SwiperModule } from 'swiper/angular';
+import { LotesVistoriaComponent } from './views/vistoria/lotes/lotes-vistoria.component';
 
 
 export function RestangularConfigFactory(RestangularProvider, NotifierService: NotifierService, Router) {
@@ -278,6 +279,7 @@ export function RestangularConfigFactory(RestangularProvider, NotifierService: N
     AngularEditorModule,
     HttpClientModule,
     AlertModule.forRoot(),
+    SwiperModule
   ],
   declarations: [
     AppComponent,
@@ -332,7 +334,7 @@ export function RestangularConfigFactory(RestangularProvider, NotifierService: N
     EditListacontatosComponent,
     CreateListacontatosComponent,
     UpdateAgendaComponent,
-
+    LotesVistoriaComponent
 
   ],
   providers: [{

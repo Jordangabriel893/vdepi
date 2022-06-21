@@ -1,0 +1,82 @@
+
+.container {
+ height: 90px;
+ width: 120px;
+ border: 2px solid rgb(152, 152, 152) ;
+ border-radius: 1rem;
+}
+
+.swiper {
+    width: 100%;
+    height: 100%;
+  }
+  
+  .swiper-slide {
+    text-align: center;
+    font-size: 18px;
+    background: #fff;
+  
+    /* Center slide text vertically */
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: -webkit-flex;
+    display: flex;
+    -webkit-box-pack: center;
+    -ms-flex-pack: center;
+    -webkit-justify-content: center;
+    justify-content: center;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    -webkit-align-items: center;
+    align-items: center;
+  }
+  
+  .swiper-slide img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .thumb {
+    height: 60px;
+    width: 80px;
+    border: 1px solid #000 ;
+    border-radius: 3px;
+    background-color: #afafaf;
+  }
+
+  .thumb-principal {
+    height: auto;
+    width: auto;
+    border: 2px solid #000 ;
+    border-radius: 5px;
+  }
+
+  .thumb-principal img{
+    object-fit: scale-down;
+    height: 310px;
+    width: 100%;
+    background-color: #afafaf;
+  }
+
+  .thumb img {
+    height: 60px;
+    width: 100%;
+    object-fit: scale-down;
+    opacity: 0.3;
+  }
+
+  .destaque {
+    border: 3px solid rgb(81, 75, 236) ;
+  }
+
+  .vistoriado {
+    background-color: rgb(116, 245, 118);
+  }
+
+  .itemSelecionado {
+    opacity: 1 !important;
+  }
+
+  

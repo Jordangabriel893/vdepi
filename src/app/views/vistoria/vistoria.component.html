@@ -1,76 +1,25 @@
-<div class="animated fadeIn">
 
-  <div class="row">
-    <div class="col-lg-12">
-      <div class="card">
-        <div class="card-header header">
-          <div>
-            <i class="fa fa-search" aria-hidden="true"></i>
-            Vistoria
-          </div>
-          
-          <button type="button" class="btn btn-success"><i class="fa fa-file-excel" aria-hidden="true"></i><h6>Excel</h6></button>
-          
-        </div>
-
-        <div class="card-block" >
-          <div class="table-responsive mt-4">
-            <table class="table table-striped" [mfData]="vistoria" #mfVistoria="mfDataTable" [mfRowsOnPage]="5">
-              <thead>
-                <tr>
-                  <th>
-                    <mfDefaultSorter by="vistoriaId">Id</mfDefaultSorter>
-                  </th>
-                  <th>
-                    <mfDefaultSorter by="numero">Número</mfDefaultSorter>
-                  </th>
-                  <th>
-                    <mfDefaultSorter by="dataCadastro">Data Cadastro</mfDefaultSorter>
-                  </th>
-                  <th>
-                    <mfDefaultSorter by="loteId">Leilão</mfDefaultSorter>
-                  </th>
-                  <th>
-                    <mfDefaultSorter by="loteId">Lote</mfDefaultSorter>
-                  </th>  
-                  <th class="text-center" >
-                    Laudo
-                  </th> 
-                </tr>
-              </thead>
-              <tbody>
-                <tr *ngFor="let item of mfVistoria.data; let i = index">
-                  <td>{{item.vistoriaId}}</td>
-                  <td>{{item.numero}}
-                  </td>
-                  <td>{{item.dataCadastro | date : 'dd/MM/yyyy' }}</td>
-                  <td>{{item.leilao.nome}}
-                  </td>
-                  <td>{{item.loteId}}
-                  </td>
-                  <td class="text-center" nowrap>
-                    <button type="button" class="btn btn-primary" (click)="laudo(item.numero)"><i class="fa fa-download"></i>&nbsp;Laudo</button>
-                  </td>
-                 
-                </tr>
-                <tr *ngIf="loading">
-                  <td class="text-center text-muted" colspan="9">
-                    <h5><i class="fa fa-spin fa-spinner"></i>&nbsp;Carregando...</h5>
-                  </td>
-                </tr>
-              </tbody>
-              <tfoot>
-                <tr>
-                  <td colspan="10">
-                    <mfBootstrapPaginator [rowsOnPageSet]="[5,10,25]"></mfBootstrapPaginator>
-                  </td>
-                </tr>
-              </tfoot>
-            </table>
-          </div>
-         
-        </div>
+  <div class="animated fadeIn">
+    <div class="row">
+      <div class="col-lg-12">
+        <swiper
+        [slidesPerView]="4"
+        effect="fade"
+        [navigation]="true"
+        class="mySwiper"  >
+          <ng-template swiperSlide *ngFor="let item of leiloes; index as i">
+            <div class="card" style="width: 16rem; height: 24rem">
+              <img class="card-img-top" src="{{item.foto.url}}" alt="Card image cap">
+              <div class="card-body">
+                <h3>Leilão {{item.nome}}</h3>
+                <p class="card-text">{{item.titulo}}</p>
+              </div>
+              <div class="card-footer text-center">
+                <button type="button" class="btn btn-warning" (click)="verLotes(item.id)"><i class="fa fa-list mr-2"></i>Lotes</button>
+              </div>
+            </div>
+          </ng-template>
+        </swiper>
       </div>
     </div>
   </div>
-</div>
