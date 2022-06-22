@@ -3,7 +3,7 @@
       <form [formGroup]="formulario" class="col-4">
         <select class="form-control col-12 seletor" aria-label="Default select example" (change)="buscarLeilao()" formControlName="id" >
           <option selected>Selecione o Leilão</option>
-          <option *ngFor="let item of leiloes" value="{{item.id}}">{{item.nome}}</option>
+          <option *ngFor="let item of leiloes" value="{{item.id}}">{{item.nome}} - {{item.titulo}}</option>
 
         </select>
       </form>

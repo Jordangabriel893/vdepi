@@ -27,7 +27,7 @@ export class HistoricoLancesComponent implements OnInit {
   }
   setLeilao(id, nome){
     this.leilaoNome = nome
-    this.restangular.one("lote", '').get({ leilaoId: id, PageSize:100 }).subscribe(
+    this.restangular.one("lote/numeros", '').get({ leilaoId: id }).subscribe(
       (lotes) => {
         this.loading = false;
         this.lotes = lotes.data
