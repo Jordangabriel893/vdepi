@@ -13,7 +13,7 @@ export class LeilaoComponent implements OnInit {
   formulario: FormGroup
   leiloes: Model.Leilao[];
   loading = true;
-selectLeilao
+  selectLeilao
   constructor(
     private route: ActivatedRoute,
     private router: Router,
