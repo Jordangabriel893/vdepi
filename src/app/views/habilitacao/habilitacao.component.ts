@@ -45,7 +45,13 @@ export class HabilitacaoComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.restangular.one("leilao", '').get({ PageSize: 100 }).subscribe((response) => {
+    this.restangular.one("habilitacao").get().subscribe((response) => {
+      this.habilitacao = response.data;
+      this.loading = false;
+    },
+    () => this.loading = false);
+
+    this.restangular.one("admin/leilao", '').get({ PageSize: 100 }).subscribe((response) => {
       this.leiloes = response.data;
       this.loadingLeilao = false;
     })

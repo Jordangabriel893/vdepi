@@ -60,7 +60,7 @@ export class EditNotificacaoComponent implements OnInit {
         this.templateNotifi= dados.data
       }
     )
-    this.restangular.one('leilao').get().subscribe(
+    this.restangular.one('admin/leilao').get().subscribe(
       dados =>{
         this.leilao= dados.data
       }

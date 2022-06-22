@@ -17,7 +17,7 @@ export class HistoricoLancesComponent implements OnInit {
   constructor(
     private restangular: Restangular,
   ) {
-    this.restangular.one("leilao").get({PageSize:100}).subscribe((response) => {
+    this.restangular.one("admin/leilao").get({PageSize:100}).subscribe((response) => {
       this.leiloes = response.data
       this.setLeilao(this.leiloes[0].id, this.leiloes[0].nome);
     })

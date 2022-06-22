@@ -141,6 +141,7 @@ import { CarouselModule } from 'ngx-bootstrap/carousel';
 import { HttpClientModule} from '@angular/common/http';
 import { AngularEditorModule } from '@kolkov/angular-editor';
 import { AlertModule } from 'ngx-bootstrap/alert';
+import { EmailEditorModule } from 'angular-email-editor';
 
 
 import { environment } from '../environments/environment';
@@ -202,6 +203,12 @@ import { BannerComponent } from './views/banner/banner.component';
 import { EditBannerComponent } from './views/banner/edit-banner/edit-banner.component';
 import { CreateBannerComponent } from './views/banner/create-banner/create-banner.component';
 import { PermissoesComponent } from './views/permissoes/permissoes.component';
+import { TemplateComponent } from './views/template/template.component';
+import { CreateTemplateComponent } from './views/template/create-template/create-template.component';
+import { UpdateTemplateComponent } from './views/template/update-template/update-template.component';
+import { ContaComponent } from './views/conta/conta.component';
+import { UpdateContaComponent } from './views/conta/update-conta/update-conta.component';
+import { CreateContaComponent } from './views/conta/create-conta/create-conta.component';
 
 
 
@@ -282,6 +289,7 @@ export function RestangularConfigFactory(RestangularProvider, NotifierService: N
     AngularEditorModule,
     HttpClientModule,
     AlertModule.forRoot(),
+    EmailEditorModule
   ],
   declarations: [
     AppComponent,
@@ -340,6 +348,12 @@ export function RestangularConfigFactory(RestangularProvider, NotifierService: N
     EditBannerComponent,
     CreateBannerComponent,
     PermissoesComponent,
+    TemplateComponent,
+    CreateTemplateComponent,
+    UpdateTemplateComponent,
+    ContaComponent,
+    UpdateContaComponent,
+    CreateContaComponent,
 
 
   ],

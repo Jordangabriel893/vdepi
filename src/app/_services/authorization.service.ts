@@ -6,7 +6,7 @@ export class AuthorizationService {
   constructor(private auth: AuthenticationService) { }
 
   hasSourceAccess(source: string): boolean {
-
+// return true
     const user = this.auth.getUser();
     if (user && user.permission) {
       const permissoes = user.permission;
@@ -17,6 +17,7 @@ export class AuthorizationService {
   }
 
   hasItem(item){
+    // return true
     const user = this.auth.getUser();
     if (user && user.permission) {
       const permissoes = user.permission;
@@ -27,6 +28,8 @@ export class AuthorizationService {
 
   }
   hasPermissions(){
+    // return true
+
     const user = this.auth.getUser();
     if (user && user.permission) {
       return true

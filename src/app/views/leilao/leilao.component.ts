@@ -13,7 +13,7 @@ export class LeilaoComponent implements OnInit {
   formulario: FormGroup
   leiloes: Model.Leilao[];
   loading = true;
-selectLeilao
+  selectLeilao
   constructor(
     private route: ActivatedRoute,
     private router: Router,
@@ -25,7 +25,7 @@ selectLeilao
   }
 
   ngOnInit() {
-    this.restangular.one("leilao", '').get({PageSize:100}).subscribe((response) => {
+    this.restangular.one("admin/leilao", '').get({PageSize:100}).subscribe((response) => {
         this.selectLeilao = response.data
         this.leiloes = response.data;
         this.loading = false;

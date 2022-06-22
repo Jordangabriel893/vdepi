@@ -1,3 +1,9 @@
+import { UpdateContaComponent } from './views/conta/update-conta/update-conta.component';
+import { CreateContaComponent } from './views/conta/create-conta/create-conta.component';
+import { ContaComponent } from './views/conta/conta.component';
+import { UpdateTemplateComponent } from './views/template/update-template/update-template.component';
+import { CreateTemplateComponent } from './views/template/create-template/create-template.component';
+import { TemplateComponent } from './views/template/template.component';
 import { PermissoesComponent } from './views/permissoes/permissoes.component';
 import { EditBannerComponent } from './views/banner/edit-banner/edit-banner.component';
 import { CreateBannerComponent } from './views/banner/create-banner/create-banner.component';
@@ -381,10 +387,64 @@ export const routes: Routes = [
         canActivate: [SourceGuard]
       },
       {
+        path: 'template',
+        component: TemplateComponent,
+        data: {
+          title: 'Template',
+          source: 'AGENDA'
+        },
+        canActivate: [SourceGuard]
+      },
+      {
+        path: 'create-template',
+        component: CreateTemplateComponent,
+        data: {
+          title: 'Create Template',
+          source: 'AGENDA'
+        },
+        canActivate: [SourceGuard]
+      },
+      {
+        path: 'update-template/:id',
+        component: UpdateTemplateComponent,
+        data: {
+          title: 'Update Template',
+          source: 'AGENDA'
+        },
+        canActivate: [SourceGuard]
+      },
+      {
         path: 'permissao',
         component: PermissoesComponent,
         data: {
           title: 'Permissão',
+          source: 'USUARIO'
+        },
+        canActivate: [SourceGuard]
+      },
+      {
+        path: 'conta',
+        component: ContaComponent,
+        data: {
+          title: 'Conta',
+          source: 'USUARIO'
+        },
+        canActivate: [SourceGuard]
+      },
+      {
+        path: 'create-conta',
+        component: CreateContaComponent,
+        data: {
+          title: 'Criar conta',
+          source: 'USUARIO'
+        },
+        canActivate: [SourceGuard]
+      },
+      {
+        path: 'update-conta/:id',
+        component: UpdateContaComponent,
+        data: {
+          title: 'Editar conta',
           source: 'USUARIO'
         },
         canActivate: [SourceGuard]

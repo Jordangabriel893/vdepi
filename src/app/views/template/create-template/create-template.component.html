@@ -1,0 +1,11 @@
+<div class="container">
+  <div [formGroup]="formulario">
+    <input type="text" class="form-control col-2" id="descricao" [ngClass]="aplicaCssErro('descricao')" [ngStyle]="{'right': salvar == true ? '135px' : '112px'}"
+      placeholder="Digite o titulo do template" formControlName="descricao">
+  </div>
+
+    <button *ngIf="salvar == true" class="btn btn-primary salvando" ><i class="fa fa-spin fa-spinner"></i>Salvando...</button>
+
+  <button *ngIf="salvar == false " class="btn btn-primary" (click)="save()" id="save" ><i class="fa fa-save"></i>Salvar</button>
+  <email-editor id="email-editor" (loaded)="editorLoaded($event)" (ready)="editorReady($event)"></email-editor>
+</div>
