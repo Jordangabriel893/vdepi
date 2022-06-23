@@ -212,7 +212,7 @@ import { CreateContaComponent } from './views/conta/create-conta/create-conta.co
 
 
 
-export function RestangularConfigFactory(RestangularProvider, NotifierService: NotifierService, Router) {
+export function RestangularConfigFactory(RestangularProvider, NotifierService: NotifierService) {
   RestangularProvider.setBaseUrl(environment.apiDados);
 
   let currentUser = JSON.parse(localStorage.getItem('currentUser'));
@@ -262,7 +262,7 @@ export function RestangularConfigFactory(RestangularProvider, NotifierService: N
 
       }
     }),
-    RestangularModule.forRoot([NotifierService, Router], RestangularConfigFactory),
+    RestangularModule.forRoot([NotifierService], RestangularConfigFactory),
     TextMaskModule,
     NgPipesModule,
     JasperoConfirmationsModule,
