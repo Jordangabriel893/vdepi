@@ -19,7 +19,6 @@ export class HabilitacaoComponent implements OnInit {
   modalRef: BsModalRef;
   solicitacaoHabilitacaoId: any
   solicitacaoHabilitacaoIdDesabilitar:any
-  posicaoI:any
   leiloes
   filtrado= []
   documentosUsuario:any
@@ -45,12 +44,6 @@ export class HabilitacaoComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.restangular.one("habilitacao").get().subscribe((response) => {
-      this.habilitacao = response.data;
-      this.loading = false;
-    },
-    () => this.loading = false);
-
     this.restangular.one("admin/leilao", '').get({ PageSize: 100 }).subscribe((response) => {
       this.leiloes = response.data;
       this.loadingLeilao = false;
@@ -64,7 +57,7 @@ export class HabilitacaoComponent implements OnInit {
     this.restangular.all(`habilitacao/${solicitacaoHabilitacaoId}/aprovar`).post(this.documentosUsuario)
     .subscribe(a =>{
       this.notifierService.notify('success', 'Solicitação Aprovada com sucesso');
-      setTimeout(()=>{location.reload()}, 3000)
+      //setTimeout(()=>{location.reload()}, 3000)
     },
       error => {
         this.notifierService.notify('error', 'Erro ao solicitar aprovação');
@@ -86,14 +79,13 @@ export class HabilitacaoComponent implements OnInit {
   }
 
   aprovarLimiteDeCredito(){
-    this.documentosUsuario = this.habilitacao[this.posicaoI]
-    this.solicitacaoHabilitacaoId = this.habilitacao[this.posicaoI].solicitacaoHabilitacaoId
+    this.documentosUsuario = this.habilitacao.find(x => x.solicitacaoHabilitacaoId === this.solicitacaoHabilitacaoId)
     this.documentosUsuario.limiteCredito = this.formulario.value.limiteCredito
     this.documentosUsuario.observacao = this.formulario.value.observacao
     this.documentosUsuario.habilitado = true
     this.restangular.all(`habilitacao/${this.solicitacaoHabilitacaoId}/aprovar`).post(this.documentosUsuario).subscribe(a =>{
       this.notifierService.notify('success', 'Limite Aprovado com sucesso');
-      setTimeout(()=>{location.reload()}, 3000)
+      //setTimeout(()=>{location.reload()}, 3000)
     },
       error => {
         this.notifierService.notify('error', 'Erro ao aprovar Limite de Crédito');
@@ -101,10 +93,10 @@ export class HabilitacaoComponent implements OnInit {
   }
 
   //modal
-  openModal(template: TemplateRef<any>, i, solicitacaoHabilitacaoId) {
+  openModal(template: TemplateRef<any>, solicitacaoHabilitacaoId) {
     this.modalRef = this.modalService.show(template, { class: 'modal-lg'});
-    this.documentosUsuario = this.habilitacao[i]
-    this.posicaoI = i
+    this.documentosUsuario = this.habilitacao.find(x => x.solicitacaoHabilitacaoId === solicitacaoHabilitacaoId)
+    this.solicitacaoHabilitacaoId = solicitacaoHabilitacaoId
     this.solicitacaoHabilitacaoIdDesabilitar = solicitacaoHabilitacaoId
   }
 

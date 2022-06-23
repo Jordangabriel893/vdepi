@@ -22,15 +22,17 @@ export class LeilaoComponent implements OnInit {
       this.formulario = this.formBuilder.group({
         leilao:[null]
       })
-  }
 
-  ngOnInit() {
-    this.restangular.one("admin/leilao", '').get({PageSize:100}).subscribe((response) => {
+      this.restangular.all("admin").one("leilao").get({PageSize:100}).subscribe((response) => {
         this.selectLeilao = response.data
         this.leiloes = response.data;
         this.loading = false;
       },
       () => this.loading = false);
+  }
+
+  ngOnInit() {
+
   }
 
   edit(id) {
