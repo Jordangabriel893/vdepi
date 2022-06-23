@@ -115,12 +115,15 @@
                   <th>Arquivo</th>
                   <th>Tamanho</th>
                   <th>Download</th>
+                  <th>Válido</th>
                 </tr>
                 <tr *ngFor="let doc of documentosUsuario.documentos">
                   <td>{{doc.documento.tipoDocumento.codigo}}</td>
                   <td>{{doc.documento.arquivo.nome}}</td>
                   <td>{{formatBytes(doc.documento.arquivo.tamanho)}}</td>
                   <td><button class="btn btn-success btn-sm" (click)="downloadFile(doc.documento.arquivoId)"><i class="fa fa-download"></i>&nbsp; Download</button></td>
+                  <td>
+                  </td>
                 </tr>
               </table>
               <!-- {{documentosUsuario.documentos.length > 0 ? documentosUsuario.documentos : 'Não existem documentos para serem listados'}} -->

@@ -48,6 +48,7 @@ export class HabilitacaoComponent implements OnInit {
     this.restangular.one("habilitacao").get().subscribe((response) => {
       this.habilitacao = response.data;
       this.loading = false;
+      console.log(response.data)
     },
     () => this.loading = false);
 
