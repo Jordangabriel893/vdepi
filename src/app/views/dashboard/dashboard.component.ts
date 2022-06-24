@@ -97,17 +97,16 @@ export class DashboardComponent implements OnInit {
     private route: ActivatedRoute,
     private cdr: ChangeDetectorRef,
     private formBuilder: FormBuilder,) {
-
-    this.restangular.one("admin/leilao", '').get({ PageSize: 100 }).subscribe((response) => {
-      this.leiloes = response.data
-    })
-
     this.formulario = this.formBuilder.group({
       id: [this.id]
+    });
+    this.restangular.one("admin/leilao", '').get({ PageSize: 100 }).subscribe((response) => {
+      this.leiloes = response.data
+      this.id = response.data[0].id;
+      this.formulario.controls.id.setValue(this.id);
+      this.buscarLeilao();
     })
-    this.buscarLeilao();
   }
-
 
   ngOnInit() {
 

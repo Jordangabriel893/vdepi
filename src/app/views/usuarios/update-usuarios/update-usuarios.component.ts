@@ -57,8 +57,9 @@ export class UpdateUsuariosComponent implements OnInit {
       ativo: [null,[Validators.required]],
       perfilId:[null],
       rg: [null, Validators.required],
-      dataEmissao: [null, Validators.required],
-      orgaoEmissor: [null, Validators.required],
+      dataEmissao: [null],
+      orgaoEmissor: [null],
+      emailConfirmado: [null],
     })
    }
 
@@ -72,7 +73,7 @@ export class UpdateUsuariosComponent implements OnInit {
    })
   }
 
-  onSubmit(){
+  onSubmit() {
 
     if(!this.formulario.valid){
       Object.keys(this.formulario.controls).forEach((campo)=>{
@@ -145,7 +146,8 @@ export class UpdateUsuariosComponent implements OnInit {
       perfilId: dados.perfilId,
       rg: dados.rg,
       dataEmissao: moment.utc(dados.dataEmissao).local().toDate(),
-      orgaoEmissor: dados.orgaoEmissor
+      orgaoEmissor: dados.orgaoEmissor,
+      emailConfirmado: dados.emailConfirmado,
     })
 
   }

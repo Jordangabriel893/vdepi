@@ -53,14 +53,15 @@ export class LoginComponent implements OnInit {
     this.authenticationService.login(this.f.username.value, this.f.password.value)
       .pipe(first())
       .subscribe(
-        data => {
-
-          this.router.navigate(['/home']);
+        () => {
+          window.location.href = '/#/home';
         },
-        error => {
-
-          this.notifierService.notify("error", error.msgError ? error.msgError : error.message);
-          this.router.navigate(['/home']);
+        err => {
+          let msgError = "Houve um erro inesperado, por favor tente novamente";
+          if(err.error && err.error.error_description === 'invalid_username_or_password') {
+            msgError = "Usuário ou Senha inválidos"
+          }
+          this.notifierService.notify("error", msgError);
           this.loading = false;
       });
   }

@@ -60,19 +60,19 @@
                   <td class="text-nowrap">{{item.dataCadastro | amDateFormat:'DD/MM/yyyy HH:mm' }}</td>
                   <!-- <td>{{item.leilao.nome}}</td>
                   <td>{{item.tipoLote?.descricao}}</td> -->
-                  <td><a [routerLink]="['/update-usuarios', item.usuario.usuarioId]">{{item.usuario.email}}</a></td>
-                  <td>{{item.regraHabilitacao.tipoValidacaoRegra }}</td>
-                  <td>{{item.status.descricao }}</td>
+                  <td><a [routerLink]="['/update-usuarios', item.usuarioId]">{{item.email}}</a></td>
+                  <td>{{item.regra }}</td>
+                  <td>{{item.status }}</td>
                   <td>{{item.statusCodigo }}</td>
                   <td class="text-center" nowrap>
                     <span *ngIf="item.documentos.length == 0">Sem Documentos</span>
                     <button *ngIf="item.documentos.length > 0" type="button" class="btn btn-primary btn-sm"
-                      (click)="openModal(documento, i)"><i class="fa fa-file"></i>&nbsp; {{item.documentos.length}} Documentos</button>
+                      (click)="openModal(documento, item.solicitacaoHabilitacaoId)"><i class="fa fa-file"></i>&nbsp; {{item.documentos.length}} Documentos</button>
                   </td>
                   <td class="text-center" nowrap>
-                    <button type="button" *ngIf="item.leilao.temAnaliseCadastral && !item.habilitado" class="btn btn-warning btn-sm"
+                    <button type="button" *ngIf="item.temAnaliseCadastral && !item.habilitado" class="btn btn-warning btn-sm"
                       (click)="openModal(aprovar, i)"><i class="fa fa-money"></i>&nbsp; Análisar Crédito</button>
-                      <button type="button" *ngIf="!item.leilao.temAnaliseCadastral && !item.habilitado" class="btn btn-success btn-sm"
+                      <button type="button" *ngIf="!item.temAnaliseCadastral && !item.habilitado" class="btn btn-success btn-sm"
                       (click)="aprovarSolicitacao(item.solicitacaoHabilitacaoId, i)"><i
                         class="fa fa-check"></i>&nbsp; Habilitar</button>
                       <button type="button" *ngIf="item.habilitado" class="btn btn-danger btn-sm"
@@ -112,15 +112,13 @@
               <table class="table">
                 <tr>
                   <th>Documento</th>
-                  <th>Arquivo</th>
                   <th>Tamanho</th>
                   <th>Download</th>
                 </tr>
                 <tr *ngFor="let doc of documentosUsuario.documentos">
-                  <td>{{doc.documento.tipoDocumento.codigo}}</td>
-                  <td>{{doc.documento.arquivo.nome}}</td>
-                  <td>{{formatBytes(doc.documento.arquivo.tamanho)}}</td>
-                  <td><button class="btn btn-success btn-sm" (click)="downloadFile(doc.documento.arquivoId)"><i class="fa fa-download"></i>&nbsp; Download</button></td>
+                  <td>{{doc.nome}}</td>
+                  <td>{{formatBytes(doc.tamanho)}}</td>
+                  <td><button class="btn btn-success btn-sm" (click)="downloadFile(doc.arquivoId)"><i class="fa fa-download"></i>&nbsp; Download</button></td>
                 </tr>
               </table>
               <!-- {{documentosUsuario.documentos.length > 0 ? documentosUsuario.documentos : 'Não existem documentos para serem listados'}} -->
@@ -172,11 +170,10 @@
               <h3>Deseja realmente desabilitar o usuario?</h3>
             </div>
             <div class="modal-footer">
-              <button type="submit" class="btn btn-primary "(click)="reprovarSolicitacao()"(click)="modalRef?.hide()">Sim</button>
+              <button type="submit" class="btn btn-primary "(click)="reprovarSolicitacao()" (click)="modalRef?.hide()">Sim</button>
               <button type="reset" class="btn btn-danger" (click)="modalRef?.hide()">Não</button>
             </div>
           </ng-template>
-
         </div>
       </div>
     </div>
