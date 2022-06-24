@@ -47,8 +47,10 @@ export class CreateTemplateComponent implements OnInit,  OnDestroy {
     this.emailEditor.editor.addEventListener('design:updated', (updates) => {
       this.salvar = true;
       this.emailEditor.editor.exportHtml((data) => {
+        console.log(data)
         this.template = {
-              codigoHtml: JSON.stringify(data.design),
+              designJson:JSON.stringify(data.design),
+              codigoHtml: JSON.stringify(data.html),
               descricao:this.formulario.value.descricao
             }
             this.salvar = false
@@ -64,26 +66,66 @@ export class CreateTemplateComponent implements OnInit,  OnDestroy {
     })
 
     this.emailEditor.editor.setMergeTags({
-      first_name: {
-        name: "First Name",
-        value: "{{first_name}}",
-        sample: "John"
+      comissao_leiloeiro: {
+        name: 'Comissão do Leiloeiro',
+        value: '{{comissao_leiloeiro}}',
       },
-      last_name: {
-        name: "Last Name",
-        value: "{{last_name}}",
-        sample: "Doe"
+      data_leilao: {
+        name: 'Data do Leilão',
+        value: '{{data_leilao}}',
       },
-      cidade:{
-        name:'Cidade',
-        value: "{{city}}",
-        sample: 'Rio de Janeiro'
+      descricao_lote: {
+        name: 'Descrição do Lote',
+        value: '{{descricao_lote}}',
       },
-      estado:{
-        name:'Estado',
-        value: "{{state}}",
-        sample: 'São Paulo'
-      }
+      email_usuario: {
+        name: 'Email do Usuário',
+        value: '{{email_usuario}}',
+      },
+      lotes: {
+        name: 'Lista de Lotes',
+        value: '{{lotes}}',
+      },
+      link_confirmacao: {
+        name: 'Link de Confirmação',
+        value: '{{link_confirmacao}}',
+      },
+      nome_comitente: {
+        name: 'Nome do Comitente',
+        value: '{{nome_comitente}}',
+      },
+      nome_empresa: {
+        name: 'Nome da Empresa',
+        value: '{{nome_empresa}}',
+      },
+      nome_leilao: {
+        name: 'Nome do Leilão',
+        value: '{{nome_leilao}}',
+      },
+      nome_leiloeiro: {
+        name: 'Nome do Leiloeiro',
+        value: '{{nome_leiloeiro}}',
+      },
+      nome_usuario: {
+        name: 'Nome do Usuário',
+        value: '{{nome_usuario}}',
+      },
+      numero_lote: {
+        name: 'Numero do Lote',
+        value: '{{numero_lote}}',
+      },
+      taxa_adm: {
+        name: 'Taxa Administrativa',
+        value: '{{taxa_adm}}',
+      },
+      telefone_usuario: {
+        name: 'Telefone do Usuário',
+        value: '{{telefone_usuario}}',
+      },
+      valor_arrematacao: {
+        name: 'Valor Arrematação',
+        value: '{{valor_arrematacao}}',
+      },
     });
 
   }
@@ -91,10 +133,6 @@ export class CreateTemplateComponent implements OnInit,  OnDestroy {
   save(){
     this.salvar = true;
 
-    if(this.template == undefined){
-      this.notifierService.notify('error', 'Exporte o template antes de salvar')
-      return;
-    }
     if(!this.formulario.valid) {
       Object.keys(this.formulario.controls).forEach((campo)=>{
         const controle = this.formulario.get(campo)
@@ -104,6 +142,7 @@ export class CreateTemplateComponent implements OnInit,  OnDestroy {
       return false;
     }
     this.template = {
+      designJson: this.template.designJson,
       codigoHtml: this.template.codigoHtml,
       descricao: this.formulario.value.descricao
     }
