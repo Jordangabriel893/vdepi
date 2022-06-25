@@ -18,7 +18,14 @@ export class CreateTemplateComponent implements OnInit,  OnDestroy {
   salvar = false;
   template;
   formulario;
-
+  options = {
+    locale: 'pt-BR',
+    features: {
+      textEditor: {
+        tables: true
+      }
+    }
+  }
   constructor(
     private formBuilder: FormBuilder,
     private notifierService: NotifierService,
@@ -34,26 +41,18 @@ export class CreateTemplateComponent implements OnInit,  OnDestroy {
 
   ngOnInit() {
 
-
-  }
-
-  editorLoaded(event) {
-
   }
 
   editorReady(event) {
-
-
-    this.emailEditor.editor.addEventListener('design:updated', (updates) => {
+    this.emailEditor.editor.addEventListener('design:updated', () => {
       this.salvar = true;
       this.emailEditor.editor.exportHtml((data) => {
-        console.log(data)
         this.template = {
-              designJson:JSON.stringify(data.design),
-              codigoHtml: JSON.stringify(data.html),
-              descricao:this.formulario.value.descricao
-            }
-            this.salvar = false
+          designJson:JSON.stringify(data.design),
+          codigoHtml: data.html,
+          descricao:this.formulario.value.descricao
+        }
+        this.salvar = false
       })
     })
     this.emailEditor.editor.registerCallback('image', function(file, done) {

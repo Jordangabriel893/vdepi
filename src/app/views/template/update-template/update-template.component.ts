@@ -20,6 +20,15 @@ export class UpdateTemplateComponent implements OnInit {
   // template: { codigoHtml: string; descricao: string; };
   template: any;
   formulario: any;
+  designJson;
+  options = {
+    locale: 'pt-BR',
+    features: {
+      textEditor: {
+        tables: true
+      }
+    }
+  }
   constructor(
     private formBuilder: FormBuilder,
     private notifierService: NotifierService,
@@ -27,52 +36,37 @@ export class UpdateTemplateComponent implements OnInit {
     private restangular: Restangular,
     private route: ActivatedRoute,
   ) {
-
     this.id = this.route.snapshot.params['id']
 
     this.formulario = this.formBuilder.group({
       descricao: [null, Validators.required]
     })
-
-
   }
 
   ngOnInit() {
     this.restangular.all('marketing/TemplateNotificacao').get(this.id).subscribe(dados => {
-      this.template = {
-        designJson: JSON.parse(dados.data.designJson),
-      }
+      this.designJson = JSON.parse(dados.data.designJson);
       this.formulario = this.formBuilder.group({
         descricao: [dados.data.descricao, Validators.required]
       })
-      this.getDesign(this.template)
-      // this.templateExist = true
     })
-
-  }
-  editorLoaded(event) {
 
   }
 
   editorReady(event) {
+    this.setDesign();
+    this.exportHtml();
+
     this.emailEditor.editor.addEventListener('design:updated', (updates) => {
-      this.salvar = true;
-      this.emailEditor.editor.exportHtml((data) => {
-        this.template = {
-              designJson: JSON.stringify(data.design),
-              codigoHtml: JSON.stringify(data.html),
-              descricao:this.formulario.value.descricao
-            }
-            this.salvar = false;
-      })
+      this.exportHtml();
     })
+
     this.emailEditor.editor.registerCallback('image', function(file, done) {
       const reader = new FileReader();
       reader.onload = (e: any) => {
         done({ progress: 100, url: e.target.result })
       }
-         reader.readAsDataURL(file.accepted[0]);
-
+      reader.readAsDataURL(file.accepted[0]);
     })
 
     this.emailEditor.editor.setMergeTags({
@@ -138,17 +132,18 @@ export class UpdateTemplateComponent implements OnInit {
       },
     });
   }
-  // exportHtml() {
 
-  //   this.emailEditor.editor.exportHtml((data) => {
-
-  //     this.template = {
-  //       codigoHtml: JSON.stringify(data.design),
-  //       descricao: 'Teste',
-  //     }
-  //   });
-  //   this.notifierService.notify('success', 'Template exportado');
-  // }
+  exportHtml() {
+    this.salvar = true;
+    this.emailEditor.editor.exportHtml((data) => {
+      this.template = {
+        designJson: JSON.stringify(data.design),
+        codigoHtml: data.html,
+        descricao:this.formulario.value.descricao
+      }
+      this.salvar = false;
+    })
+  }
 
   save() {
     this.salvar = true;
@@ -161,6 +156,7 @@ export class UpdateTemplateComponent implements OnInit {
       this.notifierService.notify('error', 'Preencha todos os campos obrigatórios');
       return false;
     }
+    console.log(this.template);
     this.template = {
       designJson: this.template.designJson,
       codigoHtml: this.template.codigoHtml,
@@ -180,11 +176,11 @@ export class UpdateTemplateComponent implements OnInit {
 
 
   }
-  getDesign(template: any) {
 
-    this.emailEditor.editor.loadDesign(template.designJson);
-
+  setDesign() {
+    this.emailEditor.editor.loadDesign(this.designJson);
   }
+
   verificaValidTouched(campo){
     this.formulario.controls [campo].valueChanges.subscribe ((val) => {
       if (String (val) === "NaN") {
