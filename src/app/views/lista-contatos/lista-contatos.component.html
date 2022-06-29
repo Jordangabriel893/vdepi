@@ -29,11 +29,12 @@
                     <th>
                       <mfDefaultSorter by="ativo">Ativo</mfDefaultSorter>
                     </th>
+                    <th>
+                      <mfDefaultSorter by="predefinido">Pré-Definida</mfDefaultSorter>
+                    </th>
                     <th class="text-center" >
                       Editar
                     </th>
-
-
                   </tr>
                 </thead>
                 <tbody>
@@ -43,10 +44,12 @@
                     <td>{{item.empresa}}</td>
                     <td>{{item.dataCadastro | date:'dd/MM/yyyy'}}</td>
                     <td>{{item.ativo == true ? 'Sim' : 'Não'}}</td>
+                    <td>{{item.predefinido == true ? 'Sim' : 'Não'}}</td>
                     <td class="text-center" nowrap>
-                      <button type="button" class="btn btn-primary" (click)="edit(item.listaContatoId)"><i class="fa fa-edit"></i>&nbsp;Editar</button>
+                      <button type="button" class="btn btn-primary" (click)="edit(item.listaContatoId)" *ngIf="!item.predefinido">
+                        <i class="fa fa-edit"></i>&nbsp;Editar
+                      </button>
                     </td>
-
                   </tr>
                   <tr *ngIf="loading">
                     <td class="text-center text-muted" colspan="9">
