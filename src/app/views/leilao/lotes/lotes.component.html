@@ -34,6 +34,7 @@
           <i class="fa fa-list"></i>&nbsp;Lotes - {{leilao.nome}}
         </div>
         <div class="card-block">
+
           <div class="d-flex justify-content-between">
             <button type="button" class="btn btn-success" (click)="create()"><i class="fa fa-plus-circle"></i>&nbsp; Novo Lote</button>
             <button type="button" class="btn btn-success text-nowrap" (click)="getAnexo()" *ngIf="!fileLoading">
@@ -44,9 +45,76 @@
             </button>
             <input type="file" class="inputAnexos" accept=".xls,.xlsx"  #inputAnexos  (change)="fileChangeEvent($event)">
           </div>
-
+          <div class="col-12 input-search">
+            <div class="input-group col-12 d-flex justify-content-end input-search">
+              <div class="input-group-prepend">
+                <span class="input-group-text" id="inputGroup-sizing-sm">Buscar</span>
+              </div>
+              <input type="text" class="form-control col-4" (keyup)="onSearch()" placeholder="por Nº Lote e Descrição " aria-describedby="basic-addon2" [formControl]="queryField">
+            </div>
+          </div>
           <div class="table-responsive mt-4">
-            <table class="table table-striped" [mfData]="lotes" #mfLotes="mfDataTable" [mfRowsOnPage]="10">
+            <table class="table table-striped" [mfData]="lotes" #mfLotes="mfDataTable" [mfRowsOnPage]="10"  *ngIf="queryField.value == null || queryField.value == ''  ">
+              <thead>
+                <tr>
+                  <th>
+                    <mfDefaultSorter by="id">Nº Lote</mfDefaultSorter>
+                  </th>
+                  <th>
+                    <mfDefaultSorter by="categoria">Categoria</mfDefaultSorter>
+                  </th>
+                  <th>
+                    <mfDefaultSorter by="descricao">Descrição</mfDefaultSorter>
+                  </th>
+                  <th>
+                    <mfDefaultSorter by="status">Status</mfDefaultSorter>
+                  </th>
+
+                  <th>
+                    <mfDefaultSorter by="loteJudicial">Lote Judicial</mfDefaultSorter>
+                  </th>
+                  <th>
+                    <mfDefaultSorter by="valorAvalicao">Valor Avaliação</mfDefaultSorter>
+                  </th>
+
+                  <th class="text-center" >
+                    Editar
+                  </th>
+                  <th class="text-center" >
+                    Excluir
+                  </th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let lote of mfLotes.data">
+                  <td>{{lote.numeroLote}}</td>
+                  <td>{{lote.categoria}}</td>
+                  <td>{{lote.descricao}}</td>
+                  <td>{{lote.status}}</td>
+                  <td>{{lote.loteJudicial ? "Sim" : "Não"}}</td>
+                  <td>{{lote.valorAvaliacao | currency:'BRL':true}}</td>
+                  <td class="text-center" nowrap>
+                    <button type="button" class="btn btn-primary" (click)="edit(lote.loteId)"><i class="fa fa-edit"></i>&nbsp; Editar</button>
+                  </td>
+                  <td class="text-center" nowrap>
+                    <button type="button" class="btn btn-danger" (click)="deleteLote(lote.loteId)"><i class="fa fa-times"></i>&nbsp; Excluir</button>
+                  </td>
+                </tr>
+                <tr *ngIf="loading">
+                  <td class="text-center text-muted" colspan="8">
+                    <h5>&nbsp;Carregando...</h5>
+                  </td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <td colspan="8">
+                    <mfBootstrapPaginator [rowsOnPageSet]="[5,10,25]"></mfBootstrapPaginator>
+                  </td>
+                </tr>
+              </tfoot>
+            </table>
+            <table class="table table-striped" [mfData]="lotesFiltrados" #mfLotes="mfDataTable" [mfRowsOnPage]="10"  *ngIf="queryField.value != null &&  queryField.value != '' ">
               <thead>
                 <tr>
                   <th>
