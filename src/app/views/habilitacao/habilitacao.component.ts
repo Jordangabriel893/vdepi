@@ -24,6 +24,13 @@ export class HabilitacaoComponent implements OnInit {
   documentosUsuario:any
   loading = false;
   loadingLeilao = true;
+  docRecusado = false;
+
+  statusDocs = [
+    { id: 0, descricao: 'PENDENTE' },
+    { id: 1, descricao: 'ACEITO' },
+    { id: 2, descricao: 'REJEITADO' }
+  ]
 
   constructor(
     private restangular: Restangular,
@@ -98,6 +105,7 @@ export class HabilitacaoComponent implements OnInit {
     this.documentosUsuario = this.habilitacao.find(x => x.solicitacaoHabilitacaoId === solicitacaoHabilitacaoId)
     this.solicitacaoHabilitacaoId = solicitacaoHabilitacaoId
     this.solicitacaoHabilitacaoIdDesabilitar = solicitacaoHabilitacaoId
+   // this.existeRecusado(this.documentosUsuario.documentos)
   }
 
   getTipoRegra(tipoRegra) {
@@ -145,5 +153,18 @@ export class HabilitacaoComponent implements OnInit {
       this.loading = false;
     },
     () => this.loading = false);
+  }
+
+  existeRecusado(doc:any[]){
+    if(!doc)
+    this.docRecusado = false
+    else{
+      this.docRecusado = doc.some(x => x.status == 2 )
+    }
+    console.log(this.docRecusado);
+  }
+
+  notificarDocumentos(){
+    this.notifierService.notify('success', 'Notificação de documentos rejeitados enviado com sucesso');
   }
 }

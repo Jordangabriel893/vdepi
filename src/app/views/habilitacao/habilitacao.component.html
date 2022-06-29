@@ -71,12 +71,12 @@
                   </td>
                   <td class="text-center" nowrap>
                     <button type="button" *ngIf="item.temAnaliseCadastral && !item.habilitado" class="btn btn-warning btn-sm"
-                      (click)="openModal(aprovar, i)"><i class="fa fa-money"></i>&nbsp; Análisar Crédito</button>
+                      (click)="openModal(aprovar, item.solicitacaoHabilitacaoId)"><i class="fa fa-money"></i>&nbsp; Análisar Crédito</button>
                       <button type="button" *ngIf="!item.temAnaliseCadastral && !item.habilitado" class="btn btn-success btn-sm"
                       (click)="aprovarSolicitacao(item.solicitacaoHabilitacaoId, i)"><i
                         class="fa fa-check"></i>&nbsp; Habilitar</button>
                       <button type="button" *ngIf="item.habilitado" class="btn btn-danger btn-sm"
-                       (click)="openModal(desabilitar, i, item.solicitacaoHabilitacaoId)"><i
+                       (click)="openModal(desabilitar, item.solicitacaoHabilitacaoId)"><i
                         class="fa fa-ban"></i>&nbsp; Desabilitar</button>
                     </td>
                 </tr>
@@ -114,14 +114,35 @@
                   <th>Documento</th>
                   <th>Tamanho</th>
                   <th>Download</th>
-                  <th>Válido</th>
+                  <th>Status</th>
                 </tr>
                 <tr *ngFor="let doc of documentosUsuario.documentos">
                   <td>{{doc.nome}}</td>
                   <td>{{formatBytes(doc.tamanho)}}</td>
                   <td><button class="btn btn-success btn-sm" (click)="downloadFile(doc.arquivoId)"><i class="fa fa-download"></i>&nbsp; Download</button></td>
+                  <td>
+                     <select class="form-control col-12"  [(ngModel)]="doc.status" (change)="existeRecusado(documentosUsuario.documentos)">
+                      <option *ngFor="let item of statusDocs" [value]="item.id">{{item.descricao}}</option>
+                    </select> 
+                  </td>
                 </tr>
               </table>
+              <div class="row" *ngIf="docRecusado">
+                <div class="col-12">
+                  <div class="form-group">
+                    <label for="motivo">Motivo da Recusa de Documento</label>
+                    <textarea class="form-control" id="motivo" rows="3"></textarea>
+                  </div>
+                </div>
+              </div>
+              <div class="row" *ngIf="docRecusado">
+                <div class="col-12">
+                    <button type="button"  class="btn btn-warning form-control"
+                    (click)="notificarDocumentos()" (click)="modalRef?.hide()" >Enviar Notificação</button>
+                </div>
+              </div>
+
+
               <!-- {{documentosUsuario.documentos.length > 0 ? documentosUsuario.documentos : 'Não existem documentos para serem listados'}} -->
 
             </div>
