@@ -66,19 +66,35 @@
                   <td>{{item.statusCodigo }}</td>
                   <td class="text-center" nowrap>
                     <span *ngIf="item.documentos.length == 0">Sem Documentos</span>
-                    <button *ngIf="item.documentos.length > 0" type="button" class="btn btn-primary btn-sm"
-                      (click)="openModal(documento, item.solicitacaoHabilitacaoId)"><i class="fa fa-file"></i>&nbsp; {{item.documentos.length}} Documentos</button>
+                    <button *ngIf="item.documentos.length > 0" 
+                            type="button" 
+                            class="btn btn-primary btn-sm"
+                            (click)="openModal(documento, item.solicitacaoHabilitacaoId)">
+                      <i class="fa fa-file mr-2"></i>{{item.documentos.length}} Documentos</button>
                   </td>
                   <td class="text-center" nowrap>
-                    <button type="button" *ngIf="item.temAnaliseCadastral && !item.habilitado" class="btn btn-warning btn-sm"
-                      (click)="openModal(aprovar, item.solicitacaoHabilitacaoId)"><i class="fa fa-money"></i>&nbsp; Análisar Crédito</button>
-                      <button type="button" *ngIf="!item.temAnaliseCadastral && !item.habilitado" class="btn btn-success btn-sm"
-                      (click)="aprovarSolicitacao(item.solicitacaoHabilitacaoId, i)"><i
-                        class="fa fa-check"></i>&nbsp; Habilitar</button>
-                      <button type="button" *ngIf="item.habilitado" class="btn btn-danger btn-sm"
-                       (click)="openModal(desabilitar, item.solicitacaoHabilitacaoId)"><i
-                        class="fa fa-ban"></i>&nbsp; Desabilitar</button>
-                    </td>
+                    <button type="button" 
+                            *ngIf="item.temAnaliseCadastral && !item.habilitado" 
+                            class="btn btn-warning btn-sm"
+                            (click)="openModal(aprovar, item.solicitacaoHabilitacaoId)" 
+                            [disabled]="item.status == 'Rejeitado'">
+                      <i class="fa fa-money mr-2"></i>Análisar Crédito
+                    </button>
+                    <button type="button" 
+                            *ngIf="!item.temAnaliseCadastral && !item.habilitado" 
+                            class="btn btn-success btn-sm"
+                            (click)="aprovarSolicitacao(item.solicitacaoHabilitacaoId)" 
+                            [disabled]="item.status == 'Rejeitado'">
+                      <i class="fa fa-check mr-2"></i>Habilitar
+                    </button>
+                    <button type="button" 
+                            *ngIf="item.habilitado" 
+                            class="btn btn-danger btn-sm"
+                            (click)="openModal(desabilitar, item.solicitacaoHabilitacaoId)" 
+                            [disabled]="item.status == 'Rejeitado'">
+                      <i class="fa fa-ban mr-2"></i> Desabilitar
+                    </button>
+                  </td>
                 </tr>
                 <tr *ngIf="loading">
                   <td class="text-center text-muted" colspan="9">
@@ -131,14 +147,14 @@
                 <div class="col-12">
                   <div class="form-group">
                     <label for="motivo">Motivo da Recusa de Documento</label>
-                    <textarea class="form-control" id="motivo" rows="3"></textarea>
+                    <textarea class="form-control" id="motivo" rows="3" [(ngModel)]="documentosUsuario.observacao"></textarea>
                   </div>
                 </div>
               </div>
               <div class="row" *ngIf="docRecusado">
                 <div class="col-12">
                     <button type="button"  class="btn btn-warning form-control"
-                    (click)="notificarDocumentos()" (click)="modalRef?.hide()" >Enviar Notificação</button>
+                    (click)="notificarDocumentos(documentosUsuario)" (click)="modalRef?.hide()" [disabled]="documentosUsuario.observacao == ''">Enviar Notificação</button>
                 </div>
               </div>
 
