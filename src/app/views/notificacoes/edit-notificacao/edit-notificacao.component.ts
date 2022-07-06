@@ -21,6 +21,7 @@ export class EditNotificacaoComponent implements OnInit {
   tipoDeNotifi;
   templateNotifi;
   leilao;
+  templates: any;
   constructor(
     private formBuilder: FormBuilder,
     private restangular: Restangular,
@@ -68,6 +69,11 @@ export class EditNotificacaoComponent implements OnInit {
     this.restangular.all('marketing/notificacao').get(this.id).subscribe(dados => {
       this.updateForm(dados.data)
     })
+    this.restangular.one('Marketing/TemplateNotificacao').get().subscribe(
+      dados =>{
+        this.templates= dados.data
+      }
+    )
 
 
 
@@ -117,7 +123,8 @@ export class EditNotificacaoComponent implements OnInit {
       listaContatoId: [dados.listaContatoId, Validators.required],
       leilaoId: [dados.leilaoId, Validators.required],
       templateId: [dados.templateId],
-      ativo: true
+      ativo: true,
+      dataLeilao:[dados.dataLeilao]
 
 
     })

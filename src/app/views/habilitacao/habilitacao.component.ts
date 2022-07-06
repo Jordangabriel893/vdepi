@@ -1,7 +1,7 @@
 import { Component, OnInit, TemplateRef } from '@angular/core';
 import { Restangular } from 'ngx-restangular';
 import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { NotifierService } from 'angular-notifier';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Location } from '@angular/common';
@@ -31,6 +31,9 @@ export class HabilitacaoComponent implements OnInit {
     { id: 1, descricao: 'ACEITO' },
     { id: 2, descricao: 'REJEITADO' }
   ]
+
+  queryField = new FormControl();
+  habilatacoesFiltradas: any;
 
   constructor(
     private restangular: Restangular,
@@ -153,6 +156,8 @@ export class HabilitacaoComponent implements OnInit {
     this.restangular.one("habilitacao").get({leilaoId:this.filtroLeilao.value.leilao})
     .subscribe((response) => {
       this.habilitacao = response.data;
+      this.habilatacoesFiltradas = response.data;
+      console.log(response.data)
       this.loading = false;
     },
     () => this.loading = false);
@@ -178,6 +183,13 @@ export class HabilitacaoComponent implements OnInit {
       error => {
         this.notifierService.notify('error', 'Erro ao enviar notificação de documentos Rejeitados');
       });
-    
+  }
+  
+  onSearch(){
+    if(this.queryField.value) {
+      let value = this.queryField.value.replace('.', '').replace('-', '').replace('/', '').toLowerCase();
+      this.habilatacoesFiltradas = this.habilitacao.filter(x => x.email.toLowerCase().includes(value));
+
+    }
   }
 }

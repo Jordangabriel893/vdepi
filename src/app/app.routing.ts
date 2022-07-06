@@ -399,7 +399,7 @@ export const routes: Routes = [
         path: 'create-template',
         component: CreateTemplateComponent,
         data: {
-          title: 'Create Template',
+          title: 'Criar Template',
           source: 'AGENDA'
         },
         canActivate: [SourceGuard]
@@ -408,7 +408,7 @@ export const routes: Routes = [
         path: 'update-template/:id',
         component: UpdateTemplateComponent,
         data: {
-          title: 'Update Template',
+          title: 'Atualizar Template',
           source: 'AGENDA'
         },
         canActivate: [SourceGuard]

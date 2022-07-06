@@ -1,4 +1,5 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { FormControl } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NotifierService } from 'angular-notifier';
 import * as _ from 'lodash';
@@ -29,6 +30,10 @@ export class LotesComponent implements OnInit {
   formulario: any;
   numeroAnexo: any;
 
+  queryField = new FormControl();
+  lotesFiltrados: any;
+  dataLote:any;
+
   constructor(
     private restangular: Restangular,
     private route: ActivatedRoute,
@@ -41,6 +46,7 @@ export class LotesComponent implements OnInit {
         console.log(lotes.data)
         this.loading = false;
         const lote = lotes.data
+        this.dataLote = lote
         this.lotes = lote;
         this.filtroLotes = lote
         this.numeroLote = lote.map(x => x.numeroLote)
@@ -71,12 +77,14 @@ export class LotesComponent implements OnInit {
     this.router.navigate(['/update-lotes', id], { relativeTo: this.route });
   }
   setLote(item) {
+    this.queryField.patchValue('')
     this.idLote = item
-    const listaFiltradaPorID = this.filtroLotes.filter(x => x.loteId == item)
+    const listaFiltradaPorID = this.filtroLotes.filter(x => x.numeroLote == item)
     this.lotes = listaFiltradaPorID
     this.descricaoTitle = listaFiltradaPorID[0].descricao
   }
   setDescricao(item) {
+    this.queryField.patchValue('')
     this.idLote = ''
     this.descricaoTitle = item
     const listaFiltradaPorID = this.filtroLotes.filter(x => x.descricao == item)
@@ -144,6 +152,16 @@ export class LotesComponent implements OnInit {
         });
     }
 
+  }
+  onSearch(){
+    if(this.queryField.value) {
+      this.lotes = this.dataLote
+      this.idLote = null;
+      this.descricaoTitle = '';
+      let value = this.queryField.value.replace('.', '').replace('-', '').replace('/', '').toLowerCase();
+      this.lotesFiltrados = this.lotes.filter(x => x.numeroLote == value ||  x.descricao.toLowerCase().includes(value));
+
+    }
   }
 }
 
