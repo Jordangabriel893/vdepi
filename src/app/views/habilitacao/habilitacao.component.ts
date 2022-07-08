@@ -157,7 +157,6 @@ export class HabilitacaoComponent implements OnInit {
     .subscribe((response) => {
       this.habilitacao = response.data;
       this.habilatacoesFiltradas = response.data;
-      console.log(response.data)
       this.loading = false;
     },
     () => this.loading = false);
@@ -167,9 +166,8 @@ export class HabilitacaoComponent implements OnInit {
     if(!doc)
     this.docRecusado = false
     else{
-      this.docRecusado = doc.some(x => x.status == 2 )
+      this.docRecusado = doc.some(x => x.status == true )
     }
-    console.log(this.docRecusado);
   }
 
   notificarDocumentos(documentosUsuario){
