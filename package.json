@@ -79,6 +79,7 @@
     "rxjs": "^6.4.0",
     "rxjs-compat": "^6.6.3",
     "simple-line-icons": "^2.4.1",
+    "swiper": "^6.8.4",
     "ts-helpers": "1.1.2",
     "vanilla-masker": "^1.2.0",
     "xlsx": "^0.15.4",

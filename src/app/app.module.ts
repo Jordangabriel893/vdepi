@@ -209,7 +209,8 @@ import { UpdateTemplateComponent } from './views/template/update-template/update
 import { ContaComponent } from './views/conta/conta.component';
 import { UpdateContaComponent } from './views/conta/update-conta/update-conta.component';
 import { CreateContaComponent } from './views/conta/create-conta/create-conta.component';
-
+import { SwiperModule } from 'swiper/angular';
+import { LotesVistoriaComponent } from './views/vistoria/lotes/lotes-vistoria.component';
 
 
 export function RestangularConfigFactory(RestangularProvider, NotifierService: NotifierService) {
@@ -290,6 +291,7 @@ export function RestangularConfigFactory(RestangularProvider, NotifierService: N
     HttpClientModule,
     AlertModule.forRoot(),
     EmailEditorModule
+    SwiperModule
   ],
   declarations: [
     AppComponent,
@@ -355,6 +357,7 @@ export function RestangularConfigFactory(RestangularProvider, NotifierService: N
     UpdateContaComponent,
     CreateContaComponent,
 
+    LotesVistoriaComponent
 
   ],
   providers: [{

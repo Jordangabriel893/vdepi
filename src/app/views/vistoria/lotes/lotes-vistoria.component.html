@@ -1,0 +1,156 @@
+<div class="animated fadeIn">
+  <div class="row">
+    <div class="col-md-12">
+      <div class="card">
+        <div class="card-header">
+          <i class="fa fa-gavel" aria-hidden="true"></i>
+          &nbsp;Vistoria
+        </div>
+        <div class="card-block">
+          <div class="row m-2">
+            <div class="col-md-12 overflow-hidden">
+              <swiper
+              [slidesPerView]="1"
+              [navigation]="true"
+              [spaceBetween]="20"
+              [breakpoints]="{
+                '640': {
+                  slidesPerView: 2,
+                  spaceBetween: 20
+                },
+                '768': {
+                  slidesPerView: 4.5,
+                  spaceBetween: 10
+                },
+                '1024': {
+                  slidesPerView: 5.5,
+                  spaceBetween: 15
+                },
+                '1440': {
+                  slidesPerView: 7.5,
+                  spaceBetween: 15
+                }
+              }"
+
+              class="mySwiper">
+                <ng-template swiperSlide *ngFor="let item of lotes; index as i">
+                  <div class="container text-center" 
+                       (click)="carregarVistoria(item); detalhe = i" 
+                       [class.destaque]="detalhe == i" 
+                       [class.vistoriado]=" item.vistoriado">           
+                      <h5>LOTE</h5>
+                      <h3>{{item.numeroLote}}</h3>
+                      <p class="text-truncate">{{ item.descricao }}</p>
+                  </div>
+                </ng-template>
+              </swiper>
+            </div>
+          </div>
+          <div class="row mr-2" *ngIf="carregouVistoria" >
+            <div class="col-md-12 border border-secondary rounded alert alert-warning" >
+              <h1 class="text-center ">O Lote não foi vistoriado!</h1>
+            </div>
+          </div>
+          <div class="row mr-2" *ngIf="lote && vistoria" >
+              <div class="col-md-12 border border-secondary rounded" >
+                <div class="d-flex justify-content-center flex-wrap">
+                  <div class="p-2" *ngFor="let item of lote.campos">
+                    <div class="text-uppercase">{{item.loteCampo.descricao}}</div>
+                    <div class="font-weight-bold text-uppercase">{{item.valor}}</div>
+                  </div>
+                </div>
+              </div>
+            <div class="col-md-6">
+              <div class="row mt-2">
+                <div class="col-md-12  overflow-hidden">
+                  <swiper
+                  (swiper)="thumbsSwiper = $event"
+                  [spaceBetween]="25"
+                  [slidesPerView]="3"
+                  [breakpoints]="{
+                    '640': {
+                      slidesPerView: 3.5,
+                      spaceBetween: 20
+                    },
+                    '768': {
+                      slidesPerView: 4,
+                      spaceBetween: 10
+                    },
+                    '1024': {
+                      slidesPerView: 5,
+                      spaceBetween: 25
+                    },
+                    '1440': {
+                      slidesPerView: 6,
+                      spaceBetween: 20
+                    }
+                  }"
+                  class="mySwiper2"
+                  >
+                    <ng-container *ngFor="let item of vistoria.fotos; index as i">
+                      <ng-template  swiperSlide let-data>
+                        <div class="thumb overflow-hidden">
+                          <img 
+                          (click)="itemThumb = i" 
+                          [class.itemSelecionado]="itemThumb == i" 
+                          src="{{item.loteFoto.arquivo.url}}" >
+                        </div> 
+                      </ng-template>
+                    </ng-container>
+                  </swiper>
+                </div>
+              </div>
+              <div class="row mt-2">
+                <div class="col-md-12 overflow-hidden">
+                    <swiper *ngIf="thumbsSwiper"
+                    [spaceBetween]="20"
+                    [slidesPerView]="1"
+                    [centeredSlides]="true"
+                    [navigation]="true"
+                    [thumbs]="{ swiper: thumbsSwiper }"
+                    class="mySwiper3"
+                    >
+                    <ng-container *ngFor="let item of vistoria.fotos; index as i">
+                      <ng-template swiperSlide >
+                        <div class="thumb-principal">
+                          <img src="{{item.loteFoto.arquivo.url}}" > 
+                        </div>
+                      </ng-template>
+                    </ng-container>
+                    </swiper>
+                 </div>
+              </div>
+            </div>
+            <div class="col-md-6 border border-secondary rounded mt-2">
+              <div class="row">
+                <div class="col-sm-4" *ngFor="let item of vistoria.checklist">
+                  <div class="p-2">
+                    <div class="text-uppercase">{{item.vistoriaChecklist.descricao}}</div>
+                    <div class="font-weight-bold text-uppercase">{{item.valor}}</div>
+                  </div>
+                </div>
+              </div>
+              <div class="d-flex flex-column">
+                <div class="form-group">
+                  <label for="exampleFormControlTextarea1">Observações</label>
+                  <textarea class="form-control" id="exampleFormControlTextarea1" rows="2" cols="12" [(ngModel)]="vistoria.observacao"></textarea>
+                </div>
+              </div>
+              <div class="d-flex flex-row flex-wrap">
+                <div class="form-group col-4">
+                  <label for="ativo">Tipo de Lote </label>
+                  <select class="form-control" [(ngModel)]="vistoria.lote.tipoLoteId">
+                    <option *ngFor="let item of tiposLote" [value]="item.tipoLoteId">{{item.descricao}}</option>
+                  </select>
+                </div>
+                <div class="d-flex align-items-end mb-3">
+                  <button type="button" class="btn btn-success" (click)="gravar()">Salvar</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
