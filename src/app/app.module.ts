@@ -290,7 +290,7 @@ export function RestangularConfigFactory(RestangularProvider, NotifierService: N
     AngularEditorModule,
     HttpClientModule,
     AlertModule.forRoot(),
-    EmailEditorModule
+    EmailEditorModule,
     SwiperModule
   ],
   declarations: [
