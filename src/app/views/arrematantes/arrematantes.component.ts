@@ -2,8 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { Restangular } from 'ngx-restangular';
 import * as fileSaver from 'file-saver';
 import { NotifierService } from 'angular-notifier';
-import { FormControl } from '@angular/forms';
+import { FormBuilder, FormControl } from '@angular/forms';
 import { Router } from '@angular/router';
+import * as XLSX from 'xlsx';
 
 @Component({
   selector: 'app-arrematantes',
@@ -15,48 +16,58 @@ export class ArrematantesComponent implements OnInit {
   nomeLeilao:any = 'Leilões';
   arrematantes;
   arremantantesFiltrados;
-  loading = true;
+  loading = false;
   queryField = new FormControl();
   results:any;
   arrematanteSearch;
   arrematantesComLetraMinuscula;
+  loadingLeilao;
 
   lotes;
   loteSetado;
   listaFiltradaPorLote;
   filtroLotes;
   usuarios: any;
+  filtroLeilao
 
   constructor(
     private restangular: Restangular,
     private notifierService: NotifierService,
+    private formBuilder: FormBuilder,
     private router: Router,
   ) {
-    this.restangular.one("admin/leilao").get({PageSize:100}).subscribe((response) => {
 
-      this.leiloes = response.data
-      this.setLeilao(this.leiloes[0].id, this.leiloes[0].nome);
+    this.filtroLeilao = this.formBuilder.group({
+      leilao:[0]
     })
-    this.restangular.one("usuario").get().subscribe((response) => {
-      this.usuarios = response.data;
 
+
+    this.restangular.one("admin/leilao", '').get({ PageSize: 100 }).subscribe((response) => {
+      this.leiloes = response.data;
+      this.loadingLeilao = false;
     })
+
+    this.queryField.valueChanges.subscribe( x => this.onSearch())
    }
 
   ngOnInit() {
 
   }
 
-  setLeilao(id, nome){
-    this.nomeLeilao = nome
-    this.restangular.one(`leilao/${id}/arrematantes`).get().subscribe((response) => {
-      this.loading = false;
+  
+  filtrarPorLeilao() {
+    this.arrematantes = [];
+    this.loading = true;
+    this.restangular.one(`leilao/${this.filtroLeilao.value.leilao}/arrematantes`).get()
+    .subscribe((response) => {
       this.arrematantes = response.data;
       this.arremantantesFiltrados = response.data;
+      console.log(response.data)
       this.loading = false;
     },
-    () => this.loading = false)
+    () => this.loading = false);
   }
+
   auto(loteId: number, numerolote: number) {
     this.restangular.one(`lote/${loteId}/autoarrematacao`, )
     .withHttpConfig({responseType: 'blob'})
@@ -84,21 +95,23 @@ export class ArrematantesComponent implements OnInit {
   }
 
   onSearch(){
-    if(this.queryField.value) {
       let value = this.queryField.value.replace('.', '').replace('-', '').replace('/', '').toLowerCase();
 
       this.arremantantesFiltrados =
         this.arrematantes.filter(x => x.nome.toLowerCase().includes(value) ||
                                   x.documento.replace('.', '').replace('-', '').replace('/', '').includes(value) ||
                                   x.email.toLowerCase().includes(value));
-    }
   }
-  goUsuario(nome, email){
-    const usuario = this.usuarios.find(x => x.nomeCompleto == nome )
-    this.router.navigate(['/update-usuarios', usuario.usuarioId]);
-  }
-  goLote(id){
-    this.router.navigate(['/update-lotes', id]);
-  }
+
+  exportAsExcel() {
+    const ws: XLSX.WorkSheet = XLSX.utils.json_to_sheet(this.arremantantesFiltrados);
+
+    const wb: XLSX.WorkBook = XLSX.utils.book_new();
+
+    XLSX.utils.book_append_sheet(wb, ws, 'Arremantantes do Leilão' );
+
+    /* save to file */
+    XLSX.writeFile(wb, 'Arrematantes.xlsx');
+  } 
 }
 // objLote.lote.numeroLote.includes(value
