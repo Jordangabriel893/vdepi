@@ -29,6 +29,8 @@ export class UpdateTemplateComponent implements OnInit {
       }
     }
   }
+  cardImageBase64;
+  isImageSaved;
   constructor(
     private formBuilder: FormBuilder,
     private notifierService: NotifierService,
@@ -54,6 +56,7 @@ export class UpdateTemplateComponent implements OnInit {
   }
 
   editorReady(event) {
+    const that = this
     this.setDesign();
     this.exportHtml();
 
@@ -131,6 +134,38 @@ export class UpdateTemplateComponent implements OnInit {
         value: '{{valor_arrematacao}}',
       },
     });
+
+    this.emailEditor.editor.registerCallback('image', function(file, done) {
+      var data = new FormData()
+      var data2:any = {
+        base64:'',
+        tipo:'',
+        nome:'',
+      }
+
+
+      const reader = new FileReader();
+      reader.onload = (e: any) => {
+          const image = new Image();
+          image.src = e.target.result;
+          image.onload = rs => {
+            const imgBase64Path = e.target.result;
+            that.cardImageBase64 = imgBase64Path;
+            that.isImageSaved = true;
+            data2.base64 = imgBase64Path
+            data2.nome = file.attachments[0].name
+            data2.tipo =file.attachments[0].type
+
+                    that.restangular.all('marketing/imageTemplate').post(data2).subscribe(a => {
+                      done({ progress: 100, url: a.data.url })
+                  },
+                    error => {
+                    })
+          }
+      }
+      reader.readAsDataURL(file.attachments[0]);
+
+    })
   }
 
   exportHtml() {
@@ -154,6 +189,7 @@ export class UpdateTemplateComponent implements OnInit {
         controle.markAsTouched()
       })
       this.notifierService.notify('error', 'Preencha todos os campos obrigatórios');
+      this.salvar = false
       return false;
     }
     console.log(this.template);

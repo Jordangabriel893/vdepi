@@ -1,8 +1,8 @@
 import { filter } from 'rxjs/operators';
-import { Component, OnInit, ViewChild, ElementRef, ChangeDetectorRef } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef, ChangeDetectorRef, OnDestroy } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Restangular } from 'ngx-restangular';
-import { forkJoin } from 'rxjs';
+import { forkJoin, Subscription } from 'rxjs';
 
 import { MultiDataSet, Label } from 'ng2-charts';
 import { Chart, ChartDataSets, ChartOptions, ChartType } from 'chart.js';
@@ -13,7 +13,8 @@ import { FormBuilder, FormGroup } from '@angular/forms';
   templateUrl: './dashboard.component.html',
   styleUrls: ['./dashboard.component.scss']
 })
-export class DashboardComponent implements OnInit {
+export class DashboardComponent implements OnInit, OnDestroy {
+  sub: Subscription[] = [];
   id = 1
   leiloes
   formulario: FormGroup
@@ -100,12 +101,13 @@ export class DashboardComponent implements OnInit {
     this.formulario = this.formBuilder.group({
       id: [this.id]
     });
-    this.restangular.one("admin/leilao", '').get({ PageSize: 100 }).subscribe((response) => {
+    this.sub.push( this.restangular.one("admin/leilao", '').get({ PageSize: 100 }).subscribe((response) => {
       this.leiloes = response.data
       this.id = response.data[0].id;
       this.formulario.controls.id.setValue(this.id);
       this.buscarLeilao();
     })
+    )
   }
 
   ngOnInit() {
@@ -114,13 +116,15 @@ export class DashboardComponent implements OnInit {
 
   buscarLeilao() {
     this.id = this.formulario.value.id
-    this.restangular.one("dashboard/contadores").get({ LeilaoId: this.id }).subscribe((response) => {
+    this.sub.push( this.restangular.one("dashboard/contadores").get({ LeilaoId: this.id }).subscribe((response) => {
       this.contadorVisitantes = response.data.visitantes
       this.contadorHabilitados = response.data.habilitados
       this.contadorParticipantes = response.data.participantes
       this.contadorLances = response.data.lances
     })
-    this.restangular.one("dashboard/contadores-lotes").get({ LeilaoId: this.id }).subscribe((response) => {
+    )
+
+   this.sub.push( this.restangular.one("dashboard/contadores-lotes").get({ LeilaoId: this.id }).subscribe((response) => {
       // console.log(response.data)
       this.comLances = response.data.comLances
       this.removidos = response.data.removidos
@@ -129,7 +133,8 @@ export class DashboardComponent implements OnInit {
       this.doughnutChartData = [[this.comLances, this.removidos, this.semLances]]
 
     })
-    this.restangular.one("dashboard/top10lotes").get({ LeilaoId: this.id }).subscribe((response) => {
+   )
+   this.sub.push( this.restangular.one("dashboard/top10lotes").get({ LeilaoId: this.id }).subscribe((response) => {
 
       const top10lotes = response.data.reverse();
       const lances = top10lotes.map(x => x.lances)
@@ -138,7 +143,8 @@ export class DashboardComponent implements OnInit {
       this.barChartLabels = numeroLote
 
     })
-    this.restangular.one("dashboard/financeiro").get({ LeilaoId: this.id }).subscribe((response) => {
+   )
+   this.sub.push( this.restangular.one("dashboard/financeiro").get({ LeilaoId: this.id }).subscribe((response) => {
       // console.log(response.data)
        const finaceiro = response.data
      this.listaExpirados = finaceiro.filter(x => x.status == 'Expirado')
@@ -148,7 +154,8 @@ export class DashboardComponent implements OnInit {
      this.barChartDataFinanceiro = [{ data: [finaceiro.length, this.listaPago.length, this.listaPendentes.length, this.listaExpirados.length, 0] },]
 
     })
-    this.restangular.one("dashboard/previsto-arrematado").get({ LeilaoId: this.id }).subscribe((response) => {
+   )
+   this.sub.push( this.restangular.one("dashboard/previsto-arrematado").get({ LeilaoId: this.id }).subscribe((response) => {
           if(this.chartFinanceiro) {
              this.chartFinanceiro.clear();
              this.chartFinanceiro.destroy();
@@ -205,8 +212,8 @@ export class DashboardComponent implements OnInit {
     },
     error => {
 
-    });
-
+    })
+   )
 
   }
 
@@ -221,5 +228,8 @@ export class DashboardComponent implements OnInit {
 
   girar() {
     this.flipDiv = !this.flipDiv;
+  }
+  ngOnDestroy(): void {
+    this.sub.forEach(s => s.unsubscribe())
   }
 }

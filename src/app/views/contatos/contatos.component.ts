@@ -1,17 +1,19 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Restangular } from 'ngx-restangular';
+import { Subscription } from 'rxjs';
 @Component({
   selector: 'app-contatos',
   templateUrl: './contatos.component.html',
   styleUrls: ['./contatos.component.scss']
 })
-export class ContatosComponent implements OnInit {
+export class ContatosComponent implements OnInit, OnDestroy {
   formulario: FormGroup
   loading = true;
   selectLeilao;
   contatos;
+  sub: Subscription[] = [];
   constructor(
     private route: ActivatedRoute,
     private router: Router,
@@ -26,14 +28,19 @@ export class ContatosComponent implements OnInit {
    }
 
   ngOnInit() {
+   this.sub.push(
     this.restangular.one("marketing/Contato", '').get({PageSize:100}).subscribe((response) => {
-     this.contatos = response.data
+      this.contatos = response.data
 
-      this.loading = false;
-    },
-    () => this.loading = false);
+       this.loading = false;
+     },
+     () => this.loading = false)
+   )
   }
   edit(id) {
     this.router.navigate(['/edit-contatos', id], { relativeTo: this.route });
+  }
+  ngOnDestroy(): void {
+    this.sub.forEach(s => s.unsubscribe())
   }
 }

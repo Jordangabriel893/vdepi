@@ -26,6 +26,13 @@ export const navigation = [
     grupo:'OPERACAO'
   },
   {
+    name: 'Fatura',
+    url: '/fatura',
+    icon: 'fa fa-search',
+    source: 'VISTORIA',
+    grupo:'OPERACAO'
+  },
+  {
     title: true,
     name: 'RELATORIOS',
     grupo:'RELATORIOS'
