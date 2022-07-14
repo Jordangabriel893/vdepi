@@ -212,6 +212,8 @@ import { CreateContaComponent } from './views/conta/create-conta/create-conta.co
 import { FaturaComponent } from './views/fatura/fatura.component';
 import { CreateFaturaComponent } from './views/fatura/create-fatura/create-fatura.component';
 
+import { SwiperModule } from 'swiper/angular';
+import { LotesVistoriaComponent } from './views/vistoria/lotes/lotes-vistoria.component';
 
 
 export function RestangularConfigFactory(RestangularProvider, NotifierService: NotifierService) {
@@ -291,7 +293,8 @@ export function RestangularConfigFactory(RestangularProvider, NotifierService: N
     AngularEditorModule,
     HttpClientModule,
     AlertModule.forRoot(),
-    EmailEditorModule
+    EmailEditorModule,
+    SwiperModule
   ],
   declarations: [
     AppComponent,
@@ -359,6 +362,7 @@ export function RestangularConfigFactory(RestangularProvider, NotifierService: N
     FaturaComponent,
     CreateFaturaComponent,
 
+    LotesVistoriaComponent
 
   ],
   providers: [{

@@ -4,6 +4,16 @@ import { Component, ModuleWithComponentFactories, OnInit } from '@angular/core';
 import { Restangular } from 'ngx-restangular';
 import { Observable } from 'rxjs';
 import { NotifierService } from 'angular-notifier';
+import { SwiperComponent } from "swiper/angular";
+
+// import Swiper core and required modules
+import SwiperCore, { Navigation } from "swiper";
+import {  ActivatedRoute,  Router } from '@angular/router';
+
+// install Swiper modules
+SwiperCore.use([Navigation]);
+
+
 
 @Component({
   selector: 'app-vistoria',
@@ -12,14 +22,18 @@ import { NotifierService } from 'angular-notifier';
 })
 export class VistoriaComponent implements OnInit {
   vistoria
+  leiloes
   loading = true;
   constructor(
     private restangular: Restangular,
     private http: HttpClient,
     private notifierService: NotifierService,
+    private router: Router,
+    private route: ActivatedRoute
   ) {
-    this.restangular.one("vistoria").get().subscribe((response) => {
-     this.vistoria = response.data
+
+    this.restangular.one("admin/leilao/vistoria").get().subscribe((response) => {
+     this.leiloes = response.data
      this.loading = false;
     },
     () => this.loading = false)
@@ -29,21 +43,7 @@ export class VistoriaComponent implements OnInit {
   ngOnInit() {
   }
 
-  laudo(id){
-    this.restangular.one(`vistoria/${id}/laudo`, )
-    .withHttpConfig({responseType: 'blob'})
-    .get()
-    .subscribe((response) => {
-      const blob = new Blob([response], { type: 'application/pdf' });
-      fileSaver.saveAs(blob, `Comprovante_${id}.pdf`);
-    },(error) => {
-      this.notifierService.notify('error', 'Não foi possivel fazer o download do comprovante!')
-
-    })
-
-
-   }
-   getFile(id): Observable<Blob> {
-    return  this.restangular.one(`vistoria/${id}/laudo`, ).get({ responseType: 'blob' });
-}
+  verLotes(id){
+    this.router.navigate(['vistoria-lotes', id]);
+  }
 }
