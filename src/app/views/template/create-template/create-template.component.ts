@@ -58,14 +58,6 @@ export class CreateTemplateComponent implements OnInit,  OnDestroy {
         this.salvar = false
       })
     })
-    this.emailEditor.editor.registerCallback('image', function(file, done) {
-      const reader = new FileReader();
-      reader.onload = (e: any) => {
-        done({ progress: 100, url: e.target.result })
-      }
-         reader.readAsDataURL(file.accepted[0]);
-
-    })
 
     this.emailEditor.editor.setMergeTags({
       comissao_leiloeiro: {
@@ -131,13 +123,11 @@ export class CreateTemplateComponent implements OnInit,  OnDestroy {
     });
 
     this.emailEditor.editor.registerCallback('image', function(file, done) {
-      var data = new FormData()
-      var data2:any = {
+      var imagem:any = {
         base64:'',
         tipo:'',
         nome:'',
       }
-
 
       const reader = new FileReader();
       reader.onload = (e: any) => {
@@ -147,19 +137,18 @@ export class CreateTemplateComponent implements OnInit,  OnDestroy {
             const imgBase64Path = e.target.result;
             that.cardImageBase64 = imgBase64Path;
             that.isImageSaved = true;
-            data2.base64 = imgBase64Path
-            data2.nome = file.attachments[0].name
-            data2.tipo =file.attachments[0].type
+            imagem.base64 = imgBase64Path
+            imagem.nome = file.attachments[0].name
+            imagem.tipo =file.attachments[0].type
 
-                    that.restangular.all('marketing/imageTemplate').post(data2).subscribe(a => {
-                      done({ progress: 100, url: a.data.url })
-                  },
-                    error => {
-                    })
+            that.restangular.all('marketing/imageTemplate')
+            .post(imagem)
+            .subscribe(a => {
+              done({ progress: 100, url: a.data.url })
+            })
           }
       }
       reader.readAsDataURL(file.attachments[0]);
-
     })
   }
 
