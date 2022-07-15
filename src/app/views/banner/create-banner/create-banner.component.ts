@@ -1,11 +1,11 @@
-import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
 
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { NotifierService } from 'angular-notifier';
 import * as moment from 'moment';
 import * as _ from 'lodash';
-import { forkJoin } from 'rxjs';
+import { forkJoin, Subscription } from 'rxjs';
 import { Restangular } from 'ngx-restangular';
 
 @Component({
@@ -13,7 +13,7 @@ import { Restangular } from 'ngx-restangular';
   templateUrl: './create-banner.component.html',
   styleUrls: ['./create-banner.component.scss']
 })
-export class CreateBannerComponent implements OnInit {
+export class CreateBannerComponent implements OnInit, OnDestroy {
   @ViewChild('inputBanners') inputBanners: ElementRef;
   formulario:FormGroup
     //fotos
@@ -25,7 +25,7 @@ export class CreateBannerComponent implements OnInit {
     arrayFotos = [ ];
     imageError: string;
     tipoFoto: any;
-
+    sub: Subscription[] = [];
 
   constructor(
     private formBuilder: FormBuilder,
@@ -175,5 +175,8 @@ export class CreateBannerComponent implements OnInit {
     var lista = this.formulario.get(campoArray) as FormArray;
     var item = lista.controls[i] as FormGroup;
     return !item.get(campo).valid;
+  }
+  ngOnDestroy(): void {
+    this.sub.forEach(s => s.unsubscribe())
   }
 }

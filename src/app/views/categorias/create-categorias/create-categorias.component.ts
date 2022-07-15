@@ -1,28 +1,29 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { NotifierService } from 'angular-notifier';
 import * as moment from 'moment';
 import { Restangular } from 'ngx-restangular';
+import { Subscription } from 'rxjs';
 @Component({
   selector: 'app-create-categorias',
   templateUrl: './create-categorias.component.html',
   styleUrls: ['./create-categorias.component.scss']
 })
-export class CreateCategoriasComponent implements OnInit {
+export class CreateCategoriasComponent implements OnInit, OnDestroy {
   formulario:FormGroup
   categoriasPai;
-
+  sub: Subscription[] = [];
   constructor(
     private formBuilder: FormBuilder,
     private restangular: Restangular,
     private notifierService: NotifierService,
     private router: Router
   ) {
-    this.restangular.one("categoria").get().subscribe((response) => {
+   this.sub.push(this.restangular.one("categoria").get().subscribe((response) => {
       this.categoriasPai = response.data.filter(x => x.categoriaPaiId === null);
     })
-
+   )
     this.formulario = this.formBuilder.group({
       descricao:[null, Validators.required],
       categoriaPaiId: [null],
@@ -51,5 +52,8 @@ export class CreateCategoriasComponent implements OnInit {
 
   aplicaCssErro(campo){
     return {'has-error': this.verificaValidTouched(campo) }
+  }
+  ngOnDestroy(): void {
+    this.sub.forEach(s => s.unsubscribe())
   }
 }

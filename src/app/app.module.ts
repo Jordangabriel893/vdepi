@@ -209,6 +209,9 @@ import { UpdateTemplateComponent } from './views/template/update-template/update
 import { ContaComponent } from './views/conta/conta.component';
 import { UpdateContaComponent } from './views/conta/update-conta/update-conta.component';
 import { CreateContaComponent } from './views/conta/create-conta/create-conta.component';
+import { FaturaComponent } from './views/fatura/fatura.component';
+import { CreateFaturaComponent } from './views/fatura/create-fatura/create-fatura.component';
+
 import { SwiperModule } from 'swiper/angular';
 import { LotesVistoriaComponent } from './views/vistoria/lotes/lotes-vistoria.component';
 
@@ -356,6 +359,8 @@ export function RestangularConfigFactory(RestangularProvider, NotifierService: N
     ContaComponent,
     UpdateContaComponent,
     CreateContaComponent,
+    FaturaComponent,
+    CreateFaturaComponent,
 
     LotesVistoriaComponent
 

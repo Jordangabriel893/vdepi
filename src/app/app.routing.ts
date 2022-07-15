@@ -1,3 +1,5 @@
+import { CreateFaturaComponent } from './views/fatura/create-fatura/create-fatura.component';
+import { FaturaComponent } from './views/fatura/fatura.component';
 import { UpdateContaComponent } from './views/conta/update-conta/update-conta.component';
 import { CreateContaComponent } from './views/conta/create-conta/create-conta.component';
 import { ContaComponent } from './views/conta/conta.component';
@@ -193,6 +195,24 @@ export const routes: Routes = [
         component: VistoriaComponent,
         data: {
           title: 'Vistoria',
+          source: 'VISTORIA'
+        },
+        canActivate: [SourceGuard]
+      },
+      {
+        path: 'fatura',
+        component: FaturaComponent,
+        data: {
+          title: 'Fatura',
+          source: 'VISTORIA'
+        },
+        canActivate: [SourceGuard]
+      },
+      {
+        path: 'create-fatura',
+        component: CreateFaturaComponent,
+        data: {
+          title: 'Criar Fatura',
           source: 'VISTORIA'
         },
         canActivate: [SourceGuard]

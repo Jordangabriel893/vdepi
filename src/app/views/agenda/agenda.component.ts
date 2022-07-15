@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Subscription } from 'rxjs';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { FormGroup, FormBuilder } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Restangular } from 'ngx-restangular';
@@ -8,12 +9,13 @@ import * as Model from '../_models/model'
   templateUrl: './agenda.component.html',
   styleUrls: ['./agenda.component.scss']
 })
-export class AgendaComponent implements OnInit {
+export class AgendaComponent implements OnInit, OnDestroy {
   formulario: FormGroup
   loading = true;
   selectLeilao;
   agendas;
   leiloes: Model.Leilao[];
+  sub: Subscription[] = [];
   constructor(
     private route: ActivatedRoute,
     private router: Router,
@@ -27,8 +29,10 @@ export class AgendaComponent implements OnInit {
     })
    }
 
+
   ngOnInit() {
-    this.restangular.one('marketing/agendaNotificacao').get().subscribe(
+    this.sub.push(
+      this.restangular.one('marketing/agendaNotificacao').get().subscribe(
       dados =>{
 
         this.agendas= dados.data
@@ -36,10 +40,14 @@ export class AgendaComponent implements OnInit {
       },
       () => this.loading = false
     )
+    )
+
 
   }
   edit(id) {
     this.router.navigate(['/update-agenda', id], { relativeTo: this.route });
   }
-
+  ngOnDestroy(): void {
+    this.sub.forEach(s => s.unsubscribe())
+  }
 }

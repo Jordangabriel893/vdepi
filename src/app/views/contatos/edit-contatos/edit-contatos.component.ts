@@ -1,23 +1,25 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NotifierService } from 'angular-notifier';
 import { ConsultaCepService } from 'app/views/usuarios/shared/consulta-cep/consulta-cep.service';
 import { BsLocaleService } from 'ngx-bootstrap';
 import { Restangular } from 'ngx-restangular';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-edit-contatos',
   templateUrl: './edit-contatos.component.html',
   styleUrls: ['./edit-contatos.component.scss']
 })
-export class EditContatosComponent implements OnInit {
+export class EditContatosComponent implements OnInit, OnDestroy {
 
   minDate;
   formulario:FormGroup
   empresa
   gruposEconomico;
   id;
+  sub: Subscription[] = [];
 
   public mask: Array<string | RegExp>
   public maskTelefoneFixo: Array<string | RegExp>
@@ -65,10 +67,11 @@ export class EditContatosComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.restangular.all('marketing/contato').get(this.id).subscribe(dados => {
-      this.updateForm(dados.data);
-    })
-
+    this.sub.push(
+      this.restangular.all('marketing/contato').get(this.id).subscribe(dados => {
+        this.updateForm(dados.data);
+      })
+    )
   }
   onSubmit(){
     this.restangular.all('marketing/contato').customPUT(this.formulario.value,  this.id ) .subscribe(a => {
@@ -88,8 +91,10 @@ export class EditContatosComponent implements OnInit {
     const cep = this.formulario.get('cep').value;
 
     if (cep != null && cep !== '') {
+      this.sub.push(
       this.cepService.consultaCEP(cep)
-        .subscribe(dados => this.populaDadosForm(dados));
+        .subscribe(dados => this.populaDadosForm(dados))
+      )
     }
   }
 
@@ -141,5 +146,8 @@ export class EditContatosComponent implements OnInit {
         this.notifierService.notify('error', 'Erro ao desativar contato!');
 
       });
+  }
+  ngOnDestroy(): void {
+    this.sub.forEach(s => s.unsubscribe())
   }
 }

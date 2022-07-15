@@ -269,6 +269,7 @@ selectedHabilitacao ;
                         'px';
                     return false;
                 } else {
+
                     const imgBase64Path = e.target.result;
                     this.cardImageBase64 = imgBase64Path;
                     this.isImageSaved = true;

@@ -1,16 +1,17 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NotifierService } from 'angular-notifier';
 import { Restangular } from 'ngx-restangular';
 import * as _ from 'lodash';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-update-comitente',
   templateUrl: './update-comitente.component.html',
   styleUrls: ['./update-comitente.component.scss']
 })
-export class UpdateComitenteComponent implements OnInit {
+export class UpdateComitenteComponent implements OnInit, OnDestroy {
 
   imageError: string;
   isImageSaved: boolean;
@@ -19,6 +20,7 @@ export class UpdateComitenteComponent implements OnInit {
   formulario:FormGroup
   comitente
   id
+  sub: Subscription[] = [];
 
   public mask: Array<string | RegExp>
   public maskCep: Array<string | RegExp>
@@ -34,9 +36,11 @@ export class UpdateComitenteComponent implements OnInit {
   ) {
 
     this.id = this.route.snapshot.params['id']
+   this.sub.push(
     this.restangular.one("comitente", this.id).get().subscribe((response) => {
-    this.updateForm(response.data)
-    })
+      this.updateForm(response.data)
+      })
+   )
 
     this.mask = ['(', /[1-9]/, /\d/, ')', ' ', /\d/,/\d/,/\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/]
     this.maskCep = [ /\d/,/\d/,/\d/,/\d/,/\d/, '-', /\d/, /\d/, /\d/, ]
@@ -172,5 +176,8 @@ export class UpdateComitenteComponent implements OnInit {
   onValueChange(event, campo) {
     this.formulario.get(campo).markAsTouched();
     this.formulario.get(campo).setValue(event);
+  }
+  ngOnDestroy(): void {
+    this.sub.forEach(s => s.unsubscribe())
   }
 }
