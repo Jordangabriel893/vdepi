@@ -104,14 +104,16 @@ export class ArrematantesComponent implements OnInit {
   }
 
   exportAsExcel() {
-    const ws: XLSX.WorkSheet = XLSX.utils.json_to_sheet(this.arremantantesFiltrados);
+    this.restangular.one(`leilao/${this.filtroLeilao.value.leilao}/exportararrematantes`, )
+    .withHttpConfig({responseType: 'blob'})
+    .get()
+    .subscribe((response) => {
+      const blob = new Blob([response], { type: 'application/xlsx' });
+      fileSaver.saveAs(blob, `Arrematantes.xlsx`);
+    },(error) => {
+      this.notifierService.notify('error', 'Não foi possivel fazer o download!')
 
-    const wb: XLSX.WorkBook = XLSX.utils.book_new();
-
-    XLSX.utils.book_append_sheet(wb, ws, 'Arremantantes do Leilão' );
-
-    /* save to file */
-    XLSX.writeFile(wb, 'Arrematantes.xlsx');
+    })
   } 
 }
 // objLote.lote.numeroLote.includes(value
