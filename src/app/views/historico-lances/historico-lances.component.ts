@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { NotifierService } from 'angular-notifier';
 import { Restangular } from 'ngx-restangular';
 
 @Component({
@@ -14,19 +15,28 @@ export class HistoricoLancesComponent implements OnInit {
   lotes
   lances
   loading = true;
+  ehLeilaoEncerrado = false
+  lanceVencedorAtual
   constructor(
     private restangular: Restangular,
+    private notifierService: NotifierService,
   ) {
     this.restangular.one("admin/leilao").get({PageSize:100}).subscribe((response) => {
       this.leiloes = response.data
-      this.setLeilao(this.leiloes[0].id, this.leiloes[0].nome);
+      const id = this.leiloes[0].id
+      this.setLeilao(id , this.leiloes[0].nome);
+      this.isStatusEncerrado(id)
     })
    }
 
   ngOnInit() {
   }
   setLeilao(id, nome){
+    this.lotes = []
+    this.lances = []
+    this.idLote = null;
     this.leilaoNome = nome
+    this.isStatusEncerrado(id)
     this.restangular.one("lote/numeros", '').get({ leilaoId: id }).subscribe(
       (lotes) => {
         this.loading = false;
@@ -35,7 +45,8 @@ export class HistoricoLancesComponent implements OnInit {
 
     )
   }
-  setLotes(id, numeroLote){
+
+  setLotes(id, numeroLote){   
     this.idLote = numeroLote
     this.restangular.one(`lote/${id}/lances`).get({ PageSize:500 }).subscribe((response) => {
       this.lances = response.data
@@ -43,4 +54,21 @@ export class HistoricoLancesComponent implements OnInit {
     },
     () => this.loading = false)
   }
+
+  isStatusEncerrado(id)
+  {
+    const leilao = this.leiloes.filter( x => x.id == id)
+    this.ehLeilaoEncerrado =  leilao[0].status.toString().toUpperCase() == 'ENCERRADO'
+  }
+  
+
+  gravarLanceVencedor(lanceId:number){
+    this.restangular.all(`lote/${lanceId}/LanceVencedor`).post({lanceId: lanceId }).subscribe(a =>{
+      this.notifierService.notify('success', 'Novo Lance Vencedor Cadastrado com Sucesso');
+    },
+      error => {
+        this.notifierService.notify('error', 'Erro ao Gravar Novo Lance Vencedor ');
+      });
+  }
+  
 }
