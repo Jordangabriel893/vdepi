@@ -191,7 +191,9 @@ export class UpdateLeilaoComponent implements OnInit {
       anexos: this.formBuilder.array(dados.anexos ? dados.anexos.map(x => this.formBuilder.group({ ...x, acao: '' })) : []),
       regrasHabilitacao: this.formBuilder.control([...arrayRegraHabiliacaoId]),
       observacao: dados.observacao,
-      tempoInicioSeg: dados.tempoInicioSeg
+      tempoInicioSeg: dados.tempoInicioSeg,
+      linkYoutube: dados.linkYoutube,
+      onlineYoutube: dados.onlineYoutube
     });
   }
 

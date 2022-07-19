@@ -182,7 +182,9 @@ selectedHabilitacao ;
       anexos: this.formBuilder.array([]),
       regrasHabilitacao:[null, Validators.required],
       tempoInicioSeg: [30],
-      observacao: [null]
+      observacao: [null],
+      linkYoutube: [null],
+      onlineYoutube: [null]
       // habilitacao:[null, Validators.required]
     })
   }

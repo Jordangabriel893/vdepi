@@ -101,6 +101,17 @@
                     <label for="tempoInicioSeg">Tempo Fechamento(Segundos)</label>
                     <input type="number" class="form-control" [ngClass]="aplicaCssErro('tempoInicioSeg')" id="tempoInicioSeg" placeholder="30" formControlName="tempoInicioSeg" >
                   </div>
+                  <div class="form-group col-9">
+                    <label for="linkYoutube">Transmissão Youtube (incorporar)</label>
+                    <input type="text" class="form-control" [ngClass]="aplicaCssErro('linkYoutube')" id="linkYoutube" formControlName="linkYoutube" >
+                  </div>
+                  <div class="form-group col-3">
+                    <label for="onlineYoutube">Transmissão Status</label>
+                    <select class="form-control" [ngClass]="aplicaCssErro('onlineYoutube')" formControlName="onlineYoutube">
+                      <option value="true">Online</option>
+                      <option value="false">Offline</option>
+                    </select>
+                  </div>
                 </div>
               </div>
               <div class="col-4" formGroupName="foto">
