@@ -5,8 +5,15 @@
 
 export const environment = {
   production: false,
+<<<<<<< HEAD
   apiUrl: "https://hml.id.eblonline.com.br",
   apiDados: "https://hml.api.eblonline.com.br"
   //  apiUrl: "http://localhost:5000",
   //  apiDados: "http://localhost:4000"
+=======
+  // apiUrl: "https://hml.id.eblonline.com.br",
+  // apiDados: "https://hml.api.eblonline.com.br"
+  apiUrl: "http://localhost:5000",
+  apiDados: "http://localhost:4000"
+>>>>>>> origin/hmlHabilitacao
 };

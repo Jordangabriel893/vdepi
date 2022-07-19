@@ -125,6 +125,10 @@ export class UpdateTemplateComponent implements OnInit {
         name: 'Valor Arrematação',
         value: '{{valor_arrematacao}}',
       },
+      mensagem: {
+        name: 'Mensagem',
+        value: '{{mensagem}}',
+      },
     });
 
     this.emailEditor.editor.registerCallback('image', function(file, done) {
