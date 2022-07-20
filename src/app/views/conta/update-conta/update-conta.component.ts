@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NotifierService } from 'angular-notifier';
@@ -6,12 +6,13 @@ import { ConsultaCepService } from 'app/views/usuarios/shared/consulta-cep/consu
 import * as _ from 'lodash';
 import * as moment from 'moment';
 import { Restangular } from 'ngx-restangular';
+import { Subscription } from 'rxjs';
 @Component({
   selector: 'app-update-conta',
   templateUrl: './update-conta.component.html',
   styleUrls: ['./update-conta.component.scss']
 })
-export class UpdateContaComponent implements OnInit {
+export class UpdateContaComponent implements OnInit, OnDestroy {
   context = {
     message: 'Hello there!'
   };
@@ -23,6 +24,8 @@ export class UpdateContaComponent implements OnInit {
   empresa
   gruposEconomico;
   empresas;
+  sub: Subscription[] = [];
+
   public mask: Array<string | RegExp>
   public maskCep: Array<string | RegExp>
   public maskCpf: Array<string | RegExp>
@@ -47,18 +50,20 @@ export class UpdateContaComponent implements OnInit {
 
   ngOnInit() {
     this.id = this.route.snapshot.params['id']
+   this.sub.push(
     this.restangular.one("conta", this.id).get().subscribe((response) => {
       this.updateForm(response.data)
       console.log(response.data)
       })
-    this.restangular.one('empresa').get().subscribe(
+   )
+   this.sub.push( this.restangular.one('empresa').get().subscribe(
       dados =>{
         //  this.empresas = dados.data
         console.log(dados.data)
         this.empresas = dados.data
       }
     )
-
+   )
     // this.formulario = this.formBuilder.group({
     //   nome:[null, Validators.required],
     //   email:[null, Validators.required],
@@ -102,8 +107,11 @@ export class UpdateContaComponent implements OnInit {
     const cep = this.formulario.get('endereco.cep').value;
 
     if (cep != null && cep !== '') {
-      this.cepService.consultaCEP(cep)
-      .subscribe(dados => this.populaDadosForm(dados));
+      this.sub.push(
+        this.cepService.consultaCEP(cep)
+        .subscribe(dados => this.populaDadosForm(dados))
+      )
+
     }
   }
   updateForm(dados){
@@ -148,5 +156,8 @@ export class UpdateContaComponent implements OnInit {
 
   aplicaCssErro(campo){
     return {'has-error': this.verificaValidTouched(campo) }
+  }
+  ngOnDestroy(): void {
+    this.sub.forEach(s => s.unsubscribe())
   }
 }

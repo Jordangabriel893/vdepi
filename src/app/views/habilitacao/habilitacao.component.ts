@@ -1,7 +1,7 @@
 import { Component, OnInit, TemplateRef } from '@angular/core';
 import { Restangular } from 'ngx-restangular';
 import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { NotifierService } from 'angular-notifier';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Location } from '@angular/common';
@@ -24,6 +24,16 @@ export class HabilitacaoComponent implements OnInit {
   documentosUsuario:any
   loading = false;
   loadingLeilao = true;
+  docRecusado = false;
+
+  statusDocs = [
+    { id: 0, descricao: 'PENDENTE' },
+    { id: 1, descricao: 'ACEITO' },
+    { id: 2, descricao: 'REJEITADO' }
+  ]
+
+  queryField = new FormControl();
+  habilatacoesFiltradas: any;
 
   constructor(
     private restangular: Restangular,
@@ -51,13 +61,14 @@ export class HabilitacaoComponent implements OnInit {
   }
 
   //submit
-  aprovarSolicitacao(solicitacaoHabilitacaoId, i) {
-    this.documentosUsuario = this.habilitacao[i]
-    this.documentosUsuario.habilitado = true
-    this.restangular.all(`habilitacao/${solicitacaoHabilitacaoId}/aprovar`).post(this.documentosUsuario)
+  aprovarSolicitacao(solicitacaoHabilitacaoId) {
+    const i = this.habilitacao.findIndex( x => x.solicitacaoHabilitacaoId === solicitacaoHabilitacaoId)
+    this.habilitacao[i].habilitado = true
+    this.habilitacao[i].status = 'Habilitado'
+
+    this.restangular.all(`habilitacao/${solicitacaoHabilitacaoId}/aprovar`).post(this.habilitacao[i])
     .subscribe(a =>{
       this.notifierService.notify('success', 'Solicitação Aprovada com sucesso');
-      //setTimeout(()=>{location.reload()}, 3000)
     },
       error => {
         this.notifierService.notify('error', 'Erro ao solicitar aprovação');
@@ -66,12 +77,13 @@ export class HabilitacaoComponent implements OnInit {
 
     //submit
   reprovarSolicitacao() {
+    const i = this.habilitacao.findIndex( x => x.solicitacaoHabilitacaoId === this.solicitacaoHabilitacaoIdDesabilitar)
+    this.habilitacao[i].status = 'Desabilitado'
+    this.habilitacao[i].habilitado = false
 
     this.restangular.all(`habilitacao/${this.solicitacaoHabilitacaoIdDesabilitar}/reprovar`).post()
     .subscribe(a => {
       this.notifierService.notify('success', 'Reprovado com sucesso');
-      setTimeout(()=>{location.reload()}, 3000)
-
     },
       error => {
         this.notifierService.notify('error', 'Erro ao solicitar reprovação');
@@ -79,13 +91,13 @@ export class HabilitacaoComponent implements OnInit {
   }
 
   aprovarLimiteDeCredito(){
-    this.documentosUsuario = this.habilitacao.find(x => x.solicitacaoHabilitacaoId === this.solicitacaoHabilitacaoId)
-    this.documentosUsuario.limiteCredito = this.formulario.value.limiteCredito
-    this.documentosUsuario.observacao = this.formulario.value.observacao
-    this.documentosUsuario.habilitado = true
-    this.restangular.all(`habilitacao/${this.solicitacaoHabilitacaoId}/aprovar`).post(this.documentosUsuario).subscribe(a =>{
+    const i = this.habilitacao.findIndex(x => x.solicitacaoHabilitacaoId === this.solicitacaoHabilitacaoId)
+    this.habilitacao[i].limiteCredito = this.formulario.value.limiteCredito
+    this.habilitacao[i].observacao = this.formulario.value.observacao
+    this.habilitacao[i].habilitado = true
+
+    this.restangular.all(`habilitacao/${this.solicitacaoHabilitacaoId}/aprovar`).post(this.habilitacao[i]).subscribe(a =>{
       this.notifierService.notify('success', 'Limite Aprovado com sucesso');
-      //setTimeout(()=>{location.reload()}, 3000)
     },
       error => {
         this.notifierService.notify('error', 'Erro ao aprovar Limite de Crédito');
@@ -98,6 +110,8 @@ export class HabilitacaoComponent implements OnInit {
     this.documentosUsuario = this.habilitacao.find(x => x.solicitacaoHabilitacaoId === solicitacaoHabilitacaoId)
     this.solicitacaoHabilitacaoId = solicitacaoHabilitacaoId
     this.solicitacaoHabilitacaoIdDesabilitar = solicitacaoHabilitacaoId
+    this.existeRecusado(this.documentosUsuario.documentos)
+
   }
 
   getTipoRegra(tipoRegra) {
@@ -142,8 +156,38 @@ export class HabilitacaoComponent implements OnInit {
     this.restangular.one("habilitacao").get({leilaoId:this.filtroLeilao.value.leilao})
     .subscribe((response) => {
       this.habilitacao = response.data;
+      this.habilatacoesFiltradas = response.data;
       this.loading = false;
     },
     () => this.loading = false);
+  }
+
+  existeRecusado(doc:any[]){
+    if(!doc)
+    this.docRecusado = false
+    else{
+      this.docRecusado = doc.some(x => x.status == true )
+    }
+  }
+
+  notificarDocumentos(documentosUsuario){
+    const i = this.habilitacao.findIndex(x => x.solicitacaoHabilitacaoId === this.solicitacaoHabilitacaoId)
+    this.habilitacao[i].status = 'Rejeitado'
+    this.habilitacao[i].habilitado = false
+
+    this.restangular.all(`habilitacao/${documentosUsuario.solicitacaoHabilitacaoId}/notificarDoc`).post(this.documentosUsuario).subscribe(a =>{
+      this.notifierService.notify('success', 'Notificação de documentos rejeitados enviado com sucesso');
+    },
+      error => {
+        this.notifierService.notify('error', 'Erro ao enviar notificação de documentos Rejeitados');
+      });
+  }
+  
+  onSearch(){
+    if(this.queryField.value) {
+      let value = this.queryField.value.replace('.', '').replace('-', '').replace('/', '').toLowerCase();
+      this.habilatacoesFiltradas = this.habilitacao.filter(x => x.email.toLowerCase().includes(value));
+
+    }
   }
 }

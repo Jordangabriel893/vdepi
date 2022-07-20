@@ -18,7 +18,16 @@ export class CreateTemplateComponent implements OnInit,  OnDestroy {
   salvar = false;
   template;
   formulario;
-
+  options = {
+    locale: 'pt-BR',
+    features: {
+      textEditor: {
+        tables: true
+      }
+    }
+  }
+  cardImageBase64;
+  isImageSaved
   constructor(
     private formBuilder: FormBuilder,
     private notifierService: NotifierService,
@@ -34,76 +43,133 @@ export class CreateTemplateComponent implements OnInit,  OnDestroy {
 
   ngOnInit() {
 
-
-  }
-
-  editorLoaded(event) {
-
   }
 
   editorReady(event) {
-
-
-    this.emailEditor.editor.addEventListener('design:updated', (updates) => {
+    const that = this
+    this.emailEditor.editor.addEventListener('design:updated', () => {
       this.salvar = true;
       this.emailEditor.editor.exportHtml((data) => {
         this.template = {
-              codigoHtml: JSON.stringify(data.design),
-              descricao:this.formulario.value.descricao
-            }
-            this.salvar = false
+          designJson:JSON.stringify(data.design),
+          codigoHtml: data.html,
+          descricao:this.formulario.value.descricao
+        }
+        this.salvar = false
       })
-    })
-    this.emailEditor.editor.registerCallback('image', function(file, done) {
-      const reader = new FileReader();
-      reader.onload = (e: any) => {
-        done({ progress: 100, url: e.target.result })
-      }
-         reader.readAsDataURL(file.accepted[0]);
-
     })
 
     this.emailEditor.editor.setMergeTags({
-      first_name: {
-        name: "First Name",
-        value: "{{first_name}}",
-        sample: "John"
+      comissao_leiloeiro: {
+        name: 'Comissão do Leiloeiro',
+        value: '{{comissao_leiloeiro}}',
       },
-      last_name: {
-        name: "Last Name",
-        value: "{{last_name}}",
-        sample: "Doe"
+      data_leilao: {
+        name: 'Data do Leilão',
+        value: '{{data_leilao}}',
       },
-      cidade:{
-        name:'Cidade',
-        value: "{{city}}",
-        sample: 'Rio de Janeiro'
+      descricao_lote: {
+        name: 'Descrição do Lote',
+        value: '{{descricao_lote}}',
       },
-      estado:{
-        name:'Estado',
-        value: "{{state}}",
-        sample: 'São Paulo'
-      }
+      email_usuario: {
+        name: 'Email do Usuário',
+        value: '{{email_usuario}}',
+      },
+      lotes: {
+        name: 'Lista de Lotes',
+        value: '{{lotes}}',
+      },
+      link_confirmacao: {
+        name: 'Link de Confirmação',
+        value: '{{link_confirmacao}}',
+      },
+      nome_comitente: {
+        name: 'Nome do Comitente',
+        value: '{{nome_comitente}}',
+      },
+      nome_empresa: {
+        name: 'Nome da Empresa',
+        value: '{{nome_empresa}}',
+      },
+      nome_leilao: {
+        name: 'Nome do Leilão',
+        value: '{{nome_leilao}}',
+      },
+      nome_leiloeiro: {
+        name: 'Nome do Leiloeiro',
+        value: '{{nome_leiloeiro}}',
+      },
+      nome_usuario: {
+        name: 'Nome do Usuário',
+        value: '{{nome_usuario}}',
+      },
+      numero_lote: {
+        name: 'Numero do Lote',
+        value: '{{numero_lote}}',
+      },
+      taxa_adm: {
+        name: 'Taxa Administrativa',
+        value: '{{taxa_adm}}',
+      },
+      telefone_usuario: {
+        name: 'Telefone do Usuário',
+        value: '{{telefone_usuario}}',
+      },
+      valor_arrematacao: {
+        name: 'Valor Arrematação',
+        value: '{{valor_arrematacao}}',
+      },
+      mensagem: {
+        name: 'Mensagem',
+        value: '{{mensagem}}',
+      },
     });
 
+    this.emailEditor.editor.registerCallback('image', function(file, done) {
+      var imagem:any = {
+        base64:'',
+        tipo:'',
+        nome:'',
+      }
+
+      const reader = new FileReader();
+      reader.onload = (e: any) => {
+          const image = new Image();
+          image.src = e.target.result;
+          image.onload = rs => {
+            const imgBase64Path = e.target.result;
+            that.cardImageBase64 = imgBase64Path;
+            that.isImageSaved = true;
+            imagem.base64 = imgBase64Path
+            imagem.nome = file.attachments[0].name
+            imagem.tipo =file.attachments[0].type
+
+            that.restangular.all('marketing/imageTemplate')
+            .post(imagem)
+            .subscribe(a => {
+              done({ progress: 100, url: a.data.url })
+            })
+          }
+      }
+      reader.readAsDataURL(file.attachments[0]);
+    })
   }
 
   save(){
     this.salvar = true;
 
-    if(this.template == undefined){
-      this.notifierService.notify('error', 'Exporte o template antes de salvar')
-      return;
-    }
     if(!this.formulario.valid) {
       Object.keys(this.formulario.controls).forEach((campo)=>{
         const controle = this.formulario.get(campo)
         controle.markAsTouched()
       })
       this.notifierService.notify('error', 'Preencha todos os campos obrigatórios');
+      this.salvar = false
       return false;
     }
     this.template = {
+      designJson: this.template.designJson,
       codigoHtml: this.template.codigoHtml,
       descricao: this.formulario.value.descricao
     }

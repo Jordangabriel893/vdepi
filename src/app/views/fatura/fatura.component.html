@@ -1,0 +1,68 @@
+<div class="animated fadeIn">
+  <div class="row">
+    <div class="col-lg-12">
+      <div class="card">
+        <div class="card-header">
+          <i class="fa fa-gavel" aria-hidden="true"></i>
+          &nbsp;Faturas
+        </div>
+        <div class="card-block">
+          <button type="button" class="btn btn-success" [routerLink]="['/create-fatura']"><i class="fa fa-plus-circle"></i>&nbsp; Nova Fatura</button>
+            <div class="table-responsive mt-4">
+              <table class="table table-striped" [mfData]="faturas" #mfLeilao="mfDataTable" [mfRowsOnPage]="15">
+                <thead>
+                  <tr>
+
+                    <th>
+                      <mfDefaultSorter by="faturaId">Id</mfDefaultSorter>
+                    </th>
+                    <th>
+                      <mfDefaultSorter by="descricaoLote">Descrição Lote</mfDefaultSorter>
+                    </th>
+                    <th>
+                      <mfDefaultSorter by="codigo">Código</mfDefaultSorter>
+                    </th>
+                    <th>
+                      <mfDefaultSorter by="dataVencimento">Data Vencimento</mfDefaultSorter>
+                    </th>
+
+                    <th>
+                      <mfDefaultSorter by="status">Status</mfDefaultSorter>
+                    </th>
+                    <th class="text-center" >
+                      Editar
+                    </th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let item of mfLeilao.data">
+                    <td>{{item.faturaId}}</td>
+                    <td>{{item.descricaoLote}}</td>
+                    <td>{{item.codigo}}</td>
+                    <td>{{item.dataVencimento | amDateFormat:'DD/MM/yyyy' }}</td>
+                    <td>{{item.status == 'cancelada' ? 'Cancelada' : item.status == 'pendente' ? 'Pendente' : ''}}</td>
+                    <td class="text-center" nowrap>
+                      <button type="button" class="btn btn-primary" (click)="edit(item.faturaId)"><i class="fa fa-edit"></i>&nbsp;Editar</button>
+                    </td>
+
+                  </tr>
+                  <tr *ngIf="loading">
+                    <td class="text-center text-muted" colspan="9">
+                      <h5><i class="fa fa-spin fa-spinner"></i>&nbsp;Carregando...</h5>
+                    </td>
+                  </tr>
+                </tbody>
+                <tfoot>
+                  <tr>
+                    <td colspan="9">
+                      <mfBootstrapPaginator [rowsOnPageSet]="[5,10,25]"></mfBootstrapPaginator>
+                    </td>
+                  </tr>
+                </tfoot>
+              </table>
+            </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

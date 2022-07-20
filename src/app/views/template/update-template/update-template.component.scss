@@ -3,7 +3,7 @@
   left: 0;
   width: 100%;
   top: 45px;
-  height: 89vh;
+  height: calc(100vh - 100px);
 }
 #save{
   position: absolute;
@@ -17,6 +17,7 @@ top: 7px;
   right: 112px;
   top: 7px;
 }
+
 .salvando{
   position: absolute;
   right: 24px;

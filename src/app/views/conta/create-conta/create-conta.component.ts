@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { NotifierService } from 'angular-notifier';
@@ -6,13 +6,14 @@ import { ConsultaCepService } from 'app/views/usuarios/shared/consulta-cep/consu
 import * as _ from 'lodash';
 import * as moment from 'moment';
 import { Restangular } from 'ngx-restangular';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-create-conta',
   templateUrl: './create-conta.component.html',
   styleUrls: ['./create-conta.component.scss']
 })
-export class CreateContaComponent implements OnInit {
+export class CreateContaComponent implements OnInit, OnDestroy  {
   context = {
     message: 'Hello there!'
   };
@@ -24,6 +25,8 @@ export class CreateContaComponent implements OnInit {
   empresa
   gruposEconomico;
   empresas;
+  sub: Subscription[] = [];
+
   public mask: Array<string | RegExp>
   public maskCep: Array<string | RegExp>
   public maskCpf: Array<string | RegExp>
@@ -47,6 +50,7 @@ export class CreateContaComponent implements OnInit {
 
   ngOnInit() {
 
+   this.sub.push(
     this.restangular.one('empresa').get().subscribe(
       dados =>{
         //  this.empresas = dados.data
@@ -54,6 +58,7 @@ export class CreateContaComponent implements OnInit {
         this.empresas = dados.data
       }
     )
+   )
     this.formulario = this.formBuilder.group({
       nome:[null, Validators.required],
       email:[null, Validators.required],
@@ -97,8 +102,10 @@ export class CreateContaComponent implements OnInit {
     const cep = this.formulario.get('endereco.cep').value;
 
     if (cep != null && cep !== '') {
+    this.sub.push(
       this.cepService.consultaCEP(cep)
-      .subscribe(dados => this.populaDadosForm(dados));
+      .subscribe(dados => this.populaDadosForm(dados))
+    )
     }
   }
   populaDadosForm(dados) {
@@ -121,5 +128,8 @@ export class CreateContaComponent implements OnInit {
 
   aplicaCssErro(campo){
     return {'has-error': this.verificaValidTouched(campo) }
+  }
+  ngOnDestroy(): void {
+    this.sub.forEach(s => s.unsubscribe())
   }
 }

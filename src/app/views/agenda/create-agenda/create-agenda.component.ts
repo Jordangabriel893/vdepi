@@ -1,16 +1,17 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { NotifierService } from 'angular-notifier';
 import { BsLocaleService } from 'ngx-bootstrap';
 import { Restangular } from 'ngx-restangular';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-create-agenda',
   templateUrl: './create-agenda.component.html',
   styleUrls: ['./create-agenda.component.scss']
 })
-export class CreateAgendaComponent implements OnInit {
+export class CreateAgendaComponent implements OnInit, OnDestroy {
   empresas: any;
   formulario:FormGroup;
   status: any;
@@ -18,6 +19,7 @@ export class CreateAgendaComponent implements OnInit {
   notificacoes;
   tiposAgenda;
   agendaNotificacao;
+  sub: Subscription[] = [];
   constructor(
     private formBuilder: FormBuilder,
     private restangular: Restangular,
@@ -38,25 +40,30 @@ export class CreateAgendaComponent implements OnInit {
       dataExecucao:[null, Validators.required],
       dataEncerramento:[null],
     })
-    this.restangular.one('marketing/notificacao').get().subscribe(
-      dados =>{
-        this.notificacoes= dados.data
-      }
+    this.sub.push(
+      this.restangular.one('marketing/notificacao').get().subscribe(
+        dados =>{
+          this.notificacoes= dados.data
+        }
+      )
     )
-    this.restangular.one('marketing/AgendaNotificacao').get().subscribe(
+    this.sub.push(
+      this.restangular.one('marketing/AgendaNotificacao').get().subscribe(
       dados =>{
         this.agendaNotificacao = dados.data
       }
-    )
-    this.restangular.one('marketing/tipoAgendaNotificacao').get().subscribe(
-      dados =>{
-        this.tiposAgenda= dados.data
-      }
+    ))
+    this.sub.push(
+      this.restangular.one('marketing/tipoAgendaNotificacao').get().subscribe(
+        dados =>{
+          this.tiposAgenda= dados.data
+        }
+      )
     )
 
   }
   onSubmit(){
-    this.restangular.all('marketing/agendaNotificacao').post(this.formulario.value).subscribe(a => {
+      this.restangular.all('marketing/agendaNotificacao').post(this.formulario.value).subscribe(a => {
       this.notifierService.notify('success', 'Agenda criada com sucesso');
       this.router.navigate(['/agenda']);
     },
@@ -67,7 +74,7 @@ export class CreateAgendaComponent implements OnInit {
           const controle = this.formulario.get(campo)
           controle.markAsTouched()
         })
-      });
+      })
   }
   verificaValidTouched(campo){
     return !this.formulario.get(campo).valid && this.formulario.get(campo).touched;
@@ -80,5 +87,9 @@ export class CreateAgendaComponent implements OnInit {
   onValueChange(event, campo) {
     this.formulario.get(campo).markAsTouched();
     this.formulario.get(campo).setValue(event);
+  }
+  ngOnDestroy(): void {
+    this.sub.forEach(s => {s.unsubscribe()
+    console.log('foi')})
   }
 }

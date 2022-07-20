@@ -1,17 +1,18 @@
-import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { FormGroup, FormBuilder, FormArray, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NotifierService } from 'angular-notifier';
 import * as moment from 'moment';
 import * as _ from 'lodash';
 import { Restangular } from 'ngx-restangular';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-edit-banner',
   templateUrl: './edit-banner.component.html',
   styleUrls: ['./edit-banner.component.scss']
 })
-export class EditBannerComponent implements OnInit {
+export class EditBannerComponent implements OnInit, OnDestroy {
   @ViewChild('inputBanners') inputBanners: ElementRef;
   formulario:FormGroup
     //fotos
@@ -26,7 +27,7 @@ export class EditBannerComponent implements OnInit {
   id: any;
   cardImageBase64: any;
   isImageSaved: boolean;
-
+  sub: Subscription[] = [];
 
   constructor(
     private formBuilder: FormBuilder,
@@ -36,10 +37,12 @@ export class EditBannerComponent implements OnInit {
     private route: ActivatedRoute,
     ) {
       this.id = this.route.snapshot.params['id']
+     this.sub.push(
       this.restangular.all('cms/banner').get(this.id).subscribe(dados => {
         // this.updateForm(dados.data)
         this.updateForm(dados.data)
       })
+     )
     }
   ngOnInit() {
     // this.formulario = this.formBuilder.group({
@@ -189,5 +192,8 @@ export class EditBannerComponent implements OnInit {
     var lista = this.formulario.get(campoArray) as FormArray;
     var item = lista.controls[i] as FormGroup;
     return !item.get(campo).valid;
+  }
+  ngOnDestroy(): void {
+    this.sub.forEach(s => s.unsubscribe())
   }
 }

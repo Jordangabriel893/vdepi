@@ -1,24 +1,25 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { NotifierService } from 'angular-notifier';
 import { Restangular } from 'ngx-restangular';
 import * as moment from 'moment';
 import * as _ from 'lodash';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-create-comitente',
   templateUrl: './create-comitente.component.html',
   styleUrls: ['./create-comitente.component.scss']
 })
-export class CreateComitenteComponent implements OnInit {
+export class CreateComitenteComponent implements OnInit, OnDestroy {
 
   imageError: string;
   isImageSaved: boolean;
   cardImageBase64: string;
-
   formulario:FormGroup
   comitente
+  sub: Subscription[] = [];
 
   public mask: Array<string | RegExp>
   public maskCep: Array<string | RegExp>
@@ -148,5 +149,8 @@ export class CreateComitenteComponent implements OnInit {
   onValueChange(event, campo) {
     this.formulario.get(campo).markAsTouched();
     this.formulario.get(campo).setValue(event);
+  }
+  ngOnDestroy(): void {
+    this.sub.forEach(s => s.unsubscribe())
   }
 }

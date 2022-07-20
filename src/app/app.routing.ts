@@ -1,3 +1,5 @@
+import { CreateFaturaComponent } from './views/fatura/create-fatura/create-fatura.component';
+import { FaturaComponent } from './views/fatura/fatura.component';
 import { UpdateContaComponent } from './views/conta/update-conta/update-conta.component';
 import { CreateContaComponent } from './views/conta/create-conta/create-conta.component';
 import { ContaComponent } from './views/conta/conta.component';
@@ -77,6 +79,7 @@ import { TipoMeioNotificacaoComponent } from './views/tipo-meio-notificacao/tipo
 import { TipoDeNotificacaoComponent } from './views/tipo-de-notificacao/tipo-de-notificacao.component';
 import { EditNotificacaoComponent } from './views/notificacoes/edit-notificacao/edit-notificacao.component';
 import { UpdateAgendaComponent } from './views/agenda/update-agenda/update-agenda.component';
+import { LotesVistoriaComponent } from './views/vistoria/lotes/lotes-vistoria.component';
 
 
 export const routes: Routes = [
@@ -143,6 +146,24 @@ export const routes: Routes = [
         canActivate: [SourceGuard]
       },
       {
+        path: 'vistoria-lotes/:id',
+        component: LotesVistoriaComponent,
+        data: {
+          title: 'Vistoria Lotes',
+          source: 'RelatorioEstoque'
+        },
+        canActivate: [SourceGuard]
+      },
+      {
+        path: 'lotes/:id',
+        component: LotesComponent,
+        data: {
+          title: 'Lotes',
+          source: 'RelatorioEstoque'
+        },
+        canActivate: [SourceGuard]
+      },
+      {
         path: 'create-lotes/:id',
         component: CreateLotesComponent,
         data: {
@@ -174,6 +195,24 @@ export const routes: Routes = [
         component: VistoriaComponent,
         data: {
           title: 'Vistoria',
+          source: 'VISTORIA'
+        },
+        canActivate: [SourceGuard]
+      },
+      {
+        path: 'fatura',
+        component: FaturaComponent,
+        data: {
+          title: 'Fatura',
+          source: 'VISTORIA'
+        },
+        canActivate: [SourceGuard]
+      },
+      {
+        path: 'create-fatura',
+        component: CreateFaturaComponent,
+        data: {
+          title: 'Criar Fatura',
           source: 'VISTORIA'
         },
         canActivate: [SourceGuard]
@@ -399,7 +438,7 @@ export const routes: Routes = [
         path: 'create-template',
         component: CreateTemplateComponent,
         data: {
-          title: 'Create Template',
+          title: 'Criar Template',
           source: 'AGENDA'
         },
         canActivate: [SourceGuard]
@@ -408,7 +447,7 @@ export const routes: Routes = [
         path: 'update-template/:id',
         component: UpdateTemplateComponent,
         data: {
-          title: 'Update Template',
+          title: 'Atualizar Template',
           source: 'AGENDA'
         },
         canActivate: [SourceGuard]

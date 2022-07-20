@@ -47,7 +47,7 @@
               <thead>
                 <tr>
                   <th>
-                    <mfDefaultSorter by="lanceId">Lance</mfDefaultSorter>
+                    <mfDefaultSorter by="posicao">Posição</mfDefaultSorter>
                   </th>
                   <th>
                     <mfDefaultSorter by="nomeUsuario">Usuário</mfDefaultSorter>
@@ -62,20 +62,29 @@
                     <mfDefaultSorter by="taxas">Taxas</mfDefaultSorter>
                   </th>
                   <th>
+                    <mfDefaultSorter by="comissao">Comissão</mfDefaultSorter>
+                  </th>
+                  <th>
                     <mfDefaultSorter by="total">Total</mfDefaultSorter>
                   </th>
-
+                  <th *ngIf="ehLeilaoEncerrado">
+                    <mfDefaultSorter by="vencedor">Vencedor</mfDefaultSorter>
+                  </th>
                 </tr>
               </thead>
               <tbody>
                 <tr *ngFor="let item of mfLances.data; let i = index">
-                  <td>{{item.lanceId}}</td>
-                  <td>{{item.nomeUsuario}}
-                  </td>
-                  <td>{{item.dataLance | date: 'dd/MM/yyyy' }}</td>
+                  <td>{{i + 1}}</td>
+                  <td>{{item.nomeUsuario}}</td>
+                  <td>{{item.dataLance | date: 'dd/MM/yyyy H:MM' }}</td>
                   <td>{{item.valor | currency:'BRL':true:'1.2-2' }}</td>
                   <td>{{item.taxas | currency:'BRL':true:'1.2-2'}}</td>
+                  <td>{{item.comissao | currency:'BRL':true:'1.2-2'}}</td>
                   <td>{{item.total | currency:'BRL':true:'1.2-2'}}</td>
+                  <td *ngIf="ehLeilaoEncerrado" >
+                    <button *ngIf="!item.vencedor" type="button" class="btn btn-info btn-sm" (click)="gravarLanceVencedor(item.lanceId)">&nbsp; Selecionar</button>
+                    <div *ngIf="item.vencedor"> Vencedor!</div>
+                  </td>
                 </tr>
                 <tr *ngIf="loading">
                   <td class="text-center text-muted" colspan="9">

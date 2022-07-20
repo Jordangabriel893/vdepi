@@ -1,21 +1,23 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { NotifierService } from 'angular-notifier';
 import { ConsultaCepService } from 'app/views/usuarios/shared/consulta-cep/consulta-cep.service';
 import { Restangular } from 'ngx-restangular';
 import { BsLocaleService } from 'ngx-bootstrap';
+import { Subscription } from 'rxjs';
 @Component({
   selector: 'app-create-contatos',
   templateUrl: './create-contatos.component.html',
   styleUrls: ['./create-contatos.component.scss']
 })
-export class CreateContatosComponent implements OnInit {
+export class CreateContatosComponent implements OnInit, OnDestroy {
 
   minDate;
   formulario: FormGroup
   empresa
   gruposEconomico;
+  sub: Subscription[] = [];
 
   public mask: Array<string | RegExp>
   public maskTelefoneFixo: Array<string | RegExp>
@@ -41,9 +43,11 @@ export class CreateContatosComponent implements OnInit {
     this.maskCpf = [/\d/, /\d/, /\d/, '.', /\d/, /\d/, /\d/, '.', /\d/, /\d/, /\d/, '-', /\d/, /\d/]
     this.maskCnpj = [/\d/, /\d/, '.', /\d/, /\d/, /\d/, '.', /\d/, /\d/, /\d/, '/', /\d/, /\d/, /\d/, /\d/, '-', /\d/, /\d/,]
 
+   this.sub.push(
     this.restangular.one("GrupoEconomico").get().subscribe((response) => {
       this.gruposEconomico = response.data
     })
+   )
     this.formulario = this.formBuilder.group({
 
       email: [null, Validators.required],
@@ -83,8 +87,11 @@ export class CreateContatosComponent implements OnInit {
     const cep = this.formulario.get('cep').value;
 
     if (cep != null && cep !== '') {
-      this.cepService.consultaCEP(cep)
-        .subscribe(dados => this.populaDadosForm(dados));
+      this.sub.push(
+        this.cepService.consultaCEP(cep)
+        .subscribe(dados => this.populaDadosForm(dados))
+      )
+
     }
   }
   populaDadosForm(dados) {
@@ -108,5 +115,8 @@ export class CreateContatosComponent implements OnInit {
   onValueChange(event, campo) {
     this.formulario.get(campo).markAsTouched();
     this.formulario.get(campo).setValue(event);
+  }
+  ngOnDestroy(): void {
+    this.sub.forEach(s => s.unsubscribe())
   }
 }

@@ -180,7 +180,11 @@ selectedHabilitacao ;
       comissao: ["5", Validators.required],
       termoCondicaoVenda: [null],
       anexos: this.formBuilder.array([]),
-      regrasHabilitacao:[null, Validators.required]
+      regrasHabilitacao:[null, Validators.required],
+      tempoInicioSeg: [30],
+      observacao: [null],
+      linkYoutube: [null],
+      onlineYoutube: [null]
       // habilitacao:[null, Validators.required]
     })
   }
@@ -267,6 +271,7 @@ selectedHabilitacao ;
                         'px';
                     return false;
                 } else {
+
                     const imgBase64Path = e.target.result;
                     this.cardImageBase64 = imgBase64Path;
                     this.isImageSaved = true;
