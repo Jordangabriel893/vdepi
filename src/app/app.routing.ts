@@ -150,7 +150,7 @@ export const routes: Routes = [
         component: LotesVistoriaComponent,
         data: {
           title: 'Vistoria Lotes',
-          source: 'RelatorioEstoque'
+          source: 'VISTORIA'
         },
         canActivate: [SourceGuard]
       },
