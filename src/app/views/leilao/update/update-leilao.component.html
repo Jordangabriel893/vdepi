@@ -40,7 +40,7 @@
                     <input type="text" class="form-control" [ngClass]="aplicaCssErro('dataLeilao')" id="dataLeilao" placeholder="DD/MM/AAAA"
                       formControlName="dataLeilao"
                       [bsConfig]="{ dateInputFormat: 'DD/MM/YYYY HH:mm' }"
-                      bsDatepicker [minDate]="minDate"
+                      bsDatepicker
                       (bsValueChange)="onValueChange($event, 'dataLeilao')">
 
                   </div>
@@ -81,7 +81,7 @@
                     <input type="percent" class="form-control" [ngClass]="aplicaCssErro('comissao')" id="comissao" formControlName="comissao"
                     currencyMask [options]="{ prefix: '', suffix: '%', thousands: '.', decimal: ',' }">
                   </div>
-                  <div class="form-group col-12">
+                  <div class="form-group col-6">
                     <label for="regraHabilitacao">Regra Habilitação </label>
                     <ng-select [items]="habilitacoes" formControlName="regrasHabilitacao" [multiple]="true" bindLabel="tipoValidacaoRegra" bindValue="regraHabilitacaoId">
                       <ng-template ng-option-tmp let-item="item" let-index="index" let-search="searchTerm">
@@ -96,6 +96,21 @@
                           </div>
                       </ng-template>
                     </ng-select>
+                  </div>
+                  <div class="form-group col-6">
+                    <label for="tempoInicioSeg">Tempo Fechamento(Segundos)</label>
+                    <input type="number" class="form-control" [ngClass]="aplicaCssErro('tempoInicioSeg')" id="tempoInicioSeg" placeholder="30" formControlName="tempoInicioSeg" >
+                  </div>
+                  <div class="form-group col-9">
+                    <label for="linkYoutube">Transmissão Youtube (incorporar)</label>
+                    <input type="text" class="form-control" [ngClass]="aplicaCssErro('linkYoutube')" id="linkYoutube" formControlName="linkYoutube" >
+                  </div>
+                  <div class="form-group col-3">
+                    <label for="onlineYoutube">Transmissão Status</label>
+                    <select class="form-control" [ngClass]="aplicaCssErro('onlineYoutube')" formControlName="onlineYoutube">
+                      <option value="true">Online</option>
+                      <option value="false">Offline</option>
+                    </select>
                   </div>
                 </div>
               </div>

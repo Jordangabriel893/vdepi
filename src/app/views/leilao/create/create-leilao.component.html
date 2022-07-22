@@ -10,7 +10,7 @@
 
           <div class="card-block">
             <div class="row">
-              <div class="col-12">
+              <div class="col-8">
                 <div class="row">
                   <div class="form-group col-6">
                     <label for="nome">Nome </label>
@@ -37,7 +37,7 @@
 
                   <div class="form-group col-6">
                     <label for="dataLeilao">Data Leilão </label>
-                    <input type="text" class="form-control" [ngClass]="aplicaCssErro('dataLeilao')" id="dataLeilao" placeholder="DD/MM/AAAA hh:mm"
+                    <input type="text" class="form-control" [ngClass]="aplicaCssErro('dataLeilao')" id="dataLeilao" placeholder="DD/MM/AAAA"
                       formControlName="dataLeilao"
                       [bsConfig]="{ dateInputFormat: 'DD/MM/YYYY HH:mm' }"
                       bsDatepicker [minDate]="minDate"
@@ -81,11 +81,10 @@
                     <input type="percent" class="form-control" [ngClass]="aplicaCssErro('comissao')" id="comissao" formControlName="comissao"
                     currencyMask [options]="{ prefix: '', suffix: '%', thousands: '.', decimal: ',' }">
                   </div>
-                  <div class="form-group col-12">
+                  <div class="form-group col-6">
                     <label for="regraHabilitacao">Regra Habilitação </label>
                     <ng-select [items]="habilitacoes" formControlName="regrasHabilitacao" [multiple]="true" bindLabel="tipoValidacaoRegra" bindValue="regraHabilitacaoId">
-                      <ng-template  ng-option-tmp let-item="item" let-index="index" let-search="searchTerm" >
-                          <!-- <div *ngIf="item.name === 'Kaunas'">{{item.name}}</div> -->
+                      <ng-template ng-option-tmp let-item="item" let-index="index" let-search="searchTerm">
                           <div style="margin: 10px 0; white-space: normal;" class="card" >
                               <div class="card-body">
                                   <h5 class="card-title" [ngOptionHighlight]="search">{{item.tipoValidacaoRegra}}</h5>
@@ -96,20 +95,30 @@
                               </div>
                           </div>
                       </ng-template>
-                  </ng-select>
-
+                    </ng-select>
+                  </div>
+                  <div class="form-group col-6">
+                    <label for="tempoInicioSeg">Tempo Fechamento(Segundos)</label>
+                    <input type="number" class="form-control" [ngClass]="aplicaCssErro('tempoInicioSeg')" id="tempoInicioSeg" placeholder="30" formControlName="tempoInicioSeg" >
+                  </div>
+                  <div class="form-group col-9">
+                    <label for="linkYoutube">Transmissão Youtube (incorporar)</label>
+                    <input type="text" class="form-control" [ngClass]="aplicaCssErro('linkYoutube')" id="linkYoutube" formControlName="linkYoutube" >
+                  </div>
+                  <div class="form-group col-3">
+                    <label for="onlineYoutube">Transmissão Status</label>
+                    <select class="form-control" [ngClass]="aplicaCssErro('onlineYoutube')" formControlName="onlineYoutube">
+                      <option value="true">Online</option>
+                      <option value="false">Offline</option>
+                    </select>
                   </div>
                 </div>
               </div>
-
-
-            </div>
-            <div class="row">
               <div class="col-4" formGroupName="foto">
                 <fieldset class="form-group">
                   <label>Imagem do Leilão</label>
                   <div class="custom-file fileInputProfileWrap">
-                    <input type="file" (change)="fileChangeEvent($event)" class="fileInputProfile" #inputFile>
+                    <input type="file" (change)="fileChangeEvent($event)" class="fileInputProfile" #inputFile accept="image/*">
                     <div class="img-space" [ngClass]="aplicaCssErro('foto')">
                       <ng-container *ngIf="isImageSaved; else elseTemplate">
                         <img [src]="cardImageBase64" />
@@ -122,6 +131,25 @@
                 </fieldset>
                 <a class="btn btn-danger" (click)="removeImage(inputFile)" *ngIf="isImageSaved">Remover</a>
                 <div class="alert alert-danger" *ngIf="imageError">{{imageError}}</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-lg-12">
+        <div class="card">
+          <div class="card-header d-flex align-items-center">
+            <i class="fa fa-file"></i>
+            &nbsp;Descrição
+          </div>
+          <div class="card-block">
+            <div class="row" [ngClass]="aplicaCssErro('observacao')">
+              <div class="col-12">
+                <!-- <label for="editor1" >Temos e Condições de Venda </label> -->
+                <angular-editor id="editor2" formControlName="observacao" [config]="editorConfig">
+                </angular-editor>
               </div>
             </div>
           </div>
@@ -199,7 +227,6 @@
                 <input type="text" class="form-control" id="emailsNotificacao" placeholder="Emails"
                   formControlName="emailsNotificacao">
               </div>
-
             </div>
           </div>
         </div>
@@ -239,14 +266,14 @@
       <div class="col-lg-12">
         <div class="card">
           <div class="card-header d-flex align-items-center">
-            <i class="fa fa-file"></i>
+            <i class="fa fa-clock"></i>
             &nbsp;Regra de Fechamento dos Lotes
           </div>
           <div class="card-block">
             <div class="row">
               <div class="form-group col-4">
                 <label for="tempoInicio">Tempo Fechamento do Primeiro Lote <br><small class="text-muted">(Tempo será adicionado a data e hora de inicio do leilão)</small></label>
-                <input type="text" class="form-control" id="tempoInicio" formControlName="tempoInicioSeg" />
+                <input type="text" class="form-control" id="tempoInicio" formControlName="tempoInicioSeg" placeholder="00:00" [textMask]="{mask: maskhora}" />
               </div>
             </div>
           </div>
@@ -288,7 +315,7 @@
                   <td><a [href]="item.value.arquivo.url" target="_blank">{{item.value.arquivo.nome}}</a></td>
                   <td>
                     <input type="text" formControlName="nome" class="form-control" [value]="item.value.nome"
-                      placeholder="Descricao" *ngIf="item.value.acao === 'I'">
+                      placeholder="Descricao" *ngIf="item.value.acao === 'I'" >
                     <span *ngIf="item.value.acao === ''">{{item.value.nome}}</span>
                   </td>
                   <td>{{item.value.arquivo.dataCadastro | amFromUtc | amLocal | amDateFormat: 'DD/MM/YYYY HH:mm'}}</td>

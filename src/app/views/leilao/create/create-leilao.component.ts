@@ -181,7 +181,11 @@ selectedHabilitacao ;
       comissao: ["5", Validators.required],
       termoCondicaoVenda: [null],
       anexos: this.formBuilder.array([]),
-      regrasHabilitacao:[null, Validators.required]
+      regrasHabilitacao:[null, Validators.required],
+      tempoInicioSeg: [30],
+      observacao: [null],
+      linkYoutube: [null],
+      onlineYoutube: [null]
       // habilitacao:[null, Validators.required]
     })
   }

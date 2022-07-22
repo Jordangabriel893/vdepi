@@ -17,6 +17,9 @@
       "es2016",
       "dom"
     ],
+    "paths": {
+      "swiper_angular": ["../node_modules/swiper/angular"]
+    }
   },
   "angularCompilerOptions": {
     "strictTemplates": true
