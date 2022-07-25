@@ -114,8 +114,13 @@ export class DashboardComponent implements OnInit, OnDestroy {
 
   }
 
-  buscarLeilao() {
-    this.id = this.formulario.value.id
+  buscarLeilao(event?) {
+    if(event != null){
+      this.id = event.id
+    }else{
+      this.id = this.leiloes[0].id
+    }
+
     this.sub.push( this.restangular.one("dashboard/contadores").get({ LeilaoId: this.id }).subscribe((response) => {
       this.contadorVisitantes = response.data.visitantes
       this.contadorHabilitados = response.data.habilitados

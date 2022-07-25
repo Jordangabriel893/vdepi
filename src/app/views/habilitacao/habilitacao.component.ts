@@ -150,16 +150,22 @@ export class HabilitacaoComponent implements OnInit {
     })
   }
 
-  filtrarPorLeilao() {
+  filtrarPorLeilao(event) {
     this.habilitacao = [];
     this.loading = true;
-    this.restangular.one("habilitacao").get({leilaoId:this.filtroLeilao.value.leilao})
-    .subscribe((response) => {
-      this.habilitacao = response.data;
-      this.habilatacoesFiltradas = response.data;
+    if(event != null){
+      this.restangular.one("habilitacao").get({leilaoId:event.id})
+      .subscribe((response) => {
+        this.habilitacao = response.data;
+        this.habilatacoesFiltradas = response.data;
+        this.loading = false;
+      },
+      () => this.loading = false);
+    }else{
+      this.habilitacao = [];
       this.loading = false;
-    },
-    () => this.loading = false);
+    }
+
   }
 
   existeRecusado(doc:any[]){
@@ -182,7 +188,7 @@ export class HabilitacaoComponent implements OnInit {
         this.notifierService.notify('error', 'Erro ao enviar notificação de documentos Rejeitados');
       });
   }
-  
+
   onSearch(){
     if(this.queryField.value) {
       let value = this.queryField.value.replace('.', '').replace('-', '').replace('/', '').toLowerCase();

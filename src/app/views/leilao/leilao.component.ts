@@ -47,8 +47,13 @@ export class LeilaoComponent implements OnInit {
     this.router.navigate(['/dashboard', id]);
   }
 
-  buscarLeilao(){
-    const filtro = this.selectLeilao.filter(x => x.nome === this.formulario.value.leilao)
-    this.leiloes = filtro
+  buscarLeilao(event){
+    if(event == null){
+      this.leiloes = this.selectLeilao
+    }else{
+      const filtro = this.selectLeilao.filter(x => x.nome === event.nome)
+      this.leiloes = filtro
+    }
+
   }
 }
