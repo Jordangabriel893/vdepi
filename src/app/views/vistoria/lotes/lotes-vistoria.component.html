@@ -37,7 +37,8 @@
                   <div class="container text-center" 
                        (click)="carregarVistoria(item); detalhe = i" 
                        [class.destaque]="detalhe == i" 
-                       [class.vistoriado]=" item.vistoriado">           
+                       [class.vistoriado]=" item.vistoriaConcluida"
+                       [class.disabled]="!item.vistoriado">           
                       <h5>LOTE</h5>
                       <h3>{{item.numeroLote}}</h3>
                       <p class="text-truncate">{{ item.descricao }}</p>

@@ -79,4 +79,11 @@
     opacity: 1 !important;
   }
 
+  .disabled {
+    pointer-events: none;
+    background-color: #e5e3e3;
+    border: 3px solid #cecece;
+    color: #7f7f7f
+  }
+
   
