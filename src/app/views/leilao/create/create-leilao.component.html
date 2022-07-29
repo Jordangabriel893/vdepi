@@ -112,6 +112,13 @@
                       <option value="false">Offline</option>
                     </select>
                   </div>
+                  <div class="form-group col-12">
+                    <label for="destaqueSite">Destaque</label>
+                    <select class="form-control" [ngClass]="aplicaCssErro('destaqueSite')" formControlName="destaqueSite"  >
+                      <option [value]="true">Sim</option>
+                      <option [value]="false">Não</option>
+                    </select>
+                  </div>
                 </div>
               </div>
               <div class="col-4" formGroupName="foto">
