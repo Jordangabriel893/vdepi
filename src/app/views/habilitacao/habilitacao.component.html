@@ -79,7 +79,7 @@
                         type="button" 
                         class="btn btn-primary btn-sm"
                        (click)="openModal(documento, item.solicitacaoHabilitacaoId)"
-
+                       [disabled]="item.status == 'Rejeitado'"
                        ><i class="fa fa-file"></i>&nbsp; {{item.documentos.length}} Documentos</button>
                   </td>
                   <td class="text-center" nowrap>
