@@ -1,0 +1,5 @@
+<form [formGroup]="formulario" class="col-12">
+  <ng-select [items]="leiloes" formControlName="leilao"  bindLabel="nome"  (change)="emitirLeilao()" >
+  </ng-select>
+</form>
+

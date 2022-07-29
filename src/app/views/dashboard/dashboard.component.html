@@ -1,12 +1,13 @@
 <div class="container">
     <div class="row linha-seletor">
-      <form [formGroup]="formulario" class="col-4">
+      <!-- <form [formGroup]="formulario" class="col-4">
         <select class="form-control col-12 seletor" aria-label="Default select example" (change)="buscarLeilao()" formControlName="id" >
           <option selected>Selecione o Leilão</option>
           <option *ngFor="let item of leiloes" value="{{item.id}}">{{item.nome}} - {{item.titulo}}</option>
 
         </select>
-      </form>
+      </form> -->
+      <app-search-leilao class="search-leilao" (emitLeilao)="buscarLeilao($event)"></app-search-leilao>
     </div>
 
     <div class="row">

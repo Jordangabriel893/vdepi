@@ -1,3 +1,4 @@
+
 import { Component, ElementRef, OnDestroy, OnInit, TemplateRef, ViewChild } from '@angular/core';
 import { FormGroup, FormBuilder, Validators, FormArray, FormControl } from '@angular/forms';
 import { Router } from '@angular/router';
@@ -10,8 +11,8 @@ import * as moment from 'moment';
 import { BsLocaleService } from 'ngx-bootstrap';
 import { Restangular } from 'ngx-restangular';
 import { ConsultaCepService } from 'app/views/usuarios/shared/consulta-cep/consulta-cep.service';
-import { Subscription } from 'rxjs';
-
+import { concat, Observable, of, Subject, Subscription } from 'rxjs';
+import { tap, distinctUntilChanged, switchMap, catchError, filter, map } from 'rxjs/operators';
 @Component({
   selector: 'app-create-fatura',
   templateUrl: './create-fatura.component.html',
@@ -20,12 +21,12 @@ import { Subscription } from 'rxjs';
 export class CreateFaturaComponent implements OnInit, OnDestroy {
   valorQualquer = true;
   lotes;
-  formulario:FormGroup
+  formulario: FormGroup
   loading
   today = moment().utc();
   clientes;
-  dataAtual:any;
-  empresas:any
+  dataAtual: any;
+  empresas: any
   minDate: Date;
   tipoFatura = 'Manual';
   opcoes = [
@@ -52,6 +53,14 @@ export class CreateFaturaComponent implements OnInit, OnDestroy {
   maskCnpj: (string | RegExp)[];
 
   sub: Subscription[] = [];
+
+  people$: Observable<any>;
+  peopleLoading = false;
+  peopleInput$ = new Subject<string>();
+
+  lote$: Observable<any>;
+  loteLoading = false;
+  loteInput$ = new Subject<string>();
   constructor(
     private formBuilder: FormBuilder,
     private restangular: Restangular,
@@ -60,53 +69,46 @@ export class CreateFaturaComponent implements OnInit, OnDestroy {
     private localeService: BsLocaleService,
     private modalService: BsModalService,
     private cepService: ConsultaCepService,
-    ) {
-      localeService.use('pt-br');
-      this.minDate = new Date();
-      this.minDate.setDate(this.minDate.getDate() + 1);
-      this.mask = ['(', /[1-9]/, /\d/, ')', ' ', /\d/, /\d/, /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/]
+  ) {
+    localeService.use('pt-br');
+    this.minDate = new Date();
+    this.minDate.setDate(this.minDate.getDate() + 1);
+    this.mask = ['(', /[1-9]/, /\d/, ')', ' ', /\d/, /\d/, /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/]
     this.maskTelefoneFixo = ['(', /[1-9]/, /\d/, ')', ' ', /\d/, /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/]
     this.maskCep = [/\d/, /\d/, /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/,]
     this.maskCpf = [/\d/, /\d/, /\d/, '.', /\d/, /\d/, /\d/, '.', /\d/, /\d/, /\d/, '-', /\d/, /\d/]
     this.maskCnpj = [/\d/, /\d/, '.', /\d/, /\d/, /\d/, '.', /\d/, /\d/, /\d/, '/', /\d/, /\d/, /\d/, /\d/, '-', /\d/, /\d/,]
-    }
+  }
 
   ngOnInit() {
+
     this.sub.push(
-    this.restangular.one('empresa').get().subscribe(
-      dados =>{
-        this.empresas= dados.data
-      }
-    )
-    )
-    this.sub.push(
-    this.restangular.one('admin/leilao').get().subscribe(
-      dados =>{
-        this.leilao= dados.data
-      }
-    )
+      this.restangular.one('empresa').get().subscribe(
+        dados => {
+          this.empresas = dados.data
+        }
+      )
     )
     this.sub.push(
-      this.restangular.one('lote').get().subscribe(
-      dados =>{
-        this.lotes = dados.data
-      }
-    )
+      this.restangular.one('admin/leilao').get().subscribe(
+        dados => {
+          this.leilao = dados.data
+        }
+      )
     )
     this.sub.push(
       this.restangular.one('fatura/pessoas').get().subscribe(
-      dados =>{
-        this.clientes = dados.data
-        console.log(dados.data)
-      }
-    )
+        dados => {
+          this.clientes = dados.data
+        }
+      )
     )
     this.formulario = this.formBuilder.group({
-      origem:  [null, [Validators.required, Validators.minLength(3), Validators.maxLength(35)]],
+      origem: [null, [Validators.required, Validators.minLength(3), Validators.maxLength(35)]],
       leilaoId: [null, [Validators.required]],
       cobrancaId: [null, [Validators.required]],
       cliente: this.formBuilder.group({
-        nome:[null, [Validators.required, Validators.minLength(3), Validators.maxLength(35)]],
+        nome: [null, [Validators.required, Validators.minLength(3), Validators.maxLength(35)]],
         email: [null, [Validators.required, Validators.email]],
         telefone: [null, [Validators.required, Validators.email]],
         cpfCnpj: [null, [Validators.required, Validators.minLength(11)]],
@@ -117,21 +119,23 @@ export class CreateFaturaComponent implements OnInit, OnDestroy {
         cidade: [null],
         estado: [null],
         cep: [null],
-        usuarioId:[null]
+        usuarioId: [null]
       }),
       dataVencimento: [null, Validators.required],
-      formasPagamento:this.buildOpcoes(),
+      formasPagamento: this.buildOpcoes(),
       empresaCobrança: [null, [Validators.required]],
       dataLimite: [null, Validators.required],
-      clienteSelecionado:[null],
-      lote:[null, Validators.required],
+      clienteSelecionado: [null],
+      lote: [null, Validators.required],
 
       itensFatura: this.formBuilder.array([], Validators.required),
       adicionarItem: [],
-      selectAll:[false],
+      selectAll: [false],
 
 
     })
+    this.loadLotes()
+    this.loadPeople()
   }
 
   onSubmit() {
@@ -158,24 +162,62 @@ export class CreateFaturaComponent implements OnInit, OnDestroy {
     //     })
     //   });
   }
-  listLotes(event){
-    console.log(event)
+  private loadLotes() {
+    this.lote$ = concat(
+      of([]),
+      this.loteInput$.pipe(
+        distinctUntilChanged(),
+        tap(() => { this.loteLoading = true }),
+        switchMap(term => term != '' ?
+          this.restangular.one(`fatura/lotes/${this.formulario.value.leilaoId}?pesquisa=${term}`).get().pipe(
+            catchError(() => of([])),
+            tap(() => this.loteLoading = false),
+            map((x: any) => x.data)
+          )
+          :
+          of([]).pipe(
+            tap(() => this.loteLoading = false)
+          )
+        )
+      )
+    );
+
   }
+  private loadPeople(){
+    this.people$ = concat(
+      of([]),
+      this.peopleInput$.pipe(
+        distinctUntilChanged(),
+        tap(() => { this.peopleLoading = true }),
+        switchMap(term => term != '' ?
+          this.restangular.one(`fatura/pessoas?pesquisa=${term}`).get().pipe(
+            catchError(() => of([])),
+            tap(() => this.peopleLoading = false),
+            map((x: any) => x.data)
+          )
+          :
+          of([]).pipe(
+            tap(() => this.peopleLoading = false)
+          )
+        )
+      )
+    );
+  }
+
   consultaCEP() {
     const cep = this.formulario.get('cliente.cep').value;
-
     if (cep != null && cep !== '') {
       this.sub.push(
         this.cepService.consultaCEP(cep)
-        .subscribe(dados => this.populaDadosForm(dados))
+          .subscribe(dados => this.populaDadosForm(dados))
       )
 
     }
   }
-  populaDadosPessoa(dados){
+  populaDadosPessoa(dados) {
     const clienteSelecionado = this.formulario.value.clienteSelecionado
     this.formulario.patchValue({
-      cliente:({
+      cliente: ({
         nome: clienteSelecionado.nome,
         email: clienteSelecionado.email,
         telefone: clienteSelecionado.telefone,
@@ -187,7 +229,7 @@ export class CreateFaturaComponent implements OnInit, OnDestroy {
         cidade: clienteSelecionado.cidade,
         estado: clienteSelecionado.estado,
         cep: clienteSelecionado.cep,
-        usuarioId:clienteSelecionado.usuarioId
+        usuarioId: clienteSelecionado.usuarioId
       })
 
     });
@@ -196,7 +238,7 @@ export class CreateFaturaComponent implements OnInit, OnDestroy {
     // this.formulario.setValue({});
 
     this.formulario.patchValue({
-      cliente:({
+      cliente: ({
         logradouro: dados.logradouro,
         logradouroComplemento: dados.complemento,
         bairro: dados.bairro,
@@ -209,57 +251,57 @@ export class CreateFaturaComponent implements OnInit, OnDestroy {
   setFatura(item) {
     this.tipoFatura = item
     this.formulario = this.formBuilder.group({
-      origem:  [null, [Validators.required, Validators.minLength(3), Validators.maxLength(35)]],
+      origem: [null, [Validators.required, Validators.minLength(3), Validators.maxLength(35)]],
       leilaoId: [null, [Validators.required]],
       cobrancaId: [null, [Validators.required]],
       empresaCobrança: [null, [Validators.required]],
       dataLimite: [null, Validators.required],
       dataVencimento: [null, Validators.required],
-      lote:[null, Validators.required],
-      formasPagamento:this.buildOpcoes(),
+      lote: [null, Validators.required],
+      formasPagamento: this.buildOpcoes(),
       itensFatura: this.formBuilder.array([], Validators.required),
       adicionarItem: [],
-      selectAll:[false]
+      selectAll: [false]
 
     })
   }
-  buildOpcoes(){
+  buildOpcoes() {
     const values = this.opcoes.map(v => new FormControl(false))
     return this.formBuilder.array(values);
   }
-  getOpcoes(){
+  getOpcoes() {
     return this.formulario.get('formasPagamento')['controls']
   }
   adicionarItens(itemCampoId = null) {
     const form = this.formulario.value
-    if(form.adicionarItem == 'outros'){
+    if (form.adicionarItem == 'outros') {
       let itens = this.formulario.get('itensFatura') as FormArray
       itens.push(this.formBuilder.group({
         descricao: ['', Validators.required],
         valor: ['', Validators.required],
-        tipo:['outros']
+        tipo: ['outros']
       }))
       return
     }
-    if(form.adicionarItem == 'lote'){
-      if(form.selectAll == true){
-      const desc = `Todos os lotes foram selecionados `
-      let itens = this.formulario.get('itensFatura') as FormArray
-      itens.push(this.formBuilder.group({
-        descricao: [desc, Validators.required],
-        tipo:['lote'],
-        all:[true]
-      }))
-      return
+    if (form.adicionarItem == 'lote') {
+      if (form.selectAll == true) {
+        const desc = `Todos os lotes foram selecionados `
+        let itens = this.formulario.get('itensFatura') as FormArray
+        itens.push(this.formBuilder.group({
+          descricao: [desc, Validators.required],
+          tipo: ['lote'],
+          all: [true]
+        }))
+        return
       }
 
-      const desc = `Lote: ${form.lote.numeroLote} - Placa: ${form.lote.campos[0] ? form.lote.campos[0].valor : ''} - Marca/Modelo:${form.lote.campos[5] ? form.lote.campos[5].valor : ''} - Valor:${form.lote.valorAvaliacao}   `
+      const desc = `Lote: ${form.lote.numeroLote} - Placa: ${form.lote ? form.lote.placa : ''} - Marca/Modelo:${form.lote ? form.lote.marcaModelo : ''}   `
       let itens = this.formulario.get('itensFatura') as FormArray
       itens.push(this.formBuilder.group({
         descricao: [desc, Validators.required],
-        valor: ['', Validators.required],
-        tipo:['lote'],
-        all:[false]
+        valor: [form.lote.valorLanceVencedor, Validators.required],
+        tipo: ['lote'],
+        all: [false]
       }))
     }
 
@@ -267,37 +309,41 @@ export class CreateFaturaComponent implements OnInit, OnDestroy {
   deleteItens(indexCampo: number) {
     let itens = this.formulario.controls['itensFatura'] as FormArray
     let item = itens.at(indexCampo) as FormGroup;
-      itens.removeAt(indexCampo)
-    }
+    itens.removeAt(indexCampo)
+  }
 
   filterList(campo: string) {
     const itens = this.formulario.get(campo) as FormArray;
     return itens.controls
   }
-  openModal(template: TemplateRef<any>) {
+  openModal(template: TemplateRef<any>,item?) {
+    if(item == 'fatura' && this.formulario.value.leilaoId == null){
+      this.notifierService.notify('error', 'Selecione um Leilão');
+      return
+    }
     this.modalRef = this.modalService.show(template);
 
   }
-  consoleInput(item){
+  consoleInput(item) {
     console.log(item)
   }
 
 
-  verificaValidTouched(campo){
+  verificaValidTouched(campo) {
     return !this.formulario.get(campo).valid && this.formulario.get(campo).touched;
   }
 
-  aplicaCssErroLista(campoArray, campo, i){
-    return{ 'has-error': this.verificaValidList(campoArray, campo, i) }
+  aplicaCssErroLista(campoArray, campo, i) {
+    return { 'has-error': this.verificaValidList(campoArray, campo, i) }
   }
 
-  verificaValidList(campoArray, campo, i){
+  verificaValidList(campoArray, campo, i) {
     var lista = this.formulario.get(campoArray) as FormArray;
     var item = lista.controls[i] as FormGroup;
     return !item.get(campo).valid;
   }
 
-  aplicaCssErro(campo){
+  aplicaCssErro(campo) {
     return { 'has-error': this.verificaValidTouched(campo) }
   }
 

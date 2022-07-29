@@ -56,11 +56,13 @@ export class ArrematantesComponent implements OnInit, OnDestroy {
 
   }
 
-  filtrarPorLeilao() {
+  filtrarPorLeilao(event) {
     this.arrematantes = [];
     this.loading = true;
+    if(event != null){
+      console.log('entrou')
     this.sub.push(
-      this.restangular.one(`leilao/${this.filtroLeilao.value.leilao}/arrematantes`).get()
+      this.restangular.one(`leilao/${event.id}/arrematantes`).get()
       .subscribe((response) => {
         this.arrematantes = response.data;
         this.arremantantesFiltrados = response.data;
@@ -68,6 +70,11 @@ export class ArrematantesComponent implements OnInit, OnDestroy {
       },
       () => this.loading = false)
     )
+    }else{
+      console.log('entrou 2')
+      this.arremantantesFiltrados = []
+    this.loading = false;
+    }
   }
 
   auto(loteId: number, numerolote: number) {
