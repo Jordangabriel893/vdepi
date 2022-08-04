@@ -10,99 +10,63 @@
           <div class="row m-2">
             <div class="col-md-12 overflow-hidden">
               <swiper
-              [slidesPerView]="1"
-              [navigation]="true"
-              [spaceBetween]="20"
-              [breakpoints]="{
-                '640': {
-                  slidesPerView: 2,
-                  spaceBetween: 20
-                },
-                '768': {
-                  slidesPerView: 4.5,
-                  spaceBetween: 10
-                },
-                '1024': {
-                  slidesPerView: 5.5,
-                  spaceBetween: 15
-                },
-                '1440': {
-                  slidesPerView: 7.5,
-                  spaceBetween: 15
-                }
-              }"
-
+              [slidesPerView]="6.5"
+              [navigation]="false"
+              [spaceBetween]="10"
               class="mySwiper">
                 <ng-template swiperSlide *ngFor="let item of lotes; index as i">
-                  <div class="container text-center" 
-                       (click)="carregarVistoria(item); detalhe = i" 
-                       [class.destaque]="detalhe == i" 
+                  <div class="container text-center"
+                       (click)="carregarVistoria(item); detalhe = i"
+                       [class.destaque]="detalhe == i"
                        [class.vistoriado]=" item.vistoriaConcluida"
-                       [class.disabled]="!item.vistoriado">           
-                      <h5>LOTE</h5>
+                       [class.disabled]="!item.vistoriado">
+                      <h6>LOTE</h6>
                       <h3>{{item.numeroLote}}</h3>
-                      <p class="text-truncate">{{ item.descricao }}</p>
+                      <p class="text-truncate"><small>{{ item.descricao }}</small></p>
                   </div>
                 </ng-template>
               </swiper>
             </div>
           </div>
-          <div class="row mr-2" *ngIf="carregouVistoria" >
+          <div class="row m-2" *ngIf="carregouVistoria" >
             <div class="col-md-12 border border-secondary rounded alert alert-warning" >
               <h1 class="text-center ">O Lote não foi vistoriado!</h1>
             </div>
           </div>
-          <div class="row mr-2" *ngIf="lote && vistoria" >
-              <div class="col-md-12 border border-secondary rounded" >
-                <div class="d-flex justify-content-center flex-wrap">
-                  <div class="p-2" *ngFor="let item of lote.campos">
-                    <div class="text-uppercase">{{item.loteCampo.descricao}}</div>
-                    <div class="font-weight-bold text-uppercase">{{item.valor}}</div>
-                  </div>
+          <div class="row m-2" *ngIf="lote && vistoria" >
+            <div class="col-md-12 border border-secondary rounded" >
+              <div class="d-flex justify-content-center flex-wrap">
+                <div class="px-3" *ngFor="let item of lote.campos">
+                  <div class="font-weight-bold text-uppercase small">{{item.loteCampo.descricao}}</div>
+                  <div class="text-uppercase text-muted small" *ngIf="getCampoAlterado(item.loteCampoId)"><s>{{item.valor}}</s></div>
+                  <div class="text-uppercase">{{getCampoAlterado(item.loteCampoId) ? getCampoAlterado(item.loteCampoId).valor : item.valor}}</div>
                 </div>
               </div>
+            </div>
             <div class="col-md-6">
               <div class="row mt-2">
-                <div class="col-md-12  overflow-hidden">
+                <div class="col-md-11 overflow-hidden">
                   <swiper
                   (swiper)="thumbsSwiper = $event"
                   [spaceBetween]="25"
-                  [slidesPerView]="3"
-                  [breakpoints]="{
-                    '640': {
-                      slidesPerView: 3.5,
-                      spaceBetween: 20
-                    },
-                    '768': {
-                      slidesPerView: 4,
-                      spaceBetween: 10
-                    },
-                    '1024': {
-                      slidesPerView: 5,
-                      spaceBetween: 25
-                    },
-                    '1440': {
-                      slidesPerView: 6,
-                      spaceBetween: 20
-                    }
-                  }"
+                  [slidesPerView]="5.5"
                   class="mySwiper2"
                   >
                     <ng-container *ngFor="let item of vistoria.fotos; index as i">
                       <ng-template  swiperSlide let-data>
                         <div class="thumb overflow-hidden">
-                          <img 
-                          (click)="itemThumb = i" 
-                          [class.itemSelecionado]="itemThumb == i" 
+                          <img
+                          (click)="itemThumb = i"
+                          [class.itemSelecionado]="itemThumb == i"
                           src="{{item.loteFoto.arquivo.url}}" >
-                        </div> 
+                        </div>
                       </ng-template>
                     </ng-container>
                   </swiper>
                 </div>
               </div>
               <div class="row mt-2">
-                <div class="col-md-12 overflow-hidden">
+                <div class="col-md-11 overflow-hidden">
                     <swiper *ngIf="thumbsSwiper"
                     [spaceBetween]="20"
                     [slidesPerView]="1"
@@ -114,7 +78,8 @@
                     <ng-container *ngFor="let item of vistoria.fotos; index as i">
                       <ng-template swiperSlide >
                         <div class="thumb-principal">
-                          <img src="{{item.loteFoto.arquivo.url}}" > 
+                          <img src="{{item.loteFoto.arquivo.url}}" >
+                          <div class="tarja">AVARIA: {{item.temAvaria ? item.avaria : 'N/A'}}</div>
                         </div>
                       </ng-template>
                     </ng-container>
@@ -126,26 +91,27 @@
               <div class="row">
                 <div class="col-sm-4" *ngFor="let item of vistoria.checklist">
                   <div class="p-2">
-                    <div class="text-uppercase">{{item.vistoriaChecklist.descricao}}</div>
-                    <div class="font-weight-bold text-uppercase">{{item.valor}}</div>
+                    <div class="font-weight-bold text-uppercase small">{{item.vistoriaChecklist.descricao}}</div>
+                    <div class="text-uppercase">{{item.valor}}</div>
                   </div>
                 </div>
-              </div>
-              <div class="d-flex flex-column">
-                <div class="form-group">
-                  <label for="exampleFormControlTextarea1">Observações</label>
-                  <textarea class="form-control" id="exampleFormControlTextarea1" rows="2" cols="12" [(ngModel)]="vistoria.observacao"></textarea>
+                <div class="col-sm-12">
+                  <div class="p-2">
+                    <div class="font-weight-bold text-uppercase small">Observações</div>
+                    <textarea class="form-control" id="exampleFormControlTextarea1" rows="2" cols="12" [(ngModel)]="vistoria.observacao"></textarea>
+                  </div>
                 </div>
-              </div>
-              <div class="d-flex flex-row flex-wrap">
-                <div class="form-group col-4">
-                  <label for="ativo">Tipo de Lote </label>
-                  <select class="form-control" [(ngModel)]="vistoria.lote.tipoLoteId">
-                    <option *ngFor="let item of tiposLote" [value]="item.tipoLoteId">{{item.descricao}}</option>
-                  </select>
-                </div>
-                <div class="d-flex align-items-end mb-3">
-                  <button type="button" class="btn btn-success" (click)="gravar()">Salvar</button>
+                <div class="col-sm-12">
+                  <div class="p-2">
+                    <div class="font-weight-bold text-uppercase small">Classificação do Lote</div>
+                    <select class="form-control" [(ngModel)]="vistoria.lote.tipoLoteId">
+                      <option selected>-- SELECIONE --</option>
+                      <option *ngFor="let item of tiposLote" [value]="item.tipoLoteId">{{item.descricao}}</option>
+                    </select>
+                    <div class="text-center m-2">
+                      <button type="button" class="btn btn-block btn-success btn-large" (click)="gravar()">Salvar</button>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>

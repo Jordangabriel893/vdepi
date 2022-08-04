@@ -1,21 +1,43 @@
 
 .container {
- height: 90px;
- width: 120px;
- border: 2px solid rgb(152, 152, 152) ;
- border-radius: 1rem;
+  height: 80px;
+  width: 150px;
+  border: 2px solid rgb(152, 152, 152) ;
+  border-radius: 5px;
+  background-color: #fff;
+  cursor: pointer;
+}
+
+h6{
+  font-size: 12px;
+  font-weight: normal;
+  padding: 0;
+  margin: 0;
+  margin-top: 5px;
+}
+
+h3{
+  font-size: 25px;
+  font-weight: 700;
+  padding: 0;
+  margin: 0;
+  margin-bottom: 10px;
+}
+
+p {
+  font-size: 11px;
 }
 
 .swiper {
     width: 100%;
     height: 100%;
   }
-  
+
   .swiper-slide {
     text-align: center;
     font-size: 18px;
     background: #fff;
-  
+
     /* Center slide text vertically */
     display: -webkit-box;
     display: -ms-flexbox;
@@ -30,7 +52,7 @@
     -webkit-align-items: center;
     align-items: center;
   }
-  
+
   .swiper-slide img {
     display: block;
     width: 100%;
@@ -68,11 +90,15 @@
   }
 
   .destaque {
-    border: 3px solid rgb(81, 75, 236) ;
+    background-color: #0c365e !important;
+    color: #fff !important;
+    border: 2px solid #010a13 !important;
   }
 
   .vistoriado {
-    background-color: rgb(116, 245, 118);
+    color: #454141;
+    background-color: #13c716;
+    border-color: #097a3c;
   }
 
   .itemSelecionado {
@@ -81,9 +107,20 @@
 
   .disabled {
     pointer-events: none;
+    cursor: not-allowed;
     background-color: #e5e3e3;
     border: 3px solid #cecece;
     color: #7f7f7f
   }
 
-  
+ .tarja {
+    background-color: #0006;
+    color: #fff;
+    padding: 15px;
+    position: absolute;
+    bottom: 0;
+    width: 99.5%;
+    border-bottom-right-radius: 5px;
+    border-bottom-left-radius: 5px;
+    font-weight: 600;
+ }
