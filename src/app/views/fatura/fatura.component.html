@@ -1,21 +1,8 @@
-<div class="dashboard-bar">
-  <div class="row justify-content-end pr-5">
-    <div class="col-md-auto text-right">
-      <div class="dropdown" dropdown title="Leilões">
-        <div class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false" dropdownToggle>
-          <i class="fa fa-gavel"></i>
-          <span class="d-md-down-none">{{nomeLeilao}}</span>
-        </div>
-        <div class="dropdown-menu dropdown-menu-right scrollable-dropdown" *dropdownMenu aria-labelledby="simple-dropdown">
-          <div class="dropdown-header text-center"><strong>Leilão</strong></div>
-          <div class="dropdown-item" *ngFor="let item of leiloes; let i = index" (click)="setLeilao(item.id, item.nome)" style="cursor:pointer">{{item.nome}}</div>
-        </div>
-      </div>
-    </div>
 
-  </div>
-</div>
 <div class="animated fadeIn">
+  <div class="row linha-seletor">
+    <app-search-leilao class="search-leilao" (emitLeilao)="setLeilao($event)"></app-search-leilao>
+  </div>
   <div class="row">
     <div class="col-lg-12">
       <div class="card">

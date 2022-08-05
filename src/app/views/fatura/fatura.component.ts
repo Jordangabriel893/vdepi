@@ -43,10 +43,10 @@ export class FaturaComponent implements OnInit, OnDestroy {
   ngOnInit() {
 
   }
-  setLeilao(id, nome){
-    console.log(id)
+  setLeilao(leilao){
+
     this.sub.push(
-      this.restangular.one(`fatura/${id}/faturas`).get().subscribe(
+      this.restangular.one(`fatura/${leilao.id}/faturas`).get().subscribe(
       dados =>{
         console.log(dados.data)
         this.faturas = dados.data

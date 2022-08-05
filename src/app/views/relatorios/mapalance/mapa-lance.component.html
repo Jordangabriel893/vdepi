@@ -11,7 +11,7 @@
     </div>
   </div>
 </div> -->
-<div class="dashboard-bar">
+<!-- <div class="dashboard-bar">
   <div class="row justify-content-end pr-5">
     <div class="col-md-auto text-right">
       <div class="dropdown" dropdown title="Leilões">
@@ -26,6 +26,9 @@
       </div>
     </div>
   </div>
+</div> -->
+<div class="row linha-seletor">
+  <app-search-leilao class="search-leilao" (emitLeilao)="setLeilao($event)"></app-search-leilao>
 </div>
 
 <ngui-map [center]="latLng" [zoom]="zoom" [zoomControl]="false" (mapReady$)="onMapReady($event)">
