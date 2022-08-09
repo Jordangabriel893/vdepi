@@ -165,6 +165,7 @@ selectedHabilitacao ;
       emailsNotificacao: [null],
       dataDiarioOficial: [null],
       numeroDiarioOficial: [null],
+      destaqueSite:[null, Validators.required],
       foto: this.formBuilder.group({
         arquivoId:[0],
         nome:[null],

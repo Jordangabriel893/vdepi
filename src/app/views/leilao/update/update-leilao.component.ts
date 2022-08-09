@@ -173,6 +173,7 @@ export class UpdateLeilaoComponent implements OnInit {
       dataDiarioOficial: [dados.dataDiarioOficial ? moment.utc(dados.dataDiarioOficial).local().toDate() : null],
       emailsNotificacao: [dados.emailsNotificacao],
       numeroDiarioOficial:[dados.numeroDiarioOficial],
+      destaqueSite:[dados.destaqueSite],
       foto: this.formBuilder.group({
         url: [dados.foto.url],
         nome:[dados.foto.nome],

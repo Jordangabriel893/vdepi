@@ -46,14 +46,14 @@ export class LotesVistoriaComponent implements OnInit {
       this.tiposLote = allResp[1].data
       console.log(this.lotes)
     })
-    
+
   }
 
   carregarVistoria(e){
-    forkJoin([ 
+    forkJoin([
       this.restangular.one("lote", e.loteId).get().pipe(),
       this.restangular.one("vistoria", e.loteId).get().pipe()
-    ]).subscribe((allResp: any[]) => { 
+    ]).subscribe((allResp: any[]) => {
       this.lote = allResp[0].data
       this.vistoria = allResp[1].data
       this.carregouVistoria = this.vistoria == null
@@ -61,7 +61,6 @@ export class LotesVistoriaComponent implements OnInit {
   }
 
   gravar(){
-
     this.restangular.all('vistoria').customPUT(this.vistoria, this.vistoria.vistoriaId).subscribe(a => {
         this.notifierService.notify('success', 'Lote Vistoriado com sucesso');
         this.tornaVistoriado()
@@ -69,8 +68,8 @@ export class LotesVistoriaComponent implements OnInit {
         error => {
           this.notifierService.notify('error', 'Erro ao atualizar o Lote!');
         });
-
   }
+
   tornaVistoriado(){
     const objIndex = this.lotes.findIndex((obj => obj.loteId == this.lote.loteId));
     this.lotes[objIndex].Vistoriado = true
@@ -81,6 +80,10 @@ export class LotesVistoriaComponent implements OnInit {
     this.thumbSwiper = swiper;
     this.thumbOptions = { swiper: this.thumbSwiper}
     console.log(swiper);
+  }
+
+  getCampoAlterado(loteCampoId) {
+    return this.vistoria.campos.find(x => x.loteCampoId === loteCampoId);
   }
 }
 

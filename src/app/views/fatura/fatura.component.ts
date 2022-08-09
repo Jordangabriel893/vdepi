@@ -16,6 +16,8 @@ export class FaturaComponent implements OnInit, OnDestroy {
   loading = true;
   selectLeilao
   sub: Subscription[] = [];
+  leiloes;
+  nomeLeilao:any = 'Leilões';
   constructor(
     private route: ActivatedRoute,
     private router: Router,
@@ -24,15 +26,33 @@ export class FaturaComponent implements OnInit, OnDestroy {
 
     this.sub.push(
       this.restangular.one("fatura/faturas").get().subscribe((response) => {
-        this.faturas = response.data
+
         console.log(response.data)
         this.loading = false
       })
     )
+    this.sub.push(
+      this.restangular.one('admin/leilao').get().subscribe(
+        dados =>{
+          this.leiloes= dados.data
+        }
+      )
+      )
   }
 
   ngOnInit() {
 
+  }
+  setLeilao(id, nome){
+    console.log(id)
+    this.sub.push(
+      this.restangular.one(`fatura/${id}/faturas`).get().subscribe(
+      dados =>{
+        console.log(dados.data)
+        this.faturas = dados.data
+      }
+    )
+    )
   }
 
   edit(id) {
