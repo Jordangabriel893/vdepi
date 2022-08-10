@@ -3,6 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { NotifierService } from 'angular-notifier';
 import { Restangular } from 'ngx-restangular';
 import { forkJoin } from 'rxjs';
+import * as fileSaver from 'file-saver';
 
 // import Swiper core and required modules
 import SwiperCore, {  Navigation, Thumbs} from "swiper";
@@ -22,12 +23,13 @@ export class LotesVistoriaComponent implements OnInit {
   tiposLote
   carregouVistoria
   vistoria
-  loading
+  loading = true;
   leilaoId
   itemThumb = 0
   thumbSwiper
   thumbOptions
   thumbsSwiper: any;
+  loadingLaudo = false;
   constructor(
     private restangular: Restangular,
     private route: ActivatedRoute,
@@ -39,13 +41,14 @@ export class LotesVistoriaComponent implements OnInit {
 
   ngOnInit() {
     forkJoin([
-      this.restangular.one("lote", '').get({ leilaoId: this.id, PageSize:100 }).pipe(),
+      this.restangular.one("lote", '').get({ leilaoId: this.id, PageSize:300 }).pipe(),
       this.restangular.one("tipolote").get().pipe(),
     ]).subscribe((allResp: any[]) => {
       this.lotes = allResp[0].data
       this.tiposLote = allResp[1].data
-      console.log(this.lotes)
-    })
+      this.loading = false;
+    },
+    () => this.loading = false)
 
   }
 
@@ -72,18 +75,33 @@ export class LotesVistoriaComponent implements OnInit {
 
   tornaVistoriado(){
     const objIndex = this.lotes.findIndex((obj => obj.loteId == this.lote.loteId));
-    this.lotes[objIndex].Vistoriado = true
-    console.log(this.lotes[objIndex])
+    this.lotes[objIndex].vistoriaConcluida = true
+
+    this.vistoria.statusId = 2;
   }
 
   onSwiper(swiper) {
     this.thumbSwiper = swiper;
     this.thumbOptions = { swiper: this.thumbSwiper}
-    console.log(swiper);
-  }
+ }
 
   getCampoAlterado(loteCampoId) {
     return this.vistoria.campos.find(x => x.loteCampoId === loteCampoId);
+  }
+
+  gerarLaudo() {
+    this.loadingLaudo = true;
+    this.restangular.all('vistoria').one(`${this.vistoria.numero}/laudo`, )
+    .withHttpConfig({responseType: 'blob'})
+    .get()
+    .subscribe((response) => {
+      const blob = new Blob([response], { type: 'application/pdf' });
+      fileSaver.saveAs(blob, `Vistoria_${this.vistoria.numero}.pdf`);
+      this.loadingLaudo = false;
+    },() => {
+      this.notifierService.notify('error', 'Não foi possivel Gerar o laudo!');
+      this.loadingLaudo = false;
+    })
   }
 }
 
