@@ -9,6 +9,7 @@
         <div class="card-block">
           <div class="row m-2">
             <div class="col-md-12 overflow-hidden">
+              <h4 class="text-center" *ngIf="loading"><i class="fa fa-spin fa-spinner"></i> Carregando...</h4>
               <swiper
               [slidesPerView]="6.5"
               [navigation]="false"
@@ -18,7 +19,7 @@
                   <div class="container text-center"
                        (click)="carregarVistoria(item); detalhe = i"
                        [class.destaque]="detalhe == i"
-                       [class.vistoriado]=" item.vistoriaConcluida"
+                       [class.vistoriado]="item.vistoriaConcluida"
                        [class.disabled]="!item.vistoriado">
                       <h6>LOTE</h6>
                       <h3>{{item.numeroLote}}</h3>
@@ -108,8 +109,12 @@
                       <option selected>-- SELECIONE --</option>
                       <option *ngFor="let item of tiposLote" [value]="item.tipoLoteId">{{item.descricao}}</option>
                     </select>
-                    <div class="text-center m-2">
+                    <div class="text-center m-2" *ngIf="vistoria.statusId === 1">
                       <button type="button" class="btn btn-block btn-success btn-large" (click)="gravar()">Salvar</button>
+                    </div>
+                    <div class="text-center m-2" *ngIf="vistoria.statusId === 2">
+                      <button type="button" class="btn btn-block btn-info btn-large" (click)="gerarLaudo()" *ngIf="!loadingLaudo">Gerar Laudo</button>
+                      <button type="button" class="btn btn-block btn-info btn-large" *ngIf="loadingLaudo"><i class="fa fa-spin fa-spinner"></i> Gerando...</button>
                     </div>
                   </div>
                 </div>
