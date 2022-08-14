@@ -28,7 +28,7 @@ export class CreateFaturaComponent implements OnInit, OnDestroy {
   dataAtual: any;
   empresas: any
   minDate: Date;
-  tipoFatura = 'Manual';
+  tipoFatura = 'Avulsa';
   opcoes = [
     'Cartão', 'Boleto', 'Pix'
   ]
@@ -104,7 +104,7 @@ export class CreateFaturaComponent implements OnInit, OnDestroy {
       )
     )
     this.formulario = this.formBuilder.group({
-      origem: [null, [Validators.required, Validators.minLength(3), Validators.maxLength(35)]],
+      origem: ['leilao', [Validators.required]],
       leilaoId: [null, [Validators.required]],
       cobrancaId: [null, [Validators.required]],
       cliente: this.formBuilder.group({
@@ -295,7 +295,7 @@ export class CreateFaturaComponent implements OnInit, OnDestroy {
         return
       }
 
-      const desc = `Lote: ${form.lote.numeroLote} - Placa: ${form.lote ? form.lote.placa : ''} - Marca/Modelo:${form.lote ? form.lote.marcaModelo : ''}   `
+      const desc = `Lote: ${form.lote.numeroLote} - Placa: ${form.lote ? form.lote.placa : ''} - Marca/Modelo: ${form.lote ? form.lote.marcaModelo : ''}   `
       let itens = this.formulario.get('itensFatura') as FormArray
       itens.push(this.formBuilder.group({
         descricao: [desc, Validators.required],

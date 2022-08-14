@@ -4,7 +4,7 @@
       <div class="dropdown" dropdown title="Leilões">
         <div class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false" dropdownToggle>
           <i class="fa fa-gavel"></i>
-          <span class="d-md-down-none">{{nomeLeilao}}</span>
+          <span class="d-md-down-none">&nbsp;{{nomeLeilao}}</span>
         </div>
         <div class="dropdown-menu dropdown-menu-right scrollable-dropdown" *dropdownMenu aria-labelledby="simple-dropdown">
           <div class="dropdown-header text-center"><strong>Leilão</strong></div>
@@ -34,41 +34,50 @@
                       <mfDefaultSorter by="faturaId">Id</mfDefaultSorter>
                     </th>
                     <th>
+                      <mfDefaultSorter by="codigo">Código</mfDefaultSorter>
+                    </th>
+                    <th>
                       <mfDefaultSorter by="nomeArrematante">Arrematante</mfDefaultSorter>
                     </th>
                     <th>
                       <mfDefaultSorter by="cpfArrematante">CPF</mfDefaultSorter>
                     </th>
-                    <th>
-                      <mfDefaultSorter by="codigo">Código</mfDefaultSorter>
-                    </th>
+
                     <th>
                       <mfDefaultSorter by="valorTotal">Valor</mfDefaultSorter>
                     </th>
                     <th>
                       <mfDefaultSorter by="dataVencimento">Data Vencimento</mfDefaultSorter>
                     </th>
-
                     <th>
                       <mfDefaultSorter by="status">Status</mfDefaultSorter>
                     </th>
-                    <th class="text-center" >
+                    <!-- <th class="text-center" >
                       Editar
-                    </th>
+                    </th> -->
                   </tr>
                 </thead>
                 <tbody>
                   <tr *ngFor="let item of mfLeilao.data">
                     <td>{{item.faturaId}}</td>
+                    <td>{{item.codigo}}</td>
                     <td>{{item.nomeArrematante}}</td>
                     <td>{{item.cpfArrematante}}</td>
-                    <td>{{item.codigo}}</td>
                     <td>{{item.valorTotal | currency:'BRL':true}}</td>
                     <td>{{item.dataVencimento | amDateFormat:'DD/MM/yyyy' }}</td>
-                    <td>{{item.status == 'cancelada' ? 'Cancelada' : item.status == 'pendente' ? 'Pendente' : ''}}</td>
-                    <td class="text-center" nowrap>
-                      <button type="button" class="btn btn-primary" (click)="edit(item.faturaId)"><i class="fa fa-edit"></i>&nbsp;Editar</button>
+                    <td>
+                      <ng-container [ngSwitch]="item.status">
+                        <span *ngSwitchCase="1" class="badge badge-warning">PENDENTE</span>
+                        <span *ngSwitchCase="2" class="badge badge-danger">VENCIDA</span>
+                        <span *ngSwitchCase="3" class="badge badge-success">PAGA</span>
+                        <span *ngSwitchCase="4" class="badge badge-success">PAGO MENOR</span>
+                        <span *ngSwitchCase="5" class="badge badge-success">PAGO MAIOR</span>
+                        <span *ngSwitchCase="6" class="badge badge-danger">CANCELADA</span>
+                      </ng-container>
                     </td>
+                    <!-- <td class="text-center" nowrap>
+                      <button type="button" class="btn btn-primary" (click)="edit(item.faturaId)"><i class="fa fa-edit"></i>&nbsp;Editar</button>
+                    </td> -->
 
                   </tr>
                   <tr *ngIf="loading">
