@@ -85,7 +85,6 @@ export class CreateFaturaComponent implements OnInit, OnDestroy {
     this.sub.push(
       this.restangular.one('empresa').get().subscribe(
         dados => {
-          console.log(dados.data)
           this.empresas = dados.data
         }
       )
@@ -317,6 +316,7 @@ export class CreateFaturaComponent implements OnInit, OnDestroy {
     const itens = this.formulario.get(campo) as FormArray;
     return itens.controls
   }
+
   openModal(template: TemplateRef<any>,item?) {
     if(item == 'fatura' && this.formulario.value.leilaoId == null){
       this.notifierService.notify('error', 'Selecione um Leilão');
