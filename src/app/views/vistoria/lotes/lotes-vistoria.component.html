@@ -104,6 +104,15 @@
                 </div>
                 <div class="col-sm-12">
                   <div class="p-2">
+                    <div class="font-weight-bold text-uppercase small">Status</div>
+                    <select class="form-control" [(ngModel)]="statusSelecionado">
+                      <option selected>-- SELECIONE --</option>
+                      <option *ngFor="let item of status" [value]="item.loteStatusId">{{item.descricao}}</option>
+                    </select>
+                  </div>
+                </div>
+                <div class="col-sm-12">
+                  <div class="p-2">
                     <div class="font-weight-bold text-uppercase small">Classificação do Lote</div>
                     <select class="form-control" [(ngModel)]="vistoria.lote.tipoLoteId">
                       <option selected>-- SELECIONE --</option>

@@ -32,32 +32,32 @@
                 <div class="row">
                   <div class="form-group col-4">
                     <label for="origem">Origem </label>
-                    <select class="form-control" [ngClass]="aplicaCssErro('origem')" formControlName="origem">
+                    <select class="form-control" [ngClass]="aplicaCssErro('origem')" formControlName="origem" (change)="setOrigem()">
                       <option value="leilao" selected>Leilão</option>
                       <option value="outros">Outros</option>
                     </select>
                   </div>
                   <div class="form-group col-4">
                     <label for="leilaoId">Leilao </label>
-                    <select class="form-control" [ngClass]="aplicaCssErro('leilaoId')" formControlName="leilaoId"
+                    <select class="form-control" [ngClass]="aplicaCssErro('leilaoId')"  formControlName="leilaoId" (change)="setCobranca()"
                       id="leilaoId" name="leilaoId">
                       <option *ngFor="let item of leilao" value="{{item.id}}">{{item.nome}}</option>
                     </select>
                   </div>
                   <div class="form-group col-4">
                     <label for="cobrancaId">Cobrança </label>
-                    <ng-select [items]="empresas" formControlName="cobrancaId" [multiple]="true" [ngClass]="aplicaCssErro('cobrancaId')" bindLabel="nomeFantasia" bindValue="empresaId">
+                    <ng-select [items]="empresas" formControlName="cobrancaId"  [ngClass]="aplicaCssErro('cobrancaId')" bindLabel="cedenteRazaoSocial" bindValue="idConfiguracaoConta">
                       <ng-template ng-option-tmp let-item="item" let-index="index" let-search="searchTerm">
                           <div style="margin: 10px 0; white-space: normal;" class="card" >
                               <div class="card-body">
-                                  <h5 class="card-title" [ngOptionHighlight]="search">{{item.nomeFantasia}}</h5>
-                                  <h6 class="card-subtitle mb-2 text-muted">{{item.cnpj}}</h6>
+                                  <h5 class="card-title" [ngOptionHighlight]="search">{{item.cedenteRazaoSocial}}</h5>
+                                  <h6 class="card-subtitle mb-2 text-muted">{{item.cedenteCpfCnpj}}</h6>
                               </div>
                           </div>
                       </ng-template>
                     </ng-select>
                     <!-- <label for="cobrancaId">Cobrança</label>
-                    <select class="form-control" [ngClass]="aplicaCssErro('cobrancaId')" formControlName="cobrancaId">
+                    <select class="form-control" [ngClass]="aplicaCssErro('cobrancaId') " formControlName="cobrancaId">
                       <option *ngFor="let item of empresas" value="{{item.empresaId}}">{{item.nomeFantasia}}</option>
                     </select> -->
                   </div>
@@ -93,118 +93,6 @@
         </div>
       </div>
     </div>
-    <div class="row">
-      <div class="col-lg-12">
-        <div class="card">
-          <div class="card-header new-campo d-flex align-items-center">
-            <div class="d-flex align-items-center">
-              <i class="fa fa-list" aria-hidden="true"></i>
-              &nbsp;Itens da Fatura</div>
-
-            <button type="button" class="btn btn-success btn-sm" (click)="openModal(itemAdicionar, 'fatura'); "><i
-                class="fa fa-plus-circle"></i>&nbsp;
-              Novo item</button>
-          </div>
-          <div class="card-block">
-            <div class="row">
-              <div class="form-group col-12" formArrayName="itensFatura"
-                *ngIf="this.formulario.value.itensFatura.length > 0">
-                <label for="itensFatura">Itens Fatura</label>
-
-                <table class="table">
-                  <thead>
-                    <tr>
-                      <th width="60%">Descrição</th>
-                      <th width="25%">Valor</th>
-                      <th width="15%"></th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr *ngFor="let item of filterList('itensFatura'); let i = index" [formGroupName]="i">
-                      <td>
-                        <input type="text" class="form-control" id="descricao" placeholder="Descrição"
-                          formControlName="descricao" *ngIf="item.value.tipo =='outros'">
-                        <div *ngIf="item.value.tipo =='lote'">{{item.value.descricao}}</div>
-                      </td>
-                      <td>
-                        <input type="text" class="form-control" id="valor" formControlName="valor" currencyMask
-                          *ngIf="item.value.all == false || item.value.tipo == 'outros'"
-                          [options]="{ prefix: 'R$ ', thousands: '.', decimal: ',' }">
-                      </td>
-
-
-                      <td class="text-center">
-                        <button type="button" class="btn btn-danger " (click)="deleteItens(i)">Remover</button>
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-              <div class="card-block" *ngIf="this.formulario.value.itensFatura.length == 0">
-                <alert type="danger">
-                  <strong>Item Obrigatório</strong> É necessário inserir no mínimo um item
-                </alert>
-              </div>
-            </div>
-          </div>
-
-        </div>
-      </div>
-    </div>
-    <ng-template #itemAdicionar>
-      <div class="col-12 modal-itens">
-        <div class="modal-header">
-          <h5 class="modal-title">Tipo de item:</h5>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="modalRef?.hide()">
-            <span aria-hidden="true">&times;</span>
-          </button>
-        </div>
-        <div class="modal-body d-flex flex-column">
-          <div class="form-check">
-            <input class="form-check-input" type="radio" name="adicionarItem" id="adicionarItem1" checked value="lote"
-              formControlName="adicionarItem">
-            <label class="form-check-label" for="adicionarItem1">
-              Lote
-            </label>
-          </div>
-          <div class="form-check" *ngIf="tipoFatura =='Avulsa'">
-            <input class="form-check-input" type="radio" name="adicionarItem" id="adicionarItem2" value="outros"
-              formControlName="adicionarItem">
-            <label class="form-check-label" for="adicionarItem2">
-              Outros
-            </label>
-          </div>
-          <div class="form-group col-12 pesquisa-lote"
-            *ngIf="formulario.value.adicionarItem == 'lote' && formulario.value.selectAll == false">
-            <label for="lotes">Selecionar Lote </label>
-            <ng-select [items]="lote$ | async" bindLabel="marcaModelo" [hideSelected]="true" [loading]="peopleLoading"
-              typeToSearchText="Busque por placa, marca/modelo e numero do lote" [typeahead]="loteInput$"
-              formControlName="lote">
-              <ng-template ng-option-tmp let-item="item" let-index="index" let-search="search" bindValue="item">
-                <div style="margin: 10px 0; white-space: normal;" class="card">
-                  <div class="card-body">
-                    <h5 class="card-title" [ngOptionHighlight]="search">Lote: {{item.numeroLote}}</h5>
-                    <h6 class="card-subtitle mb-2 text-muted">{{item.marcaModelo}}</h6>
-                    <h6 class="card-subtitle mb-2 text-muted">{{item.placa}}</h6>
-                    <h6 class="card-subtitle mb-2 text-muted">{{item.valorLanceVencedor | currency:'BRL':true}}</h6>
-                  </div>
-                </div>
-              </ng-template>
-            </ng-select>
-
-          </div>
-          <label class="checkbox-inline" *ngIf="formulario.value.adicionarItem == 'lote' && tipoFatura =='Massiva'">
-            <input type="checkbox" formControlName="selectAll"> Selecionar Todos
-          </label>
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-primary" (click)="modalRef?.hide(); adicionarItens()">Adicionar</button>
-          <button type="button" class="btn btn-secondary" data-dismiss="modal"
-            (click)="modalRef?.hide()">Cancelar</button>
-        </div>
-
-      </div>
-    </ng-template>
     <div class="animated fadeIn" formGroupName="cliente" *ngIf="tipoFatura === 'Avulsa'">
       <div class="row">
         <div class="col-lg-12">
@@ -278,11 +166,7 @@
               </div>
 
             </div>
-            <div class="card-footer">
-              <button type="submit" class="btn btn-primary saveCancel"><i class="fa fa-save"></i> Salvar</button>
-              <button type="reset" class="btn btn-danger" [routerLink]="['/fatura']"><i class="fa fa-undo"></i>
-                Cancelar</button>
-            </div>
+
           </div>
         </div>
       </div>
@@ -325,6 +209,123 @@
 
       </div>
     </ng-template>
+    <div class="row">
+      <div class="col-lg-12">
+        <div class="card">
+          <div class="card-header new-campo d-flex align-items-center">
+            <div class="d-flex align-items-center">
+              <i class="fa fa-list" aria-hidden="true"></i>
+              &nbsp;Itens da Fatura</div>
+
+            <button type="button" class="btn btn-success btn-sm" (click)="openModal(itemAdicionar, 'fatura'); "><i
+                class="fa fa-plus-circle"></i>&nbsp;
+              Novo item</button>
+          </div>
+          <div class="card-block">
+            <div class="row">
+              <div class="form-group col-12" formArrayName="itensFatura"
+                *ngIf="this.formulario.value.itensFatura.length > 0">
+                <label for="itensFatura">Itens Fatura</label>
+
+                <table class="table">
+                  <thead>
+                    <tr>
+                      <th width="60%">Descrição</th>
+                      <th width="25%">Valor</th>
+                      <th width="15%"></th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr *ngFor="let item of filterList('itensFatura'); let i = index" [formGroupName]="i">
+                      <td>
+                        <input type="text" class="form-control" id="descricao" placeholder="Descrição"
+                          formControlName="descricao" *ngIf="item.value.tipo =='outros'">
+                        <div *ngIf="item.value.tipo =='lote'">{{item.value.descricao}}</div>
+                      </td>
+                      <td>
+                        <input type="text" class="form-control" id="valor" formControlName="valor" currencyMask
+                          *ngIf="item.value.all == false || item.value.tipo == 'outros'"
+                          [options]="{ prefix: 'R$ ', thousands: '.', decimal: ',' }">
+                      </td>
+
+
+                      <td class="text-center">
+                        <button type="button" class="btn btn-danger " (click)="deleteItens(i)">Remover</button>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+              <div class="card-block" *ngIf="this.formulario.value.itensFatura.length == 0">
+                <alert type="danger">
+                  <strong>Item Obrigatório</strong> É necessário inserir no mínimo um item
+                </alert>
+              </div>
+            </div>
+          </div>
+          <div class="card-footer">
+            <button type="submit" class="btn btn-primary saveCancel"><i class="fa fa-save"></i> Salvar</button>
+            <button type="reset" class="btn btn-danger" [routerLink]="['/fatura']"><i class="fa fa-undo"></i>
+              Cancelar</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <ng-template #itemAdicionar>
+      <div class="col-12 modal-itens">
+        <div class="modal-header">
+          <h5 class="modal-title">Tipo de item:</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="modalRef?.hide()">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body d-flex flex-column">
+          <div class="form-check">
+            <input class="form-check-input" type="radio" name="adicionarItem" id="adicionarItem1" checked value="lote"
+              formControlName="adicionarItem">
+            <label class="form-check-label" for="adicionarItem1">
+              Lote
+            </label>
+          </div>
+          <div class="form-check" *ngIf="tipoFatura =='Avulsa'">
+            <input class="form-check-input" type="radio" name="adicionarItem" id="adicionarItem2" value="outros"
+              formControlName="adicionarItem">
+            <label class="form-check-label" for="adicionarItem2">
+              Outros
+            </label>
+          </div>
+          <div class="form-group col-12 pesquisa-lote"
+            *ngIf="formulario.value.adicionarItem == 'lote' && formulario.value.selectAll == false">
+            <label for="lotes">Selecionar Lote </label>
+            <ng-select [items]="lote$ | async" bindLabel="marcaModelo" [hideSelected]="true" [loading]="peopleLoading"
+              typeToSearchText="Busque por placa, marca/modelo e numero do lote" [typeahead]="loteInput$"
+              formControlName="lote">
+              <ng-template ng-option-tmp let-item="item" let-index="index" let-search="search" bindValue="item">
+                <div style="margin: 10px 0; white-space: normal;" class="card">
+                  <div class="card-body">
+                    <h5 class="card-title" [ngOptionHighlight]="search">Lote: {{item.numeroLote}}</h5>
+                    <h6 class="card-subtitle mb-2 text-muted">{{item.marcaModelo}}</h6>
+                    <h6 class="card-subtitle mb-2 text-muted">{{item.placa}}</h6>
+                    <h6 class="card-subtitle mb-2 text-muted">{{item.valorLanceVencedor | currency:'BRL':true}}</h6>
+                  </div>
+                </div>
+              </ng-template>
+            </ng-select>
+
+          </div>
+          <label class="checkbox-inline" *ngIf="formulario.value.adicionarItem == 'lote' && tipoFatura =='Massiva'">
+            <input type="checkbox" formControlName="selectAll"> Selecionar Todos
+          </label>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-primary" (click)="modalRef?.hide(); adicionarItens()">Adicionar</button>
+          <button type="button" class="btn btn-secondary" data-dismiss="modal"
+            (click)="modalRef?.hide()">Cancelar</button>
+        </div>
+
+      </div>
+    </ng-template>
+
 
   </div>
 </form>

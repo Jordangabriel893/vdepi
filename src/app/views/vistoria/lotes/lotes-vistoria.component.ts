@@ -30,6 +30,8 @@ export class LotesVistoriaComponent implements OnInit {
   thumbOptions
   thumbsSwiper: any;
   loadingLaudo = false;
+  status = [];
+  statusSelecionado:any;
   constructor(
     private restangular: Restangular,
     private route: ActivatedRoute,
@@ -43,9 +45,12 @@ export class LotesVistoriaComponent implements OnInit {
     forkJoin([
       this.restangular.one("lote", '').get({ leilaoId: this.id, PageSize:300 }).pipe(),
       this.restangular.one("tipolote").get().pipe(),
+      this.restangular.one("lotestatus").get().pipe(),
     ]).subscribe((allResp: any[]) => {
       this.lotes = allResp[0].data
       this.tiposLote = allResp[1].data
+      this.status = allResp[2].data
+
       this.loading = false;
     },
     () => this.loading = false)
@@ -59,11 +64,14 @@ export class LotesVistoriaComponent implements OnInit {
     ]).subscribe((allResp: any[]) => {
       this.lote = allResp[0].data
       this.vistoria = allResp[1].data
+      console.log(this.vistoria)
       this.carregouVistoria = this.vistoria == null
+
     })
   }
 
   gravar(){
+    this.vistoria.statusId = this.statusSelecionado
     this.restangular.all('vistoria').customPUT(this.vistoria, this.vistoria.vistoriaId).subscribe(a => {
         this.notifierService.notify('success', 'Lote Vistoriado com sucesso');
         this.tornaVistoriado()
@@ -90,6 +98,7 @@ export class LotesVistoriaComponent implements OnInit {
   }
 
   gerarLaudo() {
+    this.vistoria.statusId = this.statusSelecionado
     this.loadingLaudo = true;
     this.restangular.all('vistoria').one(`${this.vistoria.numero}/laudo`, )
     .withHttpConfig({responseType: 'blob'})
