@@ -50,7 +50,7 @@ export class LotesVistoriaComponent implements OnInit {
       this.lotes = allResp[0].data
       this.tiposLote = allResp[1].data
       this.status = allResp[2].data
-
+      console.log(this.lotes)
       this.loading = false;
     },
     () => this.loading = false)
@@ -65,8 +65,8 @@ export class LotesVistoriaComponent implements OnInit {
       this.lote = allResp[0].data
       this.vistoria = allResp[1].data
       console.log(this.vistoria)
+      this.statusSelecionado = this.vistoria.statusId
       this.carregouVistoria = this.vistoria == null
-
     })
   }
 
