@@ -89,9 +89,12 @@
                 <div class="col-sm-12">
                   <div class="p-2">
                     <div class="font-weight-bold text-uppercase small">Status</div>
-                    <select class="form-control" [(ngModel)]="statusSelecionado">
+                    <select class="form-control" [(ngModel)]="vistoria.statusId">
                       <option selected>-- SELECIONE --</option>
-                      <option *ngFor="let item of status" [value]="item.loteStatusId">{{item.descricao}}</option>
+                      <option value="3">CANCELADO</option>
+                      <option value="4">APROVADO</option>
+                      <option value="5">REPROVADO</option>
+                      <option value="6">APROVADO COM RESTRIÇÃO</option>
                     </select>
                   </div>
                 </div>
@@ -106,7 +109,7 @@
                       <button type="button" class="btn btn-block btn-success btn-large"
                         (click)="gravar()">Salvar</button>
                     </div>
-                    <div class="text-center m-2">
+                    <div class="text-center m-2" *ngIf="vistoria.statusId > 2">
                       <button type="button" class="btn btn-block btn-info btn-large" (click)="gerarLaudo()"
                         *ngIf="!loadingLaudo">Gerar Laudo</button>
                       <button type="button" class="btn btn-block btn-info btn-large" *ngIf="loadingLaudo"><i
