@@ -1,4 +1,4 @@
-<div class="dashboard-bar">
+<!-- <div class="dashboard-bar">
   <div class="row justify-content-end pr-5">
     <div class="col-md-auto text-right">
       <div class="dropdown" dropdown title="Leilões">
@@ -11,11 +11,12 @@
           <div class="dropdown-item" *ngFor="let item of leiloes; let i = index" (click)="setLeilao(item.id, item.nome)" style="cursor:pointer">{{item.nome}}</div>
         </div>
       </div>
-    </div>
+    </div> -->
 
-  </div>
-</div>
 <div class="animated fadeIn">
+  <div class="row linha-seletor">
+    <app-search-leilao class="search-leilao" (emitLeilao)="setLeilao($event)"></app-search-leilao>
+  </div>
   <div class="row">
     <div class="col-lg-12">
       <div class="card">
@@ -34,41 +35,50 @@
                       <mfDefaultSorter by="faturaId">Id</mfDefaultSorter>
                     </th>
                     <th>
+                      <mfDefaultSorter by="codigo">Código</mfDefaultSorter>
+                    </th>
+                    <th>
                       <mfDefaultSorter by="nomeArrematante">Arrematante</mfDefaultSorter>
                     </th>
                     <th>
                       <mfDefaultSorter by="cpfArrematante">CPF</mfDefaultSorter>
                     </th>
-                    <th>
-                      <mfDefaultSorter by="codigo">Código</mfDefaultSorter>
-                    </th>
+
                     <th>
                       <mfDefaultSorter by="valorTotal">Valor</mfDefaultSorter>
                     </th>
                     <th>
                       <mfDefaultSorter by="dataVencimento">Data Vencimento</mfDefaultSorter>
                     </th>
-
                     <th>
                       <mfDefaultSorter by="status">Status</mfDefaultSorter>
                     </th>
-                    <th class="text-center" >
+                    <!-- <th class="text-center" >
                       Editar
-                    </th>
+                    </th> -->
                   </tr>
                 </thead>
                 <tbody>
                   <tr *ngFor="let item of mfLeilao.data">
                     <td>{{item.faturaId}}</td>
+                    <td>{{item.codigo}}</td>
                     <td>{{item.nomeArrematante}}</td>
                     <td>{{item.cpfArrematante}}</td>
-                    <td>{{item.codigo}}</td>
                     <td>{{item.valorTotal | currency:'BRL':true}}</td>
                     <td>{{item.dataVencimento | amDateFormat:'DD/MM/yyyy' }}</td>
-                    <td>{{item.status == 'cancelada' ? 'Cancelada' : item.status == 'pendente' ? 'Pendente' : ''}}</td>
-                    <td class="text-center" nowrap>
-                      <button type="button" class="btn btn-primary" (click)="edit(item.faturaId)"><i class="fa fa-edit"></i>&nbsp;Editar</button>
+                    <td>
+                      <ng-container [ngSwitch]="item.status">
+                        <span *ngSwitchCase="1" class="badge badge-warning">PENDENTE</span>
+                        <span *ngSwitchCase="2" class="badge badge-danger">VENCIDA</span>
+                        <span *ngSwitchCase="3" class="badge badge-success">PAGA</span>
+                        <span *ngSwitchCase="4" class="badge badge-success">PAGO MENOR</span>
+                        <span *ngSwitchCase="5" class="badge badge-success">PAGO MAIOR</span>
+                        <span *ngSwitchCase="6" class="badge badge-danger">CANCELADA</span>
+                      </ng-container>
                     </td>
+                    <!-- <td class="text-center" nowrap>
+                      <button type="button" class="btn btn-primary" (click)="edit(item.faturaId)"><i class="fa fa-edit"></i>&nbsp;Editar</button>
+                    </td> -->
 
                   </tr>
                   <tr *ngIf="loading">

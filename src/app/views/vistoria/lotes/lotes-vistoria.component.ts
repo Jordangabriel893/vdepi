@@ -6,10 +6,10 @@ import { forkJoin } from 'rxjs';
 import * as fileSaver from 'file-saver';
 
 // import Swiper core and required modules
-import SwiperCore, {  Navigation, Thumbs} from "swiper";
+import SwiperCore, { Navigation, Thumbs } from "swiper";
 
 // install Swiper modules
-SwiperCore.use([ Navigation, Thumbs]);
+SwiperCore.use([Navigation, Thumbs]);
 
 @Component({
   selector: 'app-lotes-vistoria',
@@ -30,6 +30,8 @@ export class LotesVistoriaComponent implements OnInit {
   thumbOptions
   thumbsSwiper: any;
   loadingLaudo = false;
+  status = [];
+  statusSelecionado: any;
   constructor(
     private restangular: Restangular,
     private route: ActivatedRoute,
@@ -41,39 +43,45 @@ export class LotesVistoriaComponent implements OnInit {
 
   ngOnInit() {
     forkJoin([
-      this.restangular.one("lote", '').get({ leilaoId: this.id, PageSize:300 }).pipe(),
+      this.restangular.one("lote", '').get({ leilaoId: this.id, PageSize: 300 }).pipe(),
       this.restangular.one("tipolote").get().pipe(),
+      this.restangular.one("lotestatus").get().pipe(),
     ]).subscribe((allResp: any[]) => {
       this.lotes = allResp[0].data
       this.tiposLote = allResp[1].data
+      this.status = allResp[2].data
+      console.log(this.lotes)
       this.loading = false;
     },
-    () => this.loading = false)
+      () => this.loading = false)
 
   }
 
-  carregarVistoria(e){
+  carregarVistoria(e) {
     forkJoin([
       this.restangular.one("lote", e.loteId).get().pipe(),
       this.restangular.one("vistoria", e.loteId).get().pipe()
     ]).subscribe((allResp: any[]) => {
       this.lote = allResp[0].data
       this.vistoria = allResp[1].data
+      console.log(this.vistoria)
+      this.statusSelecionado = this.vistoria.statusId
       this.carregouVistoria = this.vistoria == null
     })
   }
 
-  gravar(){
+  gravar() {
+
     this.restangular.all('vistoria').customPUT(this.vistoria, this.vistoria.vistoriaId).subscribe(a => {
-        this.notifierService.notify('success', 'Lote Vistoriado com sucesso');
-        this.tornaVistoriado()
-      },
-        error => {
-          this.notifierService.notify('error', 'Erro ao atualizar o Lote!');
-        });
+      this.notifierService.notify('success', 'Lote Vistoriado com sucesso');
+      this.tornaVistoriado()
+    },
+      error => {
+        this.notifierService.notify('error', 'Erro ao atualizar o Lote!');
+      });
   }
 
-  tornaVistoriado(){
+  tornaVistoriado() {
     const objIndex = this.lotes.findIndex((obj => obj.loteId == this.lote.loteId));
     this.lotes[objIndex].vistoriaConcluida = true
 
@@ -82,26 +90,27 @@ export class LotesVistoriaComponent implements OnInit {
 
   onSwiper(swiper) {
     this.thumbSwiper = swiper;
-    this.thumbOptions = { swiper: this.thumbSwiper}
- }
+    this.thumbOptions = { swiper: this.thumbSwiper }
+  }
 
   getCampoAlterado(loteCampoId) {
     return this.vistoria.campos.find(x => x.loteCampoId === loteCampoId);
   }
 
   gerarLaudo() {
+    this.vistoria.statusId = this.statusSelecionado
     this.loadingLaudo = true;
-    this.restangular.all('vistoria').one(`${this.vistoria.numero}/laudo`, )
-    .withHttpConfig({responseType: 'blob'})
-    .get()
-    .subscribe((response) => {
-      const blob = new Blob([response], { type: 'application/pdf' });
-      fileSaver.saveAs(blob, `Vistoria_${this.vistoria.numero}.pdf`);
-      this.loadingLaudo = false;
-    },() => {
-      this.notifierService.notify('error', 'Não foi possivel Gerar o laudo!');
-      this.loadingLaudo = false;
-    })
+    this.restangular.all('vistoria').one(`${this.vistoria.numero}/laudo`,)
+      .withHttpConfig({ responseType: 'blob' })
+      .get()
+      .subscribe((response) => {
+        const blob = new Blob([response], { type: 'application/pdf' });
+        fileSaver.saveAs(blob, `Vistoria_${this.vistoria.numero}.pdf`);
+        this.loadingLaudo = false;
+      }, () => {
+        this.notifierService.notify('error', 'Não foi possivel Gerar o laudo!');
+        this.loadingLaudo = false;
+      })
   }
 }
 

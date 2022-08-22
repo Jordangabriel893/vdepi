@@ -13,7 +13,7 @@ import * as Model from '../_models/model'
 export class FaturaComponent implements OnInit, OnDestroy {
   formulario: FormGroup
   faturas;
-  loading = true;
+  loading;
   selectLeilao
   sub: Subscription[] = [];
   leiloes;
@@ -23,42 +23,31 @@ export class FaturaComponent implements OnInit, OnDestroy {
     private router: Router,
     private restangular: Restangular,
     private formBuilder: FormBuilder,) {
-
-    this.sub.push(
-      this.restangular.one("fatura/faturas").get().subscribe((response) => {
-
-        console.log(response.data)
-        this.loading = false
-      })
-    )
     this.sub.push(
       this.restangular.one('admin/leilao').get().subscribe(
         dados =>{
-          this.leiloes= dados.data
+          this.leiloes = dados.data
         }
       )
-      )
+    )
   }
 
   ngOnInit() {
 
   }
-  setLeilao(id, nome){
-    console.log(id)
+
+  setLeilao(idLeilao) {
+    this.loading = true;
     this.sub.push(
-      this.restangular.one(`fatura/${id}/faturas`).get().subscribe(
+      this.restangular.one(`fatura?leilaoId=${idLeilao.id}`).get().subscribe(
       dados =>{
-        console.log(dados.data)
         this.faturas = dados.data
+        this.nomeLeilao = idLeilao.nome;
+        this.loading = false
       }
     )
     )
   }
-
-  edit(id) {
-    this.router.navigate(['/update-leilao', id], { relativeTo: this.route });
-  }
-
 
   ngOnDestroy(): void {
     this.sub.forEach(s => s.unsubscribe())

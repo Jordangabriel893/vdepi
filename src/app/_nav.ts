@@ -28,7 +28,7 @@ export const navigation = [
   {
     name: 'Fatura',
     url: '/fatura',
-    icon: 'fa fa-search',
+    icon: 'fa fa-dollar-sign',
     source: 'VISTORIA',
     grupo:'OPERACAO'
   },

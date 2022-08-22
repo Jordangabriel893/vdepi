@@ -17,6 +17,7 @@ import * as MarkerCluster from '@google/markerclusterer'
 @Component({
   selector: 'app-mapa-lance',
   templateUrl: './mapa-lance.component.html',
+  styleUrls: ['./mapa-lance.component.scss'],
   providers: [GroupByPipe, TooltipDirective]
 })
 export class MapaLanceComponent implements OnInit, OnDestroy {
@@ -115,7 +116,10 @@ export class MapaLanceComponent implements OnInit, OnDestroy {
 
     this.restangular.one("admin/leilao").get({PageSize:100}).subscribe((response) => {
       this.leiloes = response.data
-      this.setLeilao(this.leiloes[0].id, this.leiloes[0].nome);
+      this.leilaoId = this.leiloes[0].id
+      this.leilaoNome = this.leiloes[0].nome;
+      this.refreshLances();
+      // this.setLeilao(this.leiloes[0].id, this.leiloes[0].nome);
     })
 
     // this.filtro.controls["periodo"].setValue([moment().subtract(1, 'months').toDate(), moment().toDate()]);
@@ -136,9 +140,9 @@ export class MapaLanceComponent implements OnInit, OnDestroy {
     $event.stopPropagation();
   }
 
-  setLeilao(id, nome){
-    this.leilaoId = id;
-    this.leilaoNome = nome;
+  setLeilao(leilao){
+    this.leilaoId = leilao.id;
+    this.leilaoNome = leilao.nome;
     this.refreshLances();
   }
 
