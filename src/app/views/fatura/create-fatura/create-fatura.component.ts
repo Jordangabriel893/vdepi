@@ -112,9 +112,10 @@ export class CreateFaturaComponent implements OnInit, OnDestroy {
       dataVencimento: [null, Validators.required],
       lote: [null, Validators.required],
       formasPagamento: this.buildOpcoes(),
-      itensFatura: this.formBuilder.array([], Validators.required),
+      itensFatura: this.formBuilder.array([]),
       adicionarItem: [],
       selectAll: [false]
+
     })
     this.loadLotes()
     this.loadPeople()
