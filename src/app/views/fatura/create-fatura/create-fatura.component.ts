@@ -141,9 +141,20 @@ export class CreateFaturaComponent implements OnInit, OnDestroy {
       contador++
     }
     formulario.formasPagamento = formasSelecionadas
-    if(this.tipoFatura == 'Massiva'){
 
-      this.restangular.all('/Fatura/FaturaMassiva').post(formulario).subscribe(a => {
+
+    if(this.tipoFatura == 'Massiva'){
+      const formMassivo = {
+        leilaoId:formulario.leilaoId,
+        todosLotes: formulario.todosLotes,
+        cobrancaId:formulario.cobrancaId,
+        dataLimite: formulario.dataLimite,
+        dataVencimento:formulario.dataVencimento,
+        formasPagamento:formasSelecionadas,
+        lotes: formulario.itensFatura.map(x => x.id)
+      }
+
+      this.restangular.all('/Fatura/FaturaMassiva').post(formMassivo).subscribe(a => {
         this.notifierService.notify('success', 'Fatura massiva criada com sucesso');
         this.router.navigate(['/fatura']);
       },
@@ -371,10 +382,10 @@ export class CreateFaturaComponent implements OnInit, OnDestroy {
         descricao: [desc, Validators.required],
         valor: [form.lote.valorLanceVencedor, Validators.required],
         tipo: ['lote'],
+        id:[form.lote.numeroLote],
         all: [false]
       }))
     }
-
   }
   deleteItens(indexCampo: number) {
     let itens = this.formulario.controls['itensFatura'] as FormArray
