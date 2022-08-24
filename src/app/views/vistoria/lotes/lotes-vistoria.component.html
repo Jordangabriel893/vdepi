@@ -12,8 +12,8 @@
               <h4 class="text-center" *ngIf="loading"><i class="fa fa-spin fa-spinner"></i> Carregando...</h4>
               <swiper [slidesPerView]="6.5" [navigation]="false" [spaceBetween]="10" class="mySwiper">
                 <ng-template swiperSlide *ngFor="let item of lotes; index as i">
-                  <div class="container text-center" (click)="carregarVistoria(item); detalhe = i"
-                    [ngClass]="{'destaque': detalhe == i, 'vistoriado': item.vistoriaConcluida, 'disabled': !item.vistoriado}">
+                  <div class="container text-center" (click)="carregarVistoria(item)"
+                    [ngClass]="classStatusVistoria(item)">
                     <h6>LOTE</h6>
                     <h3>{{item.numeroLote}}</h3>
                     <p class="text-truncate"><small>{{ item.descricao }}</small></p>

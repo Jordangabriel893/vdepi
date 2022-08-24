@@ -32,6 +32,7 @@ export class LotesVistoriaComponent implements OnInit {
   loadingLaudo = false;
   status = [];
   statusSelecionado: any;
+  loteSelecionado;
   constructor(
     private restangular: Restangular,
     private route: ActivatedRoute,
@@ -50,7 +51,6 @@ export class LotesVistoriaComponent implements OnInit {
       this.lotes = allResp[0].data
       this.tiposLote = allResp[1].data
       this.status = allResp[2].data
-      console.log(this.lotes)
       this.loading = false;
     },
       () => this.loading = false)
@@ -64,28 +64,23 @@ export class LotesVistoriaComponent implements OnInit {
     ]).subscribe((allResp: any[]) => {
       this.lote = allResp[0].data
       this.vistoria = allResp[1].data
-      console.log(this.vistoria)
       this.statusSelecionado = this.vistoria.statusId
       this.carregouVistoria = this.vistoria == null
     })
+
+    this.loteSelecionado = e;
   }
 
   gravar() {
-
     this.restangular.all('vistoria').customPUT(this.vistoria, this.vistoria.vistoriaId).subscribe(a => {
       this.notifierService.notify('success', 'Lote Vistoriado com sucesso');
-      this.tornaVistoriado()
     },
       error => {
         this.notifierService.notify('error', 'Erro ao atualizar o Lote!');
       });
-  }
 
-  tornaVistoriado() {
-    const objIndex = this.lotes.findIndex((obj => obj.loteId == this.lote.loteId));
-    this.lotes[objIndex].vistoriaConcluida = true
-
-    this.vistoria.statusId = 2;
+      let lote = this.lotes.find(x => x.loteId === this.loteSelecionado.loteId);
+      lote.statusVistoriaId = parseInt(this.vistoria.statusId);
   }
 
   onSwiper(swiper) {
@@ -111,6 +106,28 @@ export class LotesVistoriaComponent implements OnInit {
         this.notifierService.notify('error', 'Não foi possivel Gerar o laudo!');
         this.loadingLaudo = false;
       })
+  }
+
+  classStatusVistoria(lote) {
+
+    if(this.loteSelecionado && this.loteSelecionado.loteId === lote.loteId) {
+      return 'destaque';
+    }
+
+    if(!lote.statusVistoriaId) {
+      return 'disabled';
+    }
+
+    switch(lote.statusVistoriaId) {
+      case 3:
+        return 'vistoriaCancelada';
+      case 4:
+        return 'vistoriaAprovada';
+      case 5:
+        return 'vistoriaReprovada';
+      case 6:
+        return 'vistoriaAprovadaRestricao';
+    }
   }
 }
 
