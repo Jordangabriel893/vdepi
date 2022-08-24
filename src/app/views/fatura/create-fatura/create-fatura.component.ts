@@ -110,11 +110,11 @@ export class CreateFaturaComponent implements OnInit, OnDestroy {
       cobrancaId: [null, [Validators.required]],
       dataLimite: [null, Validators.required],
       dataVencimento: [null, Validators.required],
-      lote: [null, Validators.required],
+      lote: [null],
       formasPagamento: this.buildOpcoes(),
       itensFatura: this.formBuilder.array([]),
       adicionarItem: [],
-      selectAll: [false]
+      todosLotes: [false]
 
     })
     this.loadLotes()
@@ -123,6 +123,7 @@ export class CreateFaturaComponent implements OnInit, OnDestroy {
 
   onSubmit() {
     const formulario = {...this.formulario.value}
+
     if(!this.formulario.valid){
       Object.keys(this.formulario.controls).forEach((campo)=>{
         const controle = this.formulario.get(campo)
@@ -132,10 +133,12 @@ export class CreateFaturaComponent implements OnInit, OnDestroy {
       return false;
     }
     const formasSelecionadas = [];
+    let contador = 1;
     for(var x = 0; x < formulario.formasPagamento.length; x ++ ){
       if(formulario.formasPagamento[x] == true){
-        formasSelecionadas.push(x)
+        formasSelecionadas.push(contador)
       }
+      contador++
     }
     formulario.formasPagamento = formasSelecionadas
     if(this.tipoFatura == 'Massiva'){
@@ -283,11 +286,11 @@ export class CreateFaturaComponent implements OnInit, OnDestroy {
         cobrancaId: [null, [Validators.required]],
         dataLimite: [null, Validators.required],
         dataVencimento: [null, Validators.required],
-        lote: [null, Validators.required],
+        lote: [null],
         formasPagamento: this.buildOpcoes(),
-        itensFatura: this.formBuilder.array([], Validators.required),
+        itensFatura: this.formBuilder.array([]),
         adicionarItem: [],
-        selectAll: [false]
+        todosLotes: [false]
       })
     }
     if(item == 'Avulsa'){
@@ -314,11 +317,11 @@ export class CreateFaturaComponent implements OnInit, OnDestroy {
         empresaCobrança: [null, [Validators.required]],
         dataLimite: [null, Validators.required],
         clienteSelecionado: [null],
-        lote: [null, Validators.required],
+        lote: [null],
 
-        itensFatura: this.formBuilder.array([], Validators.required),
+        itensFatura: this.formBuilder.array([]),
         adicionarItem: [],
-        selectAll: [false],
+        todosLotes: [false],
 
 
       })
@@ -351,7 +354,7 @@ export class CreateFaturaComponent implements OnInit, OnDestroy {
       return
     }
     if (form.adicionarItem == 'lote') {
-      if (form.selectAll == true) {
+      if (form.todosLotes == true) {
         const desc = `Todos os lotes foram selecionados `
         let itens = this.formulario.get('itensFatura') as FormArray
         itens.push(this.formBuilder.group({

@@ -197,7 +197,7 @@
 
           </div>
           <label class="checkbox-inline" *ngIf="formulario.value.adicionarItem == 'lote' && tipoFatura =='Massiva'">
-            <input type="checkbox" formControlName="selectAll"> Selecionar Todos
+            <input type="checkbox" formControlName="todosLotes"> Selecionar Todos
           </label>
         </div>
         <div class="modal-footer">
@@ -295,7 +295,7 @@
             </label>
           </div>
           <div class="form-group col-12 pesquisa-lote"
-            *ngIf="formulario.value.adicionarItem == 'lote' && formulario.value.selectAll == false">
+            *ngIf="formulario.value.adicionarItem == 'lote' && formulario.value.todosLotes == false">
             <label for="lotes">Selecionar Lote </label>
             <ng-select [items]="lote$ | async" bindLabel="marcaModelo" [hideSelected]="true" [loading]="peopleLoading"
               typeToSearchText="Busque por placa, marca/modelo e numero do lote" [typeahead]="loteInput$"
@@ -314,7 +314,7 @@
 
           </div>
           <label class="checkbox-inline" *ngIf="formulario.value.adicionarItem == 'lote' && tipoFatura =='Massiva'">
-            <input type="checkbox" formControlName="selectAll"> Selecionar Todos
+            <input type="checkbox" formControlName="todosLotes"> Selecionar Todos
           </label>
         </div>
         <div class="modal-footer">
