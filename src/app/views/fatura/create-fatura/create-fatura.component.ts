@@ -144,6 +144,8 @@ export class CreateFaturaComponent implements OnInit, OnDestroy {
 
 
     if(this.tipoFatura == 'Massiva'){
+      const existAll = this.formulario.value.itensFatura.filter(x => x.all == true)
+      console.log(existAll)
       const formMassivo = {
         leilaoId:formulario.leilaoId,
         todosLotes: formulario.todosLotes,
@@ -151,7 +153,7 @@ export class CreateFaturaComponent implements OnInit, OnDestroy {
         dataLimite: formulario.dataLimite,
         dataVencimento:formulario.dataVencimento,
         formasPagamento:formasSelecionadas,
-        lotes: formulario.itensFatura.map(x => x.id)
+        lotes: existAll.length > 0 ? [0] :  formulario.itensFatura.map(x => x.id)
       }
 
       this.restangular.all('/Fatura/FaturaMassiva').post(formMassivo).subscribe(a => {
@@ -416,8 +418,8 @@ export class CreateFaturaComponent implements OnInit, OnDestroy {
   }
 
   openModal(template: TemplateRef<any>,item?) {
-    if(item == 'fatura' && this.formulario.value.leilaoId == null){
-      this.notifierService.notify('error', 'Selecione um Leilão');
+    if(item == 'fatura' && this.formulario.value.leilaoId == null  ){
+      this.notifierService.notify('error', 'Selecione uma opção');
       return
     }
     this.modalRef = this.modalService.show(template);
