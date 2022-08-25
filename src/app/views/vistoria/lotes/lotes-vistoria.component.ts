@@ -43,6 +43,7 @@ export class LotesVistoriaComponent implements OnInit {
   }
 
   ngOnInit() {
+   
     forkJoin([
       this.restangular.one("lote", '').get({ leilaoId: this.id, PageSize: 300 }).pipe(),
       this.restangular.one("tipolote").get().pipe(),
