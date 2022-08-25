@@ -65,10 +65,7 @@ export class UpdateUsuariosComponent implements OnInit {
 
   ngOnInit() {
     this.id = this.route.snapshot.params['id']
-  //  console.log(this.id )
    this.restangular.all('usuario').get( this.id).subscribe(dados => {
-
-    //  console.log(dados.data),
      this.updateForm(dados.data)
    })
   }

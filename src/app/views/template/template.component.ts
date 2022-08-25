@@ -26,7 +26,6 @@ export class TemplateComponent implements OnInit {
     this.restangular.one('Marketing/TemplateNotificacao').get().subscribe(
       dados =>{
         this.templates= dados.data
-        console.log(this.templates)
         this.loading = false;
       }
     )

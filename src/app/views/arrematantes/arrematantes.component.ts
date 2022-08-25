@@ -60,7 +60,6 @@ export class ArrematantesComponent implements OnInit, OnDestroy {
     this.arrematantes = [];
     this.loading = true;
     if(event != null){
-      console.log('entrou')
     this.sub.push(
       this.restangular.one(`leilao/${event.id}/arrematantes`).get()
       .subscribe((response) => {
@@ -71,7 +70,6 @@ export class ArrematantesComponent implements OnInit, OnDestroy {
       () => this.loading = false)
     )
     }else{
-      console.log('entrou 2')
       this.arremantantesFiltrados = []
     this.loading = false;
     }

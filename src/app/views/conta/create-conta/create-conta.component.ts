@@ -53,8 +53,6 @@ export class CreateContaComponent implements OnInit, OnDestroy  {
    this.sub.push(
     this.restangular.one('empresa').get().subscribe(
       dados =>{
-        //  this.empresas = dados.data
-        console.log(dados.data)
         this.empresas = dados.data
       }
     )

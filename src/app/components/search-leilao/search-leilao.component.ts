@@ -41,7 +41,6 @@ export class SearchLeilaoComponent implements OnInit, OnDestroy {
     )
   }
   emitirLeilao(){
-    console.log(this.formulario.value.leilao)
     this.emitLeilao.emit(this.formulario.value.leilao)
   }
   ngOnDestroy(): void {

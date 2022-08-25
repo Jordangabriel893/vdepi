@@ -42,7 +42,6 @@ export class EditTiponotificacaoComponent implements OnInit {
 
   }
   onSubmit(){
-    // console.log(this.formulario.value)
     if(!this.formulario.valid){
       Object.keys(this.formulario.controls).forEach((campo)=>{
         const controle = this.formulario.get(campo)

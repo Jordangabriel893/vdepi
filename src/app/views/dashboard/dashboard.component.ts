@@ -130,7 +130,6 @@ export class DashboardComponent implements OnInit, OnDestroy {
     )
 
    this.sub.push( this.restangular.one("dashboard/contadores-lotes").get({ LeilaoId: this.id }).subscribe((response) => {
-      // console.log(response.data)
       this.comLances = response.data.comLances
       this.removidos = response.data.removidos
       this.semLances = response.data.semLances
@@ -150,7 +149,6 @@ export class DashboardComponent implements OnInit, OnDestroy {
     })
    )
    this.sub.push( this.restangular.one("dashboard/financeiro").get({ LeilaoId: this.id }).subscribe((response) => {
-      // console.log(response.data)
        const finaceiro = response.data
      this.listaExpirados = finaceiro.filter(x => x.status == 'Expirado')
      this.listaPendentes = finaceiro.filter(x => x.status == 'Pendente')

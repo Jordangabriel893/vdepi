@@ -51,15 +51,12 @@
                           <div style="margin: 10px 0; white-space: normal;" class="card" >
                               <div class="card-body">
                                   <h5 class="card-title" [ngOptionHighlight]="search">{{item.cedenteRazaoSocial}}</h5>
-                                  <h6 class="card-subtitle mb-2 text-muted">{{item.cedenteCpfCnpj}}</h6>
+                                  <h6 class="card-subtitle mb-2 text-muted">CNPJ: {{item.cedenteCpfCnpj | formatCpfCnpf }}</h6>
+                                  <h6 class="card-subtitle mb-2 text-muted"><small>Banco: {{item.cedenteBanco }} - AG: {{item.cedenteAgencia }} - CC: {{ item.cedenteContaCorrente + '-' + item.cedenteDigitoConta }}</small></h6>
                               </div>
                           </div>
                       </ng-template>
                     </ng-select>
-                    <!-- <label for="cobrancaId">Cobrança</label>
-                    <select class="form-control" [ngClass]="aplicaCssErro('cobrancaId') " formControlName="cobrancaId">
-                      <option *ngFor="let item of empresas" value="{{item.empresaId}}">{{item.nomeFantasia}}</option>
-                    </select> -->
                   </div>
 
                   <div class="form-group col-6">
@@ -79,9 +76,19 @@
                   <div class="col-md-12">
                     <label for="formasPagamento">Formas de pagamento:</label>
                     <div id="formasPagamento" class="row" formArrayName="formasPagamento">
-                      <div class="checkbox" class="col-sm-4" *ngFor="let item of getOpcoes(); let i = index">
+                      <div class="checkbox" class="col-sm-3" *ngFor="let item of formasPagamentoFormArray.controls; let i = index">
                         <label class="checkbox-inline">
-                          <input type="checkbox" [formControlName]="i"> {{ opcoes[i] }}
+                          <input type="checkbox" [formControlName]="i"> {{ formasPagamento[i].descricao }}
+                        </label>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-md-12">
+                    <label for="agrupar">Agrupar:</label>
+                    <div id="agrupar" class="row">
+                      <div class="checkbox" class="col-sm-3">
+                        <label class="checkbox-inline">
+                          <input type="checkbox" formControlName="agrupar"> Agrupar fatura por arrematante
                         </label>
                       </div>
                     </div>
@@ -264,8 +271,9 @@
             </div>
           </div>
           <div class="card-footer">
-            <button type="submit" class="btn btn-primary saveCancel"><i class="fa fa-save"></i> Salvar</button>
-            <button type="reset" class="btn btn-danger" [routerLink]="['/fatura']"><i class="fa fa-undo"></i>
+            <button type="submit" class="btn btn-primary saveCancel" *ngIf="!salvando"><i class="fa fa-save"></i> Salvar</button>
+            <button type="button" class="btn btn-primary saveCancel" *ngIf="salvando"><i class="fa fa-spin fa-spinner"></i> Salvando...</button>
+            &nbsp;<button type="reset" class="btn btn-danger" [routerLink]="['/fatura']"><i class="fa fa-undo"></i>
               Cancelar</button>
           </div>
         </div>
@@ -319,7 +327,7 @@
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-primary" (click)="modalRef?.hide(); adicionarItens()">Adicionar</button>
-          <button type="button" class="btn btn-secondary" data-dismiss="modal"
+          &nbsp;<button type="button" class="btn btn-secondary" data-dismiss="modal"
             (click)="modalRef?.hide()">Cancelar</button>
         </div>
 

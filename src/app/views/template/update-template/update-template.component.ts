@@ -185,7 +185,6 @@ export class UpdateTemplateComponent implements OnInit {
       this.salvar = false
       return false;
     }
-    console.log(this.template);
     this.template = {
       designJson: this.template.designJson,
       codigoHtml: this.template.codigoHtml,

@@ -42,8 +42,6 @@ export class AppSidebarNavComponent {
     return item.source ? this.auth.hasSourceAccess(item.source) : true;
   }
   public showTitle(item){
-    // const user = this.authentication.getUser()
-    // console.log(user.permission ? true : false)
     return this.auth.hasPermissions() ? true : false
   }
 
@@ -176,7 +174,6 @@ export class AppSidebarNavTitleComponent implements OnInit, OnChanges {
 
   ngOnInit() {
     if(this.auth.hasItem(this.title)){
-      // console.log('passou', this.title)
       const nativeElement: HTMLElement = this.el.nativeElement;
       const li = this.renderer.createElement('li');
       const name = this.renderer.createText(this.title.name);
