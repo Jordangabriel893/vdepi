@@ -355,6 +355,13 @@ export class CreateFaturaComponent implements OnInit, OnDestroy {
   }
   adicionarItens(itemCampoId = null) {
     const form = this.formulario.value
+    const existAll = this.formulario.value.itensFatura.filter(x => x.all == true)
+    const existLote =  this.formulario.value.itensFatura.filter(x =>{
+      if(form.lote){
+      return  x.id == form.lote.numeroLote
+      }
+      return []
+    } )
     if (form.adicionarItem == 'outros') {
       let itens = this.formulario.get('itensFatura') as FormArray
       itens.push(this.formBuilder.group({
@@ -366,25 +373,35 @@ export class CreateFaturaComponent implements OnInit, OnDestroy {
     }
     if (form.adicionarItem == 'lote') {
       if (form.todosLotes == true) {
-        const desc = `Todos os lotes foram selecionados `
-        let itens = this.formulario.get('itensFatura') as FormArray
-        itens.push(this.formBuilder.group({
-          descricao: [desc, Validators.required],
-          tipo: ['lote'],
-          all: [true]
-        }))
+        if(existAll.length > 0 || form.itensFatura.length > 0){
+          this.notifierService.notify('error', 'Um ou mais lotes foram selecionados!');
+        }else{
+          const desc = `Todos os lotes foram selecionados `
+          let itens = this.formulario.get('itensFatura') as FormArray
+          itens.push(this.formBuilder.group({
+            descricao: [desc, Validators.required],
+            tipo: ['lote'],
+            all: [true]
+          }))
+          return
+        }
         return
       }
+      if(existAll.length < 1){
+        if(existLote.length == 0){
+          const desc = `Lote: ${form.lote.numeroLote} - Placa: ${form.lote ? form.lote.placa : ''} - Marca/Modelo: ${form.lote ? form.lote.marcaModelo : ''}   `
+          let itens = this.formulario.get('itensFatura') as FormArray
+          itens.push(this.formBuilder.group({
+            descricao: [desc, Validators.required],
+            valor: [form.lote.valorLanceVencedor, Validators.required],
+            tipo: ['lote'],
+            id:[form.lote.numeroLote],
+            all: [false]
+          }))
+        }else{ this.notifierService.notify('error', 'Lote já selecionado !') ;}
+      }else{ this.notifierService.notify('error', 'Todos os lotes já foram selecionados !') ;}
 
-      const desc = `Lote: ${form.lote.numeroLote} - Placa: ${form.lote ? form.lote.placa : ''} - Marca/Modelo: ${form.lote ? form.lote.marcaModelo : ''}   `
-      let itens = this.formulario.get('itensFatura') as FormArray
-      itens.push(this.formBuilder.group({
-        descricao: [desc, Validators.required],
-        valor: [form.lote.valorLanceVencedor, Validators.required],
-        tipo: ['lote'],
-        id:[form.lote.numeroLote],
-        all: [false]
-      }))
+
     }
   }
   deleteItens(indexCampo: number) {
