@@ -123,7 +123,7 @@ export class CreateFaturaComponent implements OnInit, OnDestroy {
 
   onSubmit() {
     const formulario = {...this.formulario.value}
-
+    console.log(this.formulario.controls)
     if(!this.formulario.valid){
       Object.keys(this.formulario.controls).forEach((campo)=>{
         const controle = this.formulario.get(campo)
@@ -153,7 +153,7 @@ export class CreateFaturaComponent implements OnInit, OnDestroy {
         dataLimite: formulario.dataLimite,
         dataVencimento:formulario.dataVencimento,
         formasPagamento:formasSelecionadas,
-        lotes: existAll.length > 0 ? [0] :  formulario.itensFatura.map(x => x.id)
+        lotes: existAll.length > 0 ? [0] :  formulario.itensFatura.map(x => x.loteId)
       }
 
       this.restangular.all('/Fatura/FaturaMassiva').post(formMassivo).subscribe(a => {
@@ -169,7 +169,16 @@ export class CreateFaturaComponent implements OnInit, OnDestroy {
         });
     }
     if(this.tipoFatura == 'Avulsa'){
-      this.restangular.all('/Fatura/FaturaManual').post(this.formulario.value).subscribe(a => {
+      const formAvulso = {
+        origem:formulario.origem,
+        leilaoId:formulario.leilaoId,
+        cobrancaId:formulario.cobrancaId,
+        cliente:formulario.cliente,
+        dataVencimento:formulario.dataVencimento,
+        formasPagamento:formulario.formasPagamento,
+        itensFatura:formulario.itensFatura,
+      }
+      this.restangular.all('/Fatura/FaturaManual').post(formAvulso).subscribe(a => {
         this.notifierService.notify('success', 'Fatura avulsa criada com sucesso');
         this.router.navigate(['/fatura']);
       },
@@ -273,7 +282,6 @@ export class CreateFaturaComponent implements OnInit, OnDestroy {
         cep: clienteSelecionado.cep,
         usuarioId: clienteSelecionado.usuarioId
       })
-
     });
   }
   populaDadosForm(dados) {
@@ -314,7 +322,7 @@ export class CreateFaturaComponent implements OnInit, OnDestroy {
         cliente: this.formBuilder.group({
           nome: [null, [Validators.required, Validators.minLength(3), Validators.maxLength(35)]],
           email: [null, [Validators.required, Validators.email]],
-          telefone: [null, [Validators.required, Validators.email]],
+          telefone: [null, [Validators.required]],
           cpfCnpj: [null, [Validators.required, Validators.minLength(11)]],
           logradouro: [null],
           logradouroNumero: [null],
@@ -327,11 +335,9 @@ export class CreateFaturaComponent implements OnInit, OnDestroy {
         }),
         dataVencimento: [null, Validators.required],
         formasPagamento: this.buildOpcoes(),
-        empresaCobrança: [null, [Validators.required]],
         dataLimite: [null, Validators.required],
         clienteSelecionado: [null],
         lote: [null],
-
         itensFatura: this.formBuilder.array([]),
         adicionarItem: [],
         todosLotes: [false],
@@ -360,13 +366,14 @@ export class CreateFaturaComponent implements OnInit, OnDestroy {
     const existAll = this.formulario.value.itensFatura.filter(x => x.all == true)
     const existLote =  this.formulario.value.itensFatura.filter(x =>{
       if(form.lote){
-      return  x.id == form.lote.numeroLote
+      return  x.loteId == form.lote.numeroLote
       }
       return []
     } )
     if (form.adicionarItem == 'outros') {
       let itens = this.formulario.get('itensFatura') as FormArray
       itens.push(this.formBuilder.group({
+        loteId:[0],
         descricao: ['', Validators.required],
         valor: ['', Validators.required],
         tipo: ['outros']
@@ -397,7 +404,7 @@ export class CreateFaturaComponent implements OnInit, OnDestroy {
             descricao: [desc, Validators.required],
             valor: [form.lote.valorLanceVencedor, Validators.required],
             tipo: ['lote'],
-            id:[form.lote.numeroLote],
+            loteId:[form.lote.numeroLote],
             all: [false]
           }))
         }else{ this.notifierService.notify('error', 'Lote já selecionado !') ;}
