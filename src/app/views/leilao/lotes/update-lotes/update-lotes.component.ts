@@ -307,7 +307,6 @@ export class UpdateLotesComponent implements OnInit {
   }
 
   alterarFoto(i) {
-    // console.log(i)
     this.numeroAdcFoto = i
     this.inputFotos.nativeElement.click()
   }

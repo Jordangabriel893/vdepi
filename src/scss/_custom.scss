@@ -758,3 +758,11 @@ span.legend-color-red {
 span.legend-color-pink {
   background-color: #ff00f2;
 }
+
+.table-responsive {
+  overflow: inherit;
+}
+
+.jaspero__confirmation {
+  z-index: 1025 !important;
+}

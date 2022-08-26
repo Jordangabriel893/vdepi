@@ -8,6 +8,11 @@
   cursor: pointer;
 }
 
+.header{
+  display: flex;
+  justify-content: space-between;
+}
+
 h6{
   font-size: 12px;
   font-weight: normal;
@@ -95,10 +100,22 @@ p {
     border: 2px solid #010a13 !important;
   }
 
-  .vistoriado {
+  .vistoriaAprovada {
     color: #454141;
     background-color: #13c716;
     border-color: #097a3c;
+  }
+
+  .vistoriaReprovada, .vistoriaCancelada {
+    color: #ffffff;
+    background-color: #c72e13;
+    border-color: #7a0909;
+  }
+
+  .vistoriaAprovadaRestricao {
+    color: #454141;
+    background-color: #db981b;
+    border-color: #97760a;
   }
 
   .itemSelecionado {

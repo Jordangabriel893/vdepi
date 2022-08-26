@@ -13,8 +13,6 @@ import {  ActivatedRoute,  Router } from '@angular/router';
 // install Swiper modules
 SwiperCore.use([Navigation]);
 
-
-
 @Component({
   selector: 'app-vistoria',
   templateUrl: './vistoria.component.html',

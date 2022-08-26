@@ -1,9 +1,11 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
+import { ConfirmationService, ResolveEmit } from '@jaspero/ng-confirmations';
 import { NotifierService } from 'angular-notifier';
 import * as _ from 'lodash';
 import { Restangular } from 'ngx-restangular';
+import * as fileSaver from 'file-saver';
 
 @Component({
   selector: 'app-lotes',
@@ -33,17 +35,17 @@ export class LotesComponent implements OnInit {
   queryField = new FormControl();
   lotesFiltrados: any;
   dataLote:any;
-
+  exportando = false;
   constructor(
     private restangular: Restangular,
     private route: ActivatedRoute,
     private router: Router,
-    private notifierService: NotifierService
+    private notifierService: NotifierService,
+    private confirmationService: ConfirmationService
   ) {
     this.id = this.route.snapshot.params['id']
     this.restangular.one("lote", '').get({ leilaoId: this.id, PageSize: 500 }).subscribe(
       (lotes) => {
-        console.log(lotes.data)
         this.loading = false;
         const lote = lotes.data
         this.dataLote = lote
@@ -56,15 +58,7 @@ export class LotesComponent implements OnInit {
     )
     this.restangular.one('leilao', this.id).get().subscribe((response) => {
       this.leilao = response.data
-
     });
-    // this.restangular.all('admin/leilao').get(this.id).subscribe(dados => {
-    //   const arquivoPlanilha = dados.data.anexos.filter(element => element.arquivo.nome.includes('xlsx'))
-    //   this.formData.append('file', arquivoPlanilha[0])
-
-    // })
-
-
   }
 
   ngOnInit() {
@@ -92,28 +86,21 @@ export class LotesComponent implements OnInit {
   }
 
   deleteLote(loteId: number) {
-    this.restangular.one('lote', loteId).remove()
-      .subscribe((resp) => {
-        this.notifierService.notify('success', 'Lote excluido!');
-      },
-        () => {
-          this.notifierService.notify('error', 'Erro ao exclir o Lote!');
-        });
+    this.confirmationService.create('Atenção', 'Deseja realmente excluir o lote?')
+    .subscribe((ans: ResolveEmit) => {
+      if(ans.resolved) {
+        this.restangular.one('lote', loteId).remove()
+          .subscribe((resp) => {
+            this.notifierService.notify('success', 'Lote excluido!');
+          },
+            () => {
+              this.notifierService.notify('error', 'Erro ao exclir o Lote!');
+            });
+          }
+    })
   }
-  // upload(){
-  //   var formData = new FormData();
-  //   formData.append('file', this.arquivo)
-  //   console.log(this.formData)
-  //   this.restangular.all('lote').customPOST(formData, 'ImportacaoPlanilha',{ leilaoId: this.id}, { 'content-type': 'multipart/form-data'} ).subscribe(a => {
-  //     this.notifierService.notify('success', 'Upload de Banner com sucesso');
-  //     // this.router.navigate(['/lotes', this.id]);
-  //   },
-  //     error => {
-  //       this.notifierService.notify('error', 'Upload de Banner erro!');
-  //     });
-  // }
+
   getAnexo() {
-    // this.numeroAnexo = i
     this.inputAnexos.nativeElement.click()
   }
   fileChangeEvent(fileInput: any) {
@@ -162,6 +149,21 @@ export class LotesComponent implements OnInit {
       this.lotesFiltrados = this.lotes.filter(x => x.numeroLote == value ||  x.descricao.toLowerCase().includes(value));
 
     }
+  }
+
+  exportAsExcel() {
+    this.exportando = true;
+    this.restangular.one(`leilao/${this.id}/exportarlotes`, )
+    .withHttpConfig({responseType: 'blob'})
+    .get()
+    .subscribe((response) => {
+      const blob = new Blob([response], { type: 'application/xlsx' });
+      fileSaver.saveAs(blob, `Lotes.xlsx`);
+      this.exportando = false;
+    },(error) => {
+      this.notifierService.notify('error', 'Não foi possivel exportar lotes!');
+      this.exportando = false;
+    })
   }
 }
 

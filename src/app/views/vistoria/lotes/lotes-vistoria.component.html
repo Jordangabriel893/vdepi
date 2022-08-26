@@ -2,62 +2,67 @@
   <div class="row">
     <div class="col-md-12">
       <div class="card">
-        <div class="card-header">
-          <i class="fa fa-gavel" aria-hidden="true"></i>
-          &nbsp;Vistoria
+        <div class="card-header header">
+          <div>
+            <i class="fa fa-gavel" aria-hidden="true"></i>
+            &nbsp;Vistoria
+          </div>
+          <div class="d-flex justify-content-end">
+            <button type="button"
+                    class="btn btn-sm btn-info text-nowrap"
+                    (click)="exportAsExcel()"
+                    title="Exportar para Excel" *ngIf="!exportando">
+                    <i class="fa fa-download" aria-hidden="true"></i>
+                    &nbsp;Exportar Vistorias
+            </button>&nbsp;
+            <button type="button" class="btn btn-info btn-sm text-nowrap" *ngIf="exportando">
+              <i class="fa fa-spin fa-spinner" ></i>&nbsp;Exportando Vistorias...
+            </button>&nbsp;
+          </div>
         </div>
         <div class="card-block">
           <div class="row m-2">
             <div class="col-md-12 overflow-hidden">
               <h4 class="text-center" *ngIf="loading"><i class="fa fa-spin fa-spinner"></i> Carregando...</h4>
-              <swiper
-              [slidesPerView]="6.5"
-              [navigation]="false"
-              [spaceBetween]="10"
-              class="mySwiper">
+              <swiper [slidesPerView]="6.5" [navigation]="false" [spaceBetween]="10" class="mySwiper">
                 <ng-template swiperSlide *ngFor="let item of lotes; index as i">
-                  <div class="container text-center"
-                       (click)="carregarVistoria(item); detalhe = i"
-                       [ngClass]="{'destaque': detalhe == i, 'vistoriado': item.vistoriaConcluida, 'disabled': !item.vistoriado}">
-                      <h6>LOTE</h6>
-                      <h3>{{item.numeroLote}}</h3>
-                      <p class="text-truncate"><small>{{ item.descricao }}</small></p>
+                  <div class="container text-center" (click)="carregarVistoria(item)"
+                    [ngClass]="classStatusVistoria(item)">
+                    <h6>LOTE</h6>
+                    <h3>{{item.numeroLote}}</h3>
+                    <p class="text-truncate"><small>{{ item.descricao }}</small></p>
                   </div>
                 </ng-template>
               </swiper>
             </div>
           </div>
-          <div class="row m-2" *ngIf="carregouVistoria" >
-            <div class="col-md-12 border border-secondary rounded alert alert-warning" >
+          <div class="row m-2" *ngIf="carregouVistoria">
+            <div class="col-md-12 border border-secondary rounded alert alert-warning">
               <h1 class="text-center ">O Lote não foi vistoriado!</h1>
             </div>
           </div>
-          <div class="row m-2" *ngIf="lote && vistoria" >
-            <div class="col-md-12 border border-secondary rounded" >
+          <div class="row m-2" *ngIf="lote && vistoria">
+            <div class="col-md-12 border border-secondary rounded">
               <div class="d-flex justify-content-center flex-wrap">
                 <div class="px-3" *ngFor="let item of lote.campos">
                   <div class="font-weight-bold text-uppercase small">{{item.loteCampo.descricao}}</div>
-                  <div class="text-uppercase text-muted small" *ngIf="getCampoAlterado(item.loteCampoId)"><s>{{item.valor}}</s></div>
-                  <div class="text-uppercase">{{getCampoAlterado(item.loteCampoId) ? getCampoAlterado(item.loteCampoId).valor : item.valor}}</div>
+                  <div class="text-uppercase text-muted small" *ngIf="getCampoAlterado(item.loteCampoId)">
+                    <s>{{item.valor}}</s>
+                  </div>
+                  <div class="text-uppercase">{{getCampoAlterado(item.loteCampoId) ?
+                    getCampoAlterado(item.loteCampoId).valor : item.valor}}</div>
                 </div>
               </div>
             </div>
             <div class="col-md-6">
               <div class="row mt-2">
                 <div class="col-md-11 overflow-hidden">
-                  <swiper
-                  (swiper)="thumbsSwiper = $event"
-                  [spaceBetween]="25"
-                  [slidesPerView]="5.5"
-                  class="mySwiper2"
-                  >
+                  <swiper (swiper)="thumbsSwiper = $event" [spaceBetween]="25" [slidesPerView]="5.5" class="mySwiper2">
                     <ng-container *ngFor="let item of vistoria.fotos; index as i">
-                      <ng-template  swiperSlide let-data>
+                      <ng-template swiperSlide let-data>
                         <div class="thumb overflow-hidden">
-                          <img
-                          (click)="itemThumb = i"
-                          [class.itemSelecionado]="itemThumb == i"
-                          src="{{item.loteFoto.arquivo.url}}" >
+                          <img (click)="itemThumb = i" [class.itemSelecionado]="itemThumb == i"
+                            src="{{item.loteFoto.arquivo.url}}">
                         </div>
                       </ng-template>
                     </ng-container>
@@ -66,24 +71,18 @@
               </div>
               <div class="row mt-2">
                 <div class="col-md-11 overflow-hidden">
-                    <swiper *ngIf="thumbsSwiper"
-                    [spaceBetween]="20"
-                    [slidesPerView]="1"
-                    [centeredSlides]="true"
-                    [navigation]="true"
-                    [thumbs]="{ swiper: thumbsSwiper }"
-                    class="mySwiper3"
-                    >
+                  <swiper *ngIf="thumbsSwiper" [spaceBetween]="20" [slidesPerView]="1" [centeredSlides]="true"
+                    [navigation]="true" [thumbs]="{ swiper: thumbsSwiper }" class="mySwiper3">
                     <ng-container *ngFor="let item of vistoria.fotos; index as i">
-                      <ng-template swiperSlide >
+                      <ng-template swiperSlide>
                         <div class="thumb-principal">
-                          <img src="{{item.loteFoto.arquivo.url}}" >
+                          <img src="{{item.loteFoto.arquivo.url}}">
                           <div class="tarja">AVARIA: {{item.temAvaria ? item.avaria : 'N/A'}}</div>
                         </div>
                       </ng-template>
                     </ng-container>
-                    </swiper>
-                 </div>
+                  </swiper>
+                </div>
               </div>
             </div>
             <div class="col-md-6 border border-secondary rounded mt-2">
@@ -97,15 +96,19 @@
                 <div class="col-sm-12">
                   <div class="p-2">
                     <div class="font-weight-bold text-uppercase small">Observações</div>
-                    <textarea class="form-control" id="exampleFormControlTextarea1" rows="2" cols="12" [(ngModel)]="vistoria.observacao"></textarea>
+                    <textarea class="form-control" id="exampleFormControlTextarea1" rows="2" cols="12"
+                      [(ngModel)]="vistoria.observacao"></textarea>
                   </div>
                 </div>
                 <div class="col-sm-12">
                   <div class="p-2">
                     <div class="font-weight-bold text-uppercase small">Status</div>
-                    <select class="form-control" [(ngModel)]="statusSelecionado">
+                    <select class="form-control" [(ngModel)]="vistoria.statusId">
                       <option selected>-- SELECIONE --</option>
-                      <option *ngFor="let item of status" [value]="item.loteStatusId">{{item.descricao}}</option>
+                      <option value="3">CANCELADO</option>
+                      <option value="4">APROVADO</option>
+                      <option value="5">REPROVADO</option>
+                      <option value="6">APROVADO COM RESTRIÇÃO</option>
                     </select>
                   </div>
                 </div>
@@ -116,12 +119,15 @@
                       <option selected>-- SELECIONE --</option>
                       <option *ngFor="let item of tiposLote" [value]="item.tipoLoteId">{{item.descricao}}</option>
                     </select>
-                    <div class="text-center m-2" *ngIf="vistoria.statusId != 5 && vistoria.statusId != 6 && vistoria.statusId != 7">
-                      <button type="button" class="btn btn-block btn-success btn-large" (click)="gravar()">Salvar</button>
+                    <div class="text-center m-2">
+                      <button type="button" class="btn btn-block btn-success btn-large"
+                        (click)="gravar()">Salvar</button>
                     </div>
-                    <div class="text-center m-2" *ngIf="vistoria.statusId == 5 || vistoria.statusId == 6 || vistoria.statusId == 7">
-                      <button type="button" class="btn btn-block btn-info btn-large" (click)="gerarLaudo()" *ngIf="!loadingLaudo">Gerar Laudo</button>
-                      <button type="button" class="btn btn-block btn-info btn-large" *ngIf="loadingLaudo"><i class="fa fa-spin fa-spinner"></i> Gerando...</button>
+                    <div class="text-center m-2" *ngIf="vistoria.statusId > 2">
+                      <button type="button" class="btn btn-block btn-info btn-large" (click)="gerarLaudo()"
+                        *ngIf="!loadingLaudo">Gerar Laudo</button>
+                      <button type="button" class="btn btn-block btn-info btn-large" *ngIf="loadingLaudo"><i
+                          class="fa fa-spin fa-spinner"></i> Gerando...</button>
                     </div>
                   </div>
 

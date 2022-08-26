@@ -6,10 +6,10 @@ import { forkJoin } from 'rxjs';
 import * as fileSaver from 'file-saver';
 
 // import Swiper core and required modules
-import SwiperCore, {  Navigation, Thumbs} from "swiper";
+import SwiperCore, { Navigation, Thumbs } from "swiper";
 
 // install Swiper modules
-SwiperCore.use([ Navigation, Thumbs]);
+SwiperCore.use([Navigation, Thumbs]);
 
 @Component({
   selector: 'app-lotes-vistoria',
@@ -31,7 +31,9 @@ export class LotesVistoriaComponent implements OnInit {
   thumbsSwiper: any;
   loadingLaudo = false;
   status = [];
-  statusSelecionado:any;
+  statusSelecionado: any;
+  loteSelecionado;
+  exportando = false;
   constructor(
     private restangular: Restangular,
     private route: ActivatedRoute,
@@ -42,57 +44,51 @@ export class LotesVistoriaComponent implements OnInit {
   }
 
   ngOnInit() {
-   
+
     forkJoin([
-      this.restangular.one("lote", '').get({ leilaoId: this.id, PageSize:300 }).pipe(),
+      this.restangular.one("lote", '').get({ leilaoId: this.id, PageSize: 300 }).pipe(),
       this.restangular.one("tipolote").get().pipe(),
       this.restangular.one("lotestatus").get().pipe(),
     ]).subscribe((allResp: any[]) => {
       this.lotes = allResp[0].data
       this.tiposLote = allResp[1].data
       this.status = allResp[2].data
-      console.log(this.lotes)
       this.loading = false;
     },
-    () => this.loading = false)
+      () => this.loading = false)
 
   }
 
-  carregarVistoria(e){
+  carregarVistoria(e) {
     forkJoin([
       this.restangular.one("lote", e.loteId).get().pipe(),
       this.restangular.one("vistoria", e.loteId).get().pipe()
     ]).subscribe((allResp: any[]) => {
       this.lote = allResp[0].data
       this.vistoria = allResp[1].data
-      console.log(this.vistoria)
       this.statusSelecionado = this.vistoria.statusId
       this.carregouVistoria = this.vistoria == null
     })
+
+    this.loteSelecionado = e;
   }
 
-  gravar(){
-    this.vistoria.statusId = this.statusSelecionado
+  gravar() {
     this.restangular.all('vistoria').customPUT(this.vistoria, this.vistoria.vistoriaId).subscribe(a => {
-        this.notifierService.notify('success', 'Lote Vistoriado com sucesso');
-        this.tornaVistoriado()
-      },
-        error => {
-          this.notifierService.notify('error', 'Erro ao atualizar o Lote!');
-        });
-  }
+      this.notifierService.notify('success', 'Lote Vistoriado com sucesso');
+    },
+      error => {
+        this.notifierService.notify('error', 'Erro ao atualizar o Lote!');
+      });
 
-  tornaVistoriado(){
-    const objIndex = this.lotes.findIndex((obj => obj.loteId == this.lote.loteId));
-    this.lotes[objIndex].vistoriaConcluida = true
-
-    this.vistoria.statusId = 2;
+      let lote = this.lotes.find(x => x.loteId === this.loteSelecionado.loteId);
+      lote.statusVistoriaId = parseInt(this.vistoria.statusId);
   }
 
   onSwiper(swiper) {
     this.thumbSwiper = swiper;
-    this.thumbOptions = { swiper: this.thumbSwiper}
- }
+    this.thumbOptions = { swiper: this.thumbSwiper }
+  }
 
   getCampoAlterado(loteCampoId) {
     return this.vistoria.campos.find(x => x.loteCampoId === loteCampoId);
@@ -101,16 +97,53 @@ export class LotesVistoriaComponent implements OnInit {
   gerarLaudo() {
     this.vistoria.statusId = this.statusSelecionado
     this.loadingLaudo = true;
-    this.restangular.all('vistoria').one(`${this.vistoria.numero}/laudo`, )
+    this.restangular.all('vistoria').one(`${this.vistoria.numero}/laudo`,)
+      .withHttpConfig({ responseType: 'blob' })
+      .get()
+      .subscribe((response) => {
+        const blob = new Blob([response], { type: 'application/pdf' });
+        fileSaver.saveAs(blob, `Vistoria_${this.vistoria.numero}.pdf`);
+        this.loadingLaudo = false;
+      }, () => {
+        this.notifierService.notify('error', 'Não foi possivel Gerar o laudo!');
+        this.loadingLaudo = false;
+      })
+  }
+
+  classStatusVistoria(lote) {
+
+    if(this.loteSelecionado && this.loteSelecionado.loteId === lote.loteId) {
+      return 'destaque';
+    }
+
+    if(!lote.statusVistoriaId) {
+      return 'disabled';
+    }
+
+    switch(lote.statusVistoriaId) {
+      case 3:
+        return 'vistoriaCancelada';
+      case 4:
+        return 'vistoriaAprovada';
+      case 5:
+        return 'vistoriaReprovada';
+      case 6:
+        return 'vistoriaAprovadaRestricao';
+    }
+  }
+
+  exportAsExcel() {
+    this.exportando = true;
+    this.restangular.one(`vistoria/exportar/${this.id}`, )
     .withHttpConfig({responseType: 'blob'})
     .get()
     .subscribe((response) => {
-      const blob = new Blob([response], { type: 'application/pdf' });
-      fileSaver.saveAs(blob, `Vistoria_${this.vistoria.numero}.pdf`);
-      this.loadingLaudo = false;
-    },() => {
-      this.notifierService.notify('error', 'Não foi possivel Gerar o laudo!');
-      this.loadingLaudo = false;
+      const blob = new Blob([response], { type: 'application/xlsx' });
+      fileSaver.saveAs(blob, `Vistorias.xlsx`);
+      this.exportando = false;
+    },(error) => {
+      this.notifierService.notify('error', 'Não foi possivel exportar vistorias!');
+      this.exportando = false;
     })
   }
 }
