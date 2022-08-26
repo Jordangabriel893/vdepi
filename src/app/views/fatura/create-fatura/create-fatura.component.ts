@@ -29,9 +29,6 @@ export class CreateFaturaComponent implements OnInit, OnDestroy {
   empresas: any
   minDate: Date;
   tipoFatura = 'Massiva';
-  opcoes = [
-    'Cartão', 'Boleto', 'Pix'
-  ]
   tiposItem = [
     'Lote', 'Outro'
   ]
@@ -129,6 +126,7 @@ export class CreateFaturaComponent implements OnInit, OnDestroy {
         controle.markAsTouched()
       })
       this.notifierService.notify('error', 'Preencha todos os campos obrigatórios');
+      this.salvando = false;
       return false;
     }
     const formasSelecionadas = formulario.formasPagamento
@@ -190,7 +188,7 @@ export class CreateFaturaComponent implements OnInit, OnDestroy {
     }
   }
 
-  setOrigem(){
+  setOrigem() {
     const origem = this.formulario.value.origem
     if(origem == 'leilao'){
       this.leilao = this.leiloes;
@@ -199,7 +197,7 @@ export class CreateFaturaComponent implements OnInit, OnDestroy {
     }
   }
 
-  setCobranca(){
+  setCobranca() {
    const leilaoId = this.formulario.value.leilaoId
    const leilaoCorrespondente = this.leiloes.find(x => x.id == leilaoId)
     const empresaId = leilaoCorrespondente.empresaId;
@@ -233,7 +231,7 @@ export class CreateFaturaComponent implements OnInit, OnDestroy {
     );
   }
 
-  private loadPeople(){
+  private loadPeople() {
     this.people$ = concat(
       of([]),
       this.peopleInput$.pipe(
@@ -335,7 +333,7 @@ export class CreateFaturaComponent implements OnInit, OnDestroy {
           usuarioId: [null]
         }),
         dataVencimento: [null, Validators.required],
-        formasPagamento: this.formBuilder.array([]),
+        formasPagamento: new FormArray([]),
         dataLimite: [null, Validators.required],
         clienteSelecionado: [null],
         lote: [null],
@@ -344,6 +342,8 @@ export class CreateFaturaComponent implements OnInit, OnDestroy {
         todosLotes: [false],
       })
     }
+
+    this.buildFormaPagamento();
   }
 
   buildFormaPagamento() {

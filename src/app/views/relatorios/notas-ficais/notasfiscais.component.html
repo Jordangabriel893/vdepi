@@ -98,7 +98,7 @@
                 <td>{{item.nota_fiscal_nome}}</td>
                 <td>{{item.data_liberacao_grv | amDateFormat:'DD/MM/YYYY HH:mm'}}</td>
                 <!-- <td>{{item.atividade}}</td> -->
-                <td class="text-nowrap">{{item.total_com_desconto | currency: 'R$ '}}</td>
+                <td class="text-nowrap">{{item.total_com_desconto | currencyFormat}}</td>
                 <td>{{item.codigo_erro}}</td>
                 <td>{{item.mensagem_erro}}</td>
                 <td class="text-center">

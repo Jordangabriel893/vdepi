@@ -103,7 +103,7 @@
                   <td>{{lote.descricao}}</td>
                   <td>{{lote.status}}</td>
                   <td>{{lote.loteJudicial ? "Sim" : "Não"}}</td>
-                  <td>{{lote.valorAvaliacao | currency:'BRL':true}}</td>
+                  <td>{{lote.valorAvaliacao | currencyFormat}}</td>
                   <td class="text-center" nowrap>
                     <button type="button" class="btn btn-primary" (click)="edit(lote.loteId)"><i class="fa fa-edit"></i>&nbsp; Editar</button>
                   </td>
@@ -163,7 +163,7 @@
                   <td>{{lote.descricao}}</td>
                   <td>{{lote.status}}</td>
                   <td>{{lote.loteJudicial ? "Sim" : "Não"}}</td>
-                  <td>{{lote.valorAvaliacao | currency:'BRL':true}}</td>
+                  <td>{{lote.valorAvaliacao | currencyFormat}}</td>
                   <td class="text-center" nowrap>
                     <button type="button" class="btn btn-primary" (click)="edit(lote.loteId)"><i class="fa fa-edit"></i>&nbsp; Editar</button>
                   </td>

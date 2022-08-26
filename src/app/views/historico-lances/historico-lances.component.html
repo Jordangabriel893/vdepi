@@ -77,10 +77,10 @@
                   <td>{{i + 1}}</td>
                   <td>{{item.nomeUsuario}}</td>
                   <td>{{item.dataLance | date: 'dd/MM/yyyy H:MM' }}</td>
-                  <td>{{item.valor | currency:'BRL':true:'1.2-2' }}</td>
-                  <td>{{item.taxas | currency:'BRL':true:'1.2-2'}}</td>
-                  <td>{{item.comissao | currency:'BRL':true:'1.2-2'}}</td>
-                  <td>{{item.total | currency:'BRL':true:'1.2-2'}}</td>
+                  <td>{{item.valor | currencyFormat }}</td>
+                  <td>{{item.taxas | currencyFormat}}</td>
+                  <td>{{item.comissao | currencyFormat}}</td>
+                  <td>{{item.total | currencyFormat}}</td>
                   <td *ngIf="ehLeilaoEncerrado" >
                     <button *ngIf="!item.vencedor" type="button" class="btn btn-info btn-sm" (click)="gravarLanceVencedor(item.lanceId)">&nbsp; Selecionar</button>
                     <div *ngIf="item.vencedor"> Vencedor!</div>
