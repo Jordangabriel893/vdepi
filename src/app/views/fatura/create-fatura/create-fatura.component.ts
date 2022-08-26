@@ -77,7 +77,7 @@ export class CreateFaturaComponent implements OnInit, OnDestroy {
   ) {
     localeService.use('pt-br');
     this.minDate = new Date();
-    this.minDate.setDate(this.minDate.getDate() + 1);
+    this.minDate.setDate(this.minDate.getDate());
     this.mask = ['(', /[1-9]/, /\d/, ')', ' ', /\d/, /\d/, /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/]
     this.maskTelefoneFixo = ['(', /[1-9]/, /\d/, ')', ' ', /\d/, /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/]
     this.maskCep = [/\d/, /\d/, /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/,]
@@ -189,12 +189,12 @@ export class CreateFaturaComponent implements OnInit, OnDestroy {
   }
 
   setOrigem() {
-    const origem = this.formulario.value.origem
-    if(origem == 'leilao'){
-      this.leilao = this.leiloes;
-    }else{
-      this.leilao = [];
-    }
+    // const origem = this.formulario.value.origem
+    // if(origem == 'leilao'){
+    //   this.leilao = this.leiloes;
+    // }else{
+    //   this.leilao = [];
+    // }
   }
 
   setCobranca() {
