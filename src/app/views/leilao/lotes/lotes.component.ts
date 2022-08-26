@@ -5,6 +5,7 @@ import { ConfirmationService, ResolveEmit } from '@jaspero/ng-confirmations';
 import { NotifierService } from 'angular-notifier';
 import * as _ from 'lodash';
 import { Restangular } from 'ngx-restangular';
+import * as fileSaver from 'file-saver';
 
 @Component({
   selector: 'app-lotes',
@@ -34,7 +35,7 @@ export class LotesComponent implements OnInit {
   queryField = new FormControl();
   lotesFiltrados: any;
   dataLote:any;
-
+  exportando = false;
   constructor(
     private restangular: Restangular,
     private route: ActivatedRoute,
@@ -148,6 +149,21 @@ export class LotesComponent implements OnInit {
       this.lotesFiltrados = this.lotes.filter(x => x.numeroLote == value ||  x.descricao.toLowerCase().includes(value));
 
     }
+  }
+
+  exportAsExcel() {
+    this.exportando = true;
+    this.restangular.one(`leilao/${this.id}/exportarlotes`, )
+    .withHttpConfig({responseType: 'blob'})
+    .get()
+    .subscribe((response) => {
+      const blob = new Blob([response], { type: 'application/xlsx' });
+      fileSaver.saveAs(blob, `Lotes.xlsx`);
+      this.exportando = false;
+    },(error) => {
+      this.notifierService.notify('error', 'Não foi possivel exportar lotes!');
+      this.exportando = false;
+    })
   }
 }
 
