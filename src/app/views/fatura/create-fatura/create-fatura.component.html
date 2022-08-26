@@ -34,7 +34,7 @@
                     <label for="origem">Origem </label>
                     <select class="form-control" [ngClass]="aplicaCssErro('origem')" formControlName="origem" (change)="setOrigem()">
                       <option value="leilao" selected>Leilão</option>
-                      <option value="outros" *ngIf="tipoFatura == 'Avulsa'">Outros</option>
+                      <!-- <option value="outros" *ngIf="tipoFatura == 'Avulsa'">Outros</option> -->
                     </select>
                   </div>
                   <div class="form-group col-4">
@@ -280,7 +280,7 @@
           </button>
         </div>
         <div class="modal-body d-flex flex-column">
-          <div class="form-check">
+          <div class="form-check" >
             <input class="form-check-input" type="radio" name="adicionarItem" id="adicionarItem1" checked value="lote"
               formControlName="adicionarItem">
             <label class="form-check-label" for="adicionarItem1">

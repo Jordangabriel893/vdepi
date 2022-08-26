@@ -425,7 +425,7 @@ export class CreateFaturaComponent implements OnInit, OnDestroy {
   }
 
   openModal(template: TemplateRef<any>,item?) {
-    if(item == 'fatura' && this.formulario.value.leilaoId == null  ){
+    if(item == 'fatura' && this.formulario.value.leilaoId == null && this.formulario.value.origem == null)  {
       this.notifierService.notify('error', 'Selecione uma opção');
       return
     }
