@@ -124,9 +124,6 @@ export class EditNotificacaoComponent implements OnInit {
       leilaoId: [dados.leilaoId, Validators.required],
       templateId: [dados.templateId],
       ativo: true,
-      dataLeilao:[dados.dataLeilao]
-
-
     })
   }
 

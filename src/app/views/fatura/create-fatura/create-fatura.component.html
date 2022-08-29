@@ -5,7 +5,7 @@
         <div class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true"
           aria-expanded="false" dropdownToggle>
           <i class="fa fa-dollar-sign icone"></i>
-          <span class="d-md-down-none">&nbsp;Fatura: {{tipoFatura}}</span>
+          <span class="d-md-down-none">&nbsp;Tipo Fatura: {{tipoFatura}}</span>
         </div>
         <div class="dropdown-menu dropdown-menu-right scrollable-dropdown " *dropdownMenu
           aria-labelledby="simple-dropdown">
@@ -17,7 +17,7 @@
     </div>
   </div>
 </div>
-<form [formGroup]="formulario" (ngSubmit)="onSubmit()" appFocus *ngIf="formulario">
+<form [formGroup]="formulario" appFocus *ngIf="formulario">
   <div class="animated fadeIn">
     <div class="row">
       <div class="col-lg-12">
@@ -34,14 +34,14 @@
                     <label for="origem">Origem </label>
                     <select class="form-control" [ngClass]="aplicaCssErro('origem')" formControlName="origem" (change)="setOrigem()">
                       <option value="leilao" selected>Leilão</option>
-                      <option value="outros">Outros</option>
+                      <!-- <option value="outros" *ngIf="tipoFatura == 'Avulsa'">Outros</option> -->
                     </select>
                   </div>
                   <div class="form-group col-4">
                     <label for="leilaoId">Leilao </label>
                     <select class="form-control" [ngClass]="aplicaCssErro('leilaoId')"  formControlName="leilaoId" (change)="setCobranca()"
                       id="leilaoId" name="leilaoId">
-                      <option *ngFor="let item of leilao" value="{{item.id}}">{{item.nome}}</option>
+                      <option *ngFor="let item of leiloes" value="{{item.id}}">{{item.nome}}</option>
                     </select>
                   </div>
                   <div class="form-group col-4">
@@ -51,15 +51,12 @@
                           <div style="margin: 10px 0; white-space: normal;" class="card" >
                               <div class="card-body">
                                   <h5 class="card-title" [ngOptionHighlight]="search">{{item.cedenteRazaoSocial}}</h5>
-                                  <h6 class="card-subtitle mb-2 text-muted">{{item.cedenteCpfCnpj}}</h6>
+                                  <h6 class="card-subtitle mb-2 text-muted">CNPJ: {{item.cedenteCpfCnpj | formatCpfCnpf }}</h6>
+                                  <h6 class="card-subtitle mb-2 text-muted"><small>Banco: {{item.cedenteBanco }} - AG: {{item.cedenteAgencia }} - CC: {{ item.cedenteContaCorrente + '-' + item.cedenteDigitoConta }}</small></h6>
                               </div>
                           </div>
                       </ng-template>
                     </ng-select>
-                    <!-- <label for="cobrancaId">Cobrança</label>
-                    <select class="form-control" [ngClass]="aplicaCssErro('cobrancaId') " formControlName="cobrancaId">
-                      <option *ngFor="let item of empresas" value="{{item.empresaId}}">{{item.nomeFantasia}}</option>
-                    </select> -->
                   </div>
 
                   <div class="form-group col-6">
@@ -79,9 +76,19 @@
                   <div class="col-md-12">
                     <label for="formasPagamento">Formas de pagamento:</label>
                     <div id="formasPagamento" class="row" formArrayName="formasPagamento">
-                      <div class="checkbox" class="col-sm-4" *ngFor="let item of getOpcoes(); let i = index">
+                      <div class="checkbox" class="col-sm-3" *ngFor="let item of formasPagamentoFormArray.controls; let i = index">
                         <label class="checkbox-inline">
-                          <input type="checkbox" [formControlName]="i"> {{ opcoes[i] }}
+                          <input type="checkbox" [formControlName]="i"> {{ formasPagamento[i].descricao }}
+                        </label>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-md-12">
+                    <label for="agrupar">Agrupar:</label>
+                    <div id="agrupar" class="row">
+                      <div class="checkbox" class="col-sm-3">
+                        <label class="checkbox-inline">
+                          <input type="checkbox" formControlName="agrupar"> Agrupar fatura por arrematante
                         </label>
                       </div>
                     </div>
@@ -93,81 +100,79 @@
         </div>
       </div>
     </div>
-    <div class="animated fadeIn" formGroupName="cliente" *ngIf="tipoFatura === 'Avulsa'">
-      <div class="row">
-        <div class="col-lg-12">
-          <div class="card">
-            <div class="card-header new-campo d-flex align-items-center">
-              <div class="d-flex align-items-center">
-                <i class="fa fa-user" aria-hidden="true"></i>&nbsp; Cliente
-              </div>
-              <button type="button" class="btn btn-success btn-sm" (click)="openModal(buscarPessoa)"><i
-                  class="fa fa-search"></i>&nbsp;
-                  Consultar Cliente</button>
+    <div class="row" formGroupName="cliente" *ngIf="tipoFatura === 'Avulsa'">
+      <div class="col-lg-12">
+        <div class="card">
+          <div class="card-header new-campo d-flex align-items-center">
+            <div class="d-flex align-items-center">
+              <i class="fa fa-user" aria-hidden="true"></i>&nbsp; Cliente
             </div>
+            <button type="button" class="btn btn-success btn-sm" (click)="openModal(buscarPessoa)"><i
+                class="fa fa-search"></i>&nbsp;
+                Consultar Cliente</button>
+          </div>
 
-            <div class="card-block">
-              <div class="row">
-                <div class="form-group col-7">
-                  <label for="nome">Nome</label>
-                  <input type="text" class="form-control" id="nome" formControlName="nome">
-                </div>
-                <div class="form-group col-5">
-                  <label for="cpfCnpj">CPF/CNPJ</label>
-                  <input type="text" class="form-control" id="cpfCnpj" formControlName="cpfCnpj"
-                    [textMask]="{mask: maskCpf}">
-                </div>
+          <div class="card-block">
+            <div class="row">
+              <div class="form-group col-7">
+                <label for="nome">Nome</label>
+                <input type="text" class="form-control" id="nome" formControlName="nome">
               </div>
-              <div class="row">
-                <div class="form-group col-7">
-                  <label for="email">Email</label>
-                  <input type="text" class="form-control" id="email" formControlName="email">
-                </div>
-                <div class="form-group col-5">
-                  <label for="telefone">Celular</label>
-                  <input type="text" class="form-control" id="telefone" formControlName="telefone"
-                    [textMask]="{mask: mask}">
-                </div>
+              <div class="form-group col-5">
+                <label for="cpfCnpj">CPF/CNPJ</label>
+                <input type="text" class="form-control" id="cpfCnpj" formControlName="cpfCnpj"
+                  [textMask]="{mask: maskCpf}">
               </div>
-              <div class="row">
-                <div class="form-group col-3">
-                  <label for="cep">CEP</label>
-                  <input type="text" class="form-control" id="cep" formControlName="cep" (blur)="consultaCEP()"
-                    [textMask]="{mask: maskCep}">
-                </div>
-                <div class="form-group col-7">
-                  <label for="logradouro">Logradouro</label>
-                  <input type="text" class="form-control" id="logradouro" formControlName="logradouro">
-                </div>
-                <div class="form-group col-2">
-                  <label for="logradouroNumero">Número</label>
-                  <input type="text" class="form-control" id="logradouroNumero" formControlName="logradouroNumero">
-                </div>
-
+            </div>
+            <div class="row">
+              <div class="form-group col-7">
+                <label for="email">Email</label>
+                <input type="text" class="form-control" id="email" formControlName="email">
               </div>
-              <div class="row">
-                <div class="form-group col-4">
-                  <label for="logradouroComplemento">Complemento</label>
-                  <input type="text" class="form-control" id="logradouroComplemento"
-                    formControlName="logradouroComplemento">
-                </div>
-                <div class="form-group col-3">
-                  <label for="bairro">Bairro</label>
-                  <input type="text" class="form-control" id="bairro" formControlName="bairro">
-                </div>
-                <div class="form-group col-3">
-                  <label for="cidade">Cidade</label>
-                  <input type="text" class="form-control" id="cidade" formControlName="cidade">
-                </div>
-                <div class="form-group col-2">
-                  <label for="estado">Estado</label>
-                  <input type="text" class="form-control" id="estado" formControlName="estado">
-                </div>
+              <div class="form-group col-5">
+                <label for="telefone">Celular</label>
+                <input type="text" class="form-control" id="telefone" formControlName="telefone"
+                  [textMask]="{mask: mask}">
+              </div>
+            </div>
+            <div class="row">
+              <div class="form-group col-3">
+                <label for="cep">CEP</label>
+                <input type="text" class="form-control" id="cep" formControlName="cep" (blur)="consultaCEP()"
+                  [textMask]="{mask: maskCep}">
+              </div>
+              <div class="form-group col-7">
+                <label for="logradouro">Logradouro</label>
+                <input type="text" class="form-control" id="logradouro" formControlName="logradouro">
+              </div>
+              <div class="form-group col-2">
+                <label for="logradouroNumero">Número</label>
+                <input type="text" class="form-control" id="logradouroNumero" formControlName="logradouroNumero">
               </div>
 
+            </div>
+            <div class="row">
+              <div class="form-group col-4">
+                <label for="logradouroComplemento">Complemento</label>
+                <input type="text" class="form-control" id="logradouroComplemento"
+                  formControlName="logradouroComplemento">
+              </div>
+              <div class="form-group col-3">
+                <label for="bairro">Bairro</label>
+                <input type="text" class="form-control" id="bairro" formControlName="bairro">
+              </div>
+              <div class="form-group col-3">
+                <label for="cidade">Cidade</label>
+                <input type="text" class="form-control" id="cidade" formControlName="cidade">
+              </div>
+              <div class="form-group col-2">
+                <label for="estado">Estado</label>
+                <input type="text" class="form-control" id="estado" formControlName="estado">
+              </div>
             </div>
 
           </div>
+
         </div>
       </div>
     </div>
@@ -197,7 +202,7 @@
 
           </div>
           <label class="checkbox-inline" *ngIf="formulario.value.adicionarItem == 'lote' && tipoFatura =='Massiva'">
-            <input type="checkbox" formControlName="selectAll"> Selecionar Todos
+            <input type="checkbox" formControlName="todosLotes"> Selecionar Todos
           </label>
         </div>
         <div class="modal-footer">
@@ -264,8 +269,9 @@
             </div>
           </div>
           <div class="card-footer">
-            <button type="submit" class="btn btn-primary saveCancel"><i class="fa fa-save"></i> Salvar</button>
-            <button type="reset" class="btn btn-danger" [routerLink]="['/fatura']"><i class="fa fa-undo"></i>
+            <button type="button" class="btn btn-primary saveCancel" *ngIf="!salvando" (click)="onSubmit()"><i class="fa fa-save"></i> Salvar</button>
+            <button type="button" class="btn btn-primary saveCancel" *ngIf="salvando"><i class="fa fa-spin fa-spinner"></i> Salvando...</button>
+            &nbsp;<button type="reset" class="btn btn-danger" [routerLink]="['/fatura']"><i class="fa fa-undo"></i>
               Cancelar</button>
           </div>
         </div>
@@ -280,7 +286,7 @@
           </button>
         </div>
         <div class="modal-body d-flex flex-column">
-          <div class="form-check">
+          <div class="form-check" >
             <input class="form-check-input" type="radio" name="adicionarItem" id="adicionarItem1" checked value="lote"
               formControlName="adicionarItem">
             <label class="form-check-label" for="adicionarItem1">
@@ -295,7 +301,7 @@
             </label>
           </div>
           <div class="form-group col-12 pesquisa-lote"
-            *ngIf="formulario.value.adicionarItem == 'lote' && formulario.value.selectAll == false">
+            *ngIf="formulario.value.adicionarItem == 'lote' && formulario.value.todosLotes == false">
             <label for="lotes">Selecionar Lote </label>
             <ng-select [items]="lote$ | async" bindLabel="marcaModelo" [hideSelected]="true" [loading]="peopleLoading"
               typeToSearchText="Busque por placa, marca/modelo e numero do lote" [typeahead]="loteInput$"
@@ -306,7 +312,7 @@
                     <h5 class="card-title" [ngOptionHighlight]="search">Lote: {{item.numeroLote}}</h5>
                     <h6 class="card-subtitle mb-2 text-muted">{{item.marcaModelo}}</h6>
                     <h6 class="card-subtitle mb-2 text-muted">{{item.placa}}</h6>
-                    <h6 class="card-subtitle mb-2 text-muted">{{item.valorLanceVencedor | currency:'BRL':true}}</h6>
+                    <h6 class="card-subtitle mb-2 text-muted">{{item.valorLanceVencedor | currencyFormat}}</h6>
                   </div>
                 </div>
               </ng-template>
@@ -314,18 +320,16 @@
 
           </div>
           <label class="checkbox-inline" *ngIf="formulario.value.adicionarItem == 'lote' && tipoFatura =='Massiva'">
-            <input type="checkbox" formControlName="selectAll"> Selecionar Todos
+            <input type="checkbox" formControlName="todosLotes"> Selecionar Todos
           </label>
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-primary" (click)="modalRef?.hide(); adicionarItens()">Adicionar</button>
-          <button type="button" class="btn btn-secondary" data-dismiss="modal"
+          &nbsp;<button type="button" class="btn btn-secondary" data-dismiss="modal"
             (click)="modalRef?.hide()">Cancelar</button>
         </div>
 
       </div>
     </ng-template>
-
-
   </div>
 </form>

@@ -89,7 +89,6 @@ export class CreateAgendaComponent implements OnInit, OnDestroy {
     this.formulario.get(campo).setValue(event);
   }
   ngOnDestroy(): void {
-    this.sub.forEach(s => {s.unsubscribe()
-    console.log('foi')})
+    this.sub.forEach(s => {s.unsubscribe()})
   }
 }

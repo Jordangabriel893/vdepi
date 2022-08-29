@@ -53,13 +53,10 @@ export class UpdateContaComponent implements OnInit, OnDestroy {
    this.sub.push(
     this.restangular.one("conta", this.id).get().subscribe((response) => {
       this.updateForm(response.data)
-      console.log(response.data)
       })
    )
    this.sub.push( this.restangular.one('empresa').get().subscribe(
       dados =>{
-        //  this.empresas = dados.data
-        console.log(dados.data)
         this.empresas = dados.data
       }
     )
@@ -83,7 +80,6 @@ export class UpdateContaComponent implements OnInit, OnDestroy {
     // })
   }
   onSubmit(){
-    console.log(this.formulario.value)
     if(!this.formulario.valid){
       Object.keys(this.formulario.controls).forEach((campo)=>{
         const controle = this.formulario.get(campo)

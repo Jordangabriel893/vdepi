@@ -1,5 +1,11 @@
-<form [formGroup]="formulario" class="col-12">
-  <ng-select [items]="leiloes" formControlName="leilao"  bindLabel="nome"  (change)="emitirLeilao()" >
-  </ng-select>
+<form [formGroup]="formulario">
+  <div class="linha-seletor">
+    <label>LEILÃO:</label>
+    <ng-select [items]="leiloes" formControlName="leilao"  bindLabel="nome"  (change)="emitirLeilao()" >
+      <ng-template ng-option-tmp let-item="item" let-index="index" let-search="searchTerm">
+        <span>{{item.nome}} - {{item.titulo}}</span>
+    </ng-template>
+    </ng-select>
+  </div>
 </form>
 

@@ -33,6 +33,7 @@ export class LotesVistoriaComponent implements OnInit {
   status = [];
   statusSelecionado: any;
   loteSelecionado;
+  exportando = false;
   constructor(
     private restangular: Restangular,
     private route: ActivatedRoute,
@@ -43,6 +44,7 @@ export class LotesVistoriaComponent implements OnInit {
   }
 
   ngOnInit() {
+
     forkJoin([
       this.restangular.one("lote", '').get({ leilaoId: this.id, PageSize: 300 }).pipe(),
       this.restangular.one("tipolote").get().pipe(),
@@ -128,6 +130,21 @@ export class LotesVistoriaComponent implements OnInit {
       case 6:
         return 'vistoriaAprovadaRestricao';
     }
+  }
+
+  exportAsExcel() {
+    this.exportando = true;
+    this.restangular.one(`vistoria/exportar/${this.id}`, )
+    .withHttpConfig({responseType: 'blob'})
+    .get()
+    .subscribe((response) => {
+      const blob = new Blob([response], { type: 'application/xlsx' });
+      fileSaver.saveAs(blob, `Vistorias.xlsx`);
+      this.exportando = false;
+    },(error) => {
+      this.notifierService.notify('error', 'Não foi possivel exportar vistorias!');
+      this.exportando = false;
+    })
   }
 }
 

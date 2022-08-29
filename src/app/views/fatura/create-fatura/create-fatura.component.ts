@@ -29,9 +29,6 @@ export class CreateFaturaComponent implements OnInit, OnDestroy {
   empresas: any
   minDate: Date;
   tipoFatura = 'Massiva';
-  opcoes = [
-    'Cartão', 'Boleto', 'Pix'
-  ]
   tiposItem = [
     'Lote', 'Outro'
   ]
@@ -62,6 +59,13 @@ export class CreateFaturaComponent implements OnInit, OnDestroy {
   lote$: Observable<any>;
   loteLoading = false;
   loteInput$ = new Subject<string>();
+  formasPagamento = [];
+
+  get formasPagamentoFormArray() {
+    return this.formulario.controls.formasPagamento as FormArray;
+  }
+
+  salvando = false;
   constructor(
     private formBuilder: FormBuilder,
     private restangular: Restangular,
@@ -73,7 +77,7 @@ export class CreateFaturaComponent implements OnInit, OnDestroy {
   ) {
     localeService.use('pt-br');
     this.minDate = new Date();
-    this.minDate.setDate(this.minDate.getDate() + 1);
+    this.minDate.setDate(this.minDate.getDate());
     this.mask = ['(', /[1-9]/, /\d/, ')', ' ', /\d/, /\d/, /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/]
     this.maskTelefoneFixo = ['(', /[1-9]/, /\d/, ')', ' ', /\d/, /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/]
     this.maskCep = [/\d/, /\d/, /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/,]
@@ -82,14 +86,6 @@ export class CreateFaturaComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-
-    // this.sub.push(
-    //   this.restangular.one('empresa').get().subscribe(
-    //     dados => {
-    //       this.empresas = dados.data
-    //     }
-    //   )
-    // )
     this.sub.push(
       this.restangular.one('admin/leilao').get().subscribe(
         dados => {
@@ -97,6 +93,7 @@ export class CreateFaturaComponent implements OnInit, OnDestroy {
         }
       )
     )
+
     this.sub.push(
       this.restangular.one('fatura/pessoas').get().subscribe(
         dados => {
@@ -104,100 +101,115 @@ export class CreateFaturaComponent implements OnInit, OnDestroy {
         }
       )
     )
-    this.formulario = this.formBuilder.group({
-      origem: [ null, [Validators.required]],
-      leilaoId: [null, [Validators.required]],
-      cobrancaId: [null, [Validators.required]],
-      cliente: this.formBuilder.group({
-        nome: [null, [Validators.required, Validators.minLength(3), Validators.maxLength(35)]],
-        email: [null, [Validators.required, Validators.email]],
-        telefone: [null, [Validators.required, Validators.email]],
-        cpfCnpj: [null, [Validators.required, Validators.minLength(11)]],
-        logradouro: [null],
-        logradouroNumero: [null],
-        logradouroComplemento: [null],
-        bairro: [null],
-        cidade: [null],
-        estado: [null],
-        cep: [null],
-        usuarioId: [null]
-      }),
-      dataVencimento: [null, Validators.required],
-      formasPagamento: this.buildOpcoes(),
-      empresaCobrança: [null, [Validators.required]],
-      dataLimite: [null, Validators.required],
-      clienteSelecionado: [null],
-      lote: [null, Validators.required],
 
-      itensFatura: this.formBuilder.array([], Validators.required),
-      adicionarItem: [],
-      selectAll: [false],
+    this.setFatura(this.tipoFatura);
+    this.loadLotes();
+    this.loadPeople();
 
-
-    })
-    this.loadLotes()
-    this.loadPeople()
+    this.sub.push(
+      this.restangular.one('/Fatura/FormasPagamento').get().subscribe(
+        dados => {
+          this.formasPagamento = dados.data;
+          this.buildFormaPagamento();
+        }
+      )
+    )
   }
 
   onSubmit() {
-    console.log(this.formulario.value)
+    this.salvando = true;
+    const formulario = {...this.formulario.value}
+    console.log(this.formulario.controls)
     if(!this.formulario.valid){
       Object.keys(this.formulario.controls).forEach((campo)=>{
         const controle = this.formulario.get(campo)
         controle.markAsTouched()
       })
       this.notifierService.notify('error', 'Preencha todos os campos obrigatórios');
+      this.salvando = false;
       return false;
     }
-    if(this.tipoFatura = 'Massiva'){
-      this.restangular.all('/Fatura/FaturaMassiva').post(this.formulario.value).subscribe(a => {
+    const formasSelecionadas = formulario.formasPagamento
+      .map((checked, i) => checked ? this.formasPagamento[i].formaPagamentoId : null)
+      .filter(v => v !== null);
+    formulario.formasPagamento = formasSelecionadas
+
+    if(this.tipoFatura == 'Massiva'){
+      const existAll = this.formulario.value.itensFatura.filter(x => x.all == true)
+      const formMassivo = {
+        leilaoId:formulario.leilaoId,
+        todosLotes: formulario.todosLotes,
+        cobrancaId:formulario.cobrancaId,
+        dataLimite: formulario.dataLimite,
+        dataVencimento:formulario.dataVencimento,
+        formasPagamento:formasSelecionadas,
+        agrupar: formulario.agrupar,
+        lotes: existAll.length > 0 ? [0] : formulario.itensFatura.map(x => x.loteId)
+      }
+
+      this.restangular.all('/Fatura/FaturaMassiva').post(formMassivo).subscribe(a => {
         this.notifierService.notify('success', 'Fatura massiva criada com sucesso');
+        this.salvando = false;
         this.router.navigate(['/fatura']);
       },
         error => {
           this.notifierService.notify('error', 'Erro ao criar fatura massiva!');
+          this.salvando = false;
           Object.keys(this.formulario.controls).forEach((campo)=>{
             const controle = this.formulario.get(campo)
             controle.markAsTouched()
           })
         });
     }
-    if(this.tipoFatura = 'Avulsa'){
-      this.restangular.all('/Fatura/FaturaManual').post(this.formulario.value).subscribe(a => {
+
+    if(this.tipoFatura == 'Avulsa'){
+      const formAvulso = {
+        origem:formulario.origem,
+        leilaoId:formulario.leilaoId,
+        cobrancaId:formulario.cobrancaId,
+        cliente:formulario.cliente,
+        dataVencimento:formulario.dataVencimento,
+        formasPagamento:formulario.formasPagamento,
+        itensFatura:formulario.itensFatura,
+      }
+      this.restangular.all('/Fatura/FaturaManual').post(formAvulso).subscribe(a => {
         this.notifierService.notify('success', 'Fatura avulsa criada com sucesso');
+        this.salvando = false;
         this.router.navigate(['/fatura']);
       },
         error => {
           this.notifierService.notify('error', 'Erro ao criar fatura avulsa!');
+          this.salvando = false;
           Object.keys(this.formulario.controls).forEach((campo)=>{
             const controle = this.formulario.get(campo)
             controle.markAsTouched()
           })
         });
     }
+  }
 
+  setOrigem() {
+    // const origem = this.formulario.value.origem
+    // if(origem == 'leilao'){
+    //   this.leilao = this.leiloes;
+    // }else{
+    //   this.leilao = [];
+    // }
   }
-  setOrigem(){
-    const origem = this.formulario.value.origem
-    if(origem == 'leilao'){
-      this.leilao = this.leiloes;
-    }else{
-      this.leilao = [];
-    }
-  }
-  setCobranca(){
-    const leilaoId = this.formulario.value.leilaoId
-   const leilaoCorrespondente =  this.leiloes.filter(x => x.id == leilaoId)
-    const empresaId = leilaoCorrespondente[0].empresaId;
+
+  setCobranca() {
+   const leilaoId = this.formulario.value.leilaoId
+   const leilaoCorrespondente = this.leiloes.find(x => x.id == leilaoId)
+    const empresaId = leilaoCorrespondente.empresaId;
     this.sub.push(
       this.restangular.one(`configuracaoConta/Empresa/${empresaId}`).get().subscribe(
         dados => {
           this.empresas = dados.data
-
         }
       )
     )
   }
+
   private loadLotes() {
     this.lote$ = concat(
       of([]),
@@ -217,9 +229,9 @@ export class CreateFaturaComponent implements OnInit, OnDestroy {
         )
       )
     );
-
   }
-  private loadPeople(){
+
+  private loadPeople() {
     this.people$ = concat(
       of([]),
       this.peopleInput$.pipe(
@@ -250,6 +262,7 @@ export class CreateFaturaComponent implements OnInit, OnDestroy {
 
     }
   }
+
   populaDadosPessoa(dados) {
     const clienteSelecionado = this.formulario.value.clienteSelecionado
     this.formulario.patchValue({
@@ -267,12 +280,10 @@ export class CreateFaturaComponent implements OnInit, OnDestroy {
         cep: clienteSelecionado.cep,
         usuarioId: clienteSelecionado.usuarioId
       })
-
     });
   }
-  populaDadosForm(dados) {
-    // this.formulario.setValue({});
 
+  populaDadosForm(dados) {
     this.formulario.patchValue({
       cliente: ({
         logradouro: dados.logradouro,
@@ -284,21 +295,22 @@ export class CreateFaturaComponent implements OnInit, OnDestroy {
 
     });
   }
+
   setFatura(item) {
     this.tipoFatura = item
     if(item == 'Massiva'){
       this.formulario = this.formBuilder.group({
-        origem: [null, [Validators.required, Validators.minLength(3), Validators.maxLength(35)]],
+        origem: [null, Validators.required],
         leilaoId: [null, [Validators.required]],
         cobrancaId: [null, [Validators.required]],
-        empresaCobrança: [null, [Validators.required]],
         dataLimite: [null, Validators.required],
         dataVencimento: [null, Validators.required],
-        lote: [null, Validators.required],
-        formasPagamento: this.buildOpcoes(),
-        itensFatura: this.formBuilder.array([], Validators.required),
+        lote: [null],
+        formasPagamento: new FormArray([]),
+        itensFatura: this.formBuilder.array([]),
         adicionarItem: [],
-        selectAll: [false]
+        todosLotes: [false],
+        agrupar: [false]
       })
     }
     if(item == 'Avulsa'){
@@ -309,7 +321,7 @@ export class CreateFaturaComponent implements OnInit, OnDestroy {
         cliente: this.formBuilder.group({
           nome: [null, [Validators.required, Validators.minLength(3), Validators.maxLength(35)]],
           email: [null, [Validators.required, Validators.email]],
-          telefone: [null, [Validators.required, Validators.email]],
+          telefone: [null, [Validators.required]],
           cpfCnpj: [null, [Validators.required, Validators.minLength(11)]],
           logradouro: [null],
           logradouroNumero: [null],
@@ -321,65 +333,84 @@ export class CreateFaturaComponent implements OnInit, OnDestroy {
           usuarioId: [null]
         }),
         dataVencimento: [null, Validators.required],
-        formasPagamento: this.buildOpcoes(),
-        empresaCobrança: [null, [Validators.required]],
+        formasPagamento: new FormArray([]),
         dataLimite: [null, Validators.required],
         clienteSelecionado: [null],
-        lote: [null, Validators.required],
-
-        itensFatura: this.formBuilder.array([], Validators.required),
+        lote: [null],
+        itensFatura: this.formBuilder.array([]),
         adicionarItem: [],
-        selectAll: [false],
-
-
+        todosLotes: [false],
       })
     }
 
+    this.buildFormaPagamento();
   }
-  buildOpcoes() {
-    const values = this.opcoes.map(v => new FormControl(false))
-    return this.formBuilder.array(values);
+
+  buildFormaPagamento() {
+    this.formasPagamento.forEach(() => this.formasPagamentoFormArray.push(new FormControl(false)));
   }
-  getOpcoes() {
-    return this.formulario.get('formasPagamento')['controls']
-  }
+
   adicionarItens(itemCampoId = null) {
     const form = this.formulario.value
+    const existAll = this.formulario.value.itensFatura.filter(x => x.all == true)
+    const existLote =  this.formulario.value.itensFatura.find(x => {
+      return form.lote && x.loteId === form.lote.loteId
+    })
+
     if (form.adicionarItem == 'outros') {
       let itens = this.formulario.get('itensFatura') as FormArray
       itens.push(this.formBuilder.group({
+        loteId:[0],
         descricao: ['', Validators.required],
         valor: ['', Validators.required],
         tipo: ['outros']
       }))
       return
     }
+
     if (form.adicionarItem == 'lote') {
-      if (form.selectAll == true) {
-        const desc = `Todos os lotes foram selecionados `
-        let itens = this.formulario.get('itensFatura') as FormArray
-        itens.push(this.formBuilder.group({
-          descricao: [desc, Validators.required],
-          tipo: ['lote'],
-          all: [true]
-        }))
+      if (form.todosLotes == true) {
+        if(existAll.length > 0 || form.itensFatura.length > 0){
+          this.notifierService.notify('error', 'Um ou mais lotes foram selecionados!');
+        }else{
+          const desc = `Todos os lotes foram selecionados `
+          let itens = this.formulario.get('itensFatura') as FormArray
+          itens.push(this.formBuilder.group({
+            descricao: [desc, Validators.required],
+            tipo: ['lote'],
+            all: [true]
+          }))
+          return
+        }
         return
       }
 
-      const desc = `Lote: ${form.lote.numeroLote} - Placa: ${form.lote ? form.lote.placa : ''} - Marca/Modelo: ${form.lote ? form.lote.marcaModelo : ''}   `
-      let itens = this.formulario.get('itensFatura') as FormArray
-      itens.push(this.formBuilder.group({
-        descricao: [desc, Validators.required],
-        valor: [form.lote.valorLanceVencedor, Validators.required],
-        tipo: ['lote'],
-        all: [false]
-      }))
+      if(existAll.length < 1) {
+        if(!existLote){
+          const desc = `Lote: ${form.lote.numeroLote} - Placa: ${form.lote ? form.lote.placa : ''} - Marca/Modelo: ${form.lote ? form.lote.marcaModelo : ''}   `
+          let itens = this.formulario.get('itensFatura') as FormArray
+          itens.push(this.formBuilder.group({
+            descricao: [desc, Validators.required],
+            valor: [form.lote.valorLanceVencedor, Validators.required],
+            tipo: ['lote'],
+            loteId:[form.lote.loteId],
+            all: [false]
+          }))
+        }
+        else
+        {
+          this.notifierService.notify('error', 'Lote já selecionado !');
+        }
+      }
+      else
+      {
+        this.notifierService.notify('error', 'Todos os lotes já foram selecionados !');
+      }
     }
-
   }
+
   deleteItens(indexCampo: number) {
     let itens = this.formulario.controls['itensFatura'] as FormArray
-    let item = itens.at(indexCampo) as FormGroup;
     itens.removeAt(indexCampo)
   }
 
@@ -390,16 +421,11 @@ export class CreateFaturaComponent implements OnInit, OnDestroy {
 
   openModal(template: TemplateRef<any>,item?) {
     if(item == 'fatura' && this.formulario.value.leilaoId == null){
-      this.notifierService.notify('error', 'Selecione um Leilão');
+      this.notifierService.notify('error', 'Selecione um leilão');
       return
     }
     this.modalRef = this.modalService.show(template);
-
   }
-  consoleInput(item) {
-    console.log(item)
-  }
-
 
   verificaValidTouched(campo) {
     return !this.formulario.get(campo).valid && this.formulario.get(campo).touched;
@@ -423,6 +449,7 @@ export class CreateFaturaComponent implements OnInit, OnDestroy {
     this.formulario.get(campo).markAsTouched();
     this.formulario.get(campo).setValue(event);
   }
+
   ngOnDestroy(): void {
     this.sub.forEach(s => s.unsubscribe())
   }

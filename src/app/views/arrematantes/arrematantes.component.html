@@ -70,13 +70,13 @@
               <tbody>
                 <tr *ngFor="let item of mfArrematantes.data; let i = index">
                   <td><a class="link-primary" [routerLink]="['/update-lotes', item.loteId]" target="_blank">{{item.numeroLote}}</a></td>
-                  <td>{{item.nome}}</td>
+                  <td>{{item.nome | uppercase}}</td>
                   <td><a class="link-primary" [routerLink]="['/update-usuarios', item.usuarioId]" target="_blank">{{ item.email }}</a> </td>
                   <td nowrap>{{item.documento}}</td>
-                  <td>{{item.valorArrematado | currency:'BRL':true:'1.2-2'}}</td>
-                  <td>{{item.valorTaxas | currency:'BRL':true:'1.2-2'}}</td>
-                  <td>{{item.valorComissao | currency:'BRL':true:'1.2-2'}}</td>
-                  <td>{{item.valorTaxas + item.valorArrematado + item.valorComissao | currency:'BRL':true:'1.2-2'}}</td>
+                  <td nowrap>{{item.valorArrematado | currencyFormat}}</td>
+                  <td nowrap>{{item.valorTaxas | currencyFormat}}</td>
+                  <td nowrap>{{item.valorComissao | currencyFormat}}</td>
+                  <td nowrap>{{item.valorTaxas + item.valorArrematado + item.valorComissao | currencyFormat}}</td>
                   <td class="text-center" nowrap>
                     <div class="dropdown" dropdown>
                       <button class="btn" id="dropdownMenuButton" type="button" data-toggle="dropdown" aria-expanded="false" dropdownToggle>
@@ -87,8 +87,6 @@
                         <li><a class="dropdown-item" (click)="nota(item.loteId, item.numeroLote)">Nota de Arrematação</a></li>
                       </ul>
                     </div>
-                    <!-- <button type="button" class="btn btn-primary" (click)="auto(item.lote.loteId, item.lote.numeroLote)"><i class="fa fa-edit"></i>Auto</button>&nbsp;&nbsp;
-                    <button type="button" class="btn btn-primary" (click)="nota(item.lote.loteId, item.lote.numeroLote)"><i class="fa fa-edit"></i>Nota</button> -->
                   </td>
                 </tr>
                 <tr *ngIf="loading">
