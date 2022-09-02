@@ -94,15 +94,15 @@ export class LotesVistoriaComponent implements OnInit {
     return this.vistoria.campos.find(x => x.loteCampoId === loteCampoId);
   }
 
-  gerarLaudo() {
-    this.vistoria.statusId = this.statusSelecionado
+  gerarLaudo(numeroVistoria) {
+    //this.vistoria.statusId = this.statusSelecionado
     this.loadingLaudo = true;
-    this.restangular.all('vistoria').one(`${this.vistoria.numero}/laudo`,)
+    this.restangular.all('vistoria').one(`${numeroVistoria}/laudo`,)
       .withHttpConfig({ responseType: 'blob' })
       .get()
       .subscribe((response) => {
         const blob = new Blob([response], { type: 'application/pdf' });
-        fileSaver.saveAs(blob, `Vistoria_${this.vistoria.numero}.pdf`);
+        fileSaver.saveAs(blob, `Vistoria_${numeroVistoria}.pdf`);
         this.loadingLaudo = false;
       }, () => {
         this.notifierService.notify('error', 'Não foi possivel Gerar o laudo!');
@@ -144,6 +144,15 @@ export class LotesVistoriaComponent implements OnInit {
     },(error) => {
       this.notifierService.notify('error', 'Não foi possivel exportar vistorias!');
       this.exportando = false;
+    })
+  }
+
+  exportarLaudos() {
+    this.lotes.filter(x => x.statusVistoriaId > 2).forEach(lote => {
+      this.restangular.one("vistoria", lote.loteId).get()
+      .subscribe(vistoria => {
+        this.gerarLaudo(vistoria.data.numero);
+      })
     })
   }
 }

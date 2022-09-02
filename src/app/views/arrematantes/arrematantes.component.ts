@@ -129,4 +129,12 @@ export class ArrematantesComponent implements OnInit, OnDestroy {
 
     })
   }
+
+  exportarTodosAutos() {
+    this.arremantantesFiltrados.forEach(arr => this.auto(arr.loteId, arr.numeroLote));
+  }
+
+  exportarTodasNotas() {
+    this.arremantantesFiltrados.forEach(arr => this.nota(arr.loteId, arr.numeroLote));
+  }
 }

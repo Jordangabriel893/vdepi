@@ -15,7 +15,7 @@
       <div class="card">
         <div class="card-header header">
           <div>
-            <i class="fa fa-dollar-sign" aria-hidden="true"></i>Arrematantes
+            <i class="fa fa-dollar-sign" aria-hidden="true"></i>&nbsp;Arrematantes
           </div>
           <button type="button"
                   class="btn btn-success"
@@ -62,8 +62,16 @@
                   <th>
                     <mfDefaultSorter by="valorTotal">Valor Total</mfDefaultSorter>
                   </th>
-                  <th>
-                    <mfDefaultSorter by="valorTotal">Ação</mfDefaultSorter>
+                  <th class="text-center">
+                    <div class="dropdown" dropdown>
+                      <button class="btn p-0" id="dropdownMenuButton" type="button" data-toggle="dropdown" aria-expanded="false" dropdownToggle>
+                        <i class="fa fa-ellipsis-v"></i>
+                      </button>
+                      <ul class="dropdown-menu dropdown-menu-left" *dropdownMenu>
+                        <li><a class="dropdown-item" (click)="exportarTodosAutos()">Exportar Autos de Arrematação</a></li>
+                        <li><a class="dropdown-item" (click)="exportarTodasNotas()">Exportar Notas de Arrematação</a></li>
+                      </ul>
+                    </div>
                   </th>
                 </tr>
               </thead>
