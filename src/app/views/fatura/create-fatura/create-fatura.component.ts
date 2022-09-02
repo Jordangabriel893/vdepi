@@ -119,7 +119,6 @@ export class CreateFaturaComponent implements OnInit, OnDestroy {
   onSubmit() {
     this.salvando = true;
     const formulario = {...this.formulario.value}
-    console.log(this.formulario.controls)
     if(!this.formulario.valid){
       Object.keys(this.formulario.controls).forEach((campo)=>{
         const controle = this.formulario.get(campo)
