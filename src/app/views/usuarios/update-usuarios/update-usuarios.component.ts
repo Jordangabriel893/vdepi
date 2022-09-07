@@ -35,7 +35,7 @@ export class UpdateUsuariosComponent implements OnInit {
     this.maskRg = [ /\d/,/\d/, '.', /\d/,/\d/,/\d/, '.', /\d/, /\d/, /\d/, '-', /\d/ ]
     this.formulario = this.formBuilder.group({
       usuarioId: [null, Validators.required],
-      nomeCompleto: [null, [Validators.required, Validators.minLength(3), Validators.maxLength(35)]],
+      nomeCompleto: [null, [Validators.required, Validators.minLength(3)]],
       numeroDocumento: [null, [Validators.required, Validators.minLength(6)]],
       dataNascimento: [null],
       telefoneCelular: [null, [Validators.required, Validators.minLength(3)]],
@@ -71,7 +71,6 @@ export class UpdateUsuariosComponent implements OnInit {
   }
 
   onSubmit() {
-
     if(!this.formulario.valid){
       Object.keys(this.formulario.controls).forEach((campo)=>{
         const controle = this.formulario.get(campo)
