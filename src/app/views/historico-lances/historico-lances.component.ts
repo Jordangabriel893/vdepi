@@ -14,7 +14,7 @@ export class HistoricoLancesComponent implements OnInit {
   idLote:any = ''
   lotes
   lances
-  loading = true;
+  loading = false;
   ehLeilaoEncerrado = false
   lanceVencedorAtual
   constructor(
@@ -23,14 +23,15 @@ export class HistoricoLancesComponent implements OnInit {
   ) {
     this.restangular.one("admin/leilao").get({PageSize:100}).subscribe((response) => {
       this.leiloes = response.data
-      const id = this.leiloes[0].id
-      this.setLeilao(id , this.leiloes[0].nome);
-      this.isStatusEncerrado(id)
+      //const id = this.leiloes[0].id
+      //this.setLeilao(id , this.leiloes[0].nome);
+      //this.isStatusEncerrado(id)
     })
    }
 
   ngOnInit() {
   }
+
   setLeilao(id, nome){
     this.lotes = []
     this.lances = []
@@ -46,7 +47,9 @@ export class HistoricoLancesComponent implements OnInit {
     )
   }
 
-  setLotes(id, numeroLote){   
+  setLotes(id, numeroLote){
+    this.loading = true;
+    this.lances = [];
     this.idLote = numeroLote
     this.restangular.one(`lote/${id}/lances`).get({ PageSize:500 }).subscribe((response) => {
       this.lances = response.data
@@ -60,7 +63,7 @@ export class HistoricoLancesComponent implements OnInit {
     const leilao = this.leiloes.filter( x => x.id == id)
     this.ehLeilaoEncerrado =  leilao[0].status.toString().toUpperCase() == 'ENCERRADO'
   }
-  
+
 
   gravarLanceVencedor(lanceId:number){
     this.restangular.all(`lote/${lanceId}/LanceVencedor`).post({lanceId: lanceId }).subscribe(a =>{
@@ -70,5 +73,5 @@ export class HistoricoLancesComponent implements OnInit {
         this.notifierService.notify('error', 'Erro ao Gravar Novo Lance Vencedor ');
       });
   }
-  
+
 }
