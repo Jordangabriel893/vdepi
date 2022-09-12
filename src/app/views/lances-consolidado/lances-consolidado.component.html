@@ -87,6 +87,12 @@
                     <h5><i class="fa fa-spin fa-spinner"></i>&nbsp;Carregando...</h5>
                   </td>
                 </tr>
+                <tr *ngIf="mflancesConsolidados.data.length === 0 && !loading" >
+                  <td class="text-center text-muted" colspan="12">
+                    <h6 *ngIf="lancesconsolidados">Não há lances para o Leilão Selecionado</h6>
+                    <h6 *ngIf="!lancesconsolidados">Selecione um leilão</h6>
+                  </td>
+                </tr>
               </tbody>
               <tfoot>
                 <tr>

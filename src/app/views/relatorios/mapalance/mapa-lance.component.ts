@@ -23,7 +23,7 @@ import * as MarkerCluster from '@google/markerclusterer'
 export class MapaLanceComponent implements OnInit, OnDestroy {
 
   //Global Parameters
-  loading: boolean = true;
+  loading: boolean = false;
   @ViewChild('templateModal') templateModal: TemplateRef<any>;
   filterModal: BsModalRef;
 
@@ -113,17 +113,6 @@ export class MapaLanceComponent implements OnInit, OnDestroy {
       infracao: [],
       autoridade: []
     });
-
-    this.restangular.one("admin/leilao").get({PageSize:100}).subscribe((response) => {
-      this.leiloes = response.data
-      this.leilaoId = this.leiloes[0].id
-      this.leilaoNome = this.leiloes[0].nome;
-      this.refreshLances();
-      // this.setLeilao(this.leiloes[0].id, this.leiloes[0].nome);
-    })
-
-    // this.filtro.controls["periodo"].setValue([moment().subtract(1, 'months').toDate(), moment().toDate()]);
-    // this.refreshLances();
   }
 
   ngOnDestroy() {

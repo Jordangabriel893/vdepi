@@ -16,38 +16,26 @@ export class LancesConsolidadoComponent implements OnInit {
   leiloes
   nomeLeilao:any = 'Leilões'
   lancesconsolidados
-  loading = true;
+  loading;
   leilaoId;
   constructor(
     private restangular: Restangular,
     private pdfService: PdfService,
     private currency: CurrencyFormatPipe
 
-  ) {
-    this.restangular.one("admin/leilao").get({PageSize:100}).subscribe((response) => {
-      this.leiloes = response.data
-      this.nomeLeilao = this.leiloes[0].nome
-      this.restangular.one(`leilao/${this.leiloes[0].id}/lancesConsolidado`).get().subscribe((response) => {
-        this.loading = false;
-        this.lancesconsolidados = response.data
-        this.loading = false;
-      },
-      () => this.loading = false)
-      // this.setLeilao(this.leiloes[0].id, this.leiloes[0].nome);
-    })
-
-
-   }
+  ) {}
 
   ngOnInit() {
   }
+
   setLeilao(leilao){
+    this.loading = true;
+    this.lancesconsolidados = [];
     this.nomeLeilao = leilao.nome
     this.leilaoId = leilao.id
     this.restangular.one(`leilao/${this.leilaoId}/lancesConsolidado`).get().subscribe((response) => {
       this.loading = false;
       this.lancesconsolidados = response.data
-      this.loading = false;
     },
     () => this.loading = false)
 

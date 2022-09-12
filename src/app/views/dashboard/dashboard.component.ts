@@ -22,10 +22,10 @@ export class DashboardComponent implements OnInit, OnDestroy {
   @ViewChild("barrasHorizontal") barrasHorizontal: ElementRef
   chartFinanceiro;
   //contadores
-  contadorVisitantes
-  contadorHabilitados
-  contadorParticipantes
-  contadorLances
+  contadorVisitantes = 0
+  contadorHabilitados = 0
+  contadorParticipantes = 0
+  contadorLances = 0
   //lotes
   comLances
   removidos
@@ -43,10 +43,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
   listaExpirados
   // Doughnut
   public doughnutChartLabels: Label[] = ['Com Lances', 'Removidos', 'Sem Lances'];
-  public doughnutChartData: MultiDataSet = [
-    [300, 450, 100],
-
-  ];
+  public doughnutChartData: MultiDataSet = [[0,0,0]];
   public doughnutChartType: ChartType = 'doughnut';
   doughnutChartOptions = {
     aspectRatio: 1,
@@ -65,11 +62,11 @@ export class DashboardComponent implements OnInit, OnDestroy {
       }
     }
   };
-  public barChartLabels: Label[] = ['2006', '2007', '2008', '2009', '2010', '2011', '2012'];
+  public barChartLabels: Label[] = [];
   public barChartType: ChartType = 'bar';
   public barChartLegend = false;
   public barChartData: ChartDataSets[] = [
-    { data: [28, 48, 40, 19, 86, 27, 90], label: 'Series B' }
+    { data: [], label: '' }
   ];
   public barChartColor = [{ backgroundColor: ['	#87CEFA','#4876FF','#436EEE','#3A5FCD',' #27408B', '#0000FF', '	#0000EE', '#0000CD', '#00008B', '#191970'] }]
 
@@ -89,7 +86,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
   public barChartLegendFinanceiro = false;
 
   public barChartDataFinanceiro: ChartDataSets[] = [
-    { data: [65, 59, 80, 81, 56, 55, 40], label: 'Series A' },
+    { data: [], label: '' },
 
   ];
 
@@ -101,13 +98,6 @@ export class DashboardComponent implements OnInit, OnDestroy {
     this.formulario = this.formBuilder.group({
       id: [this.id]
     });
-    this.sub.push( this.restangular.one("admin/leilao", '').get({ PageSize: 100 }).subscribe((response) => {
-      this.leiloes = response.data
-      this.id = response.data[0].id;
-      this.formulario.controls.id.setValue(this.id);
-      this.buscarLeilao();
-    })
-    )
   }
 
   ngOnInit() {
@@ -115,11 +105,12 @@ export class DashboardComponent implements OnInit, OnDestroy {
   }
 
   buscarLeilao(event?) {
-    if(event != null){
-      this.id = event.id
-    }else{
-      this.id = this.leiloes[0].id
+    if(!event){
+      return false;
     }
+
+    this.id = event.id
+
 
     this.sub.push( this.restangular.one("dashboard/contadores").get({ LeilaoId: this.id }).subscribe((response) => {
       this.contadorVisitantes = response.data.visitantes
