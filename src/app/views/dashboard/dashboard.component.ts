@@ -81,7 +81,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
 
   };
   public barChartColorFinanceiro = [{ backgroundColor: ['#191970', ' #15f70e', '#fc7a00', 'red'] }]
-  public barChartLabelsFinanceiro: Label[] = ['Arrematado', 'Pago', 'Pendente', 'Expirado'];
+  public barChartLabelsFinanceiro: Label[] = ['Arrematado', 'Pago', 'Pendente', 'Vencido'];
   public barChartTypeFinanceiro: ChartType = 'bar';
   public barChartLegendFinanceiro = false;
 
@@ -141,7 +141,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
    )
    this.sub.push( this.restangular.one("dashboard/financeiro").get({ LeilaoId: this.id }).subscribe((response) => {
        const finaceiro = response.data
-     this.listaExpirados = finaceiro.filter(x => x.status == 'Expirado')
+     this.listaExpirados = finaceiro.filter(x => x.status == 'Vencido')
      this.listaPendentes = finaceiro.filter(x => x.status == 'Pendente')
      this.listaPago = finaceiro.filter(x => x.status == 'Pago')
      this.listaArrematados = finaceiro
