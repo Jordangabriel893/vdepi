@@ -22,7 +22,7 @@ docker push cloud.canister.io:5000/leolirarj/eblonline-hml-admin
 goto end
 :prd
 echo ::: PRODUCAO :::
-cd ../..
+cd ..
 docker build -t eblonline-admin .
 FOR /F "tokens=*" %%g IN ('docker images eblonline-admin:latest -q') do (SET imageid=%%g)
 docker tag %imageid% cloud.canister.io:5000/leolirarj/eblonline-admin:latest
