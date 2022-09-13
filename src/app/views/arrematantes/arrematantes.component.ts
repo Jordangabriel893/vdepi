@@ -2,7 +2,7 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Restangular } from 'ngx-restangular';
 import * as fileSaver from 'file-saver';
 import { NotifierService } from 'angular-notifier';
-import { FormBuilder, FormControl } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import * as XLSX from 'xlsx';
@@ -29,7 +29,7 @@ export class ArrematantesComponent implements OnInit, OnDestroy {
   listaFiltradaPorLote;
   filtroLotes;
   usuarios: any;
-  filtroLeilao
+  filtroLeilao: FormGroup;
 
   sub: Subscription[] = [];
 
@@ -39,12 +39,6 @@ export class ArrematantesComponent implements OnInit, OnDestroy {
     private formBuilder: FormBuilder,
     private router: Router,
   ) {
-      this.sub.push(
-        this.restangular.one("admin/leilao").get({PageSize:100}).subscribe((response) => {
-          this.leiloes = response.data
-        })
-      )
-
       this.filtroLeilao = this.formBuilder.group({
         leilao:[0]
       })
@@ -60,6 +54,7 @@ export class ArrematantesComponent implements OnInit, OnDestroy {
     this.arrematantes = [];
     this.loading = true;
     if(event != null){
+    this.filtroLeilao.controls.leilao.setValue(event.id);
     this.sub.push(
       this.restangular.one(`leilao/${event.id}/arrematantes`).get()
       .subscribe((response) => {
@@ -71,7 +66,7 @@ export class ArrematantesComponent implements OnInit, OnDestroy {
     )
     }else{
       this.arremantantesFiltrados = []
-    this.loading = false;
+      this.loading = false;
     }
   }
 
