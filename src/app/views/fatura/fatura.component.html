@@ -2,18 +2,35 @@
   <app-search-leilao (emitLeilao)="setLeilao($event)"></app-search-leilao>
   <div class="row">
     <div class="col-lg-12">
+
       <div class="card">
-        <div class="card-header">
-          <i class="fa fa-dollar-sign" aria-hidden="true"></i>
-          &nbsp;Faturas
+        <div class="card-header header">
+          <div>
+            <i class="fa fa-dollar-sign" aria-hidden="true"></i>
+            &nbsp;Faturas
+          </div>
+          <button type="button" class="btn btn-success" (click)="sendFatura()"><i class="fa fa-file" aria-hidden="true"></i><h6>Enviar Faturas</h6></button>
         </div>
+
+
         <div class="card-block">
-          <button type="button" class="btn btn-success" [routerLink]="['/create-fatura']"><i class="fa fa-plus-circle"></i>&nbsp; Nova Fatura</button>
+          <form [formGroup]="formulario">
+
+
+          <div class="d-flex align-items-center justify-content-between">
+            <button type="button" class="btn btn-success" [routerLink]="['/create-fatura']"><i class="fa fa-plus-circle"></i>&nbsp; Nova Fatura</button>
+            <div class="d-flex align-items-center flex-column">
+              <label>Selecionar todos:</label>
+              <input type="checkbox" (change)="selectAllFaturas()" formControlName="selectAll">
+            </div>
+          </div>
+
             <div class="table-responsive mt-4">
-              <table class="table table-striped" [mfData]="faturas" #mfLeilao="mfDataTable" [mfRowsOnPage]="15">
+
+
+              <table class="table table-striped" [mfData]="faturas" #mfLeilao="mfDataTable" [mfRowsOnPage]="15" >
                 <thead>
                   <tr>
-
                     <th>
                       <mfDefaultSorter by="faturaId">Id</mfDefaultSorter>
                     </th>
@@ -39,13 +56,16 @@
                     <th>
                       <mfDefaultSorter by="status">Status</mfDefaultSorter>
                     </th>
+                    <th>
+                      <mfDefaultSorter by="fatura">Fatura</mfDefaultSorter>
+                    </th>
                     <th class="text-center" >
                       Ação
                     </th>
                   </tr>
                 </thead>
-                <tbody>
-                  <tr *ngFor="let item of mfLeilao.data">
+                <tbody  formArrayName="enviarFaturas">
+                  <tr *ngFor="let item of mfLeilao.data; let i = index">
                     <td>{{item.faturaId}}</td>
                     <td>{{item.codigo}}</td>
                     <td>{{item.nomeArrematante | uppercase}}</td>
@@ -62,6 +82,9 @@
                         <span *ngSwitchCase="5" class="badge badge-success">PAGO MAIOR</span>
                         <span *ngSwitchCase="6" class="badge badge-danger">CANCELADA</span>
                       </ng-container>
+                    </td>
+                    <td class="text-center" nowrap [formGroupName]="i">
+                      <input type="checkbox" [checked]="formulario.value.enviarFaturas[i].valor == true"  formControlName="valor" >
                     </td>
                     <td class="text-center" nowrap>
                       <div class="dropdown" dropdown>
@@ -91,7 +114,9 @@
                   </tr>
                 </tfoot>
               </table>
+
             </div>
+          </form>
         </div>
       </div>
     </div>
