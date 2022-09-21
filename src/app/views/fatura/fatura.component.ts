@@ -5,7 +5,6 @@ import { ConfirmationService, ResolveEmit } from '@jaspero/ng-confirmations';
 import { NotifierService } from 'angular-notifier';
 import { Restangular } from 'ngx-restangular';
 import { Subscription } from 'rxjs';
-import * as Model from '../_models/model'
 
 @Component({
   selector: 'app-fatura',
@@ -20,8 +19,6 @@ export class FaturaComponent implements OnInit, OnDestroy {
   nomeLeilao:any = 'Leilões';
   leilaoId;
   constructor(
-    private route: ActivatedRoute,
-    private router: Router,
     private restangular: Restangular,
     private formBuilder: FormBuilder,
     private notifierService: NotifierService,
@@ -73,25 +70,38 @@ export class FaturaComponent implements OnInit, OnDestroy {
           }
         })
     );
-
-
   }
+
   sendFatura(){
     const faturasSelected =  this.formulario.value.enviarFaturas.filter(x => x.valor == true)
-    const faturasId = faturasSelected.map(x => x.faturaId )
+
+    if(faturasSelected.length === 0) {
+      this.notifierService.notify('error', 'Selecione alguma fatura para enviar');
+    }
+
+    const body = {
+      faturaIds: faturasSelected.map(x => x.faturaId)
+    };
+
+    this.restangular.all("fatura/notificar").post(body).subscribe(() => {
+      this.notifierService.notify('success', 'Faturas Enviadas');
+    },
+    () => {
+      this.notifierService.notify('error', 'Erro ao enviar faturas');
+    })
   }
+
   selectAllFaturas(){
     const selectAll = this.formulario.value.selectAll
-    if(selectAll == true){ this.formulario.value.enviarFaturas.forEach(x => x.valor = true) }
-    else{  this.formulario.value.enviarFaturas.forEach(x => x.valor = false)}
-
-
+    if(selectAll == true){
+      this.formulario.value.enviarFaturas.forEach(x => x.valor = true)
+    }
+    else{
+      this.formulario.value.enviarFaturas.forEach(x => x.valor = false)
+    }
   }
 
   ngOnDestroy(): void {
     this.sub.forEach(s => s.unsubscribe())
   }
-
-
-
 }
