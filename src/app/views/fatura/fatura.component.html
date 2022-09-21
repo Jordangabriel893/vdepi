@@ -70,6 +70,7 @@
                         </button>
                         <ul class="dropdown-menu dropdown-menu-right" *dropdownMenu>
                           <li><a class="dropdown-item">Ver Fatura</a></li>
+                          <li><a class="dropdown-item" (click)="downloadBoleto(item.faturaId)">Baixar Boleto</a></li>
                           <li><a class="dropdown-item" (click)="cancelarFatura(item.faturaId)" *ngIf="item.status === 1">Cancelar Fatura</a></li>
                           <!-- <li><a class="dropdown-item">Atualizar Fatura</a></li> -->
                         </ul>
