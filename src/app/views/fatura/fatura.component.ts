@@ -5,10 +5,6 @@ import { ConfirmationService, ResolveEmit } from '@jaspero/ng-confirmations';
 import { NotifierService } from 'angular-notifier';
 import { Restangular } from 'ngx-restangular';
 import { Subscription } from 'rxjs';
-<<<<<<< HEAD
-import * as fileSaver from 'file-saver';
-=======
->>>>>>> 221-fix/enviarFatura
 
 @Component({
   selector: 'app-fatura',
@@ -25,7 +21,8 @@ export class FaturaComponent implements OnInit, OnDestroy {
   constructor(
     private restangular: Restangular,
     private notifierService: NotifierService,
-    private confirmationService: ConfirmationService) { }
+    private confirmationService: ConfirmationService,
+    private formBuilder: FormBuilder) { }
 
   ngOnInit() {
 
@@ -105,21 +102,4 @@ export class FaturaComponent implements OnInit, OnDestroy {
   ngOnDestroy(): void {
     this.sub.forEach(s => s.unsubscribe())
   }
-<<<<<<< HEAD
-
-  downloadBoleto(faturaId) {
-    //this.vistoria.statusId = this.statusSelecionado
-    this.restangular.all('fatura').one(`${faturaId}/downloadBoleto`,)
-      .withHttpConfig({ responseType: 'blob' })
-      .get()
-      .subscribe((response) => {
-        const blob = new Blob([response], { type: 'application/pdf' });
-        fileSaver.saveAs(blob, `Boleto.pdf`);
-      }, () => {
-        this.notifierService.notify('error', 'Não foi possivel fazer o download do boleto!');
-      })
-  }
-
-=======
->>>>>>> 221-fix/enviarFatura
 }
