@@ -5,6 +5,7 @@ import { ConfirmationService, ResolveEmit } from '@jaspero/ng-confirmations';
 import { NotifierService } from 'angular-notifier';
 import { Restangular } from 'ngx-restangular';
 import { Subscription } from 'rxjs';
+import { environment } from 'environments/environment';
 
 @Component({
   selector: 'app-fatura',
@@ -18,6 +19,7 @@ export class FaturaComponent implements OnInit, OnDestroy {
   sub: Subscription[] = [];
   nomeLeilao:any = 'Leilões';
   leilaoId;
+  siteUrl = environment.siteUrl;
   constructor(
     private restangular: Restangular,
     private notifierService: NotifierService,

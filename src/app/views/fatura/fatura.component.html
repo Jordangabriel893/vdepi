@@ -91,8 +91,8 @@
                           <i class="fa fa-ellipsis-v"></i>
                         </button>
                         <ul class="dropdown-menu dropdown-menu-right" *dropdownMenu>
+                          <li><a class="dropdown-item" [href]="siteUrl + '/fatura/' + item.token" target="_blank">Ver Fatura</a></li>
                           <li><a class="dropdown-item" (click)="cancelarFatura(item.faturaId)" *ngIf="item.status === 1">Cancelar Fatura</a></li>
-                          <!-- <li><a class="dropdown-item">Atualizar Fatura</a></li> -->
                         </ul>
                       </div>
                     </td>
