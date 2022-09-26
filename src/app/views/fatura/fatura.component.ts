@@ -20,6 +20,9 @@ export class FaturaComponent implements OnInit, OnDestroy {
   nomeLeilao:any = 'Leilões';
   leilaoId;
   siteUrl = environment.siteUrl;
+  enviando = false;
+  faturasEnviar = [];
+  todasFaturas = false;
   constructor(
     private restangular: Restangular,
     private notifierService: NotifierService,
@@ -40,7 +43,6 @@ export class FaturaComponent implements OnInit, OnDestroy {
     this.sub.push(
       this.restangular.one(`fatura?leilaoId=${idLeilao.id}`).get().subscribe(
       dados =>{
-
         this.faturas = dados.data
         this.nomeLeilao = idLeilao.nome;
         this.loading = false
@@ -73,31 +75,43 @@ export class FaturaComponent implements OnInit, OnDestroy {
   }
 
   sendFatura(){
-    const faturasSelected =  this.formulario.value.enviarFaturas.filter(x => x.valor == true)
-
-    if(faturasSelected.length === 0) {
+    if(this.faturasEnviar.length === 0) {
       this.notifierService.notify('error', 'Selecione alguma fatura para enviar');
+      return false;
     }
 
+    this.enviando = true;
+
     const body = {
-      faturaIds: faturasSelected.map(x => x.faturaId)
+      faturaIds: this.faturasEnviar
     };
 
     this.restangular.all("fatura/notificar").post(body).subscribe(() => {
       this.notifierService.notify('success', 'Faturas Enviadas');
+      this.setLeilao(this.leilaoId);
+      this.enviando = false;
     },
     () => {
       this.notifierService.notify('error', 'Erro ao enviar faturas');
+      this.enviando = false;
     })
   }
 
   selectAllFaturas(){
-    const selectAll = this.formulario.value.selectAll
-    if(selectAll == true){
-      this.formulario.value.enviarFaturas.forEach(x => x.valor = true)
+   this.todasFaturas = !this.todasFaturas;
+   this.faturasEnviar = [];
+   if(this.todasFaturas) {
+    this.faturasEnviar = this.faturas.map(x => x.faturaId);
+   }
+  }
+
+  selectFatura(faturaId) {
+    const idx = this.faturasEnviar.indexOf(faturaId);
+    if(idx >= 0) {
+      this.faturasEnviar = this.faturasEnviar.splice(idx, 1);
     }
-    else{
-      this.formulario.value.enviarFaturas.forEach(x => x.valor = false)
+    else {
+      this.faturasEnviar.push(faturaId);
     }
   }
 

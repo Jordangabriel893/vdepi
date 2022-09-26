@@ -85,6 +85,10 @@ export class UpdateTemplateComponent implements OnInit {
         name: 'Lista de Lotes',
         value: '{{lotes}}',
       },
+      link_boleto: {
+        name: 'Link do Boleto',
+        value: '{{link_boleto}}',
+      },
       link_confirmacao: {
         name: 'Link de Confirmação',
         value: '{{link_confirmacao}}',
