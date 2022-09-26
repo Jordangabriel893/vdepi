@@ -60,6 +60,7 @@ export class CreateTemplateComponent implements OnInit,  OnDestroy {
     })
 
     this.emailEditor.editor.setMergeTags({
+
       comissao_leiloeiro: {
         name: 'Comissão do Leiloeiro',
         value: '{{comissao_leiloeiro}}',
@@ -79,6 +80,10 @@ export class CreateTemplateComponent implements OnInit,  OnDestroy {
       lotes: {
         name: 'Lista de Lotes',
         value: '{{lotes}}',
+      },
+      link_boleto: {
+        name: 'Link do Boleto',
+        value: '{{link_boleto}}',
       },
       link_confirmacao: {
         name: 'Link de Confirmação',
