@@ -1,0 +1,12 @@
+#/bin/bash
+docker build -t  eblonline-admin .
+
+image=$(docker images | sed -n 2p | awk '{print $3}')
+
+docker tag $image cloud.canister.io:5000/leolirarj/eblonline-admin:latest
+
+docker login --username=leolirarj --password=@oliveira09 cloud.canister.io:5000
+
+docker push cloud.canister.io:5000/leolirarj/eblonline-admin:latest
+
+docker image rm $(docker images | awk  '{if ($2=="<none>") print $3}')
