@@ -42,26 +42,44 @@ export class UpdateAgendaComponent implements OnInit, OnDestroy {
       notificacaoId: [null, Validators.required],
       tipoAgendaId: [null, Validators.required],
       dataExecucao: [null, Validators.required],
-      dataEncerramento: [null],
+      dataEncerramento: [{value: null, disabled: true}],
       dataUltimaExecucao: [null],
-      intervaloMinutos: [null],
+      intervaloMinutos: [{value: null, disabled: true}],
       dataCadastro: [null],
     })
+
+    this.formulario.get("tipoAgendaId").valueChanges.subscribe(value => {
+      if(value == 6) {
+        this.formulario.controls.intervaloMinutos.enable();
+      }
+      else {
+        this.formulario.controls.intervaloMinutos.disable();
+      }
+
+      if(value != 1) {
+        this.formulario.controls.dataEncerramento.enable();
+      }
+      else {
+        this.formulario.controls.dataEncerramento.disable();
+      }
+    });
+
     this.sub.push(
       this.restangular.all('marketing/AgendaNotificacao').get(this.id).subscribe(dados => {
         this.updateForm(dados.data);
       }
-
       )
     )
-      this.sub.push(
-        this.restangular.one('marketing/notificacao').get().subscribe(
-          dados =>{
-            this.notificacoes= dados.data
 
-          }
-        )
+    this.sub.push(
+      this.restangular.one('marketing/notificacao').get().subscribe(
+        dados =>{
+          this.notificacoes= dados.data
+
+        }
       )
+    )
+
    this.sub.push(
     this.restangular.one('marketing/tipoAgendaNotificacao').get().subscribe(
       dados =>{
@@ -69,18 +87,17 @@ export class UpdateAgendaComponent implements OnInit, OnDestroy {
       }
     )
    )
-
-
   }
+
   updateForm(dados) {
     this.formulario.patchValue({
       agendaNotificacaoId: this.id,
       notificacaoId: dados.notificacaoId,
       tipoAgendaId: dados.tipoAgendaId,
       dataExecucao: moment.utc(dados.dataExecucao).local().toDate(),
-      dataEncerramento: moment.utc(dados.dataEncerramento).local().toDate(),
-      dataUltimaExecucao: moment.utc(dados.dataUltimaExecucao).local().toDate(),
-      intervaloMinutos:dados.intervaloMinutos,
+      dataEncerramento: dados.dataEncerramento ? moment.utc(dados.dataEncerramento).local().toDate() : null,
+      dataUltimaExecucao: dados.dataUltimaExecucao ? moment.utc(dados.dataUltimaExecucao).local().toDate() : null,
+      intervaloMinutos: dados.intervaloMinutos,
       dataCadastro: dados.dataCadastro,
     })
   }
@@ -106,8 +123,8 @@ export class UpdateAgendaComponent implements OnInit, OnDestroy {
           controle.markAsTouched()
         })
       })
-
   }
+
   verificaValidTouched(campo){
     return !this.formulario.get(campo).valid && this.formulario.get(campo).touched;
   }
@@ -120,6 +137,7 @@ export class UpdateAgendaComponent implements OnInit, OnDestroy {
     this.formulario.get(campo).markAsTouched();
     this.formulario.get(campo).setValue(event);
   }
+
   ngOnDestroy(): void {
     this.sub.forEach(s => s.unsubscribe())
   }

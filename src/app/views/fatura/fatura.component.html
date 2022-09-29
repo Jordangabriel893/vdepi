@@ -6,7 +6,7 @@
       <div class="card">
         <div class="card-header header">
           <div>
-            <i class="fa fa-dollar-sign" aria-hidden="true"></i>
+            <i class="fa fa-file-invoice-dollar" aria-hidden="true"></i>
             &nbsp;Faturas
           </div>
         </div>
@@ -17,7 +17,7 @@
 
           <div class="d-flex align-items-center justify-content-between">
             <button type="button" class="btn btn-success" [routerLink]="['/create-fatura']"><i class="fa fa-plus-circle"></i>&nbsp;Nova Fatura</button>
-            <button type="button" class="btn btn-success" (click)="sendFatura()" *ngIf="faturas && !enviando"><i class="fa fa-envelope" aria-hidden="true"></i>&nbsp;Enviar Faturas</button>
+            <button type="button" class="btn btn-success" (click)="sendFatura()" *ngIf="faturas && !enviando"><i class="fa fa-paper-plane" aria-hidden="true"></i>&nbsp;Enviar Faturas</button>
             <button type="button" class="btn btn-success" *ngIf="faturas && enviando"><i class="fa fa-spin fa-spinner" aria-hidden="true"></i>&nbsp;Enviando...</button>
           </div>
 

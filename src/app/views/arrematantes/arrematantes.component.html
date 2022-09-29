@@ -1,12 +1,4 @@
 <div class="row linha-seletor">
-  <!-- <form [formGroup]="filtroLeilao" class="col-4">
-    <select class="form-control col-12" aria-label="Default select example" (change)="filtrarPorLeilao()" formControlName="leilao" >
-      <option value="0" *ngIf="loadingLeilao">CARREGANDO...</option>
-      <option value="0">SELECIONE</option>
-      <option *ngFor="let item of leiloes" [value]="item.id">{{item.nome}}</option>
-    </select>
-
-  </form> -->
   <app-search-leilao class="search-leilao" (emitLeilao)="filtrarPorLeilao($event)"></app-search-leilao>
 </div>
 <div class="animated fadeIn">
@@ -18,11 +10,11 @@
             <i class="fa fa-dollar-sign" aria-hidden="true"></i>&nbsp;Arrematantes
           </div>
           <button type="button"
-                  class="btn btn-success"
+                  class="btn btn-success btn-sm"
                   (click)="exportAsExcel()"
                   title="Exportar para Excel">
-                  <i class="fa fa-file-excel" aria-hidden="true"></i>
-                  <h6>Excel</h6>
+                  <i class="fa fa-file-excel" aria-hidden="true"></i>&nbsp;
+                  Excel
           </button>
         </div>
         <div class="card-block" >

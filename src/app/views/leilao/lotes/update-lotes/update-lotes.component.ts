@@ -137,7 +137,6 @@ export class UpdateLotesComponent implements OnInit {
       this.restangular.one('lotestatus').get().pipe(),
       this.restangular.one("tabelafipe/tipos").get().pipe()
     ]).subscribe((allResp: any[]) => {
-      this.tiposLote = allResp[1].data
       this.tipoFoto = allResp[2].data.filter(x => x.visivelSite);;
       this.local = allResp[3].data;
 
@@ -156,6 +155,7 @@ export class UpdateLotesComponent implements OnInit {
         this.leilao = resp.data
         this.categoriasFilhas = this.categorias.filter(categoria => categoria.categoriaPaiId === this.leilao.categoriaId);
         this.loteCampos = allResp[0].data.filter(x => x.categoriaId === this.leilao.categoriaId);
+        this.tiposLote = allResp[1].data.filter(x => x.categoriaId === this.leilao.categoriaId);
       })
     });
   }

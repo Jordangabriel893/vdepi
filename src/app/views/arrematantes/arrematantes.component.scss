@@ -3,19 +3,9 @@
     justify-content: space-between;
 }
 .btn-success{
-    display: flex;
-    align-items: center;
+    white-space: nowrap;
+}
 
-    h6{
-        margin-bottom: 0%;
-    }
-}
-.fa-file-excel, .fa-gavel, .fa-list {
-    margin-right: 10%;
-}
-.autoLeilao{
-    margin-right: 1em;
-}
 
 .dropdown-menu-left {
   left: -145px !important;
