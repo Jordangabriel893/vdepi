@@ -5,7 +5,6 @@
 .btn-success{
   display: flex;
   align-items: center;
-  width: 13%;
 
   h6{
       margin-bottom: 0%;
@@ -13,4 +12,20 @@
 }
 .fa-file{
   margin-right: 10%;
+}
+.input-search{
+  padding-top: 20px;
+}
+.info{
+  height: 45vh;
+  background-color: rgb(243, 243, 243);
+}
+.border-table{
+  border:1px solid rgb(199, 199, 199)
+}
+.table-user{
+  height: 100%;
+}
+table td {
+  vertical-align: top !important;
 }

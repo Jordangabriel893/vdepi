@@ -9,6 +9,11 @@
             <i class="fa fa-dollar-sign" aria-hidden="true"></i>
             &nbsp;Faturas
           </div>
+          <div class="d-flex">
+
+            <button type="button" (click)="exportAsExcel()" class="btn btn-success ml-5" title="Exportar para Excel"> <i class="fas fa-file-excel"></i>&nbsp;Excel </button>
+            <button type="button" class="btn btn-success" (click)="sendFatura()" *ngIf="faturas && !enviando" style="margin-left:10px"><i class="fa fa-envelope" aria-hidden="true" ></i>&nbsp;Enviar Faturas</button>
+          </div>
         </div>
 
 
@@ -17,12 +22,34 @@
 
           <div class="d-flex align-items-center justify-content-between">
             <button type="button" class="btn btn-success" [routerLink]="['/create-fatura']"><i class="fa fa-plus-circle"></i>&nbsp;Nova Fatura</button>
-            <button type="button" class="btn btn-success" (click)="sendFatura()" *ngIf="faturas && !enviando"><i class="fa fa-envelope" aria-hidden="true"></i>&nbsp;Enviar Faturas</button>
+
             <button type="button" class="btn btn-success" *ngIf="faturas && enviando"><i class="fa fa-spin fa-spinner" aria-hidden="true"></i>&nbsp;Enviando...</button>
+          </div>
+          <div class="input-group col-12 d-flex justify-content-end input-search">
+
+              <div class="input-group-prepend">
+                <span class="input-group-text" id="inputGroup-sizing-sm">Buscar</span>
+              </div>
+              <input type="text" class="form-control col-4" (keyup)="onSearch()" aria-describedby="basic-addon2" [formControl]="queryField">
+
+
+
+          <div class="col-3">
+
+              <select class="form-control "   formControlName="statusControl" (change)="filtrarFaturas()">
+                <option value="0" >TODOS</option>
+                <option value="1">PENDENTE</option>
+                <option value="2">VENCIDA</option>
+                <option value="3">PAGA</option>
+                <option value="4">PAGO MENOR</option>
+                <option value="5">PAGO MAIOR</option>
+                <option value="6">CANCELADA</option>
+              </select>
+            </div>
           </div>
 
             <div class="table-responsive mt-4">
-              <table class="table table-striped" [mfData]="faturas" #mfLeilao="mfDataTable" [mfRowsOnPage]="15" >
+              <table class="table table-striped" [mfData]="faturasFiltradas" #mfLeilao="mfDataTable" [mfRowsOnPage]="15" >
                 <thead>
                   <tr>
                     <th class="text-center">
@@ -61,44 +88,78 @@
                   </tr>
                 </thead>
                 <tbody  formArrayName="enviarFaturas">
-                  <tr *ngFor="let item of mfLeilao.data; let i = index">
-                    <td class="text-center" nowrap>
-                      <input type="checkbox" (click)="selectFatura(item.faturaId)" >
-                    </td>
-                    <td>{{item.faturaId}}</td>
-                    <td>{{item.codigo}}</td>
-                    <td>{{item.nomeArrematante | uppercase}}</td>
-                    <td>{{item.cpfArrematante}}</td>
-                    <td>{{item.valorTotal | currencyFormat}}</td>
-                    <td>{{item.dataVencimento | amDateFormat:'DD/MM/yyyy' }}</td>
-                    <td>{{item.quantidadeItens }}</td>
-                    <td>
-                      <ng-container [ngSwitch]="item.status">
-                        <span *ngSwitchCase="1" class="badge badge-warning">PENDENTE</span>
-                        <span *ngSwitchCase="2" class="badge badge-danger">VENCIDA</span>
-                        <span *ngSwitchCase="3" class="badge badge-success">PAGA</span>
-                        <span *ngSwitchCase="4" class="badge badge-success">PAGO MENOR</span>
-                        <span *ngSwitchCase="5" class="badge badge-success">PAGO MAIOR</span>
-                        <span *ngSwitchCase="6" class="badge badge-danger">CANCELADA</span>
-                      </ng-container>
-                    </td>
-                    <td class="text-center">
-                        <span *ngIf="!item.enviada" class="text-muted" title="Não Enviada"><i class="fa fa-envelope"></i></span>
-                        <span *ngIf="item.enviada"  class="text-success" title="Enviada"><i class="fa fa-envelope"></i></span>
-                    </td>
-                    <td class="text-center" nowrap>
-                      <div class="dropdown" dropdown>
-                        <button class="btn" id="dropdownMenuButton" type="button" data-toggle="dropdown" aria-expanded="false" dropdownToggle>
-                          <i class="fa fa-ellipsis-v"></i>
-                        </button>
-                        <ul class="dropdown-menu dropdown-menu-right" *dropdownMenu>
-                          <li><a class="dropdown-item" [href]="siteUrl + '/fatura/' + item.token" target="_blank">Ver Fatura</a></li>
-                          <li><a class="dropdown-item" (click)="cancelarFatura(item.faturaId)" *ngIf="item.status === 1">Cancelar Fatura</a></li>
-                        </ul>
-                      </div>
-                    </td>
+                  <ng-template ngFor let-item [ngForOf]="mfLeilao.data">
+                    <tr>
+                      <td class="text-center" nowrap>
+                        <input type="checkbox" (click)="selectFatura(item.faturaId)" >
+                      </td>
+                      <td>{{item.faturaId}}</td>
+                      <td>{{item.codigo}}</td>
+                      <td>{{item.nomeArrematante | uppercase}}</td>
+                      <td>{{item.cpfArrematante}}</td>
+                      <td>{{item.valorTotal | currencyFormat}}</td>
+                      <td>{{item.dataVencimento | amDateFormat:'DD/MM/yyyy' }}</td>
+                      <td>{{item.quantidadeItens }}</td>
+                      <td>
+                        <ng-container [ngSwitch]="item.status">
+                          <span *ngSwitchCase="1" class="badge badge-warning">PENDENTE</span>
+                          <span *ngSwitchCase="2" class="badge badge-danger">VENCIDA</span>
+                          <span *ngSwitchCase="3" class="badge badge-success">PAGA</span>
+                          <span *ngSwitchCase="4" class="badge badge-success">PAGO MENOR</span>
+                          <span *ngSwitchCase="5" class="badge badge-success">PAGO MAIOR</span>
+                          <span *ngSwitchCase="6" class="badge badge-danger">CANCELADA</span>
+                        </ng-container>
+                      </td>
+                      <td class="text-center">
+                          <span *ngIf="!item.enviada" class="text-muted" title="Não Enviada"><i class="fa fa-envelope"></i></span>
+                          <span *ngIf="item.enviada"  class="text-success" title="Enviada"><i class="fa fa-envelope"></i></span>
+                      </td>
+                      <td class="text-center" nowrap>
+                        <div class="dropdown" dropdown>
+                          <button class="btn" id="dropdownMenuButton" type="button" data-toggle="dropdown" aria-expanded="false" dropdownToggle>
+                            <i class="fa fa-ellipsis-v"></i>
+                          </button>
+                          <ul class="dropdown-menu dropdown-menu-right" *dropdownMenu>
+                            <li><a class="dropdown-item" [href]="siteUrl + '/fatura/' + item.token" target="_blank">Ver Fatura</a></li>
+                            <li (click)="showItensFatura(item.faturaId)"><a class="dropdown-item" >Ver Itens Fatura</a></li>
+                            <li><a class="dropdown-item" (click)="cancelarFatura(item.faturaId)" *ngIf="item.status === 1">Cancelar Fatura</a></li>
+                          </ul>
+                        </div>
+                      </td>
 
-                  </tr>
+                    </tr>
+                    <tr *ngIf="item.faturaId == showItens">
+                      <td colspan="12">
+                        <table class="table table-striped col-12 d-flex justify-content-start flex-row" style="text-align: start;">
+
+                        <tbody class="col-12 border-table" style="padding:0%">
+                          <tr class="d-flex justify-content-center "  style = "background-color: rgb(243, 243, 243)" scope="row">
+                            <th class="d-flex justify-content-center col-12 border-table" scope="col">DÉBITOS </th>
+                          </tr>
+                          <tr class="d-flex  ">
+                            <th class="col-9 border-table">Descrição</th>
+                            <th class="col-3 border-table">Valor</th>
+                          </tr>
+                          <ng-template ngFor let-itensFatura [ngForOf]="item.itens">
+                            <tr class="d-flex"  >
+                              <td class="col-9 border-table">{{itensFatura.descricao}}</td>
+                              <td class="col-3 border-table">{{itensFatura.valor | currencyFormat}}</td>
+                            </tr>
+                          </ng-template>
+
+                          <tr *ngIf="loading">
+                            <td class="text-center text-muted" colspan="11">
+                              <h5><i class="fa fa-spin fa-spinner"></i>&nbsp;Carregando...</h5>
+                            </td>
+                          </tr>
+
+                        </tbody>
+
+                      </table>
+                    </td>
+                    </tr>
+                  </ng-template>
+
                   <tr *ngIf="loading">
                     <td class="text-center text-muted" colspan="11">
                       <h5><i class="fa fa-spin fa-spinner"></i>&nbsp;Carregando...</h5>
@@ -113,7 +174,28 @@
                   </tr>
                 </tfoot>
               </table>
+              <!-- <div class="info col-12">
+                <table>
+                  <tr>
+                    <th style = "background-color: rgb(243, 243, 243)" scope="col">DADOS DO CLIENTE</th>
+
+                  </tr>
+                  <tr>
+                    <th scope="row">header 2</th>
+                    <td>2</td>
+                  </tr>
+                  <tr>
+                    <th scope="row">header 3</th>
+                    <td>3</td>
+                  </tr>
+                </table>
+
+              </div> -->
             </div>
+            <div class="table-responsive mt-5 d-flex">
+
+            </div>
+
           </form>
         </div>
       </div>
