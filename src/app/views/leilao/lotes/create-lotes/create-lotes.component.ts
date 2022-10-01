@@ -76,21 +76,7 @@ export class CreateLotesComponent implements OnInit {
       { class: 'calibri', name: 'Calibri' },
       { class: 'comic-sans-ms', name: 'Comic Sans MS' }
     ],
-    customClasses: [
-      {
-        name: 'quote',
-        class: 'quote',
-      },
-      {
-        name: 'redText',
-        class: 'redText'
-      },
-      {
-        name: 'titleText',
-        class: 'titleText',
-        tag: 'h1',
-      },
-    ],
+    sanitize: true,
   };
 
   constructor(
@@ -149,28 +135,24 @@ export class CreateLotesComponent implements OnInit {
       this.restangular.one("tipolote").get().pipe(),
       this.restangular.one('tipofoto').get().pipe(),
       this.restangular.one('local').get().pipe(),
-      this.restangular.one("admin/leilao", this.id).get().pipe(),
       this.restangular.one('categoria').get().pipe(),
-      this.restangular.one('lotestatus').get().pipe()
+      this.restangular.one('lotestatus').get().pipe(),
+      this.restangular.one("admin/leilao", this.id).get()
     ]).subscribe((allResp: any[]) => {
-      this.loteCampos = allResp[0].data;
+      this.tipoFoto = allResp[2].data.filter(x => x.visivelSite);
+      this.local = allResp[3].data;
+      this.categorias = allResp[4].data;
 
+      this.loteStatus = allResp[5].data;
+      this.leilao = allResp[6].data
+      this.categoriasFilhas = this.categorias.filter(categoria => categoria.categoriaPaiId === this.leilao.categoriaId);
+      this.loteCampos = allResp[0].data.filter(x => x.categoriaId === this.leilao.categoriaId);
+      this.tiposLote = allResp[1].data.filter(x => x.categoriaId === this.leilao.categoriaId);
       this.loteCampos.forEach(x => {
         if(x.destaqueSite) {
           this.adicionarCampo(x.loteCampoId);
         }
       });
-
-      this.tiposLote = allResp[1].data;
-      this.tipoFoto = allResp[2].data.filter(x => x.visivelSite);
-      this.local = allResp[3].data;
-
-      this.leilao = allResp[4].data;
-
-      this.categorias = allResp[5].data;
-      this.categoriasFilhas = this.categorias.filter(categoria => categoria.categoriaPaiId === this.leilao.categoriaId);
-
-      this.loteStatus = allResp[6].data;
     });
 
   }

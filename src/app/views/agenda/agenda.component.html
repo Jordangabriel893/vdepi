@@ -23,13 +23,13 @@
                       <mfDefaultSorter by="notificacao">Notificação</mfDefaultSorter>
                     </th>
                     <th>
+                      <mfDefaultSorter by="dataCadastro">Data Cadastro</mfDefaultSorter>
+                    </th>
+                    <th>
                       <mfDefaultSorter by="dataExecucao">Data Execução</mfDefaultSorter>
                     </th>
                     <th>
                       <mfDefaultSorter by="dataEncerramento">Data Encerramento</mfDefaultSorter>
-                    </th>
-                    <th>
-                      <mfDefaultSorter by="dataCadastro">Data Cadastro</mfDefaultSorter>
                     </th>
                     <th class="text-center" >
                       Editar
@@ -42,10 +42,9 @@
                     <td>{{item.agendaNotificacaoId}}</td>
                     <td>{{item.tipoAgenda }}</td>
                     <td>{{item.notificacao }}</td>
+                    <td>{{item.dataCadastro | date: 'dd/MM/yyyy HH:mm'}}</td>
                     <td>{{item.dataExecucao | date: 'dd/MM/yyyy HH:mm'}}</td>
                     <td>{{item.dataEncerramento | date: 'dd/MM/yyyy HH:mm'}}</td>
-                    <td>{{item.dataCadastro | date: 'dd/MM/yyyy'}}</td>
-
                     <td class="text-center" nowrap>
                       <button type="button" class="btn btn-primary" (click)="edit(item.agendaNotificacaoId)"><i class="fa fa-edit"></i>&nbsp;Editar</button>
                     </td>

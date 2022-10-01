@@ -4,8 +4,8 @@
       placeholder="Digite o titulo do template" formControlName="descricao">
   </div>
 
-  <button *ngIf="salvar" class="btn btn-primary salvando" ><i class="fa fa-spin fa-spinner"></i> Salvando...</button>
-  <button *ngIf="!salvar" class="btn btn-primary" (click)="save()" id="save" ><i class="fa fa-save"></i> Salvar</button>
+  <button *ngIf="salvar" class="btn btn-success salvando" ><i class="fa fa-spin fa-spinner"></i>&nbsp;Salvando...</button>
+  <button *ngIf="!salvar" class="btn btn-success" (click)="save()" id="save" ><i class="fa fa-save"></i>&nbsp;Salvar</button>
   <email-editor id="email-editor"
   [options]="options"
   (ready)="editorReady($event)"></email-editor>

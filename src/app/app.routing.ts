@@ -113,7 +113,7 @@ export const routes: Routes = [
         path: 'leilao',
         component: LeilaoComponent,
         data: {
-          title: 'Leilao',
+          title: 'Leilões',
           source: 'LEILOES'
         },
         canActivate: [SourceGuard]
@@ -203,7 +203,7 @@ export const routes: Routes = [
         path: 'fatura',
         component: FaturaComponent,
         data: {
-          title: 'Fatura',
+          title: 'Faturas',
           source: 'VISTORIA'
         },
         canActivate: [SourceGuard]
@@ -212,7 +212,7 @@ export const routes: Routes = [
         path: 'create-fatura',
         component: CreateFaturaComponent,
         data: {
-          title: 'Criar Fatura',
+          title: 'Nova Fatura',
           source: 'VISTORIA'
         },
         canActivate: [SourceGuard]
@@ -248,7 +248,7 @@ export const routes: Routes = [
         path: 'lancesconsolidado',
         component: LancesConsolidadoComponent,
         data: {
-          title: 'LancesConsolidado',
+          title: 'Lances Consolidados',
           source: 'LANCES_CONSOLIDADOS'
         },
         canActivate: [SourceGuard]
@@ -266,7 +266,7 @@ export const routes: Routes = [
         path: 'listacontatos',
         component: ListaContatosComponent,
         data: {
-          title: 'ListaContatos',
+          title: 'Lista de Contatos',
           source: 'LISTA_CONTATOS'
         },
         canActivate: [SourceGuard]
@@ -275,7 +275,7 @@ export const routes: Routes = [
         path: 'edit-listacontatos/:id',
         component: EditListacontatosComponent,
         data: {
-          title: 'ListaContatos',
+          title: 'Editar Lista de Contatos',
           source: 'LISTA_CONTATOS'
         },
         canActivate: [SourceGuard]
@@ -284,7 +284,7 @@ export const routes: Routes = [
         path: 'create-listacontatos',
         component: CreateListacontatosComponent,
         data: {
-          title: 'ListaContatos',
+          title: 'Nova Lista de Contatos',
           source: 'LISTA_CONTATOS'
         },
         canActivate: [SourceGuard]
@@ -303,7 +303,7 @@ export const routes: Routes = [
         path: 'create-contatos',
         component: CreateContatosComponent,
         data: {
-          title: 'Contatos',
+          title: 'Novo Contato',
           source: 'CONTATOS'
         },
         canActivate: [SourceGuard]
@@ -312,7 +312,7 @@ export const routes: Routes = [
         path: 'edit-contatos/:id',
         component: EditContatosComponent,
         data: {
-          title: 'Contatos',
+          title: 'Editar Contatos',
           source: 'CONTATOS'
         },
         canActivate: [SourceGuard]
@@ -321,7 +321,7 @@ export const routes: Routes = [
         path: 'notificacoes',
         component: NotificacoesComponent,
         data: {
-          title: 'Notificacoes',
+          title: 'Notificações',
           source: 'NOTIFICACOES'
         },
         canActivate: [SourceGuard]
@@ -339,7 +339,7 @@ export const routes: Routes = [
         path: 'create-notificacoes',
         component: CreateNotificacaoComponent,
         data: {
-          title: 'Criar Notificação',
+          title: 'Nova Notificação',
           source: 'NOTIFICACOES'
         },
         canActivate: [SourceGuard]
@@ -366,7 +366,7 @@ export const routes: Routes = [
         path: 'create-tipomeionotificao',
         component: CreateTipomeionotificacaoComponent,
         data: {
-          title: 'Tipo Meio Notificação',
+          title: 'Novo Tipo Meio Notificação',
           source: 'MEIO_NOTIFICACAO'
         },
         canActivate: [SourceGuard]
@@ -384,7 +384,7 @@ export const routes: Routes = [
         path: 'create-tiponotificacao',
         component: CreateTiponotificacaoComponent,
         data: {
-          title: 'Tipo de Notificação',
+          title: 'Novo Tipo de Notificação',
           source: 'TIPO_NOTIFICACAO'
         },
         canActivate: [SourceGuard]
@@ -411,7 +411,7 @@ export const routes: Routes = [
         path: 'create-agenda',
         component: CreateAgendaComponent,
         data: {
-          title: 'Agenda',
+          title: 'Nova Agenda',
           source: 'AGENDA'
         },
         canActivate: [SourceGuard]
@@ -420,7 +420,7 @@ export const routes: Routes = [
         path: 'update-agenda/:id',
         component: UpdateAgendaComponent,
         data: {
-          title: 'Agenda',
+          title: 'Editar Agenda',
           source: 'AGENDA'
         },
         canActivate: [SourceGuard]
@@ -438,7 +438,7 @@ export const routes: Routes = [
         path: 'create-template',
         component: CreateTemplateComponent,
         data: {
-          title: 'Criar Template',
+          title: 'Novo Template',
           source: 'AGENDA'
         },
         canActivate: [SourceGuard]
@@ -447,7 +447,7 @@ export const routes: Routes = [
         path: 'update-template/:id',
         component: UpdateTemplateComponent,
         data: {
-          title: 'Atualizar Template',
+          title: 'Editar Template',
           source: 'AGENDA'
         },
         canActivate: [SourceGuard]
@@ -474,7 +474,7 @@ export const routes: Routes = [
         path: 'create-conta',
         component: CreateContaComponent,
         data: {
-          title: 'Criar conta',
+          title: 'Nova Conta',
           source: 'USUARIO'
         },
         canActivate: [SourceGuard]
@@ -483,7 +483,7 @@ export const routes: Routes = [
         path: 'update-conta/:id',
         component: UpdateContaComponent,
         data: {
-          title: 'Editar conta',
+          title: 'Editar Conta',
           source: 'USUARIO'
         },
         canActivate: [SourceGuard]
@@ -519,7 +519,7 @@ export const routes: Routes = [
         path: 'create-empresa',
         component: CreateEmpresaComponent,
         data: {
-          title: 'Criar empresa',
+          title: 'Nova Empresa',
           source: 'EMPRESAS'
         },
         canActivate: [SourceGuard]
@@ -528,7 +528,7 @@ export const routes: Routes = [
         path: 'update-empresa/:id',
         component: UpdateEmpresaComponent,
         data: {
-          title: 'Editar empresa',
+          title: 'Editar Empresa',
           source: 'EMPRESAS'
         },
         canActivate: [SourceGuard]
@@ -546,7 +546,7 @@ export const routes: Routes = [
         path: 'create-comitente',
         component: CreateComitenteComponent,
         data: {
-          title: 'Criar Comitente',
+          title: 'Novo Comitente',
           source: 'COMITENTES'
         },
         canActivate: [SourceGuard]
@@ -600,7 +600,7 @@ export const routes: Routes = [
         path: 'create-local',
         component: CreateLocalComponent,
         data: {
-          title: 'Criar Local',
+          title: 'Novo Local',
           source: 'LOCAIS'
         },
         canActivate: [SourceGuard]
@@ -627,7 +627,7 @@ export const routes: Routes = [
         path: 'create-categoria',
         component: CreateCategoriasComponent,
         data: {
-          title: 'Criar Categoria',
+          title: 'Nova Categoria',
           source: 'CATEGORIAS'
         },
         canActivate: [SourceGuard]
@@ -672,7 +672,7 @@ export const routes: Routes = [
         path: 'create-banner',
         component: CreateBannerComponent,
         data: {
-          title: 'Banner',
+          title: 'Novo Banner',
           source: 'STATUS_LEILAO'
         },
         canActivate: [SourceGuard]
@@ -681,7 +681,7 @@ export const routes: Routes = [
         path: 'edit-banner/:id',
         component: EditBannerComponent,
         data: {
-          title: 'Banner',
+          title: 'Editar Banner',
           source: 'STATUS_LEILAO'
         },
         canActivate: [SourceGuard]

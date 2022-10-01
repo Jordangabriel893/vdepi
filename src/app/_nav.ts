@@ -26,9 +26,9 @@ export const navigation = [
     grupo:'OPERACAO'
   },
   {
-    name: 'Fatura',
+    name: 'Faturas',
     url: '/fatura',
-    icon: 'fa fa-dollar-sign',
+    icon: 'fa fa-file-invoice-dollar',
     source: 'VISTORIA',
     grupo:'OPERACAO'
   },
@@ -61,7 +61,7 @@ export const navigation = [
    {
      name: 'Lances Consolidados',
      url: '/lancesconsolidado',
-     icon: 'fa fa-history',
+     icon: 'fa fa-file-alt',
      source: 'LANCES_CONSOLIDADOS',
      grupo:'RELATORIOS'
    },
@@ -95,21 +95,21 @@ export const navigation = [
   {
     name: 'Notificações',
     url: '/notificacoes',
-    icon: 'fa fa-comment',
+    icon: 'fa fa-envelope',
     source: 'NOTIFICACOES',
     grupo:'MARKETING'
   },
   {
     name: 'Meio Notificação',
     url: '/tipomeionotificao',
-    icon: 'fa fa-comment',
+    icon: 'fa fa-envelope-open',
     source: 'MEIO_NOTIFICACAO',
     grupo:'MARKETING'
   },
   {
     name: 'Tipo Notificação',
     url: '/tiponotificacao',
-    icon: 'fa fa-comment',
+    icon: 'fa fa-mail-bulk',
     source: 'TIPO_NOTIFICACAO',
     grupo:'MARKETING'
   },
@@ -123,7 +123,7 @@ export const navigation = [
   {
     name: 'Template',
     url: '/template',
-    icon: 'fa fa-images',
+    icon: 'fa fa-code',
     source: 'AGENDA',
     grupo:'MARKETING'
   },
@@ -135,14 +135,14 @@ export const navigation = [
   {
     name: 'Permissão',
     url: '/permissao',
-    icon: 'fa fa-user',
+    icon: 'fa fa-user-cog',
     source: 'PERMISSAO',
     grupo:'CADASTROS'
   },
   {
     name: 'Conta',
     url: '/conta',
-    icon: 'fa fa-user',
+    icon: 'fa fa-user-tie',
     source: 'CONTA',
     grupo:'CADASTROS'
   },
@@ -191,14 +191,14 @@ export const navigation = [
   {
     name: 'Status Lote',
     url: '/statusLote',
-    icon: 'fa fa-bars',
+    icon: 'fa fa-signal',
     source: 'STATUS_LOTE',
     grupo:'CADASTROS'
   },
   {
     name: 'Status Leilão',
     url: '/statusLeilao',
-    icon: 'fa fa-bars',
+    icon: 'fa fa-signal',
     source: 'STATUS_LEILAO',
     grupo:'CADASTROS'
   },
