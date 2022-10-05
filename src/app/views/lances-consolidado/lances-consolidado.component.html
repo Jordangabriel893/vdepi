@@ -8,7 +8,7 @@
         <div class="card-header header">
           <div>
             <i class="fa fa-file-alt" aria-hidden="true"></i>
-           &nbsp;Lances Consolidados
+           &nbsp;Lotes Consolidados
           </div>
           <div class="d-flex">
             <button type="button" (click)="exportAsPDF()" class="btn btn-danger ml-3 btn-sm" title="Exportar para PDF"> <i class="fas fa-file-pdf"></i>&nbsp;PDF </button>
@@ -28,16 +28,22 @@
                     <mfDefaultSorter by="descricao">Descrição</mfDefaultSorter>
                   </th>
                   <th>
-                    <mfDefaultSorter by="categoria">Categoria</mfDefaultSorter>
+                    <mfDefaultSorter by="categoria">Status</mfDefaultSorter>
                   </th>
                   <th>
                     <mfDefaultSorter by="qteLances">Lances</mfDefaultSorter>
                   </th>
                   <th>
-                    <mfDefaultSorter by="qteUsuarios">Participantes</mfDefaultSorter>
+                    <mfDefaultSorter by="qteUsuarios">Part.</mfDefaultSorter>
                   </th>
                   <th>
                     <mfDefaultSorter by="valorAvaliacao">Avaliação</mfDefaultSorter>
+                  </th>
+                  <th>
+                    <mfDefaultSorter by="valorMinimoVenda">Min. Venda</mfDefaultSorter>
+                  </th>
+                  <th>
+                    <mfDefaultSorter by="lanceAtual">Valor</mfDefaultSorter>
                   </th>
                   <th>
                     <mfDefaultSorter by="valorTaxaAdministrativa">Taxa Adm</mfDefaultSorter>
@@ -46,13 +52,7 @@
                     <mfDefaultSorter by="comissao">Comissão</mfDefaultSorter>
                   </th>
                   <th>
-                    <mfDefaultSorter by="valorMinimoVenda">Mínimo Venda</mfDefaultSorter>
-                  </th>
-                  <th>
-                    <mfDefaultSorter by="lanceAtual">Lance Atual</mfDefaultSorter>
-                  </th>
-                  <th>
-                    <mfDefaultSorter by="indicador">Indicador</mfDefaultSorter>
+                    <mfDefaultSorter by="indicador">Ind.</mfDefaultSorter>
                   </th>
                   <th>
                     <mfDefaultSorter by="meta">% Mínimo</mfDefaultSorter>
@@ -65,18 +65,18 @@
                 <tr *ngFor="let item of mflancesConsolidados.data; let i = index">
                   <td>{{item.numeroLote}}</td>
                   <td>{{item.descricao}}</td>
-                  <td>{{item.categoria}}  </td>
+                  <td>{{item.status}}  </td>
                   <td>{{item.qteLances }}</td>
                   <td>{{item.qteUsuarios }}</td>
                   <td nowrap>{{item.valorAvaliacao | currencyFormat}}</td>
+                  <td nowrap>{{item.valorMinimoVenda | currencyFormat}}</td>
+                  <td nowrap>{{item.lanceAtual | currencyFormat}}</td>
                   <td nowrap>{{item.valorTaxaAdministrativa | currencyFormat}}</td>
                   <td nowrap>{{item.comissao | currencyFormat}}</td>
-                  <td nowrap>{{item.valorMinimoVenda | currencyFormat}}</td>
-                  <td>{{item.lanceAtual | currencyFormat}}</td>
                   <td class="text-center">
-                    <i class='fa fa-check-circle text-success'          *ngIf="item.lanceAtual >= item.valorMinimoVenda"></i>
-                    <i class='fa fa-exclamation-triangle text-alert'    *ngIf="item.lanceAtual <= item.valorMinimoVenda && item.lanceAtual >0 "></i>
-                    <i class='fa fa-times-circle text-danger'           *ngIf="item.lanceAtual == 0"></i>
+                    <i class='fa fa-check-circle text-success' *ngIf="item.lanceAtual >= item.valorMinimoVenda" title="Atingiu o mínimo de venda"></i>
+                    <i class='fa fa-exclamation-triangle text-alert' *ngIf="item.lanceAtual <= item.valorMinimoVenda && item.lanceAtual > 0" title="Não atingiu o mínimo de venda"></i>
+                    <i class='fa fa-times-circle text-danger' *ngIf="item.lanceAtual == 0" title="Sem lance"></i>
                   </td>
                   <!-- <td>{{item.tipoPessoa == 'PF' ? 'Pessoa Física' : item.pessoa.tipoPessoa == 'PJ' ? 'Pessoa Jurídica' : '' }}</td> -->
                   <td>{{item.meta}}%</td>

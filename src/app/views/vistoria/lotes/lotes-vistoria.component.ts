@@ -6,10 +6,10 @@ import { forkJoin } from 'rxjs';
 import * as fileSaver from 'file-saver';
 
 // import Swiper core and required modules
-import SwiperCore, { Navigation, Thumbs } from "swiper";
+import SwiperCore, { Navigation, Thumbs, Mousewheel, Scrollbar } from "swiper";
 
 // install Swiper modules
-SwiperCore.use([Navigation, Thumbs]);
+SwiperCore.use([Navigation, Thumbs, Mousewheel, Scrollbar]);
 
 @Component({
   selector: 'app-lotes-vistoria',
@@ -74,12 +74,13 @@ export class LotesVistoriaComponent implements OnInit {
   }
 
   gravar() {
-    this.restangular.all('vistoria').customPUT(this.vistoria, this.vistoria.vistoriaId).subscribe(a => {
-      this.notifierService.notify('success', 'Lote Vistoriado com sucesso');
+    this.restangular.all(`vistoria/${this.vistoria.vistoriaId}/aprovar`)
+    .post(this.vistoria).subscribe(a => {
+      this.notifierService.notify('success', 'Vistoria salva com sucesso');
     },
-      error => {
-        this.notifierService.notify('error', 'Erro ao atualizar o Lote!');
-      });
+    () => {
+      this.notifierService.notify('error', 'Erro ao atualizar vistoria');
+    });
 
       let lote = this.lotes.find(x => x.loteId === this.loteSelecionado.loteId);
       lote.statusVistoriaId = parseInt(this.vistoria.statusId);

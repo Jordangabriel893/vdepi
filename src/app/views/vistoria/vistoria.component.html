@@ -6,7 +6,8 @@
         [slidesPerView]="4"
         effect="fade"
         [navigation]="true"
-        class="mySwiper"  >
+        id="swipertest"
+          >
           <ng-template swiperSlide *ngFor="let item of leiloes; index as i">
             <div class="card" style="width: 16rem; height: 24rem">
               <img class="card-img-top" src="{{item.foto.url}}" alt="Card image cap">

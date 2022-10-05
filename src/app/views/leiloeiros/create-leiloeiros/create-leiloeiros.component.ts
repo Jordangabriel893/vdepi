@@ -62,10 +62,10 @@ export class CreateLeiloeirosComponent implements OnInit {
       assinatura: this.formBuilder.group({
         arquivoId:[0],
         nome:[null],
-        base64:[null, Validators.required],
+        base64:[null],
         tipo:[null],
         tamanho:[0]
-      }, Validators.required),
+      }),
       endereco: this.formBuilder.group({
         enderecoId: [0],
         cep: [null],

@@ -56,37 +56,39 @@ exportAsPDF() {
   let columns = [
     { title: "Nº Lote ", dataKey: "numeroLote" },
     { title: "Descrição", dataKey: "descricao" },
+    { title: "Status", dataKey: "status" },
     { title: "Categoria", dataKey: "categoria" },
     { title: "Lances", dataKey: "qteLances" },
-    { title: "Usuários", dataKey: "qteUsuarios" },
+    { title: "Participantes", dataKey: "qteUsuarios" },
     { title: "Avaliação", dataKey: "valorAvaliacao" },
-     { title: "Taxa", dataKey: "valorTaxaAdministrativa" },
-    { title: "Comissão", dataKey: "comissao" },
     { title: "Mínimo Vendas", dataKey: "valorMinimoVenda" },
-    { title: "Lance Atual", dataKey: "lanceAtual" },
-    { title: "Meta", dataKey: "meta" },
+    { title: "Valor", dataKey: "lanceAtual" },
+    { title: "Taxa", dataKey: "valorTaxaAdministrativa" },
+    { title: "Comissão", dataKey: "comissao" },
+    { title: "% Meta", dataKey: "meta" },
 
   ];
 
   const columStyles = {
     numeroLote: { columnWidth: 'wrap', overflow: 'visible', halign: 'left', valign: 'middle' },
     descricao: { columnWidth: 'auto', overflow: 'visible', valign: 'middle', halign: 'left' },
+    status: { columnWidth: 'wrap', overflow: 'visible', halign: 'left', valign: 'middle' },
     categoria: { columnWidth: 'wrap', overflow: 'visible', halign: 'left', valign: 'middle' },
     qteLances: { columnWidth: 'wrap', overflow: 'visible', valign: 'middle', halign: 'left' },
     qteUsuarios: { columnWidth: 'wrap', overflow: 'linebreak', valign: 'middle', halign: 'left' },
     valorAvaliacao: { columnWidth: 'wrap', overflow: 'visible', valign: 'middle', halign: 'left' },
-    valorTaxaAdministrativa: { columnWidth: 'wrap', overflow: 'visible', valign: 'middle', halign: 'left' },
-    comissao: { columnWidth: 'wrap', overflow: 'visible', valign: 'middle', halign: 'left' },
     valorMinimoVenda: { columnWidth: 'wrap', overflow: 'linebreak', valign: 'middle', halign: 'left' },
     lanceAtual: { columnWidth: 'wrap', overflow: 'linebreak', valign: 'middle', halign: 'left' },
-    meta: { columnWidth: 'wrap', overflow: 'linebreak', valign: 'middle', halign: 'left' },
-
+    valorTaxaAdministrativa: { columnWidth: 'wrap', overflow: 'visible', valign: 'middle', halign: 'left' },
+    comissao: { columnWidth: 'wrap', overflow: 'visible', valign: 'middle', halign: 'left' },
+    meta: { columnWidth: 'wrap', overflow: 'linebreak', valign: 'middle', halign: 'left' }
   };
 
   const rows = this.lancesconsolidados.map(e => {
     return {
       numeroLote: e.numeroLote || "",
       descricao: e.descricao || "",
+      status: e.status || "",
       categoria: e.categoria || "",
       qteLances: e.qteLances || "",
       qteUsuarios: e.qteUsuarios || "",
@@ -95,23 +97,15 @@ exportAsPDF() {
       comissao: this.currency.transform(e.comissao) || "",
       valorMinimoVenda: this.currency.transform(e.valorMinimoVenda) || "",
       lanceAtual: this.currency.transform(e.lanceAtual) || "",
-      //boletoPago: e.boletoPago === 'S' ? 'SIM' : 'NÃO',
       meta: e.meta || ""
-
-
     }
   });
 
   const header = {
     leilao: this.nomeLeilao
-
   }
 
-  // const groupRows = this.groupBy.transform(rows, 'tipo_veiculo');
-  // const resumo = groupRows.map(x => (x.key + ': ' + x.value.length));
-  // resumo.push("TOTAL: " + rows.length);
-
-  this.pdfService.exportPdf('lancesconsolidados', "Lotes Consolidados", rows, columns, columStyles, header, null);
+  this.pdfService.exportPdf('LancesConsolidados', "Lotes Consolidados", rows, columns, columStyles, header, null);
 }
 
 }

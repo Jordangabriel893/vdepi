@@ -248,7 +248,7 @@ export const routes: Routes = [
         path: 'lancesconsolidado',
         component: LancesConsolidadoComponent,
         data: {
-          title: 'Lances Consolidados',
+          title: 'Lotes Consolidados',
           source: 'LANCES_CONSOLIDADOS'
         },
         canActivate: [SourceGuard]

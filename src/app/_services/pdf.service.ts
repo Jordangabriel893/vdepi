@@ -102,7 +102,7 @@ export class PdfService {
         doc.setFontStyle('normal');
         doc.setTextColor(150);
 
-        doc.text(moment().format("LLLL") + ' - ' + objExtra.usuario, 20, (doc.internal.pageSize.getHeight() - 20));
+        doc.text(moment().format("LLLL") + (objExtra.usuario ? ' - ' + objExtra.usuario : ''), 20, (doc.internal.pageSize.getHeight() - 20));
 
         let str = "Página " + doc.page;
         if (typeof doc.putTotalPages === 'function') {

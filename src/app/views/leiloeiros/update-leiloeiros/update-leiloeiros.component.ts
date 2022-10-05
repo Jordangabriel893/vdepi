@@ -69,7 +69,7 @@ export class UpdateLeiloeirosComponent implements OnInit {
         base64:[null],
         tipo:[null],
         tamanho:[0]
-      }, Validators.required),
+      }),
       endereco: this.formBuilder.group({
         enderecoId: [0],
         cep: [null],

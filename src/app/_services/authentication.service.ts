@@ -34,7 +34,6 @@ export class AuthenticationService {
           localStorage.removeItem('currentUser');
           const decodedToken: any = jwt_decode(user.access_token);
           localStorage.setItem('currentUser', JSON.stringify({ access_token: user.access_token, username: decodedToken.email, }))
-
         }
 
         return user
