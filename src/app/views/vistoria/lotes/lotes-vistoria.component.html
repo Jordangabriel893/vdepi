@@ -34,7 +34,7 @@
           <div class="row m-2">
             <div class="col-md-12 overflow-hidden">
               <h4 class="text-center" *ngIf="loading"><i class="fa fa-spin fa-spinner"></i> Carregando...</h4>
-              <swiper [slidesPerView]="6.5" [navigation]="false" [spaceBetween]="10" class="mySwiper">
+              <swiper [slidesPerView]="6.5" [navigation]="true" [mousewheel]="{sensitivity: 3}" [spaceBetween]="20" id="mySwiper" title="Use o scroll do mouse">
                 <ng-template swiperSlide *ngFor="let item of lotes; index as i">
                   <div class="container text-center" (click)="carregarVistoria(item)"
                     [ngClass]="classStatusVistoria(item)">

@@ -59,7 +59,7 @@ export const navigation = [
     grupo:'RELATORIOS'
   },
    {
-     name: 'Lances Consolidados',
+     name: 'Lotes Consolidados',
      url: '/lancesconsolidado',
      icon: 'fa fa-file-alt',
      source: 'LANCES_CONSOLIDADOS',
