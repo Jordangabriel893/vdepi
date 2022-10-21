@@ -70,6 +70,9 @@
                   <th *ngIf="ehLeilaoEncerrado">
                     <mfDefaultSorter by="vencedor">Vencedor</mfDefaultSorter>
                   </th>
+                  <th class="text-center" >
+                    Ação
+                  </th>
                 </tr>
               </thead>
               <tbody>
@@ -84,6 +87,16 @@
                   <td *ngIf="ehLeilaoEncerrado" >
                     <button *ngIf="!item.vencedor" type="button" class="btn btn-info btn-sm" (click)="gravarLanceVencedor(item.lanceId)">&nbsp; Selecionar</button>
                     <div *ngIf="item.vencedor"> Vencedor!</div>
+                  </td>
+                  <td class="text-center" nowrap>
+                    <div class="dropdown" dropdown>
+                      <button class="btn" id="dropdownMenuButton" type="button" data-toggle="dropdown" aria-expanded="false" dropdownToggle>
+                        <i class="fa fa-ellipsis-v"></i>
+                      </button>
+                      <ul class="dropdown-menu dropdown-menu-right" *dropdownMenu>
+                        <li><a class="dropdown-item" (click)="openModal(cancelarLeilao, item.lanceId)">Cancelar Lance</a></li>
+                      </ul>
+                    </div>
                   </td>
                 </tr>
                 <tr *ngIf="loading">
@@ -101,6 +114,7 @@
                     <h6>Selecione um lote para visualizar o histórico</h6>
                   </td>
                 </tr>
+
               </tbody>
               <tfoot>
                 <tr>
@@ -110,6 +124,24 @@
                 </tr>
               </tfoot>
             </table>
+            <ng-template #cancelarLeilao>
+              <div class="modal-body">
+                <h3>Deseja realmente cancelar o lance?</h3>
+              </div>
+              <form [formGroup]="formulario">
+                <div class="row d-flex justify-content-center">
+                  <div class="form-group col-11">
+                    <label for="motivo">Motivo</label>
+                    <input type="text" class="form-control" id="motivo" formControlName="motivo">
+                  </div>
+                  </div>
+              </form>
+
+              <div class="modal-footer">
+                <button type="submit" class="btn btn-primary "(click)="cancelarLance()" (click)="modalRef?.hide()" [disabled]="!formulario.valid">Sim</button>
+                <button type="reset" class="btn btn-danger" (click)="modalRef?.hide()">Não</button>
+              </div>
+            </ng-template>
           </div>
 
         </div>
