@@ -19,9 +19,7 @@
                 <label for="dataNascimento">Data de Nacimento</label>
                 <input type="text" class="form-control" [ngClass]="aplicaCssErro('dataNascimento')" id="dataNascimento"
                   formControlName="dataNascimento"
-                  [bsConfig]="{ dateInputFormat: 'DD/MM/YYYY' }"
-                  bsDatepicker
-                  (bsValueChange)="onValueChange($event, 'dataNascimento')">
+                  [textMask]="{mask: maskData}">
               </div>
               <div class="form-group col-4">
                 <label for="genero">Gênero </label>
@@ -146,17 +144,28 @@
 
           <div class="card-block">
             <div class="row">
-              <div class="form-group col-10">
+              <div class="form-group col-8">
                 <label for="email">Email</label>
                 <input type="text" class="form-control" [ngClass]="aplicaCssErro('email')" id="email" placeholder="xxxxx@xxxx.com"
                   formControlName="email"  >
               </div>
-              <div class="form-group col-2">
-                <label for="ativo">Email Confirmado</label>
-                <select class="form-control" [ngClass]="aplicaCssErro('emailConfirmado')" formControlName="emailConfirmado" >
-                  <option value="true">Sim</option>
-                  <option value="false">Não</option>
-                </select>
+              <div class="form-group col-4">
+                <label for="ativo">Senha</label>
+                <div class="input-group">
+                  <input
+                    [type]="fieldTextType ? 'text' : 'password'"
+                    class="form-control"
+                    [ngClass]="aplicaCssErro('senha')" formControlName="senha"
+                  />
+                  <div class="input-group-append" (click)="toggleFieldTextType()">
+                    <span class="input-group-text"  *ngIf="fieldTextType">
+                      <i class="fa fa-eye"></i>
+                    </span>
+                    <span class="input-group-text" *ngIf="!fieldTextType">
+                      <i class="fa fa-eye-slash"></i>
+                    </span>
+                 </div>
+                </div>
               </div>
             </div>
           </div>

@@ -215,6 +215,7 @@ import { CreateFaturaComponent } from './views/fatura/create-fatura/create-fatur
 import { SwiperModule } from 'swiper/angular';
 import { LotesVistoriaComponent } from './views/vistoria/lotes/lotes-vistoria.component';
 import { SearchLeilaoComponent } from './components/search-leilao/search-leilao.component';
+import { CreateUsuariosComponent } from './views/usuarios/create-usuarios/create-usuarios.component';
 
 
 export function RestangularConfigFactory(RestangularProvider, NotifierService: NotifierService) {
@@ -362,11 +363,9 @@ export function RestangularConfigFactory(RestangularProvider, NotifierService: N
     CreateContaComponent,
     FaturaComponent,
     CreateFaturaComponent,
-
+    CreateUsuariosComponent,
     LotesVistoriaComponent,
-
     SearchLeilaoComponent
-
   ],
   providers: [{
     provide: LocationStrategy,

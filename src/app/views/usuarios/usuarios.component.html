@@ -8,12 +8,15 @@
           &nbsp;Usuários
         </div>
         <div class="card-block">
-          <div class="col-12 input-search">
-            <div class="input-group col-12 d-flex justify-content-end input-search">
+          <div class="row input-search">
+            <div class="col-3">
+              <button type="button" class="btn btn-success" [routerLink]="['/create-usuario']"><i class="fa fa-plus-circle"></i>&nbsp; Novo Usuário</button>
+            </div>
+            <div class="input-group col-9 d-flex justify-content-end input-search">
               <div class="input-group-prepend">
                 <span class="input-group-text" id="inputGroup-sizing-sm">Buscar</span>
               </div>
-              <input type="text" class="form-control col-4" (keyup)="onSearch()" placeholder="por Nome, Email ou CPF " aria-describedby="basic-addon2" [formControl]="queryField">
+              <input type="text" class="form-control col-4" placeholder="por Nome, Email ou CPF " aria-describedby="basic-addon2" [formControl]="queryField">
             </div>
           </div>
             <div class="table-responsive mt-4">

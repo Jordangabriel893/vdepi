@@ -16,6 +16,7 @@ export class LoginComponent implements OnInit {
   loginForm: FormGroup;
   loading = false;
   returnUrl: string;
+  fieldTextType: boolean;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -64,5 +65,9 @@ export class LoginComponent implements OnInit {
           this.notifierService.notify("error", msgError);
           this.loading = false;
       });
+  }
+
+  toggleFieldTextType() {
+    this.fieldTextType = !this.fieldTextType;
   }
 }

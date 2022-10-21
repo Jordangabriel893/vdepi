@@ -1,11 +1,9 @@
-import * as moment from 'moment';
-import { FormBuilder, FormArray, FormGroup, Validators } from '@angular/forms';
-import { Component, OnInit, ElementRef, ViewChild } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Component, OnInit } from '@angular/core';
 import * as _ from 'lodash';
 import { Restangular } from 'ngx-restangular';
 import { NotifierService } from 'angular-notifier';
 import { ActivatedRoute, Router } from '@angular/router';
-import { BsLocaleService } from 'ngx-bootstrap/datepicker';
 import { ConsultaCepService } from 'app/views/usuarios/shared/consulta-cep/consulta-cep.service';
 
 @Component({
@@ -57,7 +55,6 @@ export class UpdateLeiloeirosComponent implements OnInit {
       matricula: [null, Validators.required],
       genero:[null, Validators.required],
       nomeComercial:[null],
-      senha: [null],
       foto: this.formBuilder.group({
         nome:[null],
         base64:[null],

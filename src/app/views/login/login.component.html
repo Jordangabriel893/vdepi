@@ -14,15 +14,27 @@
             <div class="card-block">
               <h1>LOGIN</h1>
               <form [formGroup]="loginForm" (ngSubmit)="login()">
-                <p class="text-muted">Entre com seu login</p>
+                <p class="text-muted">Entre com seu email e senha</p>
                 <div class="input-group mb-1" [ngClass]="{ 'has-error': submitted && f.username.errors }">
-                  <span class="input-group-addon"><i class="icon-user"></i></span>
                   <input type="text" class="form-control" formControlName="username" placeholder="Login" />
                   <div *ngIf="submitted && f.username.errors" class="help-block">login é obrigatório</div>
                 </div>
                 <div class="input-group mb-2" [ngClass]="{ 'has-error': submitted && f.password.errors }">
-                  <span class="input-group-addon"><i class="icon-lock"></i></span>
-                  <input type="password" class="form-control" formControlName="password" placeholder="Senha" />
+                  <div class="input-group">
+                    <input
+                      [type]="fieldTextType ? 'text' : 'password'"
+                      class="form-control"
+                      formControlName="password"
+                    />
+                    <div class="input-group-append" (click)="toggleFieldTextType()">
+                      <span class="input-group-text"  *ngIf="fieldTextType">
+                        <i class="fa fa-eye"></i>
+                      </span>
+                      <span class="input-group-text" *ngIf="!fieldTextType">
+                        <i class="fa fa-eye-slash"></i>
+                      </span>
+                   </div>
+                  </div>
                   <div *ngIf="submitted && f.password.errors" class="help-block">Senha é obrigatório</div>
                 </div>
                 <div class="row justify-content-md-center">

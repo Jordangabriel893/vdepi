@@ -59,7 +59,6 @@ export class UpdateEmpresaComponent implements OnInit {
       cnpj:[null, Validators.required],
       codigoTributarioMunicipio:[null],
       email: [null, Validators.required],
-      senha: [null],
       foto: this.formBuilder.group({
         arquivoId:[0],
         nome:[null],

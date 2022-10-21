@@ -23,7 +23,7 @@ export class LeilaoComponent implements OnInit {
         leilao:[null]
       })
 
-      this.restangular.all("admin").one("leilao").get({PageSize:100}).subscribe((response) => {
+      this.restangular.all("admin").one("leilao").get().subscribe((response) => {
         this.selectLeilao = response.data
         this.leiloes = response.data;
         this.loading = false;
@@ -54,6 +54,5 @@ export class LeilaoComponent implements OnInit {
       const filtro = this.selectLeilao.filter(x => x.nome === event.nome)
       this.leiloes = filtro
     }
-
   }
 }

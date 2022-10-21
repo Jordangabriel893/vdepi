@@ -140,13 +140,6 @@ export const navigation = [
     grupo:'CADASTROS'
   },
   {
-    name: 'Conta',
-    url: '/conta',
-    icon: 'fa fa-user-tie',
-    source: 'CONTA',
-    grupo:'CADASTROS'
-  },
-  {
     name: 'Usuarios',
     url: '/usuarios',
     icon: 'fa fa-user',

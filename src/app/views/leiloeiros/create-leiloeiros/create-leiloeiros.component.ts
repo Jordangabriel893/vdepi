@@ -4,7 +4,6 @@ import { Router } from '@angular/router';
 import { NotifierService } from 'angular-notifier';
 import { ConsultaCepService } from 'app/views/usuarios/shared/consulta-cep/consulta-cep.service';
 import { Restangular } from 'ngx-restangular';
-import * as moment from 'moment';
 import * as _ from 'lodash';
 
 
@@ -51,7 +50,6 @@ export class CreateLeiloeirosComponent implements OnInit {
       matricula: [null, Validators.required],
       genero:[null, Validators.required],
       nomeComercial:[null],
-      senha: [null, Validators.required],
       foto: this.formBuilder.group({
         arquivoId:[0],
         nome:[null],
