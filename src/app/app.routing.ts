@@ -80,6 +80,7 @@ import { TipoDeNotificacaoComponent } from './views/tipo-de-notificacao/tipo-de-
 import { EditNotificacaoComponent } from './views/notificacoes/edit-notificacao/edit-notificacao.component';
 import { UpdateAgendaComponent } from './views/agenda/update-agenda/update-agenda.component';
 import { LotesVistoriaComponent } from './views/vistoria/lotes/lotes-vistoria.component';
+import { CreateUsuariosComponent } from './views/usuarios/create-usuarios/create-usuarios.component';
 
 
 export const routes: Routes = [
@@ -462,37 +463,19 @@ export const routes: Routes = [
         canActivate: [SourceGuard]
       },
       {
-        path: 'conta',
-        component: ContaComponent,
-        data: {
-          title: 'Conta',
-          source: 'USUARIO'
-        },
-        canActivate: [SourceGuard]
-      },
-      {
-        path: 'create-conta',
-        component: CreateContaComponent,
-        data: {
-          title: 'Nova Conta',
-          source: 'USUARIO'
-        },
-        canActivate: [SourceGuard]
-      },
-      {
-        path: 'update-conta/:id',
-        component: UpdateContaComponent,
-        data: {
-          title: 'Editar Conta',
-          source: 'USUARIO'
-        },
-        canActivate: [SourceGuard]
-      },
-      {
         path: 'usuarios',
         component: UsuariosComponent,
         data: {
           title: 'Usuários',
+          source: 'USUARIO'
+        },
+        canActivate: [SourceGuard]
+      },
+      {
+        path: 'create-usuario',
+        component: CreateUsuariosComponent,
+        data: {
+          title: 'Novo Usuário',
           source: 'USUARIO'
         },
         canActivate: [SourceGuard]

@@ -61,7 +61,6 @@ export class UpdateComitenteComponent implements OnInit, OnDestroy {
         tamanho:[0]
       }, Validators.required),
       email: [null, Validators.required],
-      senha: [null],
       usuarioId: [null]
     })
   }

@@ -53,7 +53,6 @@ export class CreateEmpresaComponent implements OnInit {
       cnpj:[null, Validators.required],
       codigoTributarioMunicipio:[null],
       email:[null, Validators.required],
-      senha:[null, Validators.required],
       foto: this.formBuilder.group({
         arquivoId:[0],
         nome:[null],
