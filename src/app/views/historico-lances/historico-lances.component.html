@@ -56,6 +56,9 @@
                     <mfDefaultSorter by="dataLance">Data do Lance</mfDefaultSorter>
                   </th>
                   <th>
+                    <mfDefaultSorter by="status">Status</mfDefaultSorter>
+                  </th>
+                  <th>
                     <mfDefaultSorter by="valor">Valor</mfDefaultSorter>
                   </th>
                   <th>
@@ -80,13 +83,16 @@
                   <td>{{i + 1}}</td>
                   <td>{{item.nomeUsuario}}</td>
                   <td>{{item.dataLance | date: 'dd/MM/yyyy H:MM' }}</td>
+                  <td>
+                    <span *ngIf="item.status === 'Cancelado'" class="badge badge-danger">{{item.status}}</span>
+                    <span *ngIf="item.status !== 'Cancelado'" class="badge badge-success">{{item.status}}</span>
+                  </td>
                   <td>{{item.valor | currencyFormat }}</td>
                   <td>{{item.taxas | currencyFormat}}</td>
                   <td>{{item.comissao | currencyFormat}}</td>
                   <td>{{item.total | currencyFormat}}</td>
                   <td *ngIf="ehLeilaoEncerrado" >
-                    <button *ngIf="!item.vencedor" type="button" class="btn btn-info btn-sm" (click)="gravarLanceVencedor(item.lanceId)">&nbsp; Selecionar</button>
-                    <div *ngIf="item.vencedor"> Vencedor!</div>
+                    <span *ngIf="item.vencedor" class="badge badge-success"> Vencedor!</span>
                   </td>
                   <td class="text-center" nowrap>
                     <div class="dropdown" dropdown>
@@ -94,23 +100,24 @@
                         <i class="fa fa-ellipsis-v"></i>
                       </button>
                       <ul class="dropdown-menu dropdown-menu-right" *dropdownMenu>
-                        <li><a class="dropdown-item" (click)="openModal(cancelarLeilao, item.lanceId)">Cancelar Lance</a></li>
+                        <li><a class="dropdown-item" [ngClass]="{'disabled' : item.status === 'Cancelado' }" (click)="openModal(cancelarLeilao, item.lanceId)" >Cancelar Lance</a></li>
+                        <li><a class="dropdown-item" [ngClass]="{'disabled': item.vencedor || item.status === 'Cancelado'}" (click)="gravarLanceVencedor(item.lanceId)">Definir como vencedor</a></li>
                       </ul>
                     </div>
                   </td>
                 </tr>
                 <tr *ngIf="loading">
-                  <td class="text-center text-muted" colspan="9">
+                  <td class="text-center text-muted" colspan="10">
                     <h5><i class="fa fa-spin fa-spinner"></i>&nbsp;Carregando...</h5>
                   </td>
                 </tr>
                 <tr *ngIf="!loading && mfLances.data.length === 0 && idLote">
-                  <td class="text-center text-muted" colspan="9">
+                  <td class="text-center text-muted" colspan="10">
                     <h6>Este lote ainda não teve lances</h6>
                   </td>
                 </tr>
                 <tr *ngIf="!loading && mfLances.data.length === 0 && !idLote">
-                  <td class="text-center text-muted" colspan="9">
+                  <td class="text-center text-muted" colspan="10">
                     <h6>Selecione um lote para visualizar o histórico</h6>
                   </td>
                 </tr>
@@ -118,7 +125,7 @@
               </tbody>
               <tfoot>
                 <tr>
-                  <td colspan="10">
+                  <td colspan="11">
                     <mfBootstrapPaginator [rowsOnPageSet]="[5,10,25]"></mfBootstrapPaginator>
                   </td>
                 </tr>
