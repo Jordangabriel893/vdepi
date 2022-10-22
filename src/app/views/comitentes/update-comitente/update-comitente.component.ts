@@ -60,7 +60,6 @@ export class UpdateComitenteComponent implements OnInit, OnDestroy {
         tipo:[null],
         tamanho:[0]
       }, Validators.required),
-      email: [null, Validators.required],
       usuarioId: [null]
     })
   }
@@ -101,7 +100,6 @@ export class UpdateComitenteComponent implements OnInit, OnDestroy {
       razaoSocial:dados.razaoSocial,
       foto: [dados.foto],
       fotoId: dados.fotoId,
-      email: dados.usuario.email,
       usuarioId: dados.usuarioId
     })
   }

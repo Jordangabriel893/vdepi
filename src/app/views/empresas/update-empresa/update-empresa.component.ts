@@ -58,7 +58,6 @@ export class UpdateEmpresaComponent implements OnInit {
       ativo:[null, Validators.required],
       cnpj:[null, Validators.required],
       codigoTributarioMunicipio:[null],
-      email: [null, Validators.required],
       foto: this.formBuilder.group({
         arquivoId:[0],
         nome:[null],
@@ -131,7 +130,6 @@ export class UpdateEmpresaComponent implements OnInit {
       nomeFantasia:dados.nomeFantasia,
       razaoSocial:dados.razaoSocial,
       telefone: dados.telefone,
-      email: dados.usuario.email,
       usuarioId: dados.usuarioId
     })
   }
