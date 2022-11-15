@@ -1,3 +1,5 @@
+import { UpdateConfiguracaoComponent } from './views/configuracao/update-configuracao/update-configuracao.component';
+import { ConfiguracaoComponent } from './views/configuracao/configuracao.component';
 import { CreateFaturaComponent } from './views/fatura/create-fatura/create-fatura.component';
 import { FaturaComponent } from './views/fatura/fatura.component';
 import { UpdateContaComponent } from './views/conta/update-conta/update-conta.component';
@@ -81,6 +83,7 @@ import { EditNotificacaoComponent } from './views/notificacoes/edit-notificacao/
 import { UpdateAgendaComponent } from './views/agenda/update-agenda/update-agenda.component';
 import { LotesVistoriaComponent } from './views/vistoria/lotes/lotes-vistoria.component';
 import { CreateUsuariosComponent } from './views/usuarios/create-usuarios/create-usuarios.component';
+import { CreateConfiguracaoComponent } from './views/configuracao/create-configuracao/create-configuracao.component';
 
 
 export const routes: Routes = [
@@ -423,6 +426,33 @@ export const routes: Routes = [
         data: {
           title: 'Editar Agenda',
           source: 'AGENDA'
+        },
+        canActivate: [SourceGuard]
+      },
+      {
+        path: 'configuracao',
+        component: ConfiguracaoComponent,
+        data: {
+          title: 'Configuração',
+          source: 'AGENDAMENTO'
+        },
+        canActivate: [SourceGuard]
+      },
+      {
+        path: 'create-configuracao',
+        component: CreateConfiguracaoComponent,
+        data: {
+          title: 'Crair Configuração',
+          source: 'AGENDAMENTO'
+        },
+        canActivate: [SourceGuard]
+      },
+      {
+        path: 'update-configuracao/:id',
+        component: UpdateConfiguracaoComponent,
+        data: {
+          title: 'Editar Configuração',
+          source: 'AGENDAMENTO'
         },
         canActivate: [SourceGuard]
       },

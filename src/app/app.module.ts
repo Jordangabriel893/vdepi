@@ -216,6 +216,9 @@ import { SwiperModule } from 'swiper/angular';
 import { LotesVistoriaComponent } from './views/vistoria/lotes/lotes-vistoria.component';
 import { SearchLeilaoComponent } from './components/search-leilao/search-leilao.component';
 import { CreateUsuariosComponent } from './views/usuarios/create-usuarios/create-usuarios.component';
+import { ConfiguracaoComponent } from './views/configuracao/configuracao.component';
+import { CreateConfiguracaoComponent } from './views/configuracao/create-configuracao/create-configuracao.component';
+import { UpdateConfiguracaoComponent } from './views/configuracao/update-configuracao/update-configuracao.component';
 
 
 export function RestangularConfigFactory(RestangularProvider, NotifierService: NotifierService) {
@@ -365,7 +368,10 @@ export function RestangularConfigFactory(RestangularProvider, NotifierService: N
     CreateFaturaComponent,
     CreateUsuariosComponent,
     LotesVistoriaComponent,
-    SearchLeilaoComponent
+    SearchLeilaoComponent,
+    ConfiguracaoComponent,
+    CreateConfiguracaoComponent,
+    UpdateConfiguracaoComponent
   ],
   providers: [{
     provide: LocationStrategy,

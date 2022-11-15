@@ -120,11 +120,24 @@ export const navigation = [
     source: 'AGENDA',
     grupo:'MARKETING'
   },
+
   {
     name: 'Template',
     url: '/template',
     icon: 'fa fa-code',
     source: 'AGENDA',
+    grupo:'MARKETING'
+  },
+  {
+    title: true,
+    name: 'AGENDAMENTO',
+    grupo:'AGENDAMENTO'
+  },
+  {
+    name: 'Configuração',
+    url: '/configuracao',
+    icon: 'fa fa-cog',
+    source: 'CONFIGURACAO',
     grupo:'MARKETING'
   },
   {
