@@ -13,7 +13,7 @@
                 <div class="row ">
                   <div class="form-group col-6">
                     <label for="localLoteId">Local do lote</label>
-                    <select class="form-control" (click)="verifyEmpty()" [ngClass]="aplicaCssErro('localLoteId')" formControlName="localLoteId" id="localLoteId" name="localLoteId">
+                    <select class="form-control" [ngClass]="aplicaCssErro('localLoteId')" formControlName="localLoteId" id="localLoteId" name="localLoteId">
                       <option *ngFor="let item of localLotes" value="{{item.localLoteId}}">{{item.descricao}}</option>
                     </select>
                   </div>
