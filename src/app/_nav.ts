@@ -137,7 +137,7 @@ export const navigation = [
     name: 'Configuração',
     url: '/configuracao',
     icon: 'fa fa-cog',
-    source: 'CONFIGURACAO',
+    source: 'CONFIG_AGENDAMENTO',
     grupo:'MARKETING'
   },
   {

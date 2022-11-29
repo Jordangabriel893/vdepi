@@ -5,7 +5,7 @@
       <div class="card">
         <div class="card-header">
           <i class="fa fa-cog" aria-hidden="true"></i>
-          &nbsp;Configuração
+          &nbsp;Configuração do Agendamento
         </div>
         <div class="card-block">
           <button type="button" class="btn btn-success" [routerLink]="['/create-configuracao']"><i class="fa fa-plus-circle"></i>&nbsp; Nova Configuração</button>
@@ -20,19 +20,19 @@
                       <mfDefaultSorter by="localLote.descricao">Local</mfDefaultSorter>
                     </th>
                     <th>
-                      <mfDefaultSorter by="diaSemana">Dia</mfDefaultSorter>
+                      <mfDefaultSorter by="diaSemana">Dia da Semana</mfDefaultSorter>
                     </th>
-                    <th>
-                      <mfDefaultSorter by="horaInicio">Início</mfDefaultSorter>
+                    <th class="text-center">
+                      <mfDefaultSorter by="horaInicio">Hora Início</mfDefaultSorter>
                     </th>
-                    <th>
-                      <mfDefaultSorter by="horaFinal">Final</mfDefaultSorter>
+                    <th class="text-center">
+                      <mfDefaultSorter by="horaFinal">Hora Final</mfDefaultSorter>
                     </th>
-                    <th>
+                    <th class="text-center">
                       <mfDefaultSorter by="numeroAtendentes">Nº Atendentes</mfDefaultSorter>
                     </th>
-                    <th>
-                      <mfDefaultSorter by="tempoAtendimento">Tempo(hr) </mfDefaultSorter>
+                    <th class="text-center">
+                      <mfDefaultSorter by="tempoAtendimento">Tempo Atend.(min) </mfDefaultSorter>
                     </th>
                     <th class="text-center" >
                       Editar
@@ -49,10 +49,10 @@
                       item.diaSemana == 4 ? 'Quarta' :
                       item.diaSemana == 5 ? 'Quinta' :
                       item.diaSemana == 6 ? 'Sexta' : 'Sábado'}}</td>
-                    <td>{{item.horaInicio | date : 'dd/MM/yyyy HH:mm' }}</td>
-                    <td>{{item.horaFinal  | date : 'dd/MM/yyyy HH:mm' }}</td>
-                    <td>{{item.numeroAtendentes }}</td>
-                    <td>{{item.tempoAtendimento }}</td>
+                    <td class="text-center">{{item.horaInicio | amUtc | amLocal | amDateFormat : 'HH:mm' }}</td>
+                    <td class="text-center">{{item.horaFinal  | amUtc | amLocal | amDateFormat : 'HH:mm' }}</td>
+                    <td class="text-center">{{item.numeroAtendentes }}</td>
+                    <td class="text-center">{{item.tempoAtendimento }} min</td>
 
                     <td class="text-center" nowrap>
                       <button type="button" class="btn btn-primary" (click)="edit(item.configuracaoAgendamentoId)"><i class="fa fa-edit"></i>&nbsp;Editar</button>

@@ -433,8 +433,8 @@ export const routes: Routes = [
         path: 'configuracao',
         component: ConfiguracaoComponent,
         data: {
-          title: 'Configuração',
-          source: 'AGENDAMENTO'
+          title: 'Configuração do Agendamento',
+          source: 'CONFIG_AGENDAMENTO'
         },
         canActivate: [SourceGuard]
       },
@@ -442,8 +442,8 @@ export const routes: Routes = [
         path: 'create-configuracao',
         component: CreateConfiguracaoComponent,
         data: {
-          title: 'Crair Configuração',
-          source: 'AGENDAMENTO'
+          title: 'Criar Configuração do Agendamento',
+          source: 'CONFIG_AGENDAMENTO'
         },
         canActivate: [SourceGuard]
       },
@@ -451,8 +451,8 @@ export const routes: Routes = [
         path: 'update-configuracao/:id',
         component: UpdateConfiguracaoComponent,
         data: {
-          title: 'Editar Configuração',
-          source: 'AGENDAMENTO'
+          title: 'Editar Configuração do Agendamento',
+          source: 'CONFIG_AGENDAMENTO'
         },
         canActivate: [SourceGuard]
       },
