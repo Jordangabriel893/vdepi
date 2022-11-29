@@ -219,6 +219,7 @@ import { CreateUsuariosComponent } from './views/usuarios/create-usuarios/create
 import { ConfiguracaoComponent } from './views/configuracao/configuracao.component';
 import { CreateConfiguracaoComponent } from './views/configuracao/create-configuracao/create-configuracao.component';
 import { UpdateConfiguracaoComponent } from './views/configuracao/update-configuracao/update-configuracao.component';
+import { AgendamentoComponent } from './views/agendamento/agendamento.component';
 
 
 export function RestangularConfigFactory(RestangularProvider, NotifierService: NotifierService) {
@@ -371,7 +372,8 @@ export function RestangularConfigFactory(RestangularProvider, NotifierService: N
     SearchLeilaoComponent,
     ConfiguracaoComponent,
     CreateConfiguracaoComponent,
-    UpdateConfiguracaoComponent
+    UpdateConfiguracaoComponent,
+    AgendamentoComponent
   ],
   providers: [{
     provide: LocationStrategy,

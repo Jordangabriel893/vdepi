@@ -134,6 +134,13 @@ export const navigation = [
     grupo:'AGENDAMENTO'
   },
   {
+    name: 'Agendamento',
+    url: '/agendamento',
+    icon: 'fa fa-cog',
+    source: 'AGENDAMENTO',
+    grupo:'MARKETING'
+  },
+  {
     name: 'Configuração',
     url: '/configuracao',
     icon: 'fa fa-cog',

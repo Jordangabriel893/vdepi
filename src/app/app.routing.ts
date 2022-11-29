@@ -84,6 +84,7 @@ import { UpdateAgendaComponent } from './views/agenda/update-agenda/update-agend
 import { LotesVistoriaComponent } from './views/vistoria/lotes/lotes-vistoria.component';
 import { CreateUsuariosComponent } from './views/usuarios/create-usuarios/create-usuarios.component';
 import { CreateConfiguracaoComponent } from './views/configuracao/create-configuracao/create-configuracao.component';
+import { AgendamentoComponent } from './views/agendamento/agendamento.component';
 
 
 export const routes: Routes = [
@@ -426,6 +427,15 @@ export const routes: Routes = [
         data: {
           title: 'Editar Agenda',
           source: 'AGENDA'
+        },
+        canActivate: [SourceGuard]
+      },
+      {
+        path: 'agendamento',
+        component: AgendamentoComponent,
+        data: {
+          title: 'Agendamento',
+          source: 'AGENDAMENTO'
         },
         canActivate: [SourceGuard]
       },
