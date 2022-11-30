@@ -1,0 +1,21 @@
+.header{
+  display: flex;
+  justify-content: space-between;
+}
+.btn-success{
+  display: flex;
+  align-items: center;
+
+  h6{
+      margin-bottom: 0%;
+  }
+}
+.fa-file-excel, .fa-gavel, .fa-list {
+  margin-right: 10%;
+}
+
+.fa-exclamation-triangle {
+  color: coral;
+  size: 5px;
+}
+
