@@ -43,12 +43,17 @@
                   <tr *ngFor="let item of mfconfiguracoes.data">
                     <td>{{item.configuracaoAgendamentoId}}</td>
                     <td>{{item.localLote.descricao }}</td>
-                    <td>{{item.diaSemana == 1 ? 'Domingo' :
-                      item.diaSemana == 2 ? 'Segunda' :
-                      item.diaSemana == 3 ? 'Terça' :
-                      item.diaSemana == 4 ? 'Quarta' :
-                      item.diaSemana == 5 ? 'Quinta' :
-                      item.diaSemana == 6 ? 'Sexta' : 'Sábado'}}</td>
+                    <td>
+                      {{
+                          item.diaSemana == 7 ? 'Domingo' :
+                          item.diaSemana == 1 ? 'Segunda' :
+                          item.diaSemana == 2 ? 'Terça' :
+                          item.diaSemana == 3 ? 'Quarta' :
+                          item.diaSemana == 4 ? 'Quinta' :
+                          item.diaSemana == 5 ? 'Sexta' :
+                          item.diaSemana == 6 ? 'Sábado' : ''
+                      }}
+                    </td>
                     <td class="text-center">{{item.horaInicio | amUtc | amLocal | amDateFormat : 'HH:mm' }}</td>
                     <td class="text-center">{{item.horaFinal  | amUtc | amLocal | amDateFormat : 'HH:mm' }}</td>
                     <td class="text-center">{{item.numeroAtendentes }}</td>
