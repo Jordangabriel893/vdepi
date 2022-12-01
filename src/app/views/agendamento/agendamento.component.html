@@ -5,8 +5,8 @@
       <div class="card">
         <div class="card-header header">
           <div>
-            <i class="fa fa-cog" aria-hidden="true"></i>
-           &nbsp;Agendamentos
+            <i class="fa fa-calendar-alt" aria-hidden="true"></i>
+           &nbsp;Agendamentos de Retirada
           </div>
           <div class="d-flex">
             <button type="button" (click)="exportAsExcel()" class="btn btn-success ml-2 btn-sm" title="Exportar para Excel"> <i class="fas fa-file-excel"></i>&nbsp;Excel </button>
@@ -14,7 +14,7 @@
         </div>
         <div class="card-block">
             <div class="table-responsive mt-4">
-              <table class="table table-striped" [mfData]="agendamentos" #mfLeilao="mfDataTable" [mfRowsOnPage]="100">
+              <table class="table table-striped" [mfData]="agendamentos" #mfLeilao="mfDataTable" [mfRowsOnPage]="10">
                 <thead>
                   <tr>
 
@@ -43,7 +43,7 @@
                     <td>{{item.numeroLote}}</td>
                     <td>{{item.descricaoLote}}</td>
                     <td>{{item.dataAgendamento }}</td>
-                    <td>{{item.nomeArrematante }}</td>
+                    <td>{{item.nomeArrematante | uppercase }}</td>
                     <td>{{item.documentoArrematante }}</td>
                     <td>{{item.status }}</td>
                   </tr>
