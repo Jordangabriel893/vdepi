@@ -29,7 +29,6 @@ export class AgendamentoComponent implements OnInit {
   ngOnInit() {
     this.restangular.one('agendamento').get().subscribe(
       dados =>{
-        console.log(dados.data)
         this.agendamentos= dados.data
         this.loading = false;
       },
@@ -48,8 +47,7 @@ export class AgendamentoComponent implements OnInit {
       const anoFab = item.campos.filter(campo => campo.campo == "Ano Fab.")
       const marcaModelo = item.campos.filter(campo => campo.campo == "Marca/Modelo")
       const anoMod = item.campos.filter(campo => campo.campo == "Ano Mod.")
-
-      item = {
+     item = {
         dataAgendamento:item.dataAgendamento,
         descricaoLote:item.descricaoLote,
         documentoArrematante:item.documentoArrematante,
@@ -57,18 +55,17 @@ export class AgendamentoComponent implements OnInit {
         localEndereco:item.localEndereco,
         nomeArrematante:item.nomeArrematante,
         numeroLote:item.numeroLote,
-        placa: placa[0].valor || "",
-        chassi: chassi[0].valor || "",
-        renavam:renavam[0].valor || "",
-        cor: cor[0].valor || "",
-        uf: uf[0].valor || "",
-        anoFab: anoFab[0].valor || "",
-        marcaModelo: marcaModelo[0].valor || "",
-        anoMod: anoMod[0].valor || "",
-
+        placa: placa[0].valor? placa[0].valor : '',
+        chassi: chassi[0].valor? chassi[0].valor : '',
+        renavam: renavam[0].valor? renavam[0].valor : '',
+        cor: cor[0].valor? cor[0].valor : '',
+        uf: uf[0].valor? uf[0].valor : '',
+        anoFab: anoFab[0].valor? anoFab[0].valor : '',
+        marcaModelo: marcaModelo[0].valor ? marcaModelo[0].valor : '',
+        anoMod: anoMod[0].valor ? anoMod[0].valor : '',
       }
+
     return item})
-    console.log(agendamentosModel)
 
     const ws: XLSX.WorkSheet = XLSX.utils.json_to_sheet(agendamentosModel);
 
