@@ -15,7 +15,10 @@ export class AgendamentoComponent implements OnInit {
   formulario: FormGroup
   loading = true;
   agendamentos;
-
+  agendamentoNome = 'Status';
+  agendamentosArray;
+  agendamentosDefault;
+  data;
   constructor(
     private route: ActivatedRoute,
     private router: Router,
@@ -29,6 +32,7 @@ export class AgendamentoComponent implements OnInit {
   ngOnInit() {
     this.restangular.one('agendamento').get().subscribe(
       dados =>{
+        this.agendamentosDefault = dados.data;
         this.agendamentos= dados.data
         this.loading = false;
       },
@@ -39,15 +43,16 @@ export class AgendamentoComponent implements OnInit {
   exportAsExcel() {
     const agendamentosParaEditar = this.agendamentos;
     const agendamentosModel = agendamentosParaEditar.map( item => {
-      const placa = item.campos.filter(campo => campo.campo == "Placa")
-      const chassi = item.campos.filter(campo => campo.campo == "Chassi")
-      const renavam = item.campos.filter(campo => campo.campo == "Renavam")
-      const cor = item.campos.filter(campo => campo.campo == "Cor")
-      const uf = item.campos.filter(campo => campo.campo == "UF")
-      const anoFab = item.campos.filter(campo => campo.campo == "Ano Fab.")
-      const marcaModelo = item.campos.filter(campo => campo.campo == "Marca/Modelo")
-      const anoMod = item.campos.filter(campo => campo.campo == "Ano Mod.")
+    item.campos.map(x => {
+      item = {
+        ...item,
+
+        [x.campo]:x.valor
+      }
+      return item
+    })
      item = {
+      ...item,
         dataAgendamento:item.dataAgendamento,
         descricaoLote:item.descricaoLote,
         documentoArrematante:item.documentoArrematante,
@@ -55,16 +60,8 @@ export class AgendamentoComponent implements OnInit {
         localEndereco:item.localEndereco,
         nomeArrematante:item.nomeArrematante,
         numeroLote:item.numeroLote,
-        placa: placa[0].valor? placa[0].valor : '',
-        chassi: chassi[0].valor? chassi[0].valor : '',
-        renavam: renavam[0].valor? renavam[0].valor : '',
-        cor: cor[0].valor? cor[0].valor : '',
-        uf: uf[0].valor? uf[0].valor : '',
-        anoFab: anoFab[0].valor? anoFab[0].valor : '',
-        marcaModelo: marcaModelo[0].valor ? marcaModelo[0].valor : '',
-        anoMod: anoMod[0].valor ? anoMod[0].valor : '',
       }
-
+      delete item.campos
     return item})
 
     const ws: XLSX.WorkSheet = XLSX.utils.json_to_sheet(agendamentosModel);
@@ -127,7 +124,18 @@ exportAsPDF() {
 
   this.pdfService.exportPdf('Agendamentos', "Agendamentos", rows, columns, columStyles, header, null);
 }
-
+setStatus(nome){
+  this.agendamentos = this.agendamentosDefault
+  this.agendamentoNome = nome
+  this.data = '';
+  const agendamentosFiltrados = this.agendamentos.filter(item => item.status == nome)
+  this.agendamentos = agendamentosFiltrados
+}
+setData(dataAgendamento){
+  this.data = dataAgendamento
+  const agendamentosFiltrados = this.agendamentos.filter(item => item.dataAgendamento == dataAgendamento)
+  this.agendamentos = agendamentosFiltrados
+}
   edit(id) {
     this.router.navigate(['/edit-listacontatos', id], { relativeTo: this.route });
   }
