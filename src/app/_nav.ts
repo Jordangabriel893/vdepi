@@ -136,7 +136,7 @@ export const navigation = [
   {
     name: 'Agendamento',
     url: '/agendamento',
-    icon: 'fa fa-cog',
+    icon: 'fa fa-calendar-alt',
     source: 'AGENDAMENTO',
     grupo:'MARKETING'
   },

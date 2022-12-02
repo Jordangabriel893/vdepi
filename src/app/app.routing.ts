@@ -434,7 +434,7 @@ export const routes: Routes = [
         path: 'agendamento',
         component: AgendamentoComponent,
         data: {
-          title: 'Agendamento',
+          title: 'Agendamentos de Retirada',
           source: 'AGENDAMENTO'
         },
         canActivate: [SourceGuard]
