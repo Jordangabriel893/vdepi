@@ -15,7 +15,16 @@
           <form [formGroup]="filtro">
             <div class="d-flex align-items-center justify-content-end">
               <div class="d-flex justify-content-end">
-                <div class="input-group" style="width: 145%;">
+                <div class="input-group ml-2">
+                  <div class="input-group-prepend">
+                    <span class="input-group-text" id="inputGroup-sizing-sm">Leilão</span>
+                  </div>
+                  <select class="form-control" formControlName="leilao" (change)="filtrar()">
+                    <option value="todos">TODOS</option>
+                    <option [value]="item.nome" *ngFor="let item of leiloes">{{item.nome}}</option>
+                  </select>
+                </div>
+                <div class="input-group ml-2" style="width: 145%;">
                   <div class="input-group-prepend">
                     <span class="input-group-text" id="inputGroup-sizing-sm">Data Agendamento</span>
                   </div>
@@ -28,7 +37,8 @@
                   <div class="input-group-prepend">
                     <span class="input-group-text" id="inputGroup-sizing-sm">Status</span>
                   </div>
-                  <select class="form-control" formControlName="status" (change)="setStatus()">
+                  <select class="form-control" formControlName="status" (change)="filtrar()">
+                    <option value="todos">TODOS</option>
                     <option value="AGENDADO">AGENDADO</option>
                     <option value="CANCELADO">CANCELADO</option>
                     <option value="FINALIZADO">FINALIZADO</option>
@@ -41,6 +51,9 @@
             <table class="table table-striped" [mfData]="agendamentos" #mfLeilao="mfDataTable" [mfRowsOnPage]="10">
               <thead>
                 <tr>
+                  <th>
+                    <mfDefaultSorter by="leilao">Leilão</mfDefaultSorter>
+                  </th>
                   <th>
                     <mfDefaultSorter by="numeroLote">Nº Lote</mfDefaultSorter>
                   </th>
@@ -63,12 +76,17 @@
               </thead>
               <tbody>
                 <tr *ngFor="let item of mfLeilao.data">
+                  <td>{{item.leilao}}</td>
                   <td>{{item.numeroLote}}</td>
                   <td>{{item.descricaoLote}}</td>
                   <td>{{item.dataAgendamento }}</td>
                   <td>{{item.nomeArrematante | uppercase }}</td>
                   <td>{{item.documentoArrematante }}</td>
-                  <td>{{item.status }}</td>
+                  <td>
+                    <span class="badge badge-info" *ngIf="item.status === 'AGENDADO'">AGENDADO</span>
+                    <span class="badge badge-success" *ngIf="item.status === 'FINALIZADO'">FINALIZADO</span>
+                    <span class="badge badge-danger" *ngIf="item.status === 'CANCELADO'">CANCELADO</span>
+                  </td>
                 </tr>
                 <tr *ngIf="loading">
                   <td class="text-center text-muted" colspan="9">
