@@ -34,11 +34,14 @@
                     <mfDefaultSorter by="numeroLote">Lote</mfDefaultSorter>
                   </th>
                   <th>
-                    <mfDefaultSorter by="nome">Nome</mfDefaultSorter>
+                    <mfDefaultSorter by="statusPag">Status Pag</mfDefaultSorter>
                   </th>
                   <th>
-                    <mfDefaultSorter by="email">Email</mfDefaultSorter>
+                    <mfDefaultSorter by="nome">Nome</mfDefaultSorter>
                   </th>
+                  <!-- <th>
+                    <mfDefaultSorter by="email">Email</mfDefaultSorter>
+                  </th> -->
                   <th>
                     <mfDefaultSorter by="documento">CPF/CNPJ</mfDefaultSorter>
                   </th>
@@ -70,8 +73,9 @@
               <tbody>
                 <tr *ngFor="let item of mfArrematantes.data; let i = index">
                   <td><a class="link-primary" [routerLink]="['/update-lotes', item.loteId]" target="_blank">{{item.numeroLote}}</a></td>
-                  <td>{{item.nome | uppercase}}</td>
-                  <td><a class="link-primary" [routerLink]="['/update-usuarios', item.usuarioId]" target="_blank">{{ item.email }}</a> </td>
+                  <td>{{item.statusPag || uppercase}}</td>
+                  <td><a class="link-primary" [routerLink]="['/update-usuarios', item.usuarioId]" target="_blank">{{ item.nome | uppercase }}</a></td>
+                  <!-- <td><a class="link-primary" [routerLink]="['/update-usuarios', item.usuarioId]" target="_blank">{{ item.email }}</a> </td> -->
                   <td nowrap>{{item.documento}}</td>
                   <td nowrap>{{item.valorArrematado | currencyFormat}}</td>
                   <td nowrap>{{item.valorTaxas | currencyFormat}}</td>

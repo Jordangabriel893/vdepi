@@ -14,13 +14,15 @@ export class AgendamentoComponent implements OnInit {
   agendamentos;
   agendamentosDefault;
   filtro: FormGroup;
+  leiloes;
   constructor(
     private restangular: Restangular,
     private formBuilder: FormBuilder
   ) {
     this.filtro =  this.formBuilder.group({
       data:[null],
-      status:[null]
+      status:['todos'],
+      leilao:["todos"]
     })
    }
 
@@ -34,6 +36,13 @@ export class AgendamentoComponent implements OnInit {
       () => this.loading = false
     )
 
+    this.restangular.all("admin").one("leilao").get({PageSize:100}).subscribe((response) => {
+      this.leiloes = response.data;
+      this.leiloes.sort(function(a,b) {
+        return a.nome < b.nome ? -1 : a.nome > b.nome ? 1 : 0;
+      })
+    })
+
   }
 
   exportAsExcel() {
@@ -41,6 +50,7 @@ export class AgendamentoComponent implements OnInit {
         const campos = item.campos.reduce((a, c) => ({...a, [c.campo]:c.valor}), {});
         item = {
           "Data Agendamento":item.dataAgendamento,
+          "Status": item.status,
           "Leilão":item.leilao,
           "Numero Lote":item.numeroLote,
           "Descrição Lote":item.descricaoLote,
@@ -65,23 +75,27 @@ export class AgendamentoComponent implements OnInit {
   onValueChange(event, campo) {
     this.filtro.get(campo).markAsTouched();
     this.filtro.get(campo).setValue(event);
-    this.setData();
+    this.filtrar();
   }
 
-  setStatus() {
+  filtrar() {
+    const leilao = this.filtro.controls["leilao"].value;
     const status = this.filtro.controls["status"].value;
-    const agendamentosFiltrados = this.agendamentosDefault.filter(item => item.status === status)
-    this.agendamentos = agendamentosFiltrados
-  }
-
-  setData() {
     const data = this.filtro.controls["data"].value;
-    this.agendamentos = this.agendamentosDefault;
+    let agendamentoFiltrados = this.agendamentosDefault;
+    if(leilao !== "todos") {
+      agendamentoFiltrados = agendamentoFiltrados.filter(item => item.leilao === leilao)
+    }
+
     if(data) {
       const dataFormatada = moment(data).format("DD/MM/YYYY");
-      const agendamentosFiltrados = this.agendamentosDefault.filter(item => moment(item.dataAgendamento, "DD/MM/YYYY HH:mm").format("DD/MM/YYYY") == dataFormatada)
-      this.agendamentos = agendamentosFiltrados
+      agendamentoFiltrados = agendamentoFiltrados.filter(item => moment(item.dataAgendamento, "DD/MM/YYYY HH:mm").format("DD/MM/YYYY") == dataFormatada)
     }
-  }
 
+    if(status !== "todos") {
+      agendamentoFiltrados = agendamentoFiltrados.filter(item => item.status === status)
+    }
+
+    this.agendamentos = agendamentoFiltrados
+  }
 }
