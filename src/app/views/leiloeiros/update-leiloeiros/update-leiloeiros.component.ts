@@ -76,8 +76,7 @@ export class UpdateLeiloeirosComponent implements OnInit {
         estado: [null],
         logradouro:[null]
       }),
-      ativo: [null],
-      usuarioId: [null]
+      ativo: [null]
     })
   }
 
