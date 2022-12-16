@@ -5,6 +5,7 @@ COPY . .
 # RUN npm install
 # RUN npm rebuild node-sass
 RUN npm i --force
+RUN npm rebuild node-sass
 RUN npm run build
 #stage 2
 FROM nginx:alpine

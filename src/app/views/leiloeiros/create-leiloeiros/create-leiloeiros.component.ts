@@ -44,7 +44,6 @@ export class CreateLeiloeirosComponent implements OnInit {
       razaoSocial:[null],
       cpfCnpj:[null, Validators.required],
       telefone:[null],
-      email:[null, Validators.required],
       orgaoRegistro:[null, Validators.required],
       ufRegistro: [null, Validators.required],
       matricula: [null, Validators.required],
