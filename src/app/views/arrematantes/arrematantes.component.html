@@ -75,7 +75,6 @@
                   <td><a class="link-primary" [routerLink]="['/update-lotes', item.loteId]" target="_blank">{{item.numeroLote}}</a></td>
                   <td>{{item.statusPag || uppercase}}</td>
                   <td><a class="link-primary" [routerLink]="['/update-usuarios', item.usuarioId]" target="_blank">{{ item.nome | uppercase }}</a></td>
-                  <!-- <td><a class="link-primary" [routerLink]="['/update-usuarios', item.usuarioId]" target="_blank">{{ item.email }}</a> </td> -->
                   <td nowrap>{{item.documento}}</td>
                   <td nowrap>{{item.valorArrematado | currencyFormat}}</td>
                   <td nowrap>{{item.valorTaxas | currencyFormat}}</td>
@@ -87,8 +86,8 @@
                         <i class="fa fa-ellipsis-v"></i>
                       </button>
                       <ul class="dropdown-menu dropdown-menu-left" *dropdownMenu>
-                        <li><a class="dropdown-item" (click)="auto(item.loteId, item.numeroLote)">Auto de Arrematação</a></li>
-                        <li><a class="dropdown-item" (click)="nota(item.loteId, item.numeroLote)">Nota de Arrematação</a></li>
+                        <li><a class="dropdown-item" [ngClass]="{'disabled': item.statusPag !== 'PAGO'}" (click)="auto(item.loteId, item.numeroLote)">Auto de Arrematação</a></li>
+                        <li><a class="dropdown-item" [ngClass]="{'disabled': item.statusPag !== 'PAGO'}" (click)="nota(item.loteId, item.numeroLote)">Nota de Arrematação</a></li>
                       </ul>
                     </div>
                   </td>
