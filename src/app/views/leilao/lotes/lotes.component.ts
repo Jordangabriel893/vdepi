@@ -21,7 +21,7 @@ export class LotesComponent implements OnInit {
   descricao;
   descricaoTitle;
   numeroLote;
-  loading = true;
+  loading = false;
   idLote;
   arquivo: any;
   formData = new FormData();
@@ -44,7 +44,20 @@ export class LotesComponent implements OnInit {
     private confirmationService: ConfirmationService
   ) {
     this.id = this.route.snapshot.params['id']
-    this.restangular.one("lote", '').get({ leilaoId: this.id, PageSize: 500 }).subscribe(
+    this.getLotes();
+    this.restangular.one('leilao', this.id).get().subscribe((response) => {
+      this.leilao = response.data
+    });
+  }
+
+  ngOnInit() {
+
+  }
+
+  getLotes() {
+    this.loading = true;
+    this.lotes = [];
+    this.restangular.one("lote", '').get({ leilaoId: this.id}).subscribe(
       (lotes) => {
         this.loading = false;
         const lote = lotes.data
@@ -56,20 +69,16 @@ export class LotesComponent implements OnInit {
       },
       () => this.loading = false
     )
-    this.restangular.one('leilao', this.id).get().subscribe((response) => {
-      this.leilao = response.data
-    });
   }
 
-  ngOnInit() {
-
-  }
   create() {
     this.router.navigate(['/create-lotes', this.id], { relativeTo: this.route });
   }
+
   edit(id) {
     this.router.navigate(['/update-lotes', id], { relativeTo: this.route });
   }
+
   setLote(item) {
     this.queryField.patchValue('')
     this.idLote = item
@@ -77,6 +86,7 @@ export class LotesComponent implements OnInit {
     this.lotes = listaFiltradaPorID
     this.descricaoTitle = listaFiltradaPorID[0].descricao
   }
+
   setDescricao(item) {
     this.queryField.patchValue('')
     this.idLote = ''
@@ -103,6 +113,7 @@ export class LotesComponent implements OnInit {
   getAnexo() {
     this.inputAnexos.nativeElement.click()
   }
+
   fileChangeEvent(fileInput: any) {
     this.fileError = null;
     this.fileLoading = true;
@@ -127,19 +138,28 @@ export class LotesComponent implements OnInit {
       this.restangular.all('lote').customPOST(formData, 'ImportacaoPlanilha', { leilaoId: this.id }, { 'content-type': undefined }).subscribe(a => {
         this.notifierService.notify('success', 'Upload de planilha com sucesso');
         this.fileLoading = false
-        location.reload()
-        // this.router.navigate(['/lotes', this.id]);
-
+        this.getLotes();
       },
         error => {
-          this.notifierService.notify('error', 'Upload de planilha erro!');
           fileInput.target.value = "";
           this.fileLoading = false;
 
+          const errors = error.data.Errors;
+
+          if(errors) {
+            for (var key in errors) {
+              this.notifierService.notify('error', errors[key]);
+            }
+          }
+          else {
+            this.notifierService.notify('error', 'Upload de planilha erro!');
+          }
+          this.getLotes();
         });
     }
 
   }
+
   onSearch(){
     if(this.queryField.value) {
       this.lotes = this.dataLote
