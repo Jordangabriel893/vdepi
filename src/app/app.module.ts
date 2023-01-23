@@ -220,6 +220,7 @@ import { ConfiguracaoComponent } from './views/configuracao/configuracao.compone
 import { CreateConfiguracaoComponent } from './views/configuracao/create-configuracao/create-configuracao.component';
 import { UpdateConfiguracaoComponent } from './views/configuracao/update-configuracao/update-configuracao.component';
 import { AgendamentoComponent } from './views/agendamento/agendamento.component';
+import { LogComponent } from './views/notificacoes/log/log.component';
 
 
 export function RestangularConfigFactory(RestangularProvider, NotifierService: NotifierService) {
@@ -373,7 +374,8 @@ export function RestangularConfigFactory(RestangularProvider, NotifierService: N
     ConfiguracaoComponent,
     CreateConfiguracaoComponent,
     UpdateConfiguracaoComponent,
-    AgendamentoComponent
+    AgendamentoComponent,
+    LogComponent
   ],
   providers: [{
     provide: LocationStrategy,

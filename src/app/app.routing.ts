@@ -1,3 +1,4 @@
+import { LogComponent } from './views/notificacoes/log/log.component';
 import { UpdateConfiguracaoComponent } from './views/configuracao/update-configuracao/update-configuracao.component';
 import { ConfiguracaoComponent } from './views/configuracao/configuracao.component';
 import { CreateFaturaComponent } from './views/fatura/create-fatura/create-fatura.component';
@@ -345,6 +346,15 @@ export const routes: Routes = [
         component: CreateNotificacaoComponent,
         data: {
           title: 'Nova Notificação',
+          source: 'NOTIFICACOES'
+        },
+        canActivate: [SourceGuard]
+      },
+      {
+        path: 'log-notificacoes/:id',
+        component: LogComponent,
+        data: {
+          title: 'Visualizar Log',
           source: 'NOTIFICACOES'
         },
         canActivate: [SourceGuard]
