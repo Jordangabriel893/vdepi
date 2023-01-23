@@ -43,7 +43,7 @@
             <div class="row" >
               <div class="col-12">
                 <div class="row ">
-                  <table class="table table-striped" [mfData]="contato" #mfContatos="mfDataTable" [mfRowsOnPage]="100" *ngIf="formulario">
+                  <table class="table table-striped" [mfData]="contato" #mfContatos="mfDataTable" [mfRowsOnPage]="5" *ngIf="formulario">
                     <thead>
                       <tr>
 
@@ -70,8 +70,6 @@
                         <td>{{item.email}}</td>
                         <td>{{item.telefoneCelular}}</td>
                         <td id="jstf-cnt" [formGroupName]="i" ><input type="checkbox" value="{{item.value}}" formControlName="value"  ></td>
-
-
                       </tr>
                       <tr *ngIf="loading">
                         <td class="text-center text-muted" colspan="9">

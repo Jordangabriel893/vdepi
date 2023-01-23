@@ -45,7 +45,7 @@ export class EditListacontatosComponent implements OnInit {
         this.status= dados.data
       }
     )
-    this.restangular.one("marketing/Contato", '').get({PageSize:100}).subscribe((response) => {
+    this.restangular.one("marketing/Contato", '').get().subscribe((response) => {
       this.contato = response.data
 
        this.loading = false;
@@ -125,6 +125,7 @@ export class EditListacontatosComponent implements OnInit {
         })
 
       }
+
   desativar(){
     this.restangular.all('marketing/ListaContato/Desativar').customPUT( '',this.id ) .subscribe(a => {
       this.notifierService.notify('success', 'Lista de contatos desativada com sucesso');

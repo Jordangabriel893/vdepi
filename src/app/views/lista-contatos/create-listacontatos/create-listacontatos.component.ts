@@ -23,7 +23,6 @@ export class CreateListacontatosComponent implements OnInit {
     private restangular: Restangular,
     private notifierService: NotifierService,
     private router: Router,
-    private localeService: BsLocaleService
   ) {
 
    }
@@ -35,12 +34,14 @@ export class CreateListacontatosComponent implements OnInit {
         this.empresas= dados.data
       }
     )
+
     this.restangular.all('leilao').one('status').get().subscribe(
       dados =>{
         this.status= dados.data
       }
     )
-    this.restangular.one("marketing/Contato", '').get({PageSize:100}).subscribe((response) => {
+
+    this.restangular.one("marketing/Contato", '').get().subscribe((response) => {
       this.contato = response.data
       this.updateContatos(response.data)
        this.loading = false;
@@ -82,7 +83,7 @@ export class CreateListacontatosComponent implements OnInit {
     this.formulario.get(campo).markAsTouched();
     this.formulario.get(campo).setValue(event);
   }
-  incluirContato(contato, i){
+  incluirContato(contato){
     if(this.contatos.includes(contato) == false ){
       this.contatos.push(contato)
     }else{
@@ -90,15 +91,13 @@ export class CreateListacontatosComponent implements OnInit {
       const novoArray = this.contatos.filter(x => !retiraObjeto.includes(x))
       this.contatos = novoArray
     }
-
-
-
   }
+
   updateContatos(contatos){
     this.formulario = this.formBuilder.group({
       listaContatoId:[0],
       descricao: [null, Validators.required],
-      empresaId: [null, Validators.required],
+      empresaId: [null],
       contatos: this.formBuilder.array(contatos ? contatos.map(x => this.formBuilder.group({ ...x, value: false })) : [], Validators.required),
     })
   }

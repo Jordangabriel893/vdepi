@@ -53,8 +53,8 @@
                 <tbody>
                   <tr *ngFor="let item of mfUsuarios.data">
                     <td nowrap>{{item.dataCadastro | amDateFormat:'DD/MM/YYYY HH:mm'}}</td>
-                    <td>{{item.nomeCompleto}}</td>
-                    <td>{{item.numeroDocumento}}</td>
+                    <td>{{item.nomeCompleto | uppercase}}</td>
+                    <td nowrap>{{item.numeroDocumento}}</td>
                     <td>{{item.genero == 'M'? 'Masculino' : 'Feminino'}}</td>
                     <td>{{item.email}}</td>
                     <td>{{item.tipoPessoa == 'PF'? "Pessoa Física" : "Pessoa Jurídica"}}</td>

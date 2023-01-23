@@ -43,7 +43,7 @@
             <div class="row" >
               <div class="col-12">
                 <div class="row ">
-                  <table class="table table-striped" [mfData]="contato" #mfContatos="mfDataTable" [mfRowsOnPage]="100">
+                  <table class="table table-striped" [mfData]="contato" #mfContatos="mfDataTable" [mfRowsOnPage]="5">
                     <thead>
                       <tr>
 
@@ -59,9 +59,6 @@
                         <th>
                           <mfDefaultSorter by="incluir">Incluir:</mfDefaultSorter>
                         </th>
-
-
-
                       </tr>
                     </thead>
                     <tbody formArrayName="contatos" *ngIf="this.formulario.value.contatos.length > 0">
@@ -69,9 +66,7 @@
                         <td>{{item.nomeCompleto}}</td>
                         <td>{{item.email}}</td>
                         <td>{{item.telefoneCelular}}</td>
-                        <td id="jstf-cnt" [formGroupName]="i" ><input type="checkbox" formControlName="value" (click)="incluirContato(item, i )" ></td>
-
-
+                        <td id="jstf-cnt" [formGroupName]="i" ><input type="checkbox" formControlName="value" (click)="incluirContato(item)" ></td>
                       </tr>
                       <tr *ngIf="loading">
                         <td class="text-center text-muted" colspan="9">
