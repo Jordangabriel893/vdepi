@@ -39,6 +39,9 @@
                     <th class="text-center" >
                       Editar
                     </th>
+                    <th class="text-center" >
+                      Log
+                    </th>
 
 
                   </tr>
@@ -54,6 +57,9 @@
                     <td>{{item.leilao}}</td>
                     <td class="text-center" nowrap>
                       <button type="button" class="btn btn-primary" (click)="edit(item.notificacaoId)"><i class="fa fa-edit"></i>&nbsp;Editar</button>
+                    </td>
+                    <td class="text-center" nowrap>
+                      <button type="button" class="btn btn-primary" (click)="navigateLog(item);"><i class="fa fa-edit"></i>&nbsp;Log</button>
                     </td>
                   </tr>
                   <tr *ngIf="loading">

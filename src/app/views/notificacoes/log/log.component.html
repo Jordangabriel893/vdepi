@@ -1,0 +1,123 @@
+<div class="animated fadeIn">
+
+  <div class="row">
+    <div class="col-lg-12">
+      <div class="card">
+        <div class="card-header header">
+
+          <div>
+            <i class="fa fa-envelope" aria-hidden="true"></i>
+          &nbsp;Logs de Notificação - {{notificacao}}
+          </div>
+          <div class="d-flex">
+            <button type="button" (click)="exportAsPDF()" class="btn btn-danger ml-3 btn-sm" title="Exportar para PDF"> <i class="fas fa-file-pdf"></i>&nbsp;PDF </button>
+            <button type="button" (click)="exportAsExcel()" class="btn btn-success ml-2 btn-sm" title="Exportar para Excel"> <i class="fas fa-file-excel"></i>&nbsp;Excel </button>
+          </div>
+        </div>
+        <div class="card-block">
+          <form [formGroup]="filtro">
+            <div class="d-flex align-items-center justify-content-end">
+              <div class="d-flex justify-content-end">
+                <div class="input-group ml-3" style="width: 145%;">
+                  <div class="input-group-prepend">
+                    <span class="input-group-text" id="inputGroup-sizing-sm">Periódo</span>
+                  </div>
+                  <input type="text" class="form-control" formControlName="data"
+                    placeholder="DD/MM/AAAA"
+                    [bsConfig]="{ dateInputFormat: 'DD/MM/YYYY' }" bsDatepicker
+                    (bsValueChange)="onValueChange($event, 'data')">
+                </div>
+                <div class="input-group ml-3" style="width: 145%;">
+                  <div class="input-group-prepend">
+                    <span class="input-group-text" id="inputGroup-sizing-sm">Buscar</span>
+                  </div>
+                  <input type="text" class="form-control " (keyup)="onSearch()" placeholder="por Email " aria-describedby="basic-addon2" formControlName="email">
+                </div>
+              </div>
+            </div>
+          </form>
+            <div class="table-responsive mt-4">
+
+              <table class="table table-striped" [mfData]="tableLog" #mfLogs="mfDataTable" [mfRowsOnPage]="100">
+                <thead>
+                  <tr>
+                    <th>
+                      <mfDefaultSorter by="destinatario">Email</mfDefaultSorter>
+                    </th>
+                    <th>
+                      <mfDefaultSorter by="entregue">Entregue</mfDefaultSorter>
+                    </th>
+                    <th>
+                      <mfDefaultSorter by="aberto">Aberto</mfDefaultSorter>
+                    </th>
+                    <th>
+                      <mfDefaultSorter by="clicado">Clicado</mfDefaultSorter>
+                    </th>
+                    <th>
+                      <mfDefaultSorter by="erro">Erro</mfDefaultSorter>
+                    </th>
+                    <th>
+                      <mfDefaultSorter by="mensagemErro">Mensagem Erro</mfDefaultSorter>
+                    </th>
+                    <th class="text-center" >
+                      Mensagem
+                    </th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let item of mfLogs.data">
+                    <td>{{item.destinatario}}</td>
+                    <td class="text-center"  tooltip="{{item.dataEnvio}}">
+                    <i class='fa fa-check-circle text-success' *ngIf="item.entregue" ></i>
+                    <i class='fa fa-times-circle text-danger' *ngIf="item.entregue == false" ></i>
+                    </td>
+                    <td class="text-center"  tooltip="{{item.dataAbertura}}">
+                      <i class='fa fa-check-circle text-success' *ngIf="item.aberto" ></i>
+                    <i class='fa fa-times-circle text-danger' *ngIf="item.aberto == false" ></i>
+                    </td>
+                    <td class="text-center"  tooltip="{{item.dataClicado }}">
+                      <i class='fa fa-check-circle text-success' *ngIf="item.clicado" ></i>
+                    <i class='fa fa-times-circle text-danger' *ngIf="item.clicado == false" ></i>
+                    </td>
+                    <td >
+                    <i class='fa fa-check-circle text-success' *ngIf="item.erro" ></i>
+                    <i class='fa fa-times-circle text-danger' *ngIf="item.erro == false" ></i>
+                    </td>
+                    <td>{{item.mensagemErro }}</td>
+                    <td class="text-center" nowrap>
+                      <button type="button" class="btn btn-primary" (click)="openModal(template, item.menssagem);"><i class="fa fa-envelope"></i>&nbsp;Template</button>
+                    </td>
+                  </tr>
+                  <tr *ngIf="loading">
+                    <td class="text-center text-muted" colspan="9">
+                      <h5><i class="fa fa-spin fa-spinner"></i>&nbsp;Carregando...</h5>
+                    </td>
+                  </tr>
+                </tbody>
+                <tfoot>
+                  <tr>
+                    <td colspan="9">
+                      <mfBootstrapPaginator [rowsOnPageSet]="[5,10,25]"></mfBootstrapPaginator>
+                    </td>
+                  </tr>
+                </tfoot>
+              </table>
+            </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<ng-template #template class="d-flex flex-column">
+  <div class="modal-header justify-content-between col-12">
+    <h4 class="modal-title pull-left">Mensagem</h4>
+    <button type="button" class="btn-close close pull-right" aria-label="Close" (click)="modalRef?.hide()">
+      <span aria-hidden="true" class="visually-hidden">&times;</span>
+    </button>
+
+  </div>
+  <div class="modal-body">
+    {{mensagem}}
+  </div>
+</ng-template>
