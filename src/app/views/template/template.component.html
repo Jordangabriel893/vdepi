@@ -19,6 +19,9 @@
                     <th>
                       <mfDefaultSorter by="descricao">Descrição</mfDefaultSorter>
                     </th>
+                    <th>
+                      <mfDefaultSorter by="tag">Tag</mfDefaultSorter>
+                    </th>
                     <th class="text-center" >
                       Editar
                     </th>
@@ -28,6 +31,7 @@
                   <tr *ngFor="let item of mftipoMeios.data">
                     <td>{{item.templateNotificacaoId}}</td>
                     <td>{{item.descricao }}</td>
+                    <td>{{item.tag }}</td>
                     <td class="text-center" nowrap>
                       <button type="button" class="btn btn-primary" (click)="edit(item.templateNotificacaoId)"><i class="fa fa-edit"></i>&nbsp;Editar</button>
                     </td>

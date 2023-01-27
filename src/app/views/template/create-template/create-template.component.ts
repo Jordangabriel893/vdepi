@@ -1,7 +1,8 @@
-import { Component, OnInit, ViewChild, OnChanges, SimpleChanges, HostListener, OnDestroy, Output, EventEmitter } from '@angular/core';
-import { FormBuilder, Validators } from '@angular/forms';
+import { Component, OnInit, ViewChild, OnChanges, SimpleChanges, HostListener, OnDestroy, Output, EventEmitter, TemplateRef } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { EmailEditorComponent } from 'angular-email-editor';
+import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
 import { NotifierService } from 'angular-notifier';
 import { Restangular } from 'ngx-restangular';
 import { Subject } from 'rxjs';
@@ -28,14 +29,19 @@ export class CreateTemplateComponent implements OnInit,  OnDestroy {
   }
   cardImageBase64;
   isImageSaved
+  openPopup: boolean = true
+  modalRef: BsModalRef;
+
   constructor(
     private formBuilder: FormBuilder,
     private notifierService: NotifierService,
     private router: Router,
+    private modalService: BsModalService,
     private restangular: Restangular,
   ) {
     this.formulario =this.formBuilder.group({
-      descricao:[null, Validators.required]
+      descricao:[null, Validators.required],
+      tag:[""]
     })
 
    }
@@ -129,6 +135,14 @@ export class CreateTemplateComponent implements OnInit,  OnDestroy {
         name: 'Mensagem',
         value: '{{mensagem}}',
       },
+      data_inicio_agendamento: {
+        name: 'Data Início Agendamento',
+        value: '{{data_inicio_agendamento}}',
+      },
+      data_fim_agendamento: {
+        name: 'Data Fim Agendamento',
+        value: '{{data_fim_agendamento}}',
+      },
     });
 
     this.emailEditor.editor.registerCallback('image', function(file, done) {
@@ -161,6 +175,10 @@ export class CreateTemplateComponent implements OnInit,  OnDestroy {
     })
   }
 
+  openModal(template: TemplateRef<any>) {
+    this.modalRef = this.modalService.show(template, { class: 'modal-lg'});
+  }
+
   save(){
     this.salvar = true;
 
@@ -173,22 +191,31 @@ export class CreateTemplateComponent implements OnInit,  OnDestroy {
       this.salvar = false
       return false;
     }
+
+    if(!this.template){
+      this.notifierService.notify('error', 'Template vazio, adicione mais elementos');
+      this.salvar = false
+      return false;
+    }
+
     this.template = {
       designJson: this.template.designJson,
       codigoHtml: this.template.codigoHtml,
-      descricao: this.formulario.value.descricao
+      descricao: this.formulario.value.descricao,
+      tag: this.formulario.value.tag
     }
-      this.restangular.all('Marketing/TemplateNotificacao').post(this.template).subscribe(a => {
-        this.notifierService.notify('success', 'Template criado com sucesso');
-        this.salvar = false
-        this.router.navigate(['/template']);
-      },
 
-        error => {
-          this.salvar = false
-          this.notifierService.notify('error', 'Erro ao criar o template!');
-        });
+    this.restangular.all('Marketing/TemplateNotificacao').post(this.template).subscribe(a => {
+      this.notifierService.notify('success', 'Template criado com sucesso');
+      this.salvar = false
+      this.router.navigate(['/template']);
+    },
+    error => {
+      this.salvar = false
+      this.notifierService.notify('error', 'Erro ao criar o template!');
+    });
 
+    this.modalRef.hide()
   }
 
   verificaValidTouched(campo){
