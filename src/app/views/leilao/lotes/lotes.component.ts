@@ -1,11 +1,13 @@
-import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
-import { FormControl } from '@angular/forms';
+import { Component, ElementRef, OnInit, TemplateRef, ViewChild } from '@angular/core';
+import { FormBuilder, FormControl } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ConfirmationService, ResolveEmit } from '@jaspero/ng-confirmations';
 import { NotifierService } from 'angular-notifier';
 import * as _ from 'lodash';
 import { Restangular } from 'ngx-restangular';
 import * as fileSaver from 'file-saver';
+import { BsModalRef, BsModalService } from 'ngx-bootstrap';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-lotes',
@@ -34,20 +36,39 @@ export class LotesComponent implements OnInit {
 
   queryField = new FormControl();
   lotesFiltrados: any;
-  dataLote:any;
+  dataLote: any;
   exportando = false;
+
+  modalRef: BsModalRef;
+  leiloes;
+  sub: Subscription[] = [];
+  allChecked: boolean = false;
+  lotesSelecionados = [];
+  optionModal;
   constructor(
     private restangular: Restangular,
     private route: ActivatedRoute,
     private router: Router,
     private notifierService: NotifierService,
-    private confirmationService: ConfirmationService
+    private confirmationService: ConfirmationService,
+    private modalService: BsModalService,
+    private formBuilder: FormBuilder,
   ) {
     this.id = this.route.snapshot.params['id']
     this.getLotes();
-    this.restangular.one('leilao', this.id).get().subscribe((response) => {
+    this.sub.push(this.restangular.one('leilao', this.id).get().subscribe((response) => {
       this.leilao = response.data
-    });
+    })
+    )
+    this.formulario = this.formBuilder.group({
+      leilao: [null]
+    })
+    this.sub.push(this.restangular.all("admin").one("leilao").get().subscribe((response) => {
+      this.leiloes = response.data;
+      this.loading = false;
+    },
+      () => this.loading = false)
+    )
   }
 
   ngOnInit() {
@@ -57,17 +78,25 @@ export class LotesComponent implements OnInit {
   getLotes() {
     this.loading = true;
     this.lotes = [];
-    this.restangular.one("lote", '').get({ leilaoId: this.id}).subscribe(
+    this.sub.push(this.restangular.one("lote", '').get({ leilaoId: this.id }).subscribe(
       (lotes) => {
         this.loading = false;
         const lote = lotes.data
         this.dataLote = lote
         this.lotes = lote;
+        this.lotes = this.lotes.map(lote => {
+          lote = {
+            ...lote,
+            checked: false
+          }
+          return lote
+        })
         this.filtroLotes = lote
         this.numeroLote = lote.map(x => x.numeroLote)
         this.descricao = lote.map(x => x.descricao)
       },
       () => this.loading = false
+    )
     )
   }
 
@@ -97,17 +126,17 @@ export class LotesComponent implements OnInit {
 
   deleteLote(loteId: number) {
     this.confirmationService.create('Atenção', 'Deseja realmente excluir o lote?')
-    .subscribe((ans: ResolveEmit) => {
-      if(ans.resolved) {
-        this.restangular.one('lote', loteId).remove()
-          .subscribe((resp) => {
-            this.notifierService.notify('success', 'Lote excluido!');
-          },
-            () => {
-              this.notifierService.notify('error', 'Erro ao exclir o Lote!');
-            });
-          }
-    })
+      .subscribe((ans: ResolveEmit) => {
+        if (ans.resolved) {
+          this.restangular.one('lote', loteId).remove()
+            .subscribe((resp) => {
+              this.notifierService.notify('success', 'Lote excluido!');
+            },
+              () => {
+                this.notifierService.notify('error', 'Erro ao exclir o Lote!');
+              });
+        }
+      })
   }
 
   getAnexo() {
@@ -132,10 +161,10 @@ export class LotesComponent implements OnInit {
         this.fileError = 'Somente arquivos são permitidos ( xls | xlsx )';
         return false;
       }
-      let formData:FormData = new FormData();
+      let formData: FormData = new FormData();
       formData.append('file', fileInput.target.files[0])
 
-      this.restangular.all('lote').customPOST(formData, 'ImportacaoPlanilha', { leilaoId: this.id }, { 'content-type': undefined }).subscribe(a => {
+      this.sub.push(this.restangular.all('lote').customPOST(formData, 'ImportacaoPlanilha', { leilaoId: this.id }, { 'content-type': undefined }).subscribe(a => {
         this.notifierService.notify('success', 'Upload de planilha com sucesso');
         this.fileLoading = false
         this.getLotes();
@@ -146,7 +175,7 @@ export class LotesComponent implements OnInit {
 
           const errors = error.data.Errors;
 
-          if(errors) {
+          if (errors) {
             for (var key in errors) {
               this.notifierService.notify('error', errors[key]);
             }
@@ -155,35 +184,96 @@ export class LotesComponent implements OnInit {
             this.notifierService.notify('error', 'Upload de planilha erro!');
           }
           this.getLotes();
-        });
+        })
+      )
     }
 
   }
-
-  onSearch(){
-    if(this.queryField.value) {
+  selectAllLotes() {
+    this.lotesSelecionados = [];
+    this.lotes = this.lotes.map(lote => {
+      lote = {
+        ...lote,
+        checked: this.allChecked
+      }
+      return lote
+    })
+    if (this.allChecked) {
+      this.lotesSelecionados = this.lotes.map(lote => lote.loteId);
+    }
+  }
+  selectLote(lote) {
+    if (!lote.checked) {
+      this.lotesSelecionados.push(lote.loteId)
+    }
+    if (lote.checked) {
+      this.lotesSelecionados = this.lotesSelecionados.filter(item => item != lote.loteId);
+    }
+  }
+  onSearch() {
+    if (this.queryField.value) {
       this.lotes = this.dataLote
       this.idLote = null;
       this.descricaoTitle = '';
       let value = this.queryField.value.replace('.', '').replace('-', '').replace('/', '').toLowerCase();
-      this.lotesFiltrados = this.lotes.filter(x => x.numeroLote == value ||  x.descricao.toLowerCase().includes(value));
+      this.lotesFiltrados = this.lotes.filter(x => x.numeroLote == value || x.descricao.toLowerCase().includes(value));
 
     }
   }
 
   exportAsExcel() {
     this.exportando = true;
-    this.restangular.one(`leilao/${this.id}/exportarlotes`, )
-    .withHttpConfig({responseType: 'blob'})
-    .get()
-    .subscribe((response) => {
-      const blob = new Blob([response], { type: 'application/xlsx' });
-      fileSaver.saveAs(blob, `Lotes.xlsx`);
-      this.exportando = false;
-    },(error) => {
-      this.notifierService.notify('error', 'Não foi possivel exportar lotes!');
-      this.exportando = false;
-    })
+    this.restangular.one(`leilao/${this.id}/exportarlotes`,)
+      .withHttpConfig({ responseType: 'blob' })
+      .get()
+      .subscribe((response) => {
+        const blob = new Blob([response], { type: 'application/xlsx' });
+        fileSaver.saveAs(blob, `Lotes.xlsx`);
+        this.exportando = false;
+      }, (error) => {
+        this.notifierService.notify('error', 'Não foi possivel exportar lotes!');
+        this.exportando = false;
+      })
   }
+  copyTransferLote() {
+    const form = {
+      lotes: this.lotesSelecionados,
+      leilaoId: this.formulario.value.leilao.id
+    }  
+    if (this.optionModal == 'transferir') {
+      this.sub.push(this.restangular.all('/Lote/Mover').post(form).subscribe(a => {
+        this.notifierService.notify('success', 'Lote transferido com sucesso ');
+        this.getLotes()
+      },
+        error => {
+          this.notifierService.notify('error', 'Erro ao transferir o Lote!');
+        })
+      )
+    }
+    if (this.optionModal == 'copiar') {
+      this.sub.push(this.restangular.all('/Lote/Copiar').post(form).subscribe(a => {
+        this.notifierService.notify('success', 'Lote copiado com sucesso ');
+      },
+        error => {
+          this.notifierService.notify('error', 'Erro ao copiar o Lote!');
+        })
+      )
+    }
+
+  }
+
+  openModal(template: TemplateRef<any>, item?) {
+    if (this.lotesSelecionados.length > 0) {
+      this.optionModal = item;
+      this.modalRef = this.modalService.show(template);
+    } else {
+      this.notifierService.notify('error', 'Selecione pelo menos 1 lote');
+    }
+
+  }
+  ngOnDestroy(): void {
+    this.sub.forEach(s => s.unsubscribe())
+  }
+
 }
 
