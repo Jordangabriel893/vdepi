@@ -1,9 +1,10 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, TemplateRef } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 import { NotifierService } from 'angular-notifier';
 import { Restangular } from 'ngx-restangular';
 import { EmailEditorComponent } from 'angular-email-editor';
+import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
 @Component({
   selector: 'app-update-template',
   templateUrl: './update-template.component.html',
@@ -31,7 +32,11 @@ export class UpdateTemplateComponent implements OnInit {
   }
   cardImageBase64;
   isImageSaved;
+  openPopup: boolean = true
+  modalRef: BsModalRef;
+
   constructor(
+    private modalService: BsModalService,
     private formBuilder: FormBuilder,
     private notifierService: NotifierService,
     private router: Router,
@@ -41,7 +46,8 @@ export class UpdateTemplateComponent implements OnInit {
     this.id = this.route.snapshot.params['id']
 
     this.formulario = this.formBuilder.group({
-      descricao: [null, Validators.required]
+      descricao: [null, Validators.required],
+      tag: [""]
     })
   }
 
@@ -49,7 +55,8 @@ export class UpdateTemplateComponent implements OnInit {
     this.restangular.all('marketing/TemplateNotificacao').get(this.id).subscribe(dados => {
       this.designJson = JSON.parse(dados.data.designJson);
       this.formulario = this.formBuilder.group({
-        descricao: [dados.data.descricao, Validators.required]
+        descricao: [dados.data.descricao, Validators.required],
+        tag: [""]
       })
     })
 
@@ -133,6 +140,14 @@ export class UpdateTemplateComponent implements OnInit {
         name: 'Mensagem',
         value: '{{mensagem}}',
       },
+      data_inicio_agendamento: {
+        name: 'Data Início Agendamento',
+        value: '{{data_inicio_agendamento}}',
+      },
+      data_fim_agendamento: {
+        name: 'Data Fim Agendamento',
+        value: '{{data_fim_agendamento}}',
+      },
     });
 
     this.emailEditor.editor.registerCallback('image', function(file, done) {
@@ -177,6 +192,10 @@ export class UpdateTemplateComponent implements OnInit {
     })
   }
 
+  openModal(template: TemplateRef<any>) {
+    this.modalRef = this.modalService.show(template, { class: 'modal-lg'});
+  }
+
   save() {
     this.salvar = true;
 
@@ -189,24 +208,32 @@ export class UpdateTemplateComponent implements OnInit {
       this.salvar = false
       return false;
     }
+
+    if(!this.template){
+      this.notifierService.notify('error', 'Template vazio, adicione mais elementos');
+      this.salvar = false
+      return false;
+    }
+
     this.template = {
       designJson: this.template.designJson,
       codigoHtml: this.template.codigoHtml,
       descricao: this.formulario.value.descricao,
-      templateNotificacaoId:this.id
-
+      templateNotificacaoId:this.id,
+      tag: this.formulario.value.tag
     }
+
     this.restangular.all('Marketing/TemplateNotificacao').customPUT(this.template, this.id).subscribe(a => {
       this.salvar = false;
       this.notifierService.notify('success', 'Template atualizado com sucesso');
       this.router.navigate(['template'])
     },
-      error => {
-        this.salvar = false;
-        this.notifierService.notify('error', 'Erro ao atualizar o template!');
-      });
+    error => {
+      this.salvar = false;
+      this.notifierService.notify('error', 'Erro ao atualizar o template!');
+    });
 
-
+    this.modalRef.hide()
   }
 
   setDesign() {

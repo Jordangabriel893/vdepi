@@ -111,7 +111,6 @@ export class HabilitacaoComponent implements OnInit {
     this.solicitacaoHabilitacaoId = solicitacaoHabilitacaoId
     this.solicitacaoHabilitacaoIdDesabilitar = solicitacaoHabilitacaoId
     this.existeRecusado(this.documentosUsuario.documentos)
-
   }
 
   getTipoRegra(tipoRegra) {
