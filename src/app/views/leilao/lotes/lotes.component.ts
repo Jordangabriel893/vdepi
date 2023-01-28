@@ -84,6 +84,7 @@ export class LotesComponent implements OnInit {
         const lote = lotes.data
         this.dataLote = lote
         this.lotes = lote;
+        this.lotesFiltrados = lote;
         this.lotes = this.lotes.map(lote => {
           lote = {
             ...lote,
@@ -217,7 +218,9 @@ export class LotesComponent implements OnInit {
       this.descricaoTitle = '';
       let value = this.queryField.value.replace('.', '').replace('-', '').replace('/', '').toLowerCase();
       this.lotesFiltrados = this.lotes.filter(x => x.numeroLote == value || x.descricao.toLowerCase().includes(value));
-
+    }
+    else {
+      this.lotesFiltrados = this.dataLote;
     }
   }
 
@@ -239,23 +242,25 @@ export class LotesComponent implements OnInit {
     const form = {
       lotes: this.lotesSelecionados,
       leilaoId: this.formulario.value.leilao.id
-    }  
-    if (this.optionModal == 'transferir') {
+    }
+    if (this.optionModal == 'Transferir') {
       this.sub.push(this.restangular.all('/Lote/Mover').post(form).subscribe(a => {
-        this.notifierService.notify('success', 'Lote transferido com sucesso ');
-        this.getLotes()
+        this.notifierService.notify('success', 'Lotes transferidos com sucesso');
+        this.getLotes();
       },
         error => {
-          this.notifierService.notify('error', 'Erro ao transferir o Lote!');
+          this.notifierService.notify('error', 'Erro ao transferir os Lotes!');
         })
       )
     }
-    if (this.optionModal == 'copiar') {
+
+    if (this.optionModal == 'Copiar') {
       this.sub.push(this.restangular.all('/Lote/Copiar').post(form).subscribe(a => {
-        this.notifierService.notify('success', 'Lote copiado com sucesso ');
+        this.notifierService.notify('success', 'Lotes copiados com sucesso');
+        this.getLotes();
       },
         error => {
-          this.notifierService.notify('error', 'Erro ao copiar o Lote!');
+          this.notifierService.notify('error', 'Erro ao copiar os Lotes!');
         })
       )
     }
