@@ -134,7 +134,7 @@ export class LotesComponent implements OnInit {
               this.notifierService.notify('success', 'Lote excluido!');
             },
               () => {
-                this.notifierService.notify('error', 'Erro ao exclir o Lote!');
+                this.notifierService.notify('error', 'Erro ao excluir o Lote!');
               });
         }
       })
