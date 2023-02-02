@@ -32,6 +32,9 @@
                     <th>
                       <mfDefaultSorter by="predefinido">Pré-Definida</mfDefaultSorter>
                     </th>
+                    <th>
+                      <mfDefaultSorter by="qtdContatos">Contatos</mfDefaultSorter>
+                    </th>
                     <th class="text-center" >
                       Editar
                     </th>
@@ -45,6 +48,7 @@
                     <td>{{item.dataCadastro | date:'dd/MM/yyyy'}}</td>
                     <td>{{item.ativo == true ? 'Sim' : 'Não'}}</td>
                     <td>{{item.predefinido == true ? 'Sim' : 'Não'}}</td>
+                    <td><a *ngIf="!item.predefinido" class="link-primary" role="button" (click)="downloadContatos(item.listaContatoId)">{{item.qtdContatos}}</a></td>
                     <td class="text-center" nowrap>
                       <button type="button" class="btn btn-primary" (click)="edit(item.listaContatoId)" *ngIf="!item.predefinido">
                         <i class="fa fa-edit"></i>&nbsp;Editar

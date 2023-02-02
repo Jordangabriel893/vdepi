@@ -3,6 +3,8 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Restangular } from 'ngx-restangular';
 import * as Model from '../_models/model'
+import * as fileSaver from 'file-saver'
+import { NotifierService } from 'angular-notifier';
 
 @Component({
   selector: 'app-lista-contatos',
@@ -20,17 +22,18 @@ export class ListaContatosComponent implements OnInit {
     private router: Router,
     private restangular: Restangular,
     private formBuilder: FormBuilder,
+    private notifierService: NotifierService,
   ) {
     this.formulario = this.formBuilder.group({
-      leilao:[null]
+      leilao: [null]
     })
-   }
+  }
 
   ngOnInit() {
 
     this.restangular.one('marketing/listacontato').get().subscribe(
-      dados =>{
-        this.listas= dados.data
+      dados => {
+        this.listas = dados.data
         this.loading = false;
       },
       () => this.loading = false
@@ -39,5 +42,16 @@ export class ListaContatosComponent implements OnInit {
   }
   edit(id) {
     this.router.navigate(['/edit-listacontatos', id], { relativeTo: this.route });
+  }
+  downloadContatos(id) {
+    this.restangular.one('marketing/listacontato/download/' + id)
+      .withHttpConfig({ responseType: 'blob' })
+      .get()
+      .subscribe(dados => {
+        var file = new Blob([dados], { type: 'text/plain' });
+        fileSaver.saveAs(file, `Contatos.txt`);
+      }, error => {
+        this.notifierService.notify('error', 'Não foi possivel fazer download da lista de contatos!');
+      });
   }
 }
