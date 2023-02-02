@@ -49,7 +49,7 @@ export class CreateFaturaComponent implements OnInit, OnDestroy {
   maskCep: (string | RegExp)[];
   maskCpf: (string | RegExp)[];
   maskCnpj: (string | RegExp)[];
-
+  isCpf = true;
   sub: Subscription[] = [];
 
   people$: Observable<any>;
@@ -76,8 +76,6 @@ export class CreateFaturaComponent implements OnInit, OnDestroy {
     private cepService: ConsultaCepService,
   ) {
     localeService.use('pt-br');
-    this.minDate = new Date();
-    this.minDate.setDate(this.minDate.getDate());
     this.mask = ['(', /[1-9]/, /\d/, ')', ' ', /\d/, /\d/, /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/]
     this.maskTelefoneFixo = ['(', /[1-9]/, /\d/, ')', ' ', /\d/, /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/]
     this.maskCep = [/\d/, /\d/, /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/,]
@@ -119,11 +117,24 @@ export class CreateFaturaComponent implements OnInit, OnDestroy {
   onSubmit() {
     this.salvando = true;
     const formulario = {...this.formulario.value}
+    Object.keys(this.formulario.controls).forEach((campo)=>{
+      const controle = this.formulario.get(campo)
+      controle.markAsTouched()
+    })
+
+    if(moment(this.formulario.controls.dataLimite.value).utc().diff(moment().utc(), 'day') < 0) {
+      this.notifierService.notify('error', 'A Data Expiração não pode ser menor que hoje');
+      this.salvando = false;
+      return false;
+    }
+
+    if(moment(this.formulario.controls.dataVencimento.value).utc().diff(moment().utc(), 'day') < 0) {
+      this.notifierService.notify('error', 'A Data de Vencimento não pode ser menor que hoje');
+      this.salvando = false;
+      return false;
+    }
+
     if(!this.formulario.valid){
-      Object.keys(this.formulario.controls).forEach((campo)=>{
-        const controle = this.formulario.get(campo)
-        controle.markAsTouched()
-      })
       this.notifierService.notify('error', 'Preencha todos os campos obrigatórios');
       this.salvando = false;
       return false;
@@ -318,9 +329,9 @@ export class CreateFaturaComponent implements OnInit, OnDestroy {
         leilaoId: [null, [Validators.required]],
         cobrancaId: [null, [Validators.required]],
         cliente: this.formBuilder.group({
-          nome: [null, [Validators.required, Validators.minLength(3), Validators.maxLength(35)]],
+          nome: [null, [Validators.required, Validators.minLength(3)]],
           email: [null, [Validators.required, Validators.email]],
-          telefone: [null, [Validators.required]],
+          telefone: [null],
           cpfCnpj: [null, [Validators.required, Validators.minLength(11)]],
           logradouro: [null],
           logradouroNumero: [null],
@@ -447,6 +458,19 @@ export class CreateFaturaComponent implements OnInit, OnDestroy {
   onValueChange(event, campo) {
     this.formulario.get(campo).markAsTouched();
     this.formulario.get(campo).setValue(event);
+  }
+
+  public cpfcnpjmask = function (value) {
+    let numbers = value.match(/\d/g);
+    let numberLength = 0;
+    if (numbers) {
+      numberLength = numbers.join('').length;
+    }
+    if (numberLength <= 11) {
+      return [/[0-9]/, /[0-9]/, /[0-9]/, '.', /[0-9]/, /[0-9]/, /[0-9]/, '.', /[0-9]/, /[0-9]/, /[0-9]/, '-', /[0-9]/, /[0-9]/];
+    } else {
+      return [/[0-9]/, /[0-9]/, '.', /[0-9]/, /[0-9]/, /[0-9]/, '.', /[0-9]/, /[0-9]/, /[0-9]/, '/', /[0-9]/, /[0-9]/, /[0-9]/, /[0-9]/, '-', /[0-9]/, /[0-9]/];
+    }
   }
 
   ngOnDestroy(): void {

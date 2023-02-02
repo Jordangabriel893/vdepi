@@ -63,15 +63,15 @@
                     <label for="dataLimite">Data Expiração </label>
                     <input type="text" class="form-control" [ngClass]="aplicaCssErro('dataLimite')" id="dataLimite"
                       placeholder="DD/MM/AAAA" formControlName="dataLimite"
-                      [bsConfig]="{ dateInputFormat: 'DD/MM/YYYY' }" bsDatepicker [minDate]="minDate"
-                      (bsValueChange)="onValueChange($event, 'dataLimite')">
+                      [bsConfig]="{ dateInputFormat: 'DD/MM/YYYY' }" bsDatepicker
+                      >
                   </div>
                   <div class="form-group col-6">
                     <label for="dataVencimento">Data de Vencimento </label>
                     <input type="text" class="form-control" [ngClass]="aplicaCssErro('dataVencimento')"
                       id="dataAberturaLance" placeholder="DD/MM/AAAA" formControlName="dataVencimento"
                       [bsConfig]="{ dateInputFormat: 'DD/MM/YYYY' }" bsDatepicker
-                      (bsValueChange)="onValueChange($event, 'dataVencimento')">
+                      >
                   </div>
                   <div class="col-md-12">
                     <label for="formasPagamento">Formas de pagamento:</label>
@@ -115,18 +115,18 @@
           <div class="card-block">
             <div class="row">
               <div class="form-group col-7">
-                <label for="nome">Nome</label>
+                <label for="nome">Nome*</label>
                 <input type="text" class="form-control" id="nome" formControlName="nome">
               </div>
               <div class="form-group col-5">
-                <label for="cpfCnpj">CPF/CNPJ</label>
+                <label for="cpfCnpj">CPF/CNPJ*</label>
                 <input type="text" class="form-control" id="cpfCnpj" formControlName="cpfCnpj"
-                  [textMask]="{mask: maskCpf}">
+                  [textMask]="{mask: cpfcnpjmask}">
               </div>
             </div>
             <div class="row">
               <div class="form-group col-7">
-                <label for="email">Email</label>
+                <label for="email">Email*</label>
                 <input type="text" class="form-control" id="email" formControlName="email">
               </div>
               <div class="form-group col-5">
@@ -170,7 +170,9 @@
                 <input type="text" class="form-control" id="estado" formControlName="estado">
               </div>
             </div>
-
+            <div class="row">
+              <div class="col-12"><small><p>Obs.: Campos com asteristico(*) são obrigatórios</p></small></div>
+            </div>
           </div>
 
         </div>
