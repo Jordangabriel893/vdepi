@@ -1,9 +1,9 @@
-import { Component, OnDestroy, OnInit, TemplateRef } from '@angular/core';
+import { Component, ElementRef, OnDestroy, OnInit, TemplateRef, ViewChild, ViewContainerRef } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { BsModalRef, BsModalService } from 'ngx-bootstrap';
+import { BsLocaleService, BsModalRef, BsModalService } from 'ngx-bootstrap';
 import { Restangular } from 'ngx-restangular';
-import { Subscription } from 'rxjs';
+import { Subscription, Subject } from 'rxjs';
 import * as moment from 'moment';
 import * as XLSX from 'xlsx';
 import { PdfService } from 'app/_services/pdf.service';
@@ -14,6 +14,10 @@ import { PdfService } from 'app/_services/pdf.service';
 })
 
 export class LogComponent implements OnInit, OnDestroy {
+  @ViewChild('iframe') iframe: ElementRef;
+  @ViewChild('template', { read: ViewContainerRef }) template;
+  data$: Subject<string> = new Subject();
+
   id;
   filtro: FormGroup;
   notificacao;
@@ -25,12 +29,16 @@ export class LogComponent implements OnInit, OnDestroy {
   mensagem;
   logsDefault;
   logsExcel;
+  bsValue = new Date();
+  bsRangeValue: Date[];
+  maxDate = new Date();
   constructor(
     private route: ActivatedRoute,
     private restangular: Restangular,
     private formBuilder: FormBuilder,
     private modalService: BsModalService,
     private pdfService: PdfService,
+    private localeService: BsLocaleService
   ) {
     this.id = this.route.snapshot.params['id'];
     this.sub.push(
@@ -60,19 +68,26 @@ export class LogComponent implements OnInit, OnDestroy {
         () => this.loading = false
       )
     )
+    
   }
 
   ngOnInit() {
+
     this.filtro = this.formBuilder.group({
-      de: [null],
-      ate: [null],
+      data:[],
       email: [null],
     })
+    this.modalService.onShown.subscribe(() => {
+      let iframe = document.getElementById("iframe")
+      this.setIframeReady(iframe)
+    })
+    this.bsRangeValue = [this.bsValue, this.maxDate];
+    this.applyLocale();
   }
 
   openModal(template: TemplateRef<any>, mensagem) {
     this.mensagem = mensagem;
-    this.modalRef = this.modalService.show(template, { class: 'modal-lg' });
+    this.modalRef = this.modalService.show(template, { class: 'modal-lg' }); 
   }
 
   onValueChange(event, campo) {
@@ -82,29 +97,14 @@ export class LogComponent implements OnInit, OnDestroy {
   }
 
   filtrar() {
-    const de = this.filtro.controls["de"].value;
-    const ate = this.filtro.controls["ate"].value;
+    const datas = this.filtro.controls["data"].value
+    const de = datas[0]
+    const ate = datas[1]
     let logsFiltrados = this.logsDefault;
-    if (de) {
-      const deFormatada = moment(de, moment.defaultFormat).toDate();
-      logsFiltrados = logsFiltrados.filter((item: any) => {
-        const dataEnvioFormatada = moment(item.dataEnvio, moment.defaultFormat).toDate();
-        return dataEnvioFormatada >= deFormatada
-      })
-    }
-    if (ate) {
-      const ateFormatada = moment(ate, moment.defaultFormat).toDate();
-      logsFiltrados = logsFiltrados.filter((item: any) => {
-        const dataEnvioFormatada = moment(item.dataEnvio, moment.defaultFormat).toDate();
-        return dataEnvioFormatada <= ateFormatada
-      })
-    }
     if (de && ate) {
-      const deFormatada = moment(de, moment.defaultFormat).toDate();
-      const ateFormatada = moment(ate, moment.defaultFormat).toDate();
       logsFiltrados = logsFiltrados.filter((item: any) => {
         const dataEnvioFormatada = moment(item.dataEnvio, moment.defaultFormat).toDate();
-        return dataEnvioFormatada >= deFormatada && dataEnvioFormatada <= ateFormatada
+        return dataEnvioFormatada >= de && dataEnvioFormatada <= ate
       })
 
     }
@@ -203,7 +203,16 @@ export class LogComponent implements OnInit, OnDestroy {
     this.pdfService.exportPdf('Logs', "Logs", rows, columns, columStyles, header, null);
   }
 
-
+  setIframeReady(iframe) {
+    const win: Window = iframe.contentWindow;
+    const doc: Document = win.document;
+    doc.open();
+    doc.write(this.mensagem);
+   
+  }
+  applyLocale(){
+    this.localeService.use('pt-br');
+  }
   ngOnDestroy(): void {
     this.sub.forEach(s => s.unsubscribe())
   }
