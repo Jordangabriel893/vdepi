@@ -17,20 +17,16 @@ export class CreateListacontatosComponent implements OnInit {
   status: any;
   file: File;
   loading = true;
-  contato;
-  contatos = [];
   fileName = "";
   fileOption: boolean = true;
   textoption: boolean = false;
-  sub: Subscription[] = [];
 
   constructor(
     private formBuilder: FormBuilder,
     private restangular: Restangular,
     private notifierService: NotifierService,
     private router: Router,
-  ) {
-  }
+  ) {}
 
   ngOnInit() {
 
@@ -46,17 +42,17 @@ export class CreateListacontatosComponent implements OnInit {
       }
     )
 
-    this.restangular.one("marketing/Contato", '').get().subscribe((response) => {
-      this.contato = response.data
-      this.updateContatos(response.data)
-      this.loading = false;
-    },
-      () => this.loading = false);
+    this.formulario = this.formBuilder.group({
+      listaContatoId: [0],
+      descricao: [null, Validators.required],
+      empresaId: [null],
+      file: [null],
+      emails: [""]
+    })
 
   }
-  onSubmit() {
-    const arrayContatosIds = this.contatos.map(x => x.contatoId)
 
+  onSubmit() {
     if (this.fileOption) {
       let formData: FormData = new FormData();
       formData.append('file', this.file)
@@ -81,7 +77,6 @@ export class CreateListacontatosComponent implements OnInit {
         listaContatoId: this.formulario.value.listaContatoId,
         descricao: this.formulario.value.descricao,
         empresaId: this.formulario.value.empresaId,
-        contatos: arrayContatosIds,
         emails: this.formulario.value.emails
       };
 
@@ -89,17 +84,18 @@ export class CreateListacontatosComponent implements OnInit {
         this.notifierService.notify('success', 'Lista criada com sucesso');
         this.router.navigate(['/listacontatos']);
       },
-        error => {
-          this.notifierService.notify('error', 'Erro ao criar lista de contato!');
+      error => {
+        this.notifierService.notify('error', 'Erro ao criar lista de contato!');
 
-          Object.keys(this.formulario.controls).forEach((campo) => {
-            const controle = this.formulario.get(campo)
-            controle.markAsTouched()
-          })
-        });
+        Object.keys(this.formulario.controls).forEach((campo) => {
+          const controle = this.formulario.get(campo)
+          controle.markAsTouched()
+        })
+      });
     }
 
   }
+
   verificaValidTouched(campo) {
     return !this.formulario.get(campo).valid && this.formulario.get(campo).touched;
   }
@@ -111,17 +107,6 @@ export class CreateListacontatosComponent implements OnInit {
   onValueChange(event, campo) {
     this.formulario.get(campo).markAsTouched();
     this.formulario.get(campo).setValue(event);
-  }
-
-  updateContatos(contatos) {
-    this.formulario = this.formBuilder.group({
-      listaContatoId: [0],
-      descricao: [null, Validators.required],
-      empresaId: [null],
-      contatos: this.formBuilder.array(contatos ? contatos.map(x => this.formBuilder.group({ ...x, value: false })) : [], Validators.required),
-      file: [null],
-      emails: [""]
-    })
   }
 
   handleFile(file: File) {
