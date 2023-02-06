@@ -11,11 +11,11 @@
             <div class="row ">
               <div class="form-group col-6" >
                 <label for="titulo">Título</label>
-                <input type="text" class="form-control" [ngClass]="aplicaCssErro('titulo')" id="titulo" placeholder="Título" name="Título" formControlName="titulo" >
+                <input type="text" class="form-control" [ngClass]="aplicaCssErro('titulo')" (keyup)="formatRota()" id="titulo" placeholder="Título" name="Título" formControlName="titulo" >
               </div>
               <div class="form-group col-6">
                 <label for="rota">URL</label>
-                <input type="text" class="form-control" [ngClass]="aplicaCssErro('rota')" id="rota"  formControlName="rota">
+                <input type="text" class="form-control" disabled [ngClass]="aplicaCssErro('rota')" id="rota"  formControlName="rota">
               </div>
           </div>
         </div>

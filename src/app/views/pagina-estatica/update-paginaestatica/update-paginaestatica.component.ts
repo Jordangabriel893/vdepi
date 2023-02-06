@@ -97,7 +97,12 @@ export class UpdatePaginaestaticaComponent implements OnInit {
     })
   }
 
-
+  formatRota(){
+    const titulo = this.formulario.value.titulo
+    let value =  titulo.toLowerCase();
+    value =  value.split(/\s+/).join('-')
+    this.formulario.get('rota').patchValue(value)
+  }
   verificaValidTouched(campo){
     return !this.formulario.get(campo).valid && this.formulario.get(campo).touched;
   }
