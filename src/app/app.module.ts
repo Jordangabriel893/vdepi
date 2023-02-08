@@ -221,6 +221,11 @@ import { CreateConfiguracaoComponent } from './views/configuracao/create-configu
 import { UpdateConfiguracaoComponent } from './views/configuracao/update-configuracao/update-configuracao.component';
 import { AgendamentoComponent } from './views/agendamento/agendamento.component';
 import { LogComponent } from './views/notificacoes/log/log.component';
+import { PaginaEstaticaComponent } from './views/pagina-estatica/pagina-estatica.component';
+import { CreatePaginaestaticaComponent } from './views/pagina-estatica/create-paginaestatica/create-paginaestatica.component';
+import { UpdatePaginaestaticaComponent } from './views/pagina-estatica/update-paginaestatica/update-paginaestatica.component';
+import { SaveCancelButtonsComponent } from './components/form/save-cancel-buttons/save-cancel-buttons.component';
+import { BackButtonComponent } from './components/form/back-button/back-button.component';
 
 
 export function RestangularConfigFactory(RestangularProvider, NotifierService: NotifierService) {
@@ -375,7 +380,12 @@ export function RestangularConfigFactory(RestangularProvider, NotifierService: N
     CreateConfiguracaoComponent,
     UpdateConfiguracaoComponent,
     AgendamentoComponent,
-    LogComponent
+    LogComponent,
+    PaginaEstaticaComponent,
+    CreatePaginaestaticaComponent,
+    UpdatePaginaestaticaComponent,
+    SaveCancelButtonsComponent,
+    BackButtonComponent
   ],
   providers: [{
     provide: LocationStrategy,

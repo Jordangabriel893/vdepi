@@ -98,9 +98,11 @@
 
           </div>
           <div class="card-footer">
-            <button type="submit" class="btn btn-primary saveCancel"><i class="fa fa-save"></i> Salvar</button>
+            <!-- <button type="submit" class="btn btn-primary saveCancel"><i class="fa fa-save"></i> Salvar</button>
             <button type="reset" class="btn btn-danger" [routerLink]="['/contatos']"><i class="fa fa-undo"></i>
-              Cancelar</button>
+              Cancelar</button> -->
+              <app-save-cancel-buttons [route]="'/contatos'" [buttonDisabled]="!formulario.valid"></app-save-cancel-buttons>
+
           </div>
         </div>
       </div>

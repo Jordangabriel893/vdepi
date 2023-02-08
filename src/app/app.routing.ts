@@ -1,3 +1,6 @@
+import { UpdatePaginaestaticaComponent } from './views/pagina-estatica/update-paginaestatica/update-paginaestatica.component';
+import { CreatePaginaestaticaComponent } from './views/pagina-estatica/create-paginaestatica/create-paginaestatica.component';
+import { PaginaEstaticaComponent } from './views/pagina-estatica/pagina-estatica.component';
 import { LogComponent } from './views/notificacoes/log/log.component';
 import { UpdateConfiguracaoComponent } from './views/configuracao/update-configuracao/update-configuracao.component';
 import { ConfiguracaoComponent } from './views/configuracao/configuracao.component';
@@ -477,6 +480,33 @@ export const routes: Routes = [
         canActivate: [SourceGuard]
       },
       {
+        path: 'paginaEstatica',
+        component: PaginaEstaticaComponent,
+        data: {
+          title: 'Página Estática',
+          source: 'GERENCIADOR_SITE'
+        },
+        canActivate: [SourceGuard]
+      },
+      {
+        path: 'create-paginaestatica',
+        component: CreatePaginaestaticaComponent,
+        data: {
+          title: 'Criar Página Estática',
+          source: 'GERENCIADOR_SITE'
+        },
+        canActivate: [SourceGuard]
+      },
+      {
+        path: 'update-paginaestatica/:id',
+        component: UpdatePaginaestaticaComponent,
+        data: {
+          title: 'Editar Página Estática',
+          source: 'GERENCIADOR_SITE'
+        },
+        canActivate: [SourceGuard]
+      },
+      {
         path: 'template',
         component: TemplateComponent,
         data: {
@@ -697,7 +727,7 @@ export const routes: Routes = [
         component: BannerComponent,
         data: {
           title: 'Banner',
-          source: 'STATUS_LEILAO'
+          source: 'GERENCIADOR_SITE'
         },
         canActivate: [SourceGuard]
       },
@@ -706,7 +736,7 @@ export const routes: Routes = [
         component: CreateBannerComponent,
         data: {
           title: 'Novo Banner',
-          source: 'STATUS_LEILAO'
+          source: 'GERENCIADOR_SITE'
         },
         canActivate: [SourceGuard]
       },
@@ -715,7 +745,7 @@ export const routes: Routes = [
         component: EditBannerComponent,
         data: {
           title: 'Editar Banner',
-          source: 'STATUS_LEILAO'
+          source: 'GERENCIADOR_SITE'
         },
         canActivate: [SourceGuard]
       },

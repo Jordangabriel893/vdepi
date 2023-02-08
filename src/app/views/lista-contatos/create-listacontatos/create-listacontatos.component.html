@@ -72,12 +72,7 @@
             </div>
           </div>
           <div class="card-footer">
-            <button type="submit" class="btn btn-primary saveCancel mr-1" [disabled]="formulario.invalid"><i class="fa fa-save"></i> Salvar</button>
-            <button type="reset" class="btn btn-danger" [routerLink]="['/listacontatos']"><i class="fa fa-undo"></i>
-              Cancelar</button>
-
-            <!-- <button  class="btn btn-warning" ><i class="fa fa-undo"></i>
-                Desativar</button> -->
+            <app-save-cancel-buttons [route]="'/listacontatos'" [buttonDisabled]="!formulario.valid"></app-save-cancel-buttons>
           </div>
         </div>
       </div>
