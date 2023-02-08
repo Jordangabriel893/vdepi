@@ -147,6 +147,26 @@ export const navigation = [
     source: 'CONFIG_AGENDAMENTO',
     grupo:'MARKETING'
   },
+  
+  {
+    title: true,
+    name: 'GERENCIADOR SITE',
+    grupo:'GERENCIADOR SITE'
+  },
+  {
+    name: 'Banner',
+    url: '/banner',
+    icon: 'fa fa-images',
+    source: 'GERENCIADOR_SITE',
+    grupo:'GERENCIADOR SITE'
+  },
+  {
+    name: 'Página Estática',
+    url: '/paginaEstatica',
+    icon: 'fa fa-window-maximize',
+    source: 'GERENCIADOR_SITE',
+    grupo:'GERENCIADOR SITE'
+  },
   {
     title: true,
     name: 'CADASTROS',
@@ -215,11 +235,5 @@ export const navigation = [
     source: 'STATUS_LEILAO',
     grupo:'CADASTROS'
   },
-  {
-    name: 'Banner',
-    url: '/banner',
-    icon: 'fa fa-images',
-    source: 'STATUS_LEILAO',
-    grupo:'CADASTROS'
-  },
+
 ];

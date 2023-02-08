@@ -40,60 +40,39 @@
             &nbsp;Contatos
           </div>
           <div class="card-block">
-            <div class="row" >
-              <div class="col-12">
-                <div class="row ">
-                  <table class="table table-striped" [mfData]="contato" #mfContatos="mfDataTable" [mfRowsOnPage]="5">
-                    <thead>
-                      <tr>
-
-                        <th>
-                          <mfDefaultSorter by="nomeCompleto">Nome</mfDefaultSorter>
-                        </th>
-                        <th>
-                          <mfDefaultSorter by="email">Email</mfDefaultSorter>
-                        </th>
-                        <th>
-                          <mfDefaultSorter by="telefoneCelular">Telefone:</mfDefaultSorter>
-                        </th>
-                        <th>
-                          <mfDefaultSorter by="incluir">Incluir:</mfDefaultSorter>
-                        </th>
-                      </tr>
-                    </thead>
-                    <tbody formArrayName="contatos" *ngIf="this.formulario.value.contatos.length > 0">
-                      <tr *ngFor="let item of mfContatos.data; let i = index">
-                        <td>{{item.nomeCompleto}}</td>
-                        <td>{{item.email}}</td>
-                        <td>{{item.telefoneCelular}}</td>
-                        <td id="jstf-cnt" [formGroupName]="i" ><input type="checkbox" formControlName="value" (click)="incluirContato(item)" ></td>
-                      </tr>
-                      <tr *ngIf="loading">
-                        <td class="text-center text-muted" colspan="9">
-                          <h5><i class="fa fa-spin fa-spinner"></i>&nbsp;Carregando...</h5>
-                        </td>
-                      </tr>
-                    </tbody>
-                    <tfoot>
-                      <tr>
-                        <td colspan="9">
-                          <mfBootstrapPaginator [rowsOnPageSet]="[5,10,25]"></mfBootstrapPaginator>
-                        </td>
-                      </tr>
-                    </tfoot>
-                  </table>
-
-                </div>
+            <nav class="menu-option">
+              <ul>
+                <li (click)="showMenu('textOption')" [ngClass]="{optionActive: textOption}">Texto</li>
+                <li (click)="showMenu('fileOption')" [ngClass]="{optionActive: fileOption}">Arquivo</li>
+              </ul>
+            </nav>
+            <div class="text-center">
+              <div *ngIf="fileOption" class="form-group fileUpload">
+                <button type="button" (click)="fileInput.click()" class="btn btn-primary">
+                    <i class="fa fa-file fa-3x"></i>
+                </button>
+                <p *ngIf="file === undefined; else fileName">Faça upload de um arquivo txt <abbr title="emails separados por virgula"><i class="fa fa-light fa-question"></i></abbr> </p>
+                <ng-template #fileName><p>{{file.name}}</p></ng-template>
+                <input
+                  #fileInput
+                  hidden
+                  [formControl]="formulario.controls['file']"
+                  type="file"
+                  accept="text/plain"
+                  (change)="handleFile($event.target.files[0])"
+                >
               </div>
+            </div>
+            <div *ngIf="textOption" class="form-group">
+              <textarea
+                class="form-control text-option"
+                placeholder="teste@gmail.com,teste2@gmail.com,teste3@gmail.com..."
+                [ngClass]="aplicaCssErro('emails')" id="emails" name="emails" formControlName="emails">
+              </textarea>
             </div>
           </div>
           <div class="card-footer">
-            <button type="submit" class="btn btn-primary saveCancel"><i class="fa fa-save"></i> Salvar</button>
-            <button type="reset" class="btn btn-danger" [routerLink]="['/listacontatos']"><i class="fa fa-undo"></i>
-              Cancelar</button>
-
-            <!-- <button  class="btn btn-warning" ><i class="fa fa-undo"></i>
-                Desativar</button> -->
+            <app-save-cancel-buttons [route]="'/listacontatos'" [buttonDisabled]="!formulario.valid"></app-save-cancel-buttons>
           </div>
         </div>
       </div>

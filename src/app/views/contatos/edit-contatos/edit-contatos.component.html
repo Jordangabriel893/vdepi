@@ -98,9 +98,10 @@
 
           </div>
           <div class="card-footer">
-            <button type="submit" class="btn btn-primary saveCancel"><i class="fa fa-save"></i> Salvar</button>&nbsp;&nbsp;
-            <button type="reset" class="btn btn-danger" [routerLink]="['/contatos']"><i class="fa fa-undo"></i> Cancelar</button>&nbsp;&nbsp;
-            <button  class="btn btn-warning" (click)="desativar()" ><i class="fa fa-undo"></i>Desativar</button>
+            <!-- <button type="submit" class="btn btn-primary saveCancel"><i class="fa fa-save"></i> Salvar</button>&nbsp;&nbsp;
+            <button type="reset" class="btn btn-danger" [routerLink]="['/contatos']"><i class="fa fa-undo"></i> Cancelar</button>&nbsp;&nbsp; -->
+            <app-save-cancel-buttons [route]="'/contatos'" [buttonDisabled]="!formulario.valid"></app-save-cancel-buttons>
+            <button  class="btn btn-warning ml-1" (click)="desativar()" ><i class="fa fa-undo"></i>Desativar</button>
           </div>
         </div>
       </div>
