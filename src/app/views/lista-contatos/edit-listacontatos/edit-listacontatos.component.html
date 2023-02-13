@@ -53,6 +53,11 @@
                 </button>
                 <p *ngIf="file === undefined; else fileName">Faça upload de um arquivo txt <abbr title="emails separados por virgula"><i class="fa fa-light fa-question"></i></abbr> </p>
                 <ng-template #fileName><p>{{file.name}}</p></ng-template>
+                <div *ngIf="loading">
+                  <h5 >
+                    <i class="fa fa-spin fa-spinner"></i>&nbsp;Inserindo contatos...
+                  </h5>
+                </div>
                 <input
                   #fileInput
                   hidden
@@ -75,9 +80,7 @@
             <button type="submit" class="btn btn-primary saveCancel mr-1" [disabled]="formulario.invalid"><i class="fa fa-save"></i> Salvar</button>
             <button type="reset" class="btn btn-danger" [routerLink]="['/listacontatos']"><i class="fa fa-undo"></i>
               Cancelar</button>
-
-            <!-- <button  class="btn btn-warning" ><i class="fa fa-undo"></i>
-                Desativar</button> -->
+            <div  class="btn btn-warning ml-1" (click)="desativar()"><i class="fa fa-undo"></i>Desativar</div>
           </div>
         </div>
       </div>
