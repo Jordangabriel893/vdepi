@@ -49,8 +49,10 @@ export class EditListacontatosComponent implements OnInit {
   }
 
   onSubmit(){
+    this.loading = true;
 
     if(!this.formulario.valid){
+      this.loading = false;
       Object.keys(this.formulario.controls).forEach((campo)=>{
         const controle = this.formulario.get(campo)
         controle.markAsTouched()
@@ -69,10 +71,13 @@ export class EditListacontatosComponent implements OnInit {
 
       this.restangular.all('marketing/listaContato/file')
       .customPUT(formData, this.id).subscribe(a => {
+        this.loading = false;
         this.notifierService.notify('success', 'Lista editada com sucesso');
         this.router.navigate(['/listacontatos']);
       },
       error => {
+        this.loading = false;
+
         this.notifierService.notify('error', 'Erro ao editar lista de contato!');
 
         Object.keys(this.formulario.controls).forEach((campo) => {
@@ -90,10 +95,12 @@ export class EditListacontatosComponent implements OnInit {
       }
 
       this.restangular.all('marketing/ListaContato/text').customPUT(form,  this.id ) .subscribe(a => {
+        this.loading = false;
         this.notifierService.notify('success', 'Lista de contatos editado com sucesso');
         this.router.navigate(['/listacontatos']);
       },
         error => {
+          this.loading = false;
           this.notifierService.notify('error', 'Erro ao atualizar lista de contatos!');
           Object.keys(this.formulario.controls).forEach((campo)=>{
             const controle = this.formulario.get(campo)
@@ -131,10 +138,9 @@ export class EditListacontatosComponent implements OnInit {
       this.notifierService.notify('success', 'Lista de contatos desativada com sucesso');
       this.router.navigate(['/listacontatos']);
     },
-      error => {
-        this.notifierService.notify('error', 'Erro ao desativar lista de contatos!');
-
-      });
+    error => {
+      this.notifierService.notify('error', 'Erro ao desativar lista de contatos!');
+    });
   }
 
   handleFile(file: File) {

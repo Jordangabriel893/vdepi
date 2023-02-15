@@ -16,7 +16,7 @@ export class CreateListacontatosComponent implements OnInit {
   formulario: FormGroup;
   status: any;
   file: File;
-  loading = true;
+  loading = false;
   fileName = "";
   fileOption: boolean = true;
   textoption: boolean = false;
@@ -53,6 +53,7 @@ export class CreateListacontatosComponent implements OnInit {
   }
 
   onSubmit() {
+    this.loading = true;
     if (this.fileOption) {
       let formData: FormData = new FormData();
       formData.append('file', this.file)
@@ -61,12 +62,13 @@ export class CreateListacontatosComponent implements OnInit {
 
       this.restangular.all('marketing/listaContato/file')
       .customPOST(formData, undefined, undefined, {'Content-Type': undefined}).subscribe(a => {
+        this.loading = false;
         this.notifierService.notify('success', 'Lista criada com sucesso');
         this.router.navigate(['/listacontatos']);
       },
       error => {
         this.notifierService.notify('error', 'Erro ao criar lista de contato!');
-
+        this.loading = false;
         Object.keys(this.formulario.controls).forEach((campo) => {
           const controle = this.formulario.get(campo)
           controle.markAsTouched()
@@ -81,12 +83,13 @@ export class CreateListacontatosComponent implements OnInit {
       };
 
       this.restangular.all('marketing/listaContato/text').post(form).subscribe(a => {
+        this.loading = false;
         this.notifierService.notify('success', 'Lista criada com sucesso');
         this.router.navigate(['/listacontatos']);
       },
       error => {
+        this.loading = false;
         this.notifierService.notify('error', 'Erro ao criar lista de contato!');
-
         Object.keys(this.formulario.controls).forEach((campo) => {
           const controle = this.formulario.get(campo)
           controle.markAsTouched()
