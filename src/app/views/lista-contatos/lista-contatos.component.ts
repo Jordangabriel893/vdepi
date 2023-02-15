@@ -30,7 +30,10 @@ export class ListaContatosComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.carregarListas();
+  }
 
+  carregarListas() {
     this.restangular.one('marketing/listacontato').get().subscribe(
       dados => {
         this.listas = dados.data
@@ -38,11 +41,12 @@ export class ListaContatosComponent implements OnInit {
       },
       () => this.loading = false
     )
-
   }
+
   edit(id) {
     this.router.navigate(['/edit-listacontatos', id], { relativeTo: this.route });
   }
+
   downloadContatos(id) {
     this.restangular.one('marketing/listacontato/download/' + id)
       .withHttpConfig({ responseType: 'blob' })
@@ -54,4 +58,15 @@ export class ListaContatosComponent implements OnInit {
         this.notifierService.notify('error', 'Não foi possivel fazer download da lista de contatos!');
       });
   }
+
+  desativar(id) {
+    this.restangular.all('marketing/ListaContato/Desativar').customPUT( '', id) .subscribe(a => {
+      this.notifierService.notify('success', 'Lista de contatos excluida com sucesso');
+      this.carregarListas();
+    },
+    () => {
+      this.notifierService.notify('error', 'Erro ao excluir lista de contatos!');
+    });
+  }
+
 }

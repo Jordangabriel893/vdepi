@@ -66,7 +66,9 @@ export class EditListacontatosComponent implements OnInit {
       let formData: FormData = new FormData();
       formData.append('file', this.file)
       formData.append('descricao', this.formulario.value.descricao)
-      formData.append('empresaId', this.formulario.value.empresaId)
+      if(this.formulario.value.empresaId) {
+        formData.append('empresaId', this.formulario.value.empresaId)
+      }
       formData.append('listaContatoId', this.id)
 
       this.restangular.all('marketing/listaContato/file')
@@ -86,15 +88,17 @@ export class EditListacontatosComponent implements OnInit {
         })
       });
     }else{
-
-      const form = {
-        listaContatoId:this.formulario.value.listaContatoId,
-        descricao:this.formulario.value.descricao,
-        empresaId:this.formulario.value.empresaId,
+      let form = {
+        listaContatoId: this.formulario.value.listaContatoId,
+        descricao: this.formulario.value.descricao,
         emails: this.formulario.value.emails
+      };
+
+      if(this.formulario.value.empresaId) {
+        form["empresaId"] = this.formulario.value.empresaId
       }
 
-      this.restangular.all('marketing/ListaContato/text').customPUT(form,  this.id ) .subscribe(a => {
+      this.restangular.all('marketing/ListaContato/text').customPUT(form,  this.id) .subscribe(a => {
         this.loading = false;
         this.notifierService.notify('success', 'Lista de contatos editado com sucesso');
         this.router.navigate(['/listacontatos']);
@@ -127,20 +131,10 @@ export class EditListacontatosComponent implements OnInit {
     this.formulario = this.formBuilder.group({
       listaContatoId:[contatos.listaContatoId],
       descricao: [contatos.descricao, Validators.required],
-      empresaId: [contatos.empresaId, Validators.required],
+      empresaId: [contatos.empresaId],
       file: [null],
       emails: [""]
     })
-  }
-
-  desativar(){
-    this.restangular.all('marketing/ListaContato/Desativar').customPUT( '',this.id ) .subscribe(a => {
-      this.notifierService.notify('success', 'Lista de contatos desativada com sucesso');
-      this.router.navigate(['/listacontatos']);
-    },
-    error => {
-      this.notifierService.notify('error', 'Erro ao desativar lista de contatos!');
-    });
   }
 
   handleFile(file: File) {

@@ -58,7 +58,9 @@ export class CreateListacontatosComponent implements OnInit {
       let formData: FormData = new FormData();
       formData.append('file', this.file)
       formData.append('descricao', this.formulario.value.descricao)
-      formData.append('empresaId', this.formulario.value.empresaId)
+      if(this.formulario.value.empresaId) {
+        formData.append('empresaId', this.formulario.value.empresaId)
+      }
 
       this.restangular.all('marketing/listaContato/file')
       .customPOST(formData, undefined, undefined, {'Content-Type': undefined}).subscribe(a => {
@@ -75,12 +77,15 @@ export class CreateListacontatosComponent implements OnInit {
         })
       });
     } else {
-      const form = {
+      let form = {
         listaContatoId: this.formulario.value.listaContatoId,
         descricao: this.formulario.value.descricao,
-        empresaId: this.formulario.value.empresaId,
         emails: this.formulario.value.emails
       };
+
+      if(this.formulario.value.empresaId) {
+        form["empresaId"] = this.formulario.value.empresaId
+      }
 
       this.restangular.all('marketing/listaContato/text').post(form).subscribe(a => {
         this.loading = false;

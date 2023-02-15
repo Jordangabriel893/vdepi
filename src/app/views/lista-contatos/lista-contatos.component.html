@@ -26,10 +26,10 @@
                     <th>
                       <mfDefaultSorter by="dataCadastro">Data Cadastro</mfDefaultSorter>
                     </th>
-                    <th>
+                    <!-- <th>
                       <mfDefaultSorter by="ativo">Ativo</mfDefaultSorter>
-                    </th>
-                    <th>
+                    </th> -->
+                    <th  class="text-center">
                       <mfDefaultSorter by="predefinido">Pré-Definida</mfDefaultSorter>
                     </th>
                     <th>
@@ -46,12 +46,18 @@
                     <td>{{item.descricao}}</td>
                     <td>{{item.empresa}}</td>
                     <td>{{item.dataCadastro | date:'dd/MM/yyyy'}}</td>
-                    <td>{{item.ativo == true ? 'Sim' : 'Não'}}</td>
-                    <td>{{item.predefinido == true ? 'Sim' : 'Não'}}</td>
+                    <!-- <td>{{item.ativo == true ? 'Sim' : 'Não'}}</td> -->
+                    <td class="text-center">
+                      <i class="fa fa-check-circle text-success" *ngIf="item.predefinido"></i>
+                      <i class="fa fa-times-circle text-danger" *ngIf="!item.predefinido"></i>
+                    </td>
                     <td><a *ngIf="!item.predefinido" class="link-primary" role="button" (click)="downloadContatos(item.listaContatoId)">{{item.qtdContatos}}</a></td>
                     <td class="text-center" nowrap>
                       <button type="button" class="btn btn-primary" (click)="edit(item.listaContatoId)" *ngIf="!item.predefinido">
                         <i class="fa fa-edit"></i>&nbsp;Editar
+                      </button>&nbsp;
+                      <button type="button" class="btn btn-danger" (click)="desativar(item.listaContatoId)" *ngIf="!item.predefinido">
+                        <i class="fa fa-trash"></i>&nbsp;Excluir
                       </button>
                     </td>
                   </tr>

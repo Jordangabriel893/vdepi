@@ -95,11 +95,11 @@
                 <ng-template #fileName
                   ><p>{{ file.name }}</p></ng-template
                 >
-                <div *ngIf="loading">
+                <!-- <div *ngIf="loading">
                   <h5 >
                     <i class="fa fa-spin fa-spinner"></i>&nbsp;Inserindo contatos...
                   </h5>
-                </div>
+                </div> -->
                 <input
                   #fileInput
                   hidden
@@ -123,7 +123,7 @@
             </div>
           </div>
           <div class="card-footer">
-            <app-save-cancel-buttons [route]="'/listacontatos'" [buttonDisabled]="!formulario.valid"></app-save-cancel-buttons>
+            <app-save-cancel-buttons [route]="'/listacontatos'" [buttonDisabled]="!formulario.valid" [loading]="loading"></app-save-cancel-buttons>
           </div>
         </div>
       </div>

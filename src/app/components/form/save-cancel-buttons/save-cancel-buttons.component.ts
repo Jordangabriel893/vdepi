@@ -8,6 +8,7 @@ import { Component, Input, OnInit } from '@angular/core';
 export class SaveCancelButtonsComponent implements OnInit {
   @Input() route;
   @Input() buttonDisabled;
+  @Input() loading = false;
   constructor() { }
 
   ngOnInit() {
