@@ -42,7 +42,6 @@ export class CreateComitenteComponent implements OnInit, OnDestroy {
       comitenteId:[0],
       nome:[null, Validators.required],
       razaoSocial:[null],
-      email:[null, Validators.required],
       foto: this.formBuilder.group({
         arquivoId:[0],
         nome:[null],
