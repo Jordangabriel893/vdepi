@@ -29,7 +29,7 @@ export class SearchLeilaoComponent implements OnInit, OnDestroy {
       leilao:[null]
     })
 
-    this.sub.push( this.restangular.all("admin").one("leilao").get({PageSize:100}).subscribe((response) => {
+    this.sub.push( this.restangular.all("admin").one("leilao").get().subscribe((response) => {
       this.selectLeilao = response.data
       this.leiloes = response.data;
       this.leiloes.sort(function(a,b) {

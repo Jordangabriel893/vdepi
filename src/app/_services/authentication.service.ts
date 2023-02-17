@@ -33,39 +33,32 @@ export class AuthenticationService {
           // store user details and jwt token in local storage to keep user logged in between page refreshes
           localStorage.removeItem('currentUser');
           const decodedToken: any = jwt_decode(user.access_token);
-          localStorage.setItem('currentUser', JSON.stringify({ access_token: user.access_token, username: decodedToken.email, }))
+          localStorage.setItem('currentUser', JSON.stringify({ token: user.access_token, username: decodedToken.email, }))
         }
 
         return user
-
-      }),
-      tap(user => {
-
-        const opcoes = {
-          headers: new HttpHeaders({
-             'Authorization': 'Bearer ' + user.access_token,
-              'withCredentials': 'true', 'Access-Control-Allow-Origin': '*', 'Access-Control-Allow-Credentials': 'true'
-          })
-        }
-
-        this.http.get<any>(environment.apiDados + '/permissao', opcoes).subscribe(permissao =>{
-          const getItem = this.getUser()
-
-          localStorage.setItem('currentUser', JSON.stringify({ ...getItem, permission: permissao.data.permissoes}))
-
-        })
-      })
-      );
-
+      }));
   }
 
-
-
-    logout() {
-      localStorage.removeItem('currentUser');
+  getPermissions() {
+    const user = this.getUser();
+    const opcoes = {
+      headers: new HttpHeaders({
+         'Authorization': 'Bearer ' + user.token,
+          'withCredentials': 'true', 'Access-Control-Allow-Origin': '*', 'Access-Control-Allow-Credentials': 'true'
+      })
     }
 
-    getUser() : Model.User {
-      return JSON.parse(localStorage.getItem('currentUser'));
-    }
+    this.http.get<any>(environment.apiDados + '/permissao', opcoes).subscribe(permissao =>{
+      localStorage.setItem('currentUser', JSON.stringify({ ...user, permission: permissao.data.permissoes}))
+    })
+  }
+
+  logout() {
+    localStorage.removeItem('currentUser');
+  }
+
+  getUser() : Model.User {
+    return JSON.parse(localStorage.getItem('currentUser'));
+  }
 }

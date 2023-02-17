@@ -55,7 +55,7 @@ export class LoginComponent implements OnInit {
       .pipe(first())
       .subscribe(
         () => {
-          window.location.href = '/#/home';
+          this.router.navigate(["home"], { queryParams: { r: true}});
         },
         err => {
           let msgError = "Houve um erro inesperado, por favor tente novamente";

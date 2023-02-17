@@ -11,6 +11,7 @@ export class AppComponent
   constructor() {
     setTheme('bs4'); // or 'bs4'
   }
+
   public confirmationOptions = {
     overlay: true,
     overlayClickToClose: true,
