@@ -232,13 +232,12 @@ export function RestangularConfigFactory(RestangularProvider, NotifierService: N
   RestangularProvider.setBaseUrl(environment.apiDados);
 
   let currentUser = JSON.parse(localStorage.getItem('currentUser'));
-  if (currentUser && currentUser.access_token) {
-    RestangularProvider.setDefaultHeaders({ 'Authorization': 'Bearer ' + currentUser.access_token, withCredentials: true, 'Access-Control-Allow-Origin': '*', 'Access-Control-Allow-Credentials': true });
+  if (currentUser && currentUser.token) {
+    RestangularProvider.setDefaultHeaders({ 'Authorization': 'Bearer ' + currentUser.token, withCredentials: true, 'Access-Control-Allow-Origin': '*', 'Access-Control-Allow-Credentials': true });
   }
 
   RestangularProvider.addErrorInterceptor((response, subject, responseHandler) => {
     if (response.status === 401) {
-      //localStorage.removeItem('currentUser');
       window.location.href = '/#/login';
       return false;
     }

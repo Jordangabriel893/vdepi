@@ -1,5 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import { AuthenticationService } from 'app/_services';
+import { Component } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-home',
@@ -7,8 +7,15 @@ import { AuthenticationService } from 'app/_services';
 })
 export class HomeComponent  {
 
-  constructor(private authService: AuthenticationService) {
+  constructor(
+    private route: ActivatedRoute
+    ) {
+    const reload = this.route.snapshot.queryParams['r'];
 
+    if(reload) {
+      window.location.href = "/#/home";
+      window.location.reload();
+    }
    }
 
 
