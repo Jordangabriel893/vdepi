@@ -39,7 +39,6 @@ import {
   CreateLeilaoComponent,
   UpdateLeilaoComponent,
   MapaLanceComponent,
-
 } from './views';
 
 const APP_COMPONENTS = [
@@ -226,6 +225,8 @@ import { CreatePaginaestaticaComponent } from './views/pagina-estatica/create-pa
 import { UpdatePaginaestaticaComponent } from './views/pagina-estatica/update-paginaestatica/update-paginaestatica.component';
 import { SaveCancelButtonsComponent } from './components/form/save-cancel-buttons/save-cancel-buttons.component';
 import { BackButtonComponent } from './components/form/back-button/back-button.component';
+import { GerenciadorDocumentosComponent } from './views/gerenciador-documentos/gerenciador-documentos.component';
+import { CreateDocumentoComponent } from './views/gerenciador-documentos/create-documento/create-documento.component';
 
 
 export function RestangularConfigFactory(RestangularProvider, NotifierService: NotifierService) {
@@ -384,7 +385,9 @@ export function RestangularConfigFactory(RestangularProvider, NotifierService: N
     CreatePaginaestaticaComponent,
     UpdatePaginaestaticaComponent,
     SaveCancelButtonsComponent,
-    BackButtonComponent
+    BackButtonComponent,
+    GerenciadorDocumentosComponent,
+    CreateDocumentoComponent
   ],
   providers: [{
     provide: LocationStrategy,

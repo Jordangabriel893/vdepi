@@ -89,6 +89,8 @@ import { LotesVistoriaComponent } from './views/vistoria/lotes/lotes-vistoria.co
 import { CreateUsuariosComponent } from './views/usuarios/create-usuarios/create-usuarios.component';
 import { CreateConfiguracaoComponent } from './views/configuracao/create-configuracao/create-configuracao.component';
 import { AgendamentoComponent } from './views/agendamento/agendamento.component';
+import { GerenciadorDocumentosComponent } from './views/gerenciador-documentos/gerenciador-documentos.component';
+import { CreateDocumentoComponent } from './views/gerenciador-documentos/create-documento/create-documento.component';
 
 
 export const routes: Routes = [
@@ -222,6 +224,24 @@ export const routes: Routes = [
         component: CreateFaturaComponent,
         data: {
           title: 'Nova Fatura',
+          source: 'VISTORIA'
+        },
+        canActivate: [SourceGuard]
+      },
+      {
+        path: 'gerenciador-documentos',
+        component: GerenciadorDocumentosComponent,
+        data: {
+          title: 'Gerenciador de Documentos',
+          source: 'VISTORIA'
+        },
+        canActivate: [SourceGuard]
+      },
+      {
+        path: 'create-documento',
+        component: CreateDocumentoComponent,
+        data: {
+          title: 'Novo Documento',
           source: 'VISTORIA'
         },
         canActivate: [SourceGuard]
