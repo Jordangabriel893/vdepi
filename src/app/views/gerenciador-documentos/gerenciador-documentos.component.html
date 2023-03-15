@@ -90,7 +90,7 @@
                       <td>{{item.tipoDocumento}}</td>
                       <td>
                         <div *ngFor="let assinante of item.assinantes">
-                          <small>{{assinante | uppercase}}</small>
+                          <small>{{assinante.nome | uppercase}}</small>
                         </div>
                       </td>
                       <td>

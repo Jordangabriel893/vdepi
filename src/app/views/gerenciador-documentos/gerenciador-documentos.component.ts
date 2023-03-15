@@ -47,12 +47,19 @@ export class GerenciadorDocumentosComponent implements OnInit, OnDestroy {
         arrematante: 'LEONARDO LIRA',
         tipoDocumento: 'AUTO DE ARREMATAÇÃO',
         assinantes: [
-          'Sergio Mendes',
-          'Sandra Farias'
+          {
+            usuarioId: 1,
+            nome:'Sergio Mendes',
+            dataAssinatura: null
+          },
+          {
+            usuarioId: 2,
+            nome:'Sandra Farias',
+            dataAssinatura: null
+          }
         ],
         statusId: 1,
         status: 'PENDENTE',
-        dataAssinatura: moment()
       }
     ];
 
