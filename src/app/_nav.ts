@@ -235,5 +235,18 @@ export const navigation = [
     source: 'STATUS_LEILAO',
     grupo:'CADASTROS'
   },
-
+  {
+    name: 'Tipo de Documento',
+    url: '/tipodocumento',
+    icon: 'fa fa-file',
+    source: 'GERENCIADOR_DOCUMENTOS',
+    grupo:'CADASTROS'
+  },
+  {
+    name: 'Template Documento',
+    url: '/documentotemplate',
+    icon: 'fa fa-code',
+    source: 'GERENCIADOR_DOCUMENTOS',
+    grupo:'CADASTROS'
+  },
 ];

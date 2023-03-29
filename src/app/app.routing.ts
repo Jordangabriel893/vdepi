@@ -1,3 +1,6 @@
+import { CreateDocumentoTemplateComponent } from './views/documento-template/create-documento-template/create-documento-template.component';
+import { CreateTipodocumentoComponent } from './views/tipo-documento/create-tipodocumento/create-tipodocumento.component';
+import { TipoDocumentoComponent } from './views/tipo-documento/tipo-documento.component';
 import { UpdatePaginaestaticaComponent } from './views/pagina-estatica/update-paginaestatica/update-paginaestatica.component';
 import { CreatePaginaestaticaComponent } from './views/pagina-estatica/create-paginaestatica/create-paginaestatica.component';
 import { PaginaEstaticaComponent } from './views/pagina-estatica/pagina-estatica.component';
@@ -89,6 +92,9 @@ import { LotesVistoriaComponent } from './views/vistoria/lotes/lotes-vistoria.co
 import { CreateUsuariosComponent } from './views/usuarios/create-usuarios/create-usuarios.component';
 import { CreateConfiguracaoComponent } from './views/configuracao/create-configuracao/create-configuracao.component';
 import { AgendamentoComponent } from './views/agendamento/agendamento.component';
+import { EditTipodocumentoComponent } from './views/tipo-documento/edit-tipodocumento/edit-tipodocumento.component';
+import { DocumentoTemplateComponent } from './views/documento-template/documento-template.component';
+import { EditDocumentoTemplateComponent } from './views/documento-template/edit-documento-template/edit-documento-template.component';
 
 
 export const routes: Routes = [
@@ -746,6 +752,60 @@ export const routes: Routes = [
         data: {
           title: 'Editar Banner',
           source: 'GERENCIADOR_SITE'
+        },
+        canActivate: [SourceGuard]
+      },
+      {
+        path: 'tipodocumento',
+        component: TipoDocumentoComponent,
+        data: {
+          title: 'Tipo Documento',
+          source: 'GERENCIADOR_DOCUMENTOS'
+        },
+        canActivate: [SourceGuard]
+      },
+      {
+        path: 'create-tipodocumento',
+        component: CreateTipodocumentoComponent,
+        data: {
+          title: 'Novo Tipo de Documento',
+          source: 'GERENCIADOR_DOCUMENTOS'
+        },
+        canActivate: [SourceGuard]
+      },
+      {
+        path: 'edit-tipodocumeto/:id',
+        component: EditTipodocumentoComponent,
+        data: {
+          title: 'Editar Tipo de Documento',
+          source: 'GERENCIADOR_DOCUMENTOS'
+        },
+        canActivate: [SourceGuard]
+      },
+      {
+        path: 'documentotemplate',
+        component: DocumentoTemplateComponent,
+        data: {
+          title: 'Template de Documento',
+          source: 'GERENCIADOR_DOCUMENTOS'
+        },
+        canActivate: [SourceGuard]
+      },
+      {
+        path: 'create-documentotemplate',
+        component: CreateDocumentoTemplateComponent,
+        data: {
+          title: 'Novo Template de Documento',
+          source: 'GERENCIADOR_DOCUMENTOS'
+        },
+        canActivate: [SourceGuard]
+      },
+      {
+        path: 'edit-documentotemplate/:id',
+        component: EditDocumentoTemplateComponent,
+        data: {
+          title: 'Editar Template de Documento',
+          source: 'GERENCIADOR_DOCUMENTOS'
         },
         canActivate: [SourceGuard]
       },

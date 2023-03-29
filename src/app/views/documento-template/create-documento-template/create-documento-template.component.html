@@ -1,0 +1,34 @@
+<form [formGroup]="formulario" (ngSubmit)="onSubmit()">
+  <div class="animated fadeIn">
+    <div class="row">
+      <div class="col-lg-12">
+        <div class="card">
+          <div class="card-header">
+            <i class="fa fa-code"></i>
+            Informações obrigatórias
+          </div>
+
+          <div class="card-block">
+            <div class="row ">
+              <div class="form-group col-12">
+                <label for="titulo">Título </label>
+                <input type="text" class="form-control"  [ngClass]="aplicaCssErro('titulo')" id="titulo" placeholder="Título" formControlName="titulo">
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-12">
+                <label for="html">HTML</label> 
+                <angular-editor id="html" formControlName="observacao" [config]="editorConfig" formControlName="html">
+                </angular-editor>
+              </div>
+            </div>
+          </div>
+          <div class="card-footer">
+            <!-- [buttonDisabled]="!formulario.valid" -->
+            <app-save-cancel-buttons [route]="'/documentotemplate'" [buttonDisabled]="!formulario.valid"></app-save-cancel-buttons>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</form>

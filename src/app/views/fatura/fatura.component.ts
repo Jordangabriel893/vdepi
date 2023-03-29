@@ -23,7 +23,7 @@ export class FaturaComponent implements OnInit, OnDestroy {
   sub: Subscription[] = [];
   nomeLeilao:any = 'Leilões';
   leilaoId;
-  siteUrl = environment.siteUrl;
+  siteUrl = environment.apiUrl;
   enviando = false;
   faturasEnviar = [];
   todasFaturas = false;

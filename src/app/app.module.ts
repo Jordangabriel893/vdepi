@@ -226,6 +226,12 @@ import { CreatePaginaestaticaComponent } from './views/pagina-estatica/create-pa
 import { UpdatePaginaestaticaComponent } from './views/pagina-estatica/update-paginaestatica/update-paginaestatica.component';
 import { SaveCancelButtonsComponent } from './components/form/save-cancel-buttons/save-cancel-buttons.component';
 import { BackButtonComponent } from './components/form/back-button/back-button.component';
+import { TipoDocumentoComponent } from './views/tipo-documento/tipo-documento.component';
+import { EditTipodocumentoComponent } from './views/tipo-documento/edit-tipodocumento/edit-tipodocumento.component';
+import { CreateTipodocumentoComponent } from './views/tipo-documento/create-tipodocumento/create-tipodocumento.component';
+import { DocumentoTemplateComponent } from './views/documento-template/documento-template.component';
+import { CreateDocumentoTemplateComponent } from './views/documento-template/create-documento-template/create-documento-template.component';
+import { EditDocumentoTemplateComponent } from './views/documento-template/edit-documento-template/edit-documento-template.component';
 
 
 export function RestangularConfigFactory(RestangularProvider, NotifierService: NotifierService) {
@@ -384,7 +390,13 @@ export function RestangularConfigFactory(RestangularProvider, NotifierService: N
     CreatePaginaestaticaComponent,
     UpdatePaginaestaticaComponent,
     SaveCancelButtonsComponent,
-    BackButtonComponent
+    BackButtonComponent,
+    TipoDocumentoComponent,
+    EditTipodocumentoComponent,
+    CreateTipodocumentoComponent,
+    DocumentoTemplateComponent,
+    CreateDocumentoTemplateComponent,
+    EditDocumentoTemplateComponent
   ],
   providers: [{
     provide: LocationStrategy,
