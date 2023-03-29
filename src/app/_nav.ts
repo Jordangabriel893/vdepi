@@ -246,7 +246,7 @@ export const navigation = [
     name: 'Template Documento',
     url: '/documentotemplate',
     icon: 'fa fa-code',
-    source: 'GERENCIADOR_DOCUMENTOS',
+    source: 'STATUS_LEILAO',
     grupo:'CADASTROS'
   },
 ];

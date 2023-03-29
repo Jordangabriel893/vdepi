@@ -787,7 +787,7 @@ export const routes: Routes = [
         component: DocumentoTemplateComponent,
         data: {
           title: 'Template de Documento',
-          source: 'GERENCIADOR_DOCUMENTOS'
+          source: 'STATUS_LEILAO'
         },
         canActivate: [SourceGuard]
       },
@@ -796,7 +796,7 @@ export const routes: Routes = [
         component: CreateDocumentoTemplateComponent,
         data: {
           title: 'Novo Template de Documento',
-          source: 'GERENCIADOR_DOCUMENTOS'
+          source: 'STATUS_LEILAO'
         },
         canActivate: [SourceGuard]
       },
@@ -805,7 +805,7 @@ export const routes: Routes = [
         component: EditDocumentoTemplateComponent,
         data: {
           title: 'Editar Template de Documento',
-          source: 'GERENCIADOR_DOCUMENTOS'
+          source: 'STATUS_LEILAO'
         },
         canActivate: [SourceGuard]
       },

@@ -1,34 +1,38 @@
-<form [formGroup]="formulario" (ngSubmit)="onSubmit()">
-  <div class="animated fadeIn">
-    <div class="row">
-      <div class="col-lg-12">
-        <div class="card">
-          <div class="card-header">
-            <i class="fa fa-code"></i>
-            Informações obrigatórias
-          </div>
+<div class="container">
 
-          <div class="card-block">
-            <div class="row ">
-              <div class="form-group col-12">
-                <label for="titulo">Título </label>
-                <input type="text" class="form-control"  [ngClass]="aplicaCssErro('titulo')" id="titulo" placeholder="Título" formControlName="titulo">
-              </div>
+  <button class="btn btn-success" (click)="openModal(modal)" id="create"><i class="fa fa-save"></i>&nbsp;Criar</button>
+
+  <email-editor id="email-editor" [options]="options" (ready)="editorReady($event)"></email-editor>
+  <ng-template #modal>
+    <div class="modal-header">
+      <h4 class="modal-title pull-left">Criar Template</h4>
+      <button type="button" class="btn-close close pull-right" aria-label="Close" (click)="modalRef?.hide()">
+        <span aria-hidden="true" class="visually-hidden">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body">
+      <div class="row">
+        <div class="col-12">
+          <div [formGroup]="formulario">
+            <div class="form-group">
+              <label for="titulo">Titulo</label>
+              <input
+                type="text"
+                class="form-control"
+                id="titulo" [ngClass]="aplicaCssErro('titulo')"
+                [ngStyle]="{'right': salvar == true ? '135px' : '112px'}"
+                placeholder="Digite o titulo do template"
+                formControlName="titulo"/>
             </div>
-            <div class="row">
-              <div class="col-12">
-                <label for="html">HTML</label> 
-                <angular-editor id="html" formControlName="observacao" [config]="editorConfig" formControlName="html">
-                </angular-editor>
-              </div>
+            <div class="form-group">
+              <button *ngIf="salvar == true" class="btn btn-success" ><i class="fa fa-spin fa-spinner"></i>&nbsp;Salvando...</button>
+              <button *ngIf="salvar == false " class="btn btn-success" (click)="save()" id="save" [disabled]="formulario.invalid">
+                <i class="fa fa-save"></i>&nbsp;Salvar
+              </button>
             </div>
-          </div>
-          <div class="card-footer">
-            <!-- [buttonDisabled]="!formulario.valid" -->
-            <app-save-cancel-buttons [route]="'/documentotemplate'" [buttonDisabled]="!formulario.valid"></app-save-cancel-buttons>
           </div>
         </div>
       </div>
     </div>
-  </div>
-</form>
+  </ng-template>
+</div>
