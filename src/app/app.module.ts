@@ -39,7 +39,6 @@ import {
   CreateLeilaoComponent,
   UpdateLeilaoComponent,
   MapaLanceComponent,
-
 } from './views';
 
 const APP_COMPONENTS = [
@@ -232,6 +231,8 @@ import { CreateTipodocumentoComponent } from './views/tipo-documento/create-tipo
 import { DocumentoTemplateComponent } from './views/documento-template/documento-template.component';
 import { CreateDocumentoTemplateComponent } from './views/documento-template/create-documento-template/create-documento-template.component';
 import { EditDocumentoTemplateComponent } from './views/documento-template/edit-documento-template/edit-documento-template.component';
+import { GerenciadorDocumentosComponent } from './views/gerenciador-documentos/gerenciador-documentos.component';
+import { CreateDocumentoComponent } from './views/gerenciador-documentos/create-documento/create-documento.component';
 
 
 export function RestangularConfigFactory(RestangularProvider, NotifierService: NotifierService) {
@@ -396,7 +397,9 @@ export function RestangularConfigFactory(RestangularProvider, NotifierService: N
     CreateTipodocumentoComponent,
     DocumentoTemplateComponent,
     CreateDocumentoTemplateComponent,
-    EditDocumentoTemplateComponent
+    EditDocumentoTemplateComponent,
+    GerenciadorDocumentosComponent,
+    CreateDocumentoComponent
   ],
   providers: [{
     provide: LocationStrategy,

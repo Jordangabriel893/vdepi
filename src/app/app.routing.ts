@@ -95,6 +95,8 @@ import { AgendamentoComponent } from './views/agendamento/agendamento.component'
 import { EditTipodocumentoComponent } from './views/tipo-documento/edit-tipodocumento/edit-tipodocumento.component';
 import { DocumentoTemplateComponent } from './views/documento-template/documento-template.component';
 import { EditDocumentoTemplateComponent } from './views/documento-template/edit-documento-template/edit-documento-template.component';
+import { GerenciadorDocumentosComponent } from './views/gerenciador-documentos/gerenciador-documentos.component';
+import { CreateDocumentoComponent } from './views/gerenciador-documentos/create-documento/create-documento.component';
 
 
 export const routes: Routes = [
@@ -228,6 +230,24 @@ export const routes: Routes = [
         component: CreateFaturaComponent,
         data: {
           title: 'Nova Fatura',
+          source: 'VISTORIA'
+        },
+        canActivate: [SourceGuard]
+      },
+      {
+        path: 'gerenciador-documentos',
+        component: GerenciadorDocumentosComponent,
+        data: {
+          title: 'Gerenciador de Documentos',
+          source: 'VISTORIA'
+        },
+        canActivate: [SourceGuard]
+      },
+      {
+        path: 'create-documento',
+        component: CreateDocumentoComponent,
+        data: {
+          title: 'Novo Documento',
           source: 'VISTORIA'
         },
         canActivate: [SourceGuard]

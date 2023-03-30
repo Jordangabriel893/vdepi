@@ -33,6 +33,13 @@ export const navigation = [
     grupo:'OPERACAO'
   },
   {
+    name: 'Documentos',
+    url: '/gerenciador-documentos',
+    icon: 'fa fa-file-alt',
+    source: 'VISTORIA',
+    grupo:'OPERACAO'
+  },
+  {
     title: true,
     name: 'RELATORIOS',
     grupo:'RELATORIOS'
@@ -147,7 +154,7 @@ export const navigation = [
     source: 'CONFIG_AGENDAMENTO',
     grupo:'MARKETING'
   },
-  
+
   {
     title: true,
     name: 'GERENCIADOR SITE',
