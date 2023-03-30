@@ -780,7 +780,7 @@ export const routes: Routes = [
         component: TipoDocumentoComponent,
         data: {
           title: 'Tipo Documento',
-          source: 'GERENCIADOR_DOCUMENTOS'
+          source: 'GERENCIADOR_DOC'
         },
         canActivate: [SourceGuard]
       },
@@ -789,7 +789,7 @@ export const routes: Routes = [
         component: CreateTipodocumentoComponent,
         data: {
           title: 'Novo Tipo de Documento',
-          source: 'GERENCIADOR_DOCUMENTOS'
+          source: 'GERENCIADOR_DOC'
         },
         canActivate: [SourceGuard]
       },
@@ -798,7 +798,7 @@ export const routes: Routes = [
         component: EditTipodocumentoComponent,
         data: {
           title: 'Editar Tipo de Documento',
-          source: 'GERENCIADOR_DOCUMENTOS'
+          source: 'GERENCIADOR_DOC'
         },
         canActivate: [SourceGuard]
       },
@@ -807,7 +807,7 @@ export const routes: Routes = [
         component: DocumentoTemplateComponent,
         data: {
           title: 'Template de Documento',
-          source: 'STATUS_LEILAO'
+          source: 'GERENCIADOR_DOC'
         },
         canActivate: [SourceGuard]
       },
@@ -816,7 +816,7 @@ export const routes: Routes = [
         component: CreateDocumentoTemplateComponent,
         data: {
           title: 'Novo Template de Documento',
-          source: 'STATUS_LEILAO'
+          source: 'GERENCIADOR_DOC'
         },
         canActivate: [SourceGuard]
       },
@@ -825,10 +825,29 @@ export const routes: Routes = [
         component: EditDocumentoTemplateComponent,
         data: {
           title: 'Editar Template de Documento',
-          source: 'STATUS_LEILAO'
+          source: 'GERENCIADOR_DOC'
         },
         canActivate: [SourceGuard]
       },
+      {
+        path: 'gerenciadordocumento',
+        component: GerenciadorDocumentosComponent,
+        data: {
+          title: 'Gerenciador de Documentos',
+          source: 'GERENCIADOR_DOC'
+        },
+        canActivate: [SourceGuard]
+      },
+      {
+        path: 'create-gerenciadordocumento',
+        component: CreateDocumentoComponent,
+        data: {
+          title: 'Criar Documento',
+          source: 'GERENCIADOR_DOC'
+        },
+        canActivate: [SourceGuard]
+      },
+
       {
         path: 'access-denied',
         component: AccessDeniedComponent,

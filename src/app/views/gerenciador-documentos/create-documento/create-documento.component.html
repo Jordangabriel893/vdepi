@@ -11,52 +11,33 @@
             <div class="row">
               <div class="col-12">
                 <div class="row">
-                  <div class="form-group col-4">
+                  <div class="form-group col-6">
                     <label for="leilaoId">Leilão </label>
-                    <select class="form-control" [ngClass]="aplicaCssErro('leilaoId')"  formControlName="leilaoId" (change)="setCobranca()"
+                    <select class="form-control" [ngClass]="aplicaCssErro('leilaoId')"  formControlName="leilaoId"  (change)="setLeilao()"
                       id="leilaoId" name="leilaoId">
                       <option *ngFor="let item of leiloes" value="{{item.id}}">{{item.nome}}</option>
                     </select>
                   </div>
-                  <div class="form-group col-4">
+                  <div class="form-group col-6">
                     <label for="cobrancaId">Lote</label>
-                    <select class="form-control" [ngClass]="aplicaCssErro('loteId')" formControlName="loteId">
-                      <option value="0">TODOS</option>
-                      <option value="1">Lote: 1</option>
-                      <option value="2">Lote: 1</option>
+                    <select class="form-control" [ngClass]="aplicaCssErro('loteId')" formControlName="loteId" [attr.disabled]="!hasLotes ? '' : null">
+                      <option [value]="item.loteId" *ngFor="let item of lotes">{{item.descricao}}</option>
                     </select>
-
-                    <!-- <ng-select [items]="empresas" formControlName="cobrancaId"  [ngClass]="aplicaCssErro('cobrancaId')" bindLabel="cedenteRazaoSocial" bindValue="idConfiguracaoConta">
-                      <ng-template ng-option-tmp let-item="item" let-index="index" let-search="searchTerm">
-                          <div style="margin: 10px 0; white-space: normal;" class="card" >
-                              <div class="card-body">
-                                  <h5 class="card-title" [ngOptionHighlight]="search">{{item.cedenteRazaoSocial}}</h5>
-                                  <h6 class="card-subtitle mb-2 text-muted">CNPJ: {{item.cedenteCpfCnpj | formatCpfCnpf }}</h6>
-                                  <h6 class="card-subtitle mb-2 text-muted"><small>Banco: {{item.cedenteBanco }} - AG: {{item.cedenteAgencia }} - CC: {{ item.cedenteContaCorrente + '-' + item.cedenteDigitoConta }}</small></h6>
-                              </div>
-                          </div>
-                      </ng-template>
-                    </ng-select> -->
                   </div>
-                  <div class="form-group col-4">
+                
+                </div>
+                <div class="row">
+                  <div class="form-group col-6">
                     <label for="cobrancaId">Tipo do Documento</label>
                     <select class="form-control" [ngClass]="aplicaCssErro('tipoDocumentoId')" formControlName="tipoDocumentoId">
-                      <option value="0">SELECIONE</option>
-                      <option value="1">AUTO DE LEILÃO</option>
-                      <option value="2">NOTA DE ARREMATAÇÃO</option>
-                      <option value="3">ATA DE LEILÃO</option>
+                      <option [value]="item.tipoDocumentoLoteId" *ngFor="let item of tipoDocumentos">{{item.nome}}</option>
                     </select>
-                    <!-- <ng-select [items]="empresas" formControlName="cobrancaId"  [ngClass]="aplicaCssErro('cobrancaId')" bindLabel="cedenteRazaoSocial" bindValue="idConfiguracaoConta">
-                      <ng-template ng-option-tmp let-item="item" let-index="index" let-search="searchTerm">
-                          <div style="margin: 10px 0; white-space: normal;" class="card" >
-                              <div class="card-body">
-                                  <h5 class="card-title" [ngOptionHighlight]="search">{{item.cedenteRazaoSocial}}</h5>
-                                  <h6 class="card-subtitle mb-2 text-muted">CNPJ: {{item.cedenteCpfCnpj | formatCpfCnpf }}</h6>
-                                  <h6 class="card-subtitle mb-2 text-muted"><small>Banco: {{item.cedenteBanco }} - AG: {{item.cedenteAgencia }} - CC: {{ item.cedenteContaCorrente + '-' + item.cedenteDigitoConta }}</small></h6>
-                              </div>
-                          </div>
-                      </ng-template>
-                    </ng-select> -->
+                  </div>
+                  <div class="form-group col-6">
+                    <label for="templateId">Template</label>
+                    <select class="form-control" [ngClass]="aplicaCssErro('templateId')" formControlName="templateId"  >
+                      <option *ngFor="let item of templates" [value]="item.documentoLoteTemplateId">{{item.titulo}}</option>
+                    </select>
                   </div>
                 </div>
               </div>
@@ -77,25 +58,10 @@
           <div class="card-block">
             <div class="row">
               <div class="form-group col-6">
-                <label for="nome">Assinante 1</label>
-                <select class="form-control" [ngClass]="aplicaCssErro('tipoDocumentoId')" formControlName="tipoDocumentoId">
-                  <option value="0">SELECIONE</option>
-                  <option value="1">Leiloeiro</option>
-                  <option value="2">Analista</option>
-                  <option value="3">Vistoriador</option>
-                </select>
+                <label for="perfis">Assinantes </label>
+                <ng-select [items]="perfis" formControlName="assinantes" [ngClass]="aplicaCssErro('assinantes')" [multiple]="true" bindLabel="descricao" bindValue="perfilUsuarioId">
+                </ng-select>
               </div>
-              <div class="form-group col-6">
-                <label for="cpfCnpj">Assinante 2</label>
-                <select class="form-control" [ngClass]="aplicaCssErro('tipoDocumentoId')" formControlName="tipoDocumentoId">
-                  <option value="0">SELECIONE</option>
-                  <option value="1">Leiloeiro</option>
-                  <option value="2">Analista</option>
-                  <option value="3">Vistoriador</option>
-                </select>
-              </div>
-            </div>
-            <div class="row">
               <div class="form-group col-6">
                 <label>Tipo de Assinatura</label>
                 <div class="form-check">
@@ -118,7 +84,7 @@
           <div class="card-footer">
             <button type="button" class="btn btn-primary saveCancel" *ngIf="!salvando" (click)="onSubmit()"><i class="fa fa-save"></i> Salvar</button>
             <button type="button" class="btn btn-primary saveCancel" *ngIf="salvando"><i class="fa fa-spin fa-spinner"></i> Salvando...</button>
-            &nbsp;<button type="reset" class="btn btn-danger" [routerLink]="['/gerenciador-documentos']"><i class="fa fa-undo"></i>
+            &nbsp;<button type="reset" class="btn btn-danger" [routerLink]="['/gerenciadordocumento']"><i class="fa fa-undo"></i>
               Cancelar</button>
           </div>
         </div>

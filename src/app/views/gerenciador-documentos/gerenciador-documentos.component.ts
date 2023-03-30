@@ -37,53 +37,20 @@ export class GerenciadorDocumentosComponent implements OnInit, OnDestroy {
       enviarFaturas:this.formBuilder.array([]),
       statusControl:[null]
     })
-
-    this.documentos = [
-      {
-        documentoId: 1,
-        dataCadastro: moment().subtract(5, 'day'),
-        numeroLote: 1,
-        loteId: 123,
-        arrematante: 'LEONARDO LIRA',
-        tipoDocumento: 'AUTO DE ARREMATAÇÃO',
-        assinantes: [
-          {
-            usuarioId: 1,
-            nome:'Sergio Mendes',
-            dataAssinatura: null
-          },
-          {
-            usuarioId: 2,
-            nome:'Sandra Farias',
-            dataAssinatura: null
-          }
-        ],
-        statusId: 1,
-        status: 'PENDENTE',
-      }
-    ];
-
-    this.documentosFiltrados = this.documentos;
   }
 
   setLeilao(idLeilao){
     this.leilaoId = idLeilao;
     this.loading = true;
-    // this.sub.push(
-    //   this.restangular.one(`fatura?leilaoId=${idLeilao.id}`).get().subscribe(
-    //   dados =>{
-    //     this.documentos = dados.data;
-    //     this.documentosFiltradas = dados.data;
-    //     this.nomeLeilao = idLeilao.nome;
-    //     this.loading = false
-    //     this.formulario = this.formBuilder.group({
-    //       enviarFaturas:this.formBuilder.array(dados.data ? dados.data.map(x => this.formBuilder.group({ faturaId:x.faturaId, valor: false })) : [], Validators.required),
-    //       selectAll:[false],
-    //       statusControl:[0]
-    //     })
-    //   }
-    // )
-    // )
+    this.sub.push(
+      this.restangular.one(`documentoLote/${idLeilao.id}`).get().subscribe(
+      dados =>{
+        this.documentos = dados.data;
+        this.documentosFiltrados = dados.data;
+       this.loading = false;
+      }
+    )
+    )
   }
 
   exportAsExcel() {
@@ -100,22 +67,16 @@ export class GerenciadorDocumentosComponent implements OnInit, OnDestroy {
   onSearch(){
       let value = this.queryField.value.toLowerCase();
 
-      this.documentosFiltrados =
-        this.documentos.filter(x => x.nomeArrematante.toLowerCase().includes(value) ||
-                                  x.cpfArrematante.includes(value) ||
-                                  x.cpfArrematante.replace('.', '').replace('-', '').replace('/', '').includes(value) ||
-                                  x.itens.some(i => i.descricao.toLowerCase().includes(value))
-                                  );
+      this.documentosFiltrados = this.documentos.filter(x => x.arrematante.toLowerCase().includes(value));
   }
 
-  filtrarFaturas(){
-    const statusControl = this.formulario.value.statusControl
-    if(statusControl == '0'){
-      this.documentosFiltrados = this.documentos
-      return
+  filtrarDocumentos(){
+    const form = this.formulario.value
+    if(form.statusControl == 0){
+      this.documentosFiltrados =  this.documentos
+    }else{
+      this.documentosFiltrados =  this.documentos.filter(doc => doc.statusId == form.statusControl);
     }
-
-    this.documentosFiltrados =  this.documentosFiltrados.filter(fatura => fatura.status == statusControl);
   }
 
   showItensFatura(faturaId){

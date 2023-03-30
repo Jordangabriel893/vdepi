@@ -246,14 +246,21 @@ export const navigation = [
     name: 'Tipo de Documento',
     url: '/tipodocumento',
     icon: 'fa fa-file',
-    source: 'GERENCIADOR_DOCUMENTOS',
+    source: 'GERENCIADOR_DOC',
     grupo:'CADASTROS'
   },
   {
     name: 'Template Documento',
     url: '/documentotemplate',
     icon: 'fa fa-code',
-    source: 'STATUS_LEILAO',
+    source: 'GERENCIADOR_DOC',
+    grupo:'CADASTROS'
+  },
+  {
+    name: 'Ger. Documentos',
+    url: '/gerenciadordocumento',
+    icon: 'fa fa-file-alt',
+    source: 'GERENCIADOR_DOC',
     grupo:'CADASTROS'
   },
 ];

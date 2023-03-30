@@ -19,7 +19,11 @@ import { tap, distinctUntilChanged, switchMap, catchError, filter, map } from 'r
   styleUrls: ['./create-documento.component.scss']
 })
 export class CreateDocumentoComponent implements OnInit, OnDestroy {
-  lotes;
+  lotes = [];
+  hasLotes = false;
+  tipoDocumentos;
+  perfis;
+  templates;
   formulario: FormGroup
   loading
   today = moment().utc();
@@ -46,21 +50,46 @@ export class CreateDocumentoComponent implements OnInit, OnDestroy {
       this.restangular.one('admin/leilao').get().subscribe(
         dados => {
           this.leiloes = dados.data
+
         }
       )
     )
+    this.sub.push(
+      this.restangular.one('tipoDocumentoLote').get().subscribe(
+        dados => {
+          this.tipoDocumentos = dados.data
+        }))
+    this.sub.push(
+      this.restangular.one('usuario/perfis').get().subscribe(
+        dados => {
+          this.perfis = dados.data
+        }))
+    this.sub.push(
+      this.restangular.one('documentoLoteTemplate').get().subscribe(
+        dados => {
+          this.templates = dados.data
+        }))
 
     this.formulario = this.formBuilder.group({
       leilaoId: [null, [Validators.required]],
       loteId: [null, [Validators.required]],
       tipoDocumentoId: [null, Validators.required],
-      tipoAssinatura: [null, Validators.required]
+      tipoAssinatura: [1, Validators.required],
+      assinantes:[[], Validators.required],
+      templateId: [null, [Validators.required]],
     })
   }
 
   onSubmit() {
     this.salvando = true;
-    const formulario = {...this.formulario.value}
+    const formulario = {
+      leilaoId: parseInt(this.formulario.value.leilaoId),
+      loteId: parseInt(this.formulario.value.loteId),
+      TipoDocumentoLoteId: parseInt(this.formulario.value.tipoDocumentoId),
+      TipoAssinaturaId: parseInt(this.formulario.value.tipoAssinatura),
+      assinantes: this.formulario.value.assinantes,
+      templateId: parseInt(this.formulario.value.templateId),
+    }
     Object.keys(this.formulario.controls).forEach((campo)=>{
       const controle = this.formulario.get(campo)
       controle.markAsTouched()
@@ -71,8 +100,25 @@ export class CreateDocumentoComponent implements OnInit, OnDestroy {
       this.salvando = false;
       return false;
     }
+    this.restangular.all('DocumentoLote').post(formulario).subscribe(a => {
+      this.notifierService.notify('success', 'Documento criado com sucesso');
+      this.router.navigate(['/gerenciadordocumento']);
+    },
+    error => {
+      this.notifierService.notify('error', 'Erro ao criar o documento!');
+    });
   }
-
+  setLeilao(){
+    const leilao = this.formulario.value.leilaoId
+    this.sub.push(
+      this.restangular.one("lote", '').get({ leilaoId: leilao}).subscribe(
+        dados => {
+          this.lotes = dados.data;
+          this.hasLotes = true;
+        }
+      )
+    )
+  }
   verificaValidTouched(campo) {
     return !this.formulario.get(campo).valid && this.formulario.get(campo).touched;
   }
