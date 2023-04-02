@@ -45,7 +45,9 @@ export class AuthenticationService {
     const opcoes = {
       headers: new HttpHeaders({
          'Authorization': 'Bearer ' + user.token,
-          'withCredentials': 'true', 'Access-Control-Allow-Origin': '*', 'Access-Control-Allow-Credentials': 'true'
+         'withCredentials': 'true',
+         'Access-Control-Allow-Origin': '*',
+         'Access-Control-Allow-Credentials': 'true'
       })
     }
 

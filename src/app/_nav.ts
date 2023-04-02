@@ -29,14 +29,14 @@ export const navigation = [
     name: 'Faturas',
     url: '/fatura',
     icon: 'fa fa-file-invoice-dollar',
-    source: 'VISTORIA',
+    source: 'FATURA',
     grupo:'OPERACAO'
   },
   {
     name: 'Documentos',
     url: '/gerenciador-documentos',
     icon: 'fa fa-file-alt',
-    source: 'VISTORIA',
+    source: 'GERENCIADOR_DOC',
     grupo:'OPERACAO'
   },
   {
@@ -228,20 +228,20 @@ export const navigation = [
     source: 'CATEGORIAS',
     grupo:'CADASTROS'
   },
-  {
-    name: 'Status Lote',
-    url: '/statusLote',
-    icon: 'fa fa-signal',
-    source: 'STATUS_LOTE',
-    grupo:'CADASTROS'
-  },
-  {
-    name: 'Status Leilão',
-    url: '/statusLeilao',
-    icon: 'fa fa-signal',
-    source: 'STATUS_LEILAO',
-    grupo:'CADASTROS'
-  },
+  // {
+  //   name: 'Status Lote',
+  //   url: '/statusLote',
+  //   icon: 'fa fa-signal',
+  //   source: 'STATUS_LOTE',
+  //   grupo:'CADASTROS'
+  // },
+  // {
+  //   name: 'Status Leilão',
+  //   url: '/statusLeilao',
+  //   icon: 'fa fa-signal',
+  //   source: 'STATUS_LEILAO',
+  //   grupo:'CADASTROS'
+  // },
   {
     name: 'Tipo de Documento',
     url: '/tipodocumento',
@@ -255,12 +255,5 @@ export const navigation = [
     icon: 'fa fa-code',
     source: 'GERENCIADOR_DOC',
     grupo:'CADASTROS'
-  },
-  {
-    name: 'Ger. Documentos',
-    url: '/gerenciadordocumento',
-    icon: 'fa fa-file-alt',
-    source: 'GERENCIADOR_DOC',
-    grupo:'CADASTROS'
-  },
+  }
 ];

@@ -6,13 +6,9 @@
         <div class="card-header header">
           <div>
             <i class="fa fa-file" aria-hidden="true"></i>
-            Tipo Documento
+            Tipo de Documento
           </div>
-
-          <!-- <button type="button" class="btn btn-success"><i class="fa fa-file-excel" aria-hidden="true"></i><h6>Excel</h6></button> -->
-
         </div>
-
         <div class="card-block" >
           <button type="button" class="btn btn-success" [routerLink]="['/create-tipodocumento']"><i class="fa fa-plus-circle"></i>&nbsp; Novo Tipo de Documento</button>
           <div class="table-responsive mt-4">
@@ -26,10 +22,13 @@
                     <mfDefaultSorter by="nome">Nome</mfDefaultSorter>
                   </th>
                   <th>
-                    <mfDefaultSorter by="possuiAssinatura">Assinatura</mfDefaultSorter>
+                    <mfDefaultSorter by="possuiAssinatura">Tem Assinatura?</mfDefaultSorter>
                   </th>
                   <th>
-                    <mfDefaultSorter by="ativo">Ativo</mfDefaultSorter>
+                    <mfDefaultSorter by="template">Template</mfDefaultSorter>
+                  </th>
+                  <th>
+                    Perfis
                   </th>
                   <th class="text-center" >
                     Editar
@@ -41,7 +40,12 @@
                   <td>{{item.tipoDocumentoLoteId}}</td>
                   <td>{{item.nome}}</td>
                   <td>{{item.possuiAssinatura == true ? 'Sim' : 'Não' }}</td>
-                  <td>{{item.ativo == true ? 'Sim' : 'Não' }}</td>
+                  <td>{{item.template }}</td>
+                  <td>
+                    <div *ngFor="let perfil of item.perfis">
+                      <small>{{perfil.descricao | uppercase}}</small>
+                    </div>
+                  </td>
                   <td class="text-center" nowrap>
                     <button type="button" class="btn btn-primary" (click)="edit(item.tipoDocumentoLoteId)"><i class="fa fa-edit"></i>&nbsp;Editar</button>
                   </td>

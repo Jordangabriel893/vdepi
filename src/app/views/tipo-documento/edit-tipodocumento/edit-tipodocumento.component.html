@@ -5,7 +5,7 @@
         <div class="card">
           <div class="card-header">
             <i class="fa fa-file"></i>
-            Informações obrigatórias
+            Tipo de Documento
           </div>
 
           <div class="card-block">
@@ -20,12 +20,16 @@
                 <select class="form-control" [ngClass]="aplicaCssErro('templateId')" formControlName="templateId"  >
                   <option *ngFor="let item of templates" [value]="item.documentoLoteTemplateId">{{item.titulo}}</option>
                 </select>
-              </div>    
+              </div>
             </div>
             <div class="row" >
-              <div class="form-group col-6 d-flex flex-column align-items-start">
-                <label for="possuiAssinatura">Assinatura </label>
-                <input type="checkbox" class="ml-4" formControlName="possuiAssinatura">
+              <div class="form-group col-6">
+                <label for="assinatura">Tem Assinatura? </label><br>
+                <label class="switch switch-text switch-pill switch-primary">
+                  <input type="checkbox" id="assinatura" class="switch-input" formControlName="possuiAssinatura">
+                  <span class="switch-label" data-on="Sim" data-off="Não"></span>
+                  <span class="switch-handle"></span>
+                </label>
               </div>
               <ng-template [ngIf]="formulario.controls['possuiAssinatura'].value == true">
                 <div class="form-group col-6">
@@ -35,7 +39,7 @@
                 </div>
             </ng-template>
             </div>
-            
+
           </div>
 
           <div class="card-footer">

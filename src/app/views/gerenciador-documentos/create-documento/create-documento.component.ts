@@ -1,18 +1,14 @@
 
-import { Component, ElementRef, OnDestroy, OnInit, TemplateRef, ViewChild } from '@angular/core';
-import { FormGroup, FormBuilder, Validators, FormArray, FormControl } from '@angular/forms';
+import { Component, OnDestroy, OnInit} from '@angular/core';
+import { FormGroup, FormBuilder, Validators, FormArray } from '@angular/forms';
 import { Router } from '@angular/router';
-import { AngularEditorConfig } from '@kolkov/angular-editor';
 import { NotifierService } from 'angular-notifier'
-import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
-import { FormValidations } from 'app/views/usuarios/shared/form-validation/form-validations';
 import * as _ from 'lodash';
 import * as moment from 'moment';
 import { BsLocaleService } from 'ngx-bootstrap';
 import { Restangular } from 'ngx-restangular';
-import { ConsultaCepService } from 'app/views/usuarios/shared/consulta-cep/consulta-cep.service';
-import { concat, Observable, of, Subject, Subscription } from 'rxjs';
-import { tap, distinctUntilChanged, switchMap, catchError, filter, map } from 'rxjs/operators';
+import { Subscription } from 'rxjs';
+
 @Component({
   selector: 'app-create-documento',
   templateUrl: './create-documento.component.html',
@@ -33,14 +29,13 @@ export class CreateDocumentoComponent implements OnInit, OnDestroy {
   leiloes:any;
   sub: Subscription[] = [];
   salvando = false;
+  loadingLotes = false;
   constructor(
     private formBuilder: FormBuilder,
     private restangular: Restangular,
     private notifierService: NotifierService,
     private router: Router,
-    private localeService: BsLocaleService,
-    private modalService: BsModalService,
-    private cepService: ConsultaCepService,
+    private localeService: BsLocaleService
   ) {
     localeService.use('pt-br');
   }
@@ -50,7 +45,6 @@ export class CreateDocumentoComponent implements OnInit, OnDestroy {
       this.restangular.one('admin/leilao').get().subscribe(
         dados => {
           this.leiloes = dados.data
-
         }
       )
     )
@@ -59,11 +53,11 @@ export class CreateDocumentoComponent implements OnInit, OnDestroy {
         dados => {
           this.tipoDocumentos = dados.data
         }))
-    this.sub.push(
-      this.restangular.one('usuario/perfis').get().subscribe(
-        dados => {
-          this.perfis = dados.data
-        }))
+    // this.sub.push(
+    //   this.restangular.one('usuario/perfis').get().subscribe(
+    //     dados => {
+    //       this.perfis = dados.data
+    //     }))
     this.sub.push(
       this.restangular.one('documentoLoteTemplate').get().subscribe(
         dados => {
@@ -74,10 +68,42 @@ export class CreateDocumentoComponent implements OnInit, OnDestroy {
       leilaoId: [null, [Validators.required]],
       loteId: [null, [Validators.required]],
       tipoDocumentoId: [null, Validators.required],
-      tipoAssinatura: [1, Validators.required],
-      assinantes:[[], Validators.required],
+      tipoAssinatura: ["1"],
+      assinantes: this.formBuilder.array([]),
       templateId: [null, [Validators.required]],
-    })
+    });
+
+    this.formulario.controls.tipoDocumentoId.valueChanges.subscribe((x: number) => {
+      const tipoDocumento = this.tipoDocumentos.find(t => t.tipoDocumentoLoteId == x);
+      this.createAssinantes(tipoDocumento);
+    });
+  }
+
+  get assinantes() {
+    return this.formulario.controls["assinantes"] as FormArray;
+  }
+
+  createAssinantes(tipoDocumento) {
+    this.formulario.controls["assinantes"] = this.formBuilder.array([]);
+    tipoDocumento.perfis.forEach(x => {
+      const assinanteForm = this.formBuilder.group({
+        usuarioId: [null, Validators.required],
+        perfil: [x.descricao],
+        usuarios: [[]]
+      });
+      this.getUsuarios(x.perfilId, assinanteForm);
+      this.assinantes.push(assinanteForm);
+    });
+  }
+
+  getUsuarios(perfilId: number, fg: FormGroup) {
+    this.sub.push(
+      this.restangular.one('usuario').get({perfilId: perfilId}).subscribe(
+        dados => {
+          fg.controls["usuarios"] = dados.data
+        }
+      )
+    )
   }
 
   onSubmit() {
@@ -85,40 +111,49 @@ export class CreateDocumentoComponent implements OnInit, OnDestroy {
     const formulario = {
       leilaoId: parseInt(this.formulario.value.leilaoId),
       loteId: parseInt(this.formulario.value.loteId),
-      TipoDocumentoLoteId: parseInt(this.formulario.value.tipoDocumentoId),
-      TipoAssinaturaId: parseInt(this.formulario.value.tipoAssinatura),
-      assinantes: this.formulario.value.assinantes,
+      tipoDocumentoLoteId: parseInt(this.formulario.value.tipoDocumentoId),
+      tipoAssinaturaId: parseInt(this.formulario.value.tipoAssinatura),
+      assinantes: this.assinantes.value.map(x => x.usuarioId),
       templateId: parseInt(this.formulario.value.templateId),
     }
+
     Object.keys(this.formulario.controls).forEach((campo)=>{
       const controle = this.formulario.get(campo)
       controle.markAsTouched()
     })
 
-    if(!this.formulario.valid){
-      this.notifierService.notify('error', 'Preencha todos os campos obrigatórios');
-      this.salvando = false;
-      return false;
-    }
+
+    // if(!this.formulario.valid){
+    //   this.notifierService.notify('error', 'Preencha todos os campos obrigatórios');
+    //   this.salvando = false;
+    //   return false;
+    // }
+
     this.restangular.all('DocumentoLote').post(formulario).subscribe(a => {
       this.notifierService.notify('success', 'Documento criado com sucesso');
-      this.router.navigate(['/gerenciadordocumento']);
+      this.router.navigate(['/gerenciador-documentos']);
     },
     error => {
       this.notifierService.notify('error', 'Erro ao criar o documento!');
+      this.salvando = false;
     });
   }
+
   setLeilao(){
+    this.loadingLotes = true;
     const leilao = this.formulario.value.leilaoId
     this.sub.push(
-      this.restangular.one("lote", '').get({ leilaoId: leilao}).subscribe(
+      this.restangular.one("lote/numeros").get({ leilaoId: leilao, statusId: 5})
+      .subscribe(
         dados => {
           this.lotes = dados.data;
           this.hasLotes = true;
+          this.loadingLotes = false;
         }
       )
     )
   }
+
   verificaValidTouched(campo) {
     return !this.formulario.get(campo).valid && this.formulario.get(campo).touched;
   }

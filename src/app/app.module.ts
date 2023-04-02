@@ -27,7 +27,8 @@ import {
   AppSidebarFormComponent,
   AppSidebarHeaderComponent,
   AppSidebarMinimizerComponent,
-  APP_SIDEBAR_NAV
+  APP_SIDEBAR_NAV,
+  EmailEditorEblComponent
 } from './components';
 
 // Import views
@@ -58,7 +59,8 @@ const APP_COMPONENTS = [
   LeilaoComponent,
   CreateLeilaoComponent,
   UpdateLeilaoComponent,
-  MapaLanceComponent
+  MapaLanceComponent,
+  EmailEditorEblComponent
 ]
 
 // Import directives

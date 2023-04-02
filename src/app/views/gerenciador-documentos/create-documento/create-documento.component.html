@@ -21,10 +21,15 @@
                   <div class="form-group col-6">
                     <label for="cobrancaId">Lote</label>
                     <select class="form-control" [ngClass]="aplicaCssErro('loteId')" formControlName="loteId" [attr.disabled]="!hasLotes ? '' : null">
-                      <option [value]="item.loteId" *ngFor="let item of lotes">{{item.descricao}}</option>
+                      <option selected *ngIf="loadingLotes">CARREGANDO...</option>
+                      <ng-template [ngIf]="!loadingLotes">
+                        <option>-- SELECIONE --</option>
+                        <option value="0">TODOS OS LOTES</option>
+                        <option [value]="item.loteId" *ngFor="let item of lotes">Lote: {{item.numeroLote}} - {{item.descricao}}</option>
+                      </ng-template>
                     </select>
                   </div>
-                
+
                 </div>
                 <div class="row">
                   <div class="form-group col-6">
@@ -57,21 +62,26 @@
 
           <div class="card-block">
             <div class="row">
-              <div class="form-group col-6">
-                <label for="perfis">Assinantes </label>
-                <ng-select [items]="perfis" formControlName="assinantes" [ngClass]="aplicaCssErro('assinantes')" [multiple]="true" bindLabel="descricao" bindValue="perfilUsuarioId">
-                </ng-select>
-              </div>
+              <ng-container formArrayName="assinantes">
+                <ng-container *ngFor="let assinanteForm of assinantes.controls; let i = index">
+                  <div class="form-group col-6" [formGroup]="assinanteForm">
+                    <label for="assinante">Assinante {{i + 1}} <small>({{assinanteForm.controls['perfil'].value | uppercase}})</small></label>
+                    <ng-select [items]="assinanteForm.controls['usuarios']" formControlName="usuarioId" bindLabel="nomeCompleto" bindValue="usuarioId">
+                    </ng-select>
+                  </div>
+                </ng-container>
+              </ng-container>
+
               <div class="form-group col-6">
                 <label>Tipo de Assinatura</label>
                 <div class="form-check">
-                  <input class="form-check-input" type="radio" name="tipoAssinatura" id="certificado" value="1" checked>
+                  <input class="form-check-input" type="radio" name="tipoAssinatura" id="certificado" formControlName="tipoAssinatura" value="2">
                   <label class="form-check-label" for="certificado">
                     Certificado Digital
                   </label>
                 </div>
                 <div class="form-check">
-                  <input class="form-check-input" type="radio" name="tipoAssinatura" id="assinatura" value="2">
+                  <input class="form-check-input" type="radio" name="tipoAssinatura" id="assinatura" formControlName="tipoAssinatura" value="1">
                   <label class="form-check-label" for="assinatura">
                     Assinatura Digitalizada
                   </label>

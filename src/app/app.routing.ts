@@ -221,7 +221,7 @@ export const routes: Routes = [
         component: FaturaComponent,
         data: {
           title: 'Faturas',
-          source: 'VISTORIA'
+          source: 'FATURA'
         },
         canActivate: [SourceGuard]
       },
@@ -230,7 +230,7 @@ export const routes: Routes = [
         component: CreateFaturaComponent,
         data: {
           title: 'Nova Fatura',
-          source: 'VISTORIA'
+          source: 'FATURA'
         },
         canActivate: [SourceGuard]
       },
@@ -239,7 +239,7 @@ export const routes: Routes = [
         component: GerenciadorDocumentosComponent,
         data: {
           title: 'Gerenciador de Documentos',
-          source: 'VISTORIA'
+          source: 'GERENCIADOR_DOC'
         },
         canActivate: [SourceGuard]
       },
@@ -248,7 +248,7 @@ export const routes: Routes = [
         component: CreateDocumentoComponent,
         data: {
           title: 'Novo Documento',
-          source: 'VISTORIA'
+          source: 'GERENCIADOR_DOC'
         },
         canActivate: [SourceGuard]
       },
@@ -779,7 +779,7 @@ export const routes: Routes = [
         path: 'tipodocumento',
         component: TipoDocumentoComponent,
         data: {
-          title: 'Tipo Documento',
+          title: 'Tipo de Documento',
           source: 'GERENCIADOR_DOC'
         },
         canActivate: [SourceGuard]
@@ -829,25 +829,6 @@ export const routes: Routes = [
         },
         canActivate: [SourceGuard]
       },
-      {
-        path: 'gerenciadordocumento',
-        component: GerenciadorDocumentosComponent,
-        data: {
-          title: 'Gerenciador de Documentos',
-          source: 'GERENCIADOR_DOC'
-        },
-        canActivate: [SourceGuard]
-      },
-      {
-        path: 'create-gerenciadordocumento',
-        component: CreateDocumentoComponent,
-        data: {
-          title: 'Criar Documento',
-          source: 'GERENCIADOR_DOC'
-        },
-        canActivate: [SourceGuard]
-      },
-
       {
         path: 'access-denied',
         component: AccessDeniedComponent,
