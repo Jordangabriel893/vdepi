@@ -51,7 +51,7 @@ export class PermissoesComponent implements OnInit {
 
     this.restangular.all('permissao').customPUT(formulario) .subscribe(a => {
       this.notifierService.notify('success', 'Permissões editadas com sucesso');
-      this.router.navigate(['/leilao']);
+      this.router.navigate(['/permissao']);
     },
       error => {
         this.notifierService.notify('error', 'Erro ao atualizar as permissões!');

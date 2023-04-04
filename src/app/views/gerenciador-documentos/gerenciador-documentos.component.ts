@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit, TemplateRef } from '@angular/core';
 import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
 import { ConfirmationService, ResolveEmit } from '@jaspero/ng-confirmations';
 import { NotifierService } from 'angular-notifier';
@@ -7,6 +7,7 @@ import { Subscription } from 'rxjs';
 import { environment } from 'environments/environment';
 import * as XLSX from 'xlsx';
 import * as moment from 'moment';
+import { BsModalRef, BsModalService } from 'ngx-bootstrap';
 
 @Component({
   selector: 'app-gerenciador-documentos',
@@ -19,16 +20,16 @@ export class GerenciadorDocumentosComponent implements OnInit, OnDestroy {
   loading;
   sub: Subscription[] = [];
   nomeLeilao:any = 'Leilões';
-  leilaoId;
-  siteUrl = environment.siteUrl;
   enviando = false;
   queryField = new FormControl();
   documentosFiltrados = [];
   showItens;
+  leilao;
+  blockchainInfo;
+  modalRef: BsModalRef;
   constructor(
+    private modalService: BsModalService,
     private restangular: Restangular,
-    private notifierService: NotifierService,
-    private confirmationService: ConfirmationService,
     private formBuilder: FormBuilder) { }
 
    ngOnInit() {
@@ -39,18 +40,32 @@ export class GerenciadorDocumentosComponent implements OnInit, OnDestroy {
     })
   }
 
-  setLeilao(idLeilao){
-    this.leilaoId = idLeilao;
+  setLeilao(leilao){
+    this.leilao = leilao;
+    this.buscarDocumentos();
+  }
+
+  buscarDocumentos() {
     this.loading = true;
     this.sub.push(
-      this.restangular.one(`documentoLote/${idLeilao.id}`).get().subscribe(
-      dados =>{
-        this.documentos = dados.data;
-        this.documentosFiltrados = dados.data;
-       this.loading = false;
-      }
+      this.restangular.one(`documentoLote`).get({leilaoId: this.leilao.id}).subscribe(
+        dados =>{
+          this.documentos = dados.data;
+          this.documentosFiltrados = dados.data;
+        this.loading = false;
+        }
+      )
     )
-    )
+  }
+
+  refresh() {
+    this.documentosFiltrados = null;
+    this.buscarDocumentos();
+  }
+
+  mostrarInfoBlockchain(template: TemplateRef<any>, blockchain) {
+    this.blockchainInfo = blockchain;
+    this.modalRef = this.modalService.show(template, { class: 'modal-lg'});
   }
 
   exportAsExcel() {
@@ -73,14 +88,10 @@ export class GerenciadorDocumentosComponent implements OnInit, OnDestroy {
   filtrarDocumentos(){
     const form = this.formulario.value
     if(form.statusControl == 0){
-      this.documentosFiltrados =  this.documentos
+      this.documentosFiltrados = this.documentos
     }else{
-      this.documentosFiltrados =  this.documentos.filter(doc => doc.statusId == form.statusControl);
+      this.documentosFiltrados = this.documentos.filter(doc => doc.statusId == form.statusControl);
     }
-  }
-
-  showItensFatura(faturaId){
-    this.showItens = faturaId;
   }
 
   ngOnDestroy(): void {

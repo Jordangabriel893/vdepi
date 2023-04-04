@@ -1,10 +1,8 @@
 import { Component, OnInit, TemplateRef, ViewChild } from '@angular/core';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { ActivatedRoute, Router } from '@angular/router';
-import { AngularEditorConfig } from '@kolkov/angular-editor';
+import { FormBuilder, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 import { EmailEditorComponent } from 'angular-email-editor';
 import { NotifierService } from 'angular-notifier';
-import { ConsultaCepService } from 'app/views/usuarios/shared/consulta-cep/consulta-cep.service';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap';
 import { Restangular } from 'ngx-restangular';
 
@@ -14,23 +12,30 @@ import { Restangular } from 'ngx-restangular';
   styleUrls: ['./create-documento-template.component.scss']
 })
 export class CreateDocumentoTemplateComponent implements OnInit {
- 
-  @ViewChild(EmailEditorComponent)
-  private emailEditor: EmailEditorComponent;
-  title = 'angular-email-editor';
   salvar = false;
   template;
   formulario;
   options = {
-    locale: 'pt-BR',
+    displayMode: 'web',
+    devices: ['desktop'],
     features: {
-      textEditor: {
-        tables: true
-      }
+      preview: false
+    },
+  };
+  tools = {
+    button: {
+      enabled: false
+    },
+    form: {
+      enabled: false
+    },
+    menu: {
+      enabled: false
+    },
+    html: {
+      enabled: false
     }
-  }
-  cardImageBase64;
-  isImageSaved
+  };
   openPopup: boolean = true
   modalRef: BsModalRef;
 
@@ -42,10 +47,8 @@ export class CreateDocumentoTemplateComponent implements OnInit {
     private restangular: Restangular,
   ) {
     this.formulario =this.formBuilder.group({
-      titulo:[null, Validators.required],
-      tag:[""]
+      titulo:[null, Validators.required]
     })
-
    }
 
 
@@ -53,135 +56,18 @@ export class CreateDocumentoTemplateComponent implements OnInit {
 
   }
 
-  editorReady(event) {
-    const that = this
-    this.emailEditor.editor.addEventListener('design:updated', () => {
-      this.salvar = true;
-      this.emailEditor.editor.exportHtml((data) => {
-        this.template = {
-          designJson:JSON.stringify(data.design),
-          codigoHtml: data.html,
-          descricao:this.formulario.value.descricao
-        }
-        this.salvar = false
-      })
-    })
-
-    this.emailEditor.editor.setMergeTags({
-
-      comissao_leiloeiro: {
-        name: 'Comissão do Leiloeiro',
-        value: '{{comissao_leiloeiro}}',
-      },
-      data_leilao: {
-        name: 'Data do Leilão',
-        value: '{{data_leilao}}',
-      },
-      descricao_lote: {
-        name: 'Descrição do Lote',
-        value: '{{descricao_lote}}',
-      },
-      email_usuario: {
-        name: 'Email do Usuário',
-        value: '{{email_usuario}}',
-      },
-      lotes: {
-        name: 'Lista de Lotes',
-        value: '{{lotes}}',
-      },
-      link_boleto: {
-        name: 'Link do Boleto',
-        value: '{{link_boleto}}',
-      },
-      link_confirmacao: {
-        name: 'Link de Confirmação',
-        value: '{{link_confirmacao}}',
-      },
-      nome_comitente: {
-        name: 'Nome do Comitente',
-        value: '{{nome_comitente}}',
-      },
-      nome_empresa: {
-        name: 'Nome da Empresa',
-        value: '{{nome_empresa}}',
-      },
-      nome_leilao: {
-        name: 'Nome do Leilão',
-        value: '{{nome_leilao}}',
-      },
-      nome_leiloeiro: {
-        name: 'Nome do Leiloeiro',
-        value: '{{nome_leiloeiro}}',
-      },
-      nome_usuario: {
-        name: 'Nome do Usuário',
-        value: '{{nome_usuario}}',
-      },
-      numero_lote: {
-        name: 'Numero do Lote',
-        value: '{{numero_lote}}',
-      },
-      taxa_adm: {
-        name: 'Taxa Administrativa',
-        value: '{{taxa_adm}}',
-      },
-      telefone_usuario: {
-        name: 'Telefone do Usuário',
-        value: '{{telefone_usuario}}',
-      },
-      valor_arrematacao: {
-        name: 'Valor Arrematação',
-        value: '{{valor_arrematacao}}',
-      },
-      mensagem: {
-        name: 'Mensagem',
-        value: '{{mensagem}}',
-      },
-      data_inicio_agendamento: {
-        name: 'Data Início Agendamento',
-        value: '{{data_inicio_agendamento}}',
-      },
-      data_fim_agendamento: {
-        name: 'Data Fim Agendamento',
-        value: '{{data_fim_agendamento}}',
-      },
-    });
-
-    this.emailEditor.editor.registerCallback('image', function(file, done) {
-      var imagem:any = {
-        base64:'',
-        tipo:'',
-        nome:'',
-      }
-
-      const reader = new FileReader();
-      reader.onload = (e: any) => {
-          const image = new Image();
-          image.src = e.target.result;
-          image.onload = rs => {
-            const imgBase64Path = e.target.result;
-            that.cardImageBase64 = imgBase64Path;
-            that.isImageSaved = true;
-            imagem.base64 = imgBase64Path
-            imagem.nome = file.attachments[0].name
-            imagem.tipo =file.attachments[0].type
-
-            that.restangular.all('marketing/imageTemplate')
-            .post(imagem)
-            .subscribe(a => {
-              done({ progress: 100, url: a.data.url })
-            })
-          }
-      }
-      reader.readAsDataURL(file.attachments[0]);
-    })
-  }
-
   openModal(template: TemplateRef<any>) {
     this.modalRef = this.modalService.show(template, { class: 'modal-lg'});
   }
 
-  save(){
+  editorUpdated(data) {
+    this.template = {
+      designJson:JSON.stringify(data.design),
+      codigoHtml: data.html,
+    }
+  }
+
+  save() {
     this.salvar = true;
 
     if(!this.formulario.valid) {
@@ -200,18 +86,18 @@ export class CreateDocumentoTemplateComponent implements OnInit {
       return false;
     }
 
-    this.template = {
+    const template = {
       designJson: this.template.designJson,
       html: this.template.codigoHtml,
       titulo: this.formulario.value.titulo,
     }
 
-    this.restangular.all('DocumentoLoteTemplate').post(this.template).subscribe(a => {
+    this.restangular.all('DocumentoLoteTemplate').post(template).subscribe(a => {
       this.notifierService.notify('success', 'Template criado com sucesso');
       this.salvar = false
       this.router.navigate(['/documentotemplate']);
     },
-    error => {
+    () => {
       this.salvar = false
       this.notifierService.notify('error', 'Erro ao criar o template!');
     });
@@ -231,9 +117,4 @@ export class CreateDocumentoTemplateComponent implements OnInit {
   aplicaCssErro(campo){
     return{ 'has-error': this.verificaValidTouched(campo) }
   }
-  ngOnDestroy(): void {
-  }
-
-
-
 }

@@ -1,9 +1,13 @@
 <div class="container">
 
-  <button class="btn btn-success" (click)="openModal(modal)" id="create"><i class="fa fa-save"></i>&nbsp;Criar</button>
+  <button class="btn btn-success" (click)="openModal(modal)" id="create"><i class="fa fa-save"></i>&nbsp;Salvar</button>
 
-  <email-editor id="email-editor" [options]="options" (ready)="editorReady($event)"></email-editor>
-
+  <app-email-editor-ebl
+    [options]="options"
+    (updated)="editorUpdated($event)"
+    [tools]="tools"
+  >
+  </app-email-editor-ebl>
   <ng-template #modal>
     <div class="modal-header">
       <h4 class="modal-title pull-left">Criar Template</h4>
@@ -16,13 +20,13 @@
         <div class="col-12">
           <div [formGroup]="formulario">
             <div class="form-group">
-              <label for="titulo">Titulo</label>
+              <label for="titulo">Nome</label>
               <input
                 type="text"
                 class="form-control"
                 id="titulo" [ngClass]="aplicaCssErro('titulo')"
                 [ngStyle]="{'right': salvar == true ? '135px' : '112px'}"
-                placeholder="Digite o titulo do template"
+                placeholder="Digite o nome do template"
                 formControlName="titulo"/>
             </div>
             <div class="form-group">
