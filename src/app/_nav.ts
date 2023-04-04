@@ -263,4 +263,11 @@ export const navigation = [
     source: 'GERENCIADOR_DOC',
     grupo:'CADASTROS'
   },
+  {
+    name: 'Assinatura',
+    url: '/assinatura',
+    icon: 'fa fa-file-alt',
+    source: 'STATUS_LEILAO',
+    grupo:'CADASTROS'
+  },
 ];

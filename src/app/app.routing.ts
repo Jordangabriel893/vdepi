@@ -1,3 +1,4 @@
+import { AssinaturaComponent } from './views/assinatura/assinatura.component';
 import { CreateDocumentoTemplateComponent } from './views/documento-template/create-documento-template/create-documento-template.component';
 import { CreateTipodocumentoComponent } from './views/tipo-documento/create-tipodocumento/create-tipodocumento.component';
 import { TipoDocumentoComponent } from './views/tipo-documento/tipo-documento.component';
@@ -847,7 +848,6 @@ export const routes: Routes = [
         },
         canActivate: [SourceGuard]
       },
-
       {
         path: 'access-denied',
         component: AccessDeniedComponent,
@@ -859,6 +859,7 @@ export const routes: Routes = [
     ]
   },
   { path: 'login', component: LoginComponent },
+  { path: 'assinatura/:id', component: AssinaturaComponent },
   { path: '**', redirectTo: '' }
 ];
 

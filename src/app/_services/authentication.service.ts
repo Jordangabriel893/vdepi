@@ -39,7 +39,32 @@ export class AuthenticationService {
         return user
       }));
   }
+  loginAnonimo() {
 
+    let headers = new HttpHeaders({
+      'Content-Type': 'application/x-www-form-urlencoded'
+    });
+    let options = {
+      headers: headers
+    }
+
+    let grant_type = 'client_credentials';
+    let client_id = 'admin-eblonline';
+    let client_secret = 'X3l5h0UhDy7F0xE2sMpSPREcTyqgtZNO';
+
+    let body = `grant_type=${grant_type}&client_id=${client_id}&client_secret=${client_secret}`;
+
+    return this.http.post<any>(environment.apiUrl + '/connect/token', body, options)
+      .pipe(map(user => {
+        if (user && user.access_token) {
+          // store user details and jwt token in local storage to keep user logged in between page refreshes
+          localStorage.removeItem('currentUser');
+          const decodedToken: any = jwt_decode(user.access_token);
+          localStorage.setItem('currentUser', JSON.stringify({ token: user.access_token, username: decodedToken.email, }))
+        }
+        return user
+      }));
+  }
   getPermissions() {
     const user = this.getUser();
     const opcoes = {
