@@ -24,10 +24,13 @@ export class EditDocumentoTemplateComponent implements OnInit {
   formulario:FormGroup
   designJson;
   options = {
-    id: 'email-editor',
-    locale: 'pt-BR',
     displayMode: 'web',
     devices: ['desktop'],
+    features: {
+      textEditor: {
+        tables: true
+      }
+    },
   };
   tools = {
     button: {

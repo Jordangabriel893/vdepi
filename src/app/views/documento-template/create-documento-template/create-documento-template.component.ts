@@ -19,7 +19,9 @@ export class CreateDocumentoTemplateComponent implements OnInit {
     displayMode: 'web',
     devices: ['desktop'],
     features: {
-      preview: false
+      textEditor: {
+        tables: true
+      }
     },
   };
   tools = {

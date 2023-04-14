@@ -100,7 +100,7 @@
                       </td>
                       <td>
                         <ng-container [ngSwitch]="item.blockchain?.status">
-                          <div (click)="mostrarInfoBlockchain(modal, item.blockchain)">
+                          <div (click)="mostrarInfoBlockchain(modal, item.blockchain)" class="btn-blockchain">
                             <span *ngSwitchCase="null" class="badge badge-secondary"><i class="fa fa-ban"></i> NÃO ENVIADO</span>
                             <span *ngSwitchCase="1" class="badge badge-info"><i class="fa fa-paper-plane"></i> ENVIADO</span>
                             <span *ngSwitchCase="2" class="badge badge-warning"><i class="fa fa-clock"></i> PENDENTE</span>
@@ -147,22 +147,26 @@
 </div>
 <ng-template #modal>
   <div class="modal-header">
-    <h4 class="modal-title pull-left">Blockchain - Info</h4>
+    <h4 class="modal-title pull-left">Informações Blockchain</h4>
     <button type="button" class="btn-close close pull-right" aria-label="Close" (click)="modalRef?.hide()">
       <span aria-hidden="true" class="visually-hidden">&times;</span>
     </button>
   </div>
   <div class="modal-body" *ngIf="blockchainInfo">
     <div class="row">
-      <div class="col-12">
+      <div class="col-6">
         <div><small><b>Data Registro</b></small></div>
         <div>{{blockchainInfo.dataCadastro | amUtc | amLocal | amDateFormat:'DD/MM/yyyy HH:mm'}}</div>
+      </div>
+      <div class="col-6">
+        <div><small><b>Rede</b></small></div>
+        <div>{{blockchainInfo.rede}}</div>
       </div>
     </div>
     <div class="row">
       <div class="col-12">
-        <div><small><b>Rede</b></small></div>
-        <div>{{blockchainInfo.rede}}</div>
+        <div><small><b>Hash sha256</b></small></div>
+        <div>{{blockchainInfo.hash}}</div>
       </div>
     </div>
     <div class="row">

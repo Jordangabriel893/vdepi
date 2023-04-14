@@ -20,12 +20,19 @@ export class EmailEditorEblComponent {
 
   cardImageBase64;
   isImageSaved
+  idEditor = "emaileditor";
   optionsDefault = {
-    id: 'email-editor',
+    id: this.idEditor,
     locale: 'pt-BR',
+    features: {
+      textEditor: {
+        tables: true
+      }
+    },
     mergeTagsConfig: {
       autocompleteTriggerChar: "@"
-    }
+    },
+
   };
   body;
 

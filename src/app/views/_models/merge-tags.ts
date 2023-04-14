@@ -23,6 +23,14 @@ const mergeTags =
 				value: '{{DataInicioLiberacao}}',
 				name: 'Data Inicio da Liberacao'
 			},
+      DataDiarioOficial: {
+				value: '{{DataDiarioOficial}}',
+				name: 'Data Diário Oficial'
+			},
+      NumeroDiarioOficial: {
+				value: '{{NumeroDiarioOficial}}',
+				name: 'Numero Diário Oficial'
+			}
 		}
 	},
 	lote: {
@@ -98,6 +106,10 @@ const mergeTags =
 			NumeroNota: {
 				value: '{{NumeroNota}}',
 				name: 'Numero Aleatório da Nota'
+			},
+      EnderecoCompleto: {
+				value: '{{EnderecoCompletoLeiloeiro}}',
+				name: 'Endereço Completo'
 			}
 		}
 	},
