@@ -1,3 +1,4 @@
+import { AssinaturaComponent } from './views/assinatura/assinatura.component';
 import { CreateDocumentoTemplateComponent } from './views/documento-template/create-documento-template/create-documento-template.component';
 import { CreateTipodocumentoComponent } from './views/tipo-documento/create-tipodocumento/create-tipodocumento.component';
 import { TipoDocumentoComponent } from './views/tipo-documento/tipo-documento.component';
@@ -830,6 +831,24 @@ export const routes: Routes = [
         canActivate: [SourceGuard]
       },
       {
+        path: 'gerenciadordocumento',
+        component: GerenciadorDocumentosComponent,
+        data: {
+          title: 'Gerenciador de Documentos',
+          source: 'GERENCIADOR_DOC'
+        },
+        canActivate: [SourceGuard]
+      },
+      {
+        path: 'create-gerenciadordocumento',
+        component: CreateDocumentoComponent,
+        data: {
+          title: 'Criar Documento',
+          source: 'GERENCIADOR_DOC'
+        },
+        canActivate: [SourceGuard]
+      },
+      {
         path: 'access-denied',
         component: AccessDeniedComponent,
         data: {
@@ -840,6 +859,7 @@ export const routes: Routes = [
     ]
   },
   { path: 'login', component: LoginComponent },
+  { path: 'assinatura/:id', component: AssinaturaComponent },
   { path: '**', redirectTo: '' }
 ];
 

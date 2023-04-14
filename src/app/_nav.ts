@@ -255,5 +255,12 @@ export const navigation = [
     icon: 'fa fa-code',
     source: 'GERENCIADOR_DOC',
     grupo:'CADASTROS'
-  }
+  },
+  {
+    name: 'Ger. Documentos',
+    url: '/gerenciadordocumento',
+    icon: 'fa fa-file-alt',
+    source: 'GERENCIADOR_DOC',
+    grupo:'CADASTROS'
+  },
 ];

@@ -1,3 +1,4 @@
+import { AssinaturaComponent } from './views/assinatura/assinatura.component';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
@@ -401,7 +402,8 @@ export function RestangularConfigFactory(RestangularProvider, NotifierService: N
     CreateDocumentoTemplateComponent,
     EditDocumentoTemplateComponent,
     GerenciadorDocumentosComponent,
-    CreateDocumentoComponent
+    CreateDocumentoComponent,
+    AssinaturaComponent
   ],
   providers: [{
     provide: LocationStrategy,
