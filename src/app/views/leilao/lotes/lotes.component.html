@@ -1,10 +1,6 @@
 <div class="dashboard-bar">
   <div class="row justify-content-end">
-    <div class="col-md-auto text-right">
-
-    </div>
-
-
+    <div class="col-md-auto text-right"></div>
   </div>
 </div>
 <div class="animated fadeIn">
@@ -12,60 +8,135 @@
     <div class="col-lg-12">
       <div class="card">
         <div class="card-header header" *ngIf="leilao">
-          <div><i class="fa fa-list"></i>&nbsp;Lotes - {{leilao.nome}}</div>
+          <div><i class="fa fa-list"></i>&nbsp;Lotes - {{ leilao.nome }}</div>
           <div class="d-flex justify-content-end">
-            <button type="button" class="btn btn-sm btn-info text-nowrap" (click)="exportAsExcel()"
-              title="Exportar para Excel" *ngIf="!exportando">
-              <i class="fa fa-download" aria-hidden="true"></i>
-              &nbsp;Exportar Lotes
-            </button>&nbsp;
-            <button type="button" class="btn btn-info btn-sm text-nowrap" *ngIf="exportando">
-              <i class="fa fa-spin fa-spinner"></i>&nbsp;Exportando Lotes...
-            </button>&nbsp;
-            <button type="button" class="btn btn-info btn-sm text-nowrap" (click)="getAnexo()" *ngIf="!fileLoading">
-              <i class="fa fa-upload" aria-hidden="true"></i>&nbsp;Importar Lotes
-            </button>
-            <button type="button" class="btn btn-info btn-sm text-nowrap" *ngIf="fileLoading">
-              <i class="fa fa-spin fa-spinner"></i>&nbsp;Importando Lotes...
-            </button>
-            <input type="file" class="inputAnexos" accept=".xls,.xlsx" #inputAnexos (change)="fileChangeEvent($event)">
-            <div class=" text-right pl-2 ">
-              <button type="button" class="btn btn-sm btn-info text-nowrap" title="Copiar Lote para outro leilão"
-                (click)="openModal(transferirLote,'Copiar')">
+            <div class="text-right pl-2">
+              <button
+                type="button"
+                class="btn btn-sm btn-info text-nowrap"
+                (click)="exportAsExcel()"
+                title="Exportar para Excel"
+                *ngIf="!exportando"
+              >
+                <i class="fa fa-download" aria-hidden="true"></i>
+                &nbsp;Exportar Lotes
+              </button>
+
+              <button
+                type="button"
+                class="btn btn-info btn-sm text-nowrap"
+                *ngIf="exportando"
+              >
+                <i class="fa fa-spin fa-spinner"></i>&nbsp;Exportando Lotes...
+              </button>
+            </div>
+            <div class="text-right pl-2">
+              <button
+                type="button"
+                class="btn btn-info btn-sm text-nowrap"
+                (click)="getAnexo()"
+                *ngIf="!fileLoading"
+              >
+                <i class="fa fa-upload" aria-hidden="true"></i>&nbsp;Importar
+                Lotes
+              </button>
+              <button
+                type="button"
+                class="btn btn-info btn-sm text-nowrap"
+                *ngIf="fileLoading"
+              >
+                <i class="fa fa-spin fa-spinner"></i>&nbsp;Importando Lotes...
+              </button>
+              <input
+                type="file"
+                class="inputAnexos"
+                accept=".xls,.xlsx"
+                #inputAnexos
+                (change)="fileChangeEvent($event)"
+              />
+            </div>
+            <div class="text-right pl-2">
+              <button
+                type="button"
+                class="btn btn-sm btn-info text-nowrap"
+                title="Copiar Lote para outro leilão"
+                (click)="openModal(transferirLote, 'Copiar')"
+              >
                 <i class="fa fa-copy" aria-hidden="true"></i>
                 &nbsp;Copiar Lotes
               </button>
             </div>
-            <div class="col-md-auto text-right pl-2">
-              <button type="button" class="btn btn-sm btn-info text-nowrap" title="Transferir Lote para outro leilão"
-                (click)="openModal(transferirLote, 'Transferir')">
-                <i class="fa fa-exchange-alt" aria-hidden="true" ></i>
+            <div class="text-right pl-2">
+              <button
+                type="button"
+                class="btn btn-sm btn-info text-nowrap"
+                title="Transferir Lote para outro leilão"
+                (click)="openModal(transferirLote, 'Transferir')"
+              >
+                <i class="fa fa-exchange-alt" aria-hidden="true"></i>
                 &nbsp;Transferir Lotes
+              </button>
+            </div>
+            <div class="text-right pl-2">
+              <button
+                type="button"
+                class="btn btn-sm btn-info text-nowrap"
+                (click)="gerarEtiquetas()"
+                title="Exportar para Excel"
+                *ngIf="!gerandoEtiquetas"
+              >
+                <i class="fa fa-qrcode" aria-hidden="true"></i>
+                &nbsp;Etiquetas
+              </button>
+              <button
+                type="button"
+                class="btn btn-info btn-sm text-nowrap"
+                *ngIf="gerandoEtiquetas"
+              >
+                <i class="fa fa-spin fa-spinner"></i>&nbsp;Criando...
               </button>
             </div>
           </div>
         </div>
         <div class="card-block">
           <div class="d-flex justify-content-between">
-            <button type="button" class="btn btn-success" (click)="create()"><i class="fa fa-plus-circle"></i>&nbsp;
-              Novo Lote</button>
+            <button type="button" class="btn btn-success" (click)="create()">
+              <i class="fa fa-plus-circle"></i>&nbsp; Novo Lote
+            </button>
             <div class="input-search">
               <div class="input-group justify-content-end">
                 <div class="input-group-prepend">
-                  <span class="input-group-text" id="inputGroup-sizing-sm">Buscar</span>
+                  <span class="input-group-text" id="inputGroup-sizing-sm"
+                    >Buscar</span
+                  >
                 </div>
-                <input type="text" class="form-control col-4" (keyup)="onSearch()"
-                  placeholder="por Nº Lote e Descrição " aria-describedby="basic-addon2" [formControl]="queryField">
+                <input
+                  type="text"
+                  class="form-control col-4"
+                  (keyup)="onSearch()"
+                  placeholder="por Nº Lote e Descrição "
+                  aria-describedby="basic-addon2"
+                  [formControl]="queryField"
+                />
               </div>
             </div>
           </div>
           <div class="table-responsive mt-4">
-            <table class="table table-striped" [mfData]="lotesFiltrados" #mfLotes="mfDataTable" [mfRowsOnPage]="10">
+            <table
+              class="table table-striped"
+              [mfData]="lotesFiltrados"
+              #mfLotes="mfDataTable"
+              [mfRowsOnPage]="10"
+            >
               <thead>
                 <tr>
                   <th class="text-center">
-                    <input type="checkbox" (change)="selectAllLotes()" [(ngModel)]="allChecked"
-                      title="Selecionar Todas">
+                    <input
+                      type="checkbox"
+                      (change)="selectAllLotes()"
+                      [(ngModel)]="allChecked"
+                      title="Selecionar Todas"
+                    />
                   </th>
                   <th>
                     <mfDefaultSorter by="id">Nº Lote</mfDefaultSorter>
@@ -81,52 +152,70 @@
                   </th>
 
                   <th>
-                    <mfDefaultSorter by="loteJudicial">Lote Judicial</mfDefaultSorter>
+                    <mfDefaultSorter by="loteJudicial"
+                      >Lote Judicial</mfDefaultSorter
+                    >
                   </th>
                   <th>
-                    <mfDefaultSorter by="valorAvalicao">Valor Avaliação</mfDefaultSorter>
+                    <mfDefaultSorter by="valorAvalicao"
+                      >Valor Avaliação</mfDefaultSorter
+                    >
                   </th>
 
-                  <th class="text-center">
-                    Editar
-                  </th>
-                  <th class="text-center">
-                    Excluir
-                  </th>
+                  <th class="text-center">Editar</th>
+                  <th class="text-center">Excluir</th>
                 </tr>
               </thead>
               <tbody>
                 <tr *ngFor="let lote of mfLotes.data">
                   <td class="text-center" nowrap>
-                    <input type="checkbox" [checked]="lote.checked" [(ngModel)]="lote.checked"
-                      (click)="selectLote(lote)">
+                    <input
+                      type="checkbox"
+                      [checked]="lote.checked"
+                      [(ngModel)]="lote.checked"
+                      (click)="selectLote(lote)"
+                    />
                   </td>
-                  <td>{{lote.numeroLote}}</td>
-                  <td>{{lote.categoria}}</td>
-                  <td>{{lote.descricao}}</td>
-                  <td>{{lote.status}}</td>
-                  <td>{{lote.loteJudicial ? "Sim" : "Não"}}</td>
-                  <td>{{lote.valorAvaliacao | currencyFormat}}</td>
+                  <td>{{ lote.numeroLote }}</td>
+                  <td>{{ lote.categoria }}</td>
+                  <td>{{ lote.descricao }}</td>
+                  <td>{{ lote.status }}</td>
+                  <td>{{ lote.loteJudicial ? "Sim" : "Não" }}</td>
+                  <td>{{ lote.valorAvaliacao | currencyFormat }}</td>
                   <td class="text-center" nowrap>
-                    <button type="button" class="btn btn-primary" (click)="edit(lote.loteId)"><i
-                        class="fa fa-edit"></i>&nbsp; Editar</button>
+                    <button
+                      type="button"
+                      class="btn btn-primary"
+                      (click)="edit(lote.loteId)"
+                    >
+                      <i class="fa fa-edit"></i>&nbsp; Editar
+                    </button>
                   </td>
                   <td class="text-center" nowrap>
-                    <button type="button" class="btn btn-danger" (click)="deleteLote(lote.loteId)"><i
-                        class="fa fa-times"></i>&nbsp; Excluir</button>
+                    <button
+                      type="button"
+                      class="btn btn-danger"
+                      (click)="deleteLote(lote.loteId)"
+                    >
+                      <i class="fa fa-times"></i>&nbsp; Excluir
+                    </button>
                   </td>
                 </tr>
                 <!-- (click)="openModal(transferirLote)" -->
                 <tr *ngIf="loading">
                   <td class="text-center text-muted" colspan="9">
-                    <h5>&nbsp;<i class="fa fa-spin fa-spinner"></i> Carregando...</h5>
+                    <h5>
+                      &nbsp;<i class="fa fa-spin fa-spinner"></i> Carregando...
+                    </h5>
                   </td>
                 </tr>
               </tbody>
               <tfoot>
                 <tr>
                   <td colspan="9">
-                    <mfBootstrapPaginator [rowsOnPageSet]="[5,10,25]"></mfBootstrapPaginator>
+                    <mfBootstrapPaginator
+                      [rowsOnPageSet]="[5, 10, 25]"
+                    ></mfBootstrapPaginator>
                   </td>
                 </tr>
               </tfoot>
@@ -143,31 +232,63 @@
   <div class="col-12 modal-itens">
     <div class="modal-header">
       <h5 class="modal-title">Selecionar o leilão</h5>
-      <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="modalRef?.hide()">
+      <button
+        type="button"
+        class="close"
+        data-dismiss="modal"
+        aria-label="Close"
+        (click)="modalRef?.hide()"
+      >
         <span aria-hidden="true">&times;</span>
       </button>
     </div>
     <form [formGroup]="formulario">
       <div class="modal-body d-flex flex-column">
         <div class="form-group col-12 pesquisa-lote">
-          <ng-select [items]="leiloes" bindLabel="nome" [hideSelected]="true" [loading]="loading"
-            typeToSearchText="Busque por leilão" [typeahead]="loteInput$" formControlName="leilao">
-            <ng-template ng-option-tmp let-item="item" let-index="index" let-search="search" bindValue="item">
-              <div style="margin: 10px 0; white-space: normal;" class="card">
+          <ng-select
+            [items]="leiloes"
+            bindLabel="nome"
+            [hideSelected]="true"
+            [loading]="loading"
+            typeToSearchText="Busque por leilão"
+            [typeahead]="loteInput$"
+            formControlName="leilao"
+          >
+            <ng-template
+              ng-option-tmp
+              let-item="item"
+              let-index="index"
+              let-search="search"
+              bindValue="item"
+            >
+              <div style="margin: 10px 0; white-space: normal" class="card">
                 <div class="card-body">
-                  <h5 class="card-title" [ngOptionHighlight]="search">{{item.nome}}</h5>
-                  <p class="text-muted">{{item.titulo}}</p>
+                  <h5 class="card-title" [ngOptionHighlight]="search">
+                    {{ item.nome }}
+                  </h5>
+                  <p class="text-muted">{{ item.titulo }}</p>
                 </div>
               </div>
             </ng-template>
           </ng-select>
-
         </div>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-success" (click)="modalRef?.hide(); copyTransferLote()">{{optionModal}}</button>
-        &nbsp;<button type="button" class="btn btn-secondary" data-dismiss="modal"
-          (click)="modalRef?.hide()">Cancelar</button>
+        <button
+          type="button"
+          class="btn btn-success"
+          (click)="modalRef?.hide(); copyTransferLote()"
+        >
+          {{ optionModal }}
+        </button>
+        &nbsp;<button
+          type="button"
+          class="btn btn-secondary"
+          data-dismiss="modal"
+          (click)="modalRef?.hide()"
+        >
+          Cancelar
+        </button>
       </div>
     </form>
   </div>

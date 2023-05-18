@@ -47,6 +47,8 @@ export class EditDocumentoTemplateComponent implements OnInit {
   isImageSaved;
   openPopup: boolean = true;
   modalRef: BsModalRef;
+  tiposDocumentoLote: [];
+
   constructor(
     private modalService: BsModalService,
     private formBuilder: FormBuilder,
@@ -57,6 +59,13 @@ export class EditDocumentoTemplateComponent implements OnInit {
   ) {}
 
   ngOnInit() {
+    this.restangular
+      .all("TipoDocumentoLote")
+      .get("")
+      .subscribe((resp) => {
+        this.tiposDocumentoLote = resp.data;
+      });
+
     this.id = this.route.snapshot.params["id"];
     this.restangular
       .all("DocumentoLoteTemplate")
@@ -70,6 +79,7 @@ export class EditDocumentoTemplateComponent implements OnInit {
       html: [null, Validators.required],
       templateId: [this.id],
       designJson: [],
+      tipoDocumentoLoteId: [null, Validators.required],
     });
   }
 
@@ -93,40 +103,38 @@ export class EditDocumentoTemplateComponent implements OnInit {
       return false;
     }
 
-    if (!this.template) {
-      this.notifierService.notify("success", "Template atualizado com sucesso");
-      this.router.navigate(["documentotemplate"]);
-      this.modalRef.hide();
-    } else {
-      const template = {
-        designJson: this.template.designJson,
-        html: this.template.html,
-        titulo: this.formulario.value.titulo,
-        templateId: this.id,
-      };
+    const template = {
+      designJson:
+        this.template && this.template.designJson
+          ? this.template.designJson
+          : this.formulario.value.designJson,
+      html:
+        this.template && this.template.html
+          ? this.template.html
+          : this.formulario.value.html,
+      titulo: this.formulario.value.titulo,
+      templateId: this.id,
+      tipoDocumentoLoteId: this.formulario.value.tipoDocumentoLoteId,
+    };
 
-      this.restangular
-        .all("/DocumentoLoteTemplate")
-        .customPUT(template, this.id)
-        .subscribe(
-          (a) => {
-            this.salvar = false;
-            this.notifierService.notify(
-              "success",
-              "Template atualizado com sucesso"
-            );
-            this.router.navigate(["documentotemplate"]);
-          },
-          () => {
-            this.salvar = false;
-            this.notifierService.notify(
-              "error",
-              "Erro ao atualizar o template!"
-            );
-          }
-        );
-      this.modalRef.hide();
-    }
+    this.restangular
+      .all("/DocumentoLoteTemplate")
+      .customPUT(template, this.id)
+      .subscribe(
+        (a) => {
+          this.salvar = false;
+          this.notifierService.notify(
+            "success",
+            "Template atualizado com sucesso"
+          );
+          this.router.navigate(["documentotemplate"]);
+        },
+        () => {
+          this.salvar = false;
+          this.notifierService.notify("error", "Erro ao atualizar o template!");
+        }
+      );
+    this.modalRef.hide();
   }
   updateForm(dados) {
     this.formulario.patchValue({
@@ -134,6 +142,7 @@ export class EditDocumentoTemplateComponent implements OnInit {
       titulo: dados.titulo,
       templateId: dados.documentoLoteTemplateId,
       designJson: dados.designJson,
+      tipoDocumentoLoteId: dados.tipoDocumentoLoteId,
     });
   }
 

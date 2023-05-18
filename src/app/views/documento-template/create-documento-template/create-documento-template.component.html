@@ -1,6 +1,7 @@
 <div class="container">
-
-  <button class="btn btn-success" (click)="openModal(modal)" id="create"><i class="fa fa-save"></i>&nbsp;Salvar</button>
+  <button class="btn btn-success" (click)="openModal(modal)" id="create">
+    <i class="fa fa-save"></i>&nbsp;Salvar
+  </button>
 
   <app-email-editor-ebl
     [options]="options"
@@ -11,7 +12,12 @@
   <ng-template #modal>
     <div class="modal-header">
       <h4 class="modal-title pull-left">Criar Template</h4>
-      <button type="button" class="btn-close close pull-right" aria-label="Close" (click)="modalRef?.hide()">
+      <button
+        type="button"
+        class="btn-close close pull-right"
+        aria-label="Close"
+        (click)="modalRef?.hide()"
+      >
         <span aria-hidden="true" class="visually-hidden">&times;</span>
       </button>
     </div>
@@ -24,14 +30,40 @@
               <input
                 type="text"
                 class="form-control"
-                id="titulo" [ngClass]="aplicaCssErro('titulo')"
-                [ngStyle]="{'right': salvar == true ? '135px' : '112px'}"
+                id="titulo"
+                [ngClass]="aplicaCssErro('titulo')"
+                [ngStyle]="{ right: salvar == true ? '135px' : '112px' }"
                 placeholder="Digite o nome do template"
-                formControlName="titulo"/>
+                formControlName="titulo"
+              />
             </div>
             <div class="form-group">
-              <button *ngIf="salvar == true" class="btn btn-success" ><i class="fa fa-spin fa-spinner"></i>&nbsp;Salvando...</button>
-              <button *ngIf="salvar == false " class="btn btn-success" (click)="save()" id="save" [disabled]="formulario.invalid">
+              <label for="tipoDocumentoLoteId">Tipo de Documento</label>
+              <select
+                class="form-control"
+                id="tipoDocumentoLoteId"
+                [ngClass]="aplicaCssErro('tipoDocumentoLoteId')"
+                formControlName="tipoDocumentoLoteId"
+              >
+                <option
+                  *ngFor="let item of tiposDocumentoLote"
+                  [value]="item.tipoDocumentoLoteId"
+                >
+                  {{ item.nome }}
+                </option>
+              </select>
+            </div>
+            <div class="form-group">
+              <button *ngIf="salvar == true" class="btn btn-success">
+                <i class="fa fa-spin fa-spinner"></i>&nbsp;Salvando...
+              </button>
+              <button
+                *ngIf="salvar == false"
+                class="btn btn-success"
+                (click)="save()"
+                id="save"
+                [disabled]="formulario.invalid"
+              >
                 <i class="fa fa-save"></i>&nbsp;Salvar
               </button>
             </div>

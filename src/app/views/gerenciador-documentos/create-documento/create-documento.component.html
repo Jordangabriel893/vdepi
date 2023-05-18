@@ -13,36 +13,103 @@
                 <div class="row">
                   <div class="form-group col-6">
                     <label for="leilaoId">Leilão </label>
-                    <select class="form-control" [ngClass]="aplicaCssErro('leilaoId')"  formControlName="leilaoId"  (change)="setLeilao()"
-                      id="leilaoId" name="leilaoId">
-                      <option *ngFor="let item of leiloes" value="{{item.id}}">{{item.nome}}</option>
+                    <select
+                      class="form-control"
+                      [ngClass]="aplicaCssErro('leilaoId')"
+                      formControlName="leilaoId"
+                      (change)="setLeilao()"
+                      id="leilaoId"
+                      name="leilaoId"
+                    >
+                      <option
+                        *ngFor="let item of leiloes"
+                        value="{{ item.id }}"
+                      >
+                        {{ item.nome }}
+                      </option>
                     </select>
                   </div>
                   <div class="form-group col-6">
                     <label for="cobrancaId">Lote</label>
-                    <select class="form-control" [ngClass]="aplicaCssErro('loteId')" formControlName="loteId" [attr.disabled]="!hasLotes ? '' : null">
-                      <option selected *ngIf="loadingLotes">CARREGANDO...</option>
+                    <select
+                      class="form-control"
+                      [ngClass]="aplicaCssErro('loteId')"
+                      formControlName="loteId"
+                      [attr.disabled]="!hasLotes ? '' : null"
+                    >
+                      <option selected *ngIf="loadingLotes">
+                        CARREGANDO...
+                      </option>
                       <ng-template [ngIf]="!loadingLotes">
                         <option>-- SELECIONE --</option>
                         <option value="0">TODOS OS LOTES</option>
-                        <option [value]="item.loteId" *ngFor="let item of lotes">Lote: {{item.numeroLote}} - {{item.descricao}}</option>
+                        <option
+                          [value]="item.loteId"
+                          *ngFor="let item of lotes"
+                        >
+                          Lote: {{ item.numeroLote }} - {{ item.descricao }}
+                        </option>
                       </ng-template>
                     </select>
                   </div>
-
                 </div>
                 <div class="row">
                   <div class="form-group col-6">
                     <label for="cobrancaId">Tipo do Documento</label>
-                    <select class="form-control" [ngClass]="aplicaCssErro('tipoDocumentoId')" formControlName="tipoDocumentoId">
-                      <option [value]="item.tipoDocumentoLoteId" *ngFor="let item of tipoDocumentos">{{item.nome}}</option>
+                    <select
+                      class="form-control"
+                      [ngClass]="aplicaCssErro('tipoDocumentoId')"
+                      formControlName="tipoDocumentoId"
+                    >
+                      <option
+                        [value]="item.tipoDocumentoLoteId"
+                        *ngFor="let item of tipoDocumentos"
+                      >
+                        {{ item.nome }}
+                      </option>
                     </select>
                   </div>
                   <div class="form-group col-6">
                     <label for="templateId">Template</label>
-                    <select class="form-control" [ngClass]="aplicaCssErro('templateId')" formControlName="templateId"  >
-                      <option *ngFor="let item of templates" [value]="item.documentoLoteTemplateId">{{item.titulo}}</option>
+                    <select
+                      class="form-control"
+                      [ngClass]="aplicaCssErro('templateId')"
+                      formControlName="templateId"
+                      [attr.disabled]="templates.length == 0 ? '' : null"
+                    >
+                      <option selected *ngIf="loadingTemplateLote">
+                        CARREGANDO...
+                      </option>
+                      <ng-template [ngIf]="!loadingTemplateLote">
+                        <option>-- SELECIONE --</option>
+                        <option
+                          *ngFor="let item of templates"
+                          [value]="item.documentoLoteTemplateId"
+                        >
+                          {{ item.titulo }}
+                        </option>
+                      </ng-template>
                     </select>
+                  </div>
+                  <div class="form-group col-6">
+                    <label for="blockchain">Registrar em Blockchain? </label
+                    ><br />
+                    <label
+                      class="switch switch-text switch-pill switch-primary"
+                    >
+                      <input
+                        type="checkbox"
+                        id="blockchain"
+                        class="switch-input"
+                        formControlName="registrarBlockchain"
+                      />
+                      <span
+                        class="switch-label"
+                        data-on="Sim"
+                        data-off="Não"
+                      ></span>
+                      <span class="switch-handle"></span>
+                    </label>
                   </div>
                 </div>
               </div>
@@ -56,17 +123,35 @@
         <div class="card">
           <div class="card-header new-campo d-flex align-items-center">
             <div class="d-flex align-items-center">
-              <i class="fa fa-signature" aria-hidden="true"></i>&nbsp; Assinantes
+              <i class="fa fa-signature" aria-hidden="true"></i>&nbsp;
+              Assinantes
             </div>
           </div>
 
           <div class="card-block">
             <div class="row">
               <ng-container formArrayName="assinantes">
-                <ng-container *ngFor="let assinanteForm of assinantes.controls; let i = index">
+                <ng-container
+                  *ngFor="
+                    let assinanteForm of assinantes.controls;
+                    let i = index
+                  "
+                >
                   <div class="form-group col-6" [formGroup]="assinanteForm">
-                    <label for="assinante">Assinante {{i + 1}} <small>({{assinanteForm.controls['perfil'].value | uppercase}})</small></label>
-                    <ng-select [items]="assinanteForm.controls['usuarios']" formControlName="usuarioId" bindLabel="nomeCompleto" bindValue="usuarioId">
+                    <label for="assinante"
+                      >Assinante {{ i + 1 }}
+                      <small
+                        >({{
+                          assinanteForm.controls["perfil"].value | uppercase
+                        }})</small
+                      ></label
+                    >
+                    <ng-select
+                      [items]="assinanteForm.controls['usuarios']"
+                      formControlName="usuarioId"
+                      bindLabel="nomeCompleto"
+                      bindValue="usuarioId"
+                    >
                     </ng-select>
                   </div>
                 </ng-container>
@@ -75,13 +160,27 @@
               <div class="form-group col-6">
                 <label>Tipo de Assinatura</label>
                 <div class="form-check">
-                  <input class="form-check-input" type="radio" name="tipoAssinatura" id="certificado" formControlName="tipoAssinatura" value="2">
+                  <input
+                    class="form-check-input"
+                    type="radio"
+                    name="tipoAssinatura"
+                    id="certificado"
+                    formControlName="tipoAssinatura"
+                    value="2"
+                  />
                   <label class="form-check-label" for="certificado">
                     Certificado Digital
                   </label>
                 </div>
                 <div class="form-check">
-                  <input class="form-check-input" type="radio" name="tipoAssinatura" id="assinatura" formControlName="tipoAssinatura" value="1">
+                  <input
+                    class="form-check-input"
+                    type="radio"
+                    name="tipoAssinatura"
+                    id="assinatura"
+                    formControlName="tipoAssinatura"
+                    value="1"
+                  />
                   <label class="form-check-label" for="assinatura">
                     Assinatura Digitalizada
                   </label>
@@ -92,10 +191,28 @@
             </div>
           </div>
           <div class="card-footer">
-            <button type="button" class="btn btn-primary saveCancel" *ngIf="!salvando" (click)="onSubmit()"><i class="fa fa-save"></i> Salvar</button>
-            <button type="button" class="btn btn-primary saveCancel" *ngIf="salvando"><i class="fa fa-spin fa-spinner"></i> Salvando...</button>
-            &nbsp;<button type="reset" class="btn btn-danger" [routerLink]="['/gerenciadordocumento']"><i class="fa fa-undo"></i>
-              Cancelar</button>
+            <button
+              type="button"
+              class="btn btn-primary saveCancel"
+              *ngIf="!salvando"
+              (click)="onSubmit()"
+            >
+              <i class="fa fa-save"></i> Salvar
+            </button>
+            <button
+              type="button"
+              class="btn btn-primary saveCancel"
+              *ngIf="salvando"
+            >
+              <i class="fa fa-spin fa-spinner"></i> Salvando...
+            </button>
+            &nbsp;<button
+              type="reset"
+              class="btn btn-danger"
+              [routerLink]="['/gerenciadordocumento']"
+            >
+              <i class="fa fa-undo"></i> Cancelar
+            </button>
           </div>
         </div>
       </div>
