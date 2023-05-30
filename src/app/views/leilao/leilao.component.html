@@ -62,13 +62,7 @@
 
                   <!-- <th class="text-center">Editar</th>
                   <th class="text-center">Lotes</th> -->
-                  <th class="text-center">
-                    <div class="dropdown" dropdown>
-                      <button class="btn p-0" id="dropdownMenuButton" type="button" data-toggle="dropdown" aria-expanded="false" dropdownToggle>
-                        <i class="fa fa-ellipsis-v"></i>
-                      </button>
-                    </div>
-                  </th>
+                  <th class="text-center"></th>
                 </tr>
               </thead>
               <tbody>
@@ -87,33 +81,40 @@
                   <td>{{ item.categoria }}</td>
                   <td>{{ item.status }}</td>
                   <td>{{ item.qtdLotes }}</td>
-                  <!-- <td class="text-center" nowrap>
-                    <button
-                      type="button"
-                      class="btn btn-primary"
-                      (click)="edit(item.id)"
-                    >
-                      <i class="fa fa-edit"></i>&nbsp;Editar
-                    </button>
-                  </td>
-                  <td class="text-center" nowrap>
-                    <button
-                      type="button"
-                      class="btn btn-warning"
-                      (click)="verLotes(item.id)"
-                    >
-                      <i class="fa fa-list"></i>&nbsp; Lotes
-                    </button>
-                  </td> -->
                   <td class="text-center" nowrap>
                     <div class="dropdown" dropdown>
-                      <button class="btn" id="dropdownMenuButton" type="button" data-toggle="dropdown" aria-expanded="false" dropdownToggle>
+                      <button
+                        class="btn"
+                        id="dropdownMenuButton"
+                        type="button"
+                        data-toggle="dropdown"
+                        aria-expanded="false"
+                        dropdownToggle
+                      >
                         <i class="fa fa-ellipsis-v"></i>
                       </button>
-                      <ul class="dropdown-menu dropdown-menu-left" *dropdownMenu>
-                        <li><a class="dropdown-item"  (click)="edit(item.id)">Editar</a></li>
-                        <li><a class="dropdown-item"  (click)="verLotes(item.id)">Lotes</a></li>
-                        <li><a class="dropdown-item" [ngClass]="{'disabled': item.statusId != 6}"  (click)="finalizar(item.id)">Finalizar</a></li>
+                      <ul
+                        class="dropdown-menu dropdown-menu-left"
+                        *dropdownMenu
+                      >
+                        <li>
+                          <a class="dropdown-item" (click)="edit(item.id)"
+                            >Editar</a
+                          >
+                        </li>
+                        <li>
+                          <a class="dropdown-item" (click)="verLotes(item.id)"
+                            >Lotes</a
+                          >
+                        </li>
+                        <li>
+                          <a
+                            class="dropdown-item"
+                            [ngClass]="{ disabled: item.statusId != 6 }"
+                            (click)="finalizar(item.id)"
+                            >Encerrar</a
+                          >
+                        </li>
                       </ul>
                     </div>
                   </td>
