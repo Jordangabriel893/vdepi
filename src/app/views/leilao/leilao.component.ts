@@ -3,6 +3,9 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { Restangular } from 'ngx-restangular';
 import * as Model from '../_models/model'
 import { FormBuilder, FormGroup } from '@angular/forms';
+import { NotifierService } from 'angular-notifier';
+import { HttpErrorResponse } from '@angular/common/http';
+import { switchMap } from 'rxjs/operators';
 
 @Component({
   selector: 'app-leilao',
@@ -17,6 +20,7 @@ export class LeilaoComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private router: Router,
+    private notifierService: NotifierService,
     private restangular: Restangular,
     private formBuilder: FormBuilder,) {
       this.formulario = this.formBuilder.group({
@@ -54,5 +58,23 @@ export class LeilaoComponent implements OnInit {
       const filtro = this.selectLeilao.filter(x => x.nome === event.nome)
       this.leiloes = filtro
     }
+  }
+
+  finalizar(id){
+    this.restangular.all('leilao/finalizar/' + id)
+      .post()
+      .pipe(
+        switchMap(() => this.restangular.all('leilao/DefinirVencedores/' + id).post())
+      )
+      .subscribe(
+        () => {
+          this.notifierService.notify('success', 'Leilão finalizado!');
+          this.leiloes.find(x => x.id === id).status = "Encerrado";
+        },
+        error => {
+          console.log(error.data.Message);
+          this.notifierService.notify('error', error.data.Message);
+        }
+      );
   }
 }
