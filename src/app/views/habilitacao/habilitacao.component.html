@@ -75,12 +75,19 @@
                   <td class="text-center" nowrap>
                     <span *ngIf="item.documentos.length == 0">Sem Documentos</span>
                     <button
-                        *ngIf="item.documentos.length > 0"
+                        *ngIf="item.documentos.length > 0 && item.status != 'Rejeitado'"
                         type="button"
                         class="btn btn-primary btn-sm"
                        (click)="openModal(documento, item.solicitacaoHabilitacaoId)"
-                       [disabled]="item.status == 'Rejeitado'"
                        ><i class="fa fa-file"></i>&nbsp; {{item.documentos.length}} Documentos</button>
+                    <button
+                      *ngIf="item.status === 'Rejeitado'"
+                      type="button"
+                      class="btn btn-secondary btn-sm"
+                      (click)="verMotivoDaRecusa(motivo, item.solicitacaoHabilitacaoId)"
+                    >
+                      Ver motivo da recusa
+                    </button>
                   </td>
                   <td class="text-center" nowrap>
                     <button type="button"
@@ -225,6 +232,21 @@
               </tfoot>
             </table>
           </div>
+          <ng-template #motivo>
+            <div class="modal-header">
+              <h4 class="modal-title pull-left">Motivo da Recusa</h4>
+              <button type="button" class="btn-close close pull-right" aria-label="Close" (click)="modalRef?.hide()">
+                <span aria-hidden="true" class="visually-hidden">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              <div class="col-12">
+                  <p class="" id="motivo" rows="3" disabled>
+                    {{ getObservacao(solicitacaoHabilitacaoId) }}
+                  </p>
+              </div>
+            </div>
+          </ng-template>
           <ng-template #documento>
             <div class="modal-header">
               <h4 class="modal-title pull-left">Documentos</h4>

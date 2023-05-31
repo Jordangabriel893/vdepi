@@ -113,6 +113,16 @@ export class HabilitacaoComponent implements OnInit {
     this.existeRecusado(this.documentosUsuario.documentos)
   }
 
+  verMotivoDaRecusa(template: TemplateRef<any>, solicitacaoId){
+    this.modalRef = this.modalService.show(template, {class: 'modal-lg'});
+    this.solicitacaoHabilitacaoId = solicitacaoId;
+  }
+
+  getObservacao(solicitacaoHabilitacaoId: number): string {
+    const item = this.habilitacao.find(x => x.solicitacaoHabilitacaoId === solicitacaoHabilitacaoId);
+    return item.observacao || 'Não foi dado um motivo';
+  }
+
   getTipoRegra(tipoRegra) {
     let regra = '';
     switch(tipoRegra){
