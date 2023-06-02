@@ -119,6 +119,7 @@
                             <li><a class="dropdown-item" [href]="siteUrl + '/fatura/' + item.token" target="_blank">Ver Fatura</a></li>
                             <li (click)="showItensFatura(item.faturaId)"><a class="dropdown-item" >Ver Itens Fatura</a></li>
                             <li><a class="dropdown-item" (click)="cancelarFatura(item.faturaId)" *ngIf="item.status === 1">Cancelar Fatura</a></li>
+                            <li (click)="bloquearUsuario(item.usuarioId, item.faturaId)"><a class="dropdown-item" >Bloquear Usuário</a></li>
                           </ul>
                         </div>
                       </td>
