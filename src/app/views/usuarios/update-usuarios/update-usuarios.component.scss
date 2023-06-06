@@ -5,3 +5,9 @@
 .has-error{
     border: 1px solid red;
 }
+
+.detalhes{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}

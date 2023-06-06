@@ -225,8 +225,237 @@
       </div>
     </div>
   </div>
-
-
-
-
+  <div>
+    <div class="card">
+      <div class="card-header detalhes">
+        <h5>Detalhes</h5>
+      </div>
+      
+      <div class="card-block tabelas">
+        <div class="table-responsive mt-4">
+          <tabset>
+            <!-- faturas nao pagas -->
+            <tab>
+              <ng-template tabHeading>
+                <div class="font-weight-bold text-muted small">
+                  <i class="fa fa-tasks"></i> &nbsp; faturas não pagas
+                </div>
+              </ng-template>
+              <div class="table-responsive mt-1">
+                <table class="table table-striped" [mfData]="faturas" #mfFaturas ="mfDataTable"
+                  [mfRowsOnPage]="5">
+                  <thead>
+                    <tr>
+                      <th>
+                        <mfDefaultSorter by="faturaId">Id</mfDefaultSorter>
+                      </th>
+                      <th>
+                        <mfDefaultSorter by="codigo">Codigo</mfDefaultSorter>
+                      </th>
+                      <th>
+                        <mfDefaultSorter by="token">Token</mfDefaultSorter>
+                      </th>
+                      <th>
+                        <mfDefaultSorter by="dataCadastro">Data do cadastro</mfDefaultSorter>
+                      </th>
+                      <th>
+                        <mfDefaultSorter by="dataVencimento">Vencimento</mfDefaultSorter>
+                      </th>
+                      <th>
+                        <mfDefaultSorter by="valorTotal">Valor Total</mfDefaultSorter>
+                      </th>
+                      <th>
+                        <mfDefaultSorter by="status">Status</mfDefaultSorter>
+                      </th>
+                      <th>
+                        <mfDefaultSorter by="eviada">Enviada</mfDefaultSorter>
+                      </th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr *ngFor="let item of mfFaturas?.data">
+                      <td>{{item.faturaId }}</td>
+                      <td>{{item.codigo}}</td>
+                      <td>{{item.token}}</td>
+                      <td>{{item.dataCadastro | date : 'dd/MM/yyyy'}}</td>
+                      <td>{{item.dataVencimento | date : 'dd/MM/yyyy'}}</td>
+                      <td>{{item.valorTotal | currencyFormat}}</td>
+                      <td>{{item.status}}</td>
+                      <td>{{item.eviada}}</td>
+                    </tr>
+                  </tbody>
+                  <tfoot>
+                    <tr>
+                      <td colspan="6">
+                        <mfBootstrapPaginator [rowsOnPageSet]="[5,10,25]"></mfBootstrapPaginator>
+                      </td>
+                    </tr>
+                  </tfoot>
+                </table>
+              </div>
+            </tab>
+            <!-- lotes arrematados -->
+            <tab>
+              <ng-template tabHeading>
+                <div class="font-weight-bold text-muted small">
+                  <i class="fas fa-hand-holding-usd"></i>&nbsp; Lotes Arrematados
+                </div>
+              </ng-template>
+              <div class="table-responsive mt-1">
+                <table class="table table-striped" [mfData]="loteArrematados" #mfLoteArrematados="mfDataTable" [mfRowsOnPage]="10">
+                  <thead>
+                    <tr>
+                      <th>
+                        <mfDefaultSorter by="loteId">Id</mfDefaultSorter>
+                      </th>
+                      <th>
+                        <mfDefaultSorter by="leilao">Leilao</mfDefaultSorter>
+                      </th>
+                      <th>
+                        <mfDefaultSorter by="descricao">Descrição</mfDefaultSorter>
+                      </th>
+                      <th>
+                        <mfDefaultSorter by="status">Status</mfDefaultSorter>
+                      </th>
+                      <th>
+                        <mfDefaultSorter by="numeroLote">Numero do Lote</mfDefaultSorter>
+                      </th>
+                      <th>
+                        <mfDefaultSorter by="categoria">Categoria</mfDefaultSorter>
+                      </th>
+                      <th>
+                        <mfDefaultSorter by="statusPagamento">Status de Pagamento</mfDefaultSorter>
+                      </th>
+                      <th>
+                        <mfDefaultSorter by="statusAgendamento">Status de Agendamento</mfDefaultSorter>
+                      </th>
+                      <th>
+                        <mfDefaultSorter by="vistoriado">Vistoriado</mfDefaultSorter>
+                      </th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr *ngFor="let item of mfLoteArrematados.data">
+                      <td>{{item.loteId }}</td>
+                      <td>{{item.leilao }}</td>
+                      <td>{{item.descricao}}</td>
+                      <td>{{item.status}}</td>
+                      <td>{{item.numeroLote}}</td>
+                      <td>{{item.categoria}}</td>
+                      <td>{{item.statusPagamento}}</td>
+                      <td>{{item.statusAgendamento}}</td>
+                      <td>{{item.vistoriado}}</td>
+                    </tr>
+                  </tbody>
+                  <tfoot>
+                    <tr>
+                      <td colspan="10">
+                        <mfBootstrapPaginator [rowsOnPageSet]="[5,10,25]"></mfBootstrapPaginator>
+                      </td>
+                    </tr>
+                  </tfoot>
+                </table>
+              </div>
+            </tab>
+            <!-- bloqueios -->
+            <tab>
+              <ng-template tabHeading>
+                <div class="font-weight-bold text-muted small">
+                  <i class="fas fa-ban"></i>&nbsp; Bloqueios
+                </div>
+              </ng-template>
+              <div class="table-responsive mt-1">
+                <table class="table table-striped" [mfData]="bloqueios" #mfBloqueios="mfDataTable"
+                  [mfRowsOnPage]="10">
+                  <thead>
+                    <tr>
+                      <th>
+                        <mfDefaultSorter by="bloqueioUsuarioId">Id</mfDefaultSorter>
+                      </th>
+                      <th>
+                        <mfDefaultSorter by="motivo">Motivo</mfDefaultSorter>
+                      </th>
+                      <th>
+                        <mfDefaultSorter by="dataInicio">Data Inicial</mfDefaultSorter>
+                      </th>
+                      <th>
+                        <mfDefaultSorter by="dataFim">Data de Encerramento</mfDefaultSorter>
+                      </th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr *ngFor="let item of mfBloqueios.data">
+                      <td>{{item.bloqueioUsuarioId }}</td>
+                      <td>{{item.motivo}}</td>
+                      <td>{{item.dataInicio | date : 'dd/MM/yyyy'}}</td>
+                      <td>{{item.dataFim | date : 'dd/MM/yyyy'}}</td>
+                    </tr>
+                  </tbody>
+                  <tfoot>
+                    <tr>
+                      <td colspan="10">
+                        <mfBootstrapPaginator [rowsOnPageSet]="[5,10,25]"></mfBootstrapPaginator>
+                      </td>
+                    </tr>
+                  </tfoot>
+                </table>
+              </div>
+            </tab>
+            <!-- lances efetuados nao arrematados -->
+            <tab>
+              <ng-template tabHeading>
+                <div class="font-weight-bold text-muted small">
+                  <i class="fas fa-history"></i>&nbsp; Lances efetuados não arrematados
+                </div>
+              </ng-template>
+              <div class="table-responsive mt-1">
+                <table class="table table-striped" [mfData]="lances" #mfLances="mfDataTable"
+                  [mfRowsOnPage]="10">
+                  <thead>
+                    <tr>
+                      <th>
+                        <mfDefaultSorter by="lanceId">Id</mfDefaultSorter>
+                      </th>
+                      <th>
+                        <mfDefaultSorter by="dataCadastro">Data</mfDefaultSorter>
+                      </th>
+                      <th>
+                        <mfDefaultSorter by="loteId">Lote Id</mfDefaultSorter>
+                      </th>
+                      <th>
+                        <mfDefaultSorter by="valor">Valor</mfDefaultSorter>
+                      </th>
+                      <th>
+                        <mfDefaultSorter by="statusId">Status</mfDefaultSorter>
+                      </th>
+                      <th>
+                        <mfDefaultSorter by="motivo">Motivo</mfDefaultSorter>
+                      </th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr *ngFor="let item of mfLances.data">
+                      <td>{{item.lanceId}}</td>
+                      <td>{{item.dataCadastro | date : 'dd/MM/yyyy'}}</td>
+                      <td>{{item.loteId}}</td>
+                      <td>{{item.valor}}</td>
+                      <td>{{item.statusId}}</td>
+                      <td>{{item.motivo}}</td>
+                    </tr>
+                  </tbody>
+                  <tfoot>
+                    <tr>
+                      <td colspan="10">
+                        <mfBootstrapPaginator [rowsOnPageSet]="[5,10,25]"></mfBootstrapPaginator>
+                      </td>
+                    </tr>
+                  </tfoot>
+                </table>
+              </div>
+            </tab>
+          </tabset>
+        </div>
+      </div>
+    </div>
+</div>
 </form>
