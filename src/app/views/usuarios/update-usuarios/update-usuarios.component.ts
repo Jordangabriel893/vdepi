@@ -25,6 +25,10 @@ export class UpdateUsuariosComponent implements OnInit {
   comitentes = [];
   leiloeiros = [];
   perfis = [];
+  loteArrematados = [];
+  lances = [];
+  bloqueios = [];
+  faturas = [];
   fieldTextType: boolean;
 
   constructor(
@@ -80,16 +84,26 @@ export class UpdateUsuariosComponent implements OnInit {
       this.restangular.one("empresa").get().pipe(),
       this.restangular.one("leiloeiro").get().pipe(),
       this.restangular.one("comitente").get().pipe(),
-      this.restangular.one("usuario/perfis").get().pipe()
+      this.restangular.one("usuario/perfis").get().pipe(),
+      this.restangular.one("usuario/loteArrematados/" + this.id).get().pipe(),
+      this.restangular.one("usuario/lances/" + this.id).get().pipe(),
+      this.restangular.one("usuario/bloqueios/" + this.id).get().pipe(),
+      this.restangular.one("usuario/faturas/" + this.id).get().pipe()
     ]).subscribe((allResp: any[]) => {
       this.empresas = allResp[0].data
       this.leiloeiros = allResp[1].data
       this.comitentes = allResp[2].data
       this.perfis = allResp[3].data
+      this.loteArrematados = allResp[4].data
+      this.lances = allResp[5].data
+      this.bloqueios = allResp[6].data
+      this.faturas = allResp[7].data
+      console.log(this.faturas,  "BBBB")
     })
     this.restangular.all('usuario').get( this.id).subscribe(dados => {
      this.updateForm(dados.data)
     })
+    console.log(this.faturas, "aaaa")
   }
 
   onSubmit() {

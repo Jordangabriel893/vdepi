@@ -48,6 +48,10 @@
                     <th class="text-center" >
                       Editar
                     </th>
+
+                    <th class="text-center" >
+                      Bloquear
+                    </th>
                   </tr>
                 </thead>
                 <tbody>
@@ -61,6 +65,9 @@
                     <td>{{item.ativo ? "Sim" : "Não"}}</td>
                     <td class="text-center" nowrap>
                       <button type="button" class="btn btn-primary" (click)="edit(item.usuarioId)"><i class="fa fa-edit"></i>&nbsp; Editar</button>
+                    </td>
+                    <td class="text-center" nowrap>
+                      <button type="button" class="btn btn-danger" (click)="modalBloquear(item.usuarioId, bloquearUsuario)"><i class="fas fa-times"></i>&nbsp; Bloquear</button>
                     </td>
                   </tr>
                   <tr *ngIf="loading">
@@ -83,3 +90,38 @@
     </div>
   </div>
 </div>
+
+<ng-template #bloquearUsuario>
+  <div class="modal-header">
+    <h4 class="modal-title pull-left">Motivo do bloqueio</h4>
+    <button type="button" class="btn-close close pull-right" aria-label="Close" (click)="modalRef?.hide()">
+      <span aria-hidden="true" class="visually-hidden">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <div [formGroup]="formulario" class="col-12">
+        <label for="motivo">Motivo</label>
+        <textarea class="form-control" id="motivo" rows="3" formControlName="motivo"></textarea>
+        
+        <div class="row">
+          <div class="form-group col-6">
+            <label for="dataInicio">Data do inicio</label>
+            <input type="text" class="form-control" id="dataInicio"
+              [bsConfig]="{ dateInputFormat: 'DD/MM/YYYY HH:mm' }"
+              bsDatepicker
+              (bsValueChange)="onValueChange($event, 'dataInicio')">
+          </div>
+
+          <div class="form-group col-6">
+            <label for="dataEncerramento">Data do Encerramento</label>
+            <input type="text" class="form-control" id="dataEncerramento"
+              [bsConfig]="{ dateInputFormat: 'DD/MM/YYYY HH:mm' }"
+              bsDatepicker
+              (bsValueChange)="onValueChange($event, 'dataEncerramento')">
+          </div>
+        </div>
+
+        <button [disabled]="formulario.invalid" type="button" class="btn btn-danger mt-2" (click)="bloquear()">Bloquear</button>
+    </div>
+  </div>
+</ng-template>
