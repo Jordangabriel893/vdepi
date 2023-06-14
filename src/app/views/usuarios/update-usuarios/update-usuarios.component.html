@@ -216,11 +216,6 @@
               </div>
             </div>
           </div>
-          <div class="card-footer">
-            <button type="submit" class="btn btn-primary saveCancel"><i class="fa fa-save"></i> Salvar</button>
-            <button type="reset" class="btn btn-danger" [routerLink]="['/usuarios']"><i class="fa fa-undo"></i>
-              Cancelar</button>
-          </div>
         </div>
       </div>
     </div>
@@ -228,7 +223,7 @@
   <div>
     <div class="card">
       <div class="card-header detalhes">
-        <h5>Detalhes</h5>
+        <h5>Relatórios</h5>
       </div>
       
       <div class="card-block tabelas">
@@ -238,7 +233,7 @@
             <tab>
               <ng-template tabHeading>
                 <div class="font-weight-bold text-muted small">
-                  <i class="fa fa-tasks"></i> &nbsp; faturas não pagas
+                  <i class="fa fa-tasks"></i> &nbsp; Faturas Não Pagas
                 </div>
               </ng-template>
               <div class="table-responsive mt-1">
@@ -251,9 +246,6 @@
                       </th>
                       <th>
                         <mfDefaultSorter by="codigo">Codigo</mfDefaultSorter>
-                      </th>
-                      <th>
-                        <mfDefaultSorter by="token">Token</mfDefaultSorter>
                       </th>
                       <th>
                         <mfDefaultSorter by="dataCadastro">Data do cadastro</mfDefaultSorter>
@@ -276,7 +268,6 @@
                     <tr *ngFor="let item of mfFaturas?.data">
                       <td>{{item.faturaId }}</td>
                       <td>{{item.codigo}}</td>
-                      <td>{{item.token}}</td>
                       <td>{{item.dataCadastro | date : 'dd/MM/yyyy'}}</td>
                       <td>{{item.dataVencimento | date : 'dd/MM/yyyy'}}</td>
                       <td>{{item.valorTotal | currencyFormat}}</td>
@@ -321,16 +312,10 @@
                         <mfDefaultSorter by="numeroLote">Numero do Lote</mfDefaultSorter>
                       </th>
                       <th>
-                        <mfDefaultSorter by="categoria">Categoria</mfDefaultSorter>
-                      </th>
-                      <th>
                         <mfDefaultSorter by="statusPagamento">Status de Pagamento</mfDefaultSorter>
                       </th>
                       <th>
                         <mfDefaultSorter by="statusAgendamento">Status de Agendamento</mfDefaultSorter>
-                      </th>
-                      <th>
-                        <mfDefaultSorter by="vistoriado">Vistoriado</mfDefaultSorter>
                       </th>
                     </tr>
                   </thead>
@@ -341,10 +326,8 @@
                       <td>{{item.descricao}}</td>
                       <td>{{item.status}}</td>
                       <td>{{item.numeroLote}}</td>
-                      <td>{{item.categoria}}</td>
                       <td>{{item.statusPagamento}}</td>
                       <td>{{item.statusAgendamento}}</td>
-                      <td>{{item.vistoriado}}</td>
                     </tr>
                   </tbody>
                   <tfoot>
@@ -376,10 +359,13 @@
                         <mfDefaultSorter by="motivo">Motivo</mfDefaultSorter>
                       </th>
                       <th>
-                        <mfDefaultSorter by="dataInicio">Data Inicial</mfDefaultSorter>
+                        <mfDefaultSorter by="dataBloqueio">Data de Bloqueio</mfDefaultSorter>
                       </th>
                       <th>
-                        <mfDefaultSorter by="dataFim">Data de Encerramento</mfDefaultSorter>
+                        <mfDefaultSorter by="dataDesbloqueio">Data de Desbloqueio</mfDefaultSorter>
+                      </th>
+                      <th>
+                        Desbloquear
                       </th>
                     </tr>
                   </thead>
@@ -387,8 +373,11 @@
                     <tr *ngFor="let item of mfBloqueios.data">
                       <td>{{item.bloqueioUsuarioId }}</td>
                       <td>{{item.motivo}}</td>
-                      <td>{{item.dataInicio | date : 'dd/MM/yyyy'}}</td>
-                      <td>{{item.dataFim | date : 'dd/MM/yyyy'}}</td>
+                      <td>{{item.dataBloqueio | date : 'dd/MM/yyyy'}}</td>
+                      <td>{{item.dataDesbloqueio | date : 'dd/MM/yyyy'}}</td>
+                      <td class="" nowrap>
+                        <button *ngIf="item.dataDesbloqueio === null" type="button" class="btn btn-primary" (click)="desbloquear(item.bloqueioUsuarioId)"><i class="fas fa-unlock"></i>&nbsp; Desbloquear</button>
+                      </td>
                     </tr>
                   </tbody>
                   <tfoot>
@@ -420,16 +409,16 @@
                         <mfDefaultSorter by="dataCadastro">Data</mfDefaultSorter>
                       </th>
                       <th>
-                        <mfDefaultSorter by="loteId">Lote Id</mfDefaultSorter>
-                      </th>
-                      <th>
                         <mfDefaultSorter by="valor">Valor</mfDefaultSorter>
                       </th>
                       <th>
                         <mfDefaultSorter by="statusId">Status</mfDefaultSorter>
                       </th>
                       <th>
-                        <mfDefaultSorter by="motivo">Motivo</mfDefaultSorter>
+                        <mfDefaultSorter by="lote.numeroLote">Leilão</mfDefaultSorter>
+                      </th>
+                      <th>
+                        <mfDefaultSorter by="lote.leilao.nome">Numero do Lote</mfDefaultSorter>
                       </th>
                     </tr>
                   </thead>
@@ -437,10 +426,10 @@
                     <tr *ngFor="let item of mfLances.data">
                       <td>{{item.lanceId}}</td>
                       <td>{{item.dataCadastro | date : 'dd/MM/yyyy'}}</td>
-                      <td>{{item.loteId}}</td>
                       <td>{{item.valor}}</td>
                       <td>{{item.statusId}}</td>
-                      <td>{{item.motivo}}</td>
+                      <td>{{item.lote.leilao.nome}}</td>
+                      <td>{{item.lote.numeroLote}}</td>
                     </tr>
                   </tbody>
                   <tfoot>
@@ -455,6 +444,12 @@
             </tab>
           </tabset>
         </div>
+      </div>
+
+      <div class="card-footer">
+        <button type="submit" class="btn btn-primary saveCancel"><i class="fa fa-save"></i> Salvar</button>
+        <button type="reset" class="btn btn-danger" [routerLink]="['/usuarios']"><i class="fa fa-undo"></i>
+          Cancelar</button>
       </div>
     </div>
 </div>

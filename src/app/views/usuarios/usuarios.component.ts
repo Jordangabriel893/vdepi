@@ -33,8 +33,6 @@ export class UsuariosComponent implements OnInit {
   ){
     this.formulario = this.formBuilder.group({
       motivo:[null, Validators.required],
-      dataInicio:[null, Validators.required],
-      dataEncerramento:[null, Validators.required]
     })
   }
 
@@ -76,8 +74,6 @@ export class UsuariosComponent implements OnInit {
             const body = {
               usuarioId: this.usuarioBloqueado,
               motivo: this.formulario.value.motivo,
-              dataInicio: this.formulario.value.dataInicio,
-              dataFim: this.formulario.value.dataEncerramento
             }
 
             this.sub.push(
