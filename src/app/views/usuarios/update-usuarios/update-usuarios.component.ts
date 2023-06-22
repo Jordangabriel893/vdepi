@@ -217,4 +217,31 @@ export class UpdateUsuariosComponent implements OnInit {
     const perfis = this.perfis.filter(x => args.includes(x.descricao)).map(x => x.perfilUsuarioId);
     return this.formulario.controls.perfis.value.some(x => perfis.includes(x));
   }
+
+  desbloquear(bloqueioId: number){
+
+    const body = {
+      bloqueioId
+    }
+
+    this.restangular
+        .all(`usuario/desbloquear`)
+        .post(body)
+        .subscribe(
+          () => {
+            this.notifierService.notify(
+              "success",
+              "Usuario bloqueado com sucesso"
+            );
+            
+            this.bloqueios.find(x => x.bloqueioUsuarioId == bloqueioId).dataDesbloqueio = new Date();
+          },
+          (e) => {
+            this.notifierService.notify(
+              "error",
+              e.data.Message
+            );
+          }
+        )
+  }
 }
