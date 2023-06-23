@@ -98,6 +98,7 @@ import { DocumentoTemplateComponent } from './views/documento-template/documento
 import { EditDocumentoTemplateComponent } from './views/documento-template/edit-documento-template/edit-documento-template.component';
 import { GerenciadorDocumentosComponent } from './views/gerenciador-documentos/gerenciador-documentos.component';
 import { CreateDocumentoComponent } from './views/gerenciador-documentos/create-documento/create-documento.component';
+import { CreateAgendamentoComponent } from './views/agendamento/create/create-agendamento.component';
 
 
 export const routes: Routes = [
@@ -475,6 +476,15 @@ export const routes: Routes = [
         component: AgendamentoComponent,
         data: {
           title: 'Agendamentos de Retirada',
+          source: 'AGENDAMENTO'
+        },
+        canActivate: [SourceGuard]
+      },
+      {
+        path: 'create-agendamento',
+        component: CreateAgendamentoComponent,
+        data: {
+          title: 'Criar agendamento',
           source: 'AGENDAMENTO'
         },
         canActivate: [SourceGuard]
