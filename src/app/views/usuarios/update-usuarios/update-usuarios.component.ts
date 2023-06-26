@@ -98,12 +98,10 @@ export class UpdateUsuariosComponent implements OnInit {
       this.lances = allResp[5].data
       this.bloqueios = allResp[6].data
       this.faturas = allResp[7].data
-      console.log(this.faturas,  "BBBB")
     })
     this.restangular.all('usuario').get( this.id).subscribe(dados => {
      this.updateForm(dados.data)
     })
-    console.log(this.faturas, "aaaa")
   }
 
   onSubmit() {
@@ -229,12 +227,15 @@ export class UpdateUsuariosComponent implements OnInit {
         .post(body)
         .subscribe(
           () => {
+
             this.notifierService.notify(
               "success",
               "Usuario bloqueado com sucesso"
             );
-            
-            this.bloqueios.find(x => x.bloqueioUsuarioId == bloqueioId).dataDesbloqueio = new Date();
+
+            this.restangular.one("usuario/bloqueios/" + this.id).get().subscribe(dados => {
+              this.bloqueios = dados.data
+            })
           },
           (e) => {
             this.notifierService.notify(

@@ -365,6 +365,12 @@
                         <mfDefaultSorter by="dataDesbloqueio">Data de Desbloqueio</mfDefaultSorter>
                       </th>
                       <th>
+                        <mfDefaultSorter by="usuarioBloqueador.pessoa.nomeCompleto">Bloqueador</mfDefaultSorter>
+                      </th>
+                      <th>
+                        <mfDefaultSorter by="usuarioDesbloqueador.pessoa.nomeCompleto">Desbloqueador</mfDefaultSorter>
+                      </th>
+                      <th>
                         Desbloquear
                       </th>
                     </tr>
@@ -375,6 +381,8 @@
                       <td>{{item.motivo}}</td>
                       <td>{{item.dataBloqueio | date : 'dd/MM/yyyy'}}</td>
                       <td>{{item.dataDesbloqueio | date : 'dd/MM/yyyy'}}</td>
+                      <td>{{item.usuarioBloqueador.pessoa.nomeCompleto}}</td>
+                      <td>{{item.usuarioDesbloqueador?.pessoa?.nomeCompleto}}</td>
                       <td class="" nowrap>
                         <button *ngIf="item.dataDesbloqueio === null" type="button" class="btn btn-primary" (click)="desbloquear(item.bloqueioUsuarioId)"><i class="fas fa-unlock"></i>&nbsp; Desbloquear</button>
                       </td>
