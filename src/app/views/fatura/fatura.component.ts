@@ -113,31 +113,21 @@ export class FaturaComponent implements OnInit, OnDestroy {
     );
   }
 
-  bloquearUsuario(usuarioId, faturaId) {
+  bloquearUsuario(usuarioId, codigoFatura) {
     this.sub.push(
       this.confirmationService
         .create("Atenção", "Deseja realmente bloquear o usuário?")
         .subscribe((ans: ResolveEmit) => {
           if (ans.resolved) {
-
-            const dataInicio = new Date().toISOString();
-            const dataFim = new Date;
-            dataFim.setDate(dataFim.getDate() + 30);
-
             const body = {
               usuarioId,
-              motivo: "Bloqueado po inadimplência",
-              dataInicio,
-              dataFim: dataFim.toISOString()
-            }
+              motivo: "Bloqueado por inadimplência - Fatura " + codigoFatura,
+            };
 
             this.sub.push(
               this.restangular
                 .all(`usuario/bloquear`)
                 .post(body)
-                .pipe(
-                  switchMap(() => this.restangular.all('fatura/cancelar/' + faturaId).post())
-                )
                 .subscribe(
                   () => {
                     this.notifierService.notify(
@@ -147,10 +137,7 @@ export class FaturaComponent implements OnInit, OnDestroy {
                     this.setLeilao(this.leilaoId);
                   },
                   (e) => {
-                    this.notifierService.notify(
-                      "error",
-                      e.data.Message
-                    );
+                    this.notifierService.notify("error", e.data.Message);
                   }
                 )
             );
