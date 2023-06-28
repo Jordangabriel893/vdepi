@@ -236,7 +236,7 @@ import { CreateDocumentoTemplateComponent } from './views/documento-template/cre
 import { EditDocumentoTemplateComponent } from './views/documento-template/edit-documento-template/edit-documento-template.component';
 import { GerenciadorDocumentosComponent } from './views/gerenciador-documentos/gerenciador-documentos.component';
 import { CreateDocumentoComponent } from './views/gerenciador-documentos/create-documento/create-documento.component';
-
+import { CreateAgendamentoComponent } from './views/agendamento/create/create-agendamento.component';
 
 export function RestangularConfigFactory(RestangularProvider, NotifierService: NotifierService) {
   RestangularProvider.setBaseUrl(environment.apiDados);
@@ -403,7 +403,8 @@ export function RestangularConfigFactory(RestangularProvider, NotifierService: N
     EditDocumentoTemplateComponent,
     GerenciadorDocumentosComponent,
     CreateDocumentoComponent,
-    AssinaturaComponent
+    AssinaturaComponent,
+    CreateAgendamentoComponent
   ],
   providers: [{
     provide: LocationStrategy,
