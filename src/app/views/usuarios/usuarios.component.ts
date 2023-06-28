@@ -63,8 +63,6 @@ export class UsuariosComponent implements OnInit {
   }
 
   bloquear(){
-    console.log(this.usuarioBloqueado, this.formulario.value)
-
     this.sub.push(
       this.confirmationService
         .create("Atenção", "Deseja realmente bloquear o usuário?")
@@ -88,6 +86,10 @@ export class UsuariosComponent implements OnInit {
                     );
                     
                     this.formulario.reset();
+
+                    this.usuarios.find(x => x.usuarioId === body.usuarioId).ativo = false
+                    
+                    this.modalRef.hide();
                   },
                   (e) => {
                     this.notifierService.notify(
@@ -96,6 +98,8 @@ export class UsuariosComponent implements OnInit {
                     );
 
                     this.formulario.reset();
+                    
+                    this.modalRef.hide();
                   }
                 )
             );
