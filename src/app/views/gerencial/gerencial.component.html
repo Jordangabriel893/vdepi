@@ -1,0 +1,12 @@
+<div class="card">
+  <div class="card-header">
+    Cadastro mensal
+  </div>
+  <div class="card-body">
+    <div class="form-group row">
+      <label for="anoInput" class="col-1 col-form-label">Ano:</label>
+      <input id="anoInput" class="form-control col-1" type="number" [(ngModel)]="ano" (change)="carregarDados()" />
+    </div>
+    <canvas id="grafico"></canvas>
+  </div>
+</div>

@@ -98,6 +98,7 @@ import { DocumentoTemplateComponent } from './views/documento-template/documento
 import { EditDocumentoTemplateComponent } from './views/documento-template/edit-documento-template/edit-documento-template.component';
 import { GerenciadorDocumentosComponent } from './views/gerenciador-documentos/gerenciador-documentos.component';
 import { CreateDocumentoComponent } from './views/gerenciador-documentos/create-documento/create-documento.component';
+import { GerencialComponent } from './views/gerencial/gerencial.component';
 
 
 export const routes: Routes = [
@@ -295,6 +296,15 @@ export const routes: Routes = [
         data: {
           title: 'Arrematantes',
           source: 'ARREMATANTES'
+        },
+        canActivate: [SourceGuard]
+      },
+      {
+        path: 'gerencial',
+        component: GerencialComponent,
+        data: {
+          title: 'Gerencial',
+          source: 'GERENCIAL'
         },
         canActivate: [SourceGuard]
       },
