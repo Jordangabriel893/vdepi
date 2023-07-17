@@ -30,6 +30,8 @@ export class CreateLeilaoComponent implements OnInit {
   categorias:any
   comitentes:any
   leiloeiros:any
+  tiposLeilao:any
+  indicesCorrecao:any
   empresas:any
   habilitacoes:any;
   status:any
@@ -150,6 +152,19 @@ selectedHabilitacao ;
 
     )
 
+    this.restangular.all('leilao').one('tipos').get().subscribe(
+      dados =>{
+        this.tiposLeilao = dados.data
+      }
+    )
+
+    this.restangular.one('indiceCorrecao').get().subscribe(
+      dados =>{
+        this.indicesCorrecao = dados.data
+        console.log(this.indicesCorrecao)
+      }
+    )
+
 
     this.formulario = this.formBuilder.group({
       nome:  [null, [Validators.required, Validators.minLength(3), Validators.maxLength(35)]],
@@ -185,9 +200,77 @@ selectedHabilitacao ;
       tempoInicioSeg: [30],
       observacao: [null],
       linkYoutube: [null],
-      onlineYoutube: [null]
+      onlineYoutube: [null],
+      tipoLeilaoId: [null, Validators.required],
+      pracas: this.formBuilder.array([]),
+      lanceParcelado: false,
+      configuracaoParcela: this.formBuilder.group({
+        minimoEntrada: [0],
+        maximoParcelas: [0],
+        indiceCorrecaoId: [0]
+      }),
       // habilitacao:[null, Validators.required]
     })
+
+    this.formulario.get('configuracaoParcela').get("minimoEntrada").setValidators(this.customValidator);
+    this.formulario.get('configuracaoParcela').get("minimoEntrada").updateValueAndValidity();
+
+    this.formulario.get('configuracaoParcela').get("maximoParcelas").setValidators(this.customValidator);
+    this.formulario.get('configuracaoParcela').get("maximoParcelas").updateValueAndValidity();
+
+    this.formulario.get('configuracaoParcela').get("indiceCorrecaoId").setValidators(this.customValidator);
+    this.formulario.get('configuracaoParcela').get("indiceCorrecaoId").updateValueAndValidity();
+
+    // this.formulario.get('configuracaoParcela').setValidators((control) => {
+    //   const checkbox1Value = control.parent.get('lanceParcelado').value;
+  
+    //   if (checkbox1Value) {
+    //     return { requiredField: true }; 
+    //   }
+  
+    //   return null;
+    // })
+    // this.formulario.get('configuracaoParcela').updateValueAndValidity();
+  }
+
+  atualizaValidacaoConfiguracaoParcela() {
+    const configuracaoParcelaForm = this.formulario.get('configuracaoParcela') as FormGroup;
+    const checkbox1Value = this.formulario.get('lanceParcelado').value;
+
+    console.log(!checkbox1Value, 'checkbox1Value');
+
+    Object.keys(configuracaoParcelaForm.controls).forEach((campo)=> {
+      if(checkbox1Value){ 
+        configuracaoParcelaForm.get(campo).clearValidators();
+        configuracaoParcelaForm.get(campo).updateValueAndValidity();
+      }else{
+        configuracaoParcelaForm.get(campo).setValidators(this.customValidator);
+        configuracaoParcelaForm.get(campo).updateValueAndValidity();
+      }
+    });
+
+    configuracaoParcelaForm.markAsTouched();
+    configuracaoParcelaForm.markAsDirty();
+    configuracaoParcelaForm.updateValueAndValidity();
+
+    console.log(configuracaoParcelaForm.status)
+    console.log(configuracaoParcelaForm.controls)
+  }
+
+  customValidator(control) {
+    try {
+      const checkbox1Value = control.parent.parent.get('lanceParcelado').value;
+      const inputValue = control.value;
+  
+      if (checkbox1Value && !inputValue) {
+        return { requiredField: true }; 
+      }
+  
+      return null;
+    } catch (error) {
+      console.log(error )
+    }
+    
   }
 
   onSubmit() {
@@ -196,6 +279,13 @@ selectedHabilitacao ;
         const controle = this.formulario.get(campo)
         controle.markAsTouched()
       })
+
+      const configuracaoParcelaForm = this.formulario.get('configuracaoParcela') as FormGroup;
+      Object.keys(configuracaoParcelaForm.controls).forEach((campo)=>{
+        const controle = configuracaoParcelaForm.get(campo)
+        controle.markAsTouched()
+      })
+
       this.notifierService.notify('error', 'Preencha todos os campos obrigatórios');
       return false;
     }
@@ -366,8 +456,37 @@ selectedHabilitacao ;
     return { 'has-error': this.verificaValidTouched(campo) }
   }
 
+  verificaValidTouchedJudicial(form, campo){
+    return !form.get(campo).valid && form.get(campo).touched;
+  }
+
+  aplicaCssErroJudicial(form, campo){
+    return { 'has-error': this.verificaValidTouchedJudicial(form, campo) }
+  }
+
   onValueChange(event, campo) {
     this.formulario.get(campo).markAsTouched();
     this.formulario.get(campo).setValue(event);
+  }
+
+  onValueChangePraca(event, campo, i){
+    let pracas = this.formulario.get('pracas') as FormArray
+    let praca = pracas.at(i) as FormGroup;
+    praca.controls[campo].markAsTouched();
+    praca.controls[campo].setValue(event);
+  }
+
+  adicionarPraca(){
+    let pracas = this.formulario.get('pracas') as FormArray
+    pracas.push(this.formBuilder.group({
+      numeroPraca: [null, Validators.required],
+      dataExecucao: [null, Validators.required],
+      detalhe: [null, Validators.required],
+    }));
+  }
+
+  deletePraca(indexPraca: number) {
+    let pracas = this.formulario.controls['pracas'] as FormArray;
+    pracas.removeAt(indexPraca)
   }
 }
