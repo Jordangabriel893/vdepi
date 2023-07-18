@@ -161,7 +161,6 @@ selectedHabilitacao ;
     this.restangular.one('indiceCorrecao').get().subscribe(
       dados =>{
         this.indicesCorrecao = dados.data
-        console.log(this.indicesCorrecao)
       }
     )
 
@@ -207,7 +206,7 @@ selectedHabilitacao ;
       configuracaoParcela: this.formBuilder.group({
         minimoEntrada: [0],
         maximoParcelas: [0],
-        indiceCorrecaoId: [0]
+        indiceCorrecaoId: [null]
       }),
       // habilitacao:[null, Validators.required]
     })
@@ -220,24 +219,11 @@ selectedHabilitacao ;
 
     this.formulario.get('configuracaoParcela').get("indiceCorrecaoId").setValidators(this.customValidator);
     this.formulario.get('configuracaoParcela').get("indiceCorrecaoId").updateValueAndValidity();
-
-    // this.formulario.get('configuracaoParcela').setValidators((control) => {
-    //   const checkbox1Value = control.parent.get('lanceParcelado').value;
-  
-    //   if (checkbox1Value) {
-    //     return { requiredField: true }; 
-    //   }
-  
-    //   return null;
-    // })
-    // this.formulario.get('configuracaoParcela').updateValueAndValidity();
   }
 
   atualizaValidacaoConfiguracaoParcela() {
     const configuracaoParcelaForm = this.formulario.get('configuracaoParcela') as FormGroup;
     const checkbox1Value = this.formulario.get('lanceParcelado').value;
-
-    console.log(!checkbox1Value, 'checkbox1Value');
 
     Object.keys(configuracaoParcelaForm.controls).forEach((campo)=> {
       if(checkbox1Value){ 
@@ -253,12 +239,9 @@ selectedHabilitacao ;
     configuracaoParcelaForm.markAsDirty();
     configuracaoParcelaForm.updateValueAndValidity();
 
-    console.log(configuracaoParcelaForm.status)
-    console.log(configuracaoParcelaForm.controls)
   }
 
   customValidator(control) {
-    try {
       const checkbox1Value = control.parent.parent.get('lanceParcelado').value;
       const inputValue = control.value;
   
@@ -267,10 +250,6 @@ selectedHabilitacao ;
       }
   
       return null;
-    } catch (error) {
-      console.log(error )
-    }
-    
   }
 
   onSubmit() {

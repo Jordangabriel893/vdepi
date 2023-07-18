@@ -353,7 +353,7 @@
         <div class="form-check">
           <label class="form-check-label">
             <input class="form-check-input" type="checkbox" formControlName="lanceParcelado" (click)="atualizaValidacaoConfiguracaoParcela()">
-            LanceParcelado
+            Lance Parcelado
           </label>
         </div>
       </div>
@@ -370,12 +370,17 @@
             <input [ngClass]="aplicaCssErroJudicial(formulario.get('configuracaoParcela'),'maximoParcelas')" type="number" class="form-control"  id="maximoParcelas" placeholder="2" formControlName="maximoParcelas" >
           </div>
 
-          <div class="form-group col-12">
-            <label for="indiceCorrecaoId">Indice Correçao</label>
-            <select [ngClass]="aplicaCssErroJudicial(formulario.get('configuracaoParcela'),'indiceCorrecaoId')" class="form-control"  formControlName="indiceCorrecaoId" >
-              <option *ngFor="let item of indicesCorrecao" value="{{item.indiceCorrecaoId}}">{{item.descricao}}
-              </option>
-            </select>
+          <div class="form-group col-6">
+            <label for="regraHabilitacao">Indice Correçao</label>
+            <ng-select [items]="indicesCorrecao" formControlName="indiceCorrecaoId" [multiple]="true" bindLabel="descricao" bindValue="indiceCorrecaoId">
+              <ng-template ng-option-tmp let-item="item" let-index="index" let-search="searchTerm">
+                  <div style="margin: 10px 0; white-space: normal;" class="card" >
+                      <div class="card-body">
+                          <h5 class="card-title" [ngOptionHighlight]="search">{{item.descricao}}</h5>
+                      </div>
+                  </div>
+              </ng-template>
+            </ng-select>
           </div>
         </div>
 
