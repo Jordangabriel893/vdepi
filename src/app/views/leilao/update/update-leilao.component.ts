@@ -28,6 +28,9 @@ export class UpdateLeilaoComponent implements OnInit {
   empresas:any
   status;
   minDate: Date;
+  tiposLeilao:any
+  indicesCorrecao:any
+  idxPraca = 0;
 
   anexosbase64: any
   anexosnome: any
@@ -104,14 +107,33 @@ export class UpdateLeilaoComponent implements OnInit {
         // const habilitac = dados.data
         // const regras = habilitac.map(x => x.regraHabilitacao)
          this.habilitacoes = dados.data
-      })
+    })
+    this.restangular.all('leilao').one('tipos').get().subscribe(
+      dados =>{
+        this.tiposLeilao = dados.data
+      }
+    )
+    this.restangular.one('indiceCorrecao').get().subscribe(
+      dados =>{
+        this.indicesCorrecao = dados.data
+      }
+    )
   }
 
   ngOnInit() {
     this.id = this.route.snapshot.params['id']
+    // this.restangular.all('admin/leilao').get(this.id).subscribe(dados => {
+    //   this.restangular.all('admin/leilao/' + this.id + '/configuracao').get().subscribe(configuracao => {
+    //     dados.data.configuracaoParcela = configuracao.data
+    //     this.updateForm(dados.data)
+    //   })
+    // })
     this.restangular.all('admin/leilao').get(this.id).subscribe(dados => {
-      this.updateForm(dados.data)
-    })
+      this.restangular.one('admin/leilao', this.id).one('configuracao').get().subscribe(configuracao => {
+        dados.data.configuracaoParcela = configuracao.data;
+        this.updateForm(dados.data);
+      });
+    });
   }
 
   onSubmit(){
@@ -121,6 +143,13 @@ export class UpdateLeilaoComponent implements OnInit {
         controle.markAsTouched()
 
       })
+
+      const configuracaoParcelaForm = this.formulario.get('configuracaoParcela') as FormGroup;
+      Object.keys(configuracaoParcelaForm.controls).forEach((campo)=>{
+        const controle = configuracaoParcelaForm.get(campo)
+        controle.markAsTouched()
+      })
+
       this.notifierService.notify('error', 'Preencha todos os campos obrigatórios');
       return false;
     }
@@ -140,6 +169,7 @@ export class UpdateLeilaoComponent implements OnInit {
 
   updateForm(dados) {
     this.isImageSaved = true
+    console.log(dados);
     this.cardImageBase64 = dados.foto.url
 
 
@@ -180,8 +210,61 @@ export class UpdateLeilaoComponent implements OnInit {
       observacao: dados.observacao,
       tempoInicioSeg: dados.tempoInicioSeg,
       linkYoutube: dados.linkYoutube,
-      onlineYoutube: dados.onlineYoutube
+      onlineYoutube: dados.onlineYoutube,
+      pracas: this.formBuilder.array(dados.pracas ? dados.pracas.map(x => this.formBuilder.group({ ...x, dataExecucao: moment.utc(x.dataExecucao).local().toDate(), PracaLeilaoId: 0 })) : []),
+      lanceParcelado: [dados.lanceParcelado],
+      configuracaoParcela: this.formBuilder.group({
+        minimoEntrada: [dados.configuracaoParcela ? dados.configuracaoParcela.minimoEntrada : null],
+        maximoParcelas: [dados.configuracaoParcela ? dados.configuracaoParcela.maximoParcelas : null],
+        indiceCorrecaoId: [dados.configuracaoParcela ? dados.configuracaoParcela.indiceCorrecaoId : null],
+      }),
+      tipoLeilaoId: [dados.tipoLeilaoId, Validators.required],
     });
+
+    if(dados.configuracaoParcela){
+      this.formulario.get('configuracaoParcela').get('indiceCorrecaoId').patchValue(dados.configuracaoParcela.indiceCorrecao.map(x => x.indiceCorrecaoId));
+    }
+    
+
+    this.formulario.get('configuracaoParcela').get("minimoEntrada").setValidators(this.customValidator);
+    this.formulario.get('configuracaoParcela').get("minimoEntrada").updateValueAndValidity();
+
+    this.formulario.get('configuracaoParcela').get("maximoParcelas").setValidators(this.customValidator);
+    this.formulario.get('configuracaoParcela').get("maximoParcelas").updateValueAndValidity();
+
+    this.formulario.get('configuracaoParcela').get("indiceCorrecaoId").setValidators(this.customValidator);
+    this.formulario.get('configuracaoParcela').get("indiceCorrecaoId").updateValueAndValidity();
+  }
+
+  atualizaValidacaoConfiguracaoParcela() {
+    const configuracaoParcelaForm = this.formulario.get('configuracaoParcela') as FormGroup;
+    const checkbox1Value = this.formulario.get('lanceParcelado').value;
+
+    Object.keys(configuracaoParcelaForm.controls).forEach((campo)=> {
+      if(checkbox1Value){ 
+        configuracaoParcelaForm.get(campo).clearValidators();
+        configuracaoParcelaForm.get(campo).updateValueAndValidity();
+      }else{
+        configuracaoParcelaForm.get(campo).setValidators(this.customValidator);
+        configuracaoParcelaForm.get(campo).updateValueAndValidity();
+      }
+    });
+
+    configuracaoParcelaForm.markAsTouched();
+    configuracaoParcelaForm.markAsDirty();
+    configuracaoParcelaForm.updateValueAndValidity();
+
+  }
+
+  customValidator(control) {
+      const checkbox1Value = control.parent.parent.get('lanceParcelado').value;
+      const inputValue = control.value;
+  
+      if (checkbox1Value && !inputValue) {
+        return { requiredField: true }; 
+      }
+  
+      return null;
   }
 
   fileChangeEvent(fileInput: any) {
@@ -323,6 +406,35 @@ export class UpdateLeilaoComponent implements OnInit {
     this.formulario.get(campo).markAsTouched();
     this.formulario.get(campo).setValue(event);
     this.formulario.get(campo).updateValueAndValidity();
+  }
+
+  verificaValidTouchedJudicial(form, campo){
+    return !form.get(campo).valid && form.get(campo).touched;
+  }
+
+  aplicaCssErroJudicial(form, campo){
+    return { 'has-error': this.verificaValidTouchedJudicial(form, campo) }
+  }
+
+  onValueChangePraca(event, campo, i){
+    let pracas = this.formulario.get('pracas') as FormArray
+    let praca = pracas.at(i) as FormGroup;
+    praca.controls[campo].markAsTouched();
+    praca.controls[campo].setValue(event);
+  }
+
+  adicionarPraca(){
+    let pracas = this.formulario.get('pracas') as FormArray
+    pracas.push(this.formBuilder.group({
+      numeroPraca: [pracas.length + 1],
+      dataExecucao: [null, Validators.required],
+      detalhe: [null],
+    }));
+  }
+
+  deletePraca(indexPraca: number) {
+    let pracas = this.formulario.controls['pracas'] as FormArray;
+    pracas.removeAt(indexPraca)
   }
 
 }
