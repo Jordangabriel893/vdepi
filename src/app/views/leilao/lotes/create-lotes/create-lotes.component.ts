@@ -104,6 +104,7 @@ export class CreateLotesComponent implements OnInit {
       valorAvaliacao: [null, Validators.required],
       valorIncremento: [null, Validators.required],
       valorTaxaAdministrativa: [0],
+      tipoTaxa: ['V'],
       valorOutrasTaxas: [0],
       observacao: [],
       judicial: [false],
@@ -125,7 +126,8 @@ export class CreateLotesComponent implements OnInit {
       tipoLoteId: [null, Validators.required],
       campos: this.formBuilder.array([], Validators.required),
       anexos: this.formBuilder.array([]),
-      fotos: this.formBuilder.array([], Validators.required)
+      fotos: this.formBuilder.array([], Validators.required),
+      faixas: this.formBuilder.array([]),
     })
 
   }
@@ -427,4 +429,28 @@ export class CreateLotesComponent implements OnInit {
     return formatacao;
   }
 
+  onValueChangeFaixa(event, campo, i){
+    let faixasForm = this.formulario.get('faixas') as FormArray
+    let faixa = faixasForm.at(i) as FormGroup;
+    faixa.controls[campo].markAsTouched();
+    faixa.controls[campo].setValue(event);
+  }
+
+  selecionarTipoTaxa(tipo: string) {
+    this.formulario.get('tipoTaxa').setValue(tipo);
+  }
+
+  adicionarFaixa(){
+    let faixas = this.formulario.get('faixas') as FormArray
+    faixas.push(this.formBuilder.group({
+      faixaInicial: [null, Validators.required],
+      faixaFinal: [null, Validators.required],
+      valorTaxaAdministrativa: [null, Validators.required],
+    }));
+  }
+
+  deleteFaixa(indexPraca: number) {
+    let faixas = this.formulario.controls['faixas'] as FormArray;
+    faixas.removeAt(indexPraca)
+  }
 }
