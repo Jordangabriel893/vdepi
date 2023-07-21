@@ -1,4 +1,4 @@
-import { Component, ElementRef, OnInit, TemplateRef, ViewChild } from '@angular/core';
+import { AfterContentInit, AfterViewInit, Component, ElementRef, OnInit, TemplateRef, ViewChild } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators, FormArray } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
@@ -17,10 +17,12 @@ import 'moment/locale/pt-br';
   templateUrl: './update-lotes.component.html',
   styleUrls: ['./update-lotes.component.scss']
 })
-export class UpdateLotesComponent implements OnInit {
+export class UpdateLotesComponent implements OnInit, AfterContentInit  {
 
   @ViewChild('inputFotos') inputFotos: ElementRef;
   @ViewChild('inputAnexos') inputAnexos: ElementRef;
+  @ViewChild('btnFaixa') btnFaixa!: ElementRef;
+
   isCollapsed = false;
   modalRef: BsModalRef;
   message = 'expanded';
@@ -41,6 +43,7 @@ export class UpdateLotesComponent implements OnInit {
   fileToUpload: File | null = null;
   loteStatus;
   mostrarCampoJudicial: boolean = false
+  taxaFaixa: boolean = false 
 
   //fotos
   fotosbase64: any
@@ -143,6 +146,7 @@ export class UpdateLotesComponent implements OnInit {
       this.lote = allResp[4].data;
       this.leilaoId = this.lote.leilaoId;
       const fotos = this.lote.fotos.filter(x => x.tipoFoto.visivelSite)
+
       this.updateForm(this.lote, fotos);
 
       this.categorias = allResp[5].data;
@@ -156,6 +160,14 @@ export class UpdateLotesComponent implements OnInit {
         this.categoriasFilhas = this.categorias.filter(categoria => categoria.categoriaPaiId === this.leilao.categoriaId);
         this.loteCampos = allResp[0].data.filter(x => x.categoriaId === this.leilao.categoriaId);
         this.tiposLote = allResp[1].data.filter(x => x.categoriaId === this.leilao.categoriaId);
+
+        if(this.taxaFaixa){
+          this.formulario.get('valorTaxaAdministrativa').disable();
+          this.btnFaixa.nativeElement.disabled = true;
+        }else{
+          this.formulario.get('valorTaxaAdministrativa').enable();
+          this.btnFaixa.nativeElement.disabled = false;
+        }
       })
     });
   }
@@ -368,7 +380,25 @@ export class UpdateLotesComponent implements OnInit {
       campos: this.formBuilder.array(dados.campos ? dados.campos.map(x => this.formBuilder.group({ ...x, acao: '' })) : [], Validators.required),
       anexos: this.formBuilder.array(dados.anexos ? dados.anexos.map(x => this.formBuilder.group({ ...x, acao: '' })) : []),
       fotos: this.formBuilder.array(fotos ? fotos.map(x => this.formBuilder.group({ ...x, acao: '' })) : [], Validators.required),
+      tipoTaxa: [dados.tipoTaxa],
+      faixas: this.formBuilder.array(dados.faixas ? dados.faixas.map(x => this.formBuilder.group({ ...x })) : []),
     })
+
+    console.log(this.formulario.value)
+
+    if(this.lote.faixas.length > 0){ 
+      this.taxaFaixa = true
+      console.log(this.taxaFaixa, 'taxaFaixa');
+
+      // if(this.taxaFaixa){
+      //   this.formulario.get('valorTaxaAdministrativa').disable();
+      //   this.btnFaixa.nativeElement.disabled = true;
+      // }else{
+      //   this.formulario.get('valorTaxaAdministrativa').enable();
+      //   this.btnFaixa.nativeElement.disabled = false;
+      // }
+    }
+
     setTimeout(() => { this.mostrarCampoJudicial = true }, 3000)
   }
 
@@ -559,5 +589,44 @@ export class UpdateLotesComponent implements OnInit {
     var loteCampo = this.loteCampos.find(x => x.loteCampoId == loteCampoId);
     var formatacao = loteCampo && loteCampo.formatacao ? loteCampo.formatacao.split('').map(x => x === '#' ? new RegExp(x.replace('#', '\\w')) : x) : false;
     return formatacao;
+  }
+
+  onValueChangeFaixa(event, campo, i){
+    let faixasForm = this.formulario.get('faixas') as FormArray
+    let faixa = faixasForm.at(i) as FormGroup;
+    faixa.controls[campo].markAsTouched();
+    faixa.controls[campo].setValue(event);
+  }
+
+  selecionarTipoTaxa(tipo: string) {
+    this.formulario.get('tipoTaxa').setValue(tipo);
+  }
+
+  adicionarFaixa(){
+    let faixas = this.formulario.get('faixas') as FormArray
+    faixas.push(this.formBuilder.group({
+      faixaInicial: [null, Validators.required],
+      faixaFinal: [null, Validators.required],
+      valorTaxaAdministrativa: [null, Validators.required],
+    }));
+  }
+
+  deleteFaixa(indexPraca: number) {
+    let faixas = this.formulario.controls['faixas'] as FormArray;
+    faixas.removeAt(indexPraca)
+  }
+
+  changeCheckBoxFaixa(){
+    if(this.taxaFaixa){
+      this.formulario.get('valorTaxaAdministrativa').enable();
+      this.btnFaixa.nativeElement.disabled = false;
+    }else{
+      this.formulario.get('valorTaxaAdministrativa').disable();
+      this.btnFaixa.nativeElement.disabled = true;
+    }
+
+    this.taxaFaixa = !this.taxaFaixa;
+
+    console.log(this.btnFaixa)
   }
 }

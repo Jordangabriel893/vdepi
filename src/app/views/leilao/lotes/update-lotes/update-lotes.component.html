@@ -194,17 +194,87 @@
                   id="valorMinimoVenda" formControlName="valorMinimoVenda" currencyMask
                   [options]="{ prefix: 'R$ ', thousands: '.', decimal: ',' }">
               </div>
-              <div class="form-group col-4">
+              <!-- <div class="form-group col-4">
                 <label for="valorTaxaAdministrativa">Valor da Taxa Administrativa </label>
                 <input type="text" class="form-control" [ngClass]="aplicaCssErro('valorTaxaAdministrativa')"
                   id="valorTaxaAdministrativa" formControlName="valorTaxaAdministrativa" currencyMask
                   [options]="{ prefix: 'R$ ', thousands: '.', decimal: ',' }">
-              </div>
+              </div> -->
               <div class="form-group col-4">
                 <label for="valorOutrasTaxas">Valor de Outras Taxas </label>
                 <input type="text" class="form-control" [ngClass]="aplicaCssErro('valorOutrasTaxas')"
                   id="valorOutrasTaxas" formControlName="valorOutrasTaxas" currencyMask
                   [options]="{ prefix: 'R$ ', thousands: '.', decimal: ',' }">
+              </div>
+              <div class="col-4">
+                <label for="valorOutrasTaxas">Taxa Administrativa</label>
+                <div class="fix-margin-input input-group">
+                  <div class="input-group-prepend" dropdown >
+                    <button #btnFaixa id="btnTaxa" class="btn btn-success dropdown-toggle" type="button" data-toggle="dropdown" aria-expanded="false" dropdownToggle title="Tipo da Taxa">
+                      <h5 *ngIf="formulario.get('tipoTaxa')?.value === 'P'" class="m-0 float-left">%</h5>
+                      <h5 *ngIf="formulario.get('tipoTaxa')?.value === 'V'" class="m-0 float-left">$</h5>
+                      <span class="caret"></span>
+                    </button>
+                    <div class="dropdown-menu" *dropdownMenu style="margin: 0px;">
+                      <a class="dropdown-item" href="javascript:void(0);" (click)="selecionarTipoTaxa('P')">
+                        <i class="fa fa-percent"></i> Percentual
+                      </a>
+                      <a class="dropdown-item" href="javascript:void(0);" (click)="selecionarTipoTaxa('V')">
+                        <i class="fa fa-dollar-sign"></i> Valor
+                      </a>
+                    </div>
+                  </div>
+                  <input  type="text" class="form-control" formControlName="valorTaxaAdministrativa" currencyMask [options]="{  prefix: '', suffix: ' %', thousands: '.', decimal: ',', precision: '2' }" *ngIf="formulario.get('tipoTaxa')?.value === 'P'">
+                  <input  type="text" class="form-control" formControlName="valorTaxaAdministrativa" currencyMask [options]="{  prefix: 'R$ ', suffix: '', thousands: '.', decimal: ',', precision: '2' }" *ngIf="formulario.get('tipoTaxa')?.value === 'V'">
+                </div>
+              </div>
+            </div>
+            <div class="row" formArrayName="faixas">
+              <div class="col-lg-12">
+                <div class="card">
+                  <div class="card-header new-campo">
+                    <div class="cabecalho d-flex align-items-center"><input type="checkbox" [checked]="taxaFaixa" (change)="changeCheckBoxFaixa()"/>&nbsp;Editar Valor da Taxa Por Valor de Lance</div>
+                    <button [disabled]="!taxaFaixa" type="button" class="btn btn-success btn-sm" (click)="adicionarFaixa()">
+                      <i class="fa fa-plus-circle"></i>&nbsp;Adicionar Faixa</button>
+                  </div>
+                  <div class="card-block" *ngIf="this.formulario.value.faixas.length > 0">
+                    <table class="table">
+                      <thead style="position: relative;">
+                        <tr>
+                          <th width="30%">Faixa Inicial</th>
+                          <th width="30%">Faixa Final</th>
+                          <th width="30%">Valor Da Taxa</th>
+                          <th width="10%"></th>
+                        </tr>
+                        <div [formGroup]="formulario" style="position: absolute; right: 243.1px; top: 5px;">
+                            <select class="form-control" formControlName="tipoTaxa" id="tipoTaxa" >
+                              <option value="P">%</option>
+                              <option value="V" [defaultSelected]="">$</option>
+                            </select>
+                        </div>
+                      </thead>
+                      <tbody>
+                        <tr *ngFor="let item of this.formulario.get('faixas').controls; let i = index" [formGroupName]="i">
+                          <td>
+                            <input [ngClass]="aplicaCssErroLista('faixas','faixaInicial', i)" type="number" formControlName="faixaInicial" class="form-control" [value]="item.value.faixaInicial"
+                              placeholder="Faixa Inicial">
+                          </td>
+                          <td>
+                            <input [ngClass]="aplicaCssErroLista('faixas','faixaFinal', i)" type="number" formControlName="faixaFinal" class="form-control" [value]="item.value.faixaFinal"
+                              placeholder="Faixa Final">
+                          </td>
+                          <td>
+                            <input [ngClass]="aplicaCssErroLista('faixas','valorTaxaAdministrativa', i)"  type="text" class="form-control" formControlName="valorTaxaAdministrativa" currencyMask [options]="{  prefix: '', suffix: ' %', thousands: '.', decimal: ',', precision: '2' }" *ngIf="formulario.get('tipoTaxa')?.value === 'P'">
+                            <input [ngClass]="aplicaCssErroLista('faixas','valorTaxaAdministrativa', i)"  type="text" class="form-control" formControlName="valorTaxaAdministrativa" currencyMask [options]="{  prefix: 'R$ ', suffix: '', thousands: '.', decimal: ',', precision: '2' }" *ngIf="formulario.get('tipoTaxa')?.value === 'V'">
+                          </td>
+                          <td class="text-center">
+                            <label class="btn btn-danger m-0" (click)="deleteFaixa(i)">Remover</label>
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
@@ -323,7 +393,8 @@
                     </select>
                   </td>
                   <td>
-                    <input type="text" class="form-control text-uppercase" formControlName="valor" [textMask]="{mask: getFormatacao(i)}" [ngClass]="aplicaCssErroLista('campos','valor', i)">
+                    <input type="text" class="form-control text-uppercase" formControlName="valor"  [ngClass]="aplicaCssErroLista('campos','valor', i)">
+                    <!-- <input type="text" class="form-control text-uppercase" formControlName="valor" [textMask]="{mask: getFormatacao(i)}" [ngClass]="aplicaCssErroLista('campos','valor', i)"> -->
                   </td>
                   <td class="text-center">
                     <button type="button" class="btn btn-danger " (click)="deleteCampo(i)">Remover</button>

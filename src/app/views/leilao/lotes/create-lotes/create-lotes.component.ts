@@ -37,6 +37,8 @@ export class CreateLotesComponent implements OnInit {
   tipoFoto: any
   fileToUpload: File | null = null;
   codigoComum:boolean = true
+  taxaFaixa: boolean = false 
+
   //fotos
   fotosbase64: any
   fotosnome: any
@@ -103,7 +105,7 @@ export class CreateLotesComponent implements OnInit {
       valorMinimoVenda: [null, Validators.required],
       valorAvaliacao: [null, Validators.required],
       valorIncremento: [null, Validators.required],
-      valorTaxaAdministrativa: [0],
+      valorTaxaAdministrativa: [{value: null, disabled: this.taxaFaixa}],
       tipoTaxa: ['V'],
       valorOutrasTaxas: [0],
       observacao: [],
@@ -452,5 +454,19 @@ export class CreateLotesComponent implements OnInit {
   deleteFaixa(indexPraca: number) {
     let faixas = this.formulario.controls['faixas'] as FormArray;
     faixas.removeAt(indexPraca)
+  }
+
+  @ViewChild('btnFaixa') btnFaixa!: ElementRef;
+
+  changeCheckBoxFaixa(){
+    if(this.taxaFaixa){
+      this.formulario.get('valorTaxaAdministrativa').enable();
+      this.btnFaixa.nativeElement.disabled = false;
+    }else{
+      this.formulario.get('valorTaxaAdministrativa').disable();
+      this.btnFaixa.nativeElement.disabled = true;
+    }
+
+    this.taxaFaixa = !this.taxaFaixa;
   }
 }
