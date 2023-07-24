@@ -178,7 +178,7 @@
               </div>
               <div class="form-group col-4">
                 <label for="valorIncremento">Valor Incremento </label>
-                <input type="text" class="form-control" [ngClass]="aplicaCssErro('valorIncremento')" id="valorIncremento" formControlName="valorIncremento"
+                <input #btnFaixaIncremento type="text" class="form-control" [ngClass]="aplicaCssErro('valorIncremento')" id="valorIncremento" formControlName="valorIncremento"
                   currencyMask [options]="{ prefix: 'R$ ', thousands: '.', decimal: ',' }">
               </div>
             </div>
@@ -268,6 +268,47 @@
                           </td>
                           <td class="text-center">
                             <label class="btn btn-danger m-0" (click)="deleteFaixa(i)">Remover</label>
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="row" formArrayName="faixasIncremento">
+              <div class="col-lg-12">
+                <div class="card">
+                  <div class="card-header new-campo">
+                    <div class="cabecalho d-flex align-items-center"><input type="checkbox"  (change)="changeCheckBoxFaixaIncremento()"/>&nbsp;Editar Valor do Incremento Por Valor de Lance</div>
+                    <button [disabled]="!faixasIncremento" type="button" class="btn btn-success btn-sm" (click)="adicionarFaixaIncremento()">
+                      <i class="fa fa-plus-circle"></i>&nbsp;Adicionar Faixa</button>
+                  </div>
+                  <div class="card-block" *ngIf="this.formulario.value.faixasIncremento.length > 0">
+                    <table class="table">
+                      <thead>
+                        <tr>
+                          <th width="30%">Faixa Inicial</th>
+                          <th width="30%">Faixa Final</th>
+                          <th width="30%">Valor do incremento</th>
+                          <th width="10%"></th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr *ngFor="let item of this.formulario.get('faixasIncremento').controls; let i = index" [formGroupName]="i">
+                          <td>
+                            <input [ngClass]="aplicaCssErroLista('faixasIncremento','faixaInicial', i)" type="number" formControlName="faixaInicial" class="form-control" [value]="item.value.faixaInicial"
+                              placeholder="Faixa Inicial">
+                          </td>
+                          <td>
+                            <input [ngClass]="aplicaCssErroLista('faixasIncremento','faixaFinal', i)" type="number" formControlName="faixaFinal" class="form-control" [value]="item.value.faixaFinal"
+                              placeholder="Faixa Final">
+                          </td>
+                          <td>
+                            <input [ngClass]="aplicaCssErroLista('faixasIncremento','valorIncremento', i)"  type="text" class="form-control" formControlName="valorIncremento" currencyMask [options]="{  prefix: 'R$ ', suffix: '', thousands: '.', decimal: ',', precision: '2' }">
+                          </td>
+                          <td class="text-center">
+                            <label class="btn btn-danger m-0" (click)="deleteFaixaIncremento(i)">Remover</label>
                           </td>
                         </tr>
                       </tbody>

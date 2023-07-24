@@ -38,6 +38,7 @@ export class CreateLotesComponent implements OnInit {
   fileToUpload: File | null = null;
   codigoComum:boolean = true
   taxaFaixa: boolean = false 
+  faixasIncremento: boolean = false
 
   //fotos
   fotosbase64: any
@@ -145,6 +146,7 @@ export class CreateLotesComponent implements OnInit {
       fotos: this.formBuilder.array([], Validators.required),
       faixas: this.formBuilder.array([]),
       pracas: this.formBuilder.array([]),
+      faixasIncremento: this.formBuilder.array([]),
     });
   }
 
@@ -479,9 +481,9 @@ export class CreateLotesComponent implements OnInit {
     }));
   }
 
-  deleteFaixa(indexPraca: number) {
+  deleteFaixa(index: number) {
     let faixas = this.formulario.controls['faixas'] as FormArray;
-    faixas.removeAt(indexPraca)
+    faixas.removeAt(index)
   }
 
   @ViewChild('btnFaixa') btnFaixa!: ElementRef;
@@ -497,4 +499,44 @@ export class CreateLotesComponent implements OnInit {
 
     this.taxaFaixa = !this.taxaFaixa;
   }
+
+  //#region Faixa Incremento
+
+  onValueChangeFaixaIncremento(event, campo, i){
+    let faixasIncrementoForm = this.formulario.get('faixasIncremento') as FormArray
+    let faixaIncremento = faixasIncrementoForm.at(i) as FormGroup;
+    faixaIncremento.controls[campo].markAsTouched();
+    faixaIncremento.controls[campo].setValue(event);
+  }
+
+  adicionarFaixaIncremento(){
+    let faixasIncremento = this.formulario.get('faixasIncremento') as FormArray
+    faixasIncremento.push(this.formBuilder.group({
+      faixaInicial: [null, Validators.required],
+      faixaFinal: [null, Validators.required],
+      valorIncremento: [null, Validators.required],
+    }));
+  }
+
+  deleteFaixaIncremento(index: number) {
+    let faixasIncremento = this.formulario.controls['faixasIncremento'] as FormArray;
+    faixasIncremento.removeAt(index)
+  }
+
+  @ViewChild('btnFaixaIncremento') btnFaixaIncremento!: ElementRef;
+
+  changeCheckBoxFaixaIncremento(){
+    if(this.faixasIncremento){
+      this.formulario.get('valorIncremento').enable();
+      this.btnFaixaIncremento.nativeElement.disabled = false;
+    }else{
+      this.formulario.get('valorIncremento').disable();
+      this.btnFaixaIncremento.nativeElement.disabled = true;
+    }
+
+    this.faixasIncremento = !this.faixasIncremento;
+
+  }
+
+  //#endregion
 }

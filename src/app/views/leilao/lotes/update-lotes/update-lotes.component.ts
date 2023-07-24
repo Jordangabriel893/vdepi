@@ -22,6 +22,7 @@ export class UpdateLotesComponent implements OnInit  {
   @ViewChild('inputFotos') inputFotos: ElementRef;
   @ViewChild('inputAnexos') inputAnexos: ElementRef;
   @ViewChild('btnFaixa') btnFaixa!: ElementRef;
+  @ViewChild('btnFaixaIncremento') btnFaixaIncremento!: ElementRef;
 
   isCollapsed = false;
   modalRef: BsModalRef;
@@ -44,6 +45,7 @@ export class UpdateLotesComponent implements OnInit  {
   loteStatus;
   mostrarCampoJudicial: boolean = false
   taxaFaixa: boolean = false 
+  faixasIncremento: boolean = false
 
   //fotos
   fotosbase64: any
@@ -199,8 +201,6 @@ export class UpdateLotesComponent implements OnInit  {
 
         this.formulario.get("judicial").patchValue(this.leilao.tipoLeilaoId == 1);
         let pracas = allResp[8].data;
-
-        console.log(pracas, 'pracas')
 
         if(pracas.length == 0){
           pracas = this.leilao.pracas.map(praca => { return {...praca, dataExecucao: moment(praca.dataExecucao).format('DD/MM/YYYY')}});
@@ -429,21 +429,15 @@ export class UpdateLotesComponent implements OnInit  {
       tipoTaxa: [dados.tipoTaxa],
       faixas: this.formBuilder.array(dados.faixas ? dados.faixas.map(x => this.formBuilder.group({ ...x })) : []),
       pracas: this.formBuilder.array([]),
+      faixasIncremento: this.formBuilder.array(dados.faixasIncremento ? dados.faixasIncremento.map(x => this.formBuilder.group({ ...x })) : []),
     })
-
-    console.log(this.formulario.value)
 
     if(this.lote.faixas.length > 0){ 
       this.taxaFaixa = true
-      console.log(this.taxaFaixa, 'taxaFaixa');
+    }
 
-      // if(this.taxaFaixa){
-      //   this.formulario.get('valorTaxaAdministrativa').disable();
-      //   this.btnFaixa.nativeElement.disabled = true;
-      // }else{
-      //   this.formulario.get('valorTaxaAdministrativa').enable();
-      //   this.btnFaixa.nativeElement.disabled = false;
-      // }
+    if(this.lote.faixasIncremento.length > 0){
+      this.faixasIncremento = true
     }
 
     setTimeout(() => { this.mostrarCampoJudicial = true }, 3000)
@@ -658,9 +652,9 @@ export class UpdateLotesComponent implements OnInit  {
     }));
   }
 
-  deleteFaixa(indexPraca: number) {
+  deleteFaixa(index: number) {
     let faixas = this.formulario.controls['faixas'] as FormArray;
-    faixas.removeAt(indexPraca)
+    faixas.removeAt(index)
   }
 
   changeCheckBoxFaixa(){
@@ -676,4 +670,42 @@ export class UpdateLotesComponent implements OnInit  {
 
     console.log(this.btnFaixa)
   }
+
+    //#region Faixa Incremento
+
+    onValueChangeFaixaIncremento(event, campo, i){
+      let faixasIncrementoForm = this.formulario.get('faixasIncremento') as FormArray
+      let faixaIncremento = faixasIncrementoForm.at(i) as FormGroup;
+      faixaIncremento.controls[campo].markAsTouched();
+      faixaIncremento.controls[campo].setValue(event);
+    }
+  
+    adicionarFaixaIncremento(){
+      let faixasIncremento = this.formulario.get('faixasIncremento') as FormArray
+      faixasIncremento.push(this.formBuilder.group({
+        faixaInicial: [null, Validators.required],
+        faixaFinal: [null, Validators.required],
+        valorIncremento: [null, Validators.required],
+      }));
+    }
+  
+    deleteFaixaIncremento(index: number) {
+      let faixasIncremento = this.formulario.controls['faixasIncremento'] as FormArray;
+      faixasIncremento.removeAt(index)
+    }
+  
+    changeCheckBoxFaixaIncremento(){
+      if(this.faixasIncremento){
+        this.formulario.get('valorIncremento').enable();
+        this.btnFaixaIncremento.nativeElement.disabled = false;
+      }else{
+        this.formulario.get('valorIncremento').disable();
+        this.btnFaixaIncremento.nativeElement.disabled = true;
+      }
+  
+      this.faixasIncremento = !this.faixasIncremento;
+  
+    }
+  
+    //#endregion
 }
