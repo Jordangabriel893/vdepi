@@ -88,9 +88,23 @@ export class CreateLotesComponent implements OnInit {
     private formBuilder: FormBuilder,
     private notifierService: NotifierService
   ) {
+
     this.id = this.route.snapshot.params['id'];
     this.leilaoId = this.id;
 
+    this.restangular.one("admin/leilao", this.id).get().subscribe((leilao: any) => {
+      this.leilao = leilao.data;
+      this.formulario.get("judicial").patchValue(this.leilao.tipoLeilaoId == 1);
+      const pracas = leilao.data.pracas.map(praca => { return {...praca, dataExecucao: moment(praca.dataExecucao).format('DD/MM/YYYY')}});
+
+      pracas.forEach(praca => {
+        this.adicionarPraca(praca);
+      });
+
+      var pracasForm = this.formulario.get('pracas') as FormArray;
+
+    });
+    
     this.formulario = this.formBuilder.group({
       loteId:[0],
       descricao: [null, Validators.required],
@@ -130,9 +144,22 @@ export class CreateLotesComponent implements OnInit {
       anexos: this.formBuilder.array([]),
       fotos: this.formBuilder.array([], Validators.required),
       faixas: this.formBuilder.array([]),
-    })
-
+      pracas: this.formBuilder.array([]),
+    });
   }
+
+  adicionarPraca(praca: any) {
+    const formGroup = this.formBuilder.group({
+      pracaId: [praca.pracaLeilaoId],
+      valorLanceInicial: [null, Validators.required],
+      dataExecucao: [praca.dataExecucao],
+      numeroPraca: [praca.numeroPraca]
+    });
+
+    const pracasFormArray = this.formulario.get('pracas') as FormArray;
+    pracasFormArray.push(formGroup);
+  }
+
   ngOnInit() {
     forkJoin([
       this.restangular.one("lotecampo").get().pipe(),
@@ -141,14 +168,14 @@ export class CreateLotesComponent implements OnInit {
       this.restangular.one('local').get().pipe(),
       this.restangular.one('categoria').get().pipe(),
       this.restangular.one('lotestatus').get().pipe(),
-      this.restangular.one("admin/leilao", this.id).get()
+      // this.restangular.one("admin/leilao", this.id).get()
     ]).subscribe((allResp: any[]) => {
       this.tipoFoto = allResp[2].data.filter(x => x.visivelSite);
       this.local = allResp[3].data;
       this.categorias = allResp[4].data;
 
       this.loteStatus = allResp[5].data;
-      this.leilao = allResp[6].data
+      // this.leilao = allResp[6].data
       this.categoriasFilhas = this.categorias.filter(categoria => categoria.categoriaPaiId === this.leilao.categoriaId);
       this.loteCampos = allResp[0].data.filter(x => x.categoriaId === this.leilao.categoriaId);
       this.tiposLote = allResp[1].data.filter(x => x.categoriaId === this.leilao.categoriaId);
@@ -162,6 +189,7 @@ export class CreateLotesComponent implements OnInit {
   }
 
   onSubmit() {
+    console.log(this.formulario.value)
     if(this.formulario.value.judicial == false){
       this.removeControls()
     }

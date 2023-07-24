@@ -17,7 +17,7 @@ import 'moment/locale/pt-br';
   templateUrl: './update-lotes.component.html',
   styleUrls: ['./update-lotes.component.scss']
 })
-export class UpdateLotesComponent implements OnInit, AfterContentInit  {
+export class UpdateLotesComponent implements OnInit  {
 
   @ViewChild('inputFotos') inputFotos: ElementRef;
   @ViewChild('inputAnexos') inputAnexos: ElementRef;
@@ -127,6 +127,33 @@ export class UpdateLotesComponent implements OnInit, AfterContentInit  {
     })
   }
 
+  adicionarPraca(praca: any) {
+    const formGroup = this.formBuilder.group({
+      pracaId: [praca.praca.pracaLeilaoId],
+      valorLanceInicial: [praca.valorLanceInicial, Validators.required],
+      dataExecucao: [moment(praca.praca.dataExecucao).format('DD/MM/YYYY')],
+      numeroPraca: [praca.praca.numeroPraca]
+    });
+
+    
+    const pracasFormArray = this.formulario.get('pracas') as FormArray;
+    pracasFormArray.push(formGroup);
+    console.log(pracasFormArray, 'pracasFormArray')
+  }
+
+  adicionarPracaLeilao(praca: any){
+    const formGroup = this.formBuilder.group({
+      pracaId: [praca.pracaLeilaoId],
+      valorLanceInicial: [null, Validators.required],
+      dataExecucao: [moment(praca.dataExecucao).format('DD/MM/YYYY')],
+      numeroPraca: [praca.numeroPraca]
+    });
+
+    const pracasFormArray = this.formulario.get('pracas') as FormArray;
+    pracasFormArray.push(formGroup);
+    console.log(pracasFormArray, 'pracasFormArray')
+  }
+
   ngOnInit() {
     this.id = this.route.snapshot.params['id'];
 
@@ -138,7 +165,8 @@ export class UpdateLotesComponent implements OnInit, AfterContentInit  {
       this.restangular.one("lote", this.id).get().pipe(),
       this.restangular.one('categoria').get().pipe(),
       this.restangular.one('lotestatus').get().pipe(),
-      this.restangular.one("tabelafipe/tipos").get().pipe()
+      this.restangular.one("tabelafipe/tipos").get().pipe(),
+      this.restangular.one(`lote/${this.id}/pracaValores`).get().pipe()//8
     ]).subscribe((allResp: any[]) => {
       this.tipoFoto = allResp[2].data.filter(x => x.visivelSite);;
       this.local = allResp[3].data;
@@ -168,11 +196,29 @@ export class UpdateLotesComponent implements OnInit, AfterContentInit  {
           this.formulario.get('valorTaxaAdministrativa').enable();
           this.btnFaixa.nativeElement.disabled = false;
         }
+
+        this.formulario.get("judicial").patchValue(this.leilao.tipoLeilaoId == 1);
+        let pracas = allResp[8].data;
+
+        console.log(pracas, 'pracas')
+
+        if(pracas.length == 0){
+          pracas = this.leilao.pracas.map(praca => { return {...praca, dataExecucao: moment(praca.dataExecucao).format('DD/MM/YYYY')}});
+
+          pracas.forEach(praca => {
+            this.adicionarPracaLeilao(praca);
+          });
+        }else{
+          pracas.forEach(praca => {
+            this.adicionarPraca(praca);
+          });
+        }
       })
     });
   }
 
   onSubmit() {
+    console.log(this.formulario.value)
     if (this.formulario.value.judicial == false) {
       this.removeControls()
     }
@@ -382,6 +428,7 @@ export class UpdateLotesComponent implements OnInit, AfterContentInit  {
       fotos: this.formBuilder.array(fotos ? fotos.map(x => this.formBuilder.group({ ...x, acao: '' })) : [], Validators.required),
       tipoTaxa: [dados.tipoTaxa],
       faixas: this.formBuilder.array(dados.faixas ? dados.faixas.map(x => this.formBuilder.group({ ...x })) : []),
+      pracas: this.formBuilder.array([]),
     })
 
     console.log(this.formulario.value)

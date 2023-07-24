@@ -137,6 +137,19 @@
               </div>
             </div>
 
+            <div [formGroup]="formulario">
+              <p>Praças - Valor do Lance Inicial</p>
+              <div formArrayName="pracas">
+                <div class="" *ngFor="let item of formulario.get('pracas').controls; let i = index" [formGroupName]="i">
+                  <div class="input-group" [class.no-margin-top]="i === 0">
+                    <div class="input-group-prepend">
+                      <span class="input-group-text">{{item.value.numeroPraca}}ª Praça <small class="ml-2">{{item.value.dataExecucao}}</small></span>
+                    </div>
+                    <input type="text" class="form-control"  [id]="'pracaValorInicial-' + i" formControlName="valorLanceInicial" placeholder="Valor do Lance Inicial">
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -239,19 +252,24 @@
                   </div>
                   <div class="card-block" *ngIf="this.formulario.value.faixas.length > 0">
                     <table class="table">
-                      <thead style="position: relative;">
+                      <thead>
                         <tr>
                           <th width="30%">Faixa Inicial</th>
                           <th width="30%">Faixa Final</th>
-                          <th width="30%">Valor Da Taxa</th>
+                          <th width="30%">
+                            <div class="row align-end gap-1">
+                              <p class="no-margin">Valor Da Taxa</p>
+                              <div [formGroup]="formulario" style="width: 60px;">
+                                <select class="form-control" formControlName="tipoTaxa" id="tipoTaxa" >
+                                  <option value="P">%</option>
+                                  <option value="V" [defaultSelected]="">$</option>
+                                </select>
+                              </div>
+                            </div>
+                          </th>
                           <th width="10%"></th>
                         </tr>
-                        <div [formGroup]="formulario" style="position: absolute; right: 243.1px; top: 5px;">
-                            <select class="form-control" formControlName="tipoTaxa" id="tipoTaxa" >
-                              <option value="P">%</option>
-                              <option value="V" [defaultSelected]="">$</option>
-                            </select>
-                        </div>
+                        
                       </thead>
                       <tbody>
                         <tr *ngFor="let item of this.formulario.get('faixas').controls; let i = index" [formGroupName]="i">

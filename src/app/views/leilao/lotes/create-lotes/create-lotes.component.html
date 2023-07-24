@@ -81,25 +81,24 @@
               </div>
               <div class="form-group col-4">
                 <label for="reu">Réu </label>
-                <input type="text" class="form-control" id="reu" placeholder="Réu" formControlName="reu"
-                  >
+                <input type="text" class="form-control" id="reu" placeholder="Réu" formControlName="reu"/>
               </div>
             </div>
 
             <div class="row">
               <div class="form-group col-4">
                 <label for="depositario">Depositário </label>
-                <input type="text" class="form-control" [ngClass]="aplicaCssErro('depositario')" id="depositario" placeholder="Depositário"
+                <input type="text" class="form-control"  id="depositario" placeholder="Depositário"
                   formControlName="depositario" >
               </div>
               <div class="form-group col-4">
                 <label for="localDepositario">Local Depositário </label>
-                <input type="text" class="form-control" [ngClass]="aplicaCssErro('localDepositario')" id="localDepositario" placeholder="Local Depositário"
+                <input type="text" class="form-control" id="localDepositario" placeholder="Local Depositário"
                   formControlName="localDepositario" >
               </div>
               <div class="form-group col-4">
                 <label for="anoProcesso">Ano do Processo </label>
-                <input type="text" class="form-control" [ngClass]="aplicaCssErro('anoProcesso')" id="anoProcesso" placeholder="Ano do Processo"
+                <input type="text" class="form-control"  id="anoProcesso" placeholder="Ano do Processo"
                   formControlName="anoProcesso" >
               </div>
 
@@ -108,25 +107,24 @@
             <div class="row">
               <div class="form-group col-4">
                 <label for="tipoAcao">Tipo de Ação </label>
-                <input type="text" class="form-control" [ngClass]="aplicaCssErro('tipoAcao')" id="tipoAcao" placeholder="Tipo de Ação"
+                <input type="text" class="form-control"  id="tipoAcao" placeholder="Tipo de Ação"
                   formControlName="tipoAcao" >
               </div>
               <div class="form-group col-4">
                 <label for="comarca">Comarca </label>
-                <input type="text" class="form-control" [ngClass]="aplicaCssErro('comarca')" id="comarca" placeholder="Comarca" formControlName="comarca"
+                <input type="text" class="form-control"  id="comarca" placeholder="Comarca" formControlName="comarca"
                   >
               </div>
               <div class="form-group col-4">
                 <label for="natureza">Natureza </label>
-                <input type="text" class="form-control" [ngClass]="aplicaCssErro('natureza')" id="natureza" placeholder="Natureza" formControlName="natureza"
+                <input type="text" class="form-control"  id="natureza" placeholder="Natureza" formControlName="natureza"
                   >
               </div>
-
             </div>
             <div class="row">
-              <div class="form-group col-4 checkbox">
-                <label class="checkbox-inline">Recursos</label>
-                <input type="checkbox" formControlName="recursos">
+              <div class="col-4">
+                <label for="check-recursos">Recursos</label>
+                <input class="ml-1" id="check-recursos" type="checkbox" formControlName="recursos">
               </div>
               <div class="form-group col-4 checkbox" *ngIf="formulario.value.loteJudicial.recursos == true">
                 <label class="checkbox-inline">Recurso Pendente</label>
@@ -134,6 +132,19 @@
               </div>
             </div>
 
+            <div class="" [formGroup]="formulario">
+              <p>Praças - Valor do Lance Inicial</p>
+              <div formArrayName="pracas">
+                <div class="" *ngFor="let item of formulario.get('pracas').controls; let i = index" [formGroupName]="i">
+                  <div class="input-group" [class.no-margin-top]="i === 0">
+                    <div class="input-group-prepend">
+                      <span class="input-group-text">{{item.value.numeroPraca}}ª Praça <small class="ml-2">{{item.value.dataExecucao}}</small></span>
+                    </div>
+                    <input type="text" class="form-control"  [id]="'pracaValorInicial-' + i" formControlName="valorLanceInicial" placeholder="Valor do Lance Inicial">
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -223,19 +234,23 @@
                   </div>
                   <div class="card-block" *ngIf="this.formulario.value.faixas.length > 0">
                     <table class="table">
-                      <thead style="position: relative;">
+                      <thead>
                         <tr>
                           <th width="30%">Faixa Inicial</th>
                           <th width="30%">Faixa Final</th>
-                          <th width="30%">Valor Da Taxa</th>
+                          <th width="30%">
+                            <div class="row align-end gap-1">
+                              <p class="no-margin">Valor Da Taxa</p>
+                              <div [formGroup]="formulario" style="width: 60px;">
+                                <select class="form-control" formControlName="tipoTaxa" id="tipoTaxa" >
+                                  <option value="P">%</option>
+                                  <option value="V" [defaultSelected]="">$</option>
+                                </select>
+                              </div>
+                            </div>
+                          </th>
                           <th width="10%"></th>
                         </tr>
-                        <div [formGroup]="formulario" style="position: absolute; right: 243.1px; top: 5px;">
-                            <select class="form-control" formControlName="tipoTaxa" id="tipoTaxa" >
-                              <option value="P">%</option>
-                              <option value="V" [defaultSelected]="">$</option>
-                            </select>
-                        </div>
                       </thead>
                       <tbody>
                         <tr *ngFor="let item of this.formulario.get('faixas').controls; let i = index" [formGroupName]="i">
