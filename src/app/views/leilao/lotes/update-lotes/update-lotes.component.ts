@@ -484,21 +484,20 @@ export class UpdateLotesComponent implements OnInit  {
   }
 
   criarCampoJudicial() {
-
-
     return {
       loteJudicialId: 0,
       numProcesso: null,
       autor: null,
       reu: null,
-      depositario: null,
+      advogados: null,
       localDepositario: null,
       recursoPendente: false,
       anoProcesso: null,
       tipoAcao: null,
       recursos: false,
       comarca: null,
-      natureza: null
+      natureza: null,
+      juiz: null
     }
   }
   removeControls() {
