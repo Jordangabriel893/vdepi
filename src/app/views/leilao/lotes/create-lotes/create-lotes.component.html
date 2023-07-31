@@ -70,14 +70,14 @@
           <div class="card-block" formGroupName="loteJudicial" *ngIf="formulario.value.judicial == true">
             <div class="row">
               <div class="form-group col-4">
-                <label for="numProcesso">Nº Processo </label>
-                <input type="number" class="form-control" id="numProcesso" placeholder="Nº Processo"
-                  formControlName="numProcesso" >
-              </div>
-              <div class="form-group col-4">
                 <label for="autor">Autor </label>
                 <input type="text" class="form-control" id="autor" placeholder="Autor" formControlName="autor"
-                 >
+                  >
+              </div>
+              <div class="form-group col-4">
+                <label for="numProcesso">Nº Processo </label>
+                <input type="number" class="form-control" id="numProcesso" placeholder="Nº Processo"
+                  formControlName="numProcesso"  >
               </div>
               <div class="form-group col-4">
                 <label for="reu">Réu </label>
@@ -88,45 +88,69 @@
 
             <div class="row">
               <div class="form-group col-4">
-                <label for="depositario">Depositário </label>
-                <input type="text" class="form-control" [ngClass]="aplicaCssErro('depositario')" id="depositario" placeholder="Depositário"
-                  formControlName="depositario" >
-              </div>
-              <div class="form-group col-4">
                 <label for="localDepositario">Local Depositário </label>
-                <input type="text" class="form-control" [ngClass]="aplicaCssErro('localDepositario')" id="localDepositario" placeholder="Local Depositário"
+                <input type="text" class="form-control" id="localDepositario" placeholder="Local Depositário"
                   formControlName="localDepositario" >
               </div>
               <div class="form-group col-4">
                 <label for="anoProcesso">Ano do Processo </label>
-                <input type="text" class="form-control" [ngClass]="aplicaCssErro('anoProcesso')" id="anoProcesso" placeholder="Ano do Processo"
+                <input type="text" class="form-control" id="anoProcesso" placeholder="Ano do Processo"
                   formControlName="anoProcesso" >
               </div>
-
+              <div class="form-group col-4">
+                <label for="depositario">Advogados</label>
+                <input type="text" class="form-control" id="advogados" placeholder="Advogados"
+                  formControlName="advogados"  >
+              </div>
             </div>
 
             <div class="row">
               <div class="form-group col-4">
                 <label for="tipoAcao">Tipo de Ação </label>
-                <input type="text" class="form-control" [ngClass]="aplicaCssErro('tipoAcao')" id="tipoAcao" placeholder="Tipo de Ação"
-                  formControlName="tipoAcao" >
+                <select  class="form-control"  id="tipoAcao" placeholder="Tipo de Ação" formControlName="tipoAcao" >
+                  <option value="15">ALIENAÇÃO JUDICIAL CRIMINAL</option>
+                  <option value="6">ALENAÇÃO DE BENS JUDICIAL</option>
+                  <option value="4">CARTA PRECATÓRIA</option>
+                  <option value="3">CIVEL</option>
+                  <option value="19">COBRANÇA</option>
+                  <option value="12">CUMPRIMENTO DE SETENÇA</option>
+                  <option value="11">DANO MORAL</option>
+                  <option value="22">DESPEJO POR FALTA DE PAGAMENTO C/ COBRANÇA</option>
+                  <option value="23">EDITAL DE PÚBLICO LEILÃO PRESENCIAL E INTIMAÇÃO</option>
+                  <option value="8">EXECUÇÃO DE SENTENÇA</option>
+                  <option value="9">EXECUÇÃO DE TÍTULO EXTRANDICIAL</option>
+                  <option value="2">EXECUÇÃO DE TÍTULO JUDICIAL</option>
+                  <option value="14">EXECUÇÃO FISCAL</option>
+                  <option value="16">FALÊNCIA</option>
+                  <option value="20">INDENIZATÓRIA</option>
+                  <option value="21">INVENTÁRIO E PARTILHA</option>
+                  <option value="10">MONITORIA</option>
+                  <option value="5">PARTILHA DE BENS C/C ALIENAÇÃO JUDICIAL</option>
+                  <option value="13">SEQUESTRO</option>
+                  <option value="1">SUMÁRIA DE COBRANÇA</option>
+                </select>
               </div>
               <div class="form-group col-4">
-                <label for="comarca">Comarca </label>
-                <input type="text" class="form-control" [ngClass]="aplicaCssErro('comarca')" id="comarca" placeholder="Comarca" formControlName="comarca"
+                <label for="comarca">Comarca</label>
+                <input type="text" class="form-control" id="comarca" placeholder="Comarca" formControlName="comarca"
                   >
               </div>
               <div class="form-group col-4">
                 <label for="natureza">Natureza </label>
-                <input type="text" class="form-control" [ngClass]="aplicaCssErro('natureza')" id="natureza" placeholder="Natureza" formControlName="natureza"
-                  >
+                <input type="text" class="form-control" id="natureza" placeholder="Natureza" formControlName="natureza"/>
               </div>
+            </div>
 
+            <div class="row">
+              <div class="form-group col-4">
+                <label for="observacao">Juiz </label>
+                <input type="text" class="form-control" id="juiz" formControlName="juiz" placeholder="Juiz"/>
+              </div>
             </div>
             <div class="row">
-              <div class="form-group col-4 checkbox">
-                <label class="checkbox-inline">Recursos</label>
-                <input type="checkbox" formControlName="recursos">
+              <div class="col-4">
+                <label for="check-recursos">Recursos</label>
+                <input class="ml-1" id="check-recursos" type="checkbox" formControlName="recursos">
               </div>
               <div class="form-group col-4 checkbox" *ngIf="formulario.value.loteJudicial.recursos == true">
                 <label class="checkbox-inline">Recurso Pendente</label>
@@ -134,6 +158,19 @@
               </div>
             </div>
 
+            <div class="" [formGroup]="formulario">
+              <p>Praças - Valor do Lance Inicial</p>
+              <div formArrayName="pracas">
+                <div class="" *ngFor="let item of formulario.get('pracas').controls; let i = index" [formGroupName]="i">
+                  <div class="input-group" [class.no-margin-top]="i === 0">
+                    <div class="input-group-prepend">
+                      <span class="input-group-text">{{item.value.numeroPraca}}ª Praça <small class="ml-2">{{item.value.dataExecucao}}</small></span>
+                    </div>
+                    <input type="text" class="form-control"  [id]="'pracaValorInicial-' + i" formControlName="valorLanceInicial" placeholder="Valor do Lance Inicial">
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -167,7 +204,7 @@
               </div>
               <div class="form-group col-4">
                 <label for="valorIncremento">Valor Incremento </label>
-                <input type="text" class="form-control" [ngClass]="aplicaCssErro('valorIncremento')" id="valorIncremento" formControlName="valorIncremento"
+                <input #btnFaixaIncremento type="text" class="form-control" [ngClass]="aplicaCssErro('valorIncremento')" id="valorIncremento" formControlName="valorIncremento"
                   currencyMask [options]="{ prefix: 'R$ ', thousands: '.', decimal: ',' }">
               </div>
             </div>
@@ -177,23 +214,141 @@
                 <input type="text" class="form-control" [ngClass]="aplicaCssErro('valorMinimoVenda')" id="valorMinimoVenda" formControlName="valorMinimoVenda"
                   currencyMask [options]="{ prefix: 'R$ ', thousands: '.', decimal: ',' }">
               </div>
-              <div class="form-group col-4">
+              <!-- <div class="form-group col-4">
                 <label for="valorTaxaAdministrativa">Valor da Taxa Administrativa </label>
                 <input type="text" class="form-control" [ngClass]="aplicaCssErro('valorTaxaAdministrativa')" id="valorTaxaAdministrativa"
                   formControlName="valorTaxaAdministrativa" currencyMask
                   [options]="{ prefix: 'R$ ', thousands: '.', decimal: ',' }">
-              </div>
+              </div> -->
+              
               <div class="form-group col-4">
                 <label for="valorOutrasTaxas">Valor de Outras Taxas</label>
                 <input type="text" class="form-control" [ngClass]="aplicaCssErro('valorOutrasTaxas')" id="valorOutrasTaxas" formControlName="valorOutrasTaxas"
                   currencyMask [options]="{ prefix: 'R$ ', thousands: '.', decimal: ',' }">
               </div>
+
+              <div class="col-4">
+                <label for="valorOutrasTaxas">Taxa Administrativa</label>
+                <div class="fix-margin-input input-group">
+                  <div class="input-group-prepend" dropdown >
+                    <button #btnFaixa id="btnTaxa" class="btn btn-success dropdown-toggle" type="button" data-toggle="dropdown" aria-expanded="false" dropdownToggle title="Tipo da Taxa">
+                      <h5 *ngIf="formulario.get('tipoTaxa')?.value === 'P'" class="m-0 float-left">%</h5>
+                      <h5 *ngIf="formulario.get('tipoTaxa')?.value === 'V'" class="m-0 float-left">$</h5>
+                      <span class="caret"></span>
+                    </button>
+                    <div class="dropdown-menu" *dropdownMenu style="margin: 0px;">
+                      <a class="dropdown-item" href="javascript:void(0);" (click)="selecionarTipoTaxa('P')">
+                        <i class="fa fa-percent"></i> Percentual
+                      </a>
+                      <a class="dropdown-item" href="javascript:void(0);" (click)="selecionarTipoTaxa('V')">
+                        <i class="fa fa-dollar-sign"></i> Valor
+                      </a>
+                    </div>
+                  </div>
+                  <input  type="text" class="form-control" formControlName="valorTaxaAdministrativa" currencyMask [options]="{  prefix: '', suffix: ' %', thousands: '.', decimal: ',', precision: '2' }" *ngIf="formulario.get('tipoTaxa')?.value === 'P'">
+                  <input  type="text" class="form-control" formControlName="valorTaxaAdministrativa" currencyMask [options]="{  prefix: 'R$ ', suffix: '', thousands: '.', decimal: ',', precision: '2' }" *ngIf="formulario.get('tipoTaxa')?.value === 'V'">
+                </div>
+              </div>
             </div>
-          </div>
+            <div class="row" formArrayName="faixas">
+              <div class="col-lg-12">
+                <div class="card">
+                  <div class="card-header new-campo">
+                    <div class="cabecalho d-flex align-items-center"><input type="checkbox"  (change)="changeCheckBoxFaixa()"/>&nbsp;Editar Valor da Taxa Por Valor de Lance</div>
+                    <button [disabled]="!taxaFaixa" type="button" class="btn btn-success btn-sm" (click)="adicionarFaixa()">
+                      <i class="fa fa-plus-circle"></i>&nbsp;Adicionar Faixa</button>
+                  </div>
+                  <div class="card-block" *ngIf="this.formulario.value.faixas.length > 0">
+                    <table class="table">
+                      <thead>
+                        <tr>
+                          <th width="30%">Faixa Inicial</th>
+                          <th width="30%">Faixa Final</th>
+                          <th width="30%">
+                            <div class="row align-end gap-1">
+                              <p class="no-margin">Valor Da Taxa</p>
+                              <div [formGroup]="formulario" style="width: 60px;">
+                                <select class="form-control" formControlName="tipoTaxa" id="tipoTaxa" >
+                                  <option value="P">%</option>
+                                  <option value="V" [defaultSelected]="">$</option>
+                                </select>
+                              </div>
+                            </div>
+                          </th>
+                          <th width="10%"></th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr *ngFor="let item of this.formulario.get('faixas').controls; let i = index" [formGroupName]="i">
+                          <td>
+                            <input [ngClass]="aplicaCssErroLista('faixas','faixaInicial', i)" type="number" formControlName="faixaInicial" class="form-control" [value]="item.value.faixaInicial"
+                              placeholder="Faixa Inicial">
+                          </td>
+                          <td>
+                            <input [ngClass]="aplicaCssErroLista('faixas','faixaFinal', i)" type="number" formControlName="faixaFinal" class="form-control" [value]="item.value.faixaFinal"
+                              placeholder="Faixa Final">
+                          </td>
+                          <td>
+                            <input [ngClass]="aplicaCssErroLista('faixas','valorTaxaAdministrativa', i)"  type="text" class="form-control" formControlName="valorTaxaAdministrativa" currencyMask [options]="{  prefix: '', suffix: ' %', thousands: '.', decimal: ',', precision: '2' }" *ngIf="formulario.get('tipoTaxa')?.value === 'P'">
+                            <input [ngClass]="aplicaCssErroLista('faixas','valorTaxaAdministrativa', i)"  type="text" class="form-control" formControlName="valorTaxaAdministrativa" currencyMask [options]="{  prefix: 'R$ ', suffix: '', thousands: '.', decimal: ',', precision: '2' }" *ngIf="formulario.get('tipoTaxa')?.value === 'V'">
+                          </td>
+                          <td class="text-center">
+                            <label class="btn btn-danger m-0" (click)="deleteFaixa(i)">Remover</label>
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="row" formArrayName="faixasIncremento">
+              <div class="col-lg-12">
+                <div class="card">
+                  <div class="card-header new-campo">
+                    <div class="cabecalho d-flex align-items-center"><input type="checkbox"  (change)="changeCheckBoxFaixaIncremento()"/>&nbsp;Editar Valor do Incremento Por Valor de Lance</div>
+                    <button [disabled]="!faixasIncremento" type="button" class="btn btn-success btn-sm" (click)="adicionarFaixaIncremento()">
+                      <i class="fa fa-plus-circle"></i>&nbsp;Adicionar Faixa</button>
+                  </div>
+                  <div class="card-block" *ngIf="this.formulario.value.faixasIncremento.length > 0">
+                    <table class="table">
+                      <thead>
+                        <tr>
+                          <th width="30%">Faixa Inicial</th>
+                          <th width="30%">Faixa Final</th>
+                          <th width="30%">Valor do incremento</th>
+                          <th width="10%"></th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr *ngFor="let item of this.formulario.get('faixasIncremento').controls; let i = index" [formGroupName]="i">
+                          <td>
+                            <input [ngClass]="aplicaCssErroLista('faixasIncremento','faixaInicial', i)" type="number" formControlName="faixaInicial" class="form-control" [value]="item.value.faixaInicial"
+                              placeholder="Faixa Inicial">
+                          </td>
+                          <td>
+                            <input [ngClass]="aplicaCssErroLista('faixasIncremento','faixaFinal', i)" type="number" formControlName="faixaFinal" class="form-control" [value]="item.value.faixaFinal"
+                              placeholder="Faixa Final">
+                          </td>
+                          <td>
+                            <input [ngClass]="aplicaCssErroLista('faixasIncremento','valorIncremento', i)"  type="text" class="form-control" formControlName="valorIncremento" currencyMask [options]="{  prefix: 'R$ ', suffix: '', thousands: '.', decimal: ',', precision: '2' }">
+                          </td>
+                          <td class="text-center">
+                            <label class="btn btn-danger m-0" (click)="deleteFaixaIncremento(i)">Remover</label>
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div> 
         </div>
       </div>
     </div>
   </div>
+  
 
 
   <div class="animated fadeIn">

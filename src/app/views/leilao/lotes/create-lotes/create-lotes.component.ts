@@ -37,6 +37,9 @@ export class CreateLotesComponent implements OnInit {
   tipoFoto: any
   fileToUpload: File | null = null;
   codigoComum:boolean = true
+  taxaFaixa: boolean = false 
+  faixasIncremento: boolean = false
+
   //fotos
   fotosbase64: any
   fotosnome: any
@@ -86,9 +89,23 @@ export class CreateLotesComponent implements OnInit {
     private formBuilder: FormBuilder,
     private notifierService: NotifierService
   ) {
+
     this.id = this.route.snapshot.params['id'];
     this.leilaoId = this.id;
 
+    this.restangular.one("admin/leilao", this.id).get().subscribe((leilao: any) => {
+      this.leilao = leilao.data;
+      this.formulario.get("judicial").patchValue(this.leilao.tipoLeilaoId == 1);
+      const pracas = leilao.data.pracas.map(praca => { return {...praca, dataExecucao: moment(praca.dataExecucao).format('DD/MM/YYYY')}});
+
+      pracas.forEach(praca => {
+        this.adicionarPraca(praca);
+      });
+
+      var pracasForm = this.formulario.get('pracas') as FormArray;
+
+    });
+    
     this.formulario = this.formBuilder.group({
       loteId:[0],
       descricao: [null, Validators.required],
@@ -103,7 +120,8 @@ export class CreateLotesComponent implements OnInit {
       valorMinimoVenda: [null, Validators.required],
       valorAvaliacao: [null, Validators.required],
       valorIncremento: [null, Validators.required],
-      valorTaxaAdministrativa: [0],
+      valorTaxaAdministrativa: [{value: null, disabled: this.taxaFaixa}],
+      tipoTaxa: ['V'],
       valorOutrasTaxas: [0],
       observacao: [],
       judicial: [false],
@@ -112,23 +130,39 @@ export class CreateLotesComponent implements OnInit {
         numProcesso:[null],
         autor:[null],
         reu: [null],
-        depositario:[null],
+        advogados:[null],
         localDepositario:[null],
         recursoPendente: [false],
         anoProcesso:[null],
         tipoAcao: [null],
         recursos:[false],
         comarca:[null],
-        natureza:[null]
+        natureza:[null],
+        juiz: [null],
       }),
       loteJudicialId: [null],
       tipoLoteId: [null, Validators.required],
       campos: this.formBuilder.array([], Validators.required),
       anexos: this.formBuilder.array([]),
-      fotos: this.formBuilder.array([], Validators.required)
-    })
-
+      fotos: this.formBuilder.array([], Validators.required),
+      faixas: this.formBuilder.array([]),
+      pracas: this.formBuilder.array([]),
+      faixasIncremento: this.formBuilder.array([]),
+    });
   }
+
+  adicionarPraca(praca: any) {
+    const formGroup = this.formBuilder.group({
+      pracaId: [praca.pracaLeilaoId],
+      valorLanceInicial: [null, Validators.required],
+      dataExecucao: [praca.dataExecucao],
+      numeroPraca: [praca.numeroPraca]
+    });
+
+    const pracasFormArray = this.formulario.get('pracas') as FormArray;
+    pracasFormArray.push(formGroup);
+  }
+
   ngOnInit() {
     forkJoin([
       this.restangular.one("lotecampo").get().pipe(),
@@ -137,14 +171,14 @@ export class CreateLotesComponent implements OnInit {
       this.restangular.one('local').get().pipe(),
       this.restangular.one('categoria').get().pipe(),
       this.restangular.one('lotestatus').get().pipe(),
-      this.restangular.one("admin/leilao", this.id).get()
+      // this.restangular.one("admin/leilao", this.id).get()
     ]).subscribe((allResp: any[]) => {
       this.tipoFoto = allResp[2].data.filter(x => x.visivelSite);
       this.local = allResp[3].data;
       this.categorias = allResp[4].data;
 
       this.loteStatus = allResp[5].data;
-      this.leilao = allResp[6].data
+      // this.leilao = allResp[6].data
       this.categoriasFilhas = this.categorias.filter(categoria => categoria.categoriaPaiId === this.leilao.categoriaId);
       this.loteCampos = allResp[0].data.filter(x => x.categoriaId === this.leilao.categoriaId);
       this.tiposLote = allResp[1].data.filter(x => x.categoriaId === this.leilao.categoriaId);
@@ -158,6 +192,7 @@ export class CreateLotesComponent implements OnInit {
   }
 
   onSubmit() {
+    console.log(this.formulario.value)
     if(this.formulario.value.judicial == false){
       this.removeControls()
     }
@@ -427,4 +462,82 @@ export class CreateLotesComponent implements OnInit {
     return formatacao;
   }
 
+  onValueChangeFaixa(event, campo, i){
+    let faixasForm = this.formulario.get('faixas') as FormArray
+    let faixa = faixasForm.at(i) as FormGroup;
+    faixa.controls[campo].markAsTouched();
+    faixa.controls[campo].setValue(event);
+  }
+
+  selecionarTipoTaxa(tipo: string) {
+    this.formulario.get('tipoTaxa').setValue(tipo);
+  }
+
+  adicionarFaixa(){
+    let faixas = this.formulario.get('faixas') as FormArray
+    faixas.push(this.formBuilder.group({
+      faixaInicial: [null, Validators.required],
+      faixaFinal: [null, Validators.required],
+      valorTaxaAdministrativa: [null, Validators.required],
+    }));
+  }
+
+  deleteFaixa(index: number) {
+    let faixas = this.formulario.controls['faixas'] as FormArray;
+    faixas.removeAt(index)
+  }
+
+  @ViewChild('btnFaixa') btnFaixa!: ElementRef;
+
+  changeCheckBoxFaixa(){
+    if(this.taxaFaixa){
+      this.formulario.get('valorTaxaAdministrativa').enable();
+      this.btnFaixa.nativeElement.disabled = false;
+    }else{
+      this.formulario.get('valorTaxaAdministrativa').disable();
+      this.btnFaixa.nativeElement.disabled = true;
+    }
+
+    this.taxaFaixa = !this.taxaFaixa;
+  }
+
+  //#region Faixa Incremento
+
+  onValueChangeFaixaIncremento(event, campo, i){
+    let faixasIncrementoForm = this.formulario.get('faixasIncremento') as FormArray
+    let faixaIncremento = faixasIncrementoForm.at(i) as FormGroup;
+    faixaIncremento.controls[campo].markAsTouched();
+    faixaIncremento.controls[campo].setValue(event);
+  }
+
+  adicionarFaixaIncremento(){
+    let faixasIncremento = this.formulario.get('faixasIncremento') as FormArray
+    faixasIncremento.push(this.formBuilder.group({
+      faixaInicial: [null, Validators.required],
+      faixaFinal: [null, Validators.required],
+      valorIncremento: [null, Validators.required],
+    }));
+  }
+
+  deleteFaixaIncremento(index: number) {
+    let faixasIncremento = this.formulario.controls['faixasIncremento'] as FormArray;
+    faixasIncremento.removeAt(index)
+  }
+
+  @ViewChild('btnFaixaIncremento') btnFaixaIncremento!: ElementRef;
+
+  changeCheckBoxFaixaIncremento(){
+    if(this.faixasIncremento){
+      this.formulario.get('valorIncremento').enable();
+      this.btnFaixaIncremento.nativeElement.disabled = false;
+    }else{
+      this.formulario.get('valorIncremento').disable();
+      this.btnFaixaIncremento.nativeElement.disabled = true;
+    }
+
+    this.faixasIncremento = !this.faixasIncremento;
+
+  }
+
+  //#endregion
 }
