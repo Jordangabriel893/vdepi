@@ -24,8 +24,7 @@ export class EditDocumentoTemplateComponent implements OnInit {
   formulario: FormGroup;
   designJson;
   options = {
-    displayMode: "web",
-    devices: ["desktop"],
+    displayMode: "email",
     features: {
       textEditor: {
         tables: true,
