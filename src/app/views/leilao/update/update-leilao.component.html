@@ -119,6 +119,13 @@
                       <option [value]="false">Não</option>
                     </select>
                   </div>
+                  <div class="form-group col-6">
+                    <label for="tipoLeilaoId">Tipo do Leilão</label>
+                    <select class="form-control" [ngClass]="aplicaCssErro('tipoLeilaoId')" formControlName="tipoLeilaoId" >
+                      <option *ngFor="let item of tiposLeilao" value="{{item.tipoLeilaoId}}">{{item.descricao}}
+                      </option>
+                    </select>
+                  </div>
                 </div>
               </div>
               <div class="col-4" formGroupName="foto">
@@ -334,6 +341,89 @@
                 </tr>
               </tbody>
             </table>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div *ngIf="formulario.get('tipoLeilaoId').value == 1"  class="card">
+      <div class="card-header new-campo">
+        <div class="cabecalho d-flex align-items-center">
+          <i class="fas fa-gavel"></i>&nbsp;Judicial
+        </div>
+        <div class="form-check">
+          <label class="form-check-label">
+            <input class="form-check-input" type="checkbox" formControlName="lanceParcelado" (click)="atualizaValidacaoConfiguracaoParcela()">
+            Lance Parcelado
+          </label>
+        </div>
+      </div>
+      <div class="card-block">
+
+        <div formGroupName="configuracaoParcela" class="row" *ngIf="formulario.get('lanceParcelado').value">
+          <div class="form-group col-4">
+            <label for="minimoEntrada">Mínimo Entrada </label>
+            <input [ngClass]="aplicaCssErroJudicial(formulario.get('configuracaoParcela'),'minimoEntrada')" type="number" class="form-control"  id="minimoEntrada" placeholder="12" formControlName="minimoEntrada" >
+          </div>
+
+          <div class="form-group col-4">
+            <label for="maximoParcelas">Maximo Parcelas </label>
+            <input [ngClass]="aplicaCssErroJudicial(formulario.get('configuracaoParcela'),'maximoParcelas')" type="number" class="form-control"  id="maximoParcelas" placeholder="2" formControlName="maximoParcelas" >
+          </div>
+
+          <div class="form-group col-4">
+            <label for="regraHabilitacao">Indice Correçao</label>
+            <ng-select [items]="indicesCorrecao" formControlName="indiceCorrecaoId" [multiple]="true" bindLabel="descricao" bindValue="indiceCorrecaoId">
+              <ng-template ng-option-tmp let-item="item" let-index="index" let-search="searchTerm">
+                  <div style="margin: 10px 0; white-space: normal;" class="card" >
+                      <div class="card-body">
+                          <h5 class="card-title" [ngOptionHighlight]="search">{{item.descricao}}</h5>
+                          <p>{{item.indiceCorrecao}}%</p>
+                      </div>
+                  </div>
+              </ng-template>
+            </ng-select>
+          </div>
+        </div>
+
+        <div class="row" formArrayName="pracas">
+          <div class="col-lg-12">
+            <div class="card">
+              <div class="card-header new-campo">
+                <div class="cabecalho d-flex align-items-center">Praças</div>
+                <button type="button" class="btn btn-success btn-sm" (click)="adicionarPraca()">
+                  <i class="fa fa-plus-circle"></i>&nbsp;Nova Praça</button>
+              </div>
+              <div class="card-block" *ngIf="this.formulario.value.pracas.length > 0">
+                <table class="table">
+                  <thead>
+                    <tr>
+                      <th width="40%">Numero da Praça</th>
+                      <th width="40%">Data de Execuçao</th>
+                      <th width="20%"></th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr *ngFor="let item of this.formulario.get('pracas').controls; let i = index" [formGroupName]="i">
+                      <td>
+                        <!-- <input type="text" formControlName="numeroPraca" class="form-control" [value]="item.value.numeroPraca"
+                          placeholder="Numero da praça"> -->
+                          {{i+1}}ª Praça 
+                      </td>
+                      <td>
+                        <input type="text" class="form-control" id="dataExecucao"
+                          formControlName="dataExecucao"
+                          [bsConfig]="{ dateInputFormat: 'DD/MM/YYYY' }"
+                          bsDatepicker
+                          (bsValueChange)="onValueChangePraca($event, 'dataExecucao', i)">
+                      </td>
+                      <td class="text-center">
+                        <label class="btn btn-danger m-0" (click)="deletePraca(i)">Remover</label>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
           </div>
         </div>
       </div>

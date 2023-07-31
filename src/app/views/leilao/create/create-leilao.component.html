@@ -360,23 +360,24 @@
       <div class="card-block">
 
         <div formGroupName="configuracaoParcela" class="row" *ngIf="formulario.get('lanceParcelado').value">
-          <div class="form-group col-6">
+          <div class="form-group col-4">
             <label for="minimoEntrada">Mínimo Entrada </label>
             <input [ngClass]="aplicaCssErroJudicial(formulario.get('configuracaoParcela'),'minimoEntrada')" type="number" class="form-control"  id="minimoEntrada" placeholder="12" formControlName="minimoEntrada" >
           </div>
 
-          <div class="form-group col-6">
+          <div class="form-group col-4">
             <label for="maximoParcelas">Maximo Parcelas </label>
             <input [ngClass]="aplicaCssErroJudicial(formulario.get('configuracaoParcela'),'maximoParcelas')" type="number" class="form-control"  id="maximoParcelas" placeholder="2" formControlName="maximoParcelas" >
           </div>
 
-          <div class="form-group col-6">
+          <div class="form-group col-4">
             <label for="regraHabilitacao">Indice Correçao</label>
             <ng-select [items]="indicesCorrecao" formControlName="indiceCorrecaoId" [multiple]="true" bindLabel="descricao" bindValue="indiceCorrecaoId">
               <ng-template ng-option-tmp let-item="item" let-index="index" let-search="searchTerm">
                   <div style="margin: 10px 0; white-space: normal;" class="card" >
                       <div class="card-body">
                           <h5 class="card-title" [ngOptionHighlight]="search">{{item.descricao}}</h5>
+                          <p>{{item.indiceCorrecao}}%</p>
                       </div>
                   </div>
               </ng-template>
@@ -396,21 +397,17 @@
                 <table class="table">
                   <thead>
                     <tr>
-                      <th width="30%">Numero da Praça</th>
-                      <th width="40%">Detalhe</th>
-                      <th width="15%">Data de Execuçao</th>
-                      <th width="15%"></th>
+                      <th width="40%">Numero da Praça</th>
+                      <th width="40%">Data de Execuçao</th>
+                      <th width="20%"></th>
                     </tr>
                   </thead>
                   <tbody>
                     <tr *ngFor="let item of this.formulario.get('pracas').controls; let i = index" [formGroupName]="i">
                       <td>
-                        <input type="text" formControlName="numeroPraca" class="form-control" [value]="item.value.numeroPraca"
-                          placeholder="Numero da praça">
-                      </td>
-                      <td>
-                        <input type="text" formControlName="detalhe" class="form-control" [value]="item.value.detalhe"
-                          placeholder="Descricao">
+                        <!-- <input type="text" formControlName="numeroPraca" class="form-control" [value]="item.value.numeroPraca"
+                          placeholder="Numero da praça"> -->
+                          {{i+1}}ª Praça 
                       </td>
                       <td>
                         <input type="text" class="form-control" id="dataExecucao"

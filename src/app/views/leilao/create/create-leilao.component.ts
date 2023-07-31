@@ -458,9 +458,9 @@ selectedHabilitacao ;
   adicionarPraca(){
     let pracas = this.formulario.get('pracas') as FormArray
     pracas.push(this.formBuilder.group({
-      numeroPraca: [null, Validators.required],
+      numeroPraca: [pracas.length + 1],
       dataExecucao: [null, Validators.required],
-      detalhe: [null, Validators.required],
+      detalhe: [null],
     }));
   }
 
