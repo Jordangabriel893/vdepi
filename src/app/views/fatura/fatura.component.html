@@ -232,6 +232,13 @@
                             >
                               <a class="dropdown-item">Bloquear Usuário</a>
                             </li>
+                            <li
+                              (click)="
+                                openModal(modal, item.faturaId)
+                              "
+                            >
+                              <a class="dropdown-item">Marcar como paga</a>
+                            </li>
                           </ul>
                         </div>
                       </td>
@@ -315,4 +322,29 @@
       </div>
     </div>
   </div>
+  <input type="file" #inputComprovante (change)="comprovanteChangeEvent($event.target.files)">
 </div>
+<ng-template #modal>
+  <div class="modal-header">
+    <h4 class="modal-title pull-left">Comprovante</h4>
+    <button
+      type="button"
+      class="btn-close close pull-right"
+      aria-label="Close"
+      (click)="modalRef?.hide()"
+    >
+      <span aria-hidden="true" class="visually-hidden">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <p>Faça upload do comprovante</p>
+    <div class="row p-3">
+      <button type="button"  class="btn btn-success" (click)="inputComprovanteClick()">
+        <i class="fa fa-plus-circle"></i>&nbsp;UPLOAD COMPROVANTE</button>
+      <div *ngIf="comprovante" class="ml-2">
+        <p>{{comprovante.nome}}</p>    
+      </div>
+    </div>
+    <button class="btn btn-success" (click)="marcarComoPaga()">Concluir</button>
+  </div>
+</ng-template>

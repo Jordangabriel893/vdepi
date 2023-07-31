@@ -22,3 +22,7 @@
 table td {
   vertical-align: top !important;
 }
+
+input[type="file"] {
+  display: none;
+}

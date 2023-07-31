@@ -19,7 +19,9 @@ import { tap, distinctUntilChanged, switchMap, catchError, filter, map } from 'r
   styleUrls: ['./create-fatura.component.scss']
 })
 export class CreateFaturaComponent implements OnInit, OnDestroy {
+  @ViewChild('inputGuias') inputGuias: ElementRef;
   valorQualquer = true;
+  guiaChecked = false;
   lotes;
   formulario: FormGroup
   loading
@@ -33,13 +35,13 @@ export class CreateFaturaComponent implements OnInit, OnDestroy {
     'Lote', 'Outro'
   ]
   modalRef: BsModalRef;
-  //anexos
-  anexosbase64: any
-  anexosnome: any
-  anexostamanho: any
-  anexostipo: any
-  numeroAdcAnexo: number
-  arrayAnexos = [];
+  //guias
+ guiasbase64: any
+ guiasnome: any
+ guiastamanho: any
+ guiastipo: any
+  numeroAdcGuia: number
+  arrayGuias = [];
   fileToUpload: File | null = null;
 
   leilao: any;
@@ -114,6 +116,19 @@ export class CreateFaturaComponent implements OnInit, OnDestroy {
     )
   }
 
+  verificaGuiaPagamentoIsCheck() {
+    const formulario = {...this.formulario.value}
+
+    const formasSelecionadas = formulario.formasPagamento
+      .map((checked, i) => checked ? this.formasPagamento[i].formaPagamentoId : null)
+      .filter(v => v !== null);
+
+    console.log(formasSelecionadas);
+
+    if(formasSelecionadas.includes(6)) this.guiaChecked = true;
+    else this.guiaChecked = false;
+  }
+
   onSubmit() {
     this.salvando = true;
     const formulario = {...this.formulario.value}
@@ -154,7 +169,8 @@ export class CreateFaturaComponent implements OnInit, OnDestroy {
         dataVencimento:formulario.dataVencimento,
         formasPagamento:formasSelecionadas,
         agrupar: formulario.agrupar,
-        lotes: existAll.length > 0 ? [0] : formulario.itensFatura.map(x => x.loteId)
+        lotes: existAll.length > 0 ? [0] : formulario.itensFatura.map(x => x.loteId),
+        guias: formulario.guias,
       }
 
       this.restangular.all('/Fatura/FaturaMassiva').post(formMassivo).subscribe(a => {
@@ -181,6 +197,7 @@ export class CreateFaturaComponent implements OnInit, OnDestroy {
         dataVencimento:formulario.dataVencimento,
         formasPagamento:formulario.formasPagamento,
         itensFatura:formulario.itensFatura,
+        guias: formulario.guias,
       }
       this.restangular.all('/Fatura/FaturaManual').post(formAvulso).subscribe(a => {
         this.notifierService.notify('success', 'Fatura avulsa criada com sucesso');
@@ -319,6 +336,7 @@ export class CreateFaturaComponent implements OnInit, OnDestroy {
         formasPagamento: new FormArray([]),
         itensFatura: this.formBuilder.array([]),
         adicionarItem: [],
+        guias: this.formBuilder.array([]),
         todosLotes: [false],
         agrupar: [false]
       })
@@ -348,12 +366,74 @@ export class CreateFaturaComponent implements OnInit, OnDestroy {
         clienteSelecionado: [null],
         lote: [null],
         itensFatura: this.formBuilder.array([]),
+        guias: this.formBuilder.array([]),
         adicionarItem: [],
         todosLotes: [false],
       })
     }
 
     this.buildFormaPagamento();
+  }
+
+  guiaChangeEvent(guiaInput: FileList) {
+    this.fileToUpload = guiaInput.item(0);
+    this.fileToUpload.name
+    this.fileToUpload.size
+    this.fileToUpload.type
+    const reader = new FileReader();
+    reader.readAsDataURL(this.fileToUpload);
+    reader.onload = () => {
+      this.guiasbase64 = reader.result
+      const arquivo = {
+        arquivoId: 0,
+        nome: this.fileToUpload.name,
+        base64: this.guiasbase64,
+        tipo: this.fileToUpload.type,
+        tamanho: this.fileToUpload.size,
+        dataCadastro: moment().utc().toISOString()
+      }
+
+      this.atualizarGuia(arquivo, this.numeroAdcGuia)
+    };
+  }
+
+  atualizarGuia(obj, i) {
+    let guias = this.formulario.get('guias') as FormArray
+
+    if (i < 0) {
+     guias.push(this.formBuilder.group({
+        arquivo: obj,
+        acao: 'I'
+      }))
+    } else {
+      const valor =guias.value[i]
+     guias.removeAt(i)
+     guias.insert(i, this.formBuilder.group({
+        arquivo: obj,
+        acao: 'A'
+      }))
+    }
+  }
+
+  alterarGuia(i) {
+    this.numeroAdcGuia = i
+    this.inputGuias.nativeElement.click()
+  }
+
+  filterListAcao(campo: string) {
+    const fotos = this.formulario.get(campo) as FormArray;
+    return fotos.controls.filter(x => (x as FormGroup).controls['acao'].value !== 'D');
+  }
+
+  deleteGuia(indexGuia: number) {
+    let guias = this.formulario.controls['guias'] as FormArray;
+    let guia =guias.at(indexGuia) as FormGroup;
+    if(guia.controls['acao'].value !== 'I') {
+      guia.controls['acao'].setValue('D');
+    }
+    else {
+     guias.removeAt(indexGuia)
+    }
   }
 
   buildFormaPagamento() {

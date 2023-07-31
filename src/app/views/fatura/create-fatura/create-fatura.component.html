@@ -78,9 +78,34 @@
                     <div id="formasPagamento" class="row" formArrayName="formasPagamento">
                       <div class="checkbox" class="col-sm-3" *ngFor="let item of formasPagamentoFormArray.controls; let i = index">
                         <label class="checkbox-inline">
-                          <input type="checkbox" [formControlName]="i"> {{ formasPagamento[i].descricao }}
+                          <input type="checkbox" (change)="verificaGuiaPagamentoIsCheck()" [formControlName]="i"> {{ formasPagamento[i].descricao }}
                         </label>
                       </div>
+                    </div>
+                    <div *ngIf="guiaChecked" class="mb-2">
+                      <button type="button" class="btn btn-success btn-sm" (click)="alterarGuia(-1)">
+                        <i class="fa fa-plus-circle"></i>&nbsp;Nova Guia</button>
+                        <input type="file"  #inputGuias (change)="guiaChangeEvent($event.target.files)">
+                    </div>
+                    <div formArrayName="guias" *ngIf="guiaChecked">
+                      <table class="table">
+                        <thead>
+                          <tr>
+                            <th width="40%">Arquivo</th>
+                            <th width="15%">Criado em</th>
+                            <th width="15%"></th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr *ngFor="let item of filterList('guias'); let i = index" [formGroupName]="i">
+                            <td><a [href]="item.value.arquivo.url" target="_blank">{{item.value.arquivo.nome}}</a></td>
+                            <td>{{item.value.arquivo.dataCadastro | amFromUtc | amLocal | amDateFormat: 'DD/MM/YYYY HH:mm'}}</td>
+                            <td class="text-center">
+                              <label class="btn btn-danger m-0" (click)="deleteGuia(i)">Remover</label>
+                            </td>
+                          </tr>
+                        </tbody>
+                      </table>
                     </div>
                   </div>
                   <div class="col-md-12">
