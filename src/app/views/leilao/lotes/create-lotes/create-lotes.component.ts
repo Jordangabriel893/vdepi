@@ -139,7 +139,6 @@ export class CreateLotesComponent implements OnInit {
       this.restangular.one('lotestatus').get().pipe(),
       this.restangular.one("admin/leilao", this.id).get()
     ]).subscribe((allResp: any[]) => {
-      this.tipoFoto = allResp[2].data.filter(x => x.visivelSite);
       this.local = allResp[3].data;
       this.categorias = allResp[4].data;
 
@@ -312,8 +311,26 @@ export class CreateLotesComponent implements OnInit {
   }
 
   alterarFoto(i) {
+    
+    if(this.formulario.value.categoriaId == null){
+      this.notifierService.notify('error', 'Selecione uma categoria para adicionar uma foto');
+      this.formulario.controls['categoriaId'].markAsTouched()      
+      return false;
+    }
+
     this.numeroAdcFoto = i
     this.inputFotos.nativeElement.click()
+  }
+
+  preencheTipoLote(){
+
+    this.restangular.one('tipofoto/categoria/' + this.formulario.value.categoriaId).get().subscribe((allResp) => {
+      console.log(allResp);
+      this.tipoFoto = allResp.data;
+    }, error => {
+      console.log(error)
+    });
+
   }
 
   atualizarAnexo(obj, i) {
