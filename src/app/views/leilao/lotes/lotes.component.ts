@@ -162,6 +162,7 @@ export class LotesComponent implements OnInit {
             .subscribe(
               (resp) => {
                 this.notifierService.notify("success", "Lote excluido!");
+                this.getLotes();
               },
               () => {
                 this.notifierService.notify("error", "Erro ao excluir o Lote!");
@@ -239,6 +240,7 @@ export class LotesComponent implements OnInit {
       );
     }
   }
+
   selectAllLotes() {
     this.lotesSelecionados = [];
     this.lotes = this.lotes.map((lote) => {
@@ -252,6 +254,7 @@ export class LotesComponent implements OnInit {
       this.lotesSelecionados = this.lotes.map((lote) => lote.loteId);
     }
   }
+
   selectLote(lote) {
     if (!lote.checked) {
       this.lotesSelecionados.push(lote.loteId);
@@ -262,6 +265,7 @@ export class LotesComponent implements OnInit {
       );
     }
   }
+
   onSearch() {
     if (this.queryField.value) {
       this.lotes = this.dataLote;
