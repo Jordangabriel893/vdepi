@@ -38,9 +38,7 @@ import { Routes, RouterModule } from '@angular/router';
 import { AnonyGuard, AuthGuard } from './_guards/index';
 
 // Import Containers
-import {
-  FullLayoutComponent
-} from './containers';
+import { FullLayoutComponent } from './containers';
 
 import {
   LoginComponent,
@@ -50,7 +48,6 @@ import {
   CreateLeilaoComponent,
   UpdateLeilaoComponent,
   MapaLanceComponent,
-
 } from './views';
 
 import { SourceGuard } from './_guards/source.guard';
@@ -99,7 +96,7 @@ import { EditDocumentoTemplateComponent } from './views/documento-template/edit-
 import { GerenciadorDocumentosComponent } from './views/gerenciador-documentos/gerenciador-documentos.component';
 import { CreateDocumentoComponent } from './views/gerenciador-documentos/create-documento/create-documento.component';
 import { CreateAgendamentoComponent } from './views/agendamento/create/create-agendamento.component';
-
+import { GerencialComponent } from './views/gerencial/gerencial.component';
 
 export const routes: Routes = [
   { path: '', redirectTo: '/home', pathMatch: 'full' },
@@ -108,223 +105,232 @@ export const routes: Routes = [
     component: FullLayoutComponent,
     canActivate: [AuthGuard],
     data: {
-      title: 'Home'
+      title: 'Home',
     },
     children: [
       {
         path: 'home',
         component: HomeComponent,
         data: {
-          title: 'Home'
+          title: 'Home',
         },
-        canActivate: [AnonyGuard]
+        canActivate: [AnonyGuard],
       },
       {
         path: 'relatorios/notasfiscais',
         component: NotasFiscaisComponent,
         data: {
           title: 'Notas Fiscais',
-          source: 'RelatorioNotasFiscais'
+          source: 'RelatorioNotasFiscais',
         },
-        canActivate: [SourceGuard]
+        canActivate: [SourceGuard],
       },
       {
         path: 'leilao',
         component: LeilaoComponent,
         data: {
           title: 'Leilões',
-          source: 'LEILOES'
+          source: 'LEILOES',
         },
-        canActivate: [SourceGuard]
+        canActivate: [SourceGuard],
       },
       {
         path: 'create-leilao',
         component: CreateLeilaoComponent,
         data: {
           title: 'Novo Leilao',
-          source: 'LEILOES'
+          source: 'LEILOES',
         },
-        canActivate: [SourceGuard]
+        canActivate: [SourceGuard],
       },
       {
         path: 'update-leilao/:id',
         component: UpdateLeilaoComponent,
         data: {
           title: 'Editar Leilao',
-          source: 'LEILOES'
+          source: 'LEILOES',
         },
-        canActivate: [SourceGuard]
+        canActivate: [SourceGuard],
       },
       {
         path: 'lotes/:id',
         component: LotesComponent,
         data: {
           title: 'Lotes',
-          source: 'LEILOES'
+          source: 'LEILOES',
         },
-        canActivate: [SourceGuard]
+        canActivate: [SourceGuard],
       },
       {
         path: 'vistoria-lotes/:id',
         component: LotesVistoriaComponent,
         data: {
           title: 'Vistoria Lotes',
-          source: 'VISTORIA'
+          source: 'VISTORIA',
         },
-        canActivate: [SourceGuard]
+        canActivate: [SourceGuard],
       },
       {
         path: 'lotes/:id',
         component: LotesComponent,
         data: {
           title: 'Lotes',
-          source: 'RelatorioEstoque'
+          source: 'RelatorioEstoque',
         },
-        canActivate: [SourceGuard]
+        canActivate: [SourceGuard],
       },
       {
         path: 'create-lotes/:id',
         component: CreateLotesComponent,
         data: {
           title: 'Novo Lote',
-          source: 'LEILOES'
+          source: 'LEILOES',
         },
-        canActivate: [SourceGuard]
+        canActivate: [SourceGuard],
       },
       {
         path: 'update-lotes/:id',
         component: UpdateLotesComponent,
         data: {
           title: 'Editar Lote',
-          source: 'LEILOES'
+          source: 'LEILOES',
         },
-        canActivate: [SourceGuard]
+        canActivate: [SourceGuard],
       },
       {
         path: 'habilitacao',
         component: HabilitacaoComponent,
         data: {
           title: 'Habilitação',
-          source: 'HABILITACAO'
+          source: 'HABILITACAO',
         },
-        canActivate: [SourceGuard]
+        canActivate: [SourceGuard],
       },
       {
         path: 'vistoria',
         component: VistoriaComponent,
         data: {
           title: 'Vistoria',
-          source: 'VISTORIA'
+          source: 'VISTORIA',
         },
-        canActivate: [SourceGuard]
+        canActivate: [SourceGuard],
       },
       {
         path: 'fatura',
         component: FaturaComponent,
         data: {
           title: 'Faturas',
-          source: 'FATURA'
+          source: 'FATURA',
         },
-        canActivate: [SourceGuard]
+        canActivate: [SourceGuard],
       },
       {
         path: 'create-fatura',
         component: CreateFaturaComponent,
         data: {
           title: 'Nova Fatura',
-          source: 'FATURA'
+          source: 'FATURA',
         },
-        canActivate: [SourceGuard]
+        canActivate: [SourceGuard],
       },
       {
         path: 'gerenciador-documentos',
         component: GerenciadorDocumentosComponent,
         data: {
           title: 'Gerenciador de Documentos',
-          source: 'GERENCIADOR_DOC'
+          source: 'GERENCIADOR_DOC',
         },
-        canActivate: [SourceGuard]
+        canActivate: [SourceGuard],
       },
       {
         path: 'create-documento',
         component: CreateDocumentoComponent,
         data: {
           title: 'Novo Documento',
-          source: 'GERENCIADOR_DOC'
+          source: 'GERENCIADOR_DOC',
         },
-        canActivate: [SourceGuard]
+        canActivate: [SourceGuard],
       },
       {
         path: 'dashboard',
         component: DashboardComponent,
         data: {
           title: 'Dashboard',
-          source: 'DASHBOARD'
+          source: 'DASHBOARD',
         },
-        canActivate: [SourceGuard]
+        canActivate: [SourceGuard],
       },
       {
         path: 'mapa-lance',
         component: MapaLanceComponent,
         data: {
           title: 'Mapa de Lances',
-          source: 'MAPA_LANCES'
+          source: 'MAPA_LANCES',
         },
-        canActivate: [SourceGuard]
+        canActivate: [SourceGuard],
       },
       {
         path: 'historicolances',
         component: HistoricoLancesComponent,
         data: {
           title: 'Histórico de Lances',
-          source: 'HISTORICO_LANCES'
+          source: 'HISTORICO_LANCES',
         },
-        canActivate: [SourceGuard]
+        canActivate: [SourceGuard],
       },
       {
         path: 'lancesconsolidado',
         component: LancesConsolidadoComponent,
         data: {
           title: 'Lotes Consolidados',
-          source: 'LANCES_CONSOLIDADOS'
+          source: 'LANCES_CONSOLIDADOS',
         },
-        canActivate: [SourceGuard]
+        canActivate: [SourceGuard],
       },
       {
         path: 'arrematantes',
         component: ArrematantesComponent,
         data: {
           title: 'Arrematantes',
-          source: 'ARREMATANTES'
+          source: 'ARREMATANTES',
         },
-        canActivate: [SourceGuard]
+        canActivate: [SourceGuard],
+      },
+      {
+        path: 'gerencial',
+        component: GerencialComponent,
+        data: {
+          title: 'Gerencial',
+          source: 'GERENCIAL',
+        },
+        canActivate: [SourceGuard],
       },
       {
         path: 'listacontatos',
         component: ListaContatosComponent,
         data: {
           title: 'Lista de Contatos',
-          source: 'LISTA_CONTATOS'
+          source: 'LISTA_CONTATOS',
         },
-        canActivate: [SourceGuard]
+        canActivate: [SourceGuard],
       },
       {
         path: 'edit-listacontatos/:id',
         component: EditListacontatosComponent,
         data: {
           title: 'Editar Lista de Contatos',
-          source: 'LISTA_CONTATOS'
+          source: 'LISTA_CONTATOS',
         },
-        canActivate: [SourceGuard]
+        canActivate: [SourceGuard],
       },
       {
         path: 'create-listacontatos',
         component: CreateListacontatosComponent,
         data: {
           title: 'Nova Lista de Contatos',
-          source: 'LISTA_CONTATOS'
+          source: 'LISTA_CONTATOS',
         },
-        canActivate: [SourceGuard]
+        canActivate: [SourceGuard],
       },
 
       {
@@ -332,549 +338,548 @@ export const routes: Routes = [
         component: ContatosComponent,
         data: {
           title: 'Contatos',
-          source: 'CONTATOS'
+          source: 'CONTATOS',
         },
-        canActivate: [SourceGuard]
+        canActivate: [SourceGuard],
       },
       {
         path: 'create-contatos',
         component: CreateContatosComponent,
         data: {
           title: 'Novo Contato',
-          source: 'CONTATOS'
+          source: 'CONTATOS',
         },
-        canActivate: [SourceGuard]
+        canActivate: [SourceGuard],
       },
       {
         path: 'edit-contatos/:id',
         component: EditContatosComponent,
         data: {
           title: 'Editar Contatos',
-          source: 'CONTATOS'
+          source: 'CONTATOS',
         },
-        canActivate: [SourceGuard]
+        canActivate: [SourceGuard],
       },
       {
         path: 'notificacoes',
         component: NotificacoesComponent,
         data: {
           title: 'Notificações',
-          source: 'NOTIFICACOES'
+          source: 'NOTIFICACOES',
         },
-        canActivate: [SourceGuard]
+        canActivate: [SourceGuard],
       },
       {
         path: 'update-notificacoes/:id',
         component: EditNotificacaoComponent,
         data: {
           title: 'Editar Notificação',
-          source: 'NOTIFICACOES'
+          source: 'NOTIFICACOES',
         },
-        canActivate: [SourceGuard]
+        canActivate: [SourceGuard],
       },
       {
         path: 'create-notificacoes',
         component: CreateNotificacaoComponent,
         data: {
           title: 'Nova Notificação',
-          source: 'NOTIFICACOES'
+          source: 'NOTIFICACOES',
         },
-        canActivate: [SourceGuard]
+        canActivate: [SourceGuard],
       },
       {
         path: 'log-notificacoes/:id',
         component: LogComponent,
         data: {
           title: 'Visualizar Log',
-          source: 'NOTIFICACOES'
+          source: 'NOTIFICACOES',
         },
-        canActivate: [SourceGuard]
+        canActivate: [SourceGuard],
       },
       {
         path: 'tipomeionotificao',
         component: TipoMeioNotificacaoComponent,
         data: {
           title: 'Tipo Meio Notificação',
-          source: 'MEIO_NOTIFICACAO'
+          source: 'MEIO_NOTIFICACAO',
         },
-        canActivate: [SourceGuard]
+        canActivate: [SourceGuard],
       },
       {
         path: 'update-tipomeionotificao/:id',
         component: EditTipomeionotificacaoComponent,
         data: {
           title: 'Editar Tipo Meio Notificação',
-          source: 'MEIO_NOTIFICACAO'
+          source: 'MEIO_NOTIFICACAO',
         },
-        canActivate: [SourceGuard]
+        canActivate: [SourceGuard],
       },
       {
         path: 'create-tipomeionotificao',
         component: CreateTipomeionotificacaoComponent,
         data: {
           title: 'Novo Tipo Meio Notificação',
-          source: 'MEIO_NOTIFICACAO'
+          source: 'MEIO_NOTIFICACAO',
         },
-        canActivate: [SourceGuard]
+        canActivate: [SourceGuard],
       },
       {
         path: 'tiponotificacao',
         component: TipoDeNotificacaoComponent,
         data: {
           title: 'Tipo de Notificação',
-          source: 'TIPO_NOTIFICACAO'
+          source: 'TIPO_NOTIFICACAO',
         },
-        canActivate: [SourceGuard]
+        canActivate: [SourceGuard],
       },
       {
         path: 'create-tiponotificacao',
         component: CreateTiponotificacaoComponent,
         data: {
           title: 'Novo Tipo de Notificação',
-          source: 'TIPO_NOTIFICACAO'
+          source: 'TIPO_NOTIFICACAO',
         },
-        canActivate: [SourceGuard]
+        canActivate: [SourceGuard],
       },
       {
         path: 'update-tiponotificacao/:id',
         component: EditTiponotificacaoComponent,
         data: {
           title: 'Editar Tipo De Notificação',
-          source: 'TIPO_NOTIFICACAO'
+          source: 'TIPO_NOTIFICACAO',
         },
-        canActivate: [SourceGuard]
+        canActivate: [SourceGuard],
       },
       {
         path: 'agenda',
         component: AgendaComponent,
         data: {
           title: 'Agenda',
-          source: 'AGENDA'
+          source: 'AGENDA',
         },
-        canActivate: [SourceGuard]
+        canActivate: [SourceGuard],
       },
       {
         path: 'create-agenda',
         component: CreateAgendaComponent,
         data: {
           title: 'Nova Agenda',
-          source: 'AGENDA'
+          source: 'AGENDA',
         },
-        canActivate: [SourceGuard]
+        canActivate: [SourceGuard],
       },
       {
         path: 'update-agenda/:id',
         component: UpdateAgendaComponent,
         data: {
           title: 'Editar Agenda',
-          source: 'AGENDA'
+          source: 'AGENDA',
         },
-        canActivate: [SourceGuard]
+        canActivate: [SourceGuard],
       },
       {
         path: 'agendamento',
         component: AgendamentoComponent,
         data: {
           title: 'Agendamentos de Retirada',
-          source: 'AGENDAMENTO'
+          source: 'AGENDAMENTO',
         },
-        canActivate: [SourceGuard]
+        canActivate: [SourceGuard],
       },
       {
         path: 'create-agendamento',
         component: CreateAgendamentoComponent,
         data: {
           title: 'Criar agendamento',
-          source: 'AGENDAMENTO'
+          source: 'AGENDAMENTO',
         },
-        canActivate: [SourceGuard]
+        canActivate: [SourceGuard],
       },
       {
         path: 'configuracao',
         component: ConfiguracaoComponent,
         data: {
           title: 'Configuração do Agendamento',
-          source: 'CONFIG_AGENDAMENTO'
+          source: 'CONFIG_AGENDAMENTO',
         },
-        canActivate: [SourceGuard]
+        canActivate: [SourceGuard],
       },
       {
         path: 'create-configuracao',
         component: CreateConfiguracaoComponent,
         data: {
           title: 'Criar Configuração do Agendamento',
-          source: 'CONFIG_AGENDAMENTO'
+          source: 'CONFIG_AGENDAMENTO',
         },
-        canActivate: [SourceGuard]
+        canActivate: [SourceGuard],
       },
       {
         path: 'update-configuracao/:id',
         component: UpdateConfiguracaoComponent,
         data: {
           title: 'Editar Configuração do Agendamento',
-          source: 'CONFIG_AGENDAMENTO'
+          source: 'CONFIG_AGENDAMENTO',
         },
-        canActivate: [SourceGuard]
+        canActivate: [SourceGuard],
       },
       {
         path: 'paginaEstatica',
         component: PaginaEstaticaComponent,
         data: {
           title: 'Página Estática',
-          source: 'GERENCIADOR_SITE'
+          source: 'GERENCIADOR_SITE',
         },
-        canActivate: [SourceGuard]
+        canActivate: [SourceGuard],
       },
       {
         path: 'create-paginaestatica',
         component: CreatePaginaestaticaComponent,
         data: {
           title: 'Criar Página Estática',
-          source: 'GERENCIADOR_SITE'
+          source: 'GERENCIADOR_SITE',
         },
-        canActivate: [SourceGuard]
+        canActivate: [SourceGuard],
       },
       {
         path: 'update-paginaestatica/:id',
         component: UpdatePaginaestaticaComponent,
         data: {
           title: 'Editar Página Estática',
-          source: 'GERENCIADOR_SITE'
+          source: 'GERENCIADOR_SITE',
         },
-        canActivate: [SourceGuard]
+        canActivate: [SourceGuard],
       },
       {
         path: 'template',
         component: TemplateComponent,
         data: {
           title: 'Template',
-          source: 'AGENDA'
+          source: 'AGENDA',
         },
-        canActivate: [SourceGuard]
+        canActivate: [SourceGuard],
       },
       {
         path: 'create-template',
         component: CreateTemplateComponent,
         data: {
           title: 'Novo Template',
-          source: 'AGENDA'
+          source: 'AGENDA',
         },
-        canActivate: [SourceGuard]
+        canActivate: [SourceGuard],
       },
       {
         path: 'update-template/:id',
         component: UpdateTemplateComponent,
         data: {
           title: 'Editar Template',
-          source: 'AGENDA'
+          source: 'AGENDA',
         },
-        canActivate: [SourceGuard]
+        canActivate: [SourceGuard],
       },
       {
         path: 'permissao',
         component: PermissoesComponent,
         data: {
           title: 'Permissão',
-          source: 'USUARIO'
+          source: 'USUARIO',
         },
-        canActivate: [SourceGuard]
+        canActivate: [SourceGuard],
       },
       {
         path: 'usuarios',
         component: UsuariosComponent,
         data: {
           title: 'Usuários',
-          source: 'USUARIO'
+          source: 'USUARIO',
         },
-        canActivate: [SourceGuard]
+        canActivate: [SourceGuard],
       },
       {
         path: 'create-usuario',
         component: CreateUsuariosComponent,
         data: {
           title: 'Novo Usuário',
-          source: 'USUARIO'
+          source: 'USUARIO',
         },
-        canActivate: [SourceGuard]
+        canActivate: [SourceGuard],
       },
       {
         path: 'update-usuarios/:id',
         component: UpdateUsuariosComponent,
         data: {
           title: 'Editar Usuário',
-          source: 'USUARIO'
+          source: 'USUARIO',
         },
-        canActivate: [SourceGuard]
+        canActivate: [SourceGuard],
       },
       {
         path: 'empresa',
         component: EmpresasComponent,
         data: {
           title: 'Empresas',
-          source: 'EMPRESAS'
+          source: 'EMPRESAS',
         },
-        canActivate: [SourceGuard]
+        canActivate: [SourceGuard],
       },
       {
         path: 'create-empresa',
         component: CreateEmpresaComponent,
         data: {
           title: 'Nova Empresa',
-          source: 'EMPRESAS'
+          source: 'EMPRESAS',
         },
-        canActivate: [SourceGuard]
+        canActivate: [SourceGuard],
       },
       {
         path: 'update-empresa/:id',
         component: UpdateEmpresaComponent,
         data: {
           title: 'Editar Empresa',
-          source: 'EMPRESAS'
+          source: 'EMPRESAS',
         },
-        canActivate: [SourceGuard]
+        canActivate: [SourceGuard],
       },
       {
         path: 'comitente',
         component: ComitentesComponent,
         data: {
           title: 'Comitente',
-          source: 'COMITENTES'
+          source: 'COMITENTES',
         },
-        canActivate: [SourceGuard]
+        canActivate: [SourceGuard],
       },
       {
         path: 'create-comitente',
         component: CreateComitenteComponent,
         data: {
           title: 'Novo Comitente',
-          source: 'COMITENTES'
+          source: 'COMITENTES',
         },
-        canActivate: [SourceGuard]
+        canActivate: [SourceGuard],
       },
       {
         path: 'update-comitente/:id',
         component: UpdateComitenteComponent,
         data: {
           title: 'Editar Comitente',
-          source: 'COMITENTES'
+          source: 'COMITENTES',
         },
-        canActivate: [SourceGuard]
+        canActivate: [SourceGuard],
       },
       {
         path: 'leiloeiro',
         component: LeiloeirosComponent,
         data: {
           title: 'Leiloeiros',
-          source: 'LEILOEIROS'
+          source: 'LEILOEIROS',
         },
-        canActivate: [SourceGuard]
+        canActivate: [SourceGuard],
       },
       {
         path: 'create-leiloeiro',
         component: CreateLeiloeirosComponent,
         data: {
           title: 'Novo Leiloeiro',
-          source: 'LEILOEIROS'
+          source: 'LEILOEIROS',
         },
-        canActivate: [SourceGuard]
+        canActivate: [SourceGuard],
       },
       {
         path: 'update-leiloeiro/:id',
         component: UpdateLeiloeirosComponent,
         data: {
           title: 'Editar Leiloeiro',
-          source: 'LEILOEIROS'
+          source: 'LEILOEIROS',
         },
-        canActivate: [SourceGuard]
+        canActivate: [SourceGuard],
       },
       {
         path: 'local',
         component: LocaisComponent,
         data: {
           title: 'Locais',
-          source: 'LOCAIS'
+          source: 'LOCAIS',
         },
-        canActivate: [SourceGuard]
+        canActivate: [SourceGuard],
       },
       {
         path: 'create-local',
         component: CreateLocalComponent,
         data: {
           title: 'Novo Local',
-          source: 'LOCAIS'
+          source: 'LOCAIS',
         },
-        canActivate: [SourceGuard]
+        canActivate: [SourceGuard],
       },
       {
         path: 'update-local/:id',
         component: UpdateLocalComponent,
         data: {
           title: 'Editar Local',
-          source: 'LOCAIS'
+          source: 'LOCAIS',
         },
-        canActivate: [SourceGuard]
+        canActivate: [SourceGuard],
       },
       {
         path: 'categorias',
         component: CategoriasComponent,
         data: {
           title: 'Categorias',
-          source: 'CATEGORIAS'
+          source: 'CATEGORIAS',
         },
-        canActivate: [SourceGuard]
+        canActivate: [SourceGuard],
       },
       {
         path: 'create-categoria',
         component: CreateCategoriasComponent,
         data: {
           title: 'Nova Categoria',
-          source: 'CATEGORIAS'
+          source: 'CATEGORIAS',
         },
-        canActivate: [SourceGuard]
+        canActivate: [SourceGuard],
       },
       {
         path: 'update-categorias/:id',
         component: UpdateCategoriasComponent,
         data: {
           title: 'Editar Categoria',
-          source: 'CATEGORIAS'
+          source: 'CATEGORIAS',
         },
-        canActivate: [SourceGuard]
+        canActivate: [SourceGuard],
       },
       {
         path: 'statusLote',
         component: StatusLoteComponent,
         data: {
           title: 'Status Lote',
-          source: 'STATUS_LOTE'
+          source: 'STATUS_LOTE',
         },
-        canActivate: [SourceGuard]
+        canActivate: [SourceGuard],
       },
       {
         path: 'statusLeilao',
         component: StatusLeilaoComponent,
         data: {
           title: 'Status Leilão',
-          source: 'STATUS_LEILAO'
+          source: 'STATUS_LEILAO',
         },
-        canActivate: [SourceGuard]
+        canActivate: [SourceGuard],
       },
       {
         path: 'banner',
         component: BannerComponent,
         data: {
           title: 'Banner',
-          source: 'GERENCIADOR_SITE'
+          source: 'GERENCIADOR_SITE',
         },
-        canActivate: [SourceGuard]
+        canActivate: [SourceGuard],
       },
       {
         path: 'create-banner',
         component: CreateBannerComponent,
         data: {
           title: 'Novo Banner',
-          source: 'GERENCIADOR_SITE'
+          source: 'GERENCIADOR_SITE',
         },
-        canActivate: [SourceGuard]
+        canActivate: [SourceGuard],
       },
       {
         path: 'edit-banner/:id',
         component: EditBannerComponent,
         data: {
           title: 'Editar Banner',
-          source: 'GERENCIADOR_SITE'
+          source: 'GERENCIADOR_SITE',
         },
-        canActivate: [SourceGuard]
+        canActivate: [SourceGuard],
       },
       {
         path: 'tipodocumento',
         component: TipoDocumentoComponent,
         data: {
           title: 'Tipo de Documento',
-          source: 'GERENCIADOR_DOC'
+          source: 'GERENCIADOR_DOC',
         },
-        canActivate: [SourceGuard]
+        canActivate: [SourceGuard],
       },
       {
         path: 'create-tipodocumento',
         component: CreateTipodocumentoComponent,
         data: {
           title: 'Novo Tipo de Documento',
-          source: 'GERENCIADOR_DOC'
+          source: 'GERENCIADOR_DOC',
         },
-        canActivate: [SourceGuard]
+        canActivate: [SourceGuard],
       },
       {
         path: 'edit-tipodocumeto/:id',
         component: EditTipodocumentoComponent,
         data: {
           title: 'Editar Tipo de Documento',
-          source: 'GERENCIADOR_DOC'
+          source: 'GERENCIADOR_DOC',
         },
-        canActivate: [SourceGuard]
+        canActivate: [SourceGuard],
       },
       {
         path: 'documentotemplate',
         component: DocumentoTemplateComponent,
         data: {
           title: 'Template de Documento',
-          source: 'GERENCIADOR_DOC'
+          source: 'GERENCIADOR_DOC',
         },
-        canActivate: [SourceGuard]
+        canActivate: [SourceGuard],
       },
       {
         path: 'create-documentotemplate',
         component: CreateDocumentoTemplateComponent,
         data: {
           title: 'Novo Template de Documento',
-          source: 'GERENCIADOR_DOC'
+          source: 'GERENCIADOR_DOC',
         },
-        canActivate: [SourceGuard]
+        canActivate: [SourceGuard],
       },
       {
         path: 'edit-documentotemplate/:id',
         component: EditDocumentoTemplateComponent,
         data: {
           title: 'Editar Template de Documento',
-          source: 'GERENCIADOR_DOC'
+          source: 'GERENCIADOR_DOC',
         },
-        canActivate: [SourceGuard]
+        canActivate: [SourceGuard],
       },
       {
         path: 'gerenciadordocumento',
         component: GerenciadorDocumentosComponent,
         data: {
           title: 'Gerenciador de Documentos',
-          source: 'GERENCIADOR_DOC'
+          source: 'GERENCIADOR_DOC',
         },
-        canActivate: [SourceGuard]
+        canActivate: [SourceGuard],
       },
       {
         path: 'create-gerenciadordocumento',
         component: CreateDocumentoComponent,
         data: {
           title: 'Criar Documento',
-          source: 'GERENCIADOR_DOC'
+          source: 'GERENCIADOR_DOC',
         },
-        canActivate: [SourceGuard]
+        canActivate: [SourceGuard],
       },
       {
         path: 'access-denied',
         component: AccessDeniedComponent,
         data: {
-          title: 'Acesso Negado'
-        }
+          title: 'Acesso Negado',
+        },
       },
-
-    ]
+    ],
   },
   { path: 'login', component: LoginComponent },
   { path: 'assinatura/:id', component: AssinaturaComponent },
-  { path: '**', redirectTo: '' }
+  { path: '**', redirectTo: '' },
 ];
 
 @NgModule({
-  imports: [ RouterModule.forRoot(routes) ],
-  exports: [ RouterModule ]
+  imports: [RouterModule.forRoot(routes)],
+  exports: [RouterModule],
 })
 export class AppRoutingModule {}

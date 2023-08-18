@@ -80,6 +80,15 @@ export const navigation = [
     source: 'ARREMATANTES',
     grupo: 'RELATORIOS',
   },
+
+  {
+    name: "Gerencial",
+    url: "/gerencial",
+    icon: "fa fa-chart-line",
+    source: "GERENCIAL",
+    grupo: "RELATORIOS",
+  },
+
   {
     title: true,
     name: 'MARKETING',
