@@ -15,7 +15,7 @@ export class LocaisComponent implements OnInit {
     private router: Router,
     private route: ActivatedRoute,
   ) {
-    this.restangular.one("local").get().subscribe((response) => {
+    this.restangular.one('local').get().subscribe((response) => {
      this.locais = response.data
      this.loading = false;
     },

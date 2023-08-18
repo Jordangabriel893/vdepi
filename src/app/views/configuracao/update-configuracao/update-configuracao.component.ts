@@ -14,7 +14,7 @@ import * as moment from 'moment';
 })
 export class UpdateConfiguracaoComponent implements OnInit {
   empresas: any;
-  formulario:FormGroup;
+  formulario: FormGroup;
   status: any;
   minDate;
   notificacoes;
@@ -42,22 +42,22 @@ export class UpdateConfiguracaoComponent implements OnInit {
   ngOnInit() {
     this.sub.push(
       this.restangular.one('local').get().subscribe(
-        dados =>{
-          this.localLotes= dados.data
+        dados => {
+          this.localLotes = dados.data
         }
       )
     )
     this.sub.push( this.restangular.all('agendamento/configuracao').get(this.id).subscribe(dados => {
       const config = dados.data
         this.formulario = this.formBuilder.group({
-          configuracaoAgendamentoId:[config.configuracaoAgendamentoId],
+          configuracaoAgendamentoId: [config.configuracaoAgendamentoId],
           diaSemana: [config.diaSemana, Validators.required],
           horaInicio: [moment.utc(config.horaInicio).local().toDate(), Validators.required],
           horaFinal: [moment.utc(config.horaFinal).local().toDate(), Validators.required],
-          limiteDia:[config.limiteDia, Validators.required],
-          localLoteId:[config.localLoteId, Validators.required],
-          numeroAtendentes:[config.numeroAtendentes, Validators.required],
-          tempoAtendimento:[config.tempoAtendimento, Validators.required],
+          limiteDia: [config.limiteDia, Validators.required],
+          localLoteId: [config.localLoteId, Validators.required],
+          numeroAtendentes: [config.numeroAtendentes, Validators.required],
+          tempoAtendimento: [config.tempoAtendimento, Validators.required],
       })
     })
     )
@@ -65,7 +65,7 @@ export class UpdateConfiguracaoComponent implements OnInit {
 
 
   }
-  onSubmit(){
+  onSubmit() {
     const form = this.formulario.value
     this.restangular.all('agendamento/configuracao/').customPUT(form, form.configuracaoAgendamentoId).subscribe(a => {
       this.notifierService.notify('success', 'Configuração atualizada com sucesso');
@@ -75,10 +75,10 @@ export class UpdateConfiguracaoComponent implements OnInit {
         this.notifierService.notify('error', 'Erro ao atualizar o configuração!');
       });
   }
-  verificaValidTouched(campo){
+  verificaValidTouched(campo) {
     return !this.formulario.get(campo).valid && this.formulario.get(campo).touched;
   }
-  aplicaCssErro(campo){
+  aplicaCssErro(campo) {
     return { 'has-error': this.verificaValidTouched(campo) }
   }
   onValueChange(event, campo) {

@@ -54,10 +54,10 @@ export class LogComponent implements OnInit, OnDestroy {
           this.tableLog = dados.data;
           this.tableLog.map(campos => {
             if (campos.dataAbertura) {
-              campos.dataAbertura = moment(campos.dataAbertura).format("DD/MM/YYYY")
+              campos.dataAbertura = moment(campos.dataAbertura).format('DD/MM/YYYY')
             }
             if (campos.dataClicado) {
-              campos.dataClicado = moment(campos.dataClicado).format("DD/MM/YYYY")
+              campos.dataClicado = moment(campos.dataClicado).format('DD/MM/YYYY')
             }
             return campos
           })
@@ -68,17 +68,17 @@ export class LogComponent implements OnInit, OnDestroy {
         () => this.loading = false
       )
     )
-    
+
   }
 
   ngOnInit() {
 
     this.filtro = this.formBuilder.group({
-      data:[],
+      data: [],
       email: [null],
     })
     this.modalService.onShown.subscribe(() => {
-      let iframe = document.getElementById("iframe")
+      const iframe = document.getElementById('iframe')
       this.setIframeReady(iframe)
     })
     this.bsRangeValue = [this.bsValue, this.maxDate];
@@ -87,7 +87,7 @@ export class LogComponent implements OnInit, OnDestroy {
 
   openModal(template: TemplateRef<any>, mensagem) {
     this.mensagem = mensagem;
-    this.modalRef = this.modalService.show(template, { class: 'modal-lg' }); 
+    this.modalRef = this.modalService.show(template, { class: 'modal-lg' });
   }
 
   onValueChange(event, campo) {
@@ -97,7 +97,7 @@ export class LogComponent implements OnInit, OnDestroy {
   }
 
   filtrar() {
-    const datas = this.filtro.controls["data"].value
+    const datas = this.filtro.controls['data'].value
     const de = datas[0]
     const ate = datas[1]
     let logsFiltrados = this.logsDefault;
@@ -112,14 +112,13 @@ export class LogComponent implements OnInit, OnDestroy {
   }
 
   onSearch() {
-    const email = this.filtro.controls["email"].value
+    const email = this.filtro.controls['email'].value
     if (email.length > 3) {
-      let value = email.toLowerCase();
+      const value = email.toLowerCase();
 
       this.tableLog =
         this.logsDefault.filter(x => x.destinatario.toLowerCase().includes(value));
-    }
-    else {
+    } else {
       this.tableLog = this.logsDefault;
     }
   }
@@ -128,14 +127,14 @@ export class LogComponent implements OnInit, OnDestroy {
     logs.map(log => {
       const dataEnvioSemFormatacao = log.dataEnvio
       const dataEnvioFormatada = moment(dataEnvioSemFormatacao, moment.defaultFormat).toDate()
-      const dataEnvio = moment(dataEnvioFormatada).format("DD/MM/YYYY")
+      const dataEnvio = moment(dataEnvioFormatada).format('DD/MM/YYYY')
       if (log.entregue || log.aberto || log.clicado || log.erro || log.reenvio) {
         log.entregue = log.entregue ? 'Sim' : 'Não';
         log.aberto = log.aberto ? 'Sim' : 'Não';
         log.clicado = log.clicado ? 'Sim' : 'Não';
         log.erro = log.erro ? 'Sim' : 'Não';
         log.reenvio = log.reenvio ? 'Sim' : 'Não';
-        log.dataEnvio = dataEnvio || ""
+        log.dataEnvio = dataEnvio || ''
       }
 
       return log
@@ -152,21 +151,21 @@ export class LogComponent implements OnInit, OnDestroy {
     XLSX.writeFile(wb, 'Logs.xlsx');
 
     this.tableLog.forEach(item => {
-      item.dataEnvio = moment(item.dataEnvio, "DD/MM/YYYY").format()
+      item.dataEnvio = moment(item.dataEnvio, 'DD/MM/YYYY').format()
     })
   }
 
   exportAsPDF() {
-    let columns = [
-      { title: "Email ", dataKey: "destinatario" },
-      { title: "Entregue", dataKey: "entregue" },
-      { title: "Data Envio", dataKey: "dataEnvio" },
-      { title: "Aberto", dataKey: "aberto" },
-      { title: "Data Abertura", dataKey: "dataAbertura" },
-      { title: "Clicado", dataKey: "clicado" },
-      { title: "Data Clicado", dataKey: "dataClicado" },
-      { title: "Erro", dataKey: "erro" },
-      { title: "Mensagem Erro", dataKey: "mensagemErro" },
+    const columns = [
+      { title: 'Email ', dataKey: 'destinatario' },
+      { title: 'Entregue', dataKey: 'entregue' },
+      { title: 'Data Envio', dataKey: 'dataEnvio' },
+      { title: 'Aberto', dataKey: 'aberto' },
+      { title: 'Data Abertura', dataKey: 'dataAbertura' },
+      { title: 'Clicado', dataKey: 'clicado' },
+      { title: 'Data Clicado', dataKey: 'dataClicado' },
+      { title: 'Erro', dataKey: 'erro' },
+      { title: 'Mensagem Erro', dataKey: 'mensagemErro' },
     ];
 
     const columStyles = {
@@ -183,15 +182,15 @@ export class LogComponent implements OnInit, OnDestroy {
 
     const rows = this.tableLog.map(e => {
       return {
-        destinatario: e.destinatario || "",
-        entregue: e.entregue ? 'Sim' : 'Não' || "",
-        dataEnvio: moment(e.dataEnvio).format("DD/MM/YYYY") || "",
-        aberto: e.aberto ? 'Sim' : 'Não' || "",
-        dataAbertura: e.dataAbertura || "",
-        clicado: e.clicado ? 'Sim' : 'Não' || "",
-        dataClicado: e.dataClicado || "",
-        erro: e.erro ? 'Sim' : 'Não' || "",
-        mensagemErro: e.mensagemErro || "",
+        destinatario: e.destinatario || '',
+        entregue: e.entregue ? 'Sim' : 'Não' || '',
+        dataEnvio: moment(e.dataEnvio).format('DD/MM/YYYY') || '',
+        aberto: e.aberto ? 'Sim' : 'Não' || '',
+        dataAbertura: e.dataAbertura || '',
+        clicado: e.clicado ? 'Sim' : 'Não' || '',
+        dataClicado: e.dataClicado || '',
+        erro: e.erro ? 'Sim' : 'Não' || '',
+        mensagemErro: e.mensagemErro || '',
 
       }
     });
@@ -200,7 +199,7 @@ export class LogComponent implements OnInit, OnDestroy {
       Log: this.notificacao
     }
 
-    this.pdfService.exportPdf('Logs', "Logs", rows, columns, columStyles, header, null);
+    this.pdfService.exportPdf('Logs', 'Logs', rows, columns, columStyles, header, null);
   }
 
   setIframeReady(iframe) {
@@ -208,9 +207,9 @@ export class LogComponent implements OnInit, OnDestroy {
     const doc: Document = win.document;
     doc.open();
     doc.write(this.mensagem);
-   
+
   }
-  applyLocale(){
+  applyLocale() {
     this.localeService.use('pt-br');
   }
   ngOnDestroy(): void {

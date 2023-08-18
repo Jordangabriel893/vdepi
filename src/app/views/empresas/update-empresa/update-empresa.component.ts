@@ -18,7 +18,7 @@ export class UpdateEmpresaComponent implements OnInit {
   isImageSaved: boolean;
   cardImageBase64: string;
 
-  formulario:FormGroup
+  formulario: FormGroup
   id
   empresa
   gruposEconomico;
@@ -42,30 +42,30 @@ export class UpdateEmpresaComponent implements OnInit {
   ) {
 
     this.id = this.route.snapshot.params['id']
-    this.restangular.one("empresa", this.id).get().subscribe((response) => {
+    this.restangular.one('empresa', this.id).get().subscribe((response) => {
     this.updateForm(response.data)
     })
 
-    this.mask = ['(', /[1-9]/, /\d/, ')', ' ', /\d/,/\d/,/\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/]
-    this.maskCep = [ /\d/,/\d/,/\d/,/\d/,/\d/, '-', /\d/, /\d/, /\d/, ]
-    this.maskCpf = [ /\d/,/\d/,/\d/,  '.', /\d/,/\d/,/\d/, '.', /\d/, /\d/, /\d/, '-', /\d/,/\d/ ]
-    this.maskCnpj = [ /\d/,/\d/,'.',/\d/,/\d/,/\d/,'.',/\d/,/\d/,/\d/,'/', /\d/,/\d/,/\d/,/\d/,'-',/\d/,/\d/, ]
+    this.mask = ['(', /[1-9]/, /\d/, ')', ' ', /\d/, /\d/, /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/]
+    this.maskCep = [ /\d/, /\d/, /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, ]
+    this.maskCpf = [ /\d/, /\d/, /\d/,  '.', /\d/, /\d/, /\d/, '.', /\d/, /\d/, /\d/, '-', /\d/, /\d/ ]
+    this.maskCnpj = [ /\d/, /\d/, '.', /\d/, /\d/, /\d/, '.', /\d/, /\d/, /\d/, '/', /\d/, /\d/, /\d/, /\d/, '-', /\d/, /\d/, ]
 
-        this.restangular.one("GrupoEconomico").get().subscribe((response) => {
+        this.restangular.one('GrupoEconomico').get().subscribe((response) => {
       this.gruposEconomico = response.data
     })
     this.formulario = this.formBuilder.group({
-      ativo:[null, Validators.required],
-      cnpj:[null, Validators.required],
-      codigoTributarioMunicipio:[null],
+      ativo: [null, Validators.required],
+      cnpj: [null, Validators.required],
+      codigoTributarioMunicipio: [null],
       foto: this.formBuilder.group({
-        arquivoId:[0],
-        nome:[null],
-        base64:[null],
-        tipo:[null],
-        tamanho:[0]
+        arquivoId: [0],
+        nome: [null],
+        base64: [null],
+        tipo: [null],
+        tamanho: [0]
       }, Validators.required),
-      empresaId:[this.id],
+      empresaId: [this.id],
       endereco: this.formBuilder.group({
         enderecoId: [0],
         cep: [null],
@@ -74,14 +74,14 @@ export class UpdateEmpresaComponent implements OnInit {
         bairro: [null],
         cidade: [null],
         estado: [null],
-        logradouro:[null]
+        logradouro: [null]
       }),
-      grupoEconomicoId:[0],
-      inscricaoEstadual:[null],
-      inscricaoMunicipal:[null],
-      nomeFantasia:[null, Validators.required],
-      razaoSocial:[null],
-      telefone:[null],
+      grupoEconomicoId: [0],
+      inscricaoEstadual: [null],
+      inscricaoMunicipal: [null],
+      nomeFantasia: [null, Validators.required],
+      razaoSocial: [null],
+      telefone: [null],
       usuarioId: [null]
     })
   }
@@ -89,9 +89,9 @@ export class UpdateEmpresaComponent implements OnInit {
   ngOnInit() {
 
   }
-  onSubmit(){
-    if(!this.formulario.valid){
-      Object.keys(this.formulario.controls).forEach((campo)=>{
+  onSubmit() {
+    if (!this.formulario.valid) {
+      Object.keys(this.formulario.controls).forEach((campo) => {
         const controle = this.formulario.get(campo)
         controle.markAsTouched()
 
@@ -106,29 +106,29 @@ export class UpdateEmpresaComponent implements OnInit {
     },
      err => {
         const errors = err.data.Errors;
-        for (var key in errors) {
+        for (const key in errors) {
           this.notifierService.notify('error', errors[key]);
         }
       });
   }
-  updateForm(dados){
-    if(dados.foto) {
+  updateForm(dados) {
+    if (dados.foto) {
       this.isImageSaved = true
       this.cardImageBase64 = dados.foto.url
     }
     this.formulario.patchValue({
-      ativo:dados.ativo,
-      cnpj:dados.cnpj,
-      codigoTributarioMunicipio:dados.codigoTributarioMunicipio,
+      ativo: dados.ativo,
+      cnpj: dados.cnpj,
+      codigoTributarioMunicipio: dados.codigoTributarioMunicipio,
       foto: [dados.foto],
       fotoId: dados.fotoId,
       endereco: dados.endereco,
       enderecoId: dados.enderecoId,
-      grupoEconomicoId:dados.grupoEconomicoId,
-      inscricaoEstadual:dados.inscricaoEstadual,
-      inscricaoMunicipal:dados.inscricaoMunicipal,
-      nomeFantasia:dados.nomeFantasia,
-      razaoSocial:dados.razaoSocial,
+      grupoEconomicoId: dados.grupoEconomicoId,
+      inscricaoEstadual: dados.inscricaoEstadual,
+      inscricaoMunicipal: dados.inscricaoMunicipal,
+      nomeFantasia: dados.nomeFantasia,
+      razaoSocial: dados.razaoSocial,
       telefone: dados.telefone,
       usuarioId: dados.usuarioId
     })
@@ -173,7 +173,7 @@ export class UpdateEmpresaComponent implements OnInit {
                     const imgBase64Path = e.target.result;
                     this.cardImageBase64 = imgBase64Path;
                     this.isImageSaved = true;
-                    var foto = this.formulario.get('foto') as FormGroup;
+                    const foto = this.formulario.get('foto') as FormGroup;
                     foto.get('base64').setValue(imgBase64Path);
                     foto.get('nome').setValue(fileInput.target.files[0].name);
                     foto.get('tamanho').setValue(fileInput.target.files[0].size);
@@ -190,7 +190,7 @@ export class UpdateEmpresaComponent implements OnInit {
   removeImage(input) {
     this.cardImageBase64 = null;
     this.isImageSaved = false;
-    input.value = "";
+    input.value = '';
   }
 
   consultaCEP() {
@@ -215,11 +215,11 @@ export class UpdateEmpresaComponent implements OnInit {
       }
     });
   }
-  verificaValidTouched(campo){
+  verificaValidTouched(campo) {
     return !this.formulario.get(campo).valid && this.formulario.get(campo).touched;
   }
 
-  aplicaCssErro(campo){
+  aplicaCssErro(campo) {
     return {'has-error': this.verificaValidTouched(campo) }
   }
 }

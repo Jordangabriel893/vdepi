@@ -12,7 +12,7 @@ export class StatusLoteComponent implements OnInit {
   constructor(
     private restangular: Restangular,
   ) {
-    this.restangular.one("loteStatus").get().subscribe((response) => {
+    this.restangular.one('loteStatus').get().subscribe((response) => {
      this.statusLote = response.data
      this.loading = false;
     },

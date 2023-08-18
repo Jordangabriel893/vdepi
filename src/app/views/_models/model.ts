@@ -1,4 +1,4 @@
-import { Moment } from "moment";
+import { Moment } from 'moment';
 
 
 export class Recolhimento {
@@ -39,7 +39,7 @@ export class Alerta {
 export class Dispositivo {
   id: number;
   imei: string;
-  ativo: boolean = true;
+  ativo = true;
   id_status: number;
   telefone: string;
   fabricante: string;
@@ -117,7 +117,7 @@ export class TipoAlerta {
   id: number;
   descricao: string;
   data_cadastro: Date;
-  ativo: boolean = true;
+  ativo = true;
   cor: string;
 }
 
@@ -200,7 +200,7 @@ export class DispositivoAtividade {
 
 export class DispositivoRemessa {
   id: number;
-  id_cliente: number = 0;
+  id_cliente = 0;
   status: string;
   resp_recebimento: string;
   observacao: string;
@@ -233,10 +233,10 @@ export class RouteWay {
 
 export class Agente {
   id: number;
-  autoridade_responsavel_id: number = 0;
+  autoridade_responsavel_id = 0;
   tipo_profissao_id: number;
-  orgao_emissor_id: number = 0;
-  autoridade_divisao_id: number = 0;
+  orgao_emissor_id = 0;
+  autoridade_divisao_id = 0;
   usuario_cadastro_id: number;
   usuario_alteracao_id: number;
   login: string;
@@ -249,7 +249,7 @@ export class Agente {
   data_desativacao: Date;
   data_cadastro: Date;
   data_alteracao: Date;
-  flag_ativo: boolean = true;
+  flag_ativo = true;
 
   Orgao: Orgao;
   Autoridade: Autoridade
@@ -283,7 +283,7 @@ export class Parceiro {
   estado: string;
   lat: number;
   lng: number;
-  ativo: boolean = true;
+  ativo = true;
   login: string;
   senha: string;
 }
@@ -306,7 +306,7 @@ export class DashboardResumoFinanceiro {
 
 export class OrdemServico {
   id: number;
-  id_cliente: number = 0;
+  id_cliente = 0;
   status: string;
   id_parceiro: string;
   id_usuario: number;
@@ -334,7 +334,7 @@ export class AgenteRecolhimento {
   nome: string;
   cpf: string;
   telefone: string;
-  ativo: boolean = true;
+  ativo = true;
   login: string;
   senha: string;
   clientes: number[];
@@ -402,16 +402,16 @@ export interface Categoria {
 }
 
 export class foto {
-  arquivo:{
-    acesso:any
-    base64:any
-    nome:string
-    tamanho:any
-    tipo:string
-    url:string
+  arquivo: {
+    acesso: any
+    base64: any
+    nome: string
+    tamanho: any
+    tipo: string
+    url: string
   }
-  tipoFoto:{
-    descricao:string;
+  tipoFoto: {
+    descricao: string;
     visivelSite: boolean;
   }
 }

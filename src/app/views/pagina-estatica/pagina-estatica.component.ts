@@ -11,7 +11,7 @@ import { Restangular } from 'ngx-restangular';
   styleUrls: ['./pagina-estatica.component.scss']
 })
 export class PaginaEstaticaComponent implements OnInit {
-  paginas:any;
+  paginas: any;
   paginasFiltrados;
   loading = true;
   queryField = new FormControl();
@@ -30,8 +30,8 @@ export class PaginaEstaticaComponent implements OnInit {
       this.onSearch();
     })
   }
-  getPaginas(){
-    this.restangular.one("api/paginaEstatica").get().subscribe((response) => {
+  getPaginas() {
+    this.restangular.one('api/paginaEstatica').get().subscribe((response) => {
       this.paginas = response.data;
       this.paginasFiltrados = response.data;
       this.loading = false;
@@ -58,12 +58,11 @@ export class PaginaEstaticaComponent implements OnInit {
       })
   }
   onSearch() {
-    if(this.queryField.value.length > 3) {
-      let value = this.queryField.value.toLowerCase();
+    if (this.queryField.value.length > 3) {
+      const value = this.queryField.value.toLowerCase();
       this.paginasFiltrados =
         this.paginas.filter(x => x.titulo.toLowerCase().includes(value));
-    }
-    else {
+    } else {
       this.paginasFiltrados = this.paginas;
     }
   }

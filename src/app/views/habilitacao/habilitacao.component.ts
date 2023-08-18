@@ -1,26 +1,26 @@
-import { Component, OnInit, TemplateRef } from "@angular/core";
-import { Restangular } from "ngx-restangular";
-import { BsModalService, BsModalRef } from "ngx-bootstrap/modal";
+import { Component, OnInit, TemplateRef } from '@angular/core';
+import { Restangular } from 'ngx-restangular';
+import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
 import {
   FormBuilder,
   FormControl,
   FormGroup,
   Validators,
-} from "@angular/forms";
-import { NotifierService } from "angular-notifier";
-import { ActivatedRoute, Router } from "@angular/router";
-import { Location } from "@angular/common";
+} from '@angular/forms';
+import { NotifierService } from 'angular-notifier';
+import { ActivatedRoute, Router } from '@angular/router';
+import { Location } from '@angular/common';
 @Component({
-  selector: "app-habilitacao",
-  templateUrl: "./habilitacao.component.html",
-  styleUrls: ["./habilitacao.component.scss"],
+  selector: 'app-habilitacao',
+  templateUrl: './habilitacao.component.html',
+  styleUrls: ['./habilitacao.component.scss'],
 })
 export class HabilitacaoComponent implements OnInit {
   formulario: FormGroup;
   filtroLeilao: FormGroup;
   habilitacao: any = null;
   //modal
-  openPopup: boolean = true;
+  openPopup = true;
   modalRef: BsModalRef;
   solicitacaoHabilitacaoId: any;
   solicitacaoHabilitacaoIdDesabilitar: any;
@@ -32,9 +32,9 @@ export class HabilitacaoComponent implements OnInit {
   docRecusado = false;
 
   statusDocs = [
-    { id: 0, descricao: "PENDENTE" },
-    { id: 1, descricao: "ACEITO" },
-    { id: 2, descricao: "REJEITADO" },
+    { id: 0, descricao: 'PENDENTE' },
+    { id: 1, descricao: 'ACEITO' },
+    { id: 2, descricao: 'REJEITADO' },
   ];
 
   queryField = new FormControl();
@@ -60,7 +60,7 @@ export class HabilitacaoComponent implements OnInit {
 
   ngOnInit() {
     this.restangular
-      .one("admin/leilao", "")
+      .one('admin/leilao', '')
       .get({ PageSize: 100 })
       .subscribe((response) => {
         this.leiloes = response.data;
@@ -74,7 +74,7 @@ export class HabilitacaoComponent implements OnInit {
       (x) => x.solicitacaoHabilitacaoId === solicitacaoHabilitacaoId
     );
     this.habilitacao[i].habilitado = true;
-    this.habilitacao[i].status = "Habilitado";
+    this.habilitacao[i].status = 'Habilitado';
 
     this.restangular
       .all(`habilitacao/${solicitacaoHabilitacaoId}/aprovar`)
@@ -82,12 +82,12 @@ export class HabilitacaoComponent implements OnInit {
       .subscribe(
         (a) => {
           this.notifierService.notify(
-            "success",
-            "Solicitação Aprovada com sucesso"
+            'success',
+            'Solicitação Aprovada com sucesso'
           );
         },
         (error) => {
-          this.notifierService.notify("error", "Erro ao solicitar aprovação");
+          this.notifierService.notify('error', 'Erro ao solicitar aprovação');
         }
       );
   }
@@ -98,7 +98,7 @@ export class HabilitacaoComponent implements OnInit {
       (x) =>
         x.solicitacaoHabilitacaoId === this.solicitacaoHabilitacaoIdDesabilitar
     );
-    this.habilitacao[i].status = "Desabilitado";
+    this.habilitacao[i].status = 'Desabilitado';
     this.habilitacao[i].habilitado = false;
 
     this.restangular
@@ -106,10 +106,10 @@ export class HabilitacaoComponent implements OnInit {
       .post()
       .subscribe(
         (a) => {
-          this.notifierService.notify("success", "Reprovado com sucesso");
+          this.notifierService.notify('success', 'Reprovado com sucesso');
         },
         (error) => {
-          this.notifierService.notify("error", "Erro ao solicitar reprovação");
+          this.notifierService.notify('error', 'Erro ao solicitar reprovação');
         }
       );
   }
@@ -127,12 +127,12 @@ export class HabilitacaoComponent implements OnInit {
       .post(this.habilitacao[i])
       .subscribe(
         (a) => {
-          this.notifierService.notify("success", "Limite Aprovado com sucesso");
+          this.notifierService.notify('success', 'Limite Aprovado com sucesso');
         },
         (error) => {
           this.notifierService.notify(
-            "error",
-            "Erro ao aprovar Limite de Crédito"
+            'error',
+            'Erro ao aprovar Limite de Crédito'
           );
         }
       );
@@ -140,7 +140,7 @@ export class HabilitacaoComponent implements OnInit {
 
   //modal
   openModal(template: TemplateRef<any>, solicitacaoHabilitacaoId) {
-    this.modalRef = this.modalService.show(template, { class: "modal-lg" });
+    this.modalRef = this.modalService.show(template, { class: 'modal-lg' });
     this.documentosUsuario = this.habilitacao.find(
       (x) => x.solicitacaoHabilitacaoId === solicitacaoHabilitacaoId
     );
@@ -150,7 +150,7 @@ export class HabilitacaoComponent implements OnInit {
   }
 
   verMotivoDaRecusa(template: TemplateRef<any>, solicitacaoId) {
-    this.modalRef = this.modalService.show(template, { class: "modal-lg" });
+    this.modalRef = this.modalService.show(template, { class: 'modal-lg' });
     this.solicitacaoHabilitacaoId = solicitacaoId;
   }
 
@@ -158,20 +158,20 @@ export class HabilitacaoComponent implements OnInit {
     const item = this.habilitacao.find(
       (x) => x.solicitacaoHabilitacaoId === solicitacaoHabilitacaoId
     );
-    return item.observacao || "Não foi informado nenhum motivo";
+    return item.observacao || 'Não foi informado nenhum motivo';
   }
 
   getTipoRegra(tipoRegra) {
-    let regra = "";
+    let regra = '';
     switch (tipoRegra) {
-      case "TEL":
-        regra = "Telefone";
+      case 'TEL':
+        regra = 'Telefone';
         break;
-      case "EMAIL":
-        regra = "Email";
+      case 'EMAIL':
+        regra = 'Email';
         break;
-      case "DOC":
-        regra = "Documentos";
+      case 'DOC':
+        regra = 'Documentos';
         break;
     }
 
@@ -179,15 +179,15 @@ export class HabilitacaoComponent implements OnInit {
   }
 
   formatBytes(bytes, decimals = 2) {
-    if (bytes === 0) return "0 Bytes";
+    if (bytes === 0) { return '0 Bytes'; }
 
     const k = 1024;
     const dm = decimals < 0 ? 0 : decimals;
-    const sizes = ["Bytes", "KB", "MB", "GB", "TB", "PB", "EB", "ZB", "YB"];
+    const sizes = ['Bytes', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB'];
 
     const i = Math.floor(Math.log(bytes) / Math.log(k));
 
-    return parseFloat((bytes / Math.pow(k, i)).toFixed(dm)) + " " + sizes[i];
+    return parseFloat((bytes / Math.pow(k, i)).toFixed(dm)) + ' ' + sizes[i];
   }
 
   downloadFile(arquivoId) {
@@ -204,7 +204,7 @@ export class HabilitacaoComponent implements OnInit {
     this.loading = true;
     if (event != null) {
       this.restangular
-        .one("habilitacao")
+        .one('habilitacao')
         .get({ leilaoId: event.id })
         .subscribe(
           (response) => {
@@ -221,8 +221,7 @@ export class HabilitacaoComponent implements OnInit {
   }
 
   existeRecusado(doc: any[]) {
-    if (!doc) this.docRecusado = false;
-    else {
+    if (!doc) { this.docRecusado = false; } else {
       this.docRecusado = doc.some((x) => x.status == true);
     }
   }
@@ -231,7 +230,7 @@ export class HabilitacaoComponent implements OnInit {
     const i = this.habilitacao.findIndex(
       (x) => x.solicitacaoHabilitacaoId === this.solicitacaoHabilitacaoId
     );
-    this.habilitacao[i].status = "Rejeitado";
+    this.habilitacao[i].status = 'Rejeitado';
     this.habilitacao[i].habilitado = false;
 
     this.restangular
@@ -242,14 +241,14 @@ export class HabilitacaoComponent implements OnInit {
       .subscribe(
         (a) => {
           this.notifierService.notify(
-            "success",
-            "Notificação de documentos rejeitados enviado com sucesso"
+            'success',
+            'Notificação de documentos rejeitados enviado com sucesso'
           );
         },
         (error) => {
           this.notifierService.notify(
-            "error",
-            "Erro ao enviar notificação de documentos Rejeitados"
+            'error',
+            'Erro ao enviar notificação de documentos Rejeitados'
           );
         }
       );
@@ -257,10 +256,10 @@ export class HabilitacaoComponent implements OnInit {
 
   onSearch() {
     if (this.queryField.value) {
-      let value = this.queryField.value
-        .replace(".", "")
-        .replace("-", "")
-        .replace("/", "")
+      const value = this.queryField.value
+        .replace('.', '')
+        .replace('-', '')
+        .replace('/', '')
         .toLowerCase();
       this.habilatacoesFiltradas = this.habilitacao.filter((x) =>
         x.email.toLowerCase().includes(value)

@@ -18,7 +18,7 @@ export class ComitentesComponent implements OnInit, OnDestroy {
     private route: ActivatedRoute,
   ) {
    this.sub.push(
-    this.restangular.one("comitente").get().subscribe((response) => {
+    this.restangular.one('comitente').get().subscribe((response) => {
       this.comitente = response.data
       this.loading = false;
      },

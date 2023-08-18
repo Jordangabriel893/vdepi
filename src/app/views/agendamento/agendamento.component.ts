@@ -20,25 +20,25 @@ export class AgendamentoComponent implements OnInit {
     private formBuilder: FormBuilder
   ) {
     this.filtro =  this.formBuilder.group({
-      data:[null],
-      status:['todos'],
-      leilao:["todos"]
+      data: [null],
+      status: ['todos'],
+      leilao: ['todos']
     })
    }
 
   ngOnInit() {
     this.restangular.one('agendamento').get().subscribe(
-      dados =>{
+      dados => {
         this.agendamentosDefault = dados.data;
-        this.agendamentos= dados.data
+        this.agendamentos = dados.data
         this.loading = false;
       },
       () => this.loading = false
     )
 
-    this.restangular.all("admin").one("leilao").get({PageSize:100}).subscribe((response) => {
+    this.restangular.all('admin').one('leilao').get({PageSize: 100}).subscribe((response) => {
       this.leiloes = response.data;
-      this.leiloes.sort(function(a,b) {
+      this.leiloes.sort(function(a, b) {
         return a.nome < b.nome ? -1 : a.nome > b.nome ? 1 : 0;
       })
     })
@@ -47,15 +47,15 @@ export class AgendamentoComponent implements OnInit {
 
   exportAsExcel() {
       const agendamentosModel = this.agendamentos.map(item => {
-        const campos = item.campos.reduce((a, c) => ({...a, [c.campo]:c.valor}), {});
+        const campos = item.campos.reduce((a, c) => ({...a, [c.campo]: c.valor}), {});
         item = {
-          "Data Agendamento":item.dataAgendamento,
-          "Status": item.status,
-          "Leilão":item.leilao,
-          "Numero Lote":item.numeroLote,
-          "Descrição Lote":item.descricaoLote,
-          "Documento Arrematante":item.documentoArrematante,
-          "Nome Arrematante":item.nomeArrematante.toUpperCase(),
+          'Data Agendamento': item.dataAgendamento,
+          'Status': item.status,
+          'Leilão': item.leilao,
+          'Numero Lote': item.numeroLote,
+          'Descrição Lote': item.descricaoLote,
+          'Documento Arrematante': item.documentoArrematante,
+          'Nome Arrematante': item.nomeArrematante.toUpperCase(),
           ...campos
         }
 
@@ -79,20 +79,20 @@ export class AgendamentoComponent implements OnInit {
   }
 
   filtrar() {
-    const leilao = this.filtro.controls["leilao"].value;
-    const status = this.filtro.controls["status"].value;
-    const data = this.filtro.controls["data"].value;
+    const leilao = this.filtro.controls['leilao'].value;
+    const status = this.filtro.controls['status'].value;
+    const data = this.filtro.controls['data'].value;
     let agendamentoFiltrados = this.agendamentosDefault;
-    if(leilao !== "todos") {
+    if (leilao !== 'todos') {
       agendamentoFiltrados = agendamentoFiltrados.filter(item => item.leilao === leilao)
     }
 
-    if(data) {
-      const dataFormatada = moment(data).format("DD/MM/YYYY");
-      agendamentoFiltrados = agendamentoFiltrados.filter(item => moment(item.dataAgendamento, "DD/MM/YYYY HH:mm").format("DD/MM/YYYY") == dataFormatada)
+    if (data) {
+      const dataFormatada = moment(data).format('DD/MM/YYYY');
+      agendamentoFiltrados = agendamentoFiltrados.filter(item => moment(item.dataAgendamento, 'DD/MM/YYYY HH:mm').format('DD/MM/YYYY') == dataFormatada)
     }
 
-    if(status !== "todos") {
+    if (status !== 'todos') {
       agendamentoFiltrados = agendamentoFiltrados.filter(item => item.status === status)
     }
 

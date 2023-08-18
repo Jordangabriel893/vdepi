@@ -13,7 +13,7 @@ import { Subscription } from 'rxjs';
 })
 export class CreateAgendaComponent implements OnInit, OnDestroy {
   empresas: any;
-  formulario:FormGroup;
+  formulario: FormGroup;
   status: any;
   minDate;
   notificacoes;
@@ -37,32 +37,32 @@ export class CreateAgendaComponent implements OnInit, OnDestroy {
       notificacaoId: [null, Validators.required],
       tipoAgendaId: [null, Validators.required],
       intervaloMinutos: [null],
-      dataExecucao:[null, Validators.required],
-      dataEncerramento:[null],
+      dataExecucao: [null, Validators.required],
+      dataEncerramento: [null],
     })
     this.sub.push(
       this.restangular.one('marketing/notificacao').get().subscribe(
-        dados =>{
-          this.notificacoes= dados.data
+        dados => {
+          this.notificacoes = dados.data
         }
       )
     )
     this.sub.push(
       this.restangular.one('marketing/AgendaNotificacao').get().subscribe(
-      dados =>{
+      dados => {
         this.agendaNotificacao = dados.data
       }
     ))
     this.sub.push(
       this.restangular.one('marketing/tipoAgendaNotificacao').get().subscribe(
-        dados =>{
-          this.tiposAgenda= dados.data
+        dados => {
+          this.tiposAgenda = dados.data
         }
       )
     )
 
   }
-  onSubmit(){
+  onSubmit() {
       this.restangular.all('marketing/agendaNotificacao').post(this.formulario.value).subscribe(a => {
       this.notifierService.notify('success', 'Agenda criada com sucesso');
       this.router.navigate(['/agenda']);
@@ -70,17 +70,17 @@ export class CreateAgendaComponent implements OnInit, OnDestroy {
       error => {
         this.notifierService.notify('error', 'Erro ao criar agenda!');
 
-        Object.keys(this.formulario.controls).forEach((campo)=>{
+        Object.keys(this.formulario.controls).forEach((campo) => {
           const controle = this.formulario.get(campo)
           controle.markAsTouched()
         })
       })
   }
-  verificaValidTouched(campo){
+  verificaValidTouched(campo) {
     return !this.formulario.get(campo).valid && this.formulario.get(campo).touched;
   }
 
-  aplicaCssErro(campo){
+  aplicaCssErro(campo) {
     return { 'has-error': this.verificaValidTouched(campo) }
   }
 

@@ -18,12 +18,12 @@ export class PermissoesComponent implements OnInit {
     private router: Router,
     private formBuilder: FormBuilder,
     private restangular: Restangular,
-    private notifierService: NotifierService,) {
-    this.restangular.one("permissao/funcionalidade").get().subscribe((response) => {
+    private notifierService: NotifierService, ) {
+    this.restangular.one('permissao/funcionalidade').get().subscribe((response) => {
       this.permissoes = response.data;
       this.updateFrameworks(response.data)
     })
-    this.restangular.one("usuario/perfis").get().subscribe((response) => {
+    this.restangular.one('usuario/perfis').get().subscribe((response) => {
       this.perfis = response.data
     })
   }
@@ -36,11 +36,11 @@ export class PermissoesComponent implements OnInit {
     const funcionalidadesSelecionadas = funcionalidades.filter(x => x.selecionado == true )
     const arrayfuncionalideId = funcionalidadesSelecionadas.map(funcionalidade => funcionalidade.funcionalideId)
     const formulario = {
-      perfilId:this.formulario.value.perfilId,
-      funcionalidades:arrayfuncionalideId,
+      perfilId: this.formulario.value.perfilId,
+      funcionalidades: arrayfuncionalideId,
     }
-    if(!this.formulario.valid){
-      Object.keys(this.formulario.controls).forEach((campo)=>{
+    if (!this.formulario.valid) {
+      Object.keys(this.formulario.controls).forEach((campo) => {
         const controle = this.formulario.get(campo)
         controle.markAsTouched()
 
@@ -55,7 +55,7 @@ export class PermissoesComponent implements OnInit {
     },
       error => {
         this.notifierService.notify('error', 'Erro ao atualizar as permissões!');
-        Object.keys(this.formulario.controls).forEach((campo)=>{
+        Object.keys(this.formulario.controls).forEach((campo) => {
           const controle = this.formulario.get(campo)
           controle.markAsTouched()
         })

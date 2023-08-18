@@ -1,7 +1,7 @@
-import { InjectionToken } from "@angular/core";
-import { NotifierService } from "angular-notifier/src/services/notifier.service";
-import { environment } from "environments/environment";
-import { Restangular } from "ngx-restangular";
+import { InjectionToken } from '@angular/core';
+import { NotifierService } from 'angular-notifier/src/services/notifier.service';
+import { environment } from 'environments/environment';
+import { Restangular } from 'ngx-restangular';
 
 //Restangular service that uses accounting
 export const RESTANGULAR_TOKEN = new InjectionToken<any>('Restangular');
@@ -9,7 +9,7 @@ export function RestangularTokenFactory(restangular: Restangular, notifierServic
   return restangular.withConfig((RestangularConfigurer) => {
      RestangularConfigurer.setBaseUrl(environment.apiDados);
 
-     let currentUser = JSON.parse(localStorage.getItem('currentUser'));
+     const currentUser = JSON.parse(localStorage.getItem('currentUser'));
      if (currentUser && currentUser.access_token) {
       RestangularConfigurer.setDefaultHeaders({ 'Authorization': 'Bearer ' + currentUser.access_token, withCredentials: true, 'Access-Control-Allow-Origin': '*', 'Access-Control-Allow-Credentials': true });
      }
@@ -22,7 +22,7 @@ export function RestangularTokenFactory(restangular: Restangular, notifierServic
        }
 
        if (response.status === 403) {
-         notifierService.notify("error", "Acesso Negado");
+         notifierService.notify('error', 'Acesso Negado');
          return false;
        }
 

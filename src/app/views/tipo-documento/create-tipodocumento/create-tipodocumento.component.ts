@@ -1,15 +1,15 @@
-import { Component, OnInit } from "@angular/core";
-import { FormGroup, FormBuilder, Validators } from "@angular/forms";
-import { ActivatedRoute, Router } from "@angular/router";
-import { NotifierService } from "angular-notifier";
-import { ConsultaCepService } from "app/views/usuarios/shared/consulta-cep/consulta-cep.service";
-import { Restangular } from "ngx-restangular";
-import { forkJoin } from "rxjs";
+import { Component, OnInit } from '@angular/core';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { ActivatedRoute, Router } from '@angular/router';
+import { NotifierService } from 'angular-notifier';
+import { ConsultaCepService } from 'app/views/usuarios/shared/consulta-cep/consulta-cep.service';
+import { Restangular } from 'ngx-restangular';
+import { forkJoin } from 'rxjs';
 
 @Component({
-  selector: "app-create-tipodocumento",
-  templateUrl: "./create-tipodocumento.component.html",
-  styleUrls: ["./create-tipodocumento.component.scss"],
+  selector: 'app-create-tipodocumento',
+  templateUrl: './create-tipodocumento.component.html',
+  styleUrls: ['./create-tipodocumento.component.scss'],
 })
 export class CreateTipodocumentoComponent implements OnInit {
   formulario: FormGroup;
@@ -33,7 +33,7 @@ export class CreateTipodocumentoComponent implements OnInit {
 
   ngOnInit() {
     this.restangular
-      .one("usuario/perfis")
+      .one('usuario/perfis')
       .get()
       .subscribe((resp: any) => {
         this.perfis = resp.data;
@@ -47,8 +47,8 @@ export class CreateTipodocumentoComponent implements OnInit {
         controle.markAsTouched();
       });
       this.notifierService.notify(
-        "error",
-        "Preencha todos os campos obrigatórios"
+        'error',
+        'Preencha todos os campos obrigatórios'
       );
       return;
     }
@@ -56,24 +56,24 @@ export class CreateTipodocumentoComponent implements OnInit {
       this.formulario.value.possuiAssinatura == true &&
       this.formulario.value.perfis.length < 1
     ) {
-      this.notifierService.notify("error", "Selecione um assinante!");
+      this.notifierService.notify('error', 'Selecione um assinante!');
       return;
     }
     this.restangular
-      .all("/TipoDocumentoLote")
+      .all('/TipoDocumentoLote')
       .post(this.formulario.value)
       .subscribe(
         (a) => {
           this.notifierService.notify(
-            "success",
-            "Tipo de documento criado com sucesso"
+            'success',
+            'Tipo de documento criado com sucesso'
           );
-          this.router.navigateByUrl("/tipodocumento");
+          this.router.navigateByUrl('/tipodocumento');
         },
         (error) => {
           this.notifierService.notify(
-            "error",
-            "Erro ao criar o tipo de documento!"
+            'error',
+            'Erro ao criar o tipo de documento!'
           );
 
           Object.keys(this.formulario.controls).forEach((campo) => {
@@ -94,7 +94,7 @@ export class CreateTipodocumentoComponent implements OnInit {
 
   aplicaCssErro(campo) {
     return {
-      "has-error": this.verificaValidTouched(campo),
+      'has-error': this.verificaValidTouched(campo),
     };
   }
 

@@ -20,7 +20,7 @@ export class UpdateContaComponent implements OnInit, OnDestroy {
   isImageSaved: boolean;
   cardImageBase64: string;
   id;
-  formulario:FormGroup
+  formulario: FormGroup
   empresa
   gruposEconomico;
   empresas;
@@ -40,10 +40,10 @@ export class UpdateContaComponent implements OnInit, OnDestroy {
     private route: ActivatedRoute,
   ) {
 
-    this.mask = ['(', /[1-9]/, /\d/, ')', ' ', /\d/,/\d/,/\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/]
-    this.maskCep = [ /\d/,/\d/,/\d/,/\d/,/\d/, '-', /\d/, /\d/, /\d/, ]
-    this.maskCpf = [ /\d/,/\d/,/\d/,  '.', /\d/,/\d/,/\d/, '.', /\d/, /\d/, /\d/, '-', /\d/,/\d/ ]
-    this.maskCnpj = [ /\d/,/\d/,'.',/\d/,/\d/,/\d/,'.',/\d/,/\d/,/\d/,'/', /\d/,/\d/,/\d/,/\d/,'-',/\d/,/\d/, ]
+    this.mask = ['(', /[1-9]/, /\d/, ')', ' ', /\d/, /\d/, /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/]
+    this.maskCep = [ /\d/, /\d/, /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, ]
+    this.maskCpf = [ /\d/, /\d/, /\d/,  '.', /\d/, /\d/, /\d/, '.', /\d/, /\d/, /\d/, '-', /\d/, /\d/ ]
+    this.maskCnpj = [ /\d/, /\d/, '.', /\d/, /\d/, /\d/, '.', /\d/, /\d/, /\d/, '/', /\d/, /\d/, /\d/, /\d/, '-', /\d/, /\d/, ]
 
 
   }
@@ -51,12 +51,12 @@ export class UpdateContaComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.id = this.route.snapshot.params['id']
    this.sub.push(
-    this.restangular.one("conta", this.id).get().subscribe((response) => {
+    this.restangular.one('conta', this.id).get().subscribe((response) => {
       this.updateForm(response.data)
       })
    )
    this.sub.push( this.restangular.one('empresa').get().subscribe(
-      dados =>{
+      dados => {
         this.empresas = dados.data
       }
     )
@@ -79,9 +79,9 @@ export class UpdateContaComponent implements OnInit, OnDestroy {
     //   empresas:[null, Validators.required]
     // })
   }
-  onSubmit(){
-    if(!this.formulario.valid){
-      Object.keys(this.formulario.controls).forEach((campo)=>{
+  onSubmit() {
+    if (!this.formulario.valid) {
+      Object.keys(this.formulario.controls).forEach((campo) => {
         const controle = this.formulario.get(campo)
         controle.markAsTouched()
 
@@ -110,11 +110,11 @@ export class UpdateContaComponent implements OnInit, OnDestroy {
 
     }
   }
-  updateForm(dados){
+  updateForm(dados) {
     this.formulario = this.formBuilder.group({
       contaId: [this.id],
       nome: [dados.nome, [Validators.required, Validators.minLength(3), Validators.maxLength(35)]],
-      email:[dados.email,[Validators.required, Validators.email]],
+      email: [dados.email, [Validators.required, Validators.email]],
       telefone: [dados.telefone, [Validators.required, Validators.minLength(3)]],
       endereco: this.formBuilder.group({
         enderecoId: [dados.endereco.enderecoId],
@@ -124,12 +124,12 @@ export class UpdateContaComponent implements OnInit, OnDestroy {
             bairro: [dados.endereco.bairro],
             cidade: [dados.endereco.cidade],
             estado: [dados.endereco.estado],
-            logradouro:[dados.endereco.logradouro]
+            logradouro: [dados.endereco.logradouro]
 
       }),
-      empresas:this.formBuilder.control([...dados.empresas]),
-      senha:[null, Validators.required],
-      usuarioId:[dados.usuarioId]
+      empresas: this.formBuilder.control([...dados.empresas]),
+      senha: [null, Validators.required],
+      usuarioId: [dados.usuarioId]
     });
   }
   populaDadosForm(dados) {
@@ -146,11 +146,11 @@ export class UpdateContaComponent implements OnInit, OnDestroy {
       }
     });
   }
-  verificaValidTouched(campo){
+  verificaValidTouched(campo) {
     return !this.formulario.get(campo).valid && this.formulario.get(campo).touched;
   }
 
-  aplicaCssErro(campo){
+  aplicaCssErro(campo) {
     return {'has-error': this.verificaValidTouched(campo) }
   }
   ngOnDestroy(): void {

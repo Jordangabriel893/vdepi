@@ -20,7 +20,7 @@ export class UpdateLeiloeirosComponent implements OnInit {
   isImageSavedAss: boolean;
   cardImageBase64Ass: string;
 
-  formulario:FormGroup
+  formulario: FormGroup
   leiloeiros
   id
   public mask: Array<string | RegExp>
@@ -37,34 +37,34 @@ export class UpdateLeiloeirosComponent implements OnInit {
     private route: ActivatedRoute
     ) {
       this.id = this.route.snapshot.params['id']
-      this.restangular.one("leiloeiro", this.id).get().subscribe((response) => {
+      this.restangular.one('leiloeiro', this.id).get().subscribe((response) => {
       this.updateForm(response.data)
     })
 
-    this.maskCep = [ /\d/,/\d/,/\d/,/\d/,/\d/, '-', /\d/, /\d/, /\d/, ]
+    this.maskCep = [ /\d/, /\d/, /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, ]
 
     this.formulario = this.formBuilder.group({
       leiloeiroId: [this.id, Validators.required],
-      nome:[null, Validators.required],
-      razaoSocial:[null],
-      cpfCnpj:[null, Validators.required],
-      telefone:[null],
-      orgaoRegistro:[null, Validators.required],
+      nome: [null, Validators.required],
+      razaoSocial: [null],
+      cpfCnpj: [null, Validators.required],
+      telefone: [null],
+      orgaoRegistro: [null, Validators.required],
       ufRegistro: [null, Validators.required],
       matricula: [null, Validators.required],
-      genero:[null, Validators.required],
-      nomeComercial:[null],
+      genero: [null, Validators.required],
+      nomeComercial: [null],
       foto: this.formBuilder.group({
-        nome:[null],
-        base64:[null],
-        tipo:[null],
-        tamanho:[0]
+        nome: [null],
+        base64: [null],
+        tipo: [null],
+        tamanho: [0]
       }, Validators.required),
       assinatura: this.formBuilder.group({
-        nome:[null],
-        base64:[null],
-        tipo:[null],
-        tamanho:[0]
+        nome: [null],
+        base64: [null],
+        tipo: [null],
+        tamanho: [0]
       }),
       endereco: this.formBuilder.group({
         enderecoId: [0],
@@ -74,7 +74,7 @@ export class UpdateLeiloeirosComponent implements OnInit {
         bairro: [null],
         cidade: [null],
         estado: [null],
-        logradouro:[null]
+        logradouro: [null]
       }),
       ativo: [null]
     })
@@ -85,8 +85,8 @@ export class UpdateLeiloeirosComponent implements OnInit {
   }
 
   onSubmit() {
-    if(!this.formulario.valid){
-      Object.keys(this.formulario.controls).forEach((campo)=>{
+    if (!this.formulario.valid) {
+      Object.keys(this.formulario.controls).forEach((campo) => {
         const controle = this.formulario.get(campo)
         controle.markAsTouched()
 
@@ -101,34 +101,34 @@ export class UpdateLeiloeirosComponent implements OnInit {
     },
       err => {
         const errors = err.data.Errors;
-        for (var key in errors) {
+        for (const key in errors) {
           this.notifierService.notify('error', errors[key]);
         }
       });
   }
 
-  updateForm(dados){
-    if(dados.foto) {
+  updateForm(dados) {
+    if (dados.foto) {
       this.isImageSaved = true
       this.cardImageBase64 = dados.foto.url
     }
-    if(dados.assinatura) {
+    if (dados.assinatura) {
       this.isImageSavedAss = true
       this.cardImageBase64Ass = dados.assinatura.url
     }
     this.formulario.patchValue({
-      nome:dados.nome,
-      razaoSocial:dados.razaoSocial,
-      genero:dados.genero,
-      orgaoRegistro:dados.orgaoRegistro,
-      ufRegistro:dados.ufRegistro,
-      matricula:dados.matricula,
-      nomeComercial:dados.nomeComercial,
-      anexos:dados.anexos,
-      cpfCnpj:dados.cpfCnpj,
+      nome: dados.nome,
+      razaoSocial: dados.razaoSocial,
+      genero: dados.genero,
+      orgaoRegistro: dados.orgaoRegistro,
+      ufRegistro: dados.ufRegistro,
+      matricula: dados.matricula,
+      nomeComercial: dados.nomeComercial,
+      anexos: dados.anexos,
+      cpfCnpj: dados.cpfCnpj,
       telefone: dados.telefone,
       endereco: dados.endereco,
-      enderecoId:dados.enderecoId,
+      enderecoId: dados.enderecoId,
       foto: [dados.foto],
       assinatura: [dados.assinatura],
       fotoId: dados.fotoId,
@@ -195,7 +195,7 @@ export class UpdateLeiloeirosComponent implements OnInit {
                     const imgBase64Path = e.target.result;
                     this.cardImageBase64 = imgBase64Path;
                     this.isImageSaved = true;
-                    var foto = this.formulario.get('foto') as FormGroup;
+                    const foto = this.formulario.get('foto') as FormGroup;
                     foto.get('base64').setValue(imgBase64Path);
                     foto.get('nome').setValue(fileInput.target.files[0].name);
                     foto.get('tamanho').setValue(fileInput.target.files[0].size);
@@ -249,7 +249,7 @@ export class UpdateLeiloeirosComponent implements OnInit {
                     const imgBase64Path = e.target.result;
                     this.cardImageBase64Ass = imgBase64Path;
                     this.isImageSavedAss = true;
-                    var assinatura = this.formulario.get('assinatura') as FormGroup;
+                    const assinatura = this.formulario.get('assinatura') as FormGroup;
                     assinatura.get('base64').setValue(imgBase64Path);
                     assinatura.get('nome').setValue(fileInput.target.files[0].name);
                     assinatura.get('tamanho').setValue(fileInput.target.files[0].size);
@@ -266,26 +266,26 @@ export class UpdateLeiloeirosComponent implements OnInit {
   removeImage(input) {
     this.cardImageBase64 = null;
     this.isImageSaved = false;
-    input.value = "";
+    input.value = '';
   }
 
   removeImageAss(input) {
     this.cardImageBase64Ass = null;
     this.isImageSavedAss = false;
-    input.value = "";
+    input.value = '';
   }
 
-  verificaValidTouched(campo){
+  verificaValidTouched(campo) {
     return !this.formulario.get(campo).valid && this.formulario.get(campo).touched;
   }
 
-  aplicaCssErro(campo){
+  aplicaCssErro(campo) {
     return { 'has-error': this.verificaValidTouched(campo) }
   }
 
   public maskcpfCnpj = function (rawValue) {
-    var numbers = rawValue.match(/\d/g);
-    var numberLength = 0;
+    const numbers = rawValue.match(/\d/g);
+    let numberLength = 0;
     if (numbers) {
       numberLength = numbers.join('').length;
     }
@@ -297,15 +297,15 @@ export class UpdateLeiloeirosComponent implements OnInit {
   }
 
   public maskTelefone = function (rawValue) {
-    var numbers = rawValue.match(/\d/g);
-    var numberLength = 0;
+    const numbers = rawValue.match(/\d/g);
+    let numberLength = 0;
     if (numbers) {
       numberLength = numbers.join('').length;
     }
     if (numberLength <= 10) {
-      return ['(', /\d/, /\d/, ')', ' ',/\d/, /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/];
+      return ['(', /\d/, /\d/, ')', ' ', /\d/, /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/];
     } else {
-      return ['(', /\d/, /\d/, ')', ' ',/\d/, /\d/, /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/];
+      return ['(', /\d/, /\d/, ')', ' ', /\d/, /\d/, /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/];
     }
   }
 }

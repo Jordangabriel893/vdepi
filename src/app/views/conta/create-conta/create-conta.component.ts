@@ -21,7 +21,7 @@ export class CreateContaComponent implements OnInit, OnDestroy  {
   isImageSaved: boolean;
   cardImageBase64: string;
 
-  formulario:FormGroup
+  formulario: FormGroup
   empresa
   gruposEconomico;
   empresas;
@@ -40,10 +40,10 @@ export class CreateContaComponent implements OnInit, OnDestroy  {
     private cepService: ConsultaCepService,
   ) {
 
-    this.mask = ['(', /[1-9]/, /\d/, ')', ' ', /\d/,/\d/,/\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/]
-    this.maskCep = [ /\d/,/\d/,/\d/,/\d/,/\d/, '-', /\d/, /\d/, /\d/, ]
-    this.maskCpf = [ /\d/,/\d/,/\d/,  '.', /\d/,/\d/,/\d/, '.', /\d/, /\d/, /\d/, '-', /\d/,/\d/ ]
-    this.maskCnpj = [ /\d/,/\d/,'.',/\d/,/\d/,/\d/,'.',/\d/,/\d/,/\d/,'/', /\d/,/\d/,/\d/,/\d/,'-',/\d/,/\d/, ]
+    this.mask = ['(', /[1-9]/, /\d/, ')', ' ', /\d/, /\d/, /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/]
+    this.maskCep = [ /\d/, /\d/, /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, ]
+    this.maskCpf = [ /\d/, /\d/, /\d/,  '.', /\d/, /\d/, /\d/, '.', /\d/, /\d/, /\d/, '-', /\d/, /\d/ ]
+    this.maskCnpj = [ /\d/, /\d/, '.', /\d/, /\d/, /\d/, '.', /\d/, /\d/, /\d/, '/', /\d/, /\d/, /\d/, /\d/, '-', /\d/, /\d/, ]
 
 
   }
@@ -52,17 +52,17 @@ export class CreateContaComponent implements OnInit, OnDestroy  {
 
    this.sub.push(
     this.restangular.one('empresa').get().subscribe(
-      dados =>{
+      dados => {
         this.empresas = dados.data
       }
     )
    )
     this.formulario = this.formBuilder.group({
-      nome:[null, Validators.required],
-      email:[null, Validators.required],
-      senha:[null, Validators.required],
-      telefone:[null, Validators.required],
-      ativo:[true],
+      nome: [null, Validators.required],
+      email: [null, Validators.required],
+      senha: [null, Validators.required],
+      telefone: [null, Validators.required],
+      ativo: [true],
       endereco: this.formBuilder.group({
         enderecoId: [0],
         cep: [null],
@@ -71,14 +71,14 @@ export class CreateContaComponent implements OnInit, OnDestroy  {
         bairro: [null],
         cidade: [null],
         estado: [null],
-        logradouro:[null]
+        logradouro: [null]
       } ),
-      empresas:[null, Validators.required]
+      empresas: [null, Validators.required]
     })
   }
-  onSubmit(){
-    if(!this.formulario.valid){
-      Object.keys(this.formulario.controls).forEach((campo)=>{
+  onSubmit() {
+    if (!this.formulario.valid) {
+      Object.keys(this.formulario.controls).forEach((campo) => {
         const controle = this.formulario.get(campo)
         controle.markAsTouched()
 
@@ -120,11 +120,11 @@ export class CreateContaComponent implements OnInit, OnDestroy  {
       }
     });
   }
-  verificaValidTouched(campo){
+  verificaValidTouched(campo) {
     return !this.formulario.get(campo).valid && this.formulario.get(campo).touched;
   }
 
-  aplicaCssErro(campo){
+  aplicaCssErro(campo) {
     return {'has-error': this.verificaValidTouched(campo) }
   }
   ngOnDestroy(): void {

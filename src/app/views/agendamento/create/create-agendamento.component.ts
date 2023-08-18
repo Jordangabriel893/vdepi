@@ -27,7 +27,7 @@ export class CreateAgendamentoComponent implements OnInit {
     private localeService: BsLocaleService,
     private notifierService: NotifierService,
     private router: Router,
-  ){
+  ) {
       localeService.use('pt-br');
   }
 
@@ -36,26 +36,26 @@ export class CreateAgendamentoComponent implements OnInit {
   ngOnInit(): void {
     this.sub.push(
       this.restangular
-        .one("admin/leilao")
+        .one('admin/leilao')
         .get()
         .subscribe((dados) => {
           this.leiloes = dados.data;
         })
     );
-    
+
     this.formulario = this.formBuilder.group({
       leilaoId: [null, [Validators.required]],
       loteId: [null, [Validators.required]],
       dataAgendamento: [null, [Validators.required]]
     });
   }
-  
+
   setLeilao() {
     this.loadingLotes = true;
     const leilao = this.formulario.value.leilaoId;
     this.sub.push(
       this.restangular
-        .one("lote/numeros")
+        .one('lote/numeros')
         .get({ leilaoId: leilao, statusId: 5 })
         .subscribe((dados) => {
           this.lotes = dados.data;
@@ -65,20 +65,20 @@ export class CreateAgendamentoComponent implements OnInit {
     );
   }
 
-  onSubmit(){
+  onSubmit() {
     this.restangular
-      .all("agendamento")
+      .all('agendamento')
       .post(this.formulario.value)
       .subscribe(
         (a) => {
           this.notifierService.notify(
-            "success",
-            "Agenda criada com sucesso"
+            'success',
+            'Agenda criada com sucesso'
           );
-          this.router.navigate(["/agendamento"]);
+          this.router.navigate(['/agendamento']);
         },
         (error) => {
-          this.notifierService.notify("error", "Erro ao criar agenda!");
+          this.notifierService.notify('error', 'Erro ao criar agenda!');
         }
       );
   }
@@ -90,17 +90,17 @@ export class CreateAgendamentoComponent implements OnInit {
   }
 
   aplicaCssErroLista(campoArray, campo, i) {
-    return { "has-error": this.verificaValidList(campoArray, campo, i) };
+    return { 'has-error': this.verificaValidList(campoArray, campo, i) };
   }
 
   verificaValidList(campoArray, campo, i) {
-    var lista = this.formulario.get(campoArray) as FormArray;
-    var item = lista.controls[i] as FormGroup;
+    let lista = this.formulario.get(campoArray) as FormArray;
+    let item = lista.controls[i] as FormGroup;
     return !item.get(campo).valid;
   }
 
   aplicaCssErro(campo) {
-    return { "has-error": this.verificaValidTouched(campo) };
+    return { 'has-error': this.verificaValidTouched(campo) };
   }
 
   onValueChange(data, campo) {

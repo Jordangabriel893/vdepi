@@ -11,7 +11,7 @@ import { Subscription } from 'rxjs';
   styleUrls: ['./create-categorias.component.scss']
 })
 export class CreateCategoriasComponent implements OnInit, OnDestroy {
-  formulario:FormGroup
+  formulario: FormGroup
   categoriasPai;
   sub: Subscription[] = [];
   constructor(
@@ -20,19 +20,19 @@ export class CreateCategoriasComponent implements OnInit, OnDestroy {
     private notifierService: NotifierService,
     private router: Router
   ) {
-   this.sub.push(this.restangular.one("categoria").get().subscribe((response) => {
+   this.sub.push(this.restangular.one('categoria').get().subscribe((response) => {
       this.categoriasPai = response.data.filter(x => x.categoriaPaiId === null);
     })
    )
     this.formulario = this.formBuilder.group({
-      descricao:[null, Validators.required],
+      descricao: [null, Validators.required],
       categoriaPaiId: [null],
     })
   }
 
   ngOnInit() {
   }
-  onSubmit(){
+  onSubmit() {
     this.restangular.all('categoria').post(this.formulario.value).subscribe(a => {
       this.notifierService.notify('success', 'Categoria Criada com sucesso');
       this.router.navigate(['/categorias']);
@@ -40,17 +40,17 @@ export class CreateCategoriasComponent implements OnInit, OnDestroy {
       error => {
         this.notifierService.notify('error', 'Erro ao criar o categoria!');
 
-        Object.keys(this.formulario.controls).forEach((campo)=>{
+        Object.keys(this.formulario.controls).forEach((campo) => {
           const controle = this.formulario.get(campo)
           controle.markAsTouched()
         })
       });
   }
-  verificaValidTouched(campo){
+  verificaValidTouched(campo) {
     return !this.formulario.get(campo).valid && this.formulario.get(campo).touched;
   }
 
-  aplicaCssErro(campo){
+  aplicaCssErro(campo) {
     return {'has-error': this.verificaValidTouched(campo) }
   }
   ngOnDestroy(): void {

@@ -1,15 +1,15 @@
-import { Component, OnInit } from "@angular/core";
-import { FormGroup, FormBuilder, Validators } from "@angular/forms";
-import { ActivatedRoute, Router } from "@angular/router";
-import { NotifierService } from "angular-notifier";
-import { ConsultaCepService } from "app/views/usuarios/shared/consulta-cep/consulta-cep.service";
-import { Restangular } from "ngx-restangular";
-import { forkJoin } from "rxjs";
+import { Component, OnInit } from '@angular/core';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { ActivatedRoute, Router } from '@angular/router';
+import { NotifierService } from 'angular-notifier';
+import { ConsultaCepService } from 'app/views/usuarios/shared/consulta-cep/consulta-cep.service';
+import { Restangular } from 'ngx-restangular';
+import { forkJoin } from 'rxjs';
 
 @Component({
-  selector: "app-edit-tipodocumento",
-  templateUrl: "./edit-tipodocumento.component.html",
-  styleUrls: ["./edit-tipodocumento.component.scss"],
+  selector: 'app-edit-tipodocumento',
+  templateUrl: './edit-tipodocumento.component.html',
+  styleUrls: ['./edit-tipodocumento.component.scss'],
 })
 export class EditTipodocumentoComponent implements OnInit {
   formulario: FormGroup;
@@ -25,7 +25,7 @@ export class EditTipodocumentoComponent implements OnInit {
     private notifierService: NotifierService,
     private cepService: ConsultaCepService
   ) {
-    this.id = this.route.snapshot.params["id"];
+    this.id = this.route.snapshot.params['id'];
     this.formulario = this.formBuilder.group({
       tipoDocumentoLoteId: [this.id],
       nome: [null, [Validators.required, Validators.minLength(3)]],
@@ -36,7 +36,7 @@ export class EditTipodocumentoComponent implements OnInit {
 
   ngOnInit() {
     forkJoin([
-      this.restangular.one("usuario/perfis").get().pipe(),
+      this.restangular.one('usuario/perfis').get().pipe(),
       this.restangular.one(`tipoDocumentoLote/${this.id}`).get().pipe(),
     ]).subscribe((allResp: any[]) => {
       this.perfis = allResp[0].data;
@@ -49,24 +49,24 @@ export class EditTipodocumentoComponent implements OnInit {
       this.formulario.value.possuiAssinatura == true &&
       this.formulario.value.perfis.length < 1
     ) {
-      this.notifierService.notify("error", "Selecione um assinante!");
+      this.notifierService.notify('error', 'Selecione um assinante!');
       return;
     }
     this.restangular
-      .all("/TipoDocumentoLote")
+      .all('/TipoDocumentoLote')
       .customPUT(this.formulario.value, this.id)
       .subscribe(
         (a) => {
           this.notifierService.notify(
-            "success",
-            "Tipo de documento editado com sucesso"
+            'success',
+            'Tipo de documento editado com sucesso'
           );
-          this.router.navigate(["/tipodocumento"]);
+          this.router.navigate(['/tipodocumento']);
         },
         (error) => {
           this.notifierService.notify(
-            "error",
-            "Erro ao editar o tipo de documento!"
+            'error',
+            'Erro ao editar o tipo de documento!'
           );
 
           Object.keys(this.formulario.controls).forEach((campo) => {
@@ -97,7 +97,7 @@ export class EditTipodocumentoComponent implements OnInit {
 
   aplicaCssErro(campo) {
     return {
-      "has-error": this.verificaValidTouched(campo),
+      'has-error': this.verificaValidTouched(campo),
     };
   }
 

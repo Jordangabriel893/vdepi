@@ -6,7 +6,7 @@ export class AnonyGuard implements CanActivate {
 
     constructor(private router: Router) { }
 
-    canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {        
-      return true;      
+    canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
+      return true;
     }
 }

@@ -43,7 +43,7 @@ export class CreateFaturaComponent implements OnInit, OnDestroy {
   fileToUpload: File | null = null;
 
   leilao: any;
-  leiloes:any;
+  leiloes: any;
   mask: (string | RegExp)[];
   maskTelefoneFixo: (string | RegExp)[];
   maskCep: (string | RegExp)[];
@@ -78,9 +78,9 @@ export class CreateFaturaComponent implements OnInit, OnDestroy {
     localeService.use('pt-br');
     this.mask = ['(', /[1-9]/, /\d/, ')', ' ', /\d/, /\d/, /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/]
     this.maskTelefoneFixo = ['(', /[1-9]/, /\d/, ')', ' ', /\d/, /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/]
-    this.maskCep = [/\d/, /\d/, /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/,]
+    this.maskCep = [/\d/, /\d/, /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, ]
     this.maskCpf = [/\d/, /\d/, /\d/, '.', /\d/, /\d/, /\d/, '.', /\d/, /\d/, /\d/, '-', /\d/, /\d/]
-    this.maskCnpj = [/\d/, /\d/, '.', /\d/, /\d/, /\d/, '.', /\d/, /\d/, /\d/, '/', /\d/, /\d/, /\d/, /\d/, '-', /\d/, /\d/,]
+    this.maskCnpj = [/\d/, /\d/, '.', /\d/, /\d/, /\d/, '.', /\d/, /\d/, /\d/, '/', /\d/, /\d/, /\d/, /\d/, '-', /\d/, /\d/, ]
   }
 
   ngOnInit() {
@@ -117,24 +117,24 @@ export class CreateFaturaComponent implements OnInit, OnDestroy {
   onSubmit() {
     this.salvando = true;
     const formulario = {...this.formulario.value}
-    Object.keys(this.formulario.controls).forEach((campo)=>{
+    Object.keys(this.formulario.controls).forEach((campo) => {
       const controle = this.formulario.get(campo)
       controle.markAsTouched()
     })
 
-    if(moment(this.formulario.controls.dataLimite.value).utc().diff(moment().utc(), 'day') < 0) {
+    if (moment(this.formulario.controls.dataLimite.value).utc().diff(moment().utc(), 'day') < 0) {
       this.notifierService.notify('error', 'A Data Expiração não pode ser menor que hoje');
       this.salvando = false;
       return false;
     }
 
-    if(moment(this.formulario.controls.dataVencimento.value).utc().diff(moment().utc(), 'day') < 0) {
+    if (moment(this.formulario.controls.dataVencimento.value).utc().diff(moment().utc(), 'day') < 0) {
       this.notifierService.notify('error', 'A Data de Vencimento não pode ser menor que hoje');
       this.salvando = false;
       return false;
     }
 
-    if(!this.formulario.valid){
+    if (!this.formulario.valid) {
       this.notifierService.notify('error', 'Preencha todos os campos obrigatórios');
       this.salvando = false;
       return false;
@@ -144,15 +144,15 @@ export class CreateFaturaComponent implements OnInit, OnDestroy {
       .filter(v => v !== null);
     formulario.formasPagamento = formasSelecionadas
 
-    if(this.tipoFatura == 'Massiva'){
+    if (this.tipoFatura == 'Massiva') {
       const existAll = this.formulario.value.itensFatura.filter(x => x.all == true)
       const formMassivo = {
-        leilaoId:formulario.leilaoId,
+        leilaoId: formulario.leilaoId,
         todosLotes: formulario.todosLotes,
-        cobrancaId:formulario.cobrancaId,
+        cobrancaId: formulario.cobrancaId,
         dataLimite: formulario.dataLimite,
-        dataVencimento:formulario.dataVencimento,
-        formasPagamento:formasSelecionadas,
+        dataVencimento: formulario.dataVencimento,
+        formasPagamento: formasSelecionadas,
         agrupar: formulario.agrupar,
         lotes: existAll.length > 0 ? [0] : formulario.itensFatura.map(x => x.loteId)
       }
@@ -165,22 +165,22 @@ export class CreateFaturaComponent implements OnInit, OnDestroy {
         error => {
           this.notifierService.notify('error', 'Erro ao criar fatura massiva!');
           this.salvando = false;
-          Object.keys(this.formulario.controls).forEach((campo)=>{
+          Object.keys(this.formulario.controls).forEach((campo) => {
             const controle = this.formulario.get(campo)
             controle.markAsTouched()
           })
         });
     }
 
-    if(this.tipoFatura == 'Avulsa'){
+    if (this.tipoFatura == 'Avulsa') {
       const formAvulso = {
-        origem:formulario.origem,
-        leilaoId:formulario.leilaoId,
-        cobrancaId:formulario.cobrancaId,
-        cliente:formulario.cliente,
-        dataVencimento:formulario.dataVencimento,
-        formasPagamento:formulario.formasPagamento,
-        itensFatura:formulario.itensFatura,
+        origem: formulario.origem,
+        leilaoId: formulario.leilaoId,
+        cobrancaId: formulario.cobrancaId,
+        cliente: formulario.cliente,
+        dataVencimento: formulario.dataVencimento,
+        formasPagamento: formulario.formasPagamento,
+        itensFatura: formulario.itensFatura,
       }
       this.restangular.all('/Fatura/FaturaManual').post(formAvulso).subscribe(a => {
         this.notifierService.notify('success', 'Fatura avulsa criada com sucesso');
@@ -190,7 +190,7 @@ export class CreateFaturaComponent implements OnInit, OnDestroy {
         error => {
           this.notifierService.notify('error', 'Erro ao criar fatura avulsa!');
           this.salvando = false;
-          Object.keys(this.formulario.controls).forEach((campo)=>{
+          Object.keys(this.formulario.controls).forEach((campo) => {
             const controle = this.formulario.get(campo)
             controle.markAsTouched()
           })
@@ -308,7 +308,7 @@ export class CreateFaturaComponent implements OnInit, OnDestroy {
 
   setFatura(item) {
     this.tipoFatura = item
-    if(item == 'Massiva'){
+    if (item == 'Massiva') {
       this.formulario = this.formBuilder.group({
         origem: [null, Validators.required],
         leilaoId: [null, [Validators.required]],
@@ -323,7 +323,7 @@ export class CreateFaturaComponent implements OnInit, OnDestroy {
         agrupar: [false]
       })
     }
-    if(item == 'Avulsa'){
+    if (item == 'Avulsa') {
       this.formulario = this.formBuilder.group({
         origem: [ null, [Validators.required]],
         leilaoId: [null, [Validators.required]],
@@ -368,9 +368,9 @@ export class CreateFaturaComponent implements OnInit, OnDestroy {
     })
 
     if (form.adicionarItem == 'outros') {
-      let itens = this.formulario.get('itensFatura') as FormArray
+      const itens = this.formulario.get('itensFatura') as FormArray
       itens.push(this.formBuilder.group({
-        loteId:[0],
+        loteId: [0],
         descricao: ['', Validators.required],
         valor: ['', Validators.required],
         tipo: ['outros']
@@ -380,11 +380,11 @@ export class CreateFaturaComponent implements OnInit, OnDestroy {
 
     if (form.adicionarItem == 'lote') {
       if (form.todosLotes == true) {
-        if(existAll.length > 0 || form.itensFatura.length > 0){
+        if (existAll.length > 0 || form.itensFatura.length > 0) {
           this.notifierService.notify('error', 'Um ou mais lotes foram selecionados!');
-        }else{
+        } else {
           const desc = `Todos os lotes foram selecionados `
-          let itens = this.formulario.get('itensFatura') as FormArray
+          const itens = this.formulario.get('itensFatura') as FormArray
           itens.push(this.formBuilder.group({
             descricao: [desc, Validators.required],
             tipo: ['lote'],
@@ -395,32 +395,28 @@ export class CreateFaturaComponent implements OnInit, OnDestroy {
         return
       }
 
-      if(existAll.length < 1) {
-        if(!existLote){
+      if (existAll.length < 1) {
+        if (!existLote) {
           const desc = `Lote: ${form.lote.numeroLote} - Placa: ${form.lote ? form.lote.placa : ''} - Marca/Modelo: ${form.lote ? form.lote.marcaModelo : ''}   `
-          let itens = this.formulario.get('itensFatura') as FormArray
+          const itens = this.formulario.get('itensFatura') as FormArray
           itens.push(this.formBuilder.group({
             descricao: [desc, Validators.required],
             valor: [form.lote.valorLanceVencedor, Validators.required],
             tipo: ['lote'],
-            loteId:[form.lote.loteId],
+            loteId: [form.lote.loteId],
             all: [false]
           }))
-        }
-        else
-        {
+        } else {
           this.notifierService.notify('error', 'Lote já selecionado !');
         }
-      }
-      else
-      {
+      } else {
         this.notifierService.notify('error', 'Todos os lotes já foram selecionados !');
       }
     }
   }
 
   deleteItens(indexCampo: number) {
-    let itens = this.formulario.controls['itensFatura'] as FormArray
+    const itens = this.formulario.controls['itensFatura'] as FormArray
     itens.removeAt(indexCampo)
   }
 
@@ -429,8 +425,8 @@ export class CreateFaturaComponent implements OnInit, OnDestroy {
     return itens.controls
   }
 
-  openModal(template: TemplateRef<any>,item?) {
-    if(item == 'fatura' && this.formulario.value.leilaoId == null){
+  openModal(template: TemplateRef<any>, item?) {
+    if (item == 'fatura' && this.formulario.value.leilaoId == null) {
       this.notifierService.notify('error', 'Selecione um leilão');
       return
     }
@@ -446,8 +442,8 @@ export class CreateFaturaComponent implements OnInit, OnDestroy {
   }
 
   verificaValidList(campoArray, campo, i) {
-    var lista = this.formulario.get(campoArray) as FormArray;
-    var item = lista.controls[i] as FormGroup;
+    const lista = this.formulario.get(campoArray) as FormArray;
+    const item = lista.controls[i] as FormGroup;
     return !item.get(campo).valid;
   }
 
@@ -461,7 +457,7 @@ export class CreateFaturaComponent implements OnInit, OnDestroy {
   }
 
   public cpfcnpjmask = function (value) {
-    let numbers = value.match(/\d/g);
+    const numbers = value.match(/\d/g);
     let numberLength = 0;
     if (numbers) {
       numberLength = numbers.join('').length;

@@ -28,14 +28,14 @@ export class NotificacoesComponent implements OnInit {
     private modalService: BsModalService,
   ) {
     this.formulario = this.formBuilder.group({
-      leilao:[null]
+      leilao: [null]
     })
    }
 
   ngOnInit() {
     this.restangular.one('/Marketing/Notificacao').get().subscribe(
-      dados =>{
-        this.notificacoes= dados.data
+      dados => {
+        this.notificacoes = dados.data
         this.loading = false;
       },
       () => this.loading = false
@@ -49,7 +49,7 @@ export class NotificacoesComponent implements OnInit {
 
     this.modalRef = this.modalService.show(template, {class: 'modal-lg'});
   }
-  navigateLog(notificacao){
+  navigateLog(notificacao) {
     this.router.navigate(['/log-notificacoes', notificacao.notificacaoId], { relativeTo: this.route });
 }
 }

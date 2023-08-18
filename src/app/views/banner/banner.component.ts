@@ -6,7 +6,7 @@ import { Subscription } from 'rxjs';
 @Component({
   selector: 'app-banner',
   templateUrl: './banner.component.html',
-  styleUrls: ['./banner.component.scss']
+  styleUrls: ['./banner.component.scss'],
 })
 export class BannerComponent implements OnInit, OnDestroy {
   loading = true;
@@ -15,24 +15,24 @@ export class BannerComponent implements OnInit, OnDestroy {
   constructor(
     private route: ActivatedRoute,
     private router: Router,
-    private restangular: Restangular,
-  ) { }
+    private restangular: Restangular
+  ) {}
 
   ngOnInit() {
     this.sub.push(
-      this.restangular.one('cms/banner').get().subscribe(
-        dados =>{
-          this.banners= dados.data
+      this.restangular
+        .one('cms/banner')
+        .get()
+        .subscribe((dados) => {
+          this.banners = dados.data;
           this.loading = false;
-        }
-      )
-    )
-
+        })
+    );
   }
   edit(id) {
     this.router.navigate(['/edit-banner', id], { relativeTo: this.route });
   }
   ngOnDestroy(): void {
-    this.sub.forEach(s => s.unsubscribe())
+    this.sub.forEach((s) => s.unsubscribe());
   }
 }

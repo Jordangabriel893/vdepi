@@ -1,22 +1,22 @@
-import { Component, ElementRef, OnInit, ViewChild } from "@angular/core";
-import { Router, ActivatedRoute } from "@angular/router";
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { Router, ActivatedRoute } from '@angular/router';
 
-import { FormArray, FormBuilder, FormGroup, Validators } from "@angular/forms";
-import * as _ from "lodash";
-import * as moment from "moment";
-import { Restangular } from "ngx-restangular";
-import { NotifierService } from "angular-notifier";
-import { AngularEditorConfig } from "@kolkov/angular-editor";
-import { BsLocaleService } from "ngx-bootstrap";
-import { validateConfig } from "@angular/router/src/config";
+import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import * as _ from 'lodash';
+import * as moment from 'moment';
+import { Restangular } from 'ngx-restangular';
+import { NotifierService } from 'angular-notifier';
+import { AngularEditorConfig } from '@kolkov/angular-editor';
+import { BsLocaleService } from 'ngx-bootstrap';
+import { validateConfig } from '@angular/router/src/config';
 
 @Component({
-  selector: "app-update-leilao",
-  templateUrl: "./update-leilao.component.html",
-  styleUrls: ["./update-leilao.component.scss"],
+  selector: 'app-update-leilao',
+  templateUrl: './update-leilao.component.html',
+  styleUrls: ['./update-leilao.component.scss'],
 })
 export class UpdateLeilaoComponent implements OnInit {
-  @ViewChild("inputAnexos") inputAnexos: ElementRef;
+  @ViewChild('inputAnexos') inputAnexos: ElementRef;
   imageError: string;
   isImageSaved: boolean;
   cardImageBase64: string;
@@ -44,28 +44,28 @@ export class UpdateLeilaoComponent implements OnInit {
   editorConfig: AngularEditorConfig = {
     editable: true,
     spellcheck: true,
-    height: "auto",
-    minHeight: "0",
-    maxHeight: "300px",
-    width: "auto",
-    minWidth: "0",
-    translate: "yes",
+    height: 'auto',
+    minHeight: '0',
+    maxHeight: '300px',
+    width: 'auto',
+    minWidth: '0',
+    translate: 'yes',
     enableToolbar: true,
     showToolbar: true,
-    defaultParagraphSeparator: "",
-    defaultFontName: "",
-    defaultFontSize: "",
+    defaultParagraphSeparator: '',
+    defaultFontName: '',
+    defaultFontSize: '',
     fonts: [
-      { class: "roboto", name: "Roboto" },
-      { class: "arial", name: "Arial" },
-      { class: "times-new-roman", name: "Times New Roman" },
-      { class: "calibri", name: "Calibri" },
-      { class: "comic-sans-ms", name: "Comic Sans MS" },
+      { class: 'roboto', name: 'Roboto' },
+      { class: 'arial', name: 'Arial' },
+      { class: 'times-new-roman', name: 'Times New Roman' },
+      { class: 'calibri', name: 'Calibri' },
+      { class: 'comic-sans-ms', name: 'Comic Sans MS' },
     ],
     sanitize: true,
   };
 
-  maskhora = [/\d/, /\d/, ":", /\d/, /\d/];
+  maskhora = [/\d/, /\d/, ':', /\d/, /\d/];
   habilitacoes: any;
 
   constructor(
@@ -76,44 +76,44 @@ export class UpdateLeilaoComponent implements OnInit {
     private notifierService: NotifierService,
     private localeService: BsLocaleService
   ) {
-    localeService.use("pt-br");
+    localeService.use('pt-br');
     this.minDate = new Date();
     this.minDate.setDate(this.minDate.getDate() - 1);
 
     this.restangular
-      .one("categoria")
+      .one('categoria')
       .get()
       .subscribe((dados) => {
         const categoriaPai = dados.data.filter((x) => x.categoriaPaiId == null);
         this.categorias = categoriaPai;
       });
     this.restangular
-      .one("comitente")
+      .one('comitente')
       .get()
       .subscribe((dados) => {
         this.comitentes = dados.data;
       });
     this.restangular
-      .one("leiloeiro")
+      .one('leiloeiro')
       .get()
       .subscribe((dados) => {
         this.leiloeiros = dados.data;
       });
     this.restangular
-      .one("empresa")
+      .one('empresa')
       .get()
       .subscribe((dados) => {
         this.empresas = dados.data;
       });
     this.restangular
-      .all("leilao")
-      .one("status")
+      .all('leilao')
+      .one('status')
       .get()
       .subscribe((dados) => {
         this.status = dados.data;
       });
     this.restangular
-      .one("Habilitacao/Regras")
+      .one('Habilitacao/Regras')
       .get()
       .subscribe((dados) => {
         // const habilitac = dados.data
@@ -121,14 +121,14 @@ export class UpdateLeilaoComponent implements OnInit {
         this.habilitacoes = dados.data;
       });
     this.restangular
-      .all("leilao")
-      .one("tipos")
+      .all('leilao')
+      .one('tipos')
       .get()
       .subscribe((dados) => {
         this.tiposLeilao = dados.data;
       });
     this.restangular
-      .one("indiceCorrecao")
+      .one('indiceCorrecao')
       .get()
       .subscribe((dados) => {
         this.indicesCorrecao = dados.data;
@@ -136,7 +136,7 @@ export class UpdateLeilaoComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.id = this.route.snapshot.params["id"];
+    this.id = this.route.snapshot.params['id'];
     // this.restangular.all('admin/leilao').get(this.id).subscribe(dados => {
     //   this.restangular.all('admin/leilao/' + this.id + '/configuracao').get().subscribe(configuracao => {
     //     dados.data.configuracaoParcela = configuracao.data
@@ -144,12 +144,12 @@ export class UpdateLeilaoComponent implements OnInit {
     //   })
     // })
     this.restangular
-      .all("admin/leilao")
+      .all('admin/leilao')
       .get(this.id)
       .subscribe((dados) => {
         this.restangular
-          .one("admin/leilao", this.id)
-          .one("configuracao")
+          .one('admin/leilao', this.id)
+          .one('configuracao')
           .get()
           .subscribe((configuracao) => {
             dados.data.configuracaoParcela = configuracao.data;
@@ -167,7 +167,7 @@ export class UpdateLeilaoComponent implements OnInit {
       });
 
       const configuracaoParcelaForm = this.formulario.get(
-        "configuracaoParcela"
+        'configuracaoParcela'
       ) as FormGroup;
       Object.keys(configuracaoParcelaForm.controls).forEach((campo) => {
         const controle = configuracaoParcelaForm.get(campo);
@@ -175,33 +175,33 @@ export class UpdateLeilaoComponent implements OnInit {
       });
 
       this.notifierService.notify(
-        "error",
-        "Preencha todos os campos obrigatórios"
+        'error',
+        'Preencha todos os campos obrigatórios'
       );
       return false;
     }
 
-    if (this.formulario.get("tipoLeilaoId").value == 1) {
-      var pracas = this.formulario.get("pracas") as FormArray;
+    if (this.formulario.get('tipoLeilaoId').value == 1) {
+      const pracas = this.formulario.get('pracas') as FormArray;
       if (pracas.length === 0) {
         this.notifierService.notify(
-          "error",
-          "Adicione ao menos um praça para Leilão Judicial"
+          'error',
+          'Adicione ao menos um praça para Leilão Judicial'
         );
         return false;
       }
     }
 
     this.restangular
-      .all("leilao")
+      .all('leilao')
       .customPUT(this.formulario.value, this.id)
       .subscribe(
         (a) => {
-          this.notifierService.notify("success", "Leilão editado com sucesso");
-          this.router.navigate(["/leilao"]);
+          this.notifierService.notify('success', 'Leilão editado com sucesso');
+          this.router.navigate(['/leilao']);
         },
         (error) => {
-          this.notifierService.notify("error", "Erro ao atualizar o Leilão!");
+          this.notifierService.notify('error', 'Erro ao atualizar o Leilão!');
           Object.keys(this.formulario.controls).forEach((campo) => {
             const controle = this.formulario.get(campo);
             controle.markAsTouched();
@@ -295,7 +295,7 @@ export class UpdateLeilaoComponent implements OnInit {
       termoCondicaoVenda: [dados.termoCondicaoVenda],
       anexos: this.formBuilder.array(
         dados.anexos
-          ? dados.anexos.map((x) => this.formBuilder.group({ ...x, acao: "" }))
+          ? dados.anexos.map((x) => this.formBuilder.group({ ...x, acao: '' }))
           : []
       ),
       regrasHabilitacao: this.formBuilder.control([...arrayRegraHabiliacaoId]),
@@ -324,7 +324,7 @@ export class UpdateLeilaoComponent implements OnInit {
 
     if (dados.configuracaoParcela && dados.lanceParcelado) {
       this.formulario.addControl(
-        "configuracaoParcela",
+        'configuracaoParcela',
         this.formBuilder.group({
           minimoEntrada: [
             dados.configuracaoParcela.minimoEntrada,
@@ -344,10 +344,10 @@ export class UpdateLeilaoComponent implements OnInit {
       );
     }
 
-    this.formulario.get("lanceParcelado").valueChanges.subscribe((d) => {
+    this.formulario.get('lanceParcelado').valueChanges.subscribe((d) => {
       if (d) {
         this.formulario.addControl(
-          "configuracaoParcela",
+          'configuracaoParcela',
           this.formBuilder.group({
             minimoEntrada: [null, Validators.required],
             maximoParcelas: [null, Validators.required],
@@ -355,27 +355,27 @@ export class UpdateLeilaoComponent implements OnInit {
           })
         );
       } else {
-        this.formulario.removeControl("configuracaoParcela");
+        this.formulario.removeControl('configuracaoParcela');
       }
     });
 
     if (dados.tipoLeilaoId === 1) {
-      this.formulario.get("dataLeilao").disable();
+      this.formulario.get('dataLeilao').disable();
     }
 
-    this.formulario.get("tipoLeilaoId").valueChanges.subscribe((d) => {
-      this.formulario.get("lanceParcelado").setValue(false);
+    this.formulario.get('tipoLeilaoId').valueChanges.subscribe((d) => {
+      this.formulario.get('lanceParcelado').setValue(false);
       if (d == 1) {
-        this.formulario.get("dataLeilao").setValidators(null);
-        this.formulario.get("dataLeilao").setValue(null);
-        this.formulario.get("dataLeilao").disable();
-        this.formulario.addControl("pracas", this.formBuilder.array([]));
+        this.formulario.get('dataLeilao').setValidators(null);
+        this.formulario.get('dataLeilao').setValue(null);
+        this.formulario.get('dataLeilao').disable();
+        this.formulario.addControl('pracas', this.formBuilder.array([]));
       } else {
-        this.formulario.get("dataLeilao").setValidators(Validators.required);
-        this.formulario.removeControl("pracas");
-        this.formulario.get("dataLeilao").enable();
+        this.formulario.get('dataLeilao').setValidators(Validators.required);
+        this.formulario.removeControl('pracas');
+        this.formulario.get('dataLeilao').enable();
       }
-      this.formulario.get("dataLeilao").updateValueAndValidity();
+      this.formulario.get('dataLeilao').updateValueAndValidity();
     });
   }
 
@@ -384,18 +384,18 @@ export class UpdateLeilaoComponent implements OnInit {
     if (fileInput.target.files && fileInput.target.files[0]) {
       // Size Filter Bytes
       const max_size = 5242880;
-      const allowed_types = ["image/png", "image/jpeg"];
+      const allowed_types = ['image/png', 'image/jpeg'];
       const max_height = 15200;
       const max_width = 25600;
 
       if (fileInput.target.files[0].size > max_size) {
-        this.imageError = "Maximum size allowed is 5Mb";
+        this.imageError = 'Maximum size allowed is 5Mb';
 
         return false;
       }
 
       if (!_.includes(allowed_types, fileInput.target.files[0].type)) {
-        this.imageError = "Only Images are allowed ( JPG | PNG )";
+        this.imageError = 'Only Images are allowed ( JPG | PNG )';
         return false;
       }
       const reader = new FileReader();
@@ -403,26 +403,26 @@ export class UpdateLeilaoComponent implements OnInit {
         const image = new Image();
         image.src = e.target.result;
         image.onload = (rs) => {
-          const img_height = rs.currentTarget["height"];
-          const img_width = rs.currentTarget["width"];
+          const img_height = rs.currentTarget['height'];
+          const img_width = rs.currentTarget['width'];
 
           if (img_height > max_height && img_width > max_width) {
             this.imageError =
-              "Maximum dimentions allowed " +
+              'Maximum dimentions allowed ' +
               max_height +
-              "*" +
+              '*' +
               max_width +
-              "px";
+              'px';
             return false;
           } else {
             const imgBase64Path = e.target.result;
             this.cardImageBase64 = imgBase64Path;
             this.isImageSaved = true;
-            var foto = this.formulario.get("foto") as FormGroup;
-            foto.get("base64").setValue(imgBase64Path);
-            foto.get("nome").setValue(fileInput.target.files[0].name);
-            foto.get("tamanho").setValue(fileInput.target.files[0].size);
-            foto.get("tipo").setValue(fileInput.target.files[0].type);
+            const foto = this.formulario.get('foto') as FormGroup;
+            foto.get('base64').setValue(imgBase64Path);
+            foto.get('nome').setValue(fileInput.target.files[0].name);
+            foto.get('tamanho').setValue(fileInput.target.files[0].size);
+            foto.get('tipo').setValue(fileInput.target.files[0].type);
             // this.previewImagePath = imgBase64Path;
           }
         };
@@ -455,7 +455,7 @@ export class UpdateLeilaoComponent implements OnInit {
   }
 
   atualizarAnexo(obj, i) {
-    let anexos = this.formulario.get("anexos") as FormArray;
+    const anexos = this.formulario.get('anexos') as FormArray;
 
     if (i < 0) {
       anexos.push(
@@ -463,7 +463,7 @@ export class UpdateLeilaoComponent implements OnInit {
           arquivoId: 0,
           nome: [null, Validators.required],
           arquivo: obj,
-          acao: "I",
+          acao: 'I',
         })
       );
     } else {
@@ -475,7 +475,7 @@ export class UpdateLeilaoComponent implements OnInit {
           arquivoId: 0,
           nome: valor.nome,
           arquivo: obj,
-          acao: "A",
+          acao: 'A',
         })
       );
     }
@@ -489,15 +489,15 @@ export class UpdateLeilaoComponent implements OnInit {
   filterList(campo: string) {
     const fotos = this.formulario.get(campo) as FormArray;
     return fotos.controls.filter(
-      (x) => (x as FormGroup).controls["acao"].value !== "D"
+      (x) => (x as FormGroup).controls['acao'].value !== 'D'
     );
   }
 
   deleteAnexo(indexAnexo: number) {
-    let anexos = this.formulario.controls["anexos"] as FormArray;
-    let anexo = anexos.at(indexAnexo) as FormGroup;
-    if (anexo.controls["acao"].value !== "I") {
-      anexo.controls["acao"].setValue("D");
+    const anexos = this.formulario.controls['anexos'] as FormArray;
+    const anexo = anexos.at(indexAnexo) as FormGroup;
+    if (anexo.controls['acao'].value !== 'I') {
+      anexo.controls['acao'].setValue('D');
     } else {
       anexos.removeAt(indexAnexo);
     }
@@ -506,7 +506,7 @@ export class UpdateLeilaoComponent implements OnInit {
   removeImage(input) {
     this.cardImageBase64 = null;
     this.isImageSaved = false;
-    input.value = "";
+    input.value = '';
   }
 
   verificaValidTouched(campo) {
@@ -517,7 +517,7 @@ export class UpdateLeilaoComponent implements OnInit {
 
   aplicaCssErro(campo) {
     if (!this.formulario.get(campo).disabled) {
-      return { "has-error": this.verificaValidTouched(campo) };
+      return { 'has-error': this.verificaValidTouched(campo) };
     }
   }
 
@@ -536,18 +536,18 @@ export class UpdateLeilaoComponent implements OnInit {
   }
 
   aplicaCssErroJudicial(form, campo) {
-    return { "has-error": this.verificaValidTouchedJudicial(form, campo) };
+    return { 'has-error': this.verificaValidTouchedJudicial(form, campo) };
   }
 
   onValueChangePraca(event, campo, i) {
-    let pracas = this.formulario.get("pracas") as FormArray;
-    let praca = pracas.at(i) as FormGroup;
+    const pracas = this.formulario.get('pracas') as FormArray;
+    const praca = pracas.at(i) as FormGroup;
     praca.controls[campo].markAsTouched();
     praca.controls[campo].setValue(event);
   }
 
   adicionarPraca() {
-    let pracas = this.formulario.get("pracas") as FormArray;
+    const pracas = this.formulario.get('pracas') as FormArray;
     pracas.push(
       this.formBuilder.group({
         pracaLeilaoId: [0],
@@ -559,7 +559,7 @@ export class UpdateLeilaoComponent implements OnInit {
   }
 
   deletePraca(indexPraca: number) {
-    let pracas = this.formulario.controls["pracas"] as FormArray;
+    const pracas = this.formulario.controls['pracas'] as FormArray;
     pracas.removeAt(indexPraca);
   }
 }

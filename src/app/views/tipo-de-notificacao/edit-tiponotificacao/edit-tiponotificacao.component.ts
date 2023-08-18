@@ -13,7 +13,7 @@ import { Restangular } from 'ngx-restangular';
 export class EditTiponotificacaoComponent implements OnInit {
   id;
   empresas: any;
-  formulario:FormGroup;
+  formulario: FormGroup;
   status: any;
 
   constructor(
@@ -30,7 +30,7 @@ export class EditTiponotificacaoComponent implements OnInit {
   ngOnInit() {
     this.id = this.route.snapshot.params['id']
     this.formulario = this.formBuilder.group({
-      tipoNotificacaoId:[this.id],
+      tipoNotificacaoId: [this.id],
       descricao: [null, Validators.required],
 
     })
@@ -41,9 +41,9 @@ export class EditTiponotificacaoComponent implements OnInit {
     )
 
   }
-  onSubmit(){
-    if(!this.formulario.valid){
-      Object.keys(this.formulario.controls).forEach((campo)=>{
+  onSubmit() {
+    if (!this.formulario.valid) {
+      Object.keys(this.formulario.controls).forEach((campo) => {
         const controle = this.formulario.get(campo)
         controle.markAsTouched()
 
@@ -58,17 +58,17 @@ export class EditTiponotificacaoComponent implements OnInit {
     },
       error => {
         this.notifierService.notify('error', 'Erro ao atualizar tipo de notificação!');
-        Object.keys(this.formulario.controls).forEach((campo)=>{
+        Object.keys(this.formulario.controls).forEach((campo) => {
           const controle = this.formulario.get(campo)
           controle.markAsTouched()
         })
       });
   }
-  verificaValidTouched(campo){
+  verificaValidTouched(campo) {
     // return !this.formulario.get(campo).valid && this.formulario.get(campo).touched;
   }
 
-  aplicaCssErro(campo){
+  aplicaCssErro(campo) {
     return { 'has-error': this.verificaValidTouched(campo) }
   }
 
@@ -84,8 +84,8 @@ export class EditTiponotificacaoComponent implements OnInit {
       tipoNotificacaoId: dados.tipoNotificacaoId
     })
   }
-  desativar(){
-    this.restangular.all('marketing/TipoNotificacao/Desativar').customPUT( '',this.id ) .subscribe(a => {
+  desativar() {
+    this.restangular.all('marketing/TipoNotificacao/Desativar').customPUT( '', this.id ) .subscribe(a => {
       this.notifierService.notify('success', 'Tipo de notificação desativada com sucesso');
       this.router.navigate(['/tiponotificacao']);
     },

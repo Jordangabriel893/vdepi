@@ -12,7 +12,7 @@ import { Restangular } from 'ngx-restangular';
 })
 export class CreateTiponotificacaoComponent implements OnInit {
   empresas: any;
-  formulario:FormGroup;
+  formulario: FormGroup;
   status: any;
 
   constructor(
@@ -31,18 +31,18 @@ export class CreateTiponotificacaoComponent implements OnInit {
 
     })
     this.restangular.one('empresa').get().subscribe(
-      dados =>{
-        this.empresas= dados.data
+      dados => {
+        this.empresas = dados.data
       }
     )
     this.restangular.all('leilao').one('status').get().subscribe(
-      dados =>{
-        this.status= dados.data
+      dados => {
+        this.status = dados.data
       }
     )
 
   }
-  onSubmit(){
+  onSubmit() {
     this.restangular.all('marketing/tipoNotificacao').post(this.formulario.value).subscribe(a => {
       this.notifierService.notify('success', 'Tipo de notificação criada com sucesso');
       this.router.navigate(['/tiponotificacao']);
@@ -50,17 +50,17 @@ export class CreateTiponotificacaoComponent implements OnInit {
       error => {
         this.notifierService.notify('error', 'Erro ao criar tipo de notificação!');
 
-        Object.keys(this.formulario.controls).forEach((campo)=>{
+        Object.keys(this.formulario.controls).forEach((campo) => {
           const controle = this.formulario.get(campo)
           controle.markAsTouched()
         })
       });
   }
-  verificaValidTouched(campo){
+  verificaValidTouched(campo) {
     return !this.formulario.get(campo).valid && this.formulario.get(campo).touched;
   }
 
-  aplicaCssErro(campo){
+  aplicaCssErro(campo) {
     return { 'has-error': this.verificaValidTouched(campo) }
   }
 

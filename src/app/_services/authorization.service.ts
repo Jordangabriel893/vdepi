@@ -11,28 +11,28 @@ export class AuthorizationService {
     const user = this.auth.getUser();
     if (user && user.permission) {
       const permissoes = user.permission;
-      return permissoes.some((x:any) => x.codigo == source)
+      return permissoes.some((x: any) => x.codigo == source)
     } else {
       return false;
     }
   }
 
-  hasItem(item){
+  hasItem(item) {
     const user = this.auth.getUser();
     if (user && user.permission) {
       const permissoes = user.permission;
-      return permissoes.some((x:any) => x.grupo == item.grupo)
+      return permissoes.some((x: any) => x.grupo == item.grupo)
     } else {
       return false;
     }
   }
 
-  hasPermissions(){
+  hasPermissions() {
     const user = this.auth.getUser();
     if (user && user.permission) {
       return true
 
-    }else{
+    } else {
       return false
     }
 

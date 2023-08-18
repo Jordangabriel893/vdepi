@@ -1,8 +1,8 @@
-﻿import * as _ from "lodash";
-import { Pipe, PipeTransform } from "@angular/core";
+import * as _ from 'lodash';
+import { Pipe, PipeTransform } from '@angular/core';
 
 @Pipe({
-    name: "dataFilter"
+    name: 'dataFilter'
 })
 export class DataFilterPipe implements PipeTransform {
 
@@ -16,13 +16,11 @@ export class DataFilterPipe implements PipeTransform {
                                 return Object.keys(item[k][j]).some(l => {
                                     return String(item[k][j][l]).toLocaleLowerCase().indexOf(query.toLocaleLowerCase()) > -1
                                 });
-                            }
-                            else {
+                            } else {
                                 return String(item[k][j]).toLocaleLowerCase().indexOf(query.toLocaleLowerCase()) > -1
                             }
                         });
-                    }
-                    else {
+                    } else {
                         return String(item[k]).toLocaleLowerCase().indexOf(query.toLocaleLowerCase()) > -1
                     }
                 });

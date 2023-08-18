@@ -52,7 +52,7 @@ export class ListaContatosComponent implements OnInit {
       .withHttpConfig({ responseType: 'blob' })
       .get()
       .subscribe(dados => {
-        var file = new Blob([dados], { type: 'text/plain' });
+        const file = new Blob([dados], { type: 'text/plain' });
         fileSaver.saveAs(file, `Contatos.txt`);
       }, error => {
         this.notifierService.notify('error', 'Não foi possivel fazer download da lista de contatos!');

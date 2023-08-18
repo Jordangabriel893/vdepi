@@ -18,7 +18,7 @@ export class ContaComponent implements OnInit, OnDestroy {
     private route: ActivatedRoute,
   ) {
    this.sub.push(
-     this.restangular.one("conta").get().subscribe((response) => {
+     this.restangular.one('conta').get().subscribe((response) => {
      this.contas = response.data
      this.loading = false;
     },

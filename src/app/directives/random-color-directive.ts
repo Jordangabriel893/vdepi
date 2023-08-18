@@ -1,4 +1,4 @@
-﻿import {Directive, ElementRef, Renderer} from '@angular/core'
+import {Directive, ElementRef, Renderer} from '@angular/core'
 
 @Directive({
     selector: '[randomColor]',
@@ -11,11 +11,11 @@ export class RandomColorDirective {
       this.updateColor();
     }
     getColor() {
-      return "#"+((1<<24)*Math.random()|0).toString(16);
+      return '#' + ((1 << 24) * Math.random() | 0).toString(16);
     }
     onClick() {
-      this.updateColor("lightgrey");
-      window.setTimeout(() => this.updateColor(),1000);
+      this.updateColor('lightgrey');
+      window.setTimeout(() => this.updateColor(), 1000);
     }
     updateColor(color = this.getColor()) {
       this.renderer.setElementStyle(this.element.nativeElement, 'background-color', color);

@@ -4,17 +4,17 @@ import {
   OnInit,
   Output,
   EventEmitter,
-} from "@angular/core";
-import { FormBuilder, FormGroup } from "@angular/forms";
-import { ActivatedRoute, Router } from "@angular/router";
-import * as Model from "../../views/_models/model";
-import { Restangular } from "ngx-restangular";
-import { Subscription } from "rxjs";
+} from '@angular/core';
+import { FormBuilder, FormGroup } from '@angular/forms';
+import { ActivatedRoute, Router } from '@angular/router';
+import * as Model from '../../views/_models/model';
+import { Restangular } from 'ngx-restangular';
+import { Subscription } from 'rxjs';
 
 @Component({
-  selector: "app-search-leilao",
-  templateUrl: "./search-leilao.component.html",
-  styleUrls: ["./search-leilao.component.scss"],
+  selector: 'app-search-leilao',
+  templateUrl: './search-leilao.component.html',
+  styleUrls: ['./search-leilao.component.scss'],
 })
 export class SearchLeilaoComponent implements OnInit, OnDestroy {
   @Output() emitLeilao = new EventEmitter();
@@ -37,8 +37,8 @@ export class SearchLeilaoComponent implements OnInit, OnDestroy {
 
     this.sub.push(
       this.restangular
-        .all("admin")
-        .one("leilao")
+        .all('admin')
+        .one('leilao')
         .get()
         .subscribe(
           (response) => {

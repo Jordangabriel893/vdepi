@@ -14,7 +14,7 @@ import * as moment from 'moment';
 })
 export class CreateConfiguracaoComponent implements OnInit {
   empresas: any;
-  formulario:FormGroup;
+  formulario: FormGroup;
   status: any;
   minDate;
   notificacoes;
@@ -44,21 +44,21 @@ export class CreateConfiguracaoComponent implements OnInit {
       diaSemana: [null, Validators.required],
       horaInicio: [null, Validators.required],
       horaFinal: [null, Validators.required],
-      limiteDia:[null, Validators.required],
-      localLoteId:[null, Validators.required],
-      numeroAtendentes:[null, Validators.required],
-      tempoAtendimento:[null, Validators.required],
+      limiteDia: [null, Validators.required],
+      localLoteId: [null, Validators.required],
+      numeroAtendentes: [null, Validators.required],
+      tempoAtendimento: [null, Validators.required],
     })
     this.sub.push(
       this.restangular.one('local').get().subscribe(
-        dados =>{
-          this.localLotes= dados.data
+        dados => {
+          this.localLotes = dados.data
         }
       )
     )
 
   }
-  onSubmit(){
+  onSubmit() {
       this.restangular.all('agendamento/Configuracao').post(this.formulario.value).subscribe(a => {
       this.notifierService.notify('success', 'Configuração criada com sucesso');
       this.router.navigate(['/configuracao']);
@@ -66,18 +66,18 @@ export class CreateConfiguracaoComponent implements OnInit {
       error => {
         this.notifierService.notify('error', 'Erro ao criar configuracao!');
 
-        Object.keys(this.formulario.controls).forEach((campo)=>{
+        Object.keys(this.formulario.controls).forEach((campo) => {
           const controle = this.formulario.get(campo)
           controle.markAsTouched()
         })
       })
   }
 
-  verificaValidTouched(campo){
+  verificaValidTouched(campo) {
     return !this.formulario.get(campo).valid && this.formulario.get(campo).touched;
   }
 
-  aplicaCssErro(campo){
+  aplicaCssErro(campo) {
     return { 'has-error': this.verificaValidTouched(campo) }
   }
 

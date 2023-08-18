@@ -1,23 +1,23 @@
-import * as moment from "moment";
-import { DatePipe } from "@angular/common";
-import { FormArray, FormBuilder, FormGroup, Validators } from "@angular/forms";
-import { Component, ElementRef, OnInit, ViewChild } from "@angular/core";
-import * as _ from "lodash";
-import { Restangular } from "ngx-restangular";
-import { NotifierService } from "angular-notifier";
-import { Router } from "@angular/router";
-import { BsLocaleService } from "ngx-bootstrap/datepicker";
-import { AngularEditorConfig } from "@kolkov/angular-editor";
+import * as moment from 'moment';
+import { DatePipe } from '@angular/common';
+import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import * as _ from 'lodash';
+import { Restangular } from 'ngx-restangular';
+import { NotifierService } from 'angular-notifier';
+import { Router } from '@angular/router';
+import { BsLocaleService } from 'ngx-bootstrap/datepicker';
+import { AngularEditorConfig } from '@kolkov/angular-editor';
 @Component({
-  selector: "app-create-leilao",
-  templateUrl: "./create-leilao.component.html",
-  styleUrls: ["./create-leilao.component.scss"],
+  selector: 'app-create-leilao',
+  templateUrl: './create-leilao.component.html',
+  styleUrls: ['./create-leilao.component.scss'],
   providers: [DatePipe],
 })
 export class CreateLeilaoComponent implements OnInit {
-  @ViewChild("inputAnexos") inputAnexos: ElementRef;
+  @ViewChild('inputAnexos') inputAnexos: ElementRef;
   context = {
-    message: "Hello there!",
+    message: 'Hello there!',
   };
   imageError: string;
   isImageSaved: boolean;
@@ -48,65 +48,65 @@ export class CreateLeilaoComponent implements OnInit {
   editorConfig: AngularEditorConfig = {
     editable: true,
     spellcheck: true,
-    height: "auto",
-    minHeight: "0",
-    maxHeight: "300px",
-    width: "auto",
-    minWidth: "0",
-    translate: "yes",
+    height: 'auto',
+    minHeight: '0',
+    maxHeight: '300px',
+    width: 'auto',
+    minWidth: '0',
+    translate: 'yes',
     enableToolbar: true,
     showToolbar: true,
-    placeholder: "Termos e Condições de Venda...",
-    defaultParagraphSeparator: "",
-    defaultFontName: "",
-    defaultFontSize: "",
+    placeholder: 'Termos e Condições de Venda...',
+    defaultParagraphSeparator: '',
+    defaultFontName: '',
+    defaultFontSize: '',
     fonts: [
-      { class: "roboto", name: "Roboto" },
-      { class: "arial", name: "Arial" },
-      { class: "times-new-roman", name: "Times New Roman" },
-      { class: "calibri", name: "Calibri" },
-      { class: "comic-sans-ms", name: "Comic Sans MS" },
+      { class: 'roboto', name: 'Roboto' },
+      { class: 'arial', name: 'Arial' },
+      { class: 'times-new-roman', name: 'Times New Roman' },
+      { class: 'calibri', name: 'Calibri' },
+      { class: 'comic-sans-ms', name: 'Comic Sans MS' },
     ],
     customClasses: [
       {
-        name: "quote",
-        class: "quote",
+        name: 'quote',
+        class: 'quote',
       },
       {
-        name: "redText",
-        class: "redText",
+        name: 'redText',
+        class: 'redText',
       },
       {
-        name: "titleText",
-        class: "titleText",
-        tag: "h1",
+        name: 'titleText',
+        class: 'titleText',
+        tag: 'h1',
       },
     ],
   };
   cities = [
     {
       id: 1,
-      name: "Vilnius",
+      name: 'Vilnius',
       avatar:
-        "//www.gravatar.com/avatar/b0d8c6e5ea589e6fc3d3e08afb1873bb?d=retro&r=g&s=30 2x",
+        '//www.gravatar.com/avatar/b0d8c6e5ea589e6fc3d3e08afb1873bb?d=retro&r=g&s=30 2x',
     },
     {
       id: 2,
-      name: "Kaunas",
+      name: 'Kaunas',
       avatar:
-        "//www.gravatar.com/avatar/ddac2aa63ce82315b513be9dc93336e5?d=retro&r=g&s=15",
+        '//www.gravatar.com/avatar/ddac2aa63ce82315b513be9dc93336e5?d=retro&r=g&s=15',
     },
     {
       id: 3,
-      name: "Pavilnys",
+      name: 'Pavilnys',
       avatar:
-        "//www.gravatar.com/avatar/6acb7abf486516ab7fb0a6efa372042b?d=retro&r=g&s=15",
+        '//www.gravatar.com/avatar/6acb7abf486516ab7fb0a6efa372042b?d=retro&r=g&s=15',
     },
     {
       id: 4,
-      name: "Siauliai",
+      name: 'Siauliai',
       avatar:
-        "//www.gravatar.com/avatar/b0d8c6e5ea589e6fc3d3e08afb1873bb?d=retro&r=g&s=30 2x",
+        '//www.gravatar.com/avatar/b0d8c6e5ea589e6fc3d3e08afb1873bb?d=retro&r=g&s=30 2x',
     },
   ];
 
@@ -121,61 +121,61 @@ export class CreateLeilaoComponent implements OnInit {
     private router: Router,
     private localeService: BsLocaleService
   ) {
-    localeService.use("pt-br");
+    localeService.use('pt-br');
     this.minDate = new Date();
     this.minDate.setDate(this.minDate.getDate() + 1);
   }
 
   ngOnInit() {
     this.restangular
-      .one("categoria")
+      .one('categoria')
       .get()
       .subscribe((dados) => {
         const categoriaPai = dados.data.filter((x) => x.categoriaPaiId == null);
         this.categorias = categoriaPai;
       });
     this.restangular
-      .one("comitente")
+      .one('comitente')
       .get()
       .subscribe((dados) => {
         this.comitentes = dados.data;
       });
     this.restangular
-      .one("leiloeiro")
+      .one('leiloeiro')
       .get()
       .subscribe((dados) => {
         this.leiloeiros = dados.data;
       });
     this.restangular
-      .one("empresa")
+      .one('empresa')
       .get()
       .subscribe((dados) => {
         this.empresas = dados.data;
       });
     this.restangular
-      .all("leilao")
-      .one("status")
+      .all('leilao')
+      .one('status')
       .get()
       .subscribe((dados) => {
         this.status = dados.data;
       });
     this.restangular
-      .one("Habilitacao/Regras")
+      .one('Habilitacao/Regras')
       .get()
       .subscribe((dados) => {
         this.habilitacoes = dados.data;
       });
 
     this.restangular
-      .all("leilao")
-      .one("tipos")
+      .all('leilao')
+      .one('tipos')
       .get()
       .subscribe((dados) => {
         this.tiposLeilao = dados.data;
       });
 
     this.restangular
-      .one("indiceCorrecao")
+      .one('indiceCorrecao')
       .get()
       .subscribe((dados) => {
         this.indicesCorrecao = dados.data;
@@ -209,7 +209,7 @@ export class CreateLeilaoComponent implements OnInit {
       emailsNotificacao: [null],
       dataDiarioOficial: [null],
       numeroDiarioOficial: [null],
-      destaqueSite: [null, Validators.required],
+      destaqueSite: [false, Validators.required],
       foto: this.formBuilder.group(
         {
           arquivoId: [0],
@@ -225,23 +225,23 @@ export class CreateLeilaoComponent implements OnInit {
       leiloeiroId: [null, Validators.required],
       empresaId: [null, Validators.required],
       statusId: [null, Validators.required],
-      comissao: ["5", Validators.required],
+      comissao: ['5', Validators.required],
       termoCondicaoVenda: [null],
       anexos: this.formBuilder.array([]),
       regrasHabilitacao: [null, Validators.required],
       tempoInicioSeg: [30],
       observacao: [null],
       linkYoutube: [null],
-      onlineYoutube: [null],
-      tipoLeilaoId: [null, Validators.required],
+      onlineYoutube: [false],
+      tipoLeilaoId: [0, Validators.required],
       pracas: this.formBuilder.array([]),
-      lanceParcelado: false,
+      lanceParcelado: [false],
     });
 
-    this.formulario.get("lanceParcelado").valueChanges.subscribe((d) => {
+    this.formulario.get('lanceParcelado').valueChanges.subscribe((d) => {
       if (d) {
         this.formulario.addControl(
-          "configuracaoParcela",
+          'configuracaoParcela',
           this.formBuilder.group({
             minimoEntrada: [null, Validators.required],
             maximoParcelas: [null, Validators.required],
@@ -249,28 +249,28 @@ export class CreateLeilaoComponent implements OnInit {
           })
         );
       } else {
-        this.formulario.removeControl("configuracaoParcela");
+        this.formulario.removeControl('configuracaoParcela');
       }
     });
 
-    this.formulario.get("tipoLeilaoId").valueChanges.subscribe((d) => {
-      this.formulario.get("lanceParcelado").setValue(false);
+    this.formulario.get('tipoLeilaoId').valueChanges.subscribe((d) => {
+      this.formulario.get('lanceParcelado').setValue(false);
       if (d == 1) {
-        this.formulario.get("dataLeilao").setValidators(null);
-        this.formulario.get("dataLeilao").setValue(null);
-        this.formulario.get("dataLeilao").disable();
-        this.formulario.addControl("pracas", this.formBuilder.array([]));
+        this.formulario.get('dataLeilao').setValidators(null);
+        this.formulario.get('dataLeilao').setValue(null);
+        this.formulario.get('dataLeilao').disable();
+        this.formulario.addControl('pracas', this.formBuilder.array([]));
       } else {
-        this.formulario.get("dataLeilao").setValidators(Validators.required);
-        this.formulario.removeControl("pracas");
-        this.formulario.get("dataLeilao").enable();
+        this.formulario.get('dataLeilao').setValidators(Validators.required);
+        this.formulario.removeControl('pracas');
+        this.formulario.get('dataLeilao').enable();
       }
-      this.formulario.get("dataLeilao").updateValueAndValidity();
+      this.formulario.get('dataLeilao').updateValueAndValidity();
     });
   }
 
   customValidator(control) {
-    const checkbox1Value = control.parent.parent.get("lanceParcelado").value;
+    const checkbox1Value = control.parent.parent.get('lanceParcelado').value;
     const inputValue = control.value;
 
     if (checkbox1Value && !inputValue) {
@@ -288,7 +288,7 @@ export class CreateLeilaoComponent implements OnInit {
       });
 
       const configuracaoParcelaForm = this.formulario.get(
-        "configuracaoParcela"
+        'configuracaoParcela'
       ) as FormGroup;
       Object.keys(configuracaoParcelaForm.controls).forEach((campo) => {
         const controle = configuracaoParcelaForm.get(campo);
@@ -296,13 +296,13 @@ export class CreateLeilaoComponent implements OnInit {
       });
 
       this.notifierService.notify(
-        "error",
-        "Preencha todos os campos obrigatórios"
+        'error',
+        'Preencha todos os campos obrigatórios'
       );
       return false;
     }
 
-    if (this.formulario.value.tipoLeilaoId !== 1) {
+    if (this.formulario.value.tipoLeilaoId != 1) {
       const dataAberturaLance = moment(
         this.formulario.value.dataAberturaLance
       ).utc();
@@ -310,48 +310,48 @@ export class CreateLeilaoComponent implements OnInit {
 
       if (!dataLeilao.isSameOrAfter(this.today)) {
         this.notifierService.notify(
-          "error",
-          "Data do Leilão deve ser maior que hoje"
+          'error',
+          'Data do Leilão deve ser maior que hoje'
         );
         return false;
       }
 
       if (!dataAberturaLance.isSameOrAfter(this.today)) {
         this.notifierService.notify(
-          "error",
-          "Data da Abertura de Lances deve ser maior que hoje"
+          'error',
+          'Data da Abertura de Lances deve ser maior que hoje'
         );
         return false;
       }
 
       if (!dataAberturaLance.isSameOrBefore(dataLeilao)) {
         this.notifierService.notify(
-          "error",
-          "Data da Abertura de Lances deve ser menor que a Data do leilão"
+          'error',
+          'Data da Abertura de Lances deve ser menor que a Data do leilão'
         );
         return false;
       }
     } else {
-      var pracas = this.formulario.get("pracas") as FormArray;
+      const pracas = this.formulario.get('pracas') as FormArray;
       if (pracas.length === 0) {
         this.notifierService.notify(
-          "error",
-          "Adicione ao menos um praça para Leilão Judicial"
+          'error',
+          'Adicione ao menos um praça para Leilão Judicial'
         );
         return false;
       }
     }
 
     this.restangular
-      .all("leilao")
+      .all('leilao')
       .post(this.formulario.value)
       .subscribe(
         (a) => {
-          this.notifierService.notify("success", "Leilão Criado com sucesso");
-          this.router.navigate(["/leilao"]);
+          this.notifierService.notify('success', 'Leilão Criado com sucesso');
+          this.router.navigate(['/leilao']);
         },
         (error) => {
-          this.notifierService.notify("error", "Erro ao atualizar o Leilão!");
+          this.notifierService.notify('error', 'Erro ao atualizar o Leilão!');
 
           Object.keys(this.formulario.controls).forEach((campo) => {
             const controle = this.formulario.get(campo);
@@ -366,18 +366,18 @@ export class CreateLeilaoComponent implements OnInit {
     if (fileInput.target.files && fileInput.target.files[0]) {
       // Size Filter Bytes
       const max_size = 5242880;
-      const allowed_types = ["image/png", "image/jpeg"];
+      const allowed_types = ['image/png', 'image/jpeg'];
       const max_height = 15200;
       const max_width = 25600;
 
       if (fileInput.target.files[0].size > max_size) {
-        this.imageError = "O tamanho máximo permitido é 5Mb";
+        this.imageError = 'O tamanho máximo permitido é 5Mb';
 
         return false;
       }
 
       if (!_.includes(allowed_types, fileInput.target.files[0].type)) {
-        this.imageError = "Somente imagens são permitidas ( JPG | PNG )";
+        this.imageError = 'Somente imagens são permitidas ( JPG | PNG )';
         return false;
       }
       const reader = new FileReader();
@@ -385,22 +385,22 @@ export class CreateLeilaoComponent implements OnInit {
         const image = new Image();
         image.src = e.target.result;
         image.onload = (rs) => {
-          const img_height = rs.currentTarget["height"];
-          const img_width = rs.currentTarget["width"];
+          const img_height = rs.currentTarget['height'];
+          const img_width = rs.currentTarget['width'];
 
           if (img_height > max_height && img_width > max_width) {
             this.imageError =
-              "Tamanho máximo permitido " + max_height + "*" + max_width + "px";
+              'Tamanho máximo permitido ' + max_height + '*' + max_width + 'px';
             return false;
           } else {
             const imgBase64Path = e.target.result;
             this.cardImageBase64 = imgBase64Path;
             this.isImageSaved = true;
-            var foto = this.formulario.get("foto") as FormGroup;
-            foto.get("base64").setValue(imgBase64Path);
-            foto.get("nome").setValue(fileInput.target.files[0].name);
-            foto.get("tamanho").setValue(fileInput.target.files[0].size);
-            foto.get("tipo").setValue(fileInput.target.files[0].type);
+            const foto = this.formulario.get('foto') as FormGroup;
+            foto.get('base64').setValue(imgBase64Path);
+            foto.get('nome').setValue(fileInput.target.files[0].name);
+            foto.get('tamanho').setValue(fileInput.target.files[0].size);
+            foto.get('tipo').setValue(fileInput.target.files[0].type);
             // this.previewImagePath = imgBase64Path;
           }
         };
@@ -432,7 +432,7 @@ export class CreateLeilaoComponent implements OnInit {
   }
 
   atualizarAnexo(obj, i) {
-    let anexos = this.formulario.get("anexos") as FormArray;
+    const anexos = this.formulario.get('anexos') as FormArray;
 
     if (i < 0) {
       anexos.push(
@@ -440,7 +440,7 @@ export class CreateLeilaoComponent implements OnInit {
           arquivoId: 0,
           nome: [null, Validators.required],
           arquivo: obj,
-          acao: "I",
+          acao: 'I',
         })
       );
     } else {
@@ -452,7 +452,7 @@ export class CreateLeilaoComponent implements OnInit {
           arquivoId: 0,
           nome: valor.nome,
           arquivo: obj,
-          acao: "A",
+          acao: 'A',
         })
       );
     }
@@ -466,15 +466,15 @@ export class CreateLeilaoComponent implements OnInit {
   filterList(campo: string) {
     const fotos = this.formulario.get(campo) as FormArray;
     return fotos.controls.filter(
-      (x) => (x as FormGroup).controls["acao"].value !== "D"
+      (x) => (x as FormGroup).controls['acao'].value !== 'D'
     );
   }
 
   deleteAnexo(indexAnexo: number) {
-    let anexos = this.formulario.controls["anexos"] as FormArray;
-    let anexo = anexos.at(indexAnexo) as FormGroup;
-    if (anexo.controls["acao"].value !== "I") {
-      anexo.controls["acao"].setValue("D");
+    const anexos = this.formulario.controls['anexos'] as FormArray;
+    const anexo = anexos.at(indexAnexo) as FormGroup;
+    if (anexo.controls['acao'].value !== 'I') {
+      anexo.controls['acao'].setValue('D');
     } else {
       anexos.removeAt(indexAnexo);
     }
@@ -483,7 +483,7 @@ export class CreateLeilaoComponent implements OnInit {
   removeImage(input) {
     this.cardImageBase64 = null;
     this.isImageSaved = false;
-    input.value = "";
+    input.value = '';
   }
 
   verificaValidTouched(campo) {
@@ -494,7 +494,7 @@ export class CreateLeilaoComponent implements OnInit {
 
   aplicaCssErro(campo) {
     if (!this.formulario.get(campo).disabled) {
-      return { "has-error": this.verificaValidTouched(campo) };
+      return { 'has-error': this.verificaValidTouched(campo) };
     }
   }
 
@@ -507,7 +507,7 @@ export class CreateLeilaoComponent implements OnInit {
   }
 
   aplicaCssErroJudicial(form, campo) {
-    return { "has-error": this.verificaValidTouchedJudicial(form, campo) };
+    return { 'has-error': this.verificaValidTouchedJudicial(form, campo) };
   }
 
   onValueChange(event, campo) {
@@ -516,14 +516,14 @@ export class CreateLeilaoComponent implements OnInit {
   }
 
   onValueChangePraca(event, campo, i) {
-    let pracas = this.formulario.get("pracas") as FormArray;
-    let praca = pracas.at(i) as FormGroup;
+    const pracas = this.formulario.get('pracas') as FormArray;
+    const praca = pracas.at(i) as FormGroup;
     praca.controls[campo].markAsTouched();
     praca.controls[campo].setValue(event);
   }
 
   adicionarPraca() {
-    let pracas = this.formulario.get("pracas") as FormArray;
+    const pracas = this.formulario.get('pracas') as FormArray;
     pracas.push(
       this.formBuilder.group({
         numeroPraca: [pracas.length + 1],
@@ -534,7 +534,7 @@ export class CreateLeilaoComponent implements OnInit {
   }
 
   deletePraca(indexPraca: number) {
-    let pracas = this.formulario.controls["pracas"] as FormArray;
+    const pracas = this.formulario.controls['pracas'] as FormArray;
     pracas.removeAt(indexPraca);
   }
 }

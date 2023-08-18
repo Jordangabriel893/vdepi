@@ -55,14 +55,14 @@ export class LoginComponent implements OnInit {
       .pipe(first())
       .subscribe(
         () => {
-          this.router.navigate(["home"], { queryParams: { r: true}});
+          this.router.navigate(['home'], { queryParams: { r: true}});
         },
         err => {
-          let msgError = "Houve um erro inesperado, por favor tente novamente";
-          if(err.error && err.error.error_description === 'invalid_username_or_password') {
-            msgError = "Usuário ou Senha inválidos"
+          let msgError = 'Houve um erro inesperado, por favor tente novamente';
+          if (err.error && err.error.error_description === 'invalid_username_or_password') {
+            msgError = 'Usuário ou Senha inválidos'
           }
-          this.notifierService.notify("error", msgError);
+          this.notifierService.notify('error', msgError);
           this.loading = false;
       });
   }

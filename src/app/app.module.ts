@@ -133,7 +133,7 @@ import { PopoverModule } from 'ngx-bootstrap/popover';
 import { MomentModule } from 'ngx-moment';
 import { NguiAutoCompleteModule } from '@ngui/auto-complete';
 import { LoadingModule } from 'ngx-loading';
-import { CurrencyMaskModule } from "ng2-currency-mask";
+import { CurrencyMaskModule } from 'ng2-currency-mask';
 import { CountoModule } from 'angular2-counto';
 import { NguiMapModule } from '@ngui/map';
 import { MultiselectDropdownModule } from 'angular-2-dropdown-multiselect';
@@ -150,7 +150,7 @@ import { environment } from '../environments/environment';
 import { AuthGuard, AnonyGuard } from './_guards/index';
 import { AuthenticationService } from './_services/index';
 import { PdfService } from './_services/pdf.service';
-import { DataTableModule } from "angular2-datatable";
+import { DataTableModule } from 'angular2-datatable';
 import { SourceGuard } from './_guards/source.guard';
 import { AuthorizationService } from './_services/authorization.service';
 import { HomeComponent } from './views/home';
@@ -241,7 +241,7 @@ import { CreateAgendamentoComponent } from './views/agendamento/create/create-ag
 export function RestangularConfigFactory(RestangularProvider, NotifierService: NotifierService) {
   RestangularProvider.setBaseUrl(environment.apiDados);
 
-  let currentUser = JSON.parse(localStorage.getItem('currentUser'));
+  const currentUser = JSON.parse(localStorage.getItem('currentUser'));
   if (currentUser && currentUser.token) {
     RestangularProvider.setDefaultHeaders({ 'Authorization': 'Bearer ' + currentUser.token, withCredentials: true, 'Access-Control-Allow-Origin': '*', 'Access-Control-Allow-Credentials': true });
   }
@@ -253,7 +253,7 @@ export function RestangularConfigFactory(RestangularProvider, NotifierService: N
     }
 
     if (response.status === 403) {
-      NotifierService.notify("error", "Acesso Negado");
+      NotifierService.notify('error', 'Acesso Negado');
       return false;
     }
 

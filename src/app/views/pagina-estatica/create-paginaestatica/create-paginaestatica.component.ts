@@ -11,7 +11,7 @@ import { AngularEditorConfig } from '@kolkov/angular-editor';
   styleUrls: ['./create-paginaestatica.component.scss']
 })
 export class CreatePaginaestaticaComponent implements OnInit {
-  formulario:FormGroup;
+  formulario: FormGroup;
   editorConfig: AngularEditorConfig = {
     editable: true,
     spellcheck: true,
@@ -59,17 +59,17 @@ export class CreatePaginaestaticaComponent implements OnInit {
   ) {
     const now = new Date();
     this.formulario = this.formBuilder.group({
-      html:[null, Validators.required],
-      dataCriacao:[now, Validators.required],
-      titulo:[null, Validators.required],
-      rota:[null, Validators.required],
+      html: [null, Validators.required],
+      dataCriacao: [now, Validators.required],
+      titulo: [null, Validators.required],
+      rota: [null, Validators.required],
 
     })
   }
 
   ngOnInit() {
   }
-  onSubmit(){
+  onSubmit() {
 
     this.restangular.all('api/paginaEstatica').post(this.formulario.value).subscribe(a => {
       this.notifierService.notify('success', 'Página Estática criada com sucesso');
@@ -78,29 +78,29 @@ export class CreatePaginaestaticaComponent implements OnInit {
       error => {
         this.notifierService.notify('error', 'Erro ao criar o Página Estática!');
 
-        Object.keys(this.formulario.controls).forEach((campo)=>{
+        Object.keys(this.formulario.controls).forEach((campo) => {
           const controle = this.formulario.get(campo)
           controle.markAsTouched()
         })
       });
   }
 
-  verificaValidTouched(campo){
+  verificaValidTouched(campo) {
     return !this.formulario.get(campo).valid && this.formulario.get(campo).touched;
   }
 
-  formatRota(){
+  formatRota() {
     let titulo = this.formulario.value.titulo;
     titulo = titulo.trim()
-    .normalize("NFD")
-    .replace(/\p{Diacritic}/gu, "")
-    .replace(/[^\w ]/g,'')
-    .replace(/\s|_|\(|\)/g, "-")
+    .normalize('NFD')
+    .replace(/\p{Diacritic}/gu, '')
+    .replace(/[^\w ]/g, '')
+    .replace(/\s|_|\(|\)/g, '-')
     .toLowerCase();
     this.formulario.get('rota').patchValue(titulo)
   }
 
-  aplicaCssErro(campo){
+  aplicaCssErro(campo) {
     return {'has-error': this.verificaValidTouched(campo) }
   }
 

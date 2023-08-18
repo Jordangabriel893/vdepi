@@ -11,7 +11,7 @@ export class GroupByPipe2 implements PipeTransform {
             }
             return prev;
         }, {});
-        let teste = Object.keys(groupedObj).map(key => { return { key, value: groupedObj[key] } });
+        const teste = Object.keys(groupedObj).map(key => { return { key, value: groupedObj[key] } });
         return teste;
     }
 }
