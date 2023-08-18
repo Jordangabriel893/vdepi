@@ -151,7 +151,6 @@ export class UpdateLotesComponent implements OnInit {
       this.restangular.one('lotestatus').get().pipe(),
       this.restangular.one('tabelafipe/tipos').get().pipe(),
     ]).subscribe((allResp: any[]) => {
-      this.tipoFoto = allResp[2].data.filter((x) => x.visivelSite);
       this.local = allResp[3].data;
 
       this.lote = allResp[4].data;
@@ -348,8 +347,32 @@ export class UpdateLotesComponent implements OnInit {
   }
 
   alterarFoto(i) {
+    if (this.formulario.value.categoriaId == null) {
+      this.notifierService.notify(
+        'error',
+        'Selecione uma categoria para adicionar uma foto'
+      );
+      this.formulario.controls['categoriaId'].markAsTouched();
+      return false;
+    }
+
     this.numeroAdcFoto = i;
     this.inputFotos.nativeElement.click();
+  }
+
+  preencheTipoLote() {
+    this.restangular
+      .one('tipofoto/categoria/' + this.formulario.value.categoriaId)
+      .get()
+      .subscribe(
+        (allResp) => {
+          console.log(allResp);
+          this.tipoFoto = allResp.data;
+        },
+        (error) => {
+          console.log(error);
+        }
+      );
   }
 
   atualizarAnexo(obj, i) {
@@ -460,6 +483,8 @@ export class UpdateLotesComponent implements OnInit {
     // }
 
     //setTimeout(() => { this.mostrarCampoJudicial = true }, 3000)
+
+    this.preencheTipoLote();
   }
 
   filterList(campo: string) {
@@ -707,7 +732,9 @@ export class UpdateLotesComponent implements OnInit {
   }
 
   adicionarFaixaIncremento() {
-    const faixasIncremento = this.formulario.get('faixasIncremento') as FormArray;
+    const faixasIncremento = this.formulario.get(
+      'faixasIncremento'
+    ) as FormArray;
     faixasIncremento.push(
       this.formBuilder.group({
         faixaInicial: [null, Validators.required],

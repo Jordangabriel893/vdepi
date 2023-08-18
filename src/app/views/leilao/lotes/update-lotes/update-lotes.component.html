@@ -61,6 +61,7 @@
                   class="form-control"
                   [ngClass]="aplicaCssErro('categoriaId')"
                   formControlName="categoriaId"
+                  (change)="preencheTipoLote()"
                 >
                   <option
                     *ngFor="let item of categoriasFilhas"
