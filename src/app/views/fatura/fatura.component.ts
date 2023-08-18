@@ -19,7 +19,7 @@ import { Subscription } from 'rxjs';
 import { environment } from 'environments/environment';
 import * as XLSX from 'xlsx';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap';
-import * as moment from 'moment';
+import { BsLocaleService } from 'ngx-bootstrap';
 
 @Component({
   selector: 'app-fatura',
@@ -31,6 +31,7 @@ export class FaturaComponent implements OnInit, OnDestroy {
   formulario: FormGroup;
   faturas;
   faturaId;
+  codigoFatura;
   loading;
   sub: Subscription[] = [];
   nomeLeilao: any = 'Leilões';
@@ -43,23 +44,35 @@ export class FaturaComponent implements OnInit, OnDestroy {
   faturasFiltradas = [];
   showItens;
   modalRef: BsModalRef;
-  fileToUpload: File | null = null;
-  comprovante: {
-    nome: string;
-    base64: string;
-    tipo: string;
-    tamanho: number;
-    dataCadastro: string;
-  };
-  comprovantebase64;
+  formasPagamento = [];
+  formComprovante: FormGroup;
+  comprovanteError;
+  comprovante;
+  tamComprovante;
   constructor(
     private restangular: Restangular,
     private notifierService: NotifierService,
     private confirmationService: ConfirmationService,
     private formBuilder: FormBuilder,
-    private modalService: BsModalService
+    private modalService: BsModalService,
+    private localeService: BsLocaleService
   ) {
-    console.log(this.inputComprovante);
+    localeService.use('pt-br');
+
+    this.formComprovante = this.formBuilder.group({
+      formaPagamentoId: [null, Validators.required],
+      dataPagamento: [null, Validators.required],
+      comprovante: this.formBuilder.group(
+        {
+          arquivoId: [0],
+          nome: [null],
+          base64: [null, Validators.required],
+          tipo: [null],
+          tamanho: [0],
+        },
+        Validators.required
+      ),
+    });
   }
 
   ngOnInit() {
@@ -109,7 +122,7 @@ export class FaturaComponent implements OnInit, OnDestroy {
           if (ans.resolved) {
             this.sub.push(
               this.restangular
-                .all(`fatura/cancelar/${faturaId}`)
+                .all(`fatura/${faturaId}/cancelar`)
                 .post()
                 .subscribe(
                   () => {
@@ -166,49 +179,73 @@ export class FaturaComponent implements OnInit, OnDestroy {
   }
 
   openModal(template: TemplateRef<any>, faturaId) {
+    this.sub.push(
+      this.restangular
+        .one('/Fatura/FormasPagamento')
+        .get()
+        .subscribe((dados) => {
+          this.formasPagamento = dados.data;
+        })
+    );
+
     this.faturaId = faturaId;
+    this.codigoFatura = this.faturas.find((x) => x.faturaId == faturaId).codigo;
     this.modalRef = this.modalService.show(template, { class: 'modal-lg' });
   }
 
   marcarComoPaga() {
-    this.restangular
-      .all(`fatura/concluir/${this.faturaId}`)
-      .post({ comprovante: this.comprovante })
-      .subscribe(
-        () => {
-          this.notifierService.notify(
-            'success',
-            'Fatura marcada como paga com sucesso'
-          );
-          this.modalRef.hide();
-        },
-        (e) => {
-          console.log(e);
-        }
-      );
+    if (this.formComprovante.valid) {
+      this.restangular
+        .all(`fatura/${this.faturaId}/EnviarComprovante`)
+        .post(this.formComprovante.getRawValue())
+        .subscribe(
+          () => {
+            this.notifierService.notify(
+              'success',
+              'Pagamento da Fatura inserida com sucesso'
+            );
+            this.modalRef.hide();
+            this.setLeilao(this.leilaoId);
+          },
+          (e) => {
+            this.notifierService.notify(
+              'error',
+              'Houver um erro ao inserir o pagamento da fatura'
+            );
+          }
+        );
+    }
   }
 
   comprovanteChangeEvent(guiaInput: FileList) {
-    this.fileToUpload = guiaInput.item(0);
-    this.fileToUpload.name;
-    this.fileToUpload.size;
-    this.fileToUpload.type;
-    const reader = new FileReader();
-    reader.readAsDataURL(this.fileToUpload);
-    reader.onload = () => {
-      this.comprovantebase64 = reader.result;
-      this.comprovante = {
-        nome: this.fileToUpload.name,
-        base64: this.comprovantebase64,
-        tipo: this.fileToUpload.type,
-        tamanho: this.fileToUpload.size,
-        dataCadastro: moment().utc().toISOString(),
+    this.comprovante = '';
+    this.comprovanteError = '';
+
+    const fileToUpload = guiaInput.item(0) as File;
+    if (fileToUpload) {
+      const max_size = 5242880;
+
+      if (fileToUpload.size > max_size) {
+        this.comprovanteError = 'O tamanho máximo permitido é 5Mb';
+        return false;
+      }
+
+      const reader = new FileReader();
+      reader.readAsDataURL(fileToUpload);
+      reader.onload = () => {
+        const comprovantebase64 = reader.result;
+        const foto = this.formComprovante.get('comprovante') as FormGroup;
+        foto.get('base64').setValue(comprovantebase64);
+        foto.get('nome').setValue(fileToUpload.name);
+        foto.get('tamanho').setValue(fileToUpload.size);
+        foto.get('tipo').setValue(fileToUpload.type);
+        this.comprovante = fileToUpload.name;
+        this.tamComprovante = this.formatSize(fileToUpload.size);
       };
-    };
+    }
   }
 
   inputComprovanteClick() {
-    console.log(this.inputComprovante);
     this.inputComprovante.nativeElement.click();
   }
 
@@ -228,7 +265,7 @@ export class FaturaComponent implements OnInit, OnDestroy {
     };
 
     this.restangular
-      .all('fatura/notificar')
+      .all('fatura/EnviarPorEmail')
       .post(body)
       .subscribe(
         () => {
@@ -259,6 +296,12 @@ export class FaturaComponent implements OnInit, OnDestroy {
       this.faturasEnviar.push(faturaId);
     }
   }
+
+  onValueChange(event, campo) {
+    this.formComprovante.get(campo).markAsTouched();
+    this.formComprovante.get(campo).setValue(event);
+  }
+
   exportAsExcel() {
     const ws: XLSX.WorkSheet = XLSX.utils.json_to_sheet(this.faturasFiltradas);
 
@@ -302,7 +345,29 @@ export class FaturaComponent implements OnInit, OnDestroy {
     this.showItens = faturaId;
   }
 
+  aplicaCssErro(campo) {
+    return { 'has-error': this.verificaValidTouched(campo) };
+  }
+
+  verificaValidTouched(campo) {
+    return (
+      !this.formComprovante.get(campo).valid &&
+      this.formComprovante.get(campo).touched
+    );
+  }
+
   ngOnDestroy(): void {
     this.sub.forEach((s) => s.unsubscribe());
+  }
+
+  formatSize(_size: number) {
+    let fSExt = new Array('Bytes', 'KB', 'MB', 'GB');
+    let i = 0;
+    while (_size > 900) {
+      _size /= 1024;
+      i++;
+    }
+    var exactSize = Math.round(_size * 100) / 100 + ' ' + fSExt[i];
+    return exactSize;
   }
 }

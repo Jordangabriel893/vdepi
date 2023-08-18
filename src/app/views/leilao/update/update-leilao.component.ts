@@ -159,7 +159,6 @@ export class UpdateLeilaoComponent implements OnInit {
   }
 
   onSubmit() {
-    console.log(this.formulario);
     if (!this.formulario.valid) {
       Object.keys(this.formulario.controls).forEach((campo) => {
         const controle = this.formulario.get(campo);
@@ -434,9 +433,6 @@ export class UpdateLeilaoComponent implements OnInit {
 
   anexoChangeEvent(anexoInput: FileList) {
     this.fileToUpload = anexoInput.item(0);
-    this.fileToUpload.name;
-    this.fileToUpload.size;
-    this.fileToUpload.type;
     const reader = new FileReader();
     reader.readAsDataURL(this.fileToUpload);
     reader.onload = () => {

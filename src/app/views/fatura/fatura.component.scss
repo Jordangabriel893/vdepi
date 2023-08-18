@@ -1,22 +1,22 @@
-.header{
+.header {
   display: flex;
   justify-content: space-between;
 }
 
-.fa-file{
+.fa-file {
   margin-right: 10%;
 }
-.input-search{
+.input-search {
   padding-top: 20px;
 }
-.info{
+.info {
   height: 45vh;
   background-color: rgb(243, 243, 243);
 }
-.border-table{
-  border:1px solid rgb(199, 199, 199)
+.border-table {
+  border: 1px solid rgb(199, 199, 199);
 }
-.table-user{
+.table-user {
   height: 100%;
 }
 table td {
@@ -25,4 +25,8 @@ table td {
 
 input[type="file"] {
   display: none;
+}
+
+.has-error {
+  border: 1px solid red;
 }

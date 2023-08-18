@@ -14,10 +14,8 @@ import {
   FormControl,
 } from '@angular/forms';
 import { Router } from '@angular/router';
-import { AngularEditorConfig } from '@kolkov/angular-editor';
 import { NotifierService } from 'angular-notifier';
 import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
-import { FormValidations } from 'app/views/usuarios/shared/form-validation/form-validations';
 import * as _ from 'lodash';
 import * as moment from 'moment';
 import { BsLocaleService } from 'ngx-bootstrap';
@@ -479,7 +477,7 @@ export class CreateFaturaComponent implements OnInit, OnDestroy {
         adicionarItem: [],
         guias: this.formBuilder.array([]),
         todosLotes: [false],
-        agrupar: [false],
+        agrupar: [true],
       });
     }
     if (item == 'Avulsa') {
