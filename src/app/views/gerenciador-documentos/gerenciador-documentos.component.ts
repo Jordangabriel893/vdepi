@@ -27,10 +27,12 @@ export class GerenciadorDocumentosComponent implements OnInit, OnDestroy {
   leilao;
   blockchainInfo;
   modalRef: BsModalRef;
-  constructor(
-    private modalService: BsModalService,
-    private restangular: Restangular,
-    private formBuilder: FormBuilder) { }
+
+    constructor(
+      private modalService: BsModalService,
+      private restangular: Restangular,
+      private formBuilder: FormBuilder,
+      private notifierService: NotifierService) { }
 
    ngOnInit() {
      this.formulario =  this.formBuilder.group({
@@ -96,5 +98,34 @@ export class GerenciadorDocumentosComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     this.sub.forEach(s => s.unsubscribe())
+  }
+
+  reprocessar(documentoId){
+    this.sub.push(
+      this.restangular.one(`documentoLote/${documentoId}/reprocessar`).post().subscribe(
+        dados =>{
+          this.notifierService.notify('success', dados.message);
+          this.refresh();
+        },
+        e => {
+          console.log(e.data)
+          this.notifierService.notify('error', e.data.Message);
+        }
+      )
+    )
+  }
+
+  remover(documentoId){
+    this.sub.push(
+      this.restangular.one(`documentoLote/${documentoId}`).remove().subscribe(
+        dados =>{
+          this.notifierService.notify('success', dados.message);
+          this.refresh();
+        },
+        e => {
+          this.notifierService.notify('error', e.data.Message);
+        }
+      )
+    )
   }
 }

@@ -116,7 +116,8 @@
                             <i class="fa fa-ellipsis-v"></i>
                           </button>
                           <ul class="dropdown-menu dropdown-menu-right" *dropdownMenu>
-                            <!-- <li><a class="dropdown-item">Excluir</a></li> -->
+                            <li><a class="dropdown-item" (click)="remover(item.documentoId)">Remover</a></li>
+                            <li><a class="dropdown-item" (click)="reprocessar(item.documentoId)">Reprocessar</a></li>
                             <li><a class="dropdown-item" [href]="item.url" target="_blank" [ngClass]="{'disabled': item.statusId !== 5}">Download</a></li>
                           </ul>
                         </div>
