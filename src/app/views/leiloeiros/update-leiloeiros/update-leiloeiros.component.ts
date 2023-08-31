@@ -54,6 +54,7 @@ export class UpdateLeiloeirosComponent implements OnInit {
       matricula: [null, Validators.required],
       genero: [null, Validators.required],
       nomeComercial: [null],
+      sequencialNota: [null],
       foto: this.formBuilder.group({
         nome: [null],
         base64: [null],
@@ -133,7 +134,8 @@ export class UpdateLeiloeirosComponent implements OnInit {
       assinatura: [dados.assinatura],
       fotoId: dados.fotoId,
       ativo: dados.ativo,
-      usuarioId: dados.usuarioId
+      usuarioId: dados.usuarioId,
+      sequencialNota: dados.sequencialNota
     })
   }
   consultaCEP() {
