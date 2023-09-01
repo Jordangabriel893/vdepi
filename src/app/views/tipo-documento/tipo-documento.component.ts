@@ -15,7 +15,7 @@ export class TipoDocumentoComponent implements OnInit {
     private route: ActivatedRoute,
     private router: Router,
   ) {
-    this.restangular.one("tipoDocumentoLote").get().subscribe((response) => {
+    this.restangular.one('tipoDocumentoLote').get().subscribe((response) => {
      this.tipoDocumentos = response.data
      this.loading = false;
     },

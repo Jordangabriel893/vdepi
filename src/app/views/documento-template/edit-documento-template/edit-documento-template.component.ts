@@ -1,20 +1,20 @@
-import { BsModalService } from "ngx-bootstrap/modal";
-import { Component, OnInit, TemplateRef, ViewChild } from "@angular/core";
-import { FormGroup, FormBuilder, Validators } from "@angular/forms";
-import { ActivatedRoute, Router } from "@angular/router";
-import { AngularEditorConfig } from "@kolkov/angular-editor";
-import { EmailEditorComponent } from "angular-email-editor";
-import { NotifierService } from "angular-notifier";
-import { BsModalRef } from "ngx-bootstrap";
-import { Restangular } from "ngx-restangular";
+import { BsModalService } from 'ngx-bootstrap/modal';
+import { Component, OnInit, TemplateRef, ViewChild } from '@angular/core';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { ActivatedRoute, Router } from '@angular/router';
+import { AngularEditorConfig } from '@kolkov/angular-editor';
+import { EmailEditorComponent } from 'angular-email-editor';
+import { NotifierService } from 'angular-notifier';
+import { BsModalRef } from 'ngx-bootstrap';
+import { Restangular } from 'ngx-restangular';
 
 @Component({
-  selector: "app-edit-documento-template",
-  templateUrl: "./edit-documento-template.component.html",
-  styleUrls: ["./edit-documento-template.component.scss"],
+  selector: 'app-edit-documento-template',
+  templateUrl: './edit-documento-template.component.html',
+  styleUrls: ['./edit-documento-template.component.scss'],
 })
 export class EditDocumentoTemplateComponent implements OnInit {
-  title = "angular-email-editor";
+  title = 'angular-email-editor';
   templateExist = false;
   @ViewChild(EmailEditorComponent)
   private emailEditor: EmailEditorComponent;
@@ -24,8 +24,7 @@ export class EditDocumentoTemplateComponent implements OnInit {
   formulario: FormGroup;
   designJson;
   options = {
-    displayMode: "web",
-    devices: ["desktop"],
+    displayMode: 'email',
     features: {
       textEditor: {
         tables: true,
@@ -45,7 +44,7 @@ export class EditDocumentoTemplateComponent implements OnInit {
   };
   cardImageBase64;
   isImageSaved;
-  openPopup: boolean = true;
+  openPopup = true;
   modalRef: BsModalRef;
   tiposDocumentoLote: [];
 
@@ -60,15 +59,15 @@ export class EditDocumentoTemplateComponent implements OnInit {
 
   ngOnInit() {
     this.restangular
-      .all("TipoDocumentoLote")
-      .get("")
+      .all('TipoDocumentoLote')
+      .get('')
       .subscribe((resp) => {
         this.tiposDocumentoLote = resp.data;
       });
 
-    this.id = this.route.snapshot.params["id"];
+    this.id = this.route.snapshot.params['id'];
     this.restangular
-      .all("DocumentoLoteTemplate")
+      .all('DocumentoLoteTemplate')
       .get(this.id)
       .subscribe((dados) => {
         this.updateForm(dados.data);
@@ -84,7 +83,7 @@ export class EditDocumentoTemplateComponent implements OnInit {
   }
 
   openModal(template: TemplateRef<any>) {
-    this.modalRef = this.modalService.show(template, { class: "modal-lg" });
+    this.modalRef = this.modalService.show(template, { class: 'modal-lg' });
   }
 
   save() {
@@ -96,8 +95,8 @@ export class EditDocumentoTemplateComponent implements OnInit {
         controle.markAsTouched();
       });
       this.notifierService.notify(
-        "error",
-        "Preencha todos os campos obrigatórios"
+        'error',
+        'Preencha todos os campos obrigatórios'
       );
       this.salvar = false;
       return false;
@@ -118,20 +117,20 @@ export class EditDocumentoTemplateComponent implements OnInit {
     };
 
     this.restangular
-      .all("/DocumentoLoteTemplate")
+      .all('/DocumentoLoteTemplate')
       .customPUT(template, this.id)
       .subscribe(
         (a) => {
           this.salvar = false;
           this.notifierService.notify(
-            "success",
-            "Template atualizado com sucesso"
+            'success',
+            'Template atualizado com sucesso'
           );
-          this.router.navigate(["documentotemplate"]);
+          this.router.navigate(['documentotemplate']);
         },
         () => {
           this.salvar = false;
-          this.notifierService.notify("error", "Erro ao atualizar o template!");
+          this.notifierService.notify('error', 'Erro ao atualizar o template!');
         }
       );
     this.modalRef.hide();
@@ -162,7 +161,7 @@ export class EditDocumentoTemplateComponent implements OnInit {
 
   aplicaCssErro(campo) {
     return {
-      "has-error": this.verificaValidTouched(campo),
+      'has-error': this.verificaValidTouched(campo),
     };
   }
 

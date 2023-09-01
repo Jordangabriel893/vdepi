@@ -20,7 +20,7 @@ export class CreateEmpresaComponent implements OnInit {
   isImageSaved: boolean;
   cardImageBase64: string;
 
-  formulario:FormGroup
+  formulario: FormGroup
   empresa
   gruposEconomico;
 
@@ -37,29 +37,29 @@ export class CreateEmpresaComponent implements OnInit {
     private cepService: ConsultaCepService,
   ) {
 
-    this.mask = ['(', /[1-9]/, /\d/, ')', ' ', /\d/,/\d/,/\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/]
-    this.maskCep = [ /\d/,/\d/,/\d/,/\d/,/\d/, '-', /\d/, /\d/, /\d/, ]
-    this.maskCpf = [ /\d/,/\d/,/\d/,  '.', /\d/,/\d/,/\d/, '.', /\d/, /\d/, /\d/, '-', /\d/,/\d/ ]
-    this.maskCnpj = [ /\d/,/\d/,'.',/\d/,/\d/,/\d/,'.',/\d/,/\d/,/\d/,'/', /\d/,/\d/,/\d/,/\d/,'-',/\d/,/\d/, ]
+    this.mask = ['(', /[1-9]/, /\d/, ')', ' ', /\d/, /\d/, /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/]
+    this.maskCep = [ /\d/, /\d/, /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, ]
+    this.maskCpf = [ /\d/, /\d/, /\d/,  '.', /\d/, /\d/, /\d/, '.', /\d/, /\d/, /\d/, '-', /\d/, /\d/ ]
+    this.maskCnpj = [ /\d/, /\d/, '.', /\d/, /\d/, /\d/, '.', /\d/, /\d/, /\d/, '/', /\d/, /\d/, /\d/, /\d/, '-', /\d/, /\d/, ]
 
 
   }
 
   ngOnInit() {
-    this.restangular.one("GrupoEconomico").get().subscribe((response) => {
+    this.restangular.one('GrupoEconomico').get().subscribe((response) => {
       this.gruposEconomico = response.data
     })
     this.formulario = this.formBuilder.group({
-      cnpj:[null, Validators.required],
-      codigoTributarioMunicipio:[null],
+      cnpj: [null, Validators.required],
+      codigoTributarioMunicipio: [null],
       foto: this.formBuilder.group({
-        arquivoId:[0],
-        nome:[null],
-        base64:[null, Validators.required],
-        tipo:[null],
-        tamanho:[0]
+        arquivoId: [0],
+        nome: [null],
+        base64: [null, Validators.required],
+        tipo: [null],
+        tamanho: [0]
       }, Validators.required),
-      empresaId:[0],
+      empresaId: [0],
       endereco: this.formBuilder.group({
         enderecoId: [0],
         cep: [null],
@@ -68,19 +68,19 @@ export class CreateEmpresaComponent implements OnInit {
         bairro: [null],
         cidade: [null],
         estado: [null],
-        logradouro:[null]
+        logradouro: [null]
       }),
-      grupoEconomicoId:[0],
-      inscricaoEstadual:[null],
-      inscricaoMunicipal:[null],
-      nomeFantasia:[null, Validators.required],
-      razaoSocial:[null],
-      telefone:[null]
+      grupoEconomicoId: [0],
+      inscricaoEstadual: [null],
+      inscricaoMunicipal: [null],
+      nomeFantasia: [null, Validators.required],
+      razaoSocial: [null],
+      telefone: [null]
     })
   }
-  onSubmit(){
-    if(!this.formulario.valid){
-      Object.keys(this.formulario.controls).forEach((campo)=>{
+  onSubmit() {
+    if (!this.formulario.valid) {
+      Object.keys(this.formulario.controls).forEach((campo) => {
         const controle = this.formulario.get(campo)
         controle.markAsTouched()
 
@@ -95,7 +95,7 @@ export class CreateEmpresaComponent implements OnInit {
     },
       err => {
         const errors = err.data.Errors;
-        for (var key in errors) {
+        for (const key in errors) {
           this.notifierService.notify('error', errors[key]);
         }
       });
@@ -140,7 +140,7 @@ export class CreateEmpresaComponent implements OnInit {
                     const imgBase64Path = e.target.result;
                     this.cardImageBase64 = imgBase64Path;
                     this.isImageSaved = true;
-                    var foto = this.formulario.get('foto') as FormGroup;
+                    const foto = this.formulario.get('foto') as FormGroup;
                     foto.get('base64').setValue(imgBase64Path);
                     foto.get('nome').setValue(fileInput.target.files[0].name);
                     foto.get('tamanho').setValue(fileInput.target.files[0].size);
@@ -157,7 +157,7 @@ export class CreateEmpresaComponent implements OnInit {
   removeImage(input) {
     this.cardImageBase64 = null;
     this.isImageSaved = false;
-    input.value = "";
+    input.value = '';
   }
 
   consultaCEP() {
@@ -182,11 +182,11 @@ export class CreateEmpresaComponent implements OnInit {
       }
     });
   }
-  verificaValidTouched(campo){
+  verificaValidTouched(campo) {
     return !this.formulario.get(campo).valid && this.formulario.get(campo).touched;
   }
 
-  aplicaCssErro(campo){
+  aplicaCssErro(campo) {
     return {'has-error': this.verificaValidTouched(campo) }
   }
 }

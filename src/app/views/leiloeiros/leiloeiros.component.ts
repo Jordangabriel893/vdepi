@@ -15,7 +15,7 @@ export class LeiloeirosComponent implements OnInit {
     private router: Router,
     private route: ActivatedRoute,
   ) {
-    this.restangular.one("leiloeiro").get().subscribe((response) => {
+    this.restangular.one('leiloeiro').get().subscribe((response) => {
      this.leiloeiros = response.data
      this.loading = false;
     },

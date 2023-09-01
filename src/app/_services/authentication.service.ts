@@ -3,7 +3,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { map, tap } from 'rxjs/operators';
 import { environment } from '../../environments/environment';
 import * as Model from './../views/_models/model'
-import jwt_decode from "jwt-decode";
+import jwt_decode from 'jwt-decode';
 
  @Injectable()
 export class AuthenticationService {
@@ -14,18 +14,18 @@ export class AuthenticationService {
 
   login(username: string, password: string) {
 
-    let headers = new HttpHeaders({
+    const headers = new HttpHeaders({
       'Content-Type': 'application/x-www-form-urlencoded'
     });
-    let options = {
+    const options = {
       headers: headers
     }
 
-    let grant_type = 'password';
-    let client_id = 'admin-eblonline';
-    let client_secret = 'X3l5h0UhDy7F0xE2sMpSPREcTyqgtZNO';
+    const grant_type = 'password';
+    const client_id = 'admin-eblonline';
+    const client_secret = 'X3l5h0UhDy7F0xE2sMpSPREcTyqgtZNO';
 
-    let body = `grant_type=${grant_type}&client_id=${client_id}&client_secret=${client_secret}&username=${username}&password=${password}`;
+    const body = `grant_type=${grant_type}&client_id=${client_id}&client_secret=${client_secret}&username=${username}&password=${password}`;
 
     return this.http.post<any>(environment.apiUrl + '/connect/token', body, options)
       .pipe(map(user => {
@@ -41,18 +41,18 @@ export class AuthenticationService {
   }
   loginAnonimo() {
 
-    let headers = new HttpHeaders({
+    const headers = new HttpHeaders({
       'Content-Type': 'application/x-www-form-urlencoded'
     });
-    let options = {
+    const options = {
       headers: headers
     }
 
-    let grant_type = 'client_credentials';
-    let client_id = 'admin-eblonline';
-    let client_secret = 'X3l5h0UhDy7F0xE2sMpSPREcTyqgtZNO';
+    const grant_type = 'client_credentials';
+    const client_id = 'admin-eblonline';
+    const client_secret = 'X3l5h0UhDy7F0xE2sMpSPREcTyqgtZNO';
 
-    let body = `grant_type=${grant_type}&client_id=${client_id}&client_secret=${client_secret}`;
+    const body = `grant_type=${grant_type}&client_id=${client_id}&client_secret=${client_secret}`;
 
     return this.http.post<any>(environment.apiUrl + '/connect/token', body, options)
       .pipe(map(user => {
@@ -76,7 +76,7 @@ export class AuthenticationService {
       })
     }
 
-    this.http.get<any>(environment.apiDados + '/permissao', opcoes).subscribe(permissao =>{
+    this.http.get<any>(environment.apiDados + '/permissao', opcoes).subscribe(permissao => {
       localStorage.setItem('currentUser', JSON.stringify({ ...user, permission: permissao.data.permissoes}))
     })
   }
@@ -85,7 +85,7 @@ export class AuthenticationService {
     localStorage.removeItem('currentUser');
   }
 
-  getUser() : Model.User {
+  getUser(): Model.User {
     return JSON.parse(localStorage.getItem('currentUser'));
   }
 }

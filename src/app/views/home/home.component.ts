@@ -12,8 +12,8 @@ export class HomeComponent  {
     ) {
     const reload = this.route.snapshot.queryParams['r'];
 
-    if(reload) {
-      window.location.href = "/#/home";
+    if (reload) {
+      window.location.href = '/#/home';
       window.location.reload();
     }
    }

@@ -24,8 +24,8 @@ export class ConfiguracaoComponent implements OnInit {
 
    ngOnInit() {
     this.restangular.one('agendamento/configuracao').get().subscribe(
-      dados =>{
-        this.configuracoes= dados.data
+      dados => {
+        this.configuracoes = dados.data
         this.loading = false;
       }
     )

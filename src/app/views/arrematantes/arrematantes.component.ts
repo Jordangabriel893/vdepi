@@ -14,12 +14,12 @@ import * as XLSX from 'xlsx';
 })
 export class ArrematantesComponent implements OnInit, OnDestroy {
   leiloes;
-  nomeLeilao:any = 'Leilões';
+  nomeLeilao: any = 'Leilões';
   arrematantes;
   arremantantesFiltrados;
   loading = false;
   queryField = new FormControl();
-  results:any;
+  results: any;
   arrematanteSearch;
   arrematantesComLetraMinuscula;
   loadingLeilao;
@@ -40,7 +40,7 @@ export class ArrematantesComponent implements OnInit, OnDestroy {
     private router: Router,
   ) {
       this.filtroLeilao = this.formBuilder.group({
-        leilao:[0]
+        leilao: [0]
       })
 
       this.queryField.valueChanges.subscribe( x => this.onSearch())
@@ -53,7 +53,7 @@ export class ArrematantesComponent implements OnInit, OnDestroy {
   filtrarPorLeilao(event) {
     this.arrematantes = [];
     this.loading = true;
-    if(event != null){
+    if (event != null) {
     this.filtroLeilao.controls.leilao.setValue(event.id);
     this.sub.push(
       this.restangular.one(`leilao/${event.id}/arrematantes`).get()
@@ -64,7 +64,7 @@ export class ArrematantesComponent implements OnInit, OnDestroy {
       },
       () => this.loading = false)
     )
-    }else{
+    } else {
       this.arremantantesFiltrados = []
       this.loading = false;
     }
@@ -78,7 +78,7 @@ export class ArrematantesComponent implements OnInit, OnDestroy {
       .subscribe((response) => {
         const blob = new Blob([response], { type: 'application/pdf' });
         fileSaver.saveAs(blob, `AutoArrematacao-Lote${numerolote}.pdf`);
-      },(error) => {
+      }, (error) => {
         this.notifierService.notify('error', 'Não foi possivel fazer o download!')
 
       })
@@ -93,15 +93,15 @@ export class ArrematantesComponent implements OnInit, OnDestroy {
       .subscribe((response) => {
         const blob = new Blob([response], { type: 'application/pdf' });
         fileSaver.saveAs(blob, `NotaArrematacao-Lote${numerolote}.pdf`);
-      },(error) => {
+      }, (error) => {
         this.notifierService.notify('error', 'Não foi possivel fazer o download!')
 
       })
     )
   }
 
-  onSearch(){
-      let value = this.queryField.value.replace('.', '').replace('-', '').replace('/', '').toLowerCase();
+  onSearch() {
+      const value = this.queryField.value.replace('.', '').replace('-', '').replace('/', '').toLowerCase();
 
       this.arremantantesFiltrados =
         this.arrematantes.filter(x => x.nome.toLowerCase().includes(value) ||
@@ -119,7 +119,7 @@ export class ArrematantesComponent implements OnInit, OnDestroy {
     .subscribe((response) => {
       const blob = new Blob([response], { type: 'application/xlsx' });
       fileSaver.saveAs(blob, `Arrematantes.xlsx`);
-    },(error) => {
+    }, (error) => {
       this.notifierService.notify('error', 'Não foi possivel fazer o download!')
 
     })

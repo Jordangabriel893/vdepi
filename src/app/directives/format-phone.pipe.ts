@@ -5,8 +5,9 @@ import { Injectable } from '@angular/core';
 @Injectable()
 export class FormatPhonePipe implements PipeTransform {
     transform(value: string): string {
-        if (value.match(/[^0-9]/))
+        if (value.match(/[^0-9]/)) {
             return value;
+        }
 
         value = value.trim().replace(/^\+/, '');
         let result;
@@ -20,17 +21,17 @@ export class FormatPhonePipe implements PipeTransform {
                 ddd = value.slice(0, 2);
                 firstGroup = value.slice(2, 6);
                 lastGroup = value.slice(6, 10);
-                result = "(" + ddd + ") "+ firstGroup + "-" + lastGroup;
+                result = '(' + ddd + ') ' + firstGroup + '-' + lastGroup;
                 break;
             case 11: //(##) # ####-####  / 9 Digitos
                 ddd = value.slice(0, 2);
                 firstDigit = value.slice(2, 3);
                 firstGroup = value.slice(3, 7);
                 lastGroup = value.slice(7, 11);
-                result = "(" + ddd + ") " + firstDigit + " " + firstGroup + "-" + lastGroup;
+                result = '(' + ddd + ') ' + firstDigit + ' ' + firstGroup + '-' + lastGroup;
                 break;
             default:
-                return value;               
+                return value;
         }
 
         return result;

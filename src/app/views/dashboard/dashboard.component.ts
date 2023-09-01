@@ -18,8 +18,8 @@ export class DashboardComponent implements OnInit, OnDestroy {
   id = 1
   leiloes
   formulario: FormGroup
-  flipDiv: boolean = false;
-  @ViewChild("barrasHorizontal") barrasHorizontal: ElementRef
+  flipDiv = false;
+  @ViewChild('barrasHorizontal') barrasHorizontal: ElementRef
   chartFinanceiro;
   //contadores
   contadorVisitantes = 0
@@ -43,7 +43,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
   listaExpirados
   // Doughnut
   public doughnutChartLabels: Label[] = ['Com Lances', 'Removidos', 'Sem Lances'];
-  public doughnutChartData: MultiDataSet = [[0,0,0]];
+  public doughnutChartData: MultiDataSet = [[0, 0, 0]];
   public doughnutChartType: ChartType = 'doughnut';
   doughnutChartOptions = {
     aspectRatio: 1,
@@ -68,7 +68,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
   public barChartData: ChartDataSets[] = [
     { data: [], label: '' }
   ];
-  public barChartColor = [{ backgroundColor: ['	#87CEFA','#4876FF','#436EEE','#3A5FCD',' #27408B', '#0000FF', '	#0000EE', '#0000CD', '#00008B', '#191970'] }]
+  public barChartColor = [{ backgroundColor: ['	#87CEFA', '#4876FF', '#436EEE', '#3A5FCD', ' #27408B', '#0000FF', '	#0000EE', '#0000CD', '#00008B', '#191970'] }]
 
   //Barras Financeiro
   public barChartOptionsFinanceiro: ChartOptions = {
@@ -94,7 +94,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
     private restangular: Restangular,
     private route: ActivatedRoute,
     private cdr: ChangeDetectorRef,
-    private formBuilder: FormBuilder,) {
+    private formBuilder: FormBuilder, ) {
     this.formulario = this.formBuilder.group({
       id: [this.id]
     });
@@ -105,14 +105,14 @@ export class DashboardComponent implements OnInit, OnDestroy {
   }
 
   buscarLeilao(event?) {
-    if(!event){
+    if (!event) {
       return false;
     }
 
     this.id = event.id
 
 
-    this.sub.push( this.restangular.one("dashboard/contadores").get({ LeilaoId: this.id }).subscribe((response) => {
+    this.sub.push( this.restangular.one('dashboard/contadores').get({ LeilaoId: this.id }).subscribe((response) => {
       this.contadorVisitantes = response.data.visitantes
       this.contadorHabilitados = response.data.habilitados
       this.contadorParticipantes = response.data.participantes
@@ -120,7 +120,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
     })
     )
 
-   this.sub.push( this.restangular.one("dashboard/contadores-lotes").get({ LeilaoId: this.id }).subscribe((response) => {
+   this.sub.push( this.restangular.one('dashboard/contadores-lotes').get({ LeilaoId: this.id }).subscribe((response) => {
       this.comLances = response.data.comLances
       this.removidos = response.data.removidos
       this.semLances = response.data.semLances
@@ -129,7 +129,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
 
     })
    )
-   this.sub.push( this.restangular.one("dashboard/top10lotes").get({ LeilaoId: this.id }).subscribe((response) => {
+   this.sub.push( this.restangular.one('dashboard/top10lotes').get({ LeilaoId: this.id }).subscribe((response) => {
 
       const top10lotes = response.data.reverse();
       const lances = top10lotes.map(x => x.lances)
@@ -139,18 +139,18 @@ export class DashboardComponent implements OnInit, OnDestroy {
 
     })
    )
-   this.sub.push( this.restangular.one("dashboard/financeiro").get({ LeilaoId: this.id }).subscribe((response) => {
+   this.sub.push( this.restangular.one('dashboard/financeiro').get({ LeilaoId: this.id }).subscribe((response) => {
        const finaceiro = response.data
      this.listaExpirados = finaceiro.filter(x => x.status == 'Vencido')
      this.listaPendentes = finaceiro.filter(x => x.status == 'Pendente')
      this.listaPago = finaceiro.filter(x => x.status == 'Pago')
      this.listaArrematados = finaceiro
-     this.barChartDataFinanceiro = [{ data: [finaceiro.length, this.listaPago.length, this.listaPendentes.length, this.listaExpirados.length, 0] },]
+     this.barChartDataFinanceiro = [{ data: [finaceiro.length, this.listaPago.length, this.listaPendentes.length, this.listaExpirados.length, 0] }, ]
 
     })
    )
-   this.sub.push( this.restangular.one("dashboard/previsto-arrematado").get({ LeilaoId: this.id }).subscribe((response) => {
-          if(this.chartFinanceiro) {
+   this.sub.push( this.restangular.one('dashboard/previsto-arrematado').get({ LeilaoId: this.id }).subscribe((response) => {
+          if (this.chartFinanceiro) {
              this.chartFinanceiro.clear();
              this.chartFinanceiro.destroy();
           }
@@ -158,18 +158,18 @@ export class DashboardComponent implements OnInit, OnDestroy {
           this.minimoVendasPrevisto = response.data.minimoVendasPrevisto
           this.lancesOfertados = response.data.lancesOfertados
           const data =  {
-            labels: ["Mínimo de Vendas Previsto", "Total de Lances ofertados"],
+            labels: ['Mínimo de Vendas Previsto', 'Total de Lances ofertados'],
             datasets: [
               {
-                label: "R$",
-                backgroundColor: ["rgb(38, 1, 250)", "rgb(10, 250, 1)"],
+                label: 'R$',
+                backgroundColor: ['rgb(38, 1, 250)', 'rgb(10, 250, 1)'],
                 data: [this.minimoVendasPrevisto, this.lancesOfertados, 0]
               }
             ]
           }
           this.chartFinanceiro = new Chart(this.barrasHorizontal.nativeElement, {
             type: 'horizontalBar',
-            data:data,
+            data: data,
             options: {
               legend: { display: false },
               title: {
@@ -179,7 +179,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
                 callbacks: {
                   label: function (tooltipItem, data) {
                     const datasetLabel = data.datasets[tooltipItem.datasetIndex].data || '';
-                    return tooltipItem.xLabel.toLocaleString("pt-BR", { style: "currency", currency: "BRL" })
+                    return tooltipItem.xLabel.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })
                   }
                 }
               },
@@ -191,7 +191,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
                 },
                 ticks: {
                   callback: function (value, index, values) {
-                    return value.toLocaleString("pt-BR", { style: "currency", currency: "BRL" });
+                    return value.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
                   }
                 },
               }],

@@ -17,15 +17,15 @@ echo ::: HOMOLOGACAO :::
 cd ..
 docker build -t eblonline-hml-admin .
 FOR /F "tokens=*" %%g IN ('docker images eblonline-hml-admin:latest -q') do (SET imageid=%%g)
-docker tag %imageid% cloud.canister.io:5000/leolirarj/eblonline-hml-admin:latest
-docker push cloud.canister.io:5000/leolirarj/eblonline-hml-admin
+docker tag %imageid% ghcr.io/webzi-startup/eblonline-hml-admin:latest
+docker push ghcr.io/webzi-startup/eblonline-hml-admin
 goto end
 :prd
 echo ::: PRODUCAO :::
 cd ..
 docker build -t eblonline-admin .
 FOR /F "tokens=*" %%g IN ('docker images eblonline-admin:latest -q') do (SET imageid=%%g)
-docker tag %imageid% cloud.canister.io:5000/leolirarj/eblonline-admin:latest
-docker push cloud.canister.io:5000/leolirarj/eblonline-admin
+docker tag %imageid% ghcr.io/webzi-startup/eblonline-admin:latest
+docker push ghcr.io/webzi-startup/eblonline-admin
 goto end
 :end

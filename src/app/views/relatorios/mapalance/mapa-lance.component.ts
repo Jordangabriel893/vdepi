@@ -7,7 +7,7 @@ import { NgMapApiLoader} from '@ngui/map';
 import { BsLocaleService } from 'ngx-bootstrap/datepicker';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { BsModalRef, BsModalService, TooltipDirective } from 'ngx-bootstrap';
-import { Router } from "@angular/router";
+import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { GroupByPipe } from 'ngx-pipes';
@@ -23,7 +23,7 @@ import * as MarkerCluster from '@google/markerclusterer'
 export class MapaLanceComponent implements OnInit, OnDestroy {
 
   //Global Parameters
-  loading: boolean = false;
+  loading = false;
   @ViewChild('templateModal') templateModal: TemplateRef<any>;
   filterModal: BsModalRef;
 
@@ -35,7 +35,7 @@ export class MapaLanceComponent implements OnInit, OnDestroy {
   //***********************
   googleMaps;
   mapObject;
-  zoom: number = 4;
+  zoom = 4;
   latLng = {
     lat: -13.257732,
     lng: -47.908433
@@ -69,8 +69,8 @@ export class MapaLanceComponent implements OnInit, OnDestroy {
   //  Parameters for Filter
   //***********************
   bsConfig = {
-    containerClass: "theme-blue",
-    rangeInputFormat: "DD [de] MMMM [de] YYYY",
+    containerClass: 'theme-blue',
+    rangeInputFormat: 'DD [de] MMMM [de] YYYY',
     showWeekNumbers: false,
   };
 
@@ -80,7 +80,7 @@ export class MapaLanceComponent implements OnInit, OnDestroy {
   authorities = [];
   filtro: FormGroup;
   infoWindowEventSub: Subscription;
-  countFilter: number = 0;
+  countFilter = 0;
   leiloes;
   leilaoId;
   leilaoNome;
@@ -129,7 +129,7 @@ export class MapaLanceComponent implements OnInit, OnDestroy {
     $event.stopPropagation();
   }
 
-  setLeilao(leilao){
+  setLeilao(leilao) {
     this.leilaoId = leilao.id;
     this.leilaoNome = leilao.nome;
     this.refreshLances();
@@ -142,7 +142,7 @@ export class MapaLanceComponent implements OnInit, OnDestroy {
 
   getLances(): Promise<any> {
     return new Promise((resolve, reject) => {
-      let filtro = this.filtro !== undefined ? this.filtro.value : null;
+      const filtro = this.filtro !== undefined ? this.filtro.value : null;
       this.restangular.one(`leilao/${this.leilaoId}/Lances`).get().subscribe(
         (lances) => {
           this.lances = lances.data;
@@ -157,13 +157,13 @@ export class MapaLanceComponent implements OnInit, OnDestroy {
   filtrarLances() {
     this.refreshLances();
 
-    let filtro = this.filtro.value;
+    const filtro = this.filtro.value;
     this.countFilter = 0;
-    if (filtro.periodo != null && filtro.periodo.length > 1) this.countFilter++;
-    if (filtro.orgao != null && filtro.orgao.length > 0) this.countFilter++;
-    if (filtro.cliente != null && filtro.cliente.length > 0) this.countFilter++;
-    if (filtro.infracao != null && filtro.infracao.length > 0) this.countFilter++;
-    if (filtro.autoridade != null && filtro.autoridade.length > 0) this.countFilter++;
+    if (filtro.periodo != null && filtro.periodo.length > 1) { this.countFilter++; }
+    if (filtro.orgao != null && filtro.orgao.length > 0) { this.countFilter++; }
+    if (filtro.cliente != null && filtro.cliente.length > 0) { this.countFilter++; }
+    if (filtro.infracao != null && filtro.infracao.length > 0) { this.countFilter++; }
+    if (filtro.autoridade != null && filtro.autoridade.length > 0) { this.countFilter++; }
 
     this.filterModal.hide();
   }
@@ -188,15 +188,16 @@ export class MapaLanceComponent implements OnInit, OnDestroy {
         });
         this.loading = false;
 
-        var markers = this.points.map((p: google.maps.LatLng) => new google.maps.Marker({ 'position': p }));
-        var mcOptions = {
+        const markers = this.points.map((p: google.maps.LatLng) => new google.maps.Marker({ 'position': p }));
+        const mcOptions = {
           gridSize: 70,
           maxZoom: 20,
           imagePath: './assets/img/maps/m'
         };
 
-        if (this.markerCluster != null)
+        if (this.markerCluster != null) {
           this.markerCluster.clearMarkers();
+        }
 
         this.markerCluster = new MarkerCluster(this.mapObject, markers, mcOptions);
 

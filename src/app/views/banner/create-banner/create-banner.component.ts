@@ -15,7 +15,7 @@ import { Restangular } from 'ngx-restangular';
 })
 export class CreateBannerComponent implements OnInit, OnDestroy {
   @ViewChild('inputBanners') inputBanners: ElementRef;
-  formulario:FormGroup
+  formulario: FormGroup
     //fotos
     fotosbase64: any
     fotosnome: any
@@ -40,8 +40,8 @@ export class CreateBannerComponent implements OnInit, OnDestroy {
     })
   }
   onSubmit(i) {
-    if(!this.formulario.valid){
-      Object.keys(this.formulario.controls).forEach((campo)=>{
+    if (!this.formulario.valid) {
+      Object.keys(this.formulario.controls).forEach((campo) => {
         const controle = this.formulario.get(campo)
         controle.markAsTouched()
       })
@@ -62,12 +62,12 @@ export class CreateBannerComponent implements OnInit, OnDestroy {
     this.imageError = null;
     const arrayImagens = fileInput.target.files.length
 
-    for(let i = 0; i < arrayImagens; i ++){
+    for (let i = 0; i < arrayImagens; i ++) {
 
      this.arrayFotos.push(fileInput.target.files[i])
     }
 
-    this.arrayFotos.forEach((x: any)=>{
+    this.arrayFotos.forEach((x: any) => {
       if (x ) {
         // Size Filter Bytes
         const max_size = 5242880;
@@ -108,8 +108,7 @@ export class CreateBannerComponent implements OnInit, OnDestroy {
               return false;
             } else {
               const imgBase64Path = e.target.result;
-              const arquivo =
-              {
+              const arquivo = {
                 url: imgBase64Path,
                 nome: x.name,
                 base64: imgBase64Path,
@@ -135,11 +134,11 @@ export class CreateBannerComponent implements OnInit, OnDestroy {
     this.inputBanners.nativeElement.click()
   }
   atualizarFoto(obj, i) {
-    let banners = this.formulario.get('banners') as FormArray
+    const banners = this.formulario.get('banners') as FormArray
 
     if (i < 0) {
       banners.insert(0, this.formBuilder.group({
-        linkUrl:'',
+        linkUrl: '',
         arquivo: obj,
         acao: 'I',
       }))
@@ -147,7 +146,7 @@ export class CreateBannerComponent implements OnInit, OnDestroy {
       const valor = banners.value[i]
       banners.removeAt(i)
       banners.insert(i, this.formBuilder.group({
-        linkUrl:'',
+        linkUrl: '',
         arquivo: obj,
         acao: 'I'
       }))
@@ -159,21 +158,20 @@ export class CreateBannerComponent implements OnInit, OnDestroy {
   }
 
   deleteFoto(indexFoto: number) {
-    let banners = this.formulario.controls['banners'] as FormArray;
-    let banner = banners.at(indexFoto) as FormGroup;
-    if(banner.controls['acao'].value !== 'I') {
+    const banners = this.formulario.controls['banners'] as FormArray;
+    const banner = banners.at(indexFoto) as FormGroup;
+    if (banner.controls['acao'].value !== 'I') {
       banner.controls['acao'].setValue('D');
-    }
-    else {
+    } else {
       banners.removeAt(indexFoto)
     }
   }
-  aplicaCssErroLista(campoArray, campo, i){
+  aplicaCssErroLista(campoArray, campo, i) {
     return{ 'has-error': this.verificaValidList(campoArray, campo, i) }
   }
-  verificaValidList(campoArray, campo, i){
-    var lista = this.formulario.get(campoArray) as FormArray;
-    var item = lista.controls[i] as FormGroup;
+  verificaValidList(campoArray, campo, i) {
+    const lista = this.formulario.get(campoArray) as FormArray;
+    const item = lista.controls[i] as FormGroup;
     return !item.get(campo).valid;
   }
   ngOnDestroy(): void {

@@ -29,7 +29,7 @@ export class CreateTemplateComponent implements OnInit,  OnDestroy {
   }
   cardImageBase64;
   isImageSaved
-  openPopup: boolean = true
+  openPopup = true
   modalRef: BsModalRef;
 
   constructor(
@@ -39,9 +39,9 @@ export class CreateTemplateComponent implements OnInit,  OnDestroy {
     private modalService: BsModalService,
     private restangular: Restangular,
   ) {
-    this.formulario =this.formBuilder.group({
-      descricao:[null, Validators.required],
-      tag:[""]
+    this.formulario = this.formBuilder.group({
+      descricao: [null, Validators.required],
+      tag: ['']
     })
 
    }
@@ -57,9 +57,9 @@ export class CreateTemplateComponent implements OnInit,  OnDestroy {
       this.salvar = true;
       this.emailEditor.editor.exportHtml((data) => {
         this.template = {
-          designJson:JSON.stringify(data.design),
+          designJson: JSON.stringify(data.design),
           codigoHtml: data.html,
-          descricao:this.formulario.value.descricao
+          descricao: this.formulario.value.descricao
         }
         this.salvar = false
       })
@@ -146,10 +146,10 @@ export class CreateTemplateComponent implements OnInit,  OnDestroy {
     });
 
     this.emailEditor.editor.registerCallback('image', function(file, done) {
-      var imagem:any = {
-        base64:'',
-        tipo:'',
-        nome:'',
+      const imagem: any = {
+        base64: '',
+        tipo: '',
+        nome: '',
       }
 
       const reader = new FileReader();
@@ -162,7 +162,7 @@ export class CreateTemplateComponent implements OnInit,  OnDestroy {
             that.isImageSaved = true;
             imagem.base64 = imgBase64Path
             imagem.nome = file.attachments[0].name
-            imagem.tipo =file.attachments[0].type
+            imagem.tipo = file.attachments[0].type
 
             that.restangular.all('marketing/imageTemplate')
             .post(imagem)
@@ -179,11 +179,11 @@ export class CreateTemplateComponent implements OnInit,  OnDestroy {
     this.modalRef = this.modalService.show(template, { class: 'modal-lg'});
   }
 
-  save(){
+  save() {
     this.salvar = true;
 
-    if(!this.formulario.valid) {
-      Object.keys(this.formulario.controls).forEach((campo)=>{
+    if (!this.formulario.valid) {
+      Object.keys(this.formulario.controls).forEach((campo) => {
         const controle = this.formulario.get(campo)
         controle.markAsTouched()
       })
@@ -192,7 +192,7 @@ export class CreateTemplateComponent implements OnInit,  OnDestroy {
       return false;
     }
 
-    if(!this.template){
+    if (!this.template) {
       this.notifierService.notify('error', 'Template vazio, adicione mais elementos');
       this.salvar = false
       return false;
@@ -218,16 +218,16 @@ export class CreateTemplateComponent implements OnInit,  OnDestroy {
     this.modalRef.hide()
   }
 
-  verificaValidTouched(campo){
+  verificaValidTouched(campo) {
     this.formulario.controls [campo].valueChanges.subscribe ((val) => {
-      if (String (val) === "NaN") {
+      if (String (val) === 'NaN') {
         this.formulario.controls [campo].setValue(null);
       }
     });
     return !this.formulario.get(campo).valid && this.formulario.get(campo).touched;
   }
 
-  aplicaCssErro(campo){
+  aplicaCssErro(campo) {
     return{ 'has-error': this.verificaValidTouched(campo) }
   }
   ngOnDestroy(): void {

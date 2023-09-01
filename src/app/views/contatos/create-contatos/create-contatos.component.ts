@@ -39,12 +39,12 @@ export class CreateContatosComponent implements OnInit, OnDestroy {
 
     this.mask = ['(', /[1-9]/, /\d/, ')', ' ', /\d/, /\d/, /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/]
     this.maskTelefoneFixo = ['(', /[1-9]/, /\d/, ')', ' ', /\d/, /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/]
-    this.maskCep = [/\d/, /\d/, /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/,]
+    this.maskCep = [/\d/, /\d/, /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, ]
     this.maskCpf = [/\d/, /\d/, /\d/, '.', /\d/, /\d/, /\d/, '.', /\d/, /\d/, /\d/, '-', /\d/, /\d/]
-    this.maskCnpj = [/\d/, /\d/, '.', /\d/, /\d/, /\d/, '.', /\d/, /\d/, /\d/, '/', /\d/, /\d/, /\d/, /\d/, '-', /\d/, /\d/,]
+    this.maskCnpj = [/\d/, /\d/, '.', /\d/, /\d/, /\d/, '.', /\d/, /\d/, /\d/, '/', /\d/, /\d/, /\d/, /\d/, '-', /\d/, /\d/, ]
 
    this.sub.push(
-    this.restangular.one("GrupoEconomico").get().subscribe((response) => {
+    this.restangular.one('GrupoEconomico').get().subscribe((response) => {
       this.gruposEconomico = response.data
     })
    )
@@ -59,8 +59,8 @@ export class CreateContatosComponent implements OnInit, OnDestroy {
       bairro: [null],
       cidade: [null],
       logradouro: [null],
-      numero:[null],
-      complemento:[null],
+      numero: [null],
+      complemento: [null],
       telefoneWhatsapp: [null],
       telefoneConvencional: [null],
       telefoneCelular: [null, Validators.required],

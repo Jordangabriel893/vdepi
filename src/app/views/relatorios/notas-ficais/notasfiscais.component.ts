@@ -15,20 +15,20 @@ import { CurrencyFormatPipe } from 'app/directives/currency-format.pipe';
 })
 export class NotasFiscaisComponent implements OnInit {
 
-  loading: boolean = false;
+  loading = false;
   user;
   dadosRelatorio;
 
 
-  firstRequest: boolean = true;
+  firstRequest = true;
   periodo: any[] = [moment().startOf('month').toDate(), moment().toDate()];
   clientes: Model.Cliente[];
-  clienteSelected: Model.Cliente = { nome: "CLIENTE", id_cliente: 0, depositos: [] };
-  depositoSelected: Model.Deposito = { descricao: "DEPÓSITO", id_deposito: 0, flag_virtual: '' };
+  clienteSelected: Model.Cliente = { nome: 'CLIENTE', id_cliente: 0, depositos: [] };
+  depositoSelected: Model.Deposito = { descricao: 'DEPÓSITO', id_deposito: 0, flag_virtual: '' };
 
   bsConfig = {
-    containerClass: "theme-blue",
-    rangeInputFormat: "DD [de] MMMM [de] YYYY",
+    containerClass: 'theme-blue',
+    rangeInputFormat: 'DD [de] MMMM [de] YYYY',
     showWeekNumbers: false,
     locale: 'pt-BR'
   };
@@ -55,7 +55,7 @@ export class NotasFiscaisComponent implements OnInit {
   }
 
   getRelatorio() {
-    this.restangular.all("relatorios").customGET('notasfiscais',
+    this.restangular.all('relatorios').customGET('notasfiscais',
     {
       periodo: this.periodo,
       id_cliente: this.clienteSelected.id_cliente,
@@ -73,8 +73,8 @@ export class NotasFiscaisComponent implements OnInit {
   }
 
   getClientes() {
-    let user = this.auth.getUser();
-    return this.restangular.one("cliente/usuario", user.id).getList('', { flag_virtual: false });
+    const user = this.auth.getUser();
+    return this.restangular.one('cliente/usuario', user.id).getList('', { flag_virtual: false });
   }
 
   setCliente(cli) {
@@ -98,17 +98,17 @@ export class NotasFiscaisComponent implements OnInit {
   }
 
   exportAsPDF() {
-    let columns = [
-      { title: "Processo", dataKey: "numero_formulario_grv" },
-      { title: "Nº NFE", dataKey: "numero_nota_fiscal" },
-      { title: "Cod. Verif.", dataKey: "codigo_verificacao" },
-      { title: "CPF/CNPJ", dataKey: "cpf_cnpj" },
-      { title: "Nome", dataKey: "nota_fiscal_nome" },
-      { title: "Data Liberação", dataKey: "data_liberacao_grv" },
+    const columns = [
+      { title: 'Processo', dataKey: 'numero_formulario_grv' },
+      { title: 'Nº NFE', dataKey: 'numero_nota_fiscal' },
+      { title: 'Cod. Verif.', dataKey: 'codigo_verificacao' },
+      { title: 'CPF/CNPJ', dataKey: 'cpf_cnpj' },
+      { title: 'Nome', dataKey: 'nota_fiscal_nome' },
+      { title: 'Data Liberação', dataKey: 'data_liberacao_grv' },
       // { title: "Atividade", dataKey: "atividade" },
-      { title: "Total", dataKey: "total_com_desconto" },
-      { title: "Cod", dataKey: "codigo_erro" },
-      { title: "Mensagem", dataKey: "mensagem_erro" },
+      { title: 'Total', dataKey: 'total_com_desconto' },
+      { title: 'Cod', dataKey: 'codigo_erro' },
+      { title: 'Mensagem', dataKey: 'mensagem_erro' },
     ];
 
     const columStyles = {
@@ -126,16 +126,16 @@ export class NotasFiscaisComponent implements OnInit {
 
     const rows = this.dadosRelatorio.map(e => {
       return {
-        numero_formulario_grv: e.numero_formulario_grv || "",
-        numero_nota_fiscal: e.numero_nota_fiscal || "",
-        codigo_verificacao: e.codigo_verificacao || "",
-        cpf_cnpj: e.cpf_cnpj || "",
-        nota_fiscal_nome: e.nota_fiscal_nome || "",
-        data_liberacao_grv: moment(e.data_liberacao_grv).format("DD/MM/YYYY HH:ss"),
+        numero_formulario_grv: e.numero_formulario_grv || '',
+        numero_nota_fiscal: e.numero_nota_fiscal || '',
+        codigo_verificacao: e.codigo_verificacao || '',
+        cpf_cnpj: e.cpf_cnpj || '',
+        nota_fiscal_nome: e.nota_fiscal_nome || '',
+        data_liberacao_grv: moment(e.data_liberacao_grv).format('DD/MM/YYYY HH:ss'),
         // atividade: e.atividade || "",
-        total_com_desconto: this.currency.transform(e.total_com_desconto) || "",
-        codigo_erro: e.codigo_erro || "",
-        mensagem_erro: e.mensagem_erro || "",
+        total_com_desconto: this.currency.transform(e.total_com_desconto) || '',
+        codigo_erro: e.codigo_erro || '',
+        mensagem_erro: e.mensagem_erro || '',
       }
     });
 
@@ -150,6 +150,6 @@ export class NotasFiscaisComponent implements OnInit {
     // const resumo = groupRows.map(x => (x.key + ': ' + x.value.length));
     // resumo.push("TOTAL: " + rows.length);
 
-    this.pdfService.exportPdf('NotasFiscais', "Notas Fiscais", rows, columns, columStyles, header, null);
+    this.pdfService.exportPdf('NotasFiscais', 'Notas Fiscais', rows, columns, columStyles, header, null);
   }
 }

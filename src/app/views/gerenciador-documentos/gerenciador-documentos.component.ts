@@ -19,7 +19,7 @@ export class GerenciadorDocumentosComponent implements OnInit, OnDestroy {
   documentos;
   loading;
   sub: Subscription[] = [];
-  nomeLeilao:any = 'Leilões';
+  nomeLeilao: any = 'Leilões';
   enviando = false;
   queryField = new FormControl();
   documentosFiltrados = [];
@@ -27,20 +27,22 @@ export class GerenciadorDocumentosComponent implements OnInit, OnDestroy {
   leilao;
   blockchainInfo;
   modalRef: BsModalRef;
-  constructor(
-    private modalService: BsModalService,
-    private restangular: Restangular,
-    private formBuilder: FormBuilder) { }
+
+    constructor(
+      private modalService: BsModalService,
+      private restangular: Restangular,
+      private formBuilder: FormBuilder,
+      private notifierService: NotifierService) { }
 
    ngOnInit() {
      this.formulario =  this.formBuilder.group({
-      selectAll:[false],
-      enviarFaturas:this.formBuilder.array([]),
-      statusControl:[null]
+      selectAll: [false],
+      enviarFaturas: this.formBuilder.array([]),
+      statusControl: [null]
     })
   }
 
-  setLeilao(leilao){
+  setLeilao(leilao) {
     this.leilao = leilao;
     this.buscarDocumentos();
   }
@@ -49,7 +51,7 @@ export class GerenciadorDocumentosComponent implements OnInit, OnDestroy {
     this.loading = true;
     this.sub.push(
       this.restangular.one(`documentoLote`).get({leilaoId: this.leilao.id}).subscribe(
-        dados =>{
+        dados => {
           this.documentos = dados.data;
           this.documentosFiltrados = dados.data;
         this.loading = false;
@@ -79,22 +81,51 @@ export class GerenciadorDocumentosComponent implements OnInit, OnDestroy {
     XLSX.writeFile(wb, 'Faturas.xlsx');
   }
 
-  onSearch(){
-      let value = this.queryField.value.toLowerCase();
+  onSearch() {
+      const value = this.queryField.value.toLowerCase();
 
       this.documentosFiltrados = this.documentos.filter(x => x.arrematante.toLowerCase().includes(value));
   }
 
-  filtrarDocumentos(){
+  filtrarDocumentos() {
     const form = this.formulario.value
-    if(form.statusControl == 0){
+    if (form.statusControl == 0) {
       this.documentosFiltrados = this.documentos
-    }else{
+    } else {
       this.documentosFiltrados = this.documentos.filter(doc => doc.statusId == form.statusControl);
     }
   }
 
   ngOnDestroy(): void {
     this.sub.forEach(s => s.unsubscribe())
+  }
+
+  reprocessar(documentoId){
+    this.sub.push(
+      this.restangular.one(`documentoLote/${documentoId}/reprocessar`).post().subscribe(
+        dados =>{
+          this.notifierService.notify('success', dados.message);
+          this.refresh();
+        },
+        e => {
+          console.log(e.data)
+          this.notifierService.notify('error', e.data.Message);
+        }
+      )
+    )
+  }
+
+  remover(documentoId){
+    this.sub.push(
+      this.restangular.one(`documentoLote/${documentoId}`).remove().subscribe(
+        dados =>{
+          this.notifierService.notify('success', dados.message);
+          this.refresh();
+        },
+        e => {
+          this.notifierService.notify('error', e.data.Message);
+        }
+      )
+    )
   }
 }

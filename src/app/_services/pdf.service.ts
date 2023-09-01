@@ -6,8 +6,8 @@ import * as jsPDF from 'jspdf'
 import 'jspdf-autotable'
 import * as moment from 'moment'
 import 'moment/locale/pt-br';
-import { FormatPhonePipe } from "./../directives/format-phone.pipe"
-import { CurrencyFormatPipe } from "./../directives/currency-format.pipe"
+import { FormatPhonePipe } from './../directives/format-phone.pipe'
+import { CurrencyFormatPipe } from './../directives/currency-format.pipe'
 import { Restangular } from 'ngx-restangular';
 import html2canvas from 'html2canvas';
 
@@ -29,7 +29,7 @@ export class PdfService {
     const element = document.getElementById(elementId),
     options = {
         imageTimeout: timeout,
-        background: "white",
+        background: 'white',
         allowTaint : true,
         useCORS: false,
         height: element.clientHeight,
@@ -37,9 +37,9 @@ export class PdfService {
     };
 
     html2canvas(element, options).then((canvas) => {
-      let imgData = canvas.toDataURL('image/png');
+      const imgData = canvas.toDataURL('image/png');
 
-      let imgWidth = 210 - 2*margin,
+      const imgWidth = 210 - 2 * margin,
           // pageHeight = 295,
           imgHeight = canvas.height * imgWidth / canvas.width,
           // heightLeft = imgHeight,
@@ -56,7 +56,7 @@ export class PdfService {
       //     doc.addImage(imgData, 'PNG', margin, position, imgWidth, imgHeight);
       //     heightLeft -= pageHeight;
       // }
-      doc.save( fileName+'.pdf');
+      doc.save( fileName + '.pdf');
     });
   }
 
@@ -64,8 +64,8 @@ export class PdfService {
 
     //var imgData = Logo.imgDataUrl;
     const doc = new jsPDF('l', 'pt', 'a4');
-    doc.page=1;
-    var totalPagesExp = "{total_pages_count_string}";
+    doc.page = 1;
+    const totalPagesExp = '{total_pages_count_string}';
 
     const header = () => {
       //HEADER
@@ -76,37 +76,37 @@ export class PdfService {
 
       doc.setFontSize(12)
       doc.setFontStyle('bold');
-      doc.text("Leilão:", 20, 75);
+      doc.text('Leilão:', 20, 75);
       //doc.text("Deposito:", 20, 90);
 
-      doc.text("Data de Emissão:", 615, 75);
-      if(objExtra.periodo && objExtra.periodo.length === 2) {
-        doc.text("Periodo:", 615, 90);
+      doc.text('Data de Emissão:', 615, 75);
+      if (objExtra.periodo && objExtra.periodo.length === 2) {
+        doc.text('Periodo:', 615, 90);
       }
 
       doc.setFontStyle('normal');
       doc.text(`${objExtra.leilao}`, 80, 75);
       //doc.text(`${objExtra.deposito}`, 80, 90);
-      doc.text(`${moment().format("DD/MM/YYYY HH:mm")}`, 720, 75);
+      doc.text(`${moment().format('DD/MM/YYYY HH:mm')}`, 720, 75);
 
-      if(objExtra.periodo && objExtra.periodo.length === 2) {
-        doc.text(moment(objExtra.periodo[0]).format("DD/MM/YYYY") + ' até ' + moment(objExtra.periodo[1]).format("DD/MM/YYYY"), 670, 90);
+      if (objExtra.periodo && objExtra.periodo.length === 2) {
+        doc.text(moment(objExtra.periodo[0]).format('DD/MM/YYYY') + ' até ' + moment(objExtra.periodo[1]).format('DD/MM/YYYY'), 670, 90);
       }
 
 
     }
 
-    var footer = () => {
+    const footer = () => {
         //FOOTER
         doc.setFontSize(8);
         doc.setFontStyle('normal');
         doc.setTextColor(150);
 
-        doc.text(moment().format("LLLL") + (objExtra.usuario ? ' - ' + objExtra.usuario : ''), 20, (doc.internal.pageSize.getHeight() - 20));
+        doc.text(moment().format('LLLL') + (objExtra.usuario ? ' - ' + objExtra.usuario : ''), 20, (doc.internal.pageSize.getHeight() - 20));
 
-        let str = "Página " + doc.page;
+        let str = 'Página ' + doc.page;
         if (typeof doc.putTotalPages === 'function') {
-          str = str + " de " + totalPagesExp;
+          str = str + ' de ' + totalPagesExp;
         }
         doc.text(str, doc.internal.pageSize.getWidth() - 80, (doc.internal.pageSize.getHeight() - 20));
         doc.page++;
@@ -129,7 +129,7 @@ export class PdfService {
       }
     });
 
-    if(objResumo && objResumo.length > 0) {
+    if (objResumo && objResumo.length > 0) {
       if ((doc.autoTable.previous.finalY + 40) > doc.internal.pageSize.getHeight()) {
         doc.addPage();
         footer();
@@ -140,13 +140,13 @@ export class PdfService {
       let spaceH = 20;
       let spaceV = 40;
       objResumo.forEach(r => {
-        if(spaceH > (doc.internal.pageSize.getWidth() - 80)) {
+        if (spaceH > (doc.internal.pageSize.getWidth() - 80)) {
           spaceV += 15;
           spaceH = 20;
         }
         doc.setFontSize(9)
         doc.setFontStyle('normal');
-        doc.text(r, spaceH ,doc.autoTable.previous.finalY + spaceV);
+        doc.text(r, spaceH , doc.autoTable.previous.finalY + spaceV);
         spaceH += 200;
       });
     }
@@ -156,7 +156,7 @@ export class PdfService {
       doc.putTotalPages(totalPagesExp);
     }
 
-    doc.save(filename + ".pdf");
+    doc.save(filename + '.pdf');
 
   }
 

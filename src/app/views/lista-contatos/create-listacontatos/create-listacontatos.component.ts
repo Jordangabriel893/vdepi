@@ -17,9 +17,9 @@ export class CreateListacontatosComponent implements OnInit {
   status: any;
   file: File;
   loading = false;
-  fileName = "";
-  fileOption: boolean = true;
-  textoption: boolean = false;
+  fileName = '';
+  fileOption = true;
+  textoption = false;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -47,7 +47,7 @@ export class CreateListacontatosComponent implements OnInit {
       descricao: [null, Validators.required],
       empresaId: [null],
       file: [null],
-      emails: [""]
+      emails: ['']
     })
 
   }
@@ -55,10 +55,10 @@ export class CreateListacontatosComponent implements OnInit {
   onSubmit() {
     this.loading = true;
     if (this.fileOption) {
-      let formData: FormData = new FormData();
+      const formData: FormData = new FormData();
       formData.append('file', this.file)
       formData.append('descricao', this.formulario.value.descricao)
-      if(this.formulario.value.empresaId) {
+      if (this.formulario.value.empresaId) {
         formData.append('empresaId', this.formulario.value.empresaId)
       }
 
@@ -77,14 +77,14 @@ export class CreateListacontatosComponent implements OnInit {
         })
       });
     } else {
-      let form = {
+      const form = {
         listaContatoId: this.formulario.value.listaContatoId,
         descricao: this.formulario.value.descricao,
         emails: this.formulario.value.emails
       };
 
-      if(this.formulario.value.empresaId) {
-        form["empresaId"] = this.formulario.value.empresaId
+      if (this.formulario.value.empresaId) {
+        form['empresaId'] = this.formulario.value.empresaId
       }
 
       this.restangular.all('marketing/listaContato/text').post(form).subscribe(a => {
@@ -122,7 +122,7 @@ export class CreateListacontatosComponent implements OnInit {
   }
 
   showMenu(menuName: string) {
-    let menus = ['fileOption', 'textOption'];
+    const menus = ['fileOption', 'textOption'];
     menus.splice(menus.indexOf(menuName), 1);
     for (const menu of menus) {
       this[menu] = false;

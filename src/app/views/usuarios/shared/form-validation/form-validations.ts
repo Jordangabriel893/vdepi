@@ -11,9 +11,9 @@ export class FormValidations {
         return null;
       }
 
-      static dataLeilaoValidator(control: FormControl){
+      static dataLeilaoValidator(control: FormControl) {
         const dataLeilao = control.value;
-        if(dataLeilao && dataLeilao !== ''){
+        if (dataLeilao && dataLeilao !== '') {
 
         }
       }
@@ -26,7 +26,7 @@ export class FormValidations {
           'cepInvalido': 'CEP inválido.',
           'pattern': 'Campo inválido'
         };
-    
+
         return config[validatorName];
       }
 }

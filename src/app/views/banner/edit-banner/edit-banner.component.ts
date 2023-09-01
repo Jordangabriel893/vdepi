@@ -14,7 +14,7 @@ import { Subscription } from 'rxjs';
 })
 export class EditBannerComponent implements OnInit, OnDestroy {
   @ViewChild('inputBanners') inputBanners: ElementRef;
-  formulario:FormGroup
+  formulario: FormGroup
     //fotos
     fotosbase64: any
     fotosnome: any
@@ -51,8 +51,8 @@ export class EditBannerComponent implements OnInit, OnDestroy {
 
   }
   onSubmit(i) {
-    if(!this.formulario.valid){
-      Object.keys(this.formulario.controls).forEach((campo)=>{
+    if (!this.formulario.valid) {
+      Object.keys(this.formulario.controls).forEach((campo) => {
         const controle = this.formulario.get(campo)
         controle.markAsTouched()
 
@@ -67,26 +67,26 @@ export class EditBannerComponent implements OnInit, OnDestroy {
     },
       error => {
         this.notifierService.notify('error', 'Erro ao atualizar o Banner!');
-        Object.keys(this.formulario.controls).forEach((campo)=>{
+        Object.keys(this.formulario.controls).forEach((campo) => {
           const controle = this.formulario.get(campo)
           controle.markAsTouched()
         })
       });
   }
-  updateForm(dados){
+  updateForm(dados) {
     this.formulario = this.formBuilder.group({
-      linkUrl:dados.linkUrl,
-      bannerId:dados.bannerHomerId,
-      ativo:dados.ativo,
-      arquivo:this.formBuilder.group({
-        acesso:dados.arquivo.acesso,
-        arquivoId:dados.arquivo.arquivoId,
-        base64:dados.arquivo.base64,
-        dataCadastro:dados.arquivo.dataCadastro,
-        nome:dados.arquivo.nome,
-        tamanho:dados.arquivo.tamanho,
-        tipo:dados.arquivo.tipo,
-        url:dados.arquivo.url,
+      linkUrl: dados.linkUrl,
+      bannerId: dados.bannerHomerId,
+      ativo: dados.ativo,
+      arquivo: this.formBuilder.group({
+        acesso: dados.arquivo.acesso,
+        arquivoId: dados.arquivo.arquivoId,
+        base64: dados.arquivo.base64,
+        dataCadastro: dados.arquivo.dataCadastro,
+        nome: dados.arquivo.nome,
+        tamanho: dados.arquivo.tamanho,
+        tipo: dados.arquivo.tipo,
+        url: dados.arquivo.url,
       }),
 
 
@@ -132,7 +132,7 @@ export class EditBannerComponent implements OnInit, OnDestroy {
                     const imgBase64Path = e.target.result;
                     this.cardImageBase64 = imgBase64Path;
                     this.isImageSaved = true;
-                    var foto = this.formulario.get('arquivo') as FormGroup;
+                    const foto = this.formulario.get('arquivo') as FormGroup;
                     foto.get('base64').setValue(imgBase64Path);
                     foto.get('url').setValue(imgBase64Path);
                     foto.get('nome').setValue(fileInput.target.files[0].name);
@@ -152,11 +152,11 @@ export class EditBannerComponent implements OnInit, OnDestroy {
     this.inputBanners.nativeElement.click()
   }
   atualizarFoto(obj, i) {
-    let banners = this.formulario.get('banners') as FormArray
+    const banners = this.formulario.get('banners') as FormArray
 
     if (i < 0) {
       banners.insert(0, this.formBuilder.group({
-        linkUrl:'',
+        linkUrl: '',
         arquivo: obj,
         acao: 'I',
       }))
@@ -164,7 +164,7 @@ export class EditBannerComponent implements OnInit, OnDestroy {
       const valor = banners.value[i]
       banners.removeAt(i)
       banners.insert(i, this.formBuilder.group({
-        linkUrl:'',
+        linkUrl: '',
         arquivo: obj,
         acao: 'I'
       }))
@@ -176,21 +176,20 @@ export class EditBannerComponent implements OnInit, OnDestroy {
   }
 
   deleteFoto(indexFoto: number) {
-    let banners = this.formulario.controls['banners'] as FormArray;
-    let banner = banners.at(indexFoto) as FormGroup;
-    if(banner.controls['acao'].value !== 'I') {
+    const banners = this.formulario.controls['banners'] as FormArray;
+    const banner = banners.at(indexFoto) as FormGroup;
+    if (banner.controls['acao'].value !== 'I') {
       banner.controls['acao'].setValue('D');
-    }
-    else {
+    } else {
       banners.removeAt(indexFoto)
     }
   }
-  aplicaCssErroLista(campoArray, campo, i){
+  aplicaCssErroLista(campoArray, campo, i) {
     return{ 'has-error': this.verificaValidList(campoArray, campo, i) }
   }
-  verificaValidList(campoArray, campo, i){
-    var lista = this.formulario.get(campoArray) as FormArray;
-    var item = lista.controls[i] as FormGroup;
+  verificaValidList(campoArray, campo, i) {
+    const lista = this.formulario.get(campoArray) as FormArray;
+    const item = lista.controls[i] as FormGroup;
     return !item.get(campo).valid;
   }
   ngOnDestroy(): void {

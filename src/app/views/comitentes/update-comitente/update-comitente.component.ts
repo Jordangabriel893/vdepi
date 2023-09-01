@@ -17,7 +17,7 @@ export class UpdateComitenteComponent implements OnInit, OnDestroy {
   isImageSaved: boolean;
   cardImageBase64: string;
 
-  formulario:FormGroup
+  formulario: FormGroup
   comitente
   id
   sub: Subscription[] = [];
@@ -37,28 +37,28 @@ export class UpdateComitenteComponent implements OnInit, OnDestroy {
 
     this.id = this.route.snapshot.params['id']
    this.sub.push(
-    this.restangular.one("comitente", this.id).get().subscribe((response) => {
+    this.restangular.one('comitente', this.id).get().subscribe((response) => {
       this.updateForm(response.data)
       })
    )
 
-    this.mask = ['(', /[1-9]/, /\d/, ')', ' ', /\d/,/\d/,/\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/]
-    this.maskCep = [ /\d/,/\d/,/\d/,/\d/,/\d/, '-', /\d/, /\d/, /\d/, ]
-    this.maskCpf = [ /\d/,/\d/,/\d/,  '.', /\d/,/\d/,/\d/, '.', /\d/, /\d/, /\d/, '-', /\d/,/\d/ ]
-    this.maskCnpj = [ /\d/,/\d/,'.',/\d/,/\d/,/\d/,'.',/\d/,/\d/,/\d/,'/', /\d/,/\d/,/\d/,/\d/,'-',/\d/,/\d/, ]
+    this.mask = ['(', /[1-9]/, /\d/, ')', ' ', /\d/, /\d/, /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/]
+    this.maskCep = [ /\d/, /\d/, /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, ]
+    this.maskCpf = [ /\d/, /\d/, /\d/,  '.', /\d/, /\d/, /\d/, '.', /\d/, /\d/, /\d/, '-', /\d/, /\d/ ]
+    this.maskCnpj = [ /\d/, /\d/, '.', /\d/, /\d/, /\d/, '.', /\d/, /\d/, /\d/, '/', /\d/, /\d/, /\d/, /\d/, '-', /\d/, /\d/, ]
 
     this.formulario = this.formBuilder.group({
       comitenteId: [this.id],
-      cnpj:[null, Validators.required],
-      ativo:[null, Validators.required],
-      nome:[null, Validators.required],
-      razaoSocial:[null],
+      cnpj: [null, Validators.required],
+      ativo: [null, Validators.required],
+      nome: [null, Validators.required],
+      razaoSocial: [null],
       foto: this.formBuilder.group({
-        arquivoId:[0],
-        nome:[null],
-        base64:[null],
-        tipo:[null],
-        tamanho:[0]
+        arquivoId: [0],
+        nome: [null],
+        base64: [null],
+        tipo: [null],
+        tamanho: [0]
       }, Validators.required),
       usuarioId: [null]
     })
@@ -67,9 +67,9 @@ export class UpdateComitenteComponent implements OnInit, OnDestroy {
   ngOnInit() {
 
   }
-  onSubmit(){
-    if(!this.formulario.valid){
-      Object.keys(this.formulario.controls).forEach((campo)=>{
+  onSubmit() {
+    if (!this.formulario.valid) {
+      Object.keys(this.formulario.controls).forEach((campo) => {
         const controle = this.formulario.get(campo)
         controle.markAsTouched()
       })
@@ -83,21 +83,21 @@ export class UpdateComitenteComponent implements OnInit, OnDestroy {
     },
       err => {
       const errors = err.data.Errors;
-      for (var key in errors) {
+      for (const key in errors) {
         this.notifierService.notify('error', errors[key]);
       }
     });
   }
-  updateForm(dados){
-    if(dados.foto) {
+  updateForm(dados) {
+    if (dados.foto) {
       this.isImageSaved = true
       this.cardImageBase64 = dados.foto.url
     }
     this.formulario.patchValue({
-      cnpj:dados.cnpj,
-      ativo:dados.ativo,
-      nome:dados.nome,
-      razaoSocial:dados.razaoSocial,
+      cnpj: dados.cnpj,
+      ativo: dados.ativo,
+      nome: dados.nome,
+      razaoSocial: dados.razaoSocial,
       foto: [dados.foto],
       fotoId: dados.fotoId,
       usuarioId: dados.usuarioId
@@ -143,7 +143,7 @@ export class UpdateComitenteComponent implements OnInit, OnDestroy {
                     const imgBase64Path = e.target.result;
                     this.cardImageBase64 = imgBase64Path;
                     this.isImageSaved = true;
-                    var foto = this.formulario.get('foto') as FormGroup;
+                    const foto = this.formulario.get('foto') as FormGroup;
                     foto.get('base64').setValue(imgBase64Path);
                     foto.get('nome').setValue(fileInput.target.files[0].name);
                     foto.get('tamanho').setValue(fileInput.target.files[0].size);
@@ -160,14 +160,14 @@ export class UpdateComitenteComponent implements OnInit, OnDestroy {
   removeImage(input) {
     this.cardImageBase64 = null;
     this.isImageSaved = false;
-    input.value = "";
+    input.value = '';
   }
 
-  verificaValidTouched(campo){
+  verificaValidTouched(campo) {
     return !this.formulario.get(campo).valid && this.formulario.get(campo).touched;
   }
 
-  aplicaCssErro(campo){
+  aplicaCssErro(campo) {
     return {'has-error': this.verificaValidTouched(campo) }
   }
   onValueChange(event, campo) {

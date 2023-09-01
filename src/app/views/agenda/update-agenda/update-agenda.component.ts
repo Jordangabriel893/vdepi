@@ -14,7 +14,7 @@ import { Subscription } from 'rxjs';
 })
 export class UpdateAgendaComponent implements OnInit, OnDestroy {
   empresas: any;
-  formulario:FormGroup;
+  formulario: FormGroup;
   status: any;
   minDate;
   notificacoes;
@@ -48,18 +48,16 @@ export class UpdateAgendaComponent implements OnInit, OnDestroy {
       dataCadastro: [null],
     })
 
-    this.formulario.get("tipoAgendaId").valueChanges.subscribe(value => {
-      if(value == 6) {
+    this.formulario.get('tipoAgendaId').valueChanges.subscribe(value => {
+      if (value == 6) {
         this.formulario.controls.intervaloMinutos.enable();
-      }
-      else {
+      } else {
         this.formulario.controls.intervaloMinutos.disable();
       }
 
-      if(value != 1) {
+      if (value != 1) {
         this.formulario.controls.dataEncerramento.enable();
-      }
-      else {
+      } else {
         this.formulario.controls.dataEncerramento.disable();
       }
     });
@@ -73,8 +71,8 @@ export class UpdateAgendaComponent implements OnInit, OnDestroy {
 
     this.sub.push(
       this.restangular.one('marketing/notificacao').get().subscribe(
-        dados =>{
-          this.notificacoes= dados.data
+        dados => {
+          this.notificacoes = dados.data
 
         }
       )
@@ -82,8 +80,8 @@ export class UpdateAgendaComponent implements OnInit, OnDestroy {
 
    this.sub.push(
     this.restangular.one('marketing/tipoAgendaNotificacao').get().subscribe(
-      dados =>{
-        this.tiposAgenda= dados.data
+      dados => {
+        this.tiposAgenda = dados.data
       }
     )
    )
@@ -101,9 +99,9 @@ export class UpdateAgendaComponent implements OnInit, OnDestroy {
       dataCadastro: dados.dataCadastro,
     })
   }
-  onSubmit(){
-    if(!this.formulario.valid){
-      Object.keys(this.formulario.controls).forEach((campo)=>{
+  onSubmit() {
+    if (!this.formulario.valid) {
+      Object.keys(this.formulario.controls).forEach((campo) => {
         const controle = this.formulario.get(campo)
         controle.markAsTouched()
 
@@ -118,18 +116,18 @@ export class UpdateAgendaComponent implements OnInit, OnDestroy {
     },
       error => {
         this.notifierService.notify('error', 'Erro ao atualizar agenda!');
-        Object.keys(this.formulario.controls).forEach((campo)=>{
+        Object.keys(this.formulario.controls).forEach((campo) => {
           const controle = this.formulario.get(campo)
           controle.markAsTouched()
         })
       })
   }
 
-  verificaValidTouched(campo){
+  verificaValidTouched(campo) {
     return !this.formulario.get(campo).valid && this.formulario.get(campo).touched;
   }
 
-  aplicaCssErro(campo){
+  aplicaCssErro(campo) {
     return { 'has-error': this.verificaValidTouched(campo) }
   }
 

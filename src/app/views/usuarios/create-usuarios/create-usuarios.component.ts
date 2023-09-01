@@ -13,7 +13,7 @@ import { forkJoin } from 'rxjs';
   styleUrls: ['./create-usuarios.component.scss']
 })
 export class CreateUsuariosComponent implements OnInit {
-  formulario:FormGroup
+  formulario: FormGroup
   public mask: Array<string | RegExp>
   public maskData: Array<string | RegExp>
   public maskCep: Array<string | RegExp>
@@ -34,12 +34,12 @@ export class CreateUsuariosComponent implements OnInit {
     private notifierService: NotifierService,
     private cepService: ConsultaCepService,
   ) {
-    this.mask = ['(', /[1-9]/, /\d/, ')', ' ', /\d/,/\d/,/\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/]
-    this.maskData = [/\d/,/\d/,'/', /\d/, /\d/, '/', /\d/,/\d/,/\d/,/\d/]
-    this.maskCep = [ /\d/,/\d/,/\d/,/\d/,/\d/, '-', /\d/, /\d/, /\d/, ]
-    this.maskCpf = [ /\d/,/\d/,/\d/,  '.', /\d/,/\d/,/\d/, '.', /\d/, /\d/, /\d/, '-', /\d/,/\d/ ]
-    this.maskCnpj = [ /\d/,/\d/,'.',/\d/,/\d/,/\d/,'.',/\d/,/\d/,/\d/,'/', /\d/,/\d/,/\d/,/\d/,'-',/\d/,/\d/, ]
-    this.maskRg = [ /\d/,/\d/, '.', /\d/,/\d/,/\d/, '.', /\d/, /\d/, /\d/, '-', /\d/ ]
+    this.mask = ['(', /[1-9]/, /\d/, ')', ' ', /\d/, /\d/, /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/]
+    this.maskData = [/\d/, /\d/, '/', /\d/, /\d/, '/', /\d/, /\d/, /\d/, /\d/]
+    this.maskCep = [ /\d/, /\d/, /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, ]
+    this.maskCpf = [ /\d/, /\d/, /\d/,  '.', /\d/, /\d/, /\d/, '.', /\d/, /\d/, /\d/, '-', /\d/, /\d/ ]
+    this.maskCnpj = [ /\d/, /\d/, '.', /\d/, /\d/, /\d/, '.', /\d/, /\d/, /\d/, '/', /\d/, /\d/, /\d/, /\d/, '-', /\d/, /\d/, ]
+    this.maskRg = [ /\d/, /\d/, '.', /\d/, /\d/, /\d/, '.', /\d/, /\d/, /\d/, '-', /\d/ ]
     this.formulario = this.formBuilder.group({
       nomeCompleto: [null, [Validators.required, Validators.minLength(3)]],
       numeroDocumento: [null, [Validators.required, Validators.minLength(6)]],
@@ -48,7 +48,7 @@ export class CreateUsuariosComponent implements OnInit {
       telefoneConvencional: [null],
       telefoneWhatsapp: [null],
       genero: [null],
-      tipoPessoa: ['PF',[Validators.required]],
+      tipoPessoa: ['PF', [Validators.required]],
       endereco: this.formBuilder.group({
         cep: [null],
         numero: [null],
@@ -56,15 +56,15 @@ export class CreateUsuariosComponent implements OnInit {
         bairro: [null],
         cidade: [null],
         estado: [null],
-        logradouro:[null]
+        logradouro: [null]
       }),
-      email:[null,[Validators.required, Validators.email]],
+      email: [null, [Validators.required, Validators.email]],
       senha: [null, Validators.required],
-      ativo: [true,[Validators.required]],
-      perfis:[[], Validators.required],
-      empresas:[[]],
-      comitentes:[[]],
-      leiloeiros:[[]],
+      ativo: [true, [Validators.required]],
+      perfis: [[], Validators.required],
+      empresas: [[]],
+      comitentes: [[]],
+      leiloeiros: [[]],
       rg: [null],
       dataEmissao: [null],
       orgaoEmissor: [null],
@@ -74,10 +74,10 @@ export class CreateUsuariosComponent implements OnInit {
 
   ngOnInit() {
     forkJoin([
-      this.restangular.one("empresa").get().pipe(),
-      this.restangular.one("leiloeiro").get().pipe(),
-      this.restangular.one("comitente").get().pipe(),
-      this.restangular.one("usuario/perfis").get().pipe()
+      this.restangular.one('empresa').get().pipe(),
+      this.restangular.one('leiloeiro').get().pipe(),
+      this.restangular.one('comitente').get().pipe(),
+      this.restangular.one('usuario/perfis').get().pipe()
     ]).subscribe((allResp: any[]) => {
       this.empresas = allResp[0].data
       this.leiloeiros = allResp[1].data
@@ -87,8 +87,8 @@ export class CreateUsuariosComponent implements OnInit {
   }
 
   onSubmit() {
-    if(!this.formulario.valid){
-      Object.keys(this.formulario.controls).forEach((campo)=>{
+    if (!this.formulario.valid) {
+      Object.keys(this.formulario.controls).forEach((campo) => {
         const controle = this.formulario.get(campo)
         controle.markAsTouched()
 
@@ -102,15 +102,15 @@ export class CreateUsuariosComponent implements OnInit {
     },
     error => {
       const errors = error.data.Errors;
-      for(const k in errors) {
-        if(k.toLowerCase() === 'exception') {
+      for (const k in errors) {
+        if (k.toLowerCase() === 'exception') {
           this.notifierService.notify('error', 'Erro ao atualizar usuário');
         } else {
           this.notifierService.notify('error', errors[k]);
         }
       }
 
-      Object.keys(this.formulario.controls).forEach((campo)=>{
+      Object.keys(this.formulario.controls).forEach((campo) => {
         const controle = this.formulario.get(campo)
         controle.markAsTouched()
 
@@ -142,11 +142,11 @@ export class CreateUsuariosComponent implements OnInit {
     });
   }
 
-  verificaValidTouched(campo){
+  verificaValidTouched(campo) {
     return !this.formulario.get(campo).valid && this.formulario.get(campo).touched;
   }
 
-  aplicaCssErro(campo){
+  aplicaCssErro(campo) {
     return{
       'has-error': this.verificaValidTouched(campo),
 

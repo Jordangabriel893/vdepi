@@ -21,14 +21,14 @@ export class TipoDeNotificacaoComponent implements OnInit {
     private formBuilder: FormBuilder,
   ) {
     this.formulario = this.formBuilder.group({
-      leilao:[null]
+      leilao: [null]
     })
    }
 
   ngOnInit() {
     this.restangular.one('marketing/tipoNotificacao').get().subscribe(
-      dados =>{
-        this.tipoDeNotific= dados.data
+      dados => {
+        this.tipoDeNotific = dados.data
         this.loading = false;
       },
       () => this.loading = false

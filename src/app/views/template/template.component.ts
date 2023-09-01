@@ -24,8 +24,8 @@ export class TemplateComponent implements OnInit {
 
    ngOnInit() {
     this.restangular.one('Marketing/TemplateNotificacao').get().subscribe(
-      dados =>{
-        this.templates= dados.data
+      dados => {
+        this.templates = dados.data
         this.loading = false;
       }
     )

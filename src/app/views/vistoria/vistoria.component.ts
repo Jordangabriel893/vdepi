@@ -4,10 +4,10 @@ import { Component, ModuleWithComponentFactories, OnInit } from '@angular/core';
 import { Restangular } from 'ngx-restangular';
 import { Observable } from 'rxjs';
 import { NotifierService } from 'angular-notifier';
-import { SwiperComponent } from "swiper/angular";
+import { SwiperComponent } from 'swiper/angular';
 
 // import Swiper core and required modules
-import SwiperCore, { Navigation } from "swiper";
+import SwiperCore, { Navigation } from 'swiper';
 import {  ActivatedRoute,  Router } from '@angular/router';
 
 // install Swiper modules
@@ -30,7 +30,7 @@ export class VistoriaComponent implements OnInit {
     private route: ActivatedRoute
   ) {
 
-    this.restangular.one("admin/leilao/vistoria").get().subscribe((response) => {
+    this.restangular.one('admin/leilao/vistoria').get().subscribe((response) => {
      this.leiloes = response.data
      this.loading = false;
     },
@@ -41,7 +41,7 @@ export class VistoriaComponent implements OnInit {
   ngOnInit() {
   }
 
-  verLotes(id){
+  verLotes(id) {
     this.router.navigate(['vistoria-lotes', id]);
   }
 }

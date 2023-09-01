@@ -11,7 +11,7 @@ import { Restangular } from 'ngx-restangular';
   styleUrls: ['./create-local.component.scss']
 })
 export class CreateLocalComponent implements OnInit {
-  formulario:FormGroup
+  formulario: FormGroup
   empresa
   public mask: Array<string | RegExp>
   public maskCep: Array<string | RegExp>
@@ -25,19 +25,19 @@ export class CreateLocalComponent implements OnInit {
     private router: Router,
     private cepService: ConsultaCepService
   ) {
-    this.restangular.one("empresa").get().subscribe((response) => {
+    this.restangular.one('empresa').get().subscribe((response) => {
       this.empresa = response.data
      })
 
-    this.mask = ['(', /[1-9]/, /\d/, ')', ' ', /\d/,/\d/,/\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/]
-    this.maskCep = [ /\d/,/\d/,/\d/,/\d/,/\d/, '-', /\d/, /\d/, /\d/, ]
-    this.maskCpf = [ /\d/,/\d/,/\d/,  '.', /\d/,/\d/,/\d/, '.', /\d/, /\d/, /\d/, '-', /\d/,/\d/ ]
-    this.maskCnpj = [ /\d/,/\d/,'.',/\d/,/\d/,/\d/,'.',/\d/,/\d/,/\d/,'/', /\d/,/\d/,/\d/,/\d/,'-',/\d/,/\d/, ]
+    this.mask = ['(', /[1-9]/, /\d/, ')', ' ', /\d/, /\d/, /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/]
+    this.maskCep = [ /\d/, /\d/, /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, ]
+    this.maskCpf = [ /\d/, /\d/, /\d/,  '.', /\d/, /\d/, /\d/, '.', /\d/, /\d/, /\d/, '-', /\d/, /\d/ ]
+    this.maskCnpj = [ /\d/, /\d/, '.', /\d/, /\d/, /\d/, '.', /\d/, /\d/, /\d/, '/', /\d/, /\d/, /\d/, /\d/, '-', /\d/, /\d/, ]
 
     this.formulario = this.formBuilder.group({
-      descricao:[null, Validators.required],
-      telefone:[null, Validators.required],
-      empresaId:[null, Validators.required],
+      descricao: [null, Validators.required],
+      telefone: [null, Validators.required],
+      empresaId: [null, Validators.required],
       endereco: this.formBuilder.group({
         enderecoId: [0],
         cep: [null, [Validators.required]],
@@ -46,14 +46,14 @@ export class CreateLocalComponent implements OnInit {
         bairro: [null, Validators.required],
         cidade: [null, Validators.required],
         estado: [null, Validators.required],
-        logradouro:[null, Validators.required]
+        logradouro: [null, Validators.required]
       }),
     })
   }
 
   ngOnInit() {
   }
-  onSubmit(){
+  onSubmit() {
     this.restangular.all('local').post(this.formulario.value).subscribe(a => {
       this.notifierService.notify('success', 'Local Criado com sucesso');
       this.router.navigate(['/local']);
@@ -61,7 +61,7 @@ export class CreateLocalComponent implements OnInit {
       error => {
         this.notifierService.notify('error', 'Erro ao criar o Local!');
 
-        Object.keys(this.formulario.controls).forEach((campo)=>{
+        Object.keys(this.formulario.controls).forEach((campo) => {
           const controle = this.formulario.get(campo)
           controle.markAsTouched()
         })
@@ -87,11 +87,11 @@ export class CreateLocalComponent implements OnInit {
       }
     });
   }
-  verificaValidTouched(campo){
+  verificaValidTouched(campo) {
     return !this.formulario.get(campo).valid && this.formulario.get(campo).touched;
   }
 
-  aplicaCssErro(campo){
+  aplicaCssErro(campo) {
     return {'has-error': this.verificaValidTouched(campo) }
   }
 }

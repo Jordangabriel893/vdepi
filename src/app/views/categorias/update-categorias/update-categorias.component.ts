@@ -12,7 +12,7 @@ import { Subscription } from 'rxjs';
   styleUrls: ['./update-categorias.component.scss']
 })
 export class UpdateCategoriasComponent implements OnInit, OnDestroy {
-  formulario:FormGroup
+  formulario: FormGroup
   id
   categoriasPai;
   sub: Subscription[] = [];
@@ -25,28 +25,28 @@ export class UpdateCategoriasComponent implements OnInit, OnDestroy {
   ) {
     this.id = this.route.snapshot.params['id']
     this.sub.push(
-      this.restangular.one("categoria", this.id).get().subscribe((response) => {
+      this.restangular.one('categoria', this.id).get().subscribe((response) => {
         this.updateForm(response.data)
       })
     )
     this.sub.push(
-    this.restangular.one("categoria").get().subscribe((response) => {
+    this.restangular.one('categoria').get().subscribe((response) => {
       this.categoriasPai = response.data.filter(x => x.categoriaPaiId === null);
     })
     )
     this.formulario = this.formBuilder.group({
-      categoriaId:[this.id],
+      categoriaId: [this.id],
       categoriaPaiId: [null],
-      descricao:[null, Validators.required],
-      ativo:[null]
+      descricao: [null, Validators.required],
+      ativo: [null]
     })
   }
 
   ngOnInit() {
   }
-  onSubmit(){
-    if(!this.formulario.valid){
-      Object.keys(this.formulario.controls).forEach((campo)=>{
+  onSubmit() {
+    if (!this.formulario.valid) {
+      Object.keys(this.formulario.controls).forEach((campo) => {
         const controle = this.formulario.get(campo)
         controle.markAsTouched()
 
@@ -60,25 +60,25 @@ export class UpdateCategoriasComponent implements OnInit, OnDestroy {
     },
       error => {
         this.notifierService.notify('error', 'Erro ao atualizar a Categoria!');
-        Object.keys(this.formulario.controls).forEach((campo)=>{
+        Object.keys(this.formulario.controls).forEach((campo) => {
           const controle = this.formulario.get(campo)
           controle.markAsTouched()
         })
       });
   }
-  updateForm(dados){
+  updateForm(dados) {
     this.formulario.patchValue({
-      categoriaId:dados.categoriaId,
+      categoriaId: dados.categoriaId,
       categoriaPaiId: dados.categoriaPaiId,
-      descricao:dados.descricao,
-      ativo:dados.ativo
+      descricao: dados.descricao,
+      ativo: dados.ativo
     })
   }
-  verificaValidTouched(campo){
+  verificaValidTouched(campo) {
     return !this.formulario.get(campo).valid && this.formulario.get(campo).touched;
   }
 
-  aplicaCssErro(campo){
+  aplicaCssErro(campo) {
     return {'has-error': this.verificaValidTouched(campo) }
   }
   ngOnDestroy(): void {

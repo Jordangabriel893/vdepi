@@ -41,7 +41,7 @@ export class AppSidebarNavComponent {
 
     return item.source ? this.auth.hasSourceAccess(item.source) : true;
   }
-  public showTitle(item){
+  public showTitle(item) {
     return this.auth.hasPermissions() ? true : false
   }
 
@@ -168,12 +168,12 @@ export class AppSidebarNavDropdownComponent {
 })
 export class AppSidebarNavTitleComponent implements OnInit, OnChanges {
   @Input() title: any;
-  user:any;
+  user: any;
   constructor(private el: ElementRef, private renderer: Renderer2, private auth: AuthorizationService, private authentication: AuthenticationService) { }
 
 
   ngOnInit() {
-    if(this.auth.hasItem(this.title)){
+    if (this.auth.hasItem(this.title)) {
       const nativeElement: HTMLElement = this.el.nativeElement;
       const li = this.renderer.createElement('li');
       const name = this.renderer.createText(this.title.name);

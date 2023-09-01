@@ -21,7 +21,7 @@ export class ContatosComponent implements OnInit, OnDestroy {
     private formBuilder: FormBuilder,
   ) {
     this.formulario = this.formBuilder.group({
-      leilao:[null],
+      leilao: [null],
 
 
     })
@@ -29,7 +29,7 @@ export class ContatosComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
    this.sub.push(
-    this.restangular.one("marketing/Contato", '').get({PageSize:100}).subscribe((response) => {
+    this.restangular.one('marketing/Contato', '').get({PageSize: 100}).subscribe((response) => {
       this.contatos = response.data
 
        this.loading = false;

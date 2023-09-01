@@ -32,7 +32,7 @@ export class UpdateTemplateComponent implements OnInit {
   }
   cardImageBase64;
   isImageSaved;
-  openPopup: boolean = true
+  openPopup = true
   modalRef: BsModalRef;
 
   constructor(
@@ -47,7 +47,7 @@ export class UpdateTemplateComponent implements OnInit {
 
     this.formulario = this.formBuilder.group({
       descricao: [null, Validators.required],
-      tag: [""]
+      tag: ['']
     })
   }
 
@@ -56,7 +56,7 @@ export class UpdateTemplateComponent implements OnInit {
       this.designJson = JSON.parse(dados.data.designJson);
       this.formulario = this.formBuilder.group({
         descricao: [dados.data.descricao, Validators.required],
-        tag: [""]
+        tag: ['']
       })
     })
 
@@ -151,10 +151,10 @@ export class UpdateTemplateComponent implements OnInit {
     });
 
     this.emailEditor.editor.registerCallback('image', function(file, done) {
-      var imagem:any = {
-        base64:'',
-        tipo:'',
-        nome:'',
+      const imagem: any = {
+        base64: '',
+        tipo: '',
+        nome: '',
       }
 
       const reader = new FileReader();
@@ -167,7 +167,7 @@ export class UpdateTemplateComponent implements OnInit {
           that.isImageSaved = true;
           imagem.base64 = imgBase64Path
           imagem.nome = file.attachments[0].name
-          imagem.tipo =file.attachments[0].type
+          imagem.tipo = file.attachments[0].type
 
           that.restangular.all('marketing/imageTemplate')
           .post(imagem)
@@ -186,7 +186,7 @@ export class UpdateTemplateComponent implements OnInit {
       this.template = {
         designJson: JSON.stringify(data.design),
         codigoHtml: data.html,
-        descricao:this.formulario.value.descricao
+        descricao: this.formulario.value.descricao
       }
       this.salvar = false;
     })
@@ -199,8 +199,8 @@ export class UpdateTemplateComponent implements OnInit {
   save() {
     this.salvar = true;
 
-    if(!this.formulario.valid) {
-      Object.keys(this.formulario.controls).forEach((campo)=>{
+    if (!this.formulario.valid) {
+      Object.keys(this.formulario.controls).forEach((campo) => {
         const controle = this.formulario.get(campo)
         controle.markAsTouched()
       })
@@ -209,7 +209,7 @@ export class UpdateTemplateComponent implements OnInit {
       return false;
     }
 
-    if(!this.template){
+    if (!this.template) {
       this.notifierService.notify('error', 'Template vazio, adicione mais elementos');
       this.salvar = false
       return false;
@@ -219,7 +219,7 @@ export class UpdateTemplateComponent implements OnInit {
       designJson: this.template.designJson,
       codigoHtml: this.template.codigoHtml,
       descricao: this.formulario.value.descricao,
-      templateNotificacaoId:this.id,
+      templateNotificacaoId: this.id,
       tag: this.formulario.value.tag
     }
 
@@ -240,16 +240,16 @@ export class UpdateTemplateComponent implements OnInit {
     this.emailEditor.editor.loadDesign(this.designJson);
   }
 
-  verificaValidTouched(campo){
+  verificaValidTouched(campo) {
     this.formulario.controls [campo].valueChanges.subscribe ((val) => {
-      if (String (val) === "NaN") {
+      if (String (val) === 'NaN') {
         this.formulario.controls [campo].setValue(null);
       }
     });
     return !this.formulario.get(campo).valid && this.formulario.get(campo).touched;
   }
 
-  aplicaCssErro(campo){
+  aplicaCssErro(campo) {
     return{ 'has-error': this.verificaValidTouched(campo) }
   }
 }

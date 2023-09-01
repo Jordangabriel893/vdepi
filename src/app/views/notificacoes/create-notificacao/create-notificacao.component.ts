@@ -16,7 +16,7 @@ import { AngularEditorConfig } from '@kolkov/angular-editor';
 })
 export class CreateNotificacaoComponent implements OnInit {
   empresas: any;
-  formulario:FormGroup;
+  formulario: FormGroup;
   status: any;
   minDate: Date;
   listaContato;
@@ -44,45 +44,45 @@ export class CreateNotificacaoComponent implements OnInit {
       tipoMeioNotificacaoId: [null, Validators.required],
       listaContatoId: [null, Validators.required],
       leilaoId: [null, Validators.required],
-      usuarioId:[0],
-      templateId:[null , Validators.required],
+      usuarioId: [0],
+      templateId: [null , Validators.required],
     })
     this.restangular.one('marketing/ListaContato').get().subscribe(
-      dados =>{
-        this.listaContato= dados.data
+      dados => {
+        this.listaContato = dados.data
 
       }
     )
     this.restangular.one('marketing/tipoNotificacao').get().subscribe(
-      dados =>{
-        this.tipoDeNotifi= dados.data
+      dados => {
+        this.tipoDeNotifi = dados.data
 
       }
     )
     this.restangular.one('marketing/tipoMeioNotificacao').get().subscribe(
-      dados =>{
-        this.tipoMeioNotifi= dados.data
+      dados => {
+        this.tipoMeioNotifi = dados.data
 
       }
     )
     this.restangular.one('marketing/templateNotificacao').get().subscribe(
-      dados =>{
-        this.templateNotifi= dados.data
+      dados => {
+        this.templateNotifi = dados.data
       }
     )
     this.restangular.one('admin/leilao').get().subscribe(
-      dados =>{
-        this.leilao= dados.data
+      dados => {
+        this.leilao = dados.data
       }
     )
     this.restangular.one('Marketing/TemplateNotificacao').get().subscribe(
-      dados =>{
-        this.templates= dados.data
+      dados => {
+        this.templates = dados.data
       }
     )
 
   }
-  onSubmit(){
+  onSubmit() {
 
 
     this.restangular.all('marketing/notificacao').post(this.formulario.value).subscribe(a => {
@@ -92,17 +92,17 @@ export class CreateNotificacaoComponent implements OnInit {
       error => {
         this.notifierService.notify('error', 'Erro ao criar notificação!');
 
-        Object.keys(this.formulario.controls).forEach((campo)=>{
+        Object.keys(this.formulario.controls).forEach((campo) => {
           const controle = this.formulario.get(campo)
           controle.markAsTouched()
         })
       });
   }
-  verificaValidTouched(campo){
+  verificaValidTouched(campo) {
     return !this.formulario.get(campo).valid && this.formulario.get(campo).touched;
   }
 
-  aplicaCssErro(campo){
+  aplicaCssErro(campo) {
     return { 'has-error': this.verificaValidTouched(campo) }
   }
 

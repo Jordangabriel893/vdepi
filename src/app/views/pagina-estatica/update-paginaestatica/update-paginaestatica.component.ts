@@ -10,7 +10,7 @@ import { AngularEditorConfig } from '@kolkov/angular-editor';
   styleUrls: ['./update-paginaestatica.component.scss']
 })
 export class UpdatePaginaestaticaComponent implements OnInit {
-  formulario:FormGroup;
+  formulario: FormGroup;
   id;
   editorConfig: AngularEditorConfig = {
     editable: true,
@@ -64,9 +64,9 @@ export class UpdatePaginaestaticaComponent implements OnInit {
       this.updateForm(dados.data)
     })
   }
-  onSubmit(){
-    if(!this.formulario.valid){
-      Object.keys(this.formulario.controls).forEach((campo)=>{
+  onSubmit() {
+    if (!this.formulario.valid) {
+      Object.keys(this.formulario.controls).forEach((campo) => {
         const controle = this.formulario.get(campo)
         controle.markAsTouched()
 
@@ -80,7 +80,7 @@ export class UpdatePaginaestaticaComponent implements OnInit {
     },
       error => {
         this.notifierService.notify('error', 'Erro ao atualizar a Página Estática!');
-        Object.keys(this.formulario.controls).forEach((campo)=>{
+        Object.keys(this.formulario.controls).forEach((campo) => {
           const controle = this.formulario.get(campo)
           controle.markAsTouched()
         })
@@ -88,28 +88,28 @@ export class UpdatePaginaestaticaComponent implements OnInit {
   }
   updateForm(dados) {
     this.formulario = this.formBuilder.group({
-      paginaEstaticaId:[dados.paginaEstaticaId, Validators.required],
-      html:[dados.html, Validators.required],
-      titulo:[dados.titulo, Validators.required],
-      rota:[dados.rota, Validators.required],
+      paginaEstaticaId: [dados.paginaEstaticaId, Validators.required],
+      html: [dados.html, Validators.required],
+      titulo: [dados.titulo, Validators.required],
+      rota: [dados.rota, Validators.required],
     })
   }
 
-  formatRota(){
+  formatRota() {
     let titulo = this.formulario.value.titulo;
     titulo = titulo.trim()
-    .normalize("NFD")
-    .replace(/\p{Diacritic}/gu, "")
-    .replace(/[^\w ]/g,'')
-    .replace(/\s|_|\(|\)/g, "-")
+    .normalize('NFD')
+    .replace(/\p{Diacritic}/gu, '')
+    .replace(/[^\w ]/g, '')
+    .replace(/\s|_|\(|\)/g, '-')
     .toLowerCase();
     this.formulario.get('rota').patchValue(titulo)
   }
-  verificaValidTouched(campo){
+  verificaValidTouched(campo) {
     return !this.formulario.get(campo).valid && this.formulario.get(campo).touched;
   }
 
-  aplicaCssErro(campo){
+  aplicaCssErro(campo) {
     return {'has-error': this.verificaValidTouched(campo) }
   }
   onValueChange(event, campo) {

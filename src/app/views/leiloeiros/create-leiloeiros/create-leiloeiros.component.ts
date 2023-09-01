@@ -1,4 +1,4 @@
-import { Component,ElementRef, OnInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { NotifierService } from 'angular-notifier';
@@ -22,7 +22,7 @@ export class CreateLeiloeirosComponent implements OnInit {
   isImageSavedAss: boolean;
   cardImageBase64Ass: string;
 
-  formulario:FormGroup
+  formulario: FormGroup
   leiloeiros
   public mask: Array<string | RegExp>
   public maskCep: Array<string | RegExp>
@@ -37,31 +37,31 @@ export class CreateLeiloeirosComponent implements OnInit {
     private cepService: ConsultaCepService
   ) {
 
-    this.maskCep = [ /\d/,/\d/,/\d/,/\d/,/\d/, '-', /\d/, /\d/, /\d/, ]
+    this.maskCep = [ /\d/, /\d/, /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, ]
 
     this.formulario = this.formBuilder.group({
-      nome:[null],
-      razaoSocial:[null],
-      cpfCnpj:[null, Validators.required],
-      telefone:[null],
-      orgaoRegistro:[null, Validators.required],
+      nome: [null],
+      razaoSocial: [null],
+      cpfCnpj: [null, Validators.required],
+      telefone: [null],
+      orgaoRegistro: [null, Validators.required],
       ufRegistro: [null, Validators.required],
       matricula: [null, Validators.required],
-      genero:[null, Validators.required],
-      nomeComercial:[null],
+      genero: [null, Validators.required],
+      nomeComercial: [null],
       foto: this.formBuilder.group({
-        arquivoId:[0],
-        nome:[null],
-        base64:[null, Validators.required],
-        tipo:[null],
-        tamanho:[0]
+        arquivoId: [0],
+        nome: [null],
+        base64: [null, Validators.required],
+        tipo: [null],
+        tamanho: [0]
       }, Validators.required),
       assinatura: this.formBuilder.group({
-        arquivoId:[0],
-        nome:[null],
-        base64:[null],
-        tipo:[null],
-        tamanho:[0]
+        arquivoId: [0],
+        nome: [null],
+        base64: [null],
+        tipo: [null],
+        tamanho: [0]
       }),
       endereco: this.formBuilder.group({
         enderecoId: [0],
@@ -71,7 +71,7 @@ export class CreateLeiloeirosComponent implements OnInit {
         bairro: [null],
         cidade: [null],
         estado: [null],
-        logradouro:[null]
+        logradouro: [null]
       })
     })
   }
@@ -80,8 +80,8 @@ export class CreateLeiloeirosComponent implements OnInit {
   }
 
   onSubmit() {
-    if(!this.formulario.valid){
-      Object.keys(this.formulario.controls).forEach((campo)=>{
+    if (!this.formulario.valid) {
+      Object.keys(this.formulario.controls).forEach((campo) => {
         const controle = this.formulario.get(campo)
         controle.markAsTouched()
 
@@ -96,7 +96,7 @@ export class CreateLeiloeirosComponent implements OnInit {
     },
       err => {
         const errors = err.data.Errors;
-        for (var key in errors) {
+        for (let key in errors) {
           this.notifierService.notify('error', errors[key]);
         }
       });
@@ -162,7 +162,7 @@ export class CreateLeiloeirosComponent implements OnInit {
                     const imgBase64Path = e.target.result;
                     this.cardImageBase64 = imgBase64Path;
                     this.isImageSaved = true;
-                    var foto = this.formulario.get('foto') as FormGroup;
+                    let foto = this.formulario.get('foto') as FormGroup;
                     foto.get('base64').setValue(imgBase64Path);
                     foto.get('nome').setValue(fileInput.target.files[0].name);
                     foto.get('tamanho').setValue(fileInput.target.files[0].size);
@@ -216,7 +216,7 @@ export class CreateLeiloeirosComponent implements OnInit {
                     const imgBase64Path = e.target.result;
                     this.cardImageBase64Ass = imgBase64Path;
                     this.isImageSavedAss = true;
-                    var assinatura = this.formulario.get('assinatura') as FormGroup;
+                    let assinatura = this.formulario.get('assinatura') as FormGroup;
                     assinatura.get('base64').setValue(imgBase64Path);
                     assinatura.get('nome').setValue(fileInput.target.files[0].name);
                     assinatura.get('tamanho').setValue(fileInput.target.files[0].size);
@@ -233,26 +233,26 @@ export class CreateLeiloeirosComponent implements OnInit {
   removeImage(input) {
     this.cardImageBase64 = null;
     this.isImageSaved = false;
-    input.value = "";
+    input.value = '';
   }
 
   removeImageAss(input) {
     this.cardImageBase64Ass = null;
     this.isImageSavedAss = false;
-    input.value = "";
+    input.value = '';
   }
 
-  verificaValidTouched(campo){
+  verificaValidTouched(campo) {
     return !this.formulario.get(campo).valid && this.formulario.get(campo).touched;
   }
 
-  aplicaCssErro(campo){
+  aplicaCssErro(campo) {
     return {'has-error': this.verificaValidTouched(campo) }
   }
 
   public maskcpfCnpj = function (rawValue) {
-    var numbers = rawValue.match(/\d/g);
-    var numberLength = 0;
+    let numbers = rawValue.match(/\d/g);
+    let numberLength = 0;
     if (numbers) {
       numberLength = numbers.join('').length;
     }
@@ -264,15 +264,15 @@ export class CreateLeiloeirosComponent implements OnInit {
   }
 
   public maskTelefone = function (rawValue) {
-    var numbers = rawValue.match(/\d/g);
-    var numberLength = 0;
+    let numbers = rawValue.match(/\d/g);
+    let numberLength = 0;
     if (numbers) {
       numberLength = numbers.join('').length;
     }
     if (numberLength <= 10) {
-      return ['(', /\d/, /\d/, ')', ' ',/\d/, /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/];
+      return ['(', /\d/, /\d/, ')', ' ', /\d/, /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/];
     } else {
-      return ['(', /\d/, /\d/, ')', ' ',/\d/, /\d/, /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/];
+      return ['(', /\d/, /\d/, ')', ' ', /\d/, /\d/, /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/];
     }
   }
 }

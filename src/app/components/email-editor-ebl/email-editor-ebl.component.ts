@@ -4,15 +4,15 @@ import {
   EventEmitter,
   ViewChild,
   Input,
-} from "@angular/core";
-import { Restangular } from "ngx-restangular";
-import { EmailEditorComponent } from "angular-email-editor";
-import { mergeTags } from "../../views/_models/merge-tags";
+} from '@angular/core';
+import { Restangular } from 'ngx-restangular';
+import { EmailEditorComponent } from 'angular-email-editor';
+import { mergeTags } from '../../views/_models/merge-tags';
 
 @Component({
-  selector: "app-email-editor-ebl",
-  templateUrl: "./email-editor-ebl.component.html",
-  styleUrls: ["./email-editor-ebl.component.scss"],
+  selector: 'app-email-editor-ebl',
+  templateUrl: './email-editor-ebl.component.html',
+  styleUrls: ['./email-editor-ebl.component.scss'],
 })
 export class EmailEditorEblComponent {
   @Output() updated = new EventEmitter();
@@ -26,17 +26,17 @@ export class EmailEditorEblComponent {
 
   cardImageBase64;
   isImageSaved;
-  idEditor = "emaileditor";
+  idEditor = 'emaileditor';
   optionsDefault = {
     id: this.idEditor,
-    locale: "pt-BR",
+    locale: 'pt-BR',
     features: {
       textEditor: {
         tables: true,
       },
     },
     mergeTagsConfig: {
-      autocompleteTriggerChar: "@",
+      autocompleteTriggerChar: '@',
     },
   };
   body;
@@ -50,8 +50,8 @@ export class EmailEditorEblComponent {
     }
 
     this.body = this.bodyValues || {
-      backgroundColor: "#ffffff",
-      contentWidth: "650px", // or percent "50%"
+      backgroundColor: '#ffffff',
+      contentWidth: '650px', // or percent "50%"
     };
   }
 
@@ -64,18 +64,18 @@ export class EmailEditorEblComponent {
     }
 
     const that = this;
-    this.emailEditor.editor.addEventListener("design:updated", () => {
+    this.emailEditor.editor.addEventListener('design:updated', () => {
       //this.salvar = true;
       this.emailEditor.editor.exportHtml((data) => {
         this.updated.emit(data);
       });
     });
 
-    this.emailEditor.editor.registerCallback("image", function (file, done) {
-      var imagem: any = {
-        base64: "",
-        tipo: "",
-        nome: "",
+    this.emailEditor.editor.registerCallback('image', function (file, done) {
+      const imagem: any = {
+        base64: '',
+        tipo: '',
+        nome: '',
       };
 
       const reader = new FileReader();
@@ -91,7 +91,7 @@ export class EmailEditorEblComponent {
           imagem.tipo = file.attachments[0].type;
 
           that.restangular
-            .all("marketing/imageTemplate")
+            .all('marketing/imageTemplate')
             .post(imagem)
             .subscribe((a) => {
               done({ progress: 100, url: a.data.url });

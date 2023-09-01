@@ -24,8 +24,8 @@ export class TipoMeioNotificacaoComponent implements OnInit {
 
   ngOnInit() {
     this.restangular.one('marketing/tipoMeioNotificacao').get().subscribe(
-      dados =>{
-        this.tipoMeios= dados.data
+      dados => {
+        this.tipoMeios = dados.data
         this.loading = false;
       }
     )

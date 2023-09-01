@@ -17,7 +17,7 @@ export class CreateComitenteComponent implements OnInit, OnDestroy {
   imageError: string;
   isImageSaved: boolean;
   cardImageBase64: string;
-  formulario:FormGroup
+  formulario: FormGroup
   comitente
   sub: Subscription[] = [];
 
@@ -32,22 +32,22 @@ export class CreateComitenteComponent implements OnInit, OnDestroy {
     private notifierService: NotifierService,
     private router: Router
   ) {
-    this.mask = ['(', /[1-9]/, /\d/, ')', ' ', /\d/,/\d/,/\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/]
-    this.maskCep = [ /\d/,/\d/,/\d/,/\d/,/\d/, '-', /\d/, /\d/, /\d/, ]
-    this.maskCpf = [ /\d/,/\d/,/\d/,  '.', /\d/,/\d/,/\d/, '.', /\d/, /\d/, /\d/, '-', /\d/,/\d/ ]
-    this.maskCnpj = [ /\d/,/\d/,'.',/\d/,/\d/,/\d/,'.',/\d/,/\d/,/\d/,'/', /\d/,/\d/,/\d/,/\d/,'-',/\d/,/\d/, ]
+    this.mask = ['(', /[1-9]/, /\d/, ')', ' ', /\d/, /\d/, /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/]
+    this.maskCep = [ /\d/, /\d/, /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, ]
+    this.maskCpf = [ /\d/, /\d/, /\d/,  '.', /\d/, /\d/, /\d/, '.', /\d/, /\d/, /\d/, '-', /\d/, /\d/ ]
+    this.maskCnpj = [ /\d/, /\d/, '.', /\d/, /\d/, /\d/, '.', /\d/, /\d/, /\d/, '/', /\d/, /\d/, /\d/, /\d/, '-', /\d/, /\d/, ]
 
     this.formulario = this.formBuilder.group({
-      cnpj:[null, Validators.required],
-      comitenteId:[0],
-      nome:[null, Validators.required],
-      razaoSocial:[null],
+      cnpj: [null, Validators.required],
+      comitenteId: [0],
+      nome: [null, Validators.required],
+      razaoSocial: [null],
       foto: this.formBuilder.group({
-        arquivoId:[0],
-        nome:[null],
-        base64:[null, Validators.required],
-        tipo:[null],
-        tamanho:[0]
+        arquivoId: [0],
+        nome: [null],
+        base64: [null, Validators.required],
+        tipo: [null],
+        tamanho: [0]
       }, Validators.required),
     })
   }
@@ -55,9 +55,9 @@ export class CreateComitenteComponent implements OnInit, OnDestroy {
   ngOnInit() {
 
   }
-  onSubmit(){
-    if(!this.formulario.valid){
-      Object.keys(this.formulario.controls).forEach((campo)=>{
+  onSubmit() {
+    if (!this.formulario.valid) {
+      Object.keys(this.formulario.controls).forEach((campo) => {
         const controle = this.formulario.get(campo)
         controle.markAsTouched()
       })
@@ -71,7 +71,7 @@ export class CreateComitenteComponent implements OnInit, OnDestroy {
     },
     err => {
       const errors = err.data.Errors;
-      for (var key in errors) {
+      for (const key in errors) {
         this.notifierService.notify('error', errors[key]);
       }
     });
@@ -117,7 +117,7 @@ export class CreateComitenteComponent implements OnInit, OnDestroy {
                     const imgBase64Path = e.target.result;
                     this.cardImageBase64 = imgBase64Path;
                     this.isImageSaved = true;
-                    var foto = this.formulario.get('foto') as FormGroup;
+                    const foto = this.formulario.get('foto') as FormGroup;
                     foto.get('base64').setValue(imgBase64Path);
                     foto.get('nome').setValue(fileInput.target.files[0].name);
                     foto.get('tamanho').setValue(fileInput.target.files[0].size);
@@ -134,14 +134,14 @@ export class CreateComitenteComponent implements OnInit, OnDestroy {
   removeImage(input) {
     this.cardImageBase64 = null;
     this.isImageSaved = false;
-    input.value = "";
+    input.value = '';
   }
 
-  verificaValidTouched(campo){
+  verificaValidTouched(campo) {
     return !this.formulario.get(campo).valid && this.formulario.get(campo).touched;
   }
 
-  aplicaCssErro(campo){
+  aplicaCssErro(campo) {
     return {'has-error': this.verificaValidTouched(campo) }
   }
   onValueChange(event, campo) {

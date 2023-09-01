@@ -13,7 +13,7 @@ import { Subscription } from 'rxjs';
   styleUrls: ['./usuarios.component.scss']
 })
 export class UsuariosComponent implements OnInit {
-  usuarios:any;
+  usuarios: any;
   usuariosFiltrados;
   loading = true;
   queryField = new FormControl();
@@ -30,14 +30,14 @@ export class UsuariosComponent implements OnInit {
     private route: ActivatedRoute,
     private router: Router,
     private formBuilder: FormBuilder
-  ){
+  ) {
     this.formulario = this.formBuilder.group({
-      motivo:[null, Validators.required],
+      motivo: [null, Validators.required],
     })
   }
 
   ngOnInit() {
-    this.restangular.one("usuario").get().subscribe((response) => {
+    this.restangular.one('usuario').get().subscribe((response) => {
       this.usuarios = response.data;
       this.usuariosFiltrados = response.data;
       this.loading = false;
@@ -52,7 +52,7 @@ export class UsuariosComponent implements OnInit {
     this.router.navigate(['/update-usuarios', id], { relativeTo: this.route });
   }
 
-  modalBloquear(usuarioId: number, template: TemplateRef<any>){
+  modalBloquear(usuarioId: number, template: TemplateRef<any>) {
     this.modalRef = this.modalService.show(template, {class: 'modal-lg'})
     this.usuarioBloqueado = usuarioId;
   }
@@ -62,10 +62,10 @@ export class UsuariosComponent implements OnInit {
     this.formulario.get(campo).setValue(event);
   }
 
-  bloquear(){
+  bloquear() {
     this.sub.push(
       this.confirmationService
-        .create("Atenção", "Deseja realmente bloquear o usuário?")
+        .create('Atenção', 'Deseja realmente bloquear o usuário?')
         .subscribe((ans: ResolveEmit) => {
           if (ans.resolved) {
 
@@ -81,24 +81,24 @@ export class UsuariosComponent implements OnInit {
                 .subscribe(
                   () => {
                     this.notifierService.notify(
-                      "success",
-                      "Usuario bloqueado com sucesso"
+                      'success',
+                      'Usuario bloqueado com sucesso'
                     );
-                    
+
                     this.formulario.reset();
 
                     this.usuarios.find(x => x.usuarioId === body.usuarioId).ativo = false
-                    
+
                     this.modalRef.hide();
                   },
                   (e) => {
                     this.notifierService.notify(
-                      "error",
+                      'error',
                       e.data.Message
                     );
 
                     this.formulario.reset();
-                    
+
                     this.modalRef.hide();
                   }
                 )
@@ -111,15 +111,14 @@ export class UsuariosComponent implements OnInit {
   }
 
   onSearch() {
-    if(this.queryField.value.length > 3) {
-      let value = this.queryField.value.toLowerCase();
+    if (this.queryField.value.length > 3) {
+      const value = this.queryField.value.toLowerCase();
 
       this.usuariosFiltrados =
         this.usuarios.filter(x => x.nomeCompleto.toLowerCase().includes(value) ||
                                   (x.numeroDocumento && x.numeroDocumento.replace('.', '').replace('-', '').replace('/', '').includes(value.replace('.', '').replace('-', '').replace('/', ''))) ||
                                   x.email.toLowerCase().includes(value));
-    }
-    else {
+    } else {
       this.usuariosFiltrados = this.usuarios;
     }
   }

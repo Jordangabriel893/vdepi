@@ -6,7 +6,7 @@ import { forkJoin } from 'rxjs';
 import * as fileSaver from 'file-saver';
 
 // import Swiper core and required modules
-import SwiperCore, { Navigation, Thumbs, Mousewheel, Scrollbar } from "swiper";
+import SwiperCore, { Navigation, Thumbs, Mousewheel, Scrollbar } from 'swiper';
 
 // install Swiper modules
 SwiperCore.use([Navigation, Thumbs, Mousewheel, Scrollbar]);
@@ -46,9 +46,9 @@ export class LotesVistoriaComponent implements OnInit {
   ngOnInit() {
 
     forkJoin([
-      this.restangular.one("lote", '').get({ leilaoId: this.id, PageSize: 300 }).pipe(),
-      this.restangular.one("tipolote").get().pipe(),
-      this.restangular.one("lotestatus").get().pipe(),
+      this.restangular.one('lote', '').get({ leilaoId: this.id, PageSize: 300 }).pipe(),
+      this.restangular.one('tipolote').get().pipe(),
+      this.restangular.one('lotestatus').get().pipe(),
     ]).subscribe((allResp: any[]) => {
       this.lotes = allResp[0].data
       this.tiposLote = allResp[1].data
@@ -61,8 +61,8 @@ export class LotesVistoriaComponent implements OnInit {
 
   carregarVistoria(e) {
     forkJoin([
-      this.restangular.one("lote", e.loteId).get().pipe(),
-      this.restangular.one("vistoria", e.loteId).get().pipe()
+      this.restangular.one('lote', e.loteId).get().pipe(),
+      this.restangular.one('vistoria', e.loteId).get().pipe()
     ]).subscribe((allResp: any[]) => {
       this.lote = allResp[0].data
       this.vistoria = allResp[1].data
@@ -82,7 +82,7 @@ export class LotesVistoriaComponent implements OnInit {
       this.notifierService.notify('error', 'Erro ao atualizar vistoria');
     });
 
-      let lote = this.lotes.find(x => x.loteId === this.loteSelecionado.loteId);
+      const lote = this.lotes.find(x => x.loteId === this.loteSelecionado.loteId);
       lote.statusVistoriaId = parseInt(this.vistoria.statusId);
   }
 
@@ -98,7 +98,7 @@ export class LotesVistoriaComponent implements OnInit {
   gerarLaudo(numeroVistoria) {
     //this.vistoria.statusId = this.statusSelecionado
     this.loadingLaudo = true;
-    this.restangular.all('vistoria').one(`${numeroVistoria}/laudo`,)
+    this.restangular.all('vistoria').one(`${numeroVistoria}/laudo`, )
       .withHttpConfig({ responseType: 'blob' })
       .get()
       .subscribe((response) => {
@@ -113,15 +113,15 @@ export class LotesVistoriaComponent implements OnInit {
 
   classStatusVistoria(lote) {
 
-    if(this.loteSelecionado && this.loteSelecionado.loteId === lote.loteId) {
+    if (this.loteSelecionado && this.loteSelecionado.loteId === lote.loteId) {
       return 'destaque';
     }
 
-    if(!lote.statusVistoriaId) {
+    if (!lote.statusVistoriaId) {
       return 'disabled';
     }
 
-    switch(lote.statusVistoriaId) {
+    switch (lote.statusVistoriaId) {
       case 3:
         return 'vistoriaCancelada';
       case 4:
@@ -142,7 +142,7 @@ export class LotesVistoriaComponent implements OnInit {
       const blob = new Blob([response], { type: 'application/xlsx' });
       fileSaver.saveAs(blob, `Vistorias.xlsx`);
       this.exportando = false;
-    },(error) => {
+    }, (error) => {
       this.notifierService.notify('error', 'Não foi possivel exportar vistorias!');
       this.exportando = false;
     })
@@ -150,7 +150,7 @@ export class LotesVistoriaComponent implements OnInit {
 
   exportarLaudos() {
     this.lotes.filter(x => x.statusVistoriaId > 2).forEach(lote => {
-      this.restangular.one("vistoria", lote.loteId).get()
+      this.restangular.one('vistoria', lote.loteId).get()
       .subscribe(vistoria => {
         this.gerarLaudo(vistoria.data.numero);
       })

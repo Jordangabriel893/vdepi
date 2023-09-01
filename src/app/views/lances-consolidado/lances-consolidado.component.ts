@@ -14,7 +14,7 @@ import { NgIf } from '@angular/common';
 })
 export class LancesConsolidadoComponent implements OnInit {
   leiloes
-  nomeLeilao:any = 'Leilões'
+  nomeLeilao: any = 'Leilões'
   lancesconsolidados
   loading;
   leilaoId;
@@ -28,7 +28,7 @@ export class LancesConsolidadoComponent implements OnInit {
   ngOnInit() {
   }
 
-  setLeilao(leilao){
+  setLeilao(leilao) {
     this.loading = true;
     this.lancesconsolidados = [];
     this.nomeLeilao = leilao.nome
@@ -53,19 +53,19 @@ export class LancesConsolidadoComponent implements OnInit {
 }
 
 exportAsPDF() {
-  let columns = [
-    { title: "Nº Lote ", dataKey: "numeroLote" },
-    { title: "Descrição", dataKey: "descricao" },
-    { title: "Status", dataKey: "status" },
-    { title: "Categoria", dataKey: "categoria" },
-    { title: "Lances", dataKey: "qteLances" },
-    { title: "Participantes", dataKey: "qteUsuarios" },
-    { title: "Avaliação", dataKey: "valorAvaliacao" },
-    { title: "Mínimo Vendas", dataKey: "valorMinimoVenda" },
-    { title: "Valor", dataKey: "lanceAtual" },
-    { title: "Taxa", dataKey: "valorTaxaAdministrativa" },
-    { title: "Comissão", dataKey: "comissao" },
-    { title: "% Meta", dataKey: "meta" },
+  const columns = [
+    { title: 'Nº Lote ', dataKey: 'numeroLote' },
+    { title: 'Descrição', dataKey: 'descricao' },
+    { title: 'Status', dataKey: 'status' },
+    { title: 'Categoria', dataKey: 'categoria' },
+    { title: 'Lances', dataKey: 'qteLances' },
+    { title: 'Participantes', dataKey: 'qteUsuarios' },
+    { title: 'Avaliação', dataKey: 'valorAvaliacao' },
+    { title: 'Mínimo Vendas', dataKey: 'valorMinimoVenda' },
+    { title: 'Valor', dataKey: 'lanceAtual' },
+    { title: 'Taxa', dataKey: 'valorTaxaAdministrativa' },
+    { title: 'Comissão', dataKey: 'comissao' },
+    { title: '% Meta', dataKey: 'meta' },
 
   ];
 
@@ -86,18 +86,18 @@ exportAsPDF() {
 
   const rows = this.lancesconsolidados.map(e => {
     return {
-      numeroLote: e.numeroLote || "",
-      descricao: e.descricao || "",
-      status: e.status || "",
-      categoria: e.categoria || "",
-      qteLances: e.qteLances || "",
-      qteUsuarios: e.qteUsuarios || "",
-      valorAvaliacao: this.currency.transform(e.valorAvaliacao) || "",
-      valorTaxaAdministrativa: this.currency.transform(e.valorTaxaAdministrativa) || "",
-      comissao: this.currency.transform(e.comissao) || "",
-      valorMinimoVenda: this.currency.transform(e.valorMinimoVenda) || "",
-      lanceAtual: this.currency.transform(e.lanceAtual) || "",
-      meta: e.meta || ""
+      numeroLote: e.numeroLote || '',
+      descricao: e.descricao || '',
+      status: e.status || '',
+      categoria: e.categoria || '',
+      qteLances: e.qteLances || '',
+      qteUsuarios: e.qteUsuarios || '',
+      valorAvaliacao: this.currency.transform(e.valorAvaliacao) || '',
+      valorTaxaAdministrativa: this.currency.transform(e.valorTaxaAdministrativa) || '',
+      comissao: this.currency.transform(e.comissao) || '',
+      valorMinimoVenda: this.currency.transform(e.valorMinimoVenda) || '',
+      lanceAtual: this.currency.transform(e.lanceAtual) || '',
+      meta: e.meta || ''
     }
   });
 
@@ -105,7 +105,7 @@ exportAsPDF() {
     leilao: this.nomeLeilao
   }
 
-  this.pdfService.exportPdf('LancesConsolidados', "Lotes Consolidados", rows, columns, columStyles, header, null);
+  this.pdfService.exportPdf('LancesConsolidados', 'Lotes Consolidados', rows, columns, columStyles, header, null);
 }
 
 }

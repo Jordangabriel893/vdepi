@@ -17,7 +17,7 @@ export class EmpresasComponent implements OnInit, OnDestroy {
     private route: ActivatedRoute,
     private router: Router
   ) {
-    this.sub.push( this.restangular.one("empresa").get().subscribe((response) => {
+    this.sub.push( this.restangular.one('empresa').get().subscribe((response) => {
      this.empresa = response.data
      this.loading = false;
     },

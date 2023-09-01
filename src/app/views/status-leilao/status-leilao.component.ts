@@ -12,7 +12,7 @@ export class StatusLeilaoComponent implements OnInit {
   constructor(
     private restangular: Restangular,
   ) {
-    this.restangular.one("leilao/status").get().subscribe((response) => {
+    this.restangular.one('leilao/status').get().subscribe((response) => {
      this.statusLeilao = response.data
      this.loading = false;
     },

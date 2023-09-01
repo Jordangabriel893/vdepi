@@ -151,11 +151,11 @@
                     <mfDefaultSorter by="status">Status</mfDefaultSorter>
                   </th>
 
-                  <th>
+                  <!-- <th>
                     <mfDefaultSorter by="loteJudicial"
                       >Lote Judicial</mfDefaultSorter
                     >
-                  </th>
+                  </th> -->
                   <th>
                     <mfDefaultSorter by="valorAvalicao"
                       >Valor Avaliação</mfDefaultSorter
@@ -179,8 +179,24 @@
                   <td>{{ lote.numeroLote }}</td>
                   <td>{{ lote.categoria }}</td>
                   <td>{{ lote.descricao }}</td>
-                  <td>{{ lote.status }}</td>
-                  <td>{{ lote.loteJudicial ? "Sim" : "Não" }}</td>
+                  <td>
+                    <span
+                      class="badge badge-info"
+                      *ngIf="lote.status == 'Aberto'"
+                      >ABERTO</span
+                    >
+                    <span
+                      class="badge badge-success"
+                      *ngIf="lote.status == 'Pago'"
+                      >PAGO</span
+                    >
+                    <span
+                      class="badge badge-danger"
+                      *ngIf="lote.status !== 'Pago' && lote.status != 'Aberto'"
+                      >{{ lote.status | uppercase }}</span
+                    >
+                  </td>
+                  <!-- <td>{{ lote.loteJudicial ? "Sim" : "Não" }}</td> -->
                   <td>{{ lote.valorAvaliacao | currencyFormat }}</td>
                   <td class="text-center" nowrap>
                     <button

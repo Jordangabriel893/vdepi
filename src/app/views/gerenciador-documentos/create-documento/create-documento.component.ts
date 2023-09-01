@@ -1,17 +1,17 @@
-import { Component, OnDestroy, OnInit } from "@angular/core";
-import { FormGroup, FormBuilder, Validators, FormArray } from "@angular/forms";
-import { Router } from "@angular/router";
-import { NotifierService } from "angular-notifier";
-import * as _ from "lodash";
-import * as moment from "moment";
-import { BsLocaleService } from "ngx-bootstrap";
-import { Restangular } from "ngx-restangular";
-import { Subscription } from "rxjs";
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { FormGroup, FormBuilder, Validators, FormArray } from '@angular/forms';
+import { Router } from '@angular/router';
+import { NotifierService } from 'angular-notifier';
+import * as _ from 'lodash';
+import * as moment from 'moment';
+import { BsLocaleService } from 'ngx-bootstrap';
+import { Restangular } from 'ngx-restangular';
+import { Subscription } from 'rxjs';
 
 @Component({
-  selector: "app-create-documento",
-  templateUrl: "./create-documento.component.html",
-  styleUrls: ["./create-documento.component.scss"],
+  selector: 'app-create-documento',
+  templateUrl: './create-documento.component.html',
+  styleUrls: ['./create-documento.component.scss'],
 })
 export class CreateDocumentoComponent implements OnInit, OnDestroy {
   lotes = [];
@@ -37,13 +37,13 @@ export class CreateDocumentoComponent implements OnInit, OnDestroy {
     private router: Router,
     private localeService: BsLocaleService
   ) {
-    localeService.use("pt-br");
+    localeService.use('pt-br');
   }
 
   ngOnInit() {
     this.sub.push(
       this.restangular
-        .one("admin/leilao")
+        .one('admin/leilao')
         .get()
         .subscribe((dados) => {
           this.leiloes = dados.data;
@@ -51,7 +51,7 @@ export class CreateDocumentoComponent implements OnInit, OnDestroy {
     );
     this.sub.push(
       this.restangular
-        .one("tipoDocumentoLote")
+        .one('tipoDocumentoLote')
         .get()
         .subscribe((dados) => {
           this.tipoDocumentos = dados.data;
@@ -62,7 +62,7 @@ export class CreateDocumentoComponent implements OnInit, OnDestroy {
       leilaoId: [null, [Validators.required]],
       loteId: [null, [Validators.required]],
       tipoDocumentoId: [null, Validators.required],
-      tipoAssinatura: ["1"],
+      tipoAssinatura: ['1'],
       assinantes: this.formBuilder.array([]),
       templateId: [null, [Validators.required]],
       registrarBlockchain: [false],
@@ -78,7 +78,7 @@ export class CreateDocumentoComponent implements OnInit, OnDestroy {
         this.formulario.controls.templateId.setValue(null);
         this.sub.push(
           this.restangular
-            .one("documentoLoteTemplate")
+            .one('documentoLoteTemplate')
             .get({ tipoDocumentoLoteId: x })
             .subscribe((dados) => {
               this.templates = dados.data;
@@ -90,11 +90,11 @@ export class CreateDocumentoComponent implements OnInit, OnDestroy {
   }
 
   get assinantes() {
-    return this.formulario.controls["assinantes"] as FormArray;
+    return this.formulario.controls['assinantes'] as FormArray;
   }
 
   createAssinantes(tipoDocumento) {
-    this.formulario.controls["assinantes"] = this.formBuilder.array([]);
+    this.formulario.controls['assinantes'] = this.formBuilder.array([]);
     tipoDocumento.perfis.forEach((x) => {
       const assinanteForm = this.formBuilder.group({
         usuarioId: [null, Validators.required],
@@ -109,10 +109,10 @@ export class CreateDocumentoComponent implements OnInit, OnDestroy {
   getUsuarios(perfilId: number, fg: FormGroup) {
     this.sub.push(
       this.restangular
-        .one("usuario")
+        .one('usuario')
         .get({ perfilId: perfilId })
         .subscribe((dados) => {
-          fg.controls["usuarios"] = dados.data;
+          fg.controls['usuarios'] = dados.data;
         })
     );
   }
@@ -135,18 +135,18 @@ export class CreateDocumentoComponent implements OnInit, OnDestroy {
     });
 
     this.restangular
-      .all("DocumentoLote")
+      .all('DocumentoLote')
       .post(formulario)
       .subscribe(
         (a) => {
           this.notifierService.notify(
-            "success",
-            "Documento criado com sucesso"
+            'success',
+            'Documento criado com sucesso'
           );
-          this.router.navigate(["/gerenciador-documentos"]);
+          this.router.navigate(['/gerenciador-documentos']);
         },
         (error) => {
-          this.notifierService.notify("error", "Erro ao criar o documento!");
+          this.notifierService.notify('error', 'Erro ao criar o documento!');
           this.salvando = false;
         }
       );
@@ -157,7 +157,7 @@ export class CreateDocumentoComponent implements OnInit, OnDestroy {
     const leilao = this.formulario.value.leilaoId;
     this.sub.push(
       this.restangular
-        .one("lote/numeros")
+        .one('lote/numeros')
         .get({ leilaoId: leilao, statusId: 5 })
         .subscribe((dados) => {
           this.lotes = dados.data;
@@ -174,17 +174,17 @@ export class CreateDocumentoComponent implements OnInit, OnDestroy {
   }
 
   aplicaCssErroLista(campoArray, campo, i) {
-    return { "has-error": this.verificaValidList(campoArray, campo, i) };
+    return { 'has-error': this.verificaValidList(campoArray, campo, i) };
   }
 
   verificaValidList(campoArray, campo, i) {
-    var lista = this.formulario.get(campoArray) as FormArray;
-    var item = lista.controls[i] as FormGroup;
+    const lista = this.formulario.get(campoArray) as FormArray;
+    const item = lista.controls[i] as FormGroup;
     return !item.get(campo).valid;
   }
 
   aplicaCssErro(campo) {
-    return { "has-error": this.verificaValidTouched(campo) };
+    return { 'has-error': this.verificaValidTouched(campo) };
   }
 
   onValueChange(event, campo) {

@@ -11,7 +11,7 @@ import { Restangular } from 'ngx-restangular';
   styleUrls: ['./update-local.component.scss']
 })
 export class UpdateLocalComponent implements OnInit {
-  formulario:FormGroup
+  formulario: FormGroup
   id
   locais
   empresa
@@ -29,24 +29,24 @@ export class UpdateLocalComponent implements OnInit {
     private route: ActivatedRoute,
   ) {
     this.id = this.route.snapshot.params['id']
-    this.restangular.one("local", this.id).get().subscribe((response) => {
+    this.restangular.one('local', this.id).get().subscribe((response) => {
       this.updateForm(response.data)
     })
 
-    this.restangular.one("empresa").get().subscribe((response) => {
+    this.restangular.one('empresa').get().subscribe((response) => {
       this.empresa = response.data
      })
 
-    this.mask = ['(', /[1-9]/, /\d/, ')', ' ', /\d/,/\d/,/\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/]
-    this.maskCep = [ /\d/,/\d/,/\d/,/\d/,/\d/, '-', /\d/, /\d/, /\d/, ]
-    this.maskCpf = [ /\d/,/\d/,/\d/,  '.', /\d/,/\d/,/\d/, '.', /\d/, /\d/, /\d/, '-', /\d/,/\d/ ]
-    this.maskCnpj = [ /\d/,/\d/,'.',/\d/,/\d/,/\d/,'.',/\d/,/\d/,/\d/,'/', /\d/,/\d/,/\d/,/\d/,'-',/\d/,/\d/, ]
+    this.mask = ['(', /[1-9]/, /\d/, ')', ' ', /\d/, /\d/, /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/]
+    this.maskCep = [ /\d/, /\d/, /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, ]
+    this.maskCpf = [ /\d/, /\d/, /\d/,  '.', /\d/, /\d/, /\d/, '.', /\d/, /\d/, /\d/, '-', /\d/, /\d/ ]
+    this.maskCnpj = [ /\d/, /\d/, '.', /\d/, /\d/, /\d/, '.', /\d/, /\d/, /\d/, '/', /\d/, /\d/, /\d/, /\d/, '-', /\d/, /\d/, ]
 
     this.formulario = this.formBuilder.group({
       localLoteId: [0],
-      descricao:[null, Validators.required],
-      telefone:[null, Validators.required],
-      empresaId:[null, Validators.required],
+      descricao: [null, Validators.required],
+      telefone: [null, Validators.required],
+      empresaId: [null, Validators.required],
       endereco: this.formBuilder.group({
         enderecoId: [0],
         cep: [null, [Validators.required]],
@@ -55,16 +55,16 @@ export class UpdateLocalComponent implements OnInit {
         bairro: [null, Validators.required],
         cidade: [null, Validators.required],
         estado: [null, Validators.required],
-        logradouro:[null, Validators.required]
+        logradouro: [null, Validators.required]
       }),
     })
   }
 
   ngOnInit() {
   }
-  onSubmit(){
-    if(!this.formulario.valid){
-      Object.keys(this.formulario.controls).forEach((campo)=>{
+  onSubmit() {
+    if (!this.formulario.valid) {
+      Object.keys(this.formulario.controls).forEach((campo) => {
         const controle = this.formulario.get(campo)
         controle.markAsTouched()
 
@@ -78,21 +78,21 @@ export class UpdateLocalComponent implements OnInit {
     },
       error => {
         this.notifierService.notify('error', 'Erro ao atualizar o local!');
-        Object.keys(this.formulario.controls).forEach((campo)=>{
+        Object.keys(this.formulario.controls).forEach((campo) => {
           const controle = this.formulario.get(campo)
           controle.markAsTouched()
         })
       });
   }
-  updateForm(dados){
+  updateForm(dados) {
     this.formulario.patchValue({
-      descricao:dados.descricao,
-      empresa:dados.empresa,
-      telefone:dados.telefone,
-      empresaId:dados.empresaId,
+      descricao: dados.descricao,
+      empresa: dados.empresa,
+      telefone: dados.telefone,
+      empresaId: dados.empresaId,
       endereco: dados.endereco,
-      enderecoId:dados.enderecoId,
-      localLoteId:dados.localLoteId
+      enderecoId: dados.enderecoId,
+      localLoteId: dados.localLoteId
     })
   }
 
@@ -115,11 +115,11 @@ export class UpdateLocalComponent implements OnInit {
       }
     });
   }
-  verificaValidTouched(campo){
+  verificaValidTouched(campo) {
     return !this.formulario.get(campo).valid && this.formulario.get(campo).touched;
   }
 
-  aplicaCssErro(campo){
+  aplicaCssErro(campo) {
     return {'has-error': this.verificaValidTouched(campo) }
   }
 }

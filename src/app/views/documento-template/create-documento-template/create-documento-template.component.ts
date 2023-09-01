@@ -1,23 +1,23 @@
-import { Component, OnInit, TemplateRef, ViewChild } from "@angular/core";
-import { FormBuilder, Validators } from "@angular/forms";
-import { Router } from "@angular/router";
-import { EmailEditorComponent } from "angular-email-editor";
-import { NotifierService } from "angular-notifier";
-import { BsModalRef, BsModalService } from "ngx-bootstrap";
-import { Restangular } from "ngx-restangular";
+import { Component, OnInit, TemplateRef, ViewChild } from '@angular/core';
+import { FormBuilder, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
+import { EmailEditorComponent } from 'angular-email-editor';
+import { NotifierService } from 'angular-notifier';
+import { BsModalRef, BsModalService } from 'ngx-bootstrap';
+import { Restangular } from 'ngx-restangular';
 
 @Component({
-  selector: "app-create-documento-template",
-  templateUrl: "./create-documento-template.component.html",
-  styleUrls: ["./create-documento-template.component.scss"],
+  selector: 'app-create-documento-template',
+  templateUrl: './create-documento-template.component.html',
+  styleUrls: ['./create-documento-template.component.scss'],
 })
 export class CreateDocumentoTemplateComponent implements OnInit {
   salvar = false;
   template;
   formulario;
   options = {
-    displayMode: "web",
-    devices: ["desktop"],
+    displayMode: 'web',
+    devices: ['desktop'],
     features: {
       textEditor: {
         tables: true,
@@ -38,7 +38,7 @@ export class CreateDocumentoTemplateComponent implements OnInit {
       enabled: false,
     },
   };
-  openPopup: boolean = true;
+  openPopup = true;
   modalRef: BsModalRef;
   tiposDocumentoLote: [];
 
@@ -57,15 +57,15 @@ export class CreateDocumentoTemplateComponent implements OnInit {
 
   ngOnInit() {
     this.restangular
-      .all("TipoDocumentoLote")
-      .get("")
+      .all('TipoDocumentoLote')
+      .get('')
       .subscribe((resp) => {
         this.tiposDocumentoLote = resp.data;
       });
   }
 
   openModal(template: TemplateRef<any>) {
-    this.modalRef = this.modalService.show(template, { class: "modal-lg" });
+    this.modalRef = this.modalService.show(template, { class: 'modal-lg' });
   }
 
   editorUpdated(data) {
@@ -84,8 +84,8 @@ export class CreateDocumentoTemplateComponent implements OnInit {
         controle.markAsTouched();
       });
       this.notifierService.notify(
-        "error",
-        "Preencha todos os campos obrigatórios"
+        'error',
+        'Preencha todos os campos obrigatórios'
       );
       this.salvar = false;
       return false;
@@ -93,8 +93,8 @@ export class CreateDocumentoTemplateComponent implements OnInit {
 
     if (!this.template) {
       this.notifierService.notify(
-        "error",
-        "Template vazio, adicione mais elementos"
+        'error',
+        'Template vazio, adicione mais elementos'
       );
       this.salvar = false;
       return false;
@@ -108,17 +108,17 @@ export class CreateDocumentoTemplateComponent implements OnInit {
     };
 
     this.restangular
-      .all("DocumentoLoteTemplate")
+      .all('DocumentoLoteTemplate')
       .post(template)
       .subscribe(
         (a) => {
-          this.notifierService.notify("success", "Template criado com sucesso");
+          this.notifierService.notify('success', 'Template criado com sucesso');
           this.salvar = false;
-          this.router.navigate(["/documentotemplate"]);
+          this.router.navigate(['/documentotemplate']);
         },
         () => {
           this.salvar = false;
-          this.notifierService.notify("error", "Erro ao criar o template!");
+          this.notifierService.notify('error', 'Erro ao criar o template!');
         }
       );
 
@@ -127,7 +127,7 @@ export class CreateDocumentoTemplateComponent implements OnInit {
 
   verificaValidTouched(campo) {
     this.formulario.controls[campo].valueChanges.subscribe((val) => {
-      if (String(val) === "NaN") {
+      if (String(val) === 'NaN') {
         this.formulario.controls[campo].setValue(null);
       }
     });
@@ -137,6 +137,6 @@ export class CreateDocumentoTemplateComponent implements OnInit {
   }
 
   aplicaCssErro(campo) {
-    return { "has-error": this.verificaValidTouched(campo) };
+    return { 'has-error': this.verificaValidTouched(campo) };
   }
 }

@@ -15,7 +15,7 @@ import { Subscription } from 'rxjs';
 export class EditContatosComponent implements OnInit, OnDestroy {
 
   minDate;
-  formulario:FormGroup
+  formulario: FormGroup
   empresa
   gruposEconomico;
   id;
@@ -41,14 +41,14 @@ export class EditContatosComponent implements OnInit, OnDestroy {
     this.minDate = new Date();
     this.minDate.setDate(this.minDate.getDate() + 1);
 
-    this.mask = ['(', /[1-9]/, /\d/, ')', ' ', /\d/,/\d/,/\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/]
+    this.mask = ['(', /[1-9]/, /\d/, ')', ' ', /\d/, /\d/, /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/]
     this.maskTelefoneFixo = ['(', /[1-9]/, /\d/, ')', ' ', /\d/, /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/]
-    this.maskCep = [ /\d/,/\d/,/\d/,/\d/,/\d/, '-', /\d/, /\d/, /\d/, ]
-    this.maskCpf = [ /\d/,/\d/,/\d/,  '.', /\d/,/\d/,/\d/, '.', /\d/, /\d/, /\d/, '-', /\d/,/\d/ ]
-    this.maskCnpj = [ /\d/,/\d/,'.',/\d/,/\d/,/\d/,'.',/\d/,/\d/,/\d/,'/', /\d/,/\d/,/\d/,/\d/,'-',/\d/,/\d/, ]
+    this.maskCep = [ /\d/, /\d/, /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, ]
+    this.maskCpf = [ /\d/, /\d/, /\d/,  '.', /\d/, /\d/, /\d/, '.', /\d/, /\d/, /\d/, '-', /\d/, /\d/ ]
+    this.maskCnpj = [ /\d/, /\d/, '.', /\d/, /\d/, /\d/, '.', /\d/, /\d/, /\d/, '/', /\d/, /\d/, /\d/, /\d/, '-', /\d/, /\d/, ]
 
     this.formulario = this.formBuilder.group({
-      contatoId:[this.id],
+      contatoId: [this.id],
       email: [null, Validators.required],
       primeiroNome: [null, Validators.required],
       ultimoNome: [null, Validators.required],
@@ -58,8 +58,8 @@ export class EditContatosComponent implements OnInit, OnDestroy {
       bairro: [null],
       cidade: [null],
       logradouro: [null],
-      complemento:[null],
-      numero:[null],
+      complemento: [null],
+      numero: [null],
       telefoneWhatsapp: [null],
       telefoneConvencional: [null],
       telefoneCelular: [null, Validators.required],
@@ -73,7 +73,7 @@ export class EditContatosComponent implements OnInit, OnDestroy {
       })
     )
   }
-  onSubmit(){
+  onSubmit() {
     this.restangular.all('marketing/contato').customPUT(this.formulario.value,  this.id ) .subscribe(a => {
       this.notifierService.notify('success', 'Contato criado com sucesso');
       this.router.navigate(['/contatos']);
@@ -81,7 +81,7 @@ export class EditContatosComponent implements OnInit, OnDestroy {
       error => {
         this.notifierService.notify('error', 'Erro ao criar o contato!');
 
-        Object.keys(this.formulario.controls).forEach((campo)=>{
+        Object.keys(this.formulario.controls).forEach((campo) => {
           const controle = this.formulario.get(campo)
           controle.markAsTouched()
         })
@@ -112,7 +112,7 @@ export class EditContatosComponent implements OnInit, OnDestroy {
       email: dados.email,
       primeiroNome: dados.primeiroNome,
       ultimoNome: dados.ultimoNome,
-      listaContatoId:dados.listaContatoId,
+      listaContatoId: dados.listaContatoId,
       cep: dados.cep,
       uf: dados.uf,
       bairro: dados.bairro,
@@ -121,24 +121,24 @@ export class EditContatosComponent implements OnInit, OnDestroy {
       numero: dados.numero,
       complemento: dados.complemento,
       telefoneWhatsapp: dados.telefoneWhatsapp,
-      telefoneConvencional:dados.telefoneConvencional,
+      telefoneConvencional: dados.telefoneConvencional,
       telefoneCelular: dados.telefoneCelular,
-      ativo:dados.ativo
+      ativo: dados.ativo
     })
   }
-  verificaValidTouched(campo){
+  verificaValidTouched(campo) {
     return !this.formulario.get(campo).valid && this.formulario.get(campo).touched;
   }
 
-  aplicaCssErro(campo){
+  aplicaCssErro(campo) {
     return {'has-error': this.verificaValidTouched(campo) }
   }
   onValueChange(event, campo) {
     this.formulario.get(campo).markAsTouched();
     this.formulario.get(campo).setValue(event);
   }
-  desativar(){
-    this.restangular.all('marketing/contato/Desativar').customPUT( '',this.id ) .subscribe(a => {
+  desativar() {
+    this.restangular.all('marketing/contato/Desativar').customPUT( '', this.id ) .subscribe(a => {
       this.notifierService.notify('success', 'Contato desativado com sucesso');
       this.router.navigate(['/listacontatos']);
     },

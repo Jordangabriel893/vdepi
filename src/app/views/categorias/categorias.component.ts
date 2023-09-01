@@ -18,7 +18,7 @@ export class CategoriasComponent implements OnInit, OnDestroy {
     private route: ActivatedRoute,
   ) {
    this.sub.push(
-    this.restangular.one("categoria").get().subscribe((response) => {
+    this.restangular.one('categoria').get().subscribe((response) => {
       this.categorias = response.data
       this.loading = false;
      },

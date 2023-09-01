@@ -14,7 +14,7 @@ export class FullLayoutComponent implements OnInit, OnDestroy {
 
   //Header Variables
   user: Model.User;
-  disabled: boolean = false;
+  disabled = false;
   status: { isopen: boolean } = { isopen: false };
   alertaResumo = [];
   totalAlerta = 0;
@@ -44,7 +44,7 @@ export class FullLayoutComponent implements OnInit, OnDestroy {
     this.user = this.authenticationService.getUser();
   }
 
-  ngOnDestroy(){
+  ngOnDestroy() {
 
   }
 
@@ -56,6 +56,6 @@ export class FullLayoutComponent implements OnInit, OnDestroy {
 
   public logout(): void {
     this.authenticationService.logout();
-    this.router.navigate(["/login"]);
+    this.router.navigate(['/login']);
   }
 }

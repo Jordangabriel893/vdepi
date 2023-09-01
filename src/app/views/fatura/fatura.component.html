@@ -229,8 +229,15 @@
                               (click)="
                                 bloquearUsuario(item.usuarioId, item.codigo)
                               "
+                              *ngIf="item.status === 1"
                             >
                               <a class="dropdown-item">Bloquear Usuário</a>
+                            </li>
+                            <li
+                              (click)="openModal(modal, item.faturaId)"
+                              *ngIf="item.status === 1"
+                            >
+                              <a class="dropdown-item">Marcar como paga</a>
                             </li>
                           </ul>
                         </div>
@@ -315,4 +322,91 @@
       </div>
     </div>
   </div>
+  <input
+    type="file"
+    #inputComprovante
+    (change)="comprovanteChangeEvent($event.target.files)"
+    accept="image/*, application/pdf"
+  />
 </div>
+<ng-template #modal>
+  <div class="modal-header">
+    <h4 class="modal-title pull-left">
+      Pagamento de Fatura - {{ codigoFatura }}
+    </h4>
+    <button
+      type="button"
+      class="btn-close close pull-right"
+      aria-label="Close"
+      (click)="modalRef?.hide()"
+    >
+      <span aria-hidden="true" class="visually-hidden">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <h6 class="text-center">
+      Preencha as informações de pagamento e envie o comprovante de pagamento
+      para definir fatura como paga.
+    </h6>
+    <div
+      class="row pt-3 justify-content-center"
+      [formGroup]="formComprovante"
+      *ngIf="formComprovante"
+    >
+      <div class="form-group col-md-6">
+        <label for="formaPagamentoId">Forma de Pagamento </label>
+        <select
+          class="form-control"
+          [ngClass]="aplicaCssErro('formaPagamentoId')"
+          formControlName="formaPagamentoId"
+          id="formaPagamentoId"
+          name="formaPagamentoId"
+        >
+          <option
+            *ngFor="let item of formasPagamento"
+            value="{{ item.formaPagamentoId }}"
+          >
+            {{ item.descricao }}
+          </option>
+        </select>
+      </div>
+      <div class="form-group col-md-6">
+        <label for="dataPagamento">Data de Pagamento</label>
+        <input
+          type="text"
+          class="form-control"
+          [ngClass]="aplicaCssErro('dataPagamento')"
+          id="dataPagamento"
+          placeholder="DD/MM/AAAA"
+          formControlName="dataPagamento"
+          [bsConfig]="{ dateInputFormat: 'DD/MM/YYYY HH:mm' }"
+          bsDatepicker
+          (bsValueChange)="onValueChange($event, 'dataPagamento')"
+        />
+      </div>
+      <div class="form-group col-12 text-center">
+        <button
+          type="button"
+          class="btn btn-success"
+          (click)="inputComprovanteClick()"
+        >
+          <i class="fa fa-upload"></i>&nbsp;Enviar Comprovante
+        </button>
+        <p *ngIf="comprovante" class="text-muted p-0 pt-3">
+          {{ comprovante }} - {{ tamComprovante }}
+        </p>
+        <p
+          *ngIf="comprovanteError"
+          class="text-danger font-weight-bold p-0 pt-3"
+        >
+          {{ comprovanteError }}
+        </p>
+      </div>
+    </div>
+  </div>
+  <div class="modal-footer">
+    <div class="text-right">
+      <button class="btn btn-success" (click)="marcarComoPaga()">Salvar</button>
+    </div>
+  </div>
+</ng-template>

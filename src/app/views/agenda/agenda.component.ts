@@ -23,7 +23,7 @@ export class AgendaComponent implements OnInit, OnDestroy {
     private formBuilder: FormBuilder,
   ) {
     this.formulario = this.formBuilder.group({
-      leilao:[null],
+      leilao: [null],
 
 
     })
@@ -33,9 +33,9 @@ export class AgendaComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.sub.push(
       this.restangular.one('marketing/agendaNotificacao').get().subscribe(
-      dados =>{
+      dados => {
 
-        this.agendas= dados.data
+        this.agendas = dados.data
         this.loading = false;
       },
       () => this.loading = false

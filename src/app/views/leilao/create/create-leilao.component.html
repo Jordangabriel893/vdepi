@@ -1,11 +1,16 @@
-<form [formGroup]="formulario" (ngSubmit)="onSubmit()" appFocus *ngIf="formulario">
+<form
+  [formGroup]="formulario"
+  (ngSubmit)="onSubmit()"
+  appFocus
+  *ngIf="formulario"
+>
   <div class="animated fadeIn">
     <div class="row">
       <div class="col-lg-12">
         <div class="card">
           <div class="card-header d-flex align-items-center">
             <i class="fa fa-gavel" aria-hidden="true"></i>
-            &nbsp;Informações do Leilão - Obrigatorios*
+            &nbsp;Informações do Leilão
           </div>
 
           <div class="card-block">
@@ -14,110 +19,251 @@
                 <div class="row">
                   <div class="form-group col-6">
                     <label for="nome">Nome </label>
-                    <input type="text" class="form-control" [ngClass]="aplicaCssErro('nome')" id="nome" placeholder="Nome" formControlName="nome" >
+                    <input
+                      type="text"
+                      class="form-control"
+                      [ngClass]="aplicaCssErro('nome')"
+                      id="nome"
+                      placeholder="Nome"
+                      formControlName="nome"
+                    />
                   </div>
 
                   <div class="form-group col-6">
                     <label for="titulo">Título </label>
-                    <input type="text" class="form-control" [ngClass]="aplicaCssErro('titulo')" id="titulo" placeholder="Título" formControlName="titulo" >
+                    <input
+                      type="text"
+                      class="form-control"
+                      [ngClass]="aplicaCssErro('titulo')"
+                      id="titulo"
+                      placeholder="Título"
+                      formControlName="titulo"
+                    />
                   </div>
 
-                  <div class="form-group col-6">
+                  <div class="form-group col-4">
                     <label for="status">Status </label>
-                    <select class="form-control" [ngClass]="aplicaCssErro('statusId')" formControlName="statusId"  >
-                      <option *ngFor="let item of status" value="{{item.leilaoStatusId}}">{{item.descricao}}</option>
+                    <select
+                      class="form-control"
+                      [ngClass]="aplicaCssErro('statusId')"
+                      formControlName="statusId"
+                    >
+                      <option
+                        *ngFor="let item of status"
+                        value="{{ item.leilaoStatusId }}"
+                      >
+                        {{ item.descricao }}
+                      </option>
                     </select>
                   </div>
-                  <div class="form-group col-6">
-                    <label for="categoriaId">Categoria  </label>
-                    <select class="form-control" [ngClass]="aplicaCssErro('categoriaId')" formControlName="categoriaId"  >
-                      <option *ngFor="let item of categorias" value="{{item.categoriaId}}">{{item.descricao}}</option>
+                  <div class="form-group col-4">
+                    <label for="tipoLeilaoId">Tipo do Leilão</label>
+                    <select
+                      class="form-control"
+                      [ngClass]="aplicaCssErro('tipoLeilaoId')"
+                      formControlName="tipoLeilaoId"
+                    >
+                      <option
+                        *ngFor="let item of tiposLeilao"
+                        value="{{ item.tipoLeilaoId }}"
+                      >
+                        {{ item.descricao }}
+                      </option>
+                    </select>
+                  </div>
+                  <div class="form-group col-4">
+                    <label for="categoriaId">Categoria </label>
+                    <select
+                      class="form-control"
+                      [ngClass]="aplicaCssErro('categoriaId')"
+                      formControlName="categoriaId"
+                    >
+                      <option
+                        *ngFor="let item of categorias"
+                        value="{{ item.categoriaId }}"
+                      >
+                        {{ item.descricao }}
+                      </option>
                     </select>
                   </div>
 
                   <div class="form-group col-6">
                     <label for="dataLeilao">Data Leilão </label>
-                    <input type="text" class="form-control" [ngClass]="aplicaCssErro('dataLeilao')" id="dataLeilao" placeholder="DD/MM/AAAA"
+                    <input
+                      type="text"
+                      class="form-control"
+                      [ngClass]="aplicaCssErro('dataLeilao')"
+                      id="dataLeilao"
+                      placeholder="DD/MM/AAAA"
                       formControlName="dataLeilao"
                       [bsConfig]="{ dateInputFormat: 'DD/MM/YYYY HH:mm' }"
-                      bsDatepicker [minDate]="minDate"
-                      (bsValueChange)="onValueChange($event, 'dataLeilao')">
-
+                      bsDatepicker
+                      [minDate]="minDate"
+                      (bsValueChange)="onValueChange($event, 'dataLeilao')"
+                    />
                   </div>
                   <div class="form-group col-6">
-                    <label for="dataAberturaLance">Data Abertura de Lances </label>
-                    <input type="text" class="form-control" [ngClass]="aplicaCssErro('dataAberturaLance')" id="dataAberturaLance" placeholder="DD/MM/AAAA hh:mm"
-                    formControlName="dataAberturaLance"
-                    [bsConfig]="{ dateInputFormat: 'DD/MM/YYYY HH:mm' }"
-                    bsDatepicker
-                    (bsValueChange)="onValueChange($event, 'dataAberturaLance')">
-
+                    <label for="dataAberturaLance"
+                      >Data Abertura de Lances
+                    </label>
+                    <input
+                      type="text"
+                      class="form-control"
+                      [ngClass]="aplicaCssErro('dataAberturaLance')"
+                      id="dataAberturaLance"
+                      placeholder="DD/MM/AAAA hh:mm"
+                      formControlName="dataAberturaLance"
+                      [bsConfig]="{ dateInputFormat: 'DD/MM/YYYY HH:mm' }"
+                      bsDatepicker
+                      (bsValueChange)="
+                        onValueChange($event, 'dataAberturaLance')
+                      "
+                    />
                   </div>
                   <div class="form-group col-6">
                     <label for="empresaId">Empresa </label>
-                    <select class="form-control" [ngClass]="aplicaCssErro('empresaId')" formControlName="empresaId" >
-                      <option *ngFor="let item of empresas" value="{{item.empresaId}}">{{item.nomeFantasia}}</option>
+                    <select
+                      class="form-control"
+                      [ngClass]="aplicaCssErro('empresaId')"
+                      formControlName="empresaId"
+                    >
+                      <option
+                        *ngFor="let item of empresas"
+                        value="{{ item.empresaId }}"
+                      >
+                        {{ item.nomeFantasia }}
+                      </option>
                     </select>
                   </div>
-
 
                   <div class="form-group col-6">
                     <label for="comitenteId">Comitente </label>
-                    <select class="form-control" [ngClass]="aplicaCssErro('comitenteId')" formControlName="comitenteId"  >
-                      <option *ngFor="let item of comitentes" value="{{item.comitenteId}}">{{item.nome}}</option>
+                    <select
+                      class="form-control"
+                      [ngClass]="aplicaCssErro('comitenteId')"
+                      formControlName="comitenteId"
+                    >
+                      <option
+                        *ngFor="let item of comitentes"
+                        value="{{ item.comitenteId }}"
+                      >
+                        {{ item.nome }}
+                      </option>
                     </select>
-
                   </div>
                   <div class="form-group col-6">
                     <label for="leiloeiroId">Leiloeiro</label>
-                    <select class="form-control" [ngClass]="aplicaCssErro('leiloeiroId')" formControlName="leiloeiroId" >
-                      <option *ngFor="let item of leiloeiros" value="{{item.leiloeiroId}}">{{item.nome}}
+                    <select
+                      class="form-control"
+                      [ngClass]="aplicaCssErro('leiloeiroId')"
+                      formControlName="leiloeiroId"
+                    >
+                      <option
+                        *ngFor="let item of leiloeiros"
+                        value="{{ item.leiloeiroId }}"
+                      >
+                        {{ item.nome }}
                       </option>
                     </select>
-
                   </div>
                   <div class="form-group col-6">
                     <label for="comissao">Comissão Leiloeiro</label>
-                    <input type="percent" class="form-control" [ngClass]="aplicaCssErro('comissao')" id="comissao" formControlName="comissao"
-                    currencyMask [options]="{ prefix: '', suffix: '%', thousands: '.', decimal: ',' }">
+                    <input
+                      type="percent"
+                      class="form-control"
+                      [ngClass]="aplicaCssErro('comissao')"
+                      id="comissao"
+                      formControlName="comissao"
+                      currencyMask
+                      [options]="{
+                        prefix: '',
+                        suffix: '%',
+                        thousands: '.',
+                        decimal: ','
+                      }"
+                    />
                   </div>
                   <div class="form-group col-6">
                     <label for="regraHabilitacao">Regra Habilitação </label>
-                    <ng-select [items]="habilitacoes" formControlName="regrasHabilitacao" [multiple]="true" bindLabel="tipoValidacaoRegra" bindValue="regraHabilitacaoId">
-                      <ng-template ng-option-tmp let-item="item" let-index="index" let-search="searchTerm">
-                          <div style="margin: 10px 0; white-space: normal;" class="card" >
-                              <div class="card-body">
-                                  <h5 class="card-title" [ngOptionHighlight]="search">{{item.tipoValidacaoRegra}}</h5>
-                                  <h6 class="card-subtitle mb-2 text-muted">{{item.textoExplicativo}}</h6>
-                                  <p class="card-text text-muted">
-                                    Validação Automática:  {{item.automatica ? 'Sim' : 'Não'}}
-                                  </p>
-                              </div>
+                    <ng-select
+                      [items]="habilitacoes"
+                      formControlName="regrasHabilitacao"
+                      [multiple]="true"
+                      bindLabel="tipoValidacaoRegra"
+                      bindValue="regraHabilitacaoId"
+                    >
+                      <ng-template
+                        ng-option-tmp
+                        let-item="item"
+                        let-index="index"
+                        let-search="searchTerm"
+                      >
+                        <div
+                          style="margin: 10px 0; white-space: normal"
+                          class="card"
+                        >
+                          <div class="card-body">
+                            <h5 class="card-title" [ngOptionHighlight]="search">
+                              {{ item.tipoValidacaoRegra }}
+                            </h5>
+                            <h6 class="card-subtitle mb-2 text-muted">
+                              {{ item.textoExplicativo }}
+                            </h6>
+                            <p class="card-text text-muted">
+                              Validação Automática:
+                              {{ item.automatica ? "Sim" : "Não" }}
+                            </p>
                           </div>
+                        </div>
                       </ng-template>
                     </ng-select>
                   </div>
                   <div class="form-group col-6">
-                    <label for="tempoInicioSeg">Tempo Fechamento(Segundos)</label>
-                    <input type="number" class="form-control" [ngClass]="aplicaCssErro('tempoInicioSeg')" id="tempoInicioSeg" placeholder="30" formControlName="tempoInicioSeg" >
+                    <label for="tempoInicioSeg"
+                      >Tempo Fechamento(Segundos)</label
+                    >
+                    <input
+                      type="number"
+                      class="form-control"
+                      [ngClass]="aplicaCssErro('tempoInicioSeg')"
+                      id="tempoInicioSeg"
+                      placeholder="30"
+                      formControlName="tempoInicioSeg"
+                    />
                   </div>
                   <div class="form-group col-9">
-                    <label for="linkYoutube">Transmissão Youtube (incorporar)</label>
-                    <input type="text" class="form-control" [ngClass]="aplicaCssErro('linkYoutube')" id="linkYoutube" formControlName="linkYoutube" >
+                    <label for="linkYoutube"
+                      >Transmissão Youtube (incorporar)</label
+                    >
+                    <input
+                      type="text"
+                      class="form-control"
+                      [ngClass]="aplicaCssErro('linkYoutube')"
+                      id="linkYoutube"
+                      formControlName="linkYoutube"
+                    />
                   </div>
                   <div class="form-group col-3">
                     <label for="onlineYoutube">Transmissão Status</label>
-                    <select class="form-control" [ngClass]="aplicaCssErro('onlineYoutube')" formControlName="onlineYoutube">
+                    <select
+                      class="form-control"
+                      [ngClass]="aplicaCssErro('onlineYoutube')"
+                      formControlName="onlineYoutube"
+                    >
                       <option value="true">Online</option>
                       <option value="false">Offline</option>
                     </select>
                   </div>
                   <div class="form-group col-12">
-                    <label for="destaqueSite">Destaque</label>
-                    <select class="form-control" [ngClass]="aplicaCssErro('destaqueSite')" formControlName="destaqueSite"  >
-                      <option [value]="true">Sim</option>
-                      <option [value]="false">Não</option>
-                    </select>
+                    <label for="destaqueSite">Destaque: &nbsp;</label>
+                    <label class="switch">
+                      <input
+                        class="form-check-input"
+                        type="checkbox"
+                        formControlName="destaqueSite"
+                      />
+                      <span class="slider round"></span>
+                    </label>
                   </div>
                 </div>
               </div>
@@ -125,19 +271,35 @@
                 <fieldset class="form-group">
                   <label>Imagem do Leilão</label>
                   <div class="custom-file fileInputProfileWrap">
-                    <input type="file" (change)="fileChangeEvent($event)" class="fileInputProfile" #inputFile accept="image/*">
+                    <input
+                      type="file"
+                      (change)="fileChangeEvent($event)"
+                      class="fileInputProfile"
+                      #inputFile
+                      accept="image/*"
+                    />
                     <div class="img-space" [ngClass]="aplicaCssErro('foto')">
                       <ng-container *ngIf="isImageSaved; else elseTemplate">
                         <img [src]="cardImageBase64" />
                       </ng-container>
                       <ng-template #elseTemplate>
-                        <img src="../../../../assets/img/logo-generica.png" class="img-responsive">
+                        <img
+                          src="../../../../assets/img/logo-generica.png"
+                          class="img-responsive"
+                        />
                       </ng-template>
                     </div>
                   </div>
                 </fieldset>
-                <a class="btn btn-danger" (click)="removeImage(inputFile)" *ngIf="isImageSaved">Remover</a>
-                <div class="alert alert-danger" *ngIf="imageError">{{imageError}}</div>
+                <a
+                  class="btn btn-danger"
+                  (click)="removeImage(inputFile)"
+                  *ngIf="isImageSaved"
+                  ><i class="fa fa-trash"></i> Remover</a
+                >
+                <div class="alert alert-danger" *ngIf="imageError">
+                  {{ imageError }}
+                </div>
               </div>
             </div>
           </div>
@@ -155,7 +317,11 @@
             <div class="row" [ngClass]="aplicaCssErro('observacao')">
               <div class="col-12">
                 <!-- <label for="editor1" >Temos e Condições de Venda </label> -->
-                <angular-editor id="editor2" formControlName="observacao" [config]="editorConfig">
+                <angular-editor
+                  id="editor2"
+                  formControlName="observacao"
+                  [config]="editorConfig"
+                >
                 </angular-editor>
               </div>
             </div>
@@ -166,73 +332,123 @@
     <div class="row">
       <div class="col-lg-12">
         <div class="card">
-          <div class="card-header d-flex align-items-center" >
-            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-calendar3" viewBox="0 0 16 16">
-              <path d="M14 0H2a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2zM1 3.857C1 3.384 1.448 3 2 3h12c.552 0 1 .384 1 .857v10.286c0 .473-.448.857-1 .857H2c-.552 0-1-.384-1-.857V3.857z"/>
-              <path d="M6.5 7a1 1 0 1 0 0-2 1 1 0 0 0 0 2zm3 0a1 1 0 1 0 0-2 1 1 0 0 0 0 2zm3 0a1 1 0 1 0 0-2 1 1 0 0 0 0 2zm-9 3a1 1 0 1 0 0-2 1 1 0 0 0 0 2zm3 0a1 1 0 1 0 0-2 1 1 0 0 0 0 2zm3 0a1 1 0 1 0 0-2 1 1 0 0 0 0 2zm3 0a1 1 0 1 0 0-2 1 1 0 0 0 0 2zm-9 3a1 1 0 1 0 0-2 1 1 0 0 0 0 2zm3 0a1 1 0 1 0 0-2 1 1 0 0 0 0 2zm3 0a1 1 0 1 0 0-2 1 1 0 0 0 0 2z"/>
+          <div class="card-header d-flex align-items-center">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="16"
+              height="16"
+              fill="currentColor"
+              class="bi bi-calendar3"
+              viewBox="0 0 16 16"
+            >
+              <path
+                d="M14 0H2a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2zM1 3.857C1 3.384 1.448 3 2 3h12c.552 0 1 .384 1 .857v10.286c0 .473-.448.857-1 .857H2c-.552 0-1-.384-1-.857V3.857z"
+              />
+              <path
+                d="M6.5 7a1 1 0 1 0 0-2 1 1 0 0 0 0 2zm3 0a1 1 0 1 0 0-2 1 1 0 0 0 0 2zm3 0a1 1 0 1 0 0-2 1 1 0 0 0 0 2zm-9 3a1 1 0 1 0 0-2 1 1 0 0 0 0 2zm3 0a1 1 0 1 0 0-2 1 1 0 0 0 0 2zm3 0a1 1 0 1 0 0-2 1 1 0 0 0 0 2zm3 0a1 1 0 1 0 0-2 1 1 0 0 0 0 2zm-9 3a1 1 0 1 0 0-2 1 1 0 0 0 0 2zm3 0a1 1 0 1 0 0-2 1 1 0 0 0 0 2zm3 0a1 1 0 1 0 0-2 1 1 0 0 0 0 2z"
+              />
             </svg>
             &nbsp;Datas Opcionais
           </div>
           <div class="card-block">
             <div class="row">
               <div class="form-group col-6">
-                <label for="dataInicioAgendamento">Data Início Agendamento</label>
-                <input type="text" class="form-control" id="dataInicioAgendamento"
+                <label for="dataInicioAgendamento"
+                  >Data Início Agendamento</label
+                >
+                <input
+                  type="text"
+                  class="form-control"
+                  id="dataInicioAgendamento"
                   formControlName="dataInicioAgendamento"
                   [bsConfig]="{ dateInputFormat: 'DD/MM/YYYY' }"
                   bsDatepicker
-                  (bsValueChange)="onValueChange($event, 'dataInicioAgendamento')">
+                  (bsValueChange)="
+                    onValueChange($event, 'dataInicioAgendamento')
+                  "
+                />
               </div>
               <div class="form-group col-6">
                 <label for="dataFimAgendamento">Data Fim Agendamento</label>
-                <input type="text" class="form-control" id="dataFimAgendamento"
+                <input
+                  type="text"
+                  class="form-control"
+                  id="dataFimAgendamento"
                   formControlName="dataFimAgendamento"
                   [bsConfig]="{ dateInputFormat: 'DD/MM/YYYY' }"
                   bsDatepicker
-                  (bsValueChange)="onValueChange($event, 'dataFimAgendamento')">
+                  (bsValueChange)="onValueChange($event, 'dataFimAgendamento')"
+                />
               </div>
             </div>
-            <div class="row ">
+            <div class="row">
               <div class="form-group col-6">
                 <label for="dataEdital">Data Edital</label>
-                <input type="text" class="form-control" id="dataEdital"
+                <input
+                  type="text"
+                  class="form-control"
+                  id="dataEdital"
                   formControlName="dataEdital"
                   [bsConfig]="{ dateInputFormat: 'DD/MM/YYYY' }"
                   bsDatepicker
-                  (bsValueChange)="onValueChange($event, 'dataEdital')">
+                  (bsValueChange)="onValueChange($event, 'dataEdital')"
+                />
               </div>
               <div class="form-group col-6">
                 <label for="dataNotificacao">Data Notificação</label>
-                <input type="text" class="form-control" id="dataNotificacao"
+                <input
+                  type="text"
+                  class="form-control"
+                  id="dataNotificacao"
                   formControlName="dataNotificacao"
                   [bsConfig]="{ dateInputFormat: 'DD/MM/YYYY' }"
                   bsDatepicker
-                  (bsValueChange)="onValueChange($event, 'dataNotificacao')">
+                  (bsValueChange)="onValueChange($event, 'dataNotificacao')"
+                />
               </div>
             </div>
             <div class="row">
               <div class="form-group col-6">
                 <label for="dataInicioLiberacao">Data Início Liberação</label>
-                <input type="text" class="form-control" id="dataInicioLiberacao" placeholder=""
+                <input
+                  type="text"
+                  class="form-control"
+                  id="dataInicioLiberacao"
+                  placeholder=""
                   formControlName="dataInicioLiberacao"
                   [bsConfig]="{ dateInputFormat: 'DD/MM/YYYY' }"
                   bsDatepicker
-                  (bsValueChange)="onValueChange($event, 'dataInicioLiberacao')">
+                  (bsValueChange)="onValueChange($event, 'dataInicioLiberacao')"
+                />
               </div>
               <div class="form-group col-6">
                 <label for="dataFimLiberacao">Data Fim Liberação</label>
-                <input type="text" class="form-control" id="dataFimLiberacao"
+                <input
+                  type="text"
+                  class="form-control"
+                  id="dataFimLiberacao"
                   formControlName="dataFimLiberacao"
                   [bsConfig]="{ dateInputFormat: 'DD/MM/YYYY' }"
                   bsDatepicker
-                  (bsValueChange)="onValueChange($event, 'dataFimLiberacao')">
+                  (bsValueChange)="onValueChange($event, 'dataFimLiberacao')"
+                />
               </div>
             </div>
             <div class="row">
               <div class="form-group col-12">
-                <label for="emailsNotificacao">Emails para notificações <small class="text-muted">(separe os emails por ponto e virgula)</small></label>
-                <input type="text" class="form-control" id="emailsNotificacao" placeholder="Emails"
-                  formControlName="emailsNotificacao">
+                <label for="emailsNotificacao"
+                  >Emails para notificações
+                  <small class="text-muted"
+                    >(separe os emails por ponto e virgula)</small
+                  ></label
+                >
+                <input
+                  type="text"
+                  class="form-control"
+                  id="emailsNotificacao"
+                  placeholder="Emails"
+                  formControlName="emailsNotificacao"
+                />
               </div>
             </div>
           </div>
@@ -243,26 +459,42 @@
       <div class="col-lg-12">
         <div class="card">
           <div class="card-header d-flex align-items-center">
-            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-bank" viewBox="0 0 16 16">
-              <path d="M8 .95 14.61 4h.89a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-.5.5H15v7a.5.5 0 0 1 .485.379l.5 2A.5.5 0 0 1 15.5 17H.5a.5.5 0 0 1-.485-.621l.5-2A.5.5 0 0 1 1 14V7H.5a.5.5 0 0 1-.5-.5v-2A.5.5 0 0 1 .5 4h.89L8 .95zM3.776 4h8.447L8 2.05 3.776 4zM2 7v7h1V7H2zm2 0v7h2.5V7H4zm3.5 0v7h1V7h-1zm2 0v7H12V7H9.5zM13 7v7h1V7h-1zm2-1V5H1v1h14zm-.39 9H1.39l-.25 1h13.72l-.25-1z"/>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="16"
+              height="16"
+              fill="currentColor"
+              class="bi bi-bank"
+              viewBox="0 0 16 16"
+            >
+              <path
+                d="M8 .95 14.61 4h.89a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-.5.5H15v7a.5.5 0 0 1 .485.379l.5 2A.5.5 0 0 1 15.5 17H.5a.5.5 0 0 1-.485-.621l.5-2A.5.5 0 0 1 1 14V7H.5a.5.5 0 0 1-.5-.5v-2A.5.5 0 0 1 .5 4h.89L8 .95zM3.776 4h8.447L8 2.05 3.776 4zM2 7v7h1V7H2zm2 0v7h2.5V7H4zm3.5 0v7h1V7h-1zm2 0v7H12V7H9.5zM13 7v7h1V7h-1zm2-1V5H1v1h14zm-.39 9H1.39l-.25 1h13.72l-.25-1z"
+              />
             </svg>
             &nbsp;Diário Oficial
           </div>
           <div class="card-block">
             <div class="row">
-
               <div class="form-group col-6">
                 <label for="dataDiarioOficial">Data Diário Oficial</label>
-                <input type="text" class="form-control" id="dataDiarioOficial"
-                formControlName="dataDiarioOficial"
-                [bsConfig]="{ dateInputFormat: 'DD/MM/YYYY' }"
-                bsDatepicker
-                (bsValueChange)="onValueChange($event, 'dataDiarioOficial')">
+                <input
+                  type="text"
+                  class="form-control"
+                  id="dataDiarioOficial"
+                  formControlName="dataDiarioOficial"
+                  [bsConfig]="{ dateInputFormat: 'DD/MM/YYYY' }"
+                  bsDatepicker
+                  (bsValueChange)="onValueChange($event, 'dataDiarioOficial')"
+                />
               </div>
               <div class="form-group col-6">
                 <label for="numeroDiarioOficial">Número Diario Oficial</label>
-                <input type="number" class="form-control" id="numeroDiarioOficial"
-                  formControlName="numeroDiarioOficial">
+                <input
+                  type="number"
+                  class="form-control"
+                  id="numeroDiarioOficial"
+                  formControlName="numeroDiarioOficial"
+                />
               </div>
             </div>
           </div>
@@ -297,17 +529,42 @@
       <div class="col-lg-12">
         <div class="card">
           <div class="card-header new-campo">
-            <div class="cabecalho d-flex align-items-center"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-file-earmark-text" viewBox="0 0 16 16">
-              <path d="M5.5 7a.5.5 0 0 0 0 1h5a.5.5 0 0 0 0-1h-5zM5 9.5a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1-.5-.5zm0 2a.5.5 0 0 1 .5-.5h2a.5.5 0 0 1 0 1h-2a.5.5 0 0 1-.5-.5z"/>
-              <path d="M9.5 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V4.5L9.5 0zm0 1v2A1.5 1.5 0 0 0 11 4.5h2V14a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h5.5z"/>
-            </svg>
-            &nbsp;Anexos
+            <div class="cabecalho d-flex align-items-center">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="16"
+                height="16"
+                fill="currentColor"
+                class="bi bi-file-earmark-text"
+                viewBox="0 0 16 16"
+              >
+                <path
+                  d="M5.5 7a.5.5 0 0 0 0 1h5a.5.5 0 0 0 0-1h-5zM5 9.5a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1-.5-.5zm0 2a.5.5 0 0 1 .5-.5h2a.5.5 0 0 1 0 1h-2a.5.5 0 0 1-.5-.5z"
+                />
+                <path
+                  d="M9.5 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V4.5L9.5 0zm0 1v2A1.5 1.5 0 0 0 11 4.5h2V14a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h5.5z"
+                />
+              </svg>
+              &nbsp;Anexos
+            </div>
+            <button
+              type="button"
+              class="btn btn-success btn-sm"
+              (click)="alterarAnexo(-1)"
+            >
+              <i class="fa fa-plus-circle"></i>&nbsp;Novo Anexo
+            </button>
+            <input
+              type="file"
+              class="inputAnexos"
+              #inputAnexos
+              (change)="anexoChangeEvent($event.target.files)"
+            />
           </div>
-            <button type="button" class="btn btn-success btn-sm" (click)="alterarAnexo(-1)">
-              <i class="fa fa-plus-circle"></i>&nbsp;Novo Anexo</button>
-              <input type="file" class="inputAnexos" #inputAnexos (change)="anexoChangeEvent($event.target.files)">
-          </div>
-          <div class="card-block" *ngIf="this.formulario.value.anexos.length > 0">
+          <div
+            class="card-block"
+            *ngIf="this.formulario.value.anexos.length > 0"
+          >
             <table class="table">
               <thead>
                 <tr>
@@ -318,17 +575,41 @@
                 </tr>
               </thead>
               <tbody>
-                <tr *ngFor="let item of filterList('anexos'); let i = index" [formGroupName]="i">
-                  <td><a [href]="item.value.arquivo.url" target="_blank">{{item.value.arquivo.nome}}</a></td>
+                <tr
+                  *ngFor="let item of filterList('anexos'); let i = index"
+                  [formGroupName]="i"
+                >
                   <td>
-                    <input type="text" formControlName="nome" class="form-control" [value]="item.value.nome"
-                      placeholder="Descricao" *ngIf="item.value.acao === 'I'" >
-                    <span *ngIf="item.value.acao === ''">{{item.value.nome}}</span>
+                    <a [href]="item.value.arquivo.url" target="_blank">{{
+                      item.value.arquivo.nome
+                    }}</a>
                   </td>
-                  <td>{{item.value.arquivo.dataCadastro | amFromUtc | amLocal | amDateFormat: 'DD/MM/YYYY HH:mm'}}</td>
+                  <td>
+                    <input
+                      type="text"
+                      formControlName="nome"
+                      class="form-control"
+                      [value]="item.value.nome"
+                      placeholder="Descricao"
+                      *ngIf="item.value.acao === 'I'"
+                    />
+                    <span *ngIf="item.value.acao === ''">{{
+                      item.value.nome
+                    }}</span>
+                  </td>
+                  <td>
+                    {{
+                      item.value.arquivo.dataCadastro
+                        | amFromUtc
+                        | amLocal
+                        | amDateFormat : "DD/MM/YYYY HH:mm"
+                    }}
+                  </td>
                   <td class="text-center">
                     <!-- <label (click)="alterarAnexo(i)" class="btn btn-black">Alterar</label> -->
-                    <label class="btn btn-danger m-0" (click)="deleteAnexo(i)">Remover</label>
+                    <label class="btn btn-danger m-0" (click)="deleteAnexo(i)"
+                      ><i class="fa fa-trash"></i> Remover</label
+                    >
                   </td>
                 </tr>
               </tbody>
@@ -337,6 +618,199 @@
         </div>
       </div>
     </div>
+
+    <div class="row" *ngIf="formulario.get('tipoLeilaoId').value == 1">
+      <div class="col-lg-12">
+        <div class="card">
+          <div class="card-header new-campo">
+            <div class="cabecalho d-flex align-items-center">
+              <i class="fas fa-gavel"></i>&nbsp;Leilão Judicial
+            </div>
+
+            <div class="form-check">
+              <label class="switch">
+                <input
+                  class="form-check-input"
+                  type="checkbox"
+                  formControlName="lanceParcelado"
+                />
+                <span class="slider round"></span>
+              </label>
+              Lance Parcelado
+            </div>
+          </div>
+          <div class="card-block">
+            <div class="row" formArrayName="pracas">
+              <div class="col-lg-12">
+                <div class="card">
+                  <div class="card-header new-campo">
+                    <div class="cabecalho d-flex align-items-center">
+                      Praças
+                    </div>
+                    <button
+                      type="button"
+                      class="btn btn-success btn-sm"
+                      (click)="adicionarPraca()"
+                    >
+                      <i class="fa fa-plus-circle"></i>&nbsp;Nova Praça
+                    </button>
+                  </div>
+                  <div
+                    class="card-block"
+                    *ngIf="this.formulario.value.pracas.length > 0"
+                  >
+                    <table class="table">
+                      <thead>
+                        <tr>
+                          <th width="40%">Praça</th>
+                          <th width="40%">Data do Leilão</th>
+                          <th width="20%"></th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr
+                          *ngFor="
+                            let item of this.formulario.get('pracas').controls;
+                            let i = index
+                          "
+                          [formGroupName]="i"
+                        >
+                          <td>{{ i + 1 }}ª Praça</td>
+                          <td>
+                            <input
+                              type="text"
+                              class="form-control"
+                              id="dataExecucao"
+                              formControlName="dataExecucao"
+                              placeholder="DD/MM/AAAA hh:mm"
+                              [bsConfig]="{
+                                dateInputFormat: 'DD/MM/YYYY HH:mm'
+                              }"
+                              bsDatepicker
+                              (bsValueChange)="
+                                onValueChangePraca($event, 'dataExecucao', i)
+                              "
+                            />
+                          </td>
+                          <td class="text-center">
+                            <label
+                              class="btn btn-danger m-0"
+                              (click)="deletePraca(i)"
+                              ><i class="fa fa-trash"></i> Remover</label
+                            >
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div
+              class="row"
+              *ngIf="
+                formulario.get('lanceParcelado').value &&
+                formulario.get('configuracaoParcela')
+              "
+            >
+              <div class="col-lg-12">
+                <div formGroupName="configuracaoParcela" class="card">
+                  <div class="card-header new-campo">
+                    <div class="cabecalho d-flex align-items-center">
+                      Lance Parcelado
+                    </div>
+                  </div>
+                  <div class="card-block">
+                    <div class="row">
+                      <div class="form-group col-4">
+                        <label for="minimoEntrada"
+                          >Percentual Mínimo da Entrada
+                        </label>
+                        <input
+                          [ngClass]="
+                            aplicaCssErroJudicial(
+                              formulario.get('configuracaoParcela'),
+                              'minimoEntrada'
+                            )
+                          "
+                          currencyMask
+                          [options]="{
+                            prefix: '',
+                            suffix: ' %',
+                            thousands: '.',
+                            decimal: ',',
+                            precision: '2'
+                          }"
+                          type="text"
+                          class="form-control"
+                          id="minimoEntrada"
+                          formControlName="minimoEntrada"
+                        />
+                      </div>
+                      <div class="form-group col-4">
+                        <label for="maximoParcelas">Máximo de Parcelas </label>
+                        <input
+                          [ngClass]="
+                            aplicaCssErroJudicial(
+                              formulario.get('configuracaoParcela'),
+                              'maximoParcelas'
+                            )
+                          "
+                          type="number"
+                          class="form-control"
+                          id="maximoParcelas"
+                          formControlName="maximoParcelas"
+                        />
+                      </div>
+                      <div class="form-group col-4">
+                        <label for="regraHabilitacao">Indice de Correção</label>
+                        <ng-select
+                          [items]="indicesCorrecao"
+                          formControlName="indiceCorrecaoId"
+                          [multiple]="true"
+                          bindLabel="descricao"
+                          bindValue="indiceCorrecaoId"
+                          [ngClass]="
+                            aplicaCssErroJudicial(
+                              formulario.get('configuracaoParcela'),
+                              'indiceCorrecaoId'
+                            )
+                          "
+                        >
+                          <ng-template
+                            ng-option-tmp
+                            let-item="item"
+                            let-index="index"
+                            let-search="searchTerm"
+                          >
+                            <div
+                              style="margin: 10px 0; white-space: normal"
+                              class="card"
+                            >
+                              <div class="card-body">
+                                <h5
+                                  class="card-title"
+                                  [ngOptionHighlight]="search"
+                                >
+                                  {{ item.descricao }}
+                                </h5>
+                                <p>{{ item.indiceCorrecao }}%</p>
+                              </div>
+                            </div>
+                          </ng-template>
+                        </ng-select>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
     <div class="row">
       <div class="col-lg-12">
         <div class="card">
@@ -348,15 +822,26 @@
             <div class="row" [ngClass]="aplicaCssErro('termoCondicaoVenda')">
               <div class="col-12">
                 <!-- <label for="editor1" >Temos e Condições de Venda </label> -->
-                <angular-editor id="editor1" formControlName="termoCondicaoVenda" [config]="editorConfig">
+                <angular-editor
+                  id="editor1"
+                  formControlName="termoCondicaoVenda"
+                  [config]="editorConfig"
+                >
                 </angular-editor>
               </div>
             </div>
           </div>
           <div class="card-footer">
-            <button type="submit" class="btn btn-primary saveCancel"><i class="fa fa-save"></i> Salvar</button>
-            <button type="reset" class="btn btn-danger" [routerLink]="['/leilao']"><i class="fa fa-undo"></i>
-              Cancelar</button>
+            <button type="submit" class="btn btn-primary saveCancel">
+              <i class="fa fa-save"></i> Salvar
+            </button>
+            <button
+              type="reset"
+              class="btn btn-danger"
+              [routerLink]="['/leilao']"
+            >
+              <i class="fa fa-undo"></i> Cancelar
+            </button>
           </div>
         </div>
       </div>
