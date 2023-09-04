@@ -1,65 +1,94 @@
-<form [formGroup]="formulario" (ngSubmit)="onSubmit()" appFocus *ngIf="formulario">
-  <div class="animated fadeIn" >
+<form
+  [formGroup]="formulario"
+  (ngSubmit)="onSubmit()"
+  appFocus
+  *ngIf="formulario"
+>
+  <div class="animated fadeIn">
     <div class="row">
       <div class="col-lg-12">
         <div class="card">
           <div class="card-header new-campo">
-
             <div class="cabecalho d-flex align-items-center">
               <i class="fa fa-images" aria-hidden="true"></i>
               &nbsp;Banner
-          </div>
+            </div>
             <!-- <button type="button" class="btn btn-success btn-sm" >
               <i class="fa fa-plus-circle"></i>&nbsp;  Novo Banner</button> -->
-              <input type="file"  multiple  #inputBanners (change)="fileChangeEvent($event)" accept="image/*">
+            <input
+              type="file"
+              multiple
+              #inputBanners
+              (change)="fileChangeEvent($event)"
+              accept="image/*"
+            />
           </div>
-          <div class="card-block" >
+          <div class="card-block">
             <table class="table">
               <thead>
                 <tr>
-                  <th width="25%">Imagem</th>
+                  <th width="15%">Imagem</th>
                   <th width="35%">Arquivo</th>
-                  <th width="25%">Link</th>
+                  <th width="15%">Link</th>
+                  <th width="20%" *ngIf="userIsAdmin">Empresa</th>
                   <th width="15%">Ativo</th>
                 </tr>
               </thead>
-              <tbody >
-                <tr >
-
-                  <td class="row-img cursor" (click)="alterarFoto(-1)"><img [src]="formulario.value.arquivo.url " class="img-table"></td>
-
-                  <td><a [href]="formulario.value.arquivo.url" target="_blank">{{formulario.value.arquivo.nome}}</a></td>
-
-                  <td>
-                    <input type="text"  class="form-control"  formControlName="linkUrl" [value]="formulario.value.linkUrl"
-                      placeholder="Link" >
-                    <span></span>
+              <tbody>
+                <tr>
+                  <td class="row-img cursor" (click)="alterarFoto(-1)">
+                    <img
+                      [src]="formulario.value.arquivo.url"
+                      class="img-table"
+                    />
                   </td>
-
+                  <td>
+                    <a [href]="formulario.value.arquivo.url" target="_blank">{{
+                      formulario.value.arquivo.nome
+                    }}</a>
+                  </td>
+                  <td>
+                    <input
+                      type="text"
+                      class="form-control"
+                      formControlName="linkUrl"
+                      [value]="formulario.value.linkUrl"
+                      placeholder="Link"
+                    />
+                  </td>
+                  <td *ngIf="userIsAdmin">
+                    <select class="form-control" formControlName="empresaId">
+                      <option [value]="null"></option>
+                      <option
+                        [value]="emp.empresaId"
+                        *ngFor="let emp of empresas"
+                      >
+                        {{ emp.nomeFantasia }}
+                      </option>
+                    </select>
+                  </td>
                   <td class="text-center">
-                    <select class="form-control"  formControlName="ativo"  >
+                    <select class="form-control" formControlName="ativo">
                       <option [value]="true">Sim</option>
                       <option [value]="false">Não</option>
                     </select>
                   </td>
-
                 </tr>
-
               </tbody>
-
             </table>
-
           </div>
-          <!-- <div class="card-block"  >
-            <alert type="danger">
-              <strong>Campo Obrigatório</strong> É necessário no mínimo um banner
-            </alert>
-          </div> -->
           <div class="card-footer">
             <!-- <button  class="btn btn-primary saveCancel" (click)="console()"><i class="fa fa-save"></i> Console</button> -->
-            <button type="submit" class="btn btn-primary saveCancel"><i class="fa fa-save"></i> Salvar</button>
-            <button type="reset" class="btn btn-danger" [routerLink]="['/banner']"><i class="fa fa-undo"></i>
-              Cancelar</button>
+            <button type="submit" class="btn btn-primary saveCancel">
+              <i class="fa fa-save"></i> Salvar
+            </button>
+            <button
+              type="reset"
+              class="btn btn-danger"
+              [routerLink]="['/banner']"
+            >
+              <i class="fa fa-undo"></i> Cancelar
+            </button>
           </div>
         </div>
       </div>

@@ -1,6 +1,5 @@
 import { Moment } from 'moment';
 
-
 export class Recolhimento {
   id: number;
   id_dispositivo: number;
@@ -35,7 +34,6 @@ export class Alerta {
   tipoAlerta: TipoAlerta;
 }
 
-
 export class Dispositivo {
   id: number;
   imei: string;
@@ -50,7 +48,7 @@ export class Dispositivo {
 }
 
 export class GRV {
-  id_grv: number
+  id_grv: number;
   id_cliente: number;
   placa: string;
   chassi: string;
@@ -93,6 +91,7 @@ export class User {
   password: string;
   token: string;
   permission: [];
+  roles: [];
 }
 
 export class Acesso {
@@ -168,12 +167,12 @@ export class DashboardContadorEstoque {
 
 export class DashboardLineChart {
   label: string;
-  data: string[]
+  data: string[];
   hidden: boolean;
 }
 
 export class DashboardDoughnutChart {
-  itens: DashboardDoughnutChartItem[]
+  itens: DashboardDoughnutChartItem[];
 }
 
 export class DashboardDoughnutChartItem {
@@ -214,7 +213,6 @@ export class DispositivoRemessa {
   remessaItens: DispositivoRemessaItem[];
 }
 
-
 export class DispositivoRemessaItem {
   id: number;
   id_remessa: number;
@@ -252,7 +250,7 @@ export class Agente {
   flag_ativo = true;
 
   Orgao: Orgao;
-  Autoridade: Autoridade
+  Autoridade: Autoridade;
   Divisao: Divisao;
 }
 
@@ -320,7 +318,6 @@ export class OrdemServico {
   itens: OrdemServicoItem[];
 }
 
-
 export class OrdemServicoItem {
   id: number;
   id_ordem_servico: number;
@@ -373,7 +370,6 @@ export class DashboardFaturamentoMetas {
   fat_2ano_anterior: number;
 }
 
-
 export interface Foto {
   arquivoId: number;
   nome: string;
@@ -403,15 +399,15 @@ export interface Categoria {
 
 export class foto {
   arquivo: {
-    acesso: any
-    base64: any
-    nome: string
-    tamanho: any
-    tipo: string
-    url: string
-  }
+    acesso: any;
+    base64: any;
+    nome: string;
+    tamanho: any;
+    tipo: string;
+    url: string;
+  };
   tipoFoto: {
     descricao: string;
     visivelSite: boolean;
-  }
+  };
 }

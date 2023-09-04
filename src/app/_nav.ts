@@ -82,11 +82,11 @@ export const navigation = [
   },
 
   {
-    name: "Gerencial",
-    url: "/gerencial",
-    icon: "fa fa-chart-line",
-    source: "GERENCIAL",
-    grupo: "RELATORIOS",
+    name: 'Gerencial',
+    url: '/gerencial',
+    icon: 'fa fa-chart-line',
+    source: 'GERENCIAL',
+    grupo: 'RELATORIOS',
   },
 
   {
@@ -173,14 +173,14 @@ export const navigation = [
     name: 'Banner',
     url: '/banner',
     icon: 'fa fa-images',
-    source: 'GERENCIADOR_SITE',
+    source: 'BANNER',
     grupo: 'GERENCIADOR SITE',
   },
   {
     name: 'Página Estática',
     url: '/paginaEstatica',
     icon: 'fa fa-window-maximize',
-    source: 'GERENCIADOR_SITE',
+    source: 'PAGINA_ESTATICA',
     grupo: 'GERENCIADOR SITE',
   },
   {
@@ -241,14 +241,14 @@ export const navigation = [
     name: 'Tipo de Documento',
     url: '/tipodocumento',
     icon: 'fa fa-file',
-    source: 'GERENCIADOR_DOC',
+    source: 'TIPO_DOC',
     grupo: 'CADASTROS',
   },
   {
     name: 'Template Documento',
     url: '/documentotemplate',
     icon: 'fa fa-code',
-    source: 'GERENCIADOR_DOC',
+    source: 'TEMPLATE_DOC',
     grupo: 'CADASTROS',
   },
 ];
