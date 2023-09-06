@@ -770,7 +770,7 @@ export const routes: Routes = [
         component: BannerComponent,
         data: {
           title: 'Banner',
-          source: 'GERENCIADOR_SITE',
+          source: 'BANNER',
         },
         canActivate: [SourceGuard],
       },
@@ -779,7 +779,7 @@ export const routes: Routes = [
         component: CreateBannerComponent,
         data: {
           title: 'Novo Banner',
-          source: 'GERENCIADOR_SITE',
+          source: 'BANNER',
         },
         canActivate: [SourceGuard],
       },
@@ -788,7 +788,7 @@ export const routes: Routes = [
         component: EditBannerComponent,
         data: {
           title: 'Editar Banner',
-          source: 'GERENCIADOR_SITE',
+          source: 'BANNER',
         },
         canActivate: [SourceGuard],
       },
@@ -797,7 +797,7 @@ export const routes: Routes = [
         component: TipoDocumentoComponent,
         data: {
           title: 'Tipo de Documento',
-          source: 'GERENCIADOR_DOC',
+          source: 'TIPO_DOC',
         },
         canActivate: [SourceGuard],
       },
@@ -806,7 +806,7 @@ export const routes: Routes = [
         component: CreateTipodocumentoComponent,
         data: {
           title: 'Novo Tipo de Documento',
-          source: 'GERENCIADOR_DOC',
+          source: 'TIPO_DOC',
         },
         canActivate: [SourceGuard],
       },
@@ -815,7 +815,7 @@ export const routes: Routes = [
         component: EditTipodocumentoComponent,
         data: {
           title: 'Editar Tipo de Documento',
-          source: 'GERENCIADOR_DOC',
+          source: 'TIPO_DOC',
         },
         canActivate: [SourceGuard],
       },
@@ -824,7 +824,7 @@ export const routes: Routes = [
         component: DocumentoTemplateComponent,
         data: {
           title: 'Template de Documento',
-          source: 'GERENCIADOR_DOC',
+          source: 'TEMPLATE_DOC',
         },
         canActivate: [SourceGuard],
       },
@@ -833,7 +833,7 @@ export const routes: Routes = [
         component: CreateDocumentoTemplateComponent,
         data: {
           title: 'Novo Template de Documento',
-          source: 'GERENCIADOR_DOC',
+          source: 'TEMPLATE_DOC',
         },
         canActivate: [SourceGuard],
       },
@@ -842,7 +842,7 @@ export const routes: Routes = [
         component: EditDocumentoTemplateComponent,
         data: {
           title: 'Editar Template de Documento',
-          source: 'GERENCIADOR_DOC',
+          source: 'TEMPLATE_DOC',
         },
         canActivate: [SourceGuard],
       },

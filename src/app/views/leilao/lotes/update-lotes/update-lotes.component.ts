@@ -468,7 +468,7 @@ export class UpdateLotesComponent implements OnInit {
       // faixasIncremento: this.formBuilder.array(dados.faixasIncremento ? dados.faixasIncremento.map(x => this.formBuilder.group({ ...x })) : []),
     });
 
-    if (dados.loteJudicial) {
+    if (dados.judicial) {
       this.formulario.get('valorLanceInicial').disable();
       this.formulario.get('valorLanceInicial').setValidators(null);
       this.formulario.get('valorLanceInicial').updateValueAndValidity();

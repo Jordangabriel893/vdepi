@@ -1,13 +1,12 @@
-.new-campo{
+.new-campo {
   display: flex;
   justify-content: space-between;
 }
-.campo{
+.campo {
   display: flex;
   flex-wrap: wrap;
-
 }
-.remover{
+.remover {
   display: flex;
   align-items: flex-end;
 }
@@ -16,10 +15,10 @@
   border: solid 1px #e0e0e0;
   display: inline-block;
 }
-.row-img{
-  width: 25%;
-  .img-table{
-    width: 40%;
+.row-img {
+  width: 15%;
+  .img-table {
+    width: 100%;
   }
 }
 
@@ -30,7 +29,7 @@
   height: auto;
   width: 100%;
   padding: 10px;
-  min-height:175px;
+  min-height: 175px;
 }
 
 .img-space img {
@@ -57,60 +56,57 @@
 input[type="file"] {
   display: none;
 }
-.labelArquivo{
+.labelArquivo {
   padding: 10px;
   background-color: #333;
   width: 50%;
-  color: #FFF;
+  color: #fff;
   text-transform: uppercase;
   text-align: center;
   margin-top: 10px;
   cursor: pointer;
-  border-radius:5px;
+  border-radius: 5px;
 }
-.flex{
+.flex {
   display: flex;
-  align-items:center;
+  align-items: center;
 }
-.foto-buttons{
+.foto-buttons {
   display: flex;
-  align-items:center;
+  align-items: center;
   justify-content: space-between;
-
 }
-.deletarFoto{
+.deletarFoto {
   margin-left: 10px;
   width: 50%;
   height: 2.9em;
 }
 
-
-.labelRemove{
-padding: 10px;
-color: #FFF;
-width: 50%;
-text-transform: uppercase;
-text-align: center;
-margin-top: 10px;
-cursor: pointer;
-border-radius:5px;
-margin-left: 10px;
+.labelRemove {
+  padding: 10px;
+  color: #fff;
+  width: 50%;
+  text-transform: uppercase;
+  text-align: center;
+  margin-top: 10px;
+  cursor: pointer;
+  border-radius: 5px;
+  margin-left: 10px;
 }
 
 .btn-black {
-background-color: #333;
-color: #fff
+  background-color: #333;
+  color: #fff;
 }
 
-.btn-primary{
+.btn-primary {
   height: 4.5vh;
 }
 
-
-.saveCancel{
+.saveCancel {
   margin-right: 1em;
   height: auto;
 }
-.has-error{
+.has-error {
   border: 1px solid red;
 }

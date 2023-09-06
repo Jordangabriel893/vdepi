@@ -35,9 +35,10 @@
             <table class="table">
               <thead>
                 <tr>
-                  <th width="25%">Imagem</th>
-                  <th width="35%">Arquivo</th>
+                  <th width="15%">Imagem</th>
+                  <th width="25%">Arquivo</th>
                   <th width="25%">Link</th>
+                  <th width="20%" *ngIf="userIsAdmin">Empresa</th>
                   <th width="15%"></th>
                 </tr>
               </thead>
@@ -65,6 +66,18 @@
                       placeholder="Link"
                     />
                     <span *ngIf="item.value.acao === ''"></span>
+                  </td>
+
+                  <td *ngIf="userIsAdmin">
+                    <select class="form-control" formControlName="empresaId">
+                      <option [value]="null"></option>
+                      <option
+                        [value]="emp.empresaId"
+                        *ngFor="let emp of empresas"
+                      >
+                        {{ emp.nomeFantasia }}
+                      </option>
+                    </select>
                   </td>
 
                   <td class="text-center">

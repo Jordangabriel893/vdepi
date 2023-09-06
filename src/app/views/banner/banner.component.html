@@ -1,5 +1,4 @@
 <div class="animated fadeIn">
-
   <div class="row">
     <div class="col-lg-12">
       <div class="card">
@@ -8,54 +7,90 @@
           &nbsp;Banner
         </div>
         <div class="card-block">
-          <button type="button" class="btn btn-success" [routerLink]="['/create-banner']"><i class="fa fa-plus-circle"></i>&nbsp; Novo Banner</button>
-            <div class="table-responsive mt-4">
-              <table class="table table-striped" [mfData]="banners" #mftipoMeios="mfDataTable" [mfRowsOnPage]="100">
-                <thead>
-                  <tr>
-                    <th>
-                      <mfDefaultSorter by="bannerHomerId">Id</mfDefaultSorter>
-                    </th>
-                    <th>
-                      <mfDefaultSorter by="arquivo.url">Banner</mfDefaultSorter>
-                    </th>
-                    <th>
-                      <mfDefaultSorter by="dataCadastro">Data Cadastro</mfDefaultSorter>
-                    </th>
-                    <th>
-                      <mfDefaultSorter by="ativo">Ativo</mfDefaultSorter>
-                    </th>
-                    <th class="text-center" >
-                      Editar
-                    </th>
-
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr *ngFor="let item of mftipoMeios.data">
-                    <td>{{item.bannerHomerId}}</td>
-                    <td class="row-img"><img [src]="item.arquivo.url " class="img-table"></td>
-                    <td>{{item.dataCadastro | date : 'dd/MM/yyyy'}}</td>
-                    <td>{{item.ativo ? "Sim" : "Não"}}</td>
-                    <td class="text-center" nowrap>
-                      <button type="button" class="btn btn-primary" (click)="edit(item.bannerHomerId)"><i class="fa fa-edit"></i>&nbsp;Editar</button>
-                    </td>
-                  </tr>
-                  <tr *ngIf="loading">
-                    <td class="text-center text-muted" colspan="9">
-                      <h5><i class="fa fa-spin fa-spinner"></i>&nbsp;Carregando...</h5>
-                    </td>
-                  </tr>
-                </tbody>
-                <tfoot>
-                  <tr>
-                    <td colspan="9">
-                      <mfBootstrapPaginator [rowsOnPageSet]="[5,10,25]"></mfBootstrapPaginator>
-                    </td>
-                  </tr>
-                </tfoot>
-              </table>
-            </div>
+          <button
+            type="button"
+            class="btn btn-success"
+            [routerLink]="['/create-banner']"
+          >
+            <i class="fa fa-plus-circle"></i>&nbsp; Novo Banner
+          </button>
+          <div class="table-responsive mt-4">
+            <table
+              class="table table-striped"
+              [mfData]="banners"
+              #mftipoMeios="mfDataTable"
+              [mfRowsOnPage]="100"
+            >
+              <thead>
+                <tr>
+                  <th>
+                    <mfDefaultSorter by="id">Id</mfDefaultSorter>
+                  </th>
+                  <th>
+                    <mfDefaultSorter by="linkUrl">Banner</mfDefaultSorter>
+                  </th>
+                  <th>
+                    <mfDefaultSorter by="dataCadastro"
+                      >Data Cadastro</mfDefaultSorter
+                    >
+                  </th>
+                  <th *ngIf="userIsAdmin">
+                    <mfDefaultSorter by="empresa">Empresa</mfDefaultSorter>
+                  </th>
+                  <th class="text-center">Ações</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let item of mftipoMeios.data">
+                  <td>{{ item.id }}</td>
+                  <td class="row-img">
+                    <img [src]="item.linkUrl" class="img-table" />
+                  </td>
+                  <td>
+                    {{
+                      item.dataCadastro
+                        | amUtc
+                        | amLocal
+                        | amDateFormat : "DD/MM/yyyy HH:mm"
+                    }}
+                  </td>
+                  <td *ngIf="userIsAdmin">{{ item.empresa }}</td>
+                  <td class="text-center" nowrap>
+                    <button
+                      type="button"
+                      class="btn btn-primary"
+                      (click)="edit(item.id)"
+                    >
+                      <i class="fa fa-edit"></i>&nbsp;Editar</button
+                    >&nbsp;
+                    <button
+                      type="button"
+                      class="btn btn-danger"
+                      (click)="remover(item.id)"
+                    >
+                      <i class="fa fa-trash"></i>&nbsp;Remover
+                    </button>
+                  </td>
+                </tr>
+                <tr *ngIf="loading">
+                  <td class="text-center text-muted" colspan="9">
+                    <h5>
+                      <i class="fa fa-spin fa-spinner"></i>&nbsp;Carregando...
+                    </h5>
+                  </td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <td colspan="9">
+                    <mfBootstrapPaginator
+                      [rowsOnPageSet]="[5, 10, 25]"
+                    ></mfBootstrapPaginator>
+                  </td>
+                </tr>
+              </tfoot>
+            </table>
+          </div>
         </div>
       </div>
     </div>
