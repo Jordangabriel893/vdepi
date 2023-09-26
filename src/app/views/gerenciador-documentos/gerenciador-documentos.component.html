@@ -91,9 +91,10 @@
                       <mfDefaultSorter by="numeroLote">Lote</mfDefaultSorter>
                     </th>
                     <th>
-                      <mfDefaultSorter by="arrematante"
-                        >Arrematante</mfDefaultSorter
-                      >
+                      <mfDefaultSorter by="numeroDocumento">Numero Documento</mfDefaultSorter>
+                    </th>
+                    <th>
+                      <mfDefaultSorter by="arrematante">Arrematante</mfDefaultSorter>
                     </th>
                     <th>
                       <mfDefaultSorter by="tipoDocumento">Tipo</mfDefaultSorter>
@@ -113,21 +114,20 @@
                 <tbody>
                   <ng-template ngFor let-item [ngForOf]="mfLeilao.data">
                     <tr>
-                      <td>{{ item.documentoId }}</td>
                       <td>
-                        {{ item.dataCadastro | amDateFormat : "DD/MM/yyyy" }}
+                        {{item.documentoId}}
                       </td>
                       <td>
-                        <a [routerLink]="['/lotes/', item.loteId]">{{
-                          item.numeroLote
-                        }}</a>
+                        {{item.dataCadastro | amDateFormat:'DD/MM/yyyy'}}
                       </td>
+                      <td>
+                        <a [routerLink]="['/lotes/', item.loteId]">{{item.numeroLote}}</a>
+                      </td>
+                      <td>{{item.numeroDocumento}}</td>
                       <td nowrap>
-                        <a [routerLink]="['/usuarios/', item.loteId]">{{
-                          item.arrematante | uppercase
-                        }}</a>
+                        <a [routerLink]="['/usuarios/', item.loteId]">{{item.arrematante | uppercase}}</a>
                       </td>
-                      <td>{{ item.tipoDocumento }}</td>
+                      <td>{{item.tipoDocumento}}</td>
                       <td>
                         <div *ngFor="let assinante of item.assinantes">
                           <small>{{ assinante.nome | uppercase }}</small>
