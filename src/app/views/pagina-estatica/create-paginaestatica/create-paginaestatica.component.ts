@@ -8,7 +8,7 @@ import { AngularEditorConfig } from '@kolkov/angular-editor';
 @Component({
   selector: 'app-create-paginaestatica',
   templateUrl: './create-paginaestatica.component.html',
-  styleUrls: ['./create-paginaestatica.component.scss']
+  styleUrls: ['./create-paginaestatica.component.scss'],
 })
 export class CreatePaginaestaticaComponent implements OnInit {
   formulario: FormGroup;
@@ -32,7 +32,7 @@ export class CreatePaginaestaticaComponent implements OnInit {
       { class: 'arial', name: 'Arial' },
       { class: 'times-new-roman', name: 'Times New Roman' },
       { class: 'calibri', name: 'Calibri' },
-      { class: 'comic-sans-ms', name: 'Comic Sans MS' }
+      { class: 'comic-sans-ms', name: 'Comic Sans MS' },
     ],
     customClasses: [
       {
@@ -41,7 +41,7 @@ export class CreatePaginaestaticaComponent implements OnInit {
       },
       {
         name: 'redText',
-        class: 'redText'
+        class: 'redText',
       },
       {
         name: 'titleText',
@@ -63,45 +63,56 @@ export class CreatePaginaestaticaComponent implements OnInit {
       dataCriacao: [now, Validators.required],
       titulo: [null, Validators.required],
       rota: [null, Validators.required],
-
-    })
+    });
   }
 
-  ngOnInit() {
-  }
+  ngOnInit() {}
   onSubmit() {
+    this.restangular
+      .all('paginaEstatica')
+      .post(this.formulario.value)
+      .subscribe(
+        (a) => {
+          this.notifierService.notify(
+            'success',
+            'Página Estática criada com sucesso'
+          );
+          this.router.navigate(['/paginaEstatica']);
+        },
+        (error) => {
+          this.notifierService.notify(
+            'error',
+            'Erro ao criar o Página Estática!'
+          );
 
-    this.restangular.all('api/paginaEstatica').post(this.formulario.value).subscribe(a => {
-      this.notifierService.notify('success', 'Página Estática criada com sucesso');
-      this.router.navigate(['/paginaEstatica']);
-    },
-      error => {
-        this.notifierService.notify('error', 'Erro ao criar o Página Estática!');
-
-        Object.keys(this.formulario.controls).forEach((campo) => {
-          const controle = this.formulario.get(campo)
-          controle.markAsTouched()
-        })
-      });
+          Object.keys(this.formulario.controls).forEach((campo) => {
+            const controle = this.formulario.get(campo);
+            controle.markAsTouched();
+          });
+        }
+      );
   }
 
   verificaValidTouched(campo) {
-    return !this.formulario.get(campo).valid && this.formulario.get(campo).touched;
+    return (
+      !this.formulario.get(campo).valid && this.formulario.get(campo).touched
+    );
   }
 
   formatRota() {
     let titulo = this.formulario.value.titulo;
-    titulo = titulo.trim()
-    .normalize('NFD')
-    .replace(/\p{Diacritic}/gu, '')
-    .replace(/[^\w ]/g, '')
-    .replace(/\s|_|\(|\)/g, '-')
-    .toLowerCase();
-    this.formulario.get('rota').patchValue(titulo)
+    titulo = titulo
+      .trim()
+      .normalize('NFD')
+      .replace(/\p{Diacritic}/gu, '')
+      .replace(/[^\w ]/g, '')
+      .replace(/\s|_|\(|\)/g, '-')
+      .toLowerCase();
+    this.formulario.get('rota').patchValue(titulo);
   }
 
   aplicaCssErro(campo) {
-    return {'has-error': this.verificaValidTouched(campo) }
+    return { 'has-error': this.verificaValidTouched(campo) };
   }
 
   onValueChange(event, campo) {

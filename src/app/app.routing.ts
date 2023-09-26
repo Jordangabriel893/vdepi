@@ -527,7 +527,7 @@ export const routes: Routes = [
         component: PaginaEstaticaComponent,
         data: {
           title: 'Página Estática',
-          source: 'GERENCIADOR_SITE',
+          source: 'PAGINA_ESTATICA',
         },
         canActivate: [SourceGuard],
       },
@@ -536,7 +536,7 @@ export const routes: Routes = [
         component: CreatePaginaestaticaComponent,
         data: {
           title: 'Criar Página Estática',
-          source: 'GERENCIADOR_SITE',
+          source: 'PAGINA_ESTATICA',
         },
         canActivate: [SourceGuard],
       },
@@ -545,7 +545,7 @@ export const routes: Routes = [
         component: UpdatePaginaestaticaComponent,
         data: {
           title: 'Editar Página Estática',
-          source: 'GERENCIADOR_SITE',
+          source: 'PAGINA_ESTATICA',
         },
         canActivate: [SourceGuard],
       },

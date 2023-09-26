@@ -7,7 +7,7 @@ import { AngularEditorConfig } from '@kolkov/angular-editor';
 @Component({
   selector: 'app-update-paginaestatica',
   templateUrl: './update-paginaestatica.component.html',
-  styleUrls: ['./update-paginaestatica.component.scss']
+  styleUrls: ['./update-paginaestatica.component.scss'],
 })
 export class UpdatePaginaestaticaComponent implements OnInit {
   formulario: FormGroup;
@@ -32,7 +32,7 @@ export class UpdatePaginaestaticaComponent implements OnInit {
       { class: 'arial', name: 'Arial' },
       { class: 'times-new-roman', name: 'Times New Roman' },
       { class: 'calibri', name: 'Calibri' },
-      { class: 'comic-sans-ms', name: 'Comic Sans MS' }
+      { class: 'comic-sans-ms', name: 'Comic Sans MS' },
     ],
     customClasses: [
       {
@@ -41,7 +41,7 @@ export class UpdatePaginaestaticaComponent implements OnInit {
       },
       {
         name: 'redText',
-        class: 'redText'
+        class: 'redText',
       },
       {
         name: 'titleText',
@@ -55,36 +55,52 @@ export class UpdatePaginaestaticaComponent implements OnInit {
     private restangular: Restangular,
     private notifierService: NotifierService,
     private route: ActivatedRoute,
-    private router: Router,
+    private router: Router
   ) {}
 
   ngOnInit() {
-    this.id = this.route.snapshot.params['id']
-    this.restangular.all('api/PaginaEstatica/').get(this.id).subscribe(dados => {
-      this.updateForm(dados.data)
-    })
+    this.id = this.route.snapshot.params['id'];
+    this.restangular
+      .all('PaginaEstatica')
+      .get(this.id)
+      .subscribe((dados) => {
+        this.updateForm(dados.data);
+      });
   }
   onSubmit() {
     if (!this.formulario.valid) {
       Object.keys(this.formulario.controls).forEach((campo) => {
-        const controle = this.formulario.get(campo)
-        controle.markAsTouched()
-
-      })
-      this.notifierService.notify('error', 'Preencha todos os campos obrigatórios');
+        const controle = this.formulario.get(campo);
+        controle.markAsTouched();
+      });
+      this.notifierService.notify(
+        'error',
+        'Preencha todos os campos obrigatórios'
+      );
       return false;
     }
-    this.restangular.all('api/PaginaEstatica/').customPUT(this.formulario.value,  this.id ).subscribe(a => {
-      this.notifierService.notify('success', 'Página Estática editada com sucesso');
-      this.router.navigate(['/paginaEstatica']);
-    },
-      error => {
-        this.notifierService.notify('error', 'Erro ao atualizar a Página Estática!');
-        Object.keys(this.formulario.controls).forEach((campo) => {
-          const controle = this.formulario.get(campo)
-          controle.markAsTouched()
-        })
-      });
+    this.restangular
+      .all('PaginaEstatica')
+      .customPUT(this.formulario.value, this.id)
+      .subscribe(
+        (a) => {
+          this.notifierService.notify(
+            'success',
+            'Página Estática editada com sucesso'
+          );
+          this.router.navigate(['/paginaEstatica']);
+        },
+        (error) => {
+          this.notifierService.notify(
+            'error',
+            'Erro ao atualizar a Página Estática!'
+          );
+          Object.keys(this.formulario.controls).forEach((campo) => {
+            const controle = this.formulario.get(campo);
+            controle.markAsTouched();
+          });
+        }
+      );
   }
   updateForm(dados) {
     this.formulario = this.formBuilder.group({
@@ -92,25 +108,28 @@ export class UpdatePaginaestaticaComponent implements OnInit {
       html: [dados.html, Validators.required],
       titulo: [dados.titulo, Validators.required],
       rota: [dados.rota, Validators.required],
-    })
+    });
   }
 
   formatRota() {
     let titulo = this.formulario.value.titulo;
-    titulo = titulo.trim()
-    .normalize('NFD')
-    .replace(/\p{Diacritic}/gu, '')
-    .replace(/[^\w ]/g, '')
-    .replace(/\s|_|\(|\)/g, '-')
-    .toLowerCase();
-    this.formulario.get('rota').patchValue(titulo)
+    titulo = titulo
+      .trim()
+      .normalize('NFD')
+      .replace(/\p{Diacritic}/gu, '')
+      .replace(/[^\w ]/g, '')
+      .replace(/\s|_|\(|\)/g, '-')
+      .toLowerCase();
+    this.formulario.get('rota').patchValue(titulo);
   }
   verificaValidTouched(campo) {
-    return !this.formulario.get(campo).valid && this.formulario.get(campo).touched;
+    return (
+      !this.formulario.get(campo).valid && this.formulario.get(campo).touched
+    );
   }
 
   aplicaCssErro(campo) {
-    return {'has-error': this.verificaValidTouched(campo) }
+    return { 'has-error': this.verificaValidTouched(campo) };
   }
   onValueChange(event, campo) {
     this.formulario.get(campo).markAsTouched();
