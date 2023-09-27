@@ -5,6 +5,7 @@ import { NotifierService } from 'angular-notifier';
 import { ConsultaCepService } from 'app/views/usuarios/shared/consulta-cep/consulta-cep.service';
 import { Restangular } from 'ngx-restangular';
 import { AngularEditorConfig } from '@kolkov/angular-editor';
+import { Subscription } from 'rxjs';
 @Component({
   selector: 'app-create-paginaestatica',
   templateUrl: './create-paginaestatica.component.html',
@@ -50,6 +51,10 @@ export class CreatePaginaestaticaComponent implements OnInit {
       },
     ],
   };
+
+  sub: Subscription[] = [];
+  empresas = [];
+
   constructor(
     private formBuilder: FormBuilder,
     private restangular: Restangular,
@@ -63,10 +68,21 @@ export class CreatePaginaestaticaComponent implements OnInit {
       dataCriacao: [now, Validators.required],
       titulo: [null, Validators.required],
       rota: [null, Validators.required],
+      menu: [false, Validators.required],
+      empresaId: [null, Validators.required],
     });
   }
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.sub.push(
+      this.restangular
+        .one('empresa')
+        .get()
+        .subscribe((x) => {
+          this.empresas = x.data;
+        })
+    );
+  }
   onSubmit() {
     this.restangular
       .all('paginaEstatica')
