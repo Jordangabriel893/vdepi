@@ -91,10 +91,14 @@
                       <mfDefaultSorter by="numeroLote">Lote</mfDefaultSorter>
                     </th>
                     <th>
-                      <mfDefaultSorter by="numeroDocumento">Numero Documento</mfDefaultSorter>
+                      <mfDefaultSorter by="numeroDocumento"
+                        >Nº Doc</mfDefaultSorter
+                      >
                     </th>
                     <th>
-                      <mfDefaultSorter by="arrematante">Arrematante</mfDefaultSorter>
+                      <mfDefaultSorter by="arrematante"
+                        >Arrematante</mfDefaultSorter
+                      >
                     </th>
                     <th>
                       <mfDefaultSorter by="tipoDocumento">Tipo</mfDefaultSorter>
@@ -115,19 +119,23 @@
                   <ng-template ngFor let-item [ngForOf]="mfLeilao.data">
                     <tr>
                       <td>
-                        {{item.documentoId}}
+                        {{ item.documentoId }}
                       </td>
                       <td>
-                        {{item.dataCadastro | amDateFormat:'DD/MM/yyyy'}}
+                        {{ item.dataCadastro | amDateFormat : "DD/MM/yyyy" }}
                       </td>
                       <td>
-                        <a [routerLink]="['/lotes/', item.loteId]">{{item.numeroLote}}</a>
+                        <a [routerLink]="['/lotes/', item.loteId]">{{
+                          item.numeroLote
+                        }}</a>
                       </td>
-                      <td>{{item.numeroDocumento}}</td>
+                      <td>{{ item.numeroDocumento }}</td>
                       <td nowrap>
-                        <a [routerLink]="['/usuarios/', item.loteId]">{{item.arrematante | uppercase}}</a>
+                        <a [routerLink]="['/usuarios/', item.loteId]">{{
+                          item.arrematante | uppercase
+                        }}</a>
                       </td>
-                      <td>{{item.tipoDocumento}}</td>
+                      <td>{{ item.tipoDocumento }}</td>
                       <td>
                         <div *ngFor="let assinante of item.assinantes">
                           <small>{{ assinante.nome | uppercase }}</small>
