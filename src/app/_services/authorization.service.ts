@@ -13,7 +13,7 @@ export class AuthorizationService {
       const permissoes = user.permission;
       return permissoes.some((x: any) => x.codigo == source)
     } else {
-      return false;
+      return true;
     }
   }
 
@@ -23,7 +23,7 @@ export class AuthorizationService {
       const permissoes = user.permission;
       return permissoes.some((x: any) => x.grupo == item.grupo)
     } else {
-      return false;
+      return true;
     }
   }
 
@@ -33,7 +33,7 @@ export class AuthorizationService {
       return true
 
     } else {
-      return false
+      return true
     }
 
   }

@@ -97,6 +97,9 @@ import { GerenciadorDocumentosComponent } from './views/gerenciador-documentos/g
 import { CreateDocumentoComponent } from './views/gerenciador-documentos/create-documento/create-documento.component';
 import { CreateAgendamentoComponent } from './views/agendamento/create/create-agendamento.component';
 import { GerencialComponent } from './views/gerencial/gerencial.component';
+import { CriarTipoLoteComponent } from './views/tipo-lote/criar-tipo-lote/criar-tipo-lote.component';
+import { AtualizarTipoLoteComponent } from './views/tipo-lote/atualizar-tipo-lote/atualizar-tipo-lote.component';
+import { TipoLoteComponent } from './views/tipo-lote/tipo-lote.component';
 
 export const routes: Routes = [
   { path: '', redirectTo: '/home', pathMatch: 'full' },
@@ -861,6 +864,33 @@ export const routes: Routes = [
         data: {
           title: 'Criar Documento',
           source: 'GERENCIADOR_DOC',
+        },
+        canActivate: [SourceGuard],
+      },
+      {
+        path: 'criar-tipo-lote',
+        component: CriarTipoLoteComponent,
+        data: {
+          title: 'Criar Tipo de Lote',
+          source: 'TIPO_LOTE',
+        },
+        canActivate: [SourceGuard],
+      },
+      {
+        path: 'atualizar-tipo-lote/:id',
+        component: AtualizarTipoLoteComponent,
+        data: {
+          title: 'Atualizar tipo de lote',
+          source: 'TIPO_LOTE',
+        },
+        canActivate: [SourceGuard],
+      },
+      {
+        path: 'tipo-lote',
+        component: TipoLoteComponent,
+        data: {
+          title: 'Tipos de Lote',
+          source: 'TIPO_LOTE',
         },
         canActivate: [SourceGuard],
       },

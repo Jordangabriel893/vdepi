@@ -239,6 +239,9 @@ import { GerenciadorDocumentosComponent } from './views/gerenciador-documentos/g
 import { CreateDocumentoComponent } from './views/gerenciador-documentos/create-documento/create-documento.component';
 import { CreateAgendamentoComponent } from './views/agendamento/create/create-agendamento.component';
 import { GerencialComponent } from './views/gerencial/gerencial.component';
+import { TipoLoteComponent } from './views/tipo-lote/tipo-lote.component';
+import { CriarTipoLoteComponent } from './views/tipo-lote/criar-tipo-lote/criar-tipo-lote.component';
+import { AtualizarTipoLoteComponent } from './views/tipo-lote/atualizar-tipo-lote/atualizar-tipo-lote.component';
 
 export function RestangularConfigFactory(
   RestangularProvider,
@@ -418,6 +421,9 @@ export function RestangularConfigFactory(
     AssinaturaComponent,
     CreateAgendamentoComponent,
     GerencialComponent,
+    TipoLoteComponent,
+    CriarTipoLoteComponent,
+    AtualizarTipoLoteComponent,
   ],
   providers: [
     {

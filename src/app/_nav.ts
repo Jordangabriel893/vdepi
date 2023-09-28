@@ -251,4 +251,19 @@ export const navigation = [
     source: 'TEMPLATE_DOC',
     grupo: 'CADASTROS',
   },
+
+  {
+    title: true,
+    name: 'Manutençao de Tabelas',
+    grupo: 'MANUTENCAO',
+  },
+
+  {
+    name: 'Tipo de lote',
+    url: '/tipo-lote',
+    icon: 'fa fa-box',
+    source: 'TIPO_LOTE',
+    grupo: 'MANUTENCAO',
+  },
+
 ];
