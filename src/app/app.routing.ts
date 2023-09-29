@@ -103,6 +103,9 @@ import { TipoLoteComponent } from './views/tipo-lote/tipo-lote.component';
 import { CriarLoteCampoComponent } from './views/lote-campo/criar-lote-campo/criar-lote-campo.component';
 import { AtualizarLoteCampoComponent } from './views/lote-campo/atualizar-lote-campo/atualizar-lote-campo.component';
 import { LoteCampoComponent } from './views/lote-campo/lote-campo.component';
+import { CriarTipoFotoComponent } from './views/tipo-foto/criar-tipo-foto/criar-tipo-foto.component';
+import { AtualizarTipoFotoComponent } from './views/tipo-foto/atualizar-tipo-foto/atualizar-tipo-foto.component';
+import { TipoFotoComponent } from './views/tipo-foto/tipo-foto.component';
 
 export const routes: Routes = [
   { path: '', redirectTo: '/home', pathMatch: 'full' },
@@ -921,6 +924,33 @@ export const routes: Routes = [
         data: {
           title: 'Campos de lote',
           source: 'LOTE_CAMPO',
+        },
+        // canActivate: [SourceGuard],
+      },
+      {
+        path: 'criar-tipo-foto',
+        component: CriarTipoFotoComponent,
+        data: {
+          title: 'Criar tipo de foto',
+          source: 'TIPO_FOTO',
+        },
+        // canActivate: [SourceGuard],
+      },
+      {
+        path: 'atualizar-tipo-foto/:id',
+        component: AtualizarTipoFotoComponent,
+        data: {
+          title: 'Atualizar tipo de foto',
+          source: 'TIPO_FOTO',
+        },
+        // canActivate: [SourceGuard],
+      },
+      {
+        path: 'tipo-foto',
+        component: TipoFotoComponent,
+        data: {
+          title: 'Campos de tipo de loto',
+          source: 'TIPO_FOTO',
         },
         // canActivate: [SourceGuard],
       },

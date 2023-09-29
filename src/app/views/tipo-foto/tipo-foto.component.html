@@ -1,22 +1,24 @@
-<div class="animated fadeIn">
+<div class="animated fadeIn" *ngIf="tipos">
   <div class="row">
     <div class="col-lg-12">
       <div class="card">
         <div class="card-header">
           <i class="fa fa-envelope" aria-hidden="true"></i>
-          &nbsp;Tipos de lote
+          &nbsp;Tipos de Foto
         </div>
         <div class="card-block">
-          <button type="button" class="btn btn-success" [routerLink]="['/criar-tipo-lote']"><i
-              class="fa fa-plus-circle"></i>&nbsp; Novo tipo</button>
+          <button type="button" class="btn btn-success" [routerLink]="['/criar-tipo-foto']"><i
+              class="fa fa-plus-circle"></i>&nbsp; Novo Tipo</button>
           <div class="table-responsive mt-4">
-            <table class="table table-striped" [mfData]="tipos" #mfTipos="mfDataTable"
+            <table class="table table-striped" [mfData]="tipos
+            " #mftipos
+            ="mfDataTable"
               [mfRowsOnPage]="100">
               <thead>
                 <tr>
 
                   <th>
-                    <mfDefaultSorter by="tipoLoteId">Id</mfDefaultSorter>
+                    <mfDefaultSorter by="loteCampoId">Id</mfDefaultSorter>
                   </th>
                   <th>
                     <mfDefaultSorter by="descricao">Descrição</mfDefaultSorter>
@@ -29,19 +31,19 @@
                     Remover
                   </th>
 
-
                 </tr>
               </thead>
               <tbody>
-                <tr *ngFor="let item of mfTipos.data">
-                  <td>{{item.tipoLoteId}}</td>
+                <tr *ngFor="let item of mftipos
+                .data">
+                  <td>{{item.tipoFotoId}}</td>
                   <td>{{item.descricao}}</td>
                   <td class="text-center" nowrap>
-                    <button type="button" class="btn btn-primary" (click)="edit(item.tipoLoteId)"><i
+                    <button type="button" class="btn btn-primary" (click)="edit(item.tipoFotoId)"><i
                         class="fa fa-edit"></i>&nbsp;Editar</button>
                   </td>
                   <td class="text-center" nowrap>
-                    <button type="button" class="btn btn-danger" (click)="remove(item.tipoLoteId);"><i
+                    <button type="button" class="btn btn-danger" (click)="remove(item.tipoFotoId);"><i
                         class="fa fa-trash"></i>&nbsp;Remove</button>
                   </td>
                 </tr>

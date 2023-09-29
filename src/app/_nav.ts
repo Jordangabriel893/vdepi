@@ -274,4 +274,12 @@ export const navigation = [
     grupo: 'MANUTENCAO',
   },
 
+  {
+    name: 'Tipo de foto',
+    url: '/tipo-foto',
+    icon: 'fa fa-box',
+    source: 'TIPO_FOTO',
+    grupo: 'MANUTENCAO',
+  },
+
 ];

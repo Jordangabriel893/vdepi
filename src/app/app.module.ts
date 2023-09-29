@@ -245,6 +245,9 @@ import { AtualizarTipoLoteComponent } from './views/tipo-lote/atualizar-tipo-lot
 import { LoteCampoComponent } from './views/lote-campo/lote-campo.component';
 import { CriarLoteCampoComponent } from './views/lote-campo/criar-lote-campo/criar-lote-campo.component';
 import { AtualizarLoteCampoComponent } from './views/lote-campo/atualizar-lote-campo/atualizar-lote-campo.component';
+import { CriarTipoFotoComponent } from './views/tipo-foto/criar-tipo-foto/criar-tipo-foto.component';
+import { AtualizarTipoFotoComponent } from './views/tipo-foto/atualizar-tipo-foto/atualizar-tipo-foto.component';
+import { TipoFotoComponent } from './views/tipo-foto/tipo-foto.component';
 
 export function RestangularConfigFactory(
   RestangularProvider,
@@ -429,7 +432,10 @@ export function RestangularConfigFactory(
     AtualizarTipoLoteComponent,
     LoteCampoComponent,
     CriarLoteCampoComponent,
-    AtualizarLoteCampoComponent
+    AtualizarLoteCampoComponent,
+    TipoFotoComponent,
+    CriarTipoFotoComponent,
+    AtualizarTipoFotoComponent
   ],
   providers: [
     {
