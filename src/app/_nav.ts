@@ -266,4 +266,12 @@ export const navigation = [
     grupo: 'MANUTENCAO',
   },
 
+  {
+    name: 'Campo de lote',
+    url: '/lote-campo',
+    icon: 'fa fa-box',
+    source: 'LOTE_CAMPO',
+    grupo: 'MANUTENCAO',
+  },
+
 ];

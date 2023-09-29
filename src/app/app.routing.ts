@@ -100,6 +100,9 @@ import { GerencialComponent } from './views/gerencial/gerencial.component';
 import { CriarTipoLoteComponent } from './views/tipo-lote/criar-tipo-lote/criar-tipo-lote.component';
 import { AtualizarTipoLoteComponent } from './views/tipo-lote/atualizar-tipo-lote/atualizar-tipo-lote.component';
 import { TipoLoteComponent } from './views/tipo-lote/tipo-lote.component';
+import { CriarLoteCampoComponent } from './views/lote-campo/criar-lote-campo/criar-lote-campo.component';
+import { AtualizarLoteCampoComponent } from './views/lote-campo/atualizar-lote-campo/atualizar-lote-campo.component';
+import { LoteCampoComponent } from './views/lote-campo/lote-campo.component';
 
 export const routes: Routes = [
   { path: '', redirectTo: '/home', pathMatch: 'full' },
@@ -893,6 +896,33 @@ export const routes: Routes = [
           source: 'TIPO_LOTE',
         },
         canActivate: [SourceGuard],
+      },
+      {
+        path: 'criar-lote-campo',
+        component: CriarLoteCampoComponent,
+        data: {
+          title: 'Criar Campo de Lote',
+          source: 'LOTE_CAMPO',
+        },
+        // canActivate: [SourceGuard],
+      },
+      {
+        path: 'atualizar-lote-campo/:id',
+        component: AtualizarLoteCampoComponent,
+        data: {
+          title: 'Atualizar campo de lote',
+          source: 'LOTE_CAMPO',
+        },
+        // canActivate: [SourceGuard],
+      },
+      {
+        path: 'lote-campo',
+        component: LoteCampoComponent,
+        data: {
+          title: 'Campos de lote',
+          source: 'LOTE_CAMPO',
+        },
+        // canActivate: [SourceGuard],
       },
       {
         path: 'access-denied',

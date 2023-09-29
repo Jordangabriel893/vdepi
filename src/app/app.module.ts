@@ -242,6 +242,9 @@ import { GerencialComponent } from './views/gerencial/gerencial.component';
 import { TipoLoteComponent } from './views/tipo-lote/tipo-lote.component';
 import { CriarTipoLoteComponent } from './views/tipo-lote/criar-tipo-lote/criar-tipo-lote.component';
 import { AtualizarTipoLoteComponent } from './views/tipo-lote/atualizar-tipo-lote/atualizar-tipo-lote.component';
+import { LoteCampoComponent } from './views/lote-campo/lote-campo.component';
+import { CriarLoteCampoComponent } from './views/lote-campo/criar-lote-campo/criar-lote-campo.component';
+import { AtualizarLoteCampoComponent } from './views/lote-campo/atualizar-lote-campo/atualizar-lote-campo.component';
 
 export function RestangularConfigFactory(
   RestangularProvider,
@@ -424,6 +427,9 @@ export function RestangularConfigFactory(
     TipoLoteComponent,
     CriarTipoLoteComponent,
     AtualizarTipoLoteComponent,
+    LoteCampoComponent,
+    CriarLoteCampoComponent,
+    AtualizarLoteCampoComponent
   ],
   providers: [
     {
