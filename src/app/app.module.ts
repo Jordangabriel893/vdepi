@@ -239,6 +239,10 @@ import { GerenciadorDocumentosComponent } from './views/gerenciador-documentos/g
 import { CreateDocumentoComponent } from './views/gerenciador-documentos/create-documento/create-documento.component';
 import { CreateAgendamentoComponent } from './views/agendamento/create/create-agendamento.component';
 import { GerencialComponent } from './views/gerencial/gerencial.component';
+import { JuizoComponent } from './views/juizo/juizo.component';
+import { CreateJuizoComponent } from './views/juizo/create-juizo/create-juizo.component';
+import { UpdateJuizoComponent } from './views/juizo/update-juizo/update-juizo.component';
+import { VaraComponent } from './views/vara/vara.component';
 
 export function RestangularConfigFactory(
   RestangularProvider,
@@ -418,6 +422,10 @@ export function RestangularConfigFactory(
     AssinaturaComponent,
     CreateAgendamentoComponent,
     GerencialComponent,
+    JuizoComponent,
+    CreateJuizoComponent,
+    UpdateJuizoComponent,
+    VaraComponent,
   ],
   providers: [
     {

@@ -1,0 +1,65 @@
+<form [formGroup]="formulario" (ngSubmit)="onSubmit()" appFocus *ngIf="formulario">
+  <div class="animated fadeIn">
+    <div class="row">
+      <div class="col-lg-12">
+        <div class="card">
+          <div class="card-header d-flex align-items-center">
+            <i class="fa fa-window-maximize" aria-hidden="true"></i>
+            &nbsp;Informações - Obrigatorias*
+          </div>
+          <div class="card-block">
+            <div class="row">
+              <div class="form-group col-6">
+                <label for="nome">Nome</label>
+                <input type="text" class="form-control" [ngClass]="aplicaCssErro('nome')" id="nome"
+                  placeholder="Descrição" name="Descrição" formControlName="nome">
+              </div>
+            </div>
+            <div class="row ">
+              <div class="form-group col-6">
+                <div class="col-4" formGroupName="logo">
+                  <fieldset class="form-group">
+                    <label>Logo do juizo</label>
+                    <div class="custom-file fileInputProfileWrap">
+                      <input
+                        type="file"
+                        (change)="fileChangeEvent($event)"
+                        class="fileInputProfile"
+                        #inputFile
+                        accept="image/*"
+                      />
+                      <div class="img-space" [ngClass]="aplicaCssErro('logo')">
+                        <ng-container *ngIf="isImageSaved; else elseTemplate">
+                          <img [src]="cardImageBase64" />
+                        </ng-container>
+                        <ng-template #elseTemplate>
+                          <img
+                            src="../../../../assets/img/logo-generica.png"
+                            class="img-responsive"
+                          />
+                        </ng-template>
+                      </div>
+                    </div>
+                  </fieldset>
+                  <a
+                    class="btn btn-danger"
+                    (click)="removeImage(inputFile)"
+                    *ngIf="isImageSaved"
+                    ><i class="fa fa-trash"></i> Remover</a
+                  >
+                  <div class="alert alert-danger" *ngIf="imageError">
+                    {{ imageError }}
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="card-footer">
+            <app-save-cancel-buttons [route]="'/juizo'"
+              [buttonDisabled]="!formulario.valid"></app-save-cancel-buttons>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</form>

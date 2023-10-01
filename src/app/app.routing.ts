@@ -97,6 +97,9 @@ import { GerenciadorDocumentosComponent } from './views/gerenciador-documentos/g
 import { CreateDocumentoComponent } from './views/gerenciador-documentos/create-documento/create-documento.component';
 import { CreateAgendamentoComponent } from './views/agendamento/create/create-agendamento.component';
 import { GerencialComponent } from './views/gerencial/gerencial.component';
+import { JuizoComponent } from './views/juizo/juizo.component';
+import { CreateJuizoComponent } from './views/juizo/create-juizo/create-juizo.component';
+import { UpdateJuizoComponent } from './views/juizo/update-juizo/update-juizo.component';
 
 export const routes: Routes = [
   { path: '', redirectTo: '/home', pathMatch: 'full' },
@@ -863,6 +866,33 @@ export const routes: Routes = [
           source: 'GERENCIADOR_DOC',
         },
         canActivate: [SourceGuard],
+      },
+      {
+        path: 'juizo',
+        component: JuizoComponent,
+        data: {
+          title: 'Juizo',
+          source: 'JUIZO',
+        },
+        // canActivate: [SourceGuard],
+      },
+      {
+        path: 'create-juizo',
+        component: CreateJuizoComponent,
+        data: {
+          title: 'Criar Juizo',
+          source: 'JUIZO',
+        },
+        // canActivate: [SourceGuard],
+      },
+      {
+        path: 'update-juizo/:id',
+        component: UpdateJuizoComponent,
+        data: {
+          title: 'Atualizar Juizo',
+          source: 'JUIZO',
+        },
+        // canActivate: [SourceGuard],
       },
       {
         path: 'access-denied',
