@@ -1029,6 +1029,7 @@
                   <select
                     class="form-control col-12"
                     formControlName="tipoFotoId"
+                    [name]="'foto' + i"
                     [ngClass]="aplicaCssErroLista('fotos', 'tipoFotoId', i)"
                   >
                     <option
@@ -1070,7 +1071,7 @@
             *ngIf="this.formulario.value.fotos.length == 0"
           >
             <alert type="danger">
-              <strong>Campo Obrigatório</strong> É necessário adicionar as fodos
+              <strong>Campo Obrigatório</strong> É necessário adicionar as fotos
               do lote
             </alert>
           </div>
@@ -1125,44 +1126,44 @@
                   <th width="15%"></th>
                 </tr>
               </thead>
-              <tbody>
-                <tr
+              <tbody formArrayName="anexos">
+                <ng-container
                   *ngFor="let item of filterList('anexos'); let i = index"
-                  [formGroupName]="i"
                 >
-                  <td>
-                    <a [href]="item.value.arquivo.url" target="_blank">{{
-                      item.value.arquivo.nome
-                    }}</a>
-                  </td>
-                  <td>
-                    <input
-                      type="text"
-                      formControlName="nome"
-                      class="form-control"
-                      [value]="item.value.nome"
-                      placeholder="Descricao"
-                      *ngIf="item.value.acao === 'I'"
-                    />
-                    <span *ngIf="item.value.acao === ''">{{
-                      item.value.nome
-                    }}</span>
-                  </td>
-                  <td>
-                    {{
-                      item.value.arquivo.dataCadastro
-                        | amFromUtc
-                        | amLocal
-                        | amDateFormat : "DD/MM/YYYY HH:mm"
-                    }}
-                  </td>
-                  <td class="text-center">
-                    <!-- <label (click)="alterarAnexo(i)" class="btn btn-black">Alterar</label> -->
-                    <label class="btn btn-danger m-0" (click)="deleteAnexo(i)"
-                      >Remover</label
-                    >
-                  </td>
-                </tr>
+                  <tr [formGroupName]="i">
+                    <td>
+                      <a [href]="item.value.arquivo.url" target="_blank">{{
+                        item.value.arquivo.nome
+                      }}</a>
+                    </td>
+                    <td>
+                      <input
+                        type="text"
+                        formControlName="nome"
+                        [name]="'nomeAnexo' + i"
+                        class="form-control"
+                        placeholder="Descricao"
+                      />
+                      <!-- <span *ngIf="item.value.acao === ''">{{
+                        item.value.nome
+                      }}</span> -->
+                    </td>
+                    <td>
+                      {{
+                        item.value.arquivo.dataCadastro
+                          | amFromUtc
+                          | amLocal
+                          | amDateFormat : "DD/MM/YYYY HH:mm"
+                      }}
+                    </td>
+                    <td class="text-center">
+                      <!-- <label (click)="alterarAnexo(i)" class="btn btn-black">Alterar</label> -->
+                      <label class="btn btn-danger m-0" (click)="deleteAnexo(i)"
+                        >Remover</label
+                      >
+                    </td>
+                  </tr>
+                </ng-container>
               </tbody>
             </table>
           </div>
