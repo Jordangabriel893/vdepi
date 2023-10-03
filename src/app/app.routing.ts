@@ -106,6 +106,12 @@ import { VaraComponent } from './views/vara/vara.component';
 import { UpdateAdvogadoComponent } from './views/advogado/update-advogado/update-advogado.component';
 import { CreateAdvogadoComponent } from './views/advogado/create-advogado/create-advogado.component';
 import { AdvogadoComponent } from './views/advogado/advogado.component';
+import { JuizComponent } from './views/juiz/juiz.component';
+import { CreateJuizComponent } from './views/juiz/create-juiz/create-juiz.component';
+import { UpdateJuizComponent } from './views/juiz/update-juiz/update-juiz.component';
+import { EscrivaoComponent } from './views/escrivao/escrivao.component';
+import { CreateEscrivaoComponent } from './views/escrivao/create-escrivao/create-escrivao.component';
+import { UpdateEscrivaoComponent } from './views/escrivao/update-escrivao/update-escrivao.component';
 
 export const routes: Routes = [
   { path: '', redirectTo: '/home', pathMatch: 'full' },
@@ -951,6 +957,60 @@ export const routes: Routes = [
         data: {
           title: 'Atualizar Advogado',
           source: 'ADVOGADO',
+        },
+        // canActivate: [SourceGuard],
+      },
+      {
+        path: 'juiz',
+        component: JuizComponent,
+        data: {
+          title: 'Juiz',
+          source: 'JUIZ',
+        },
+        // canActivate: [SourceGuard],
+      },
+      {
+        path: 'create-juiz',
+        component: CreateJuizComponent,
+        data: {
+          title: 'Criar Juiz',
+          source: 'JUIZ',
+        },
+        // canActivate: [SourceGuard],
+      },
+      {
+        path: 'update-juiz/:id',
+        component: UpdateJuizComponent,
+        data: {
+          title: 'Atualizar Juiz',
+          source: 'JUIZ',
+        },
+        // canActivate: [SourceGuard],
+      },
+      {
+        path: 'escrivao',
+        component: EscrivaoComponent,
+        data: {
+          title: 'Escrivao',
+          source: 'ESCRIVAO',
+        },
+        // canActivate: [SourceGuard],
+      },
+      {
+        path: 'create-escrivao',
+        component: CreateEscrivaoComponent,
+        data: {
+          title: 'Criar Escrivao',
+          source: 'ESCRIVAO',
+        },
+        // canActivate: [SourceGuard],
+      },
+      {
+        path: 'update-escrivao/:id',
+        component: UpdateEscrivaoComponent,
+        data: {
+          title: 'Atualizar Escrivao',
+          source: 'ESCRIVAO',
         },
         // canActivate: [SourceGuard],
       },
