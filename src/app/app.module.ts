@@ -243,6 +243,8 @@ import { JuizoComponent } from './views/juizo/juizo.component';
 import { CreateJuizoComponent } from './views/juizo/create-juizo/create-juizo.component';
 import { UpdateJuizoComponent } from './views/juizo/update-juizo/update-juizo.component';
 import { VaraComponent } from './views/vara/vara.component';
+import { CreateVaraComponent } from './views/vara/create-vara/create-vara.component';
+import { UpdateVaraComponent } from './views/vara/update-vara/update-vara.component';
 
 export function RestangularConfigFactory(
   RestangularProvider,
@@ -426,6 +428,8 @@ export function RestangularConfigFactory(
     CreateJuizoComponent,
     UpdateJuizoComponent,
     VaraComponent,
+    CreateVaraComponent,
+    UpdateVaraComponent,
   ],
   providers: [
     {

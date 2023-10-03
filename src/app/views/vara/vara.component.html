@@ -4,7 +4,7 @@
       <div class="card">
         <div class="card-header">
           <i class="fa fa-user"></i>
-          &nbsp;Juizos
+          &nbsp;varas
         </div>
         <div class="card-block">
           <div class="row input-search">
@@ -12,9 +12,9 @@
               <button
                 type="button"
                 class="btn btn-success"
-                [routerLink]="['/create-juizo']"
+                [routerLink]="['/create-vara']"
               >
-                <i class="fa fa-plus-circle"></i>&nbsp; Novo Juizo
+                <i class="fa fa-plus-circle"></i>&nbsp; Novo vara
               </button>
             </div>
           </div>
@@ -28,12 +28,18 @@
               <thead>
                 <tr>
                   <th>
-                    <mfDefaultSorter by="juizoId"
+                    <mfDefaultSorter by="varaId"
                       >id</mfDefaultSorter
                     >
                   </th>
                   <th>
                     <mfDefaultSorter by="nome">Nome</mfDefaultSorter>
+                  </th>
+                  <th>
+                    <mfDefaultSorter by="endereco">Endereço</mfDefaultSorter>
+                  </th>
+                  <th>
+                    <mfDefaultSorter by="juizo.nome">Juizo</mfDefaultSorter>
                   </th>
                   <th><mfDefaultSorter>Logo</mfDefaultSorter></th>
                   <th></th>
@@ -42,15 +48,18 @@
               <tbody>
                 <tr *ngFor="let item of mfRegistros.data">
                   <td nowrap>
-                    {{ item.juizoId }}
+                    {{ item.varaId }}
                   </td>
                   <td>{{ item.nome }}</td>
+                  <td>{{ item.endereco }}</td>
+                  <td> <a [routerLink]="['/juizo']">{{ item.juizo.nome }}</a> </td>
                   <td>
                     <img
                       class="img-fluid logo"
                       [src]="item.logo.url"
                       alt="Logo"
                     />
+                  </td>
                   <td class="text-center" nowrap>
                     <div class="dropdown" dropdown>
                       <button
@@ -67,12 +76,12 @@
                         class="dropdown-menu dropdown-menu-right"
                         *dropdownMenu
                       >
-                        <li (click)="edit(item.juizoId)">
+                        <li (click)="edit(item.varaId)">
                           <a class="dropdown-item"
                             ><i class="fa fa-edit"></i>&nbsp; Editar</a
                           >
                         </li>
-                        <li (click)="delete(item.juizoId)">
+                        <li (click)="delete(item.varaId)">
                           <a class="dropdown-item"
                             ><i class="fa fa-trash"></i>&nbsp; Excluir</a
                           >
@@ -90,7 +99,7 @@
               </tbody>
               <tfoot>
                 <tr>
-                  <td colspan="4">
+                  <td colspan="6">
                     <mfBootstrapPaginator
                       [rowsOnPageSet]="[5, 10, 25]"
                     ></mfBootstrapPaginator>
@@ -103,4 +112,4 @@
       </div>
     </div>
   </div>
-</div>
+</div>  

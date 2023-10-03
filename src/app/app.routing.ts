@@ -100,6 +100,9 @@ import { GerencialComponent } from './views/gerencial/gerencial.component';
 import { JuizoComponent } from './views/juizo/juizo.component';
 import { CreateJuizoComponent } from './views/juizo/create-juizo/create-juizo.component';
 import { UpdateJuizoComponent } from './views/juizo/update-juizo/update-juizo.component';
+import { UpdateVaraComponent } from './views/vara/update-vara/update-vara.component';
+import { CreateVaraComponent } from './views/vara/create-vara/create-vara.component';
+import { VaraComponent } from './views/vara/vara.component';
 
 export const routes: Routes = [
   { path: '', redirectTo: '/home', pathMatch: 'full' },
@@ -891,6 +894,33 @@ export const routes: Routes = [
         data: {
           title: 'Atualizar Juizo',
           source: 'JUIZO',
+        },
+        // canActivate: [SourceGuard],
+      },
+      {
+        path: 'vara',
+        component: VaraComponent,
+        data: {
+          title: 'vara',
+          source: 'VARA',
+        },
+        // canActivate: [SourceGuard],
+      },
+      {
+        path: 'create-vara',
+        component: CreateVaraComponent,
+        data: {
+          title: 'Criar vara',
+          source: 'VARA',
+        },
+        // canActivate: [SourceGuard],
+      },
+      {
+        path: 'update-vara/:id',
+        component: UpdateVaraComponent,
+        data: {
+          title: 'Atualizar vara',
+          source: 'VARA',
         },
         // canActivate: [SourceGuard],
       },
