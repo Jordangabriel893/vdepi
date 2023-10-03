@@ -100,9 +100,12 @@ import { GerencialComponent } from './views/gerencial/gerencial.component';
 import { JuizoComponent } from './views/juizo/juizo.component';
 import { CreateJuizoComponent } from './views/juizo/create-juizo/create-juizo.component';
 import { UpdateJuizoComponent } from './views/juizo/update-juizo/update-juizo.component';
-import { UpdateVaraComponent } from './views/vara/update-vara/update-vara.component';
 import { CreateVaraComponent } from './views/vara/create-vara/create-vara.component';
+import { UpdateVaraComponent } from './views/vara/update-vara/update-vara.component';
 import { VaraComponent } from './views/vara/vara.component';
+import { UpdateAdvogadoComponent } from './views/advogado/update-advogado/update-advogado.component';
+import { CreateAdvogadoComponent } from './views/advogado/create-advogado/create-advogado.component';
+import { AdvogadoComponent } from './views/advogado/advogado.component';
 
 export const routes: Routes = [
   { path: '', redirectTo: '/home', pathMatch: 'full' },
@@ -921,6 +924,33 @@ export const routes: Routes = [
         data: {
           title: 'Atualizar vara',
           source: 'VARA',
+        },
+        // canActivate: [SourceGuard],
+      },
+      {
+        path: 'advogado',
+        component: AdvogadoComponent,
+        data: {
+          title: 'Advogado',
+          source: 'ADVOGADO',
+        },
+        // canActivate: [SourceGuard],
+      },
+      {
+        path: 'create-advogado',
+        component: CreateAdvogadoComponent,
+        data: {
+          title: 'Criar Advogado',
+          source: 'ADVOGADO',
+        },
+        // canActivate: [SourceGuard],
+      },
+      {
+        path: 'update-advogado/:id',
+        component: UpdateAdvogadoComponent,
+        data: {
+          title: 'Atualizar Advogado',
+          source: 'ADVOGADO',
         },
         // canActivate: [SourceGuard],
       },

@@ -245,6 +245,9 @@ import { UpdateJuizoComponent } from './views/juizo/update-juizo/update-juizo.co
 import { VaraComponent } from './views/vara/vara.component';
 import { CreateVaraComponent } from './views/vara/create-vara/create-vara.component';
 import { UpdateVaraComponent } from './views/vara/update-vara/update-vara.component';
+import { AdvogadoComponent } from './views/advogado/advogado.component';
+import { CreateAdvogadoComponent } from './views/advogado/create-advogado/create-advogado.component';
+import { UpdateAdvogadoComponent } from './views/advogado/update-advogado/update-advogado.component';
 
 export function RestangularConfigFactory(
   RestangularProvider,
@@ -430,6 +433,9 @@ export function RestangularConfigFactory(
     VaraComponent,
     CreateVaraComponent,
     UpdateVaraComponent,
+    AdvogadoComponent,
+    CreateAdvogadoComponent,
+    UpdateAdvogadoComponent,
   ],
   providers: [
     {
