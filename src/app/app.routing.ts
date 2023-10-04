@@ -1034,7 +1034,7 @@ export const routes: Routes = [
         component: ReuComponent,
         data: {
           title: 'Reu',
-          source: 'REU',
+          source: 'ATOR_PROCESSO',
         },
         // canActivate: [SourceGuard],
       },
@@ -1043,7 +1043,7 @@ export const routes: Routes = [
         component: CreateReuComponent,
         data: {
           title: 'Criar Reu',
-          source: 'REU',
+          source: 'ATOR_PROCESSO',
         },
         // canActivate: [SourceGuard],
       },
@@ -1052,7 +1052,7 @@ export const routes: Routes = [
         component: UpdateReuComponent,
         data: {
           title: 'Atualizar Reu',
-          source: 'REU',
+          source: 'ATOR_PROCESSO',
         },
         // canActivate: [SourceGuard],
       },
@@ -1061,7 +1061,7 @@ export const routes: Routes = [
         component: AutorComponent,
         data: {
           title: 'Autor',
-          source: 'AUTOR',
+          source: 'ATOR_PROCESSO',
         },
         // canActivate: [SourceGuard],
       },
@@ -1070,7 +1070,7 @@ export const routes: Routes = [
         component: CreateAutorComponent,
         data: {
           title: 'Criar Autor',
-          source: 'AUTOR',
+          source: 'ATOR_PROCESSO',
         },
         // canActivate: [SourceGuard],
       },
@@ -1079,7 +1079,7 @@ export const routes: Routes = [
         component: UpdateAutorComponent,
         data: {
           title: 'Atualizar Autor',
-          source: 'AUTOR',
+          source: 'ATOR_PROCESSO',
         },
         // canActivate: [SourceGuard],
       },
@@ -1088,7 +1088,7 @@ export const routes: Routes = [
         component: ParteComponent,
         data: {
           title: 'Parte',
-          source: 'PARTE',
+          source: 'ATOR_PROCESSO',
         },
         // canActivate: [SourceGuard],
       },
@@ -1097,7 +1097,7 @@ export const routes: Routes = [
         component: CreateParteComponent,
         data: {
           title: 'Criar Parte',
-          source: 'PARTE',
+          source: 'ATOR_PROCESSO',
         },
         // canActivate: [SourceGuard],
       },
@@ -1106,7 +1106,7 @@ export const routes: Routes = [
         component: UpdateParteComponent,
         data: {
           title: 'Atualizar Parte',
-          source: 'PARTE',
+          source: 'ATOR_PROCESSO',
         },
         // canActivate: [SourceGuard],
       },
@@ -1115,7 +1115,7 @@ export const routes: Routes = [
         component: CredorComponent,
         data: {
           title: 'Credor',
-          source: 'CREDOR',
+          source: 'ATOR_PROCESSO',
         },
         // canActivate: [SourceGuard],
       },
@@ -1124,7 +1124,7 @@ export const routes: Routes = [
         component: CreateCredorComponent,
         data: {
           title: 'Criar Credor',
-          source: 'CREDOR',
+          source: 'ATOR_PROCESSO',
         },
         // canActivate: [SourceGuard],
       },
@@ -1133,7 +1133,7 @@ export const routes: Routes = [
         component: UpdateCredorComponent,
         data: {
           title: 'Atualizar Credor',
-          source: 'CREDOR',
+          source: 'ATOR_PROCESSO',
         },
         // canActivate: [SourceGuard],
       },
@@ -1142,7 +1142,7 @@ export const routes: Routes = [
         component: FielDepositarioComponent,
         data: {
           title: 'Fiel Depositario',
-          source: 'FIEL_DEPOSITARIO',
+          source: 'ATOR_PROCESSO',
         },
         // canActivate: [SourceGuard],
       },
@@ -1151,7 +1151,7 @@ export const routes: Routes = [
         component: CreateFielDepositarioComponent,
         data: {
           title: 'Criar Fiel D',
-          source: 'FIEL_DEPOSITARIO',
+          source: 'ATOR_PROCESSO',
         },
         // canActivate: [SourceGuard],
       },
@@ -1160,7 +1160,7 @@ export const routes: Routes = [
         component: UpdateFielDepositarioComponent,
         data: {
           title: 'Atualizar Fiel D',
-          source: 'FIEL_DEPOSITARIO',
+          source: 'ATOR_PROCESSO',
         },
         // canActivate: [SourceGuard],
       },
