@@ -254,6 +254,21 @@ import { UpdateJuizComponent } from './views/juiz/update-juiz/update-juiz.compon
 import { EscrivaoComponent } from './views/escrivao/escrivao.component';
 import { CreateEscrivaoComponent } from './views/escrivao/create-escrivao/create-escrivao.component';
 import { UpdateEscrivaoComponent } from './views/escrivao/update-escrivao/update-escrivao.component';
+import { ReuComponent } from './views/reu/reu.component';
+import { CreateReuComponent } from './views/reu/create-reu/create-reu.component';
+import { UpdateReuComponent } from './views/reu/update-reu/update-reu.component';
+import { AutorComponent } from './views/autor/autor.component';
+import { CreateAutorComponent } from './views/autor/create-autor/create-autor.component';
+import { UpdateAutorComponent } from './views/autor/update-autor/update-autor.component';
+import { ParteComponent } from './views/parte/parte.component';
+import { CreateParteComponent } from './views/parte/create-parte/create-parte.component';
+import { UpdateParteComponent } from './views/parte/update-parte/update-parte.component';
+import { CredorComponent } from './views/credor/credor.component';
+import { CreateCredorComponent } from './views/credor/create-credor/create-credor.component';
+import { UpdateCredorComponent } from './views/credor/update-credor/update-credor.component';
+import { FielDepositarioComponent } from './views/fiel-depositario/fiel-depositario.component';
+import { CreateFielDepositarioComponent } from './views/fiel-depositario/create-fiel-depositario/create-fiel-depositario.component';
+import { UpdateFielDepositarioComponent } from './views/fiel-depositario/update-fiel-depositario/update-fiel-depositario.component';
 
 export function RestangularConfigFactory(
   RestangularProvider,
@@ -448,6 +463,21 @@ export function RestangularConfigFactory(
     EscrivaoComponent,
     CreateEscrivaoComponent,
     UpdateEscrivaoComponent,
+    ReuComponent,
+    CreateReuComponent,
+    UpdateReuComponent,
+    AutorComponent,
+    CreateAutorComponent,
+    UpdateAutorComponent,
+    ParteComponent,
+    CreateParteComponent,
+    UpdateParteComponent,
+    CredorComponent,
+    CreateCredorComponent,
+    UpdateCredorComponent,
+    FielDepositarioComponent,
+    CreateFielDepositarioComponent,
+    UpdateFielDepositarioComponent
   ],
   providers: [
     {

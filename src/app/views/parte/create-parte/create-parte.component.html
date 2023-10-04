@@ -1,0 +1,171 @@
+<form [formGroup]="formulario" (ngSubmit)="onSubmit()" *ngIf="formulario">
+  <div class="animated fadeIn">
+    <!-- dados pessoas -->
+    <div class="row">
+      <div class="col-lg-12">
+        <div class="card">
+          <div class="card-header">
+            <i class="fa fa-user-edit"></i>
+            Dados Pessoais
+          </div>
+
+          <div class="card-block">
+            <div class="row ">
+              <div class="form-group col-4">
+                <label for="nomeCompleto">Nome Completo</label>
+                <input type="text" class="form-control" [ngClass]="aplicaCssErro('nomeCompleto')" id="nomeCompleto"
+                  placeholder="Nome Completo" formControlName="nomeCompleto">
+              </div>
+              <div class="form-group col-4">
+                <label for="dataNascimento">Data de Nacimento</label>
+                <input type="text" class="form-control" [ngClass]="aplicaCssErro('dataNascimento')" id="dataNascimento"
+                  formControlName="dataNascimento" [textMask]="{mask: maskData}">
+              </div>
+              <div class="form-group col-4">
+                <label for="genero">Gênero </label>
+                <select class="form-control" [ngClass]="aplicaCssErro('genero')" formControlName="genero">
+                  <option value="M">Masculino</option>
+                  <option value="F">Feminino</option>
+                </select>
+              </div>
+            </div>
+            <div class="row">
+              <div class="form-group col-4">
+                <label for="telefoneCelular">Telefone Celular</label>
+                <input type="text" class="form-control" [ngClass]="aplicaCssErro('telefoneCelular')" id="titulo"
+                  formControlName="telefoneCelular" [textMask]="{mask: mask}">
+              </div>
+              <div class="form-group col-4">
+                <label for="telefone">Telefone Convencional</label>
+                <input type="text" class="form-control" [ngClass]="aplicaCssErro('telefoneConvencional')"
+                  id="telefoneConvencional" formControlName="telefoneConvencional" [textMask]="{mask: mask}">
+              </div>
+              <div class="form-group col-4">
+                <label for="telefone">Telefone Whatsapp</label>
+                <input type="text" class="form-control" [ngClass]="aplicaCssErro('telefoneWhatsapp')"
+                  id="telefoneWhatsapp" formControlName="telefoneWhatsapp" [textMask]="{mask: mask}">
+              </div>
+
+            </div>
+            <div class="row">
+              <div class="form-group col-4">
+                <label for="tipoPessoa">Tipo de Pessoa </label>
+                <select class="form-control" formControlName="tipoPessoa">
+                  <option value="PF">Pessoa Física</option>
+                  <option value="PJ">Pessoa Jurídica</option>
+                </select>
+              </div>
+              <div class="form-group col-4">
+                <label for="numeroDocumento">Nº Documento</label>
+                <input *ngIf="formulario.controls['tipoPessoa'].value == 'PF'"
+                  [ngClass]="aplicaCssErro('numeroDocumento')" type="text" class="form-control" id="numeroDocumento"
+                  placeholder="CPF" formControlName="numeroDocumento" [textMask]="{mask: maskCpf}">
+                <input *ngIf="formulario.controls['tipoPessoa'].value == 'PJ'"
+                  [ngClass]="aplicaCssErro('numeroDocumento')" type="text" class="form-control" id="numeroDocumento"
+                  placeholder="CNPJ" formControlName="numeroDocumento" [textMask]="{mask: maskCnpj}">
+              </div>
+            </div>
+            <div class="row">
+              <div class="form-group col-4">
+                <label for="rg">RG</label>
+                <input [ngClass]="aplicaCssErro('rg')" type="text" class="form-control" id="rg" placeholder="RG"
+                  formControlName="rg" [textMask]="{mask: maskRg}">
+              </div>
+              <div class="form-group col-4">
+                <label for="dataEmissao">Data Emissão</label>
+                <input [ngClass]="aplicaCssErro('dataEmissao')" type="text" class="form-control" id="dataEmissao"
+                  formControlName="dataEmissao" [bsConfig]="{ dateInputFormat: 'DD/MM/YYYY' }" bsDatepicker
+                  (bsValueChange)="onValueChange($event, 'dataEmissao')">
+              </div>
+              <div class="form-group col-4">
+                <label for="orgaoEmissor">Orgão Emissor</label>
+                <input [ngClass]="aplicaCssErro('orgaoEmissor')" type="text" class="form-control" id="orgaoEmissor"
+                  placeholder="Orgão Emissor" formControlName="orgaoEmissor">
+              </div>
+            </div>
+            <div class="row">
+              <div class="form-group col-4">
+                <label for="nome">Advogado</label>
+                <ng-select [multiple]="true" [items]="advogados" formControlName="advogados" [ngClass]="aplicaCssErro('advogados')"
+                  bindLabel="nomeCompleto" bindValue="pessoaId">
+                  <ng-template ng-option-tmp let-item="item" let-index="index" let-search="searchTerm">
+                    {{ item.nomeCompleto }}
+                  </ng-template>
+                </ng-select>
+              </div>
+              <div class="form-group col-4">
+                <label for="principal">Principal ? </label><br />
+                <label class="switch switch-text switch-pill switch-primary">
+                  <input type="checkbox" id="principal" class="switch-input" formControlName="principal" />
+                  <span class="switch-label" data-on="Sim" data-off="Não"></span>
+                  <span class="switch-handle"></span>
+                </label>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- enderecos -->
+    <div class="animated fadeIn" formGroupName="endereco">
+      <div class="row">
+        <div class="col-lg-12">
+          <div class="card">
+            <div class="card-header">
+              <i class="fa fa-home"></i>
+              Endereço
+            </div>
+
+            <div class="card-block">
+              <div class="row">
+                <div class="form-group col-4">
+                  <label for="cep">Cep</label>
+                  <input type="text" class="form-control" id="cep" [ngClass]="aplicaCssErro('endereco.cep')"
+                    formControlName="cep" (blur)="consultaCEP()" [textMask]="{mask: maskCep}">
+                </div>
+                <div class="form-group col-4">
+                  <label for="logradouro">Logradouro</label>
+                  <input type="text" class="form-control" [ngClass]="aplicaCssErro('endereco.logradouro')"
+                    id="logradouro" formControlName="logradouro">
+                </div>
+
+                <div class="form-group col-4">
+                  <label for="numero">Número</label>
+                  <input type="text" class="form-control" [ngClass]="aplicaCssErro('endereco.numero')" id="numero"
+                    formControlName="numero">
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="form-group col-3">
+                  <label for="complemento">Complemento</label>
+                  <input type="text" class="form-control" [ngClass]="aplicaCssErro('endereco.complemento')"
+                    id="complemento" formControlName="complemento">
+                </div>
+                <div class="form-group col-3">
+                  <label for="bairro">Bairro</label>
+                  <input type="text" class="form-control" [ngClass]="aplicaCssErro('endereco.bairro')" id="bairro"
+                    formControlName="bairro">
+                </div>
+                <div class="form-group col-3">
+                  <label for="cidade">Cidade</label>
+                  <input type="text" class="form-control" id="cidade" formControlName="cidade"
+                    [ngClass]="aplicaCssErro('endereco.cidade')">
+                </div>
+                <div class="form-group col-3">
+                  <label for="estado">Estado</label>
+                  <input type="text" class="form-control" id="estado" formControlName="estado"
+                    [ngClass]="aplicaCssErro('endereco.estado')" maxlength="2">
+                </div>
+              </div>
+            </div>
+            <div class="card-footer">
+              <app-save-cancel-buttons [route]="'/reu'"
+                [buttonDisabled]="!formulario.valid"></app-save-cancel-buttons>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</form>

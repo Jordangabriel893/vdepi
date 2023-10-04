@@ -112,6 +112,21 @@ import { UpdateJuizComponent } from './views/juiz/update-juiz/update-juiz.compon
 import { EscrivaoComponent } from './views/escrivao/escrivao.component';
 import { CreateEscrivaoComponent } from './views/escrivao/create-escrivao/create-escrivao.component';
 import { UpdateEscrivaoComponent } from './views/escrivao/update-escrivao/update-escrivao.component';
+import { ReuComponent } from './views/reu/reu.component';
+import { CreateReuComponent } from './views/reu/create-reu/create-reu.component';
+import { UpdateReuComponent } from './views/reu/update-reu/update-reu.component';
+import { AutorComponent } from './views/autor/autor.component';
+import { CreateAutorComponent } from './views/autor/create-autor/create-autor.component';
+import { UpdateAutorComponent } from './views/autor/update-autor/update-autor.component';
+import { ParteComponent } from './views/parte/parte.component';
+import { CreateParteComponent } from './views/parte/create-parte/create-parte.component';
+import { UpdateParteComponent } from './views/parte/update-parte/update-parte.component';
+import { UpdateCredorComponent } from './views/credor/update-credor/update-credor.component';
+import { CreateCredorComponent } from './views/credor/create-credor/create-credor.component';
+import { CredorComponent } from './views/credor/credor.component';
+import { FielDepositarioComponent } from './views/fiel-depositario/fiel-depositario.component';
+import { CreateFielDepositarioComponent } from './views/fiel-depositario/create-fiel-depositario/create-fiel-depositario.component';
+import { UpdateFielDepositarioComponent } from './views/fiel-depositario/update-fiel-depositario/update-fiel-depositario.component';
 
 export const routes: Routes = [
   { path: '', redirectTo: '/home', pathMatch: 'full' },
@@ -1011,6 +1026,141 @@ export const routes: Routes = [
         data: {
           title: 'Atualizar Escrivao',
           source: 'ESCRIVAO',
+        },
+        // canActivate: [SourceGuard],
+      },
+      {
+        path: 'reu',
+        component: ReuComponent,
+        data: {
+          title: 'Reu',
+          source: 'REU',
+        },
+        // canActivate: [SourceGuard],
+      },
+      {
+        path: 'create-reu',
+        component: CreateReuComponent,
+        data: {
+          title: 'Criar Reu',
+          source: 'REU',
+        },
+        // canActivate: [SourceGuard],
+      },
+      {
+        path: 'update-reu/:id',
+        component: UpdateReuComponent,
+        data: {
+          title: 'Atualizar Reu',
+          source: 'REU',
+        },
+        // canActivate: [SourceGuard],
+      },
+      {
+        path: 'autor',
+        component: AutorComponent,
+        data: {
+          title: 'Autor',
+          source: 'AUTOR',
+        },
+        // canActivate: [SourceGuard],
+      },
+      {
+        path: 'create-autor',
+        component: CreateAutorComponent,
+        data: {
+          title: 'Criar Autor',
+          source: 'AUTOR',
+        },
+        // canActivate: [SourceGuard],
+      },
+      {
+        path: 'update-autor/:id',
+        component: UpdateAutorComponent,
+        data: {
+          title: 'Atualizar Autor',
+          source: 'AUTOR',
+        },
+        // canActivate: [SourceGuard],
+      },
+      {
+        path: 'parte',
+        component: ParteComponent,
+        data: {
+          title: 'Parte',
+          source: 'PARTE',
+        },
+        // canActivate: [SourceGuard],
+      },
+      {
+        path: 'create-parte',
+        component: CreateParteComponent,
+        data: {
+          title: 'Criar Parte',
+          source: 'PARTE',
+        },
+        // canActivate: [SourceGuard],
+      },
+      {
+        path: 'update-parte/:id',
+        component: UpdateParteComponent,
+        data: {
+          title: 'Atualizar Parte',
+          source: 'PARTE',
+        },
+        // canActivate: [SourceGuard],
+      },
+      {
+        path: 'credor',
+        component: CredorComponent,
+        data: {
+          title: 'Credor',
+          source: 'CREDOR',
+        },
+        // canActivate: [SourceGuard],
+      },
+      {
+        path: 'create-credor',
+        component: CreateCredorComponent,
+        data: {
+          title: 'Criar Credor',
+          source: 'CREDOR',
+        },
+        // canActivate: [SourceGuard],
+      },
+      {
+        path: 'update-credor/:id',
+        component: UpdateCredorComponent,
+        data: {
+          title: 'Atualizar Credor',
+          source: 'CREDOR',
+        },
+        // canActivate: [SourceGuard],
+      },
+      {
+        path: 'fiel-depositario',
+        component: FielDepositarioComponent,
+        data: {
+          title: 'Fiel Depositario',
+          source: 'FIEL_DEPOSITARIO',
+        },
+        // canActivate: [SourceGuard],
+      },
+      {
+        path: 'create-fiel-depositario',
+        component: CreateFielDepositarioComponent,
+        data: {
+          title: 'Criar Fiel D',
+          source: 'FIEL_DEPOSITARIO',
+        },
+        // canActivate: [SourceGuard],
+      },
+      {
+        path: 'update-fiel-depositario/:id',
+        component: UpdateFielDepositarioComponent,
+        data: {
+          title: 'Atualizar Fiel D',
+          source: 'FIEL_DEPOSITARIO',
         },
         // canActivate: [SourceGuard],
       },
