@@ -248,6 +248,36 @@ import { AtualizarLoteCampoComponent } from './views/lote-campo/atualizar-lote-c
 import { CriarTipoFotoComponent } from './views/tipo-foto/criar-tipo-foto/criar-tipo-foto.component';
 import { AtualizarTipoFotoComponent } from './views/tipo-foto/atualizar-tipo-foto/atualizar-tipo-foto.component';
 import { TipoFotoComponent } from './views/tipo-foto/tipo-foto.component';
+import { JuizoComponent } from './views/juizo/juizo.component';
+import { CreateJuizoComponent } from './views/juizo/create-juizo/create-juizo.component';
+import { UpdateJuizoComponent } from './views/juizo/update-juizo/update-juizo.component';
+import { VaraComponent } from './views/vara/vara.component';
+import { CreateVaraComponent } from './views/vara/create-vara/create-vara.component';
+import { UpdateVaraComponent } from './views/vara/update-vara/update-vara.component';
+import { AdvogadoComponent } from './views/advogado/advogado.component';
+import { CreateAdvogadoComponent } from './views/advogado/create-advogado/create-advogado.component';
+import { UpdateAdvogadoComponent } from './views/advogado/update-advogado/update-advogado.component';
+import { JuizComponent } from './views/juiz/juiz.component';
+import { CreateJuizComponent } from './views/juiz/create-juiz/create-juiz.component';
+import { UpdateJuizComponent } from './views/juiz/update-juiz/update-juiz.component';
+import { EscrivaoComponent } from './views/escrivao/escrivao.component';
+import { CreateEscrivaoComponent } from './views/escrivao/create-escrivao/create-escrivao.component';
+import { UpdateEscrivaoComponent } from './views/escrivao/update-escrivao/update-escrivao.component';
+import { ReuComponent } from './views/reu/reu.component';
+import { CreateReuComponent } from './views/reu/create-reu/create-reu.component';
+import { UpdateReuComponent } from './views/reu/update-reu/update-reu.component';
+import { AutorComponent } from './views/autor/autor.component';
+import { CreateAutorComponent } from './views/autor/create-autor/create-autor.component';
+import { UpdateAutorComponent } from './views/autor/update-autor/update-autor.component';
+import { ParteComponent } from './views/parte/parte.component';
+import { CreateParteComponent } from './views/parte/create-parte/create-parte.component';
+import { UpdateParteComponent } from './views/parte/update-parte/update-parte.component';
+import { CredorComponent } from './views/credor/credor.component';
+import { CreateCredorComponent } from './views/credor/create-credor/create-credor.component';
+import { UpdateCredorComponent } from './views/credor/update-credor/update-credor.component';
+import { FielDepositarioComponent } from './views/fiel-depositario/fiel-depositario.component';
+import { CreateFielDepositarioComponent } from './views/fiel-depositario/create-fiel-depositario/create-fiel-depositario.component';
+import { UpdateFielDepositarioComponent } from './views/fiel-depositario/update-fiel-depositario/update-fiel-depositario.component';
 
 export function RestangularConfigFactory(
   RestangularProvider,
@@ -435,7 +465,37 @@ export function RestangularConfigFactory(
     AtualizarLoteCampoComponent,
     TipoFotoComponent,
     CriarTipoFotoComponent,
-    AtualizarTipoFotoComponent
+    AtualizarTipoFotoComponent,
+    JuizoComponent,
+    CreateJuizoComponent,
+    UpdateJuizoComponent,
+    VaraComponent,
+    CreateVaraComponent,
+    UpdateVaraComponent,
+    AdvogadoComponent,
+    CreateAdvogadoComponent,
+    UpdateAdvogadoComponent,
+    JuizComponent,
+    CreateJuizComponent,
+    UpdateJuizComponent,
+    EscrivaoComponent,
+    CreateEscrivaoComponent,
+    UpdateEscrivaoComponent,
+    ReuComponent,
+    CreateReuComponent,
+    UpdateReuComponent,
+    AutorComponent,
+    CreateAutorComponent,
+    UpdateAutorComponent,
+    ParteComponent,
+    CreateParteComponent,
+    UpdateParteComponent,
+    CredorComponent,
+    CreateCredorComponent,
+    UpdateCredorComponent,
+    FielDepositarioComponent,
+    CreateFielDepositarioComponent,
+    UpdateFielDepositarioComponent,
   ],
   providers: [
     {

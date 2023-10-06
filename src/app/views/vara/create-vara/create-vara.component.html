@@ -1,0 +1,80 @@
+<form [formGroup]="formulario" (ngSubmit)="onSubmit()" appFocus *ngIf="formulario">
+  <div class="animated fadeIn">
+    <div class="row">
+      <div class="col-lg-12">
+        <div class="card">
+          <div class="card-header d-flex align-items-center">
+            <i class="fa fa-window-maximize" aria-hidden="true"></i>
+            &nbsp;Informações - Obrigatorias*
+          </div>
+          <div class="card-block">
+            <div class="row">
+              <div class="row col-8">
+                <div class="form-group col-6">
+                  <label for="nome">Nome</label>
+                  <input type="text" class="form-control" [ngClass]="aplicaCssErro('nome')" id="nome" placeholder="Nome"
+                    name="Nome" formControlName="nome">
+                </div>
+                <div class="form-group col-6">
+                  <label for="nome">Endereço</label>
+                  <input type="text" class="form-control" [ngClass]="aplicaCssErro('endereco')" id="endereco"
+                    placeholder="Sp" name="endereço" formControlName="endereco">
+                </div>
+                <div class="form-group col-6">
+                  <label for="nome">Juizo</label>
+                  <select formControlName="juizoId" class="form-control" [ngClass]="aplicaCssErro('juizoId') ">
+                    <option>Selecione um juizo</option>
+                    <option *ngFor="let juizo of juizos" value="{{juizo.juizoId}}">{{juizo.nome}}</option>
+                  </select>
+                </div>
+                <div class="form-group col-6">
+                  <label for="nome">Escrivão</label>
+                  <ng-select [multiple]="true" [items]="escrivaes" formControlName="escrivaes" [ngClass]="aplicaCssErro('escrivaes')"
+                    bindLabel="nomeCompleto" bindValue="pessoaId">
+                    <ng-template ng-option-tmp let-item="item" let-index="index" let-search="searchTerm">
+                      {{ item.nomeCompleto }}
+                    </ng-template>
+                  </ng-select>
+                </div>
+                <div class="form-group col-6">
+                  <label for="nome">Juiz</label>
+                  <ng-select [multiple]="true" [items]="juizes" formControlName="juizes" [ngClass]="aplicaCssErro('juizes')"
+                    bindLabel="nomeCompleto" bindValue="pessoaId">
+                    <ng-template ng-option-tmp let-item="item" let-index="index" let-search="searchTerm">
+                      {{ item.nomeCompleto }}
+                    </ng-template>
+                  </ng-select>
+                </div>
+              </div>
+              <div class="col-4" formGroupName="logo">
+                <fieldset class="form-group">
+                  <label>Logo da vara</label>
+                  <div class="custom-file fileInputProfileWrap">
+                    <input type="file" (change)="fileChangeEvent($event)" class="fileInputProfile" #inputFile
+                      accept="image/*" />
+                    <div class="img-space" [ngClass]="aplicaCssErro('logo')">
+                      <ng-container *ngIf="isImageSaved; else elseTemplate">
+                        <img [src]="cardImageBase64" />
+                      </ng-container>
+                      <ng-template #elseTemplate>
+                        <img src="../../../../assets/img/logo-generica.png" class="img-responsive" />
+                      </ng-template>
+                    </div>
+                  </div>
+                </fieldset>
+                <a class="btn btn-danger" (click)="removeImage(inputFile)" *ngIf="isImageSaved"><i
+                    class="fa fa-trash"></i> Remover</a>
+                <div class="alert alert-danger" *ngIf="imageError">
+                  {{ imageError }}
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="card-footer">
+            <app-save-cancel-buttons [route]="'/vara'" [buttonDisabled]="!formulario.valid"></app-save-cancel-buttons>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</form>

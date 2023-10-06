@@ -106,6 +106,36 @@ import { LoteCampoComponent } from './views/lote-campo/lote-campo.component';
 import { CriarTipoFotoComponent } from './views/tipo-foto/criar-tipo-foto/criar-tipo-foto.component';
 import { AtualizarTipoFotoComponent } from './views/tipo-foto/atualizar-tipo-foto/atualizar-tipo-foto.component';
 import { TipoFotoComponent } from './views/tipo-foto/tipo-foto.component';
+import { JuizoComponent } from './views/juizo/juizo.component';
+import { CreateJuizoComponent } from './views/juizo/create-juizo/create-juizo.component';
+import { UpdateJuizoComponent } from './views/juizo/update-juizo/update-juizo.component';
+import { CreateVaraComponent } from './views/vara/create-vara/create-vara.component';
+import { UpdateVaraComponent } from './views/vara/update-vara/update-vara.component';
+import { VaraComponent } from './views/vara/vara.component';
+import { UpdateAdvogadoComponent } from './views/advogado/update-advogado/update-advogado.component';
+import { CreateAdvogadoComponent } from './views/advogado/create-advogado/create-advogado.component';
+import { AdvogadoComponent } from './views/advogado/advogado.component';
+import { JuizComponent } from './views/juiz/juiz.component';
+import { CreateJuizComponent } from './views/juiz/create-juiz/create-juiz.component';
+import { UpdateJuizComponent } from './views/juiz/update-juiz/update-juiz.component';
+import { EscrivaoComponent } from './views/escrivao/escrivao.component';
+import { CreateEscrivaoComponent } from './views/escrivao/create-escrivao/create-escrivao.component';
+import { UpdateEscrivaoComponent } from './views/escrivao/update-escrivao/update-escrivao.component';
+import { ReuComponent } from './views/reu/reu.component';
+import { CreateReuComponent } from './views/reu/create-reu/create-reu.component';
+import { UpdateReuComponent } from './views/reu/update-reu/update-reu.component';
+import { AutorComponent } from './views/autor/autor.component';
+import { CreateAutorComponent } from './views/autor/create-autor/create-autor.component';
+import { UpdateAutorComponent } from './views/autor/update-autor/update-autor.component';
+import { ParteComponent } from './views/parte/parte.component';
+import { CreateParteComponent } from './views/parte/create-parte/create-parte.component';
+import { UpdateParteComponent } from './views/parte/update-parte/update-parte.component';
+import { UpdateCredorComponent } from './views/credor/update-credor/update-credor.component';
+import { CreateCredorComponent } from './views/credor/create-credor/create-credor.component';
+import { CredorComponent } from './views/credor/credor.component';
+import { FielDepositarioComponent } from './views/fiel-depositario/fiel-depositario.component';
+import { CreateFielDepositarioComponent } from './views/fiel-depositario/create-fiel-depositario/create-fiel-depositario.component';
+import { UpdateFielDepositarioComponent } from './views/fiel-depositario/update-fiel-depositario/update-fiel-depositario.component';
 
 export const routes: Routes = [
   { path: '', redirectTo: '/home', pathMatch: 'full' },
@@ -907,7 +937,7 @@ export const routes: Routes = [
           title: 'Criar Campo de Lote',
           source: 'LOTE_CAMPO',
         },
-        // canActivate: [SourceGuard],
+        canActivate: [SourceGuard],
       },
       {
         path: 'atualizar-lote-campo/:id',
@@ -916,7 +946,7 @@ export const routes: Routes = [
           title: 'Atualizar campo de lote',
           source: 'LOTE_CAMPO',
         },
-        // canActivate: [SourceGuard],
+        canActivate: [SourceGuard],
       },
       {
         path: 'lote-campo',
@@ -925,7 +955,7 @@ export const routes: Routes = [
           title: 'Campos de lote',
           source: 'LOTE_CAMPO',
         },
-        // canActivate: [SourceGuard],
+        canActivate: [SourceGuard],
       },
       {
         path: 'criar-tipo-foto',
@@ -934,7 +964,7 @@ export const routes: Routes = [
           title: 'Criar tipo de foto',
           source: 'TIPO_FOTO',
         },
-        // canActivate: [SourceGuard],
+        canActivate: [SourceGuard],
       },
       {
         path: 'atualizar-tipo-foto/:id',
@@ -943,7 +973,7 @@ export const routes: Routes = [
           title: 'Atualizar tipo de foto',
           source: 'TIPO_FOTO',
         },
-        // canActivate: [SourceGuard],
+        canActivate: [SourceGuard],
       },
       {
         path: 'tipo-foto',
@@ -952,7 +982,282 @@ export const routes: Routes = [
           title: 'Campos de tipo de loto',
           source: 'TIPO_FOTO',
         },
-        // canActivate: [SourceGuard],
+        canActivate: [SourceGuard],
+      },
+      {
+        path: 'juizo',
+        component: JuizoComponent,
+        data: {
+          title: 'Juizo',
+          source: 'LEILOES',
+        },
+        canActivate: [SourceGuard],
+      },
+
+      {
+        path: 'create-juizo',
+        component: CreateJuizoComponent,
+        data: {
+          title: 'Criar Juizo',
+          source: 'LEILOES',
+        },
+        canActivate: [SourceGuard],
+      },
+
+      {
+        path: 'update-juizo/:id',
+        component: UpdateJuizoComponent,
+        data: {
+          title: 'Atualizar Juizo',
+          source: 'LEILOES',
+        },
+        canActivate: [SourceGuard],
+      },
+
+      {
+        path: 'vara',
+        component: VaraComponent,
+        data: {
+          title: 'vara',
+          source: 'LEILOES',
+        },
+        canActivate: [SourceGuard],
+      },
+
+      {
+        path: 'create-vara',
+        component: CreateVaraComponent,
+        data: {
+          title: 'Criar vara',
+          source: 'LEILOES',
+        },
+        canActivate: [SourceGuard],
+      },
+
+      {
+        path: 'update-vara/:id',
+        component: UpdateVaraComponent,
+        data: {
+          title: 'Atualizar vara',
+          source: 'LEILOES',
+        },
+        canActivate: [SourceGuard],
+      },
+      {
+        path: 'advogado',
+        component: AdvogadoComponent,
+        data: {
+          title: 'Advogado',
+          source: 'LEILOES',
+        },
+        canActivate: [SourceGuard],
+      },
+      {
+        path: 'create-advogado',
+        component: CreateAdvogadoComponent,
+        data: {
+          title: 'Criar Advogado',
+          source: 'LEILOES',
+        },
+        canActivate: [SourceGuard],
+      },
+      {
+        path: 'update-advogado/:id',
+        component: UpdateAdvogadoComponent,
+        data: {
+          title: 'Atualizar Advogado',
+          source: 'LEILOES',
+        },
+        canActivate: [SourceGuard],
+      },
+      {
+        path: 'juiz',
+        component: JuizComponent,
+        data: {
+          title: 'Juiz',
+          source: 'LEILOES',
+        },
+        canActivate: [SourceGuard],
+      },
+      {
+        path: 'create-juiz',
+        component: CreateJuizComponent,
+        data: {
+          title: 'Criar Juiz',
+          source: 'LEILOES',
+        },
+        canActivate: [SourceGuard],
+      },
+      {
+        path: 'update-juiz/:id',
+        component: UpdateJuizComponent,
+        data: {
+          title: 'Atualizar Juiz',
+          source: 'LEILOES',
+        },
+        canActivate: [SourceGuard],
+      },
+      {
+        path: 'escrivao',
+        component: EscrivaoComponent,
+        data: {
+          title: 'Escrivao',
+          source: 'LEILOES',
+        },
+        canActivate: [SourceGuard],
+      },
+      {
+        path: 'create-escrivao',
+        component: CreateEscrivaoComponent,
+        data: {
+          title: 'Criar Escrivao',
+          source: 'LEILOES',
+        },
+        canActivate: [SourceGuard],
+      },
+      {
+        path: 'update-escrivao/:id',
+        component: UpdateEscrivaoComponent,
+        data: {
+          title: 'Atualizar Escrivao',
+          source: 'LEILOES',
+        },
+        canActivate: [SourceGuard],
+      },
+      {
+        path: 'reu',
+        component: ReuComponent,
+        data: {
+          title: 'Reu',
+          source: 'LEILOES',
+        },
+        canActivate: [SourceGuard],
+      },
+      {
+        path: 'create-reu',
+        component: CreateReuComponent,
+        data: {
+          title: 'Criar Reu',
+          source: 'LEILOES',
+        },
+        canActivate: [SourceGuard],
+      },
+      {
+        path: 'update-reu/:id',
+        component: UpdateReuComponent,
+        data: {
+          title: 'Atualizar Reu',
+          source: 'LEILOES',
+        },
+        canActivate: [SourceGuard],
+      },
+      {
+        path: 'autor',
+        component: AutorComponent,
+        data: {
+          title: 'Autor',
+          source: 'LEILOES',
+        },
+        canActivate: [SourceGuard],
+      },
+      {
+        path: 'create-autor',
+        component: CreateAutorComponent,
+        data: {
+          title: 'Criar Autor',
+          source: 'LEILOES',
+        },
+        canActivate: [SourceGuard],
+      },
+      {
+        path: 'update-autor/:id',
+        component: UpdateAutorComponent,
+        data: {
+          title: 'Atualizar Autor',
+          source: 'LEILOES',
+        },
+        canActivate: [SourceGuard],
+      },
+      {
+        path: 'parte',
+        component: ParteComponent,
+        data: {
+          title: 'Partes',
+          source: 'LEILOES',
+        },
+        canActivate: [SourceGuard],
+      },
+      {
+        path: 'create-parte',
+        component: CreateParteComponent,
+        data: {
+          title: 'Criar Partes',
+          source: 'LEILOES',
+        },
+        canActivate: [SourceGuard],
+      },
+      {
+        path: 'update-parte/:id',
+        component: UpdateParteComponent,
+        data: {
+          title: 'Atualizar Partes',
+          source: 'LEILOES',
+        },
+        canActivate: [SourceGuard],
+      },
+      {
+        path: 'credor',
+        component: CredorComponent,
+        data: {
+          title: 'Credor',
+          source: 'LEILOES',
+        },
+        canActivate: [SourceGuard],
+      },
+      {
+        path: 'create-credor',
+        component: CreateCredorComponent,
+        data: {
+          title: 'Criar Credor',
+          source: 'LEILOES',
+        },
+        canActivate: [SourceGuard],
+      },
+      {
+        path: 'update-credor/:id',
+        component: UpdateCredorComponent,
+        data: {
+          title: 'Atualizar Credor',
+          source: 'LEILOES',
+        },
+        canActivate: [SourceGuard],
+      },
+      {
+        path: 'fiel-depositario',
+        component: FielDepositarioComponent,
+        data: {
+          title: 'Fiel Depositário',
+          source: 'LEILOES',
+        },
+        canActivate: [SourceGuard],
+      },
+      {
+        path: 'create-fiel-depositario',
+        component: CreateFielDepositarioComponent,
+        data: {
+          title: 'Criar Fiel Depositário',
+          source: 'LEILOES',
+        },
+        canActivate: [SourceGuard],
+      },
+      {
+        path: 'update-fiel-depositario/:id',
+        component: UpdateFielDepositarioComponent,
+        data: {
+          title: 'Atualizar Fiel Depositário',
+          source: 'LEILOES',
+        },
+        canActivate: [SourceGuard],
       },
       {
         path: 'access-denied',

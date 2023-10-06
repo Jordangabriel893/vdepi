@@ -274,4 +274,90 @@ export const navigation = [
     source: 'TIPO_FOTO',
     grupo: 'CADASTROS',
   },
+
+  {
+    title: true,
+    name: 'JUDICIAL',
+    grupo: 'JUDICIAL',
+  },
+
+  {
+    name: 'Juizo',
+    url: '/juizo',
+    icon: 'fa fa-user',
+    source: 'JUIZO',
+    grupo: 'JUDICIAL',
+  },
+
+  {
+    name: 'Vara',
+    url: '/vara',
+    icon: 'fa fa-user',
+    source: 'VARA',
+    grupo: 'JUDICIAL',
+  },
+
+  {
+    name: 'Juiz',
+    url: '/juiz',
+    icon: 'fa fa-user',
+    source: 'JUIZ',
+    grupo: 'JUDICIAL',
+  },
+
+  {
+    name: 'Escrivao',
+    url: '/escrivao',
+    icon: 'fa fa-user',
+    source: 'ESCRIVAO',
+    grupo: 'JUDICIAL',
+  },
+
+  {
+    name: 'Advogado',
+    url: '/advogado',
+    icon: 'fa fa-user',
+    source: 'ADVOGADO',
+    grupo: 'JUDICIAL',
+  },
+
+  {
+    name: 'Reu',
+    url: '/reu',
+    icon: 'fa fa-user',
+    source: 'ATOR_PROCESSO',
+    grupo: 'JUDICIAL',
+  },
+
+  {
+    name: 'Autor',
+    url: '/autor',
+    icon: 'fa fa-user',
+    source: 'ATOR_PROCESSO',
+    grupo: 'JUDICIAL',
+  },
+
+  {
+    name: 'Parte',
+    url: '/parte',
+    icon: 'fa fa-user',
+    source: 'ATOR_PROCESSO',
+    grupo: 'JUDICIAL',
+  },
+
+  {
+    name: 'Credor',
+    url: '/credor',
+    icon: 'fa fa-user',
+    source: 'ATOR_PROCESSO',
+    grupo: 'JUDICIAL',
+  },
+
+  {
+    name: 'Fiel Depositario',
+    url: '/fiel-depositario',
+    icon: 'fa fa-user',
+    source: 'ATOR_PROCESSO',
+    grupo: 'JUDICIAL',
+  },
 ];
