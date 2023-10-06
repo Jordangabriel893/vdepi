@@ -251,19 +251,12 @@ export const navigation = [
     source: 'TEMPLATE_DOC',
     grupo: 'CADASTROS',
   },
-
-  {
-    title: true,
-    name: 'Manutençao de Tabelas',
-    grupo: 'MANUTENCAO',
-  },
-
   {
     name: 'Tipo de lote',
     url: '/tipo-lote',
     icon: 'fa fa-box',
     source: 'TIPO_LOTE',
-    grupo: 'MANUTENCAO',
+    grupo: 'CADASTROS',
   },
 
   {
@@ -271,7 +264,7 @@ export const navigation = [
     url: '/lote-campo',
     icon: 'fa fa-box',
     source: 'LOTE_CAMPO',
-    grupo: 'MANUTENCAO',
+    grupo: 'CADASTROS',
   },
 
   {
@@ -279,7 +272,6 @@ export const navigation = [
     url: '/tipo-foto',
     icon: 'fa fa-box',
     source: 'TIPO_FOTO',
-    grupo: 'MANUTENCAO',
+    grupo: 'CADASTROS',
   },
-
 ];
