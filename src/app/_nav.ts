@@ -282,71 +282,71 @@ export const navigation = [
   },
 
   {
-    name: 'Juizo',
+    name: 'Juizos',
     url: '/juizo',
     icon: 'fa fa-user',
-    source: 'JUIZO',
+    source: 'LEILOES',
     grupo: 'JUDICIAL',
   },
 
   {
-    name: 'Vara',
+    name: 'Varas',
     url: '/vara',
     icon: 'fa fa-user',
-    source: 'VARA',
+    source: 'LEILOES',
     grupo: 'JUDICIAL',
   },
 
   {
-    name: 'Juiz',
+    name: 'Juizes',
     url: '/juiz',
     icon: 'fa fa-user',
-    source: 'JUIZ',
+    source: 'LEILOES',
     grupo: 'JUDICIAL',
   },
 
   {
-    name: 'Escrivao',
+    name: 'Escrivães',
     url: '/escrivao',
     icon: 'fa fa-user',
-    source: 'ESCRIVAO',
+    source: 'LEILOES',
     grupo: 'JUDICIAL',
   },
 
   {
-    name: 'Advogado',
+    name: 'Advogados',
     url: '/advogado',
     icon: 'fa fa-user',
-    source: 'ADVOGADO',
+    source: 'LEILOES',
     grupo: 'JUDICIAL',
   },
 
   {
-    name: 'Reu',
+    name: 'Réus',
     url: '/reu',
     icon: 'fa fa-user',
-    source: 'ATOR_PROCESSO',
+    source: 'LEILOES',
     grupo: 'JUDICIAL',
   },
 
   {
-    name: 'Autor',
+    name: 'Autores',
     url: '/autor',
     icon: 'fa fa-user',
-    source: 'ATOR_PROCESSO',
+    source: 'LEILOES',
     grupo: 'JUDICIAL',
   },
 
   {
-    name: 'Parte',
+    name: 'Partes',
     url: '/parte',
     icon: 'fa fa-user',
-    source: 'ATOR_PROCESSO',
+    source: 'LEILOES',
     grupo: 'JUDICIAL',
   },
 
   {
-    name: 'Credor',
+    name: 'Credores',
     url: '/credor',
     icon: 'fa fa-user',
     source: 'ATOR_PROCESSO',

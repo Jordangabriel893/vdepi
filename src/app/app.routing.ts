@@ -988,7 +988,7 @@ export const routes: Routes = [
         path: 'juizo',
         component: JuizoComponent,
         data: {
-          title: 'Juizo',
+          title: 'Juizos',
           source: 'LEILOES',
         },
         canActivate: [SourceGuard],
@@ -1018,7 +1018,7 @@ export const routes: Routes = [
         path: 'vara',
         component: VaraComponent,
         data: {
-          title: 'vara',
+          title: 'Varas',
           source: 'LEILOES',
         },
         canActivate: [SourceGuard],
@@ -1028,7 +1028,7 @@ export const routes: Routes = [
         path: 'create-vara',
         component: CreateVaraComponent,
         data: {
-          title: 'Criar vara',
+          title: 'Criar Vara',
           source: 'LEILOES',
         },
         canActivate: [SourceGuard],
@@ -1038,7 +1038,7 @@ export const routes: Routes = [
         path: 'update-vara/:id',
         component: UpdateVaraComponent,
         data: {
-          title: 'Atualizar vara',
+          title: 'Atualizar Vara',
           source: 'LEILOES',
         },
         canActivate: [SourceGuard],
@@ -1047,7 +1047,7 @@ export const routes: Routes = [
         path: 'advogado',
         component: AdvogadoComponent,
         data: {
-          title: 'Advogado',
+          title: 'Advogados',
           source: 'LEILOES',
         },
         canActivate: [SourceGuard],
@@ -1074,7 +1074,7 @@ export const routes: Routes = [
         path: 'juiz',
         component: JuizComponent,
         data: {
-          title: 'Juiz',
+          title: 'Juizes',
           source: 'LEILOES',
         },
         canActivate: [SourceGuard],
@@ -1101,7 +1101,7 @@ export const routes: Routes = [
         path: 'escrivao',
         component: EscrivaoComponent,
         data: {
-          title: 'Escrivao',
+          title: 'Escrivães',
           source: 'LEILOES',
         },
         canActivate: [SourceGuard],
@@ -1110,7 +1110,7 @@ export const routes: Routes = [
         path: 'create-escrivao',
         component: CreateEscrivaoComponent,
         data: {
-          title: 'Criar Escrivao',
+          title: 'Criar Escrivão',
           source: 'LEILOES',
         },
         canActivate: [SourceGuard],
@@ -1119,7 +1119,7 @@ export const routes: Routes = [
         path: 'update-escrivao/:id',
         component: UpdateEscrivaoComponent,
         data: {
-          title: 'Atualizar Escrivao',
+          title: 'Atualizar Escrivão',
           source: 'LEILOES',
         },
         canActivate: [SourceGuard],
@@ -1128,7 +1128,7 @@ export const routes: Routes = [
         path: 'reu',
         component: ReuComponent,
         data: {
-          title: 'Reu',
+          title: 'Réus',
           source: 'LEILOES',
         },
         canActivate: [SourceGuard],
@@ -1155,7 +1155,7 @@ export const routes: Routes = [
         path: 'autor',
         component: AutorComponent,
         data: {
-          title: 'Autor',
+          title: 'Autores',
           source: 'LEILOES',
         },
         canActivate: [SourceGuard],
@@ -1209,7 +1209,7 @@ export const routes: Routes = [
         path: 'credor',
         component: CredorComponent,
         data: {
-          title: 'Credor',
+          title: 'Credores',
           source: 'LEILOES',
         },
         canActivate: [SourceGuard],
