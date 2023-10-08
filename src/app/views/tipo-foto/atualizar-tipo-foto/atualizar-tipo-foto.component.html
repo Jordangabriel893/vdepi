@@ -14,7 +14,7 @@
                 <input type="text" class="form-control" [ngClass]="aplicaCssErro('descricao')" id="descricao"
                   placeholder="Descrição" name="Descrição" formControlName="descricao">
               </div>
-              <div class="form-group col-6">
+              <div class="form-group col-2">
                 <label for="visivelSite">Visivel no site? </label><br />
                 <label class="switch switch-text switch-pill switch-primary">
                   <input type="checkbox" id="visivelSite" class="switch-input" formControlName="visivelSite" />
@@ -22,9 +22,7 @@
                   <span class="switch-handle"></span>
                 </label>
               </div>
-            </div>
-            <div class="row">
-              <div class="form-group col-6">
+              <div class="form-group col-2">
                 <label for="obrigatorio">Tipo Obrigatório? </label><br />
                 <label class="switch switch-text switch-pill switch-primary">
                   <input type="checkbox" id="obrigatorio" class="switch-input" formControlName="obrigatorio" />
@@ -32,13 +30,29 @@
                   <span class="switch-handle"></span>
                 </label>
               </div>
-              <div class="form-group col-6">
+              <div class="form-group col-2">
                 <label for="vistoria">Vistoria? </label><br />
                 <label class="switch switch-text switch-pill switch-primary">
                   <input type="checkbox" id="vistoria" class="switch-input" formControlName="vistoria" />
                   <span class="switch-label" data-on="Sim" data-off="Não"></span>
                   <span class="switch-handle"></span>
                 </label>
+              </div>
+            </div>
+            <div class="row">
+              <div class="fourm-group col-6" id="categoria">
+                <label for="categoria">Categoria</label>
+                <ng-select [items]="categorias" [multiple]="true" [closeOnSelect]="false" bindValue="categoriaId"
+                  bindLabel="descricao" placeholder="Selecione uma ou mais categorias" formControlName="categorias">
+                  <ng-template ng-option-tmp let-item="item" let-index="index">
+                    <div class="card">
+                      <div class="card-body">
+                        <small>categoria pai: {{ item.categoriaPai.descricao }}</small>
+                        <h2>{{ item.descricao }}</h2>
+                      </div>
+                    </div>
+                  </ng-template>
+                </ng-select>
               </div>
             </div>
           </div>

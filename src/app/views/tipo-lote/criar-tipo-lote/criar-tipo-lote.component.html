@@ -16,32 +16,14 @@
               </div>
               <div class="form-group col-6">
                 <label for="categoria">Categoria</label>
-                <select class="form-control" id="categoria" formControlName="categoriaId">
-                  <option [value]="cat.categoriaId" *ngFor="let cat of categorias">
-                    {{ cat.descricao }}
-                  </option>
+                <select id="categoria" class="form-control">
+                  <option value="" disabled selected>Selecione uma categoria</option>
+                  <ng-container *ngFor="let categoria of categoriasAgrupadas">
+                    <optgroup [label]="categoria.label" *ngIf="categoria.filhos.length > 0">
+                      <option *ngFor="let filho of categoria.filhos" [value]="filho.categoriaId">{{ filho.descricao }}</option>
+                    </optgroup>
+                  </ng-container>
                 </select>
-              </div>
-            </div>
-            <div class="row">
-              <div class="form-group col-6">
-                <label for="regraHabilitacaoId">Regra de habilitação</label>
-                <ng-select [items]="regras" formControlName="regraHabilitacaoId"
-                  [ngClass]="aplicaCssErro('regraHabilitacaoId')" bindValue="regraHabilitacaoId"
-                  bindLabel="tipoValidacaoRegra">
-                  <ng-template ng-option-tmp let-item="item" let-index="index" let-search="searchTerm">
-                    <div style="margin: 10px 0; white-space: normal" class="card">
-                      <div class="card-body">
-                        <h5 class="card-title" [ngOptionHighlight]="search">
-                          {{ item.tipoValidacaoRegra }}
-                        </h5>
-                        <h6 class="card-subtitle mb-2 text-muted">
-                          {{ item.textoExplicativo }}
-                        </h6>
-                      </div>
-                    </div>
-                  </ng-template>
-                </ng-select>
               </div>
             </div>
           </div>

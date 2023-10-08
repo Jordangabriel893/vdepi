@@ -13,6 +13,7 @@ export class AtualizarTipoFotoComponent implements OnInit {
 
   formulario: FormGroup;
   id;
+  categorias: any;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -30,6 +31,15 @@ export class AtualizarTipoFotoComponent implements OnInit {
       .subscribe((dados) => {
         this.updateForm(dados.data);
       });
+
+      this.getCategorias();
+  }
+
+  getCategorias(){
+    this.restangular.one('categoria').get().subscribe((dados) => {
+      this.categorias = dados.data.filter(categoria => categoria.categoriaPaiId);
+      console.log(dados.data)
+    });
   }
 
   onSubmit() {
@@ -64,6 +74,7 @@ export class AtualizarTipoFotoComponent implements OnInit {
       visivelSite: [dados.visivelSite, Validators.required],
       obrigatorio: [dados.obrigatorio, Validators.required],
       vistoria: [dados.vistoria, Validators.required],
+      categorias: [dados.categorias.map(x => x.categoriaId), Validators.required],
     });
   }
 

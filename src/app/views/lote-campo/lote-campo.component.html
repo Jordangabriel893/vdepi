@@ -21,6 +21,9 @@
                   <th>
                     <mfDefaultSorter by="descricao">Descrição</mfDefaultSorter>
                   </th>
+                  <th>
+                    <mfDefaultSorter by="categoria">Categoria</mfDefaultSorter>
+                  </th>
 
                   <th class="text-center">
                     Editar
@@ -36,6 +39,7 @@
                 <tr *ngFor="let item of mfCampos.data">
                   <td>{{item.loteCampoId}}</td>
                   <td>{{item.descricao}}</td>
+                  <td>{{item.categoria.descricao}}</td>
                   <td class="text-center" nowrap>
                     <button type="button" class="btn btn-primary" (click)="edit(item.loteCampoId)"><i
                         class="fa fa-edit"></i>&nbsp;Editar</button>
@@ -46,14 +50,14 @@
                   </td>
                 </tr>
                 <tr *ngIf="loading">
-                  <td class="text-center text-muted" colspan="9">
+                  <td class="text-center text-muted" colspan="5">
                     <h5><i class="fa fa-spin fa-spinner"></i>&nbsp;Carregando...</h5>
                   </td>
                 </tr>
               </tbody>
               <tfoot>
                 <tr>
-                  <td colspan="9">
+                  <td colspan="5">
                     <mfBootstrapPaginator [rowsOnPageSet]="[5,10,25]"></mfBootstrapPaginator>
                   </td>
                 </tr>

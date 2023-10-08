@@ -14,6 +14,7 @@ export class CriarTipoLoteComponent implements OnInit {
 
   formulario: FormGroup;
   categorias: [];
+  categoriasAgrupadas: any[] = [];
   regras: [];
 
   constructor(
@@ -37,6 +38,28 @@ export class CriarTipoLoteComponent implements OnInit {
   getCategorias() {
     this.restangular.one('categoria').get().subscribe((res) => {
       this.categorias = res.data;
+
+      // agrupa as categorias por pai
+      this.categoriasAgrupadas = this.categorias.reduce((result, categoria: any) => {
+        const categoriaPaiId = categoria.categoriaPaiId;
+        if (!categoriaPaiId) {// se for pai
+          result.push({ label: categoria.descricao, id: categoria.categoriaId, filhos: [] }); // cria um novo pai com array de filhos
+        } else {// se for filho
+          const pai = result.find(item => item.id === categoriaPaiId);// recupera o pai
+          if (pai) {
+            pai.filhos.push(categoria);// adiciona o filho ao pai
+          }
+        }
+        return result;
+      }, []);
+
+      // Ordenar categorias e filhos em ordem alfabética
+      this.categoriasAgrupadas.sort((a, b) => a.label.localeCompare(b.label));
+      this.categoriasAgrupadas.forEach(categoria => {
+        categoria.filhos.sort((a, b) => a.descricao.localeCompare(b.descricao));
+      });
+      
+      console.log(this.categoriasAgrupadas);
     });
   }
 
