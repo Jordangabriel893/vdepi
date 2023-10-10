@@ -48,7 +48,7 @@ export class UpdateReuComponent implements OnInit {
       telefoneConvencional: [null],
       telefoneWhatsapp: [null],
       genero: [null],
-      tipoPessoa: ['PF', [Validators.required]],
+      tipoPessoa: ['PF'],
       endereco: this.formBuilder.group({
         cep: [null],
         numero: [null],
@@ -61,8 +61,8 @@ export class UpdateReuComponent implements OnInit {
       rg: [null],
       dataEmissao: [null],
       orgaoEmissor: [null],
-      principal: [false, Validators.required],
-      advogados: [null, Validators.required]
+      principal: [false],
+      advogados: [null]
     })
   }
 

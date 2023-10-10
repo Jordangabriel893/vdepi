@@ -61,8 +61,8 @@ export class UpdateFielDepositarioComponent implements OnInit {
       rg: [null],
       dataEmissao: [null],
       orgaoEmissor: [null],
-      principal: [false, Validators.required],
-      advogados: [null, Validators.required]
+      principal: [false],
+      advogados: [null]
     })
   }
 

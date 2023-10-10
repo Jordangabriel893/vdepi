@@ -21,14 +21,16 @@ export class CreateVaraComponent implements OnInit {
   juizos;
   escrivaes;
   juizes;
+  public maskCep: Array<string | RegExp>
 
   constructor(
     private formBuilder: FormBuilder,
     private restangular: Restangular,
     private notifierService: NotifierService,
-    private router: Router
+    private router: Router,
+    private cepService: ConsultaCepService,
   ) {
-
+    this.maskCep = [/\d/, /\d/, /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/,]
   }
 
   ngOnInit() {
@@ -49,16 +51,23 @@ export class CreateVaraComponent implements OnInit {
         {
           arquivoId: [0],
           nome: [null],
-          base64: [null, Validators.required],
+          base64: [null],
           tipo: [null],
           tamanho: [0],
         },
-        Validators.required
       ),
-      endereco: [null, Validators.required],
       juizoId: [null, Validators.required],
-      escrivaes: [null, Validators.required],
-      juizes: [null, Validators.required],
+      escrivaes: [null],
+      juizes: [null],
+      endereco: this.formBuilder.group({
+        cep: [null],
+        numero: [null],
+        complemento: [null],
+        bairro: [null],
+        cidade: [null],
+        estado: [null],
+        logradouro: [null]
+      }),
     });
 
   }
@@ -162,4 +171,27 @@ export class CreateVaraComponent implements OnInit {
     this.formulario.get(campo).setValue(event);
   }
 
+  consultaCEP() {
+    const cep = this.formulario.get('endereco.cep').value;
+
+    if (cep != null && cep !== '') {
+      this.cepService.consultaCEP(cep)
+        .subscribe(dados => this.populaDadosForm(dados));
+    }
+  }
+
+  populaDadosForm(dados) {
+    // this.formulario.setValue({});
+
+    this.formulario.patchValue({
+      endereco: {
+        logradouro: dados.logradouro,
+        // cep: dados.cep,
+        complemento: dados.complemento,
+        bairro: dados.bairro,
+        cidade: dados.localidade,
+        estado: dados.uf
+      }
+    });
+  }
 }

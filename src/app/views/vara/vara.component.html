@@ -36,9 +36,6 @@
                     <mfDefaultSorter by="nome">Nome</mfDefaultSorter>
                   </th>
                   <th>
-                    <mfDefaultSorter by="endereco">Endereço</mfDefaultSorter>
-                  </th>
-                  <th>
                     <mfDefaultSorter by="juizo.nome">Juizo</mfDefaultSorter>
                   </th>
                   <th><mfDefaultSorter>Logo</mfDefaultSorter></th>
@@ -51,7 +48,6 @@
                     {{ item.varaId }}
                   </td>
                   <td>{{ item.nome }}</td>
-                  <td>{{ item.endereco }}</td>
                   <td> <a [routerLink]="['/juizo']">{{ item.juizo.nome }}</a> </td>
                   <td>
                     <img
@@ -90,7 +86,7 @@
                   </td>
                 </tr>
                 <tr *ngIf="loading">
-                  <td class="text-center text-muted" colspan="9">
+                  <td class="text-center text-muted" colspan="5">
                     <h5>
                       <i class="fa fa-spin fa-spinner"></i>&nbsp;Carregando...
                     </h5>
@@ -99,7 +95,7 @@
               </tbody>
               <tfoot>
                 <tr>
-                  <td colspan="6">
+                  <td colspan="5">
                     <mfBootstrapPaginator
                       [rowsOnPageSet]="[5, 10, 25]"
                     ></mfBootstrapPaginator>

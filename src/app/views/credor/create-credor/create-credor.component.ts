@@ -69,8 +69,8 @@ export class CreateCredorComponent implements OnInit {
       rg: [null],
       dataEmissao: [null],
       orgaoEmissor: [null],
-      advogados: [null, Validators.required],
-      principal: [false, Validators.required],
+      advogados: [null],
+      principal: [false],
     })
   }
 

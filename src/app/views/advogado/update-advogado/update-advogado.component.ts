@@ -46,7 +46,7 @@ export class UpdateAdvogadoComponent implements OnInit {
       telefoneConvencional: [null],
       telefoneWhatsapp: [null],
       genero: [null],
-      tipoPessoa: ['PF', [Validators.required]],
+      tipoPessoa: ['PF'],
       endereco: this.formBuilder.group({
         cep: [null],
         numero: [null],

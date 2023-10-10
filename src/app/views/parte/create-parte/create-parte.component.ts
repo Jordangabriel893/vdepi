@@ -56,7 +56,7 @@ export class CreateParteComponent implements OnInit {
       telefoneConvencional: [null],
       telefoneWhatsapp: [null],
       genero: [null],
-      tipoPessoa: ['PF', [Validators.required]],
+      tipoPessoa: ['PF'],
       endereco: this.formBuilder.group({
         cep: [null],
         numero: [null],
@@ -69,8 +69,8 @@ export class CreateParteComponent implements OnInit {
       rg: [null],
       dataEmissao: [null],
       orgaoEmissor: [null],
-      advogados: [null, Validators.required],
-      principal: [false, Validators.required],
+      advogados: [null],
+      principal: [false],
     })
   }
 

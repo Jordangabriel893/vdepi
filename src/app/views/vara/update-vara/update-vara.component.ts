@@ -5,6 +5,7 @@ import { NotifierService } from 'angular-notifier';
 import { Restangular } from 'ngx-restangular';
 import * as _ from 'lodash';
 import { forkJoin } from 'rxjs';
+import { ConsultaCepService } from 'app/views/usuarios/shared/consulta-cep/consulta-cep.service';
 
 @Component({
   selector: 'app-update-vara',
@@ -21,14 +22,43 @@ export class UpdateVaraComponent implements OnInit {
   juizos;
   escrivaes;
   juizes;
+  public maskCep: Array<string | RegExp>
 
   constructor(
     private formBuilder: FormBuilder,
     private restangular: Restangular,
     private notifierService: NotifierService,
     private route: ActivatedRoute,
-    private router: Router
-  ) { }
+    private router: Router,
+    private cepService: ConsultaCepService,
+  ) { 
+    this.maskCep = [/\d/, /\d/, /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/,]
+
+    this.formulario = this.formBuilder.group({
+      nome: [null, Validators.required],
+      logo: this.formBuilder.group(
+        {
+          arquivoId: [0],
+          nome: [null],
+          base64: [null],
+          tipo: [null],
+          tamanho: [0],
+        },
+      ),
+      juizoId: [null, Validators.required],
+      escrivaes: [null],
+      juizes: [null],
+      endereco: this.formBuilder.group({
+        cep: [null],
+        numero: [null],
+        complemento: [null],
+        bairro: [null],
+        cidade: [null],
+        estado: [null],
+        logradouro: [null]
+      }),
+    });
+  }
 
   ngOnInit() {
 
@@ -81,19 +111,28 @@ export class UpdateVaraComponent implements OnInit {
     this.isImageSaved = true;
     this.cardImageBase64 = dados.logo.url;
 
-    this.formulario = this.formBuilder.group({
-      nome: [dados.nome, Validators.required],
+    this.formulario.patchValue({
+      nome: dados.nome,
       logo: this.formBuilder.group({
-          arquivoId: [dados.logo.arquivoId],
-          nome: [dados.logo.nome],
-          base64: [dados.logo.base64],
-          tipo: [dados.logo.tipo],
-          tamanho: [dados.logo.tamanho],
+          arquivoId: dados.logo.arquivoId,
+          nome: dados.logo.nome,
+          base64: dados.logo.base64,
+          tipo: dados.logo.tipo,
+          tamanho: dados.logo.tamanho,
       }),
-      endereco: [dados.endereco, Validators.required],
-      juizoId: [dados.juizoId, Validators.required],
-      escrivaes: [dados.escrivaes.map(x => x.escrivaoId), Validators.required],
-      juizes: [dados.juizes.map(x => x.juizId), Validators.required],
+      endereco: {
+        enderecoId: dados.endereco ? dados.endereco.enderecoId : 0,
+        cep: dados.endereco ? dados.endereco.cep : '',
+        numero: dados.endereco ? dados.endereco.numero : '',
+        complemento: dados.endereco ? dados.endereco.complemento : '',
+        bairro: dados.endereco ? dados.endereco.bairro : '',
+        cidade: dados.endereco ? dados.endereco.cidade : '',
+        estado: dados.endereco ? dados.endereco.estado : '',
+        logradouro: dados.endereco ? dados.endereco.logradouro : '',
+      },
+      juizoId: dados.juizoId,
+      escrivaes: dados.escrivaes.map(x => x.escrivaoId),
+      juizes: dados.juizes.map(x => x.juizId),
     });
   }
 
@@ -167,5 +206,29 @@ export class UpdateVaraComponent implements OnInit {
   onValueChange(event, campo) {
     this.formulario.get(campo).markAsTouched();
     this.formulario.get(campo).setValue(event);
+  }
+
+  consultaCEP() {
+    const cep = this.formulario.get('endereco.cep').value;
+
+    if (cep != null && cep !== '') {
+      this.cepService.consultaCEP(cep)
+        .subscribe(dados => this.populaDadosForm(dados));
+    }
+  }
+
+  populaDadosForm(dados) {
+    // this.formulario.setValue({});
+
+    this.formulario.patchValue({
+      endereco: {
+        logradouro: dados.logradouro,
+        // cep: dados.cep,
+        complemento: dados.complemento,
+        bairro: dados.bairro,
+        cidade: dados.localidade,
+        estado: dados.uf
+      }
+    });
   }
 }

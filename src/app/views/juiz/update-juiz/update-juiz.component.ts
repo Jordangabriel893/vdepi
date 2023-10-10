@@ -21,8 +21,6 @@ export class UpdateJuizComponent implements OnInit {
   public maskData: Array<string | RegExp>;
   public maskCep: Array<string | RegExp>;
   public maskCpf: Array<string | RegExp>;
-  public maskCnpj: Array<string | RegExp>;
-  public maskRg: Array<string | RegExp>;
 
   constructor(
     private route: ActivatedRoute,
@@ -36,8 +34,6 @@ export class UpdateJuizComponent implements OnInit {
     this.maskData = [/\d/, /\d/, '/', /\d/, /\d/, '/', /\d/, /\d/, /\d/, /\d/];
     this.maskCep = [/\d/, /\d/, /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/];
     this.maskCpf = [/\d/,/\d/,/\d/,'.',/\d/,/\d/,/\d/,'.',/\d/,/\d/,/\d/,'-',/\d/,/\d/,];
-    this.maskCnpj = [/\d/,/\d/,'.',/\d/,/\d/,/\d/,'.',/\d/,/\d/,/\d/,'/',/\d/,/\d/,/\d/,/\d/,'-',/\d/,/\d/,];
-    this.maskRg = [/\d/,/\d/,'.',/\d/,/\d/,/\d/,'.',/\d/,/\d/,/\d/,'-',/\d/,];
 
     this.formulario = this.formBuilder.group({
       nomeCompleto: [null, [Validators.required, Validators.minLength(3)]],

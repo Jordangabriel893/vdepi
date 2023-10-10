@@ -35,7 +35,6 @@
                   <th>
                     <mfDefaultSorter by="nome">Nome</mfDefaultSorter>
                   </th>
-                  <th><mfDefaultSorter>Logo</mfDefaultSorter></th>
                   <th></th>
                 </tr>
               </thead>
@@ -45,12 +44,6 @@
                     {{ item.juizoId }}
                   </td>
                   <td>{{ item.nome }}</td>
-                  <td>
-                    <img
-                      class="img-fluid logo"
-                      [src]="item.logo.url"
-                      alt="Logo"
-                    />
                   <td class="text-center" nowrap>
                     <div class="dropdown" dropdown>
                       <button
@@ -90,7 +83,7 @@
               </tbody>
               <tfoot>
                 <tr>
-                  <td colspan="4">
+                  <td colspan="3">
                     <mfBootstrapPaginator
                       [rowsOnPageSet]="[5, 10, 25]"
                     ></mfBootstrapPaginator>

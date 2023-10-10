@@ -34,11 +34,10 @@ export class CreateJuizoComponent implements OnInit {
         {
           arquivoId: [0],
           nome: [null],
-          base64: [null, Validators.required],
+          base64: [null],
           tipo: [null],
           tamanho: [0],
-        },
-        Validators.required
+        }
       ),
     });
   }
