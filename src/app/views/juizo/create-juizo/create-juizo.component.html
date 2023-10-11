@@ -11,17 +11,24 @@
             <div class="row">
               <div class="form-group col-6">
                 <label for="nome">Nome</label>
-                <input type="text" class="form-control" [ngClass]="aplicaCssErro('nome')" id="nome"
-                  placeholder="Descrição" name="Descrição" formControlName="nome">
+                <input
+                  type="text"
+                  class="form-control"
+                  [ngClass]="aplicaCssErro('nome')"
+                  id="nome"
+                  placeholder="Descrição"
+                  name="Descrição"
+                  formControlName="nome"
+                />
               </div>
             </div>
           </div>
         </div>
         <div class="card">
           <div class="card-body">
-            <div class="row ">
+            <div class="row">
               <div class="form-group col-6">
-                <div class="col-4" formGroupName="logo">
+                <div class="col-4">
                   <fieldset class="form-group">
                     <label>Logo do juizo</label>
                     <div class="custom-file fileInputProfileWrap">
@@ -32,7 +39,7 @@
                         #inputFile
                         accept="image/*"
                       />
-                      <div class="img-space" [ngClass]="aplicaCssErro('logo')">
+                      <div class="img-space">
                         <ng-container *ngIf="isImageSaved; else elseTemplate">
                           <img [src]="cardImageBase64" />
                         </ng-container>
@@ -59,8 +66,10 @@
             </div>
           </div>
           <div class="card-footer">
-            <app-save-cancel-buttons [route]="'/juizo'"
-              [buttonDisabled]="!formulario.valid"></app-save-cancel-buttons>
+            <app-save-cancel-buttons
+              [route]="'/juizo'"
+              [buttonDisabled]="!formulario.valid"
+            ></app-save-cancel-buttons>
           </div>
         </div>
       </div>

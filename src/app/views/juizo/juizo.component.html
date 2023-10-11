@@ -28,9 +28,7 @@
               <thead>
                 <tr>
                   <th>
-                    <mfDefaultSorter by="juizoId"
-                      >id</mfDefaultSorter
-                    >
+                    <mfDefaultSorter by="juizoId">id</mfDefaultSorter>
                   </th>
                   <th>
                     <mfDefaultSorter by="nome">Nome</mfDefaultSorter>
@@ -40,11 +38,11 @@
               </thead>
               <tbody>
                 <tr *ngFor="let item of mfRegistros.data">
-                  <td nowrap>
+                  <td width="5%">
                     {{ item.juizoId }}
                   </td>
                   <td>{{ item.nome }}</td>
-                  <td class="text-center" nowrap>
+                  <td class="text-center" width="5%">
                     <div class="dropdown" dropdown>
                       <button
                         class="btn"
@@ -69,12 +67,13 @@
                           <a class="dropdown-item"
                             ><i class="fa fa-trash"></i>&nbsp; Excluir</a
                           >
+                        </li>
                       </ul>
                     </div>
                   </td>
                 </tr>
                 <tr *ngIf="loading">
-                  <td class="text-center text-muted" colspan="9">
+                  <td class="text-center text-muted" colspan="3">
                     <h5>
                       <i class="fa fa-spin fa-spinner"></i>&nbsp;Carregando...
                     </h5>

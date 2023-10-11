@@ -4,16 +4,15 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { NotifierService } from 'angular-notifier';
 import { Restangular } from 'ngx-restangular';
 import * as moment from 'moment';
-import { forkJoin } from 'rxjs';
 import { ConsultaCepService } from 'app/views/usuarios/shared/consulta-cep/consulta-cep.service';
+import { BsLocaleService } from 'ngx-bootstrap';
 
 @Component({
   selector: 'app-update-juiz',
   templateUrl: './update-juiz.component.html',
-  styleUrls: ['./update-juiz.component.scss']
+  styleUrls: ['./update-juiz.component.scss'],
 })
 export class UpdateJuizComponent implements OnInit {
-
   formulario: FormGroup;
   id: any;
 
@@ -28,22 +27,56 @@ export class UpdateJuizComponent implements OnInit {
     private formBuilder: FormBuilder,
     private restangular: Restangular,
     private notifierService: NotifierService,
-    private cepService: ConsultaCepService
+    private cepService: ConsultaCepService,
+    private localeService: BsLocaleService
   ) {
-    this.mask = ['(',/[1-9]/,/\d/,')',' ',/\d/,/\d/,/\d/,/\d/,/\d/,'-',/\d/,/\d/,/\d/,/\d/,];
+    localeService.use('pt-br');
+
+    this.mask = [
+      '(',
+      /[1-9]/,
+      /\d/,
+      ')',
+      ' ',
+      /\d/,
+      /\d/,
+      /\d/,
+      /\d/,
+      /\d/,
+      '-',
+      /\d/,
+      /\d/,
+      /\d/,
+      /\d/,
+    ];
     this.maskData = [/\d/, /\d/, '/', /\d/, /\d/, '/', /\d/, /\d/, /\d/, /\d/];
     this.maskCep = [/\d/, /\d/, /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/];
-    this.maskCpf = [/\d/,/\d/,/\d/,'.',/\d/,/\d/,/\d/,'.',/\d/,/\d/,/\d/,'-',/\d/,/\d/,];
+    this.maskCpf = [
+      /\d/,
+      /\d/,
+      /\d/,
+      '.',
+      /\d/,
+      /\d/,
+      /\d/,
+      '.',
+      /\d/,
+      /\d/,
+      /\d/,
+      '-',
+      /\d/,
+      /\d/,
+    ];
 
     this.formulario = this.formBuilder.group({
       nomeCompleto: [null, [Validators.required, Validators.minLength(3)]],
-      numeroDocumento: [null, [Validators.required, Validators.minLength(6)]],
+      numeroDocumento: [null],
       dataNascimento: [null],
-      telefoneCelular: [null, [Validators.required, Validators.minLength(3)]],
+      telefoneCelular: [null],
       telefoneConvencional: [null],
       telefoneWhatsapp: [null],
       genero: [null],
-      tipoPessoa: ['PF', [Validators.required]],
+      tipoPessoa: ['PF'],
       endereco: this.formBuilder.group({
         cep: [null],
         numero: [null],
@@ -51,12 +84,9 @@ export class UpdateJuizComponent implements OnInit {
         bairro: [null],
         cidade: [null],
         estado: [null],
-        logradouro: [null]
+        logradouro: [null],
       }),
-      rg: [null],
-      dataEmissao: [null],
-      orgaoEmissor: [null],
-    })
+    });
   }
 
   ngOnInit() {
@@ -84,13 +114,10 @@ export class UpdateJuizComponent implements OnInit {
     }
     this.restangular
       .all('judicial/juiz')
-      .customPUT({pessoa: this.formulario.value}, this.id)
+      .customPUT({ pessoa: this.formulario.value }, this.id)
       .subscribe(
         (a) => {
-          this.notifierService.notify(
-            'success',
-            'juiz atualizado com sucesso'
-          );
+          this.notifierService.notify('success', 'juiz atualizado com sucesso');
           this.router.navigateByUrl('/juiz');
         },
         (error) => {
@@ -155,14 +182,8 @@ export class UpdateJuizComponent implements OnInit {
         estado: dados.endereco ? dados.endereco.estado : '',
         logradouro: dados.endereco ? dados.endereco.logradouro : '',
       },
-      rg: dados.rg,
-      dataEmissao: dados.dataEmissao
-        ? moment.utc(dados.dataEmissao).local().toDate()
-        : '',
-      orgaoEmissor: dados.orgaoEmissor,
-      emailConfirmado: dados.emailConfirmado,
     });
-    console.log(this.formulario.value)
+    console.log(this.formulario.value);
   }
 
   verificaValidTouched(campo) {
@@ -181,5 +202,4 @@ export class UpdateJuizComponent implements OnInit {
     this.formulario.get(campo).markAsTouched();
     this.formulario.get(campo).setValue(event);
   }
-
 }

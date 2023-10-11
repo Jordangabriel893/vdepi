@@ -8,10 +8,9 @@ import * as _ from 'lodash';
 @Component({
   selector: 'app-update-juizo',
   templateUrl: './update-juizo.component.html',
-  styleUrls: ['./update-juizo.component.scss']
+  styleUrls: ['./update-juizo.component.scss'],
 })
 export class UpdateJuizoComponent implements OnInit {
-
   formulario: FormGroup;
   id;
   cardImageBase64: any;
@@ -24,7 +23,7 @@ export class UpdateJuizoComponent implements OnInit {
     private notifierService: NotifierService,
     private route: ActivatedRoute,
     private router: Router
-  ) { }
+  ) {}
 
   ngOnInit() {
     this.id = this.route.snapshot.params['id'];
@@ -37,6 +36,7 @@ export class UpdateJuizoComponent implements OnInit {
   }
 
   onSubmit() {
+    // console.log(this.formulario.value);
     this.restangular
       .all('judicial/juizo')
       .customPUT(this.formulario.value, this.id)
@@ -44,15 +44,13 @@ export class UpdateJuizoComponent implements OnInit {
         (a) => {
           this.notifierService.notify(
             'success',
-            'Tipo de foto atualizado com sucesso'
+            'Juizo atualizado com sucesso'
           );
           this.router.navigate(['/juizo']);
         },
         (error) => {
-          this.notifierService.notify(
-            'error',
-            'Erro ao atualizar o tipo de foto!'
-          );
+          console.log(error);
+          this.notifierService.notify('error', 'Erro ao atualizar Juizo!');
 
           Object.keys(this.formulario.controls).forEach((campo) => {
             const controle = this.formulario.get(campo);
@@ -63,18 +61,20 @@ export class UpdateJuizoComponent implements OnInit {
   }
 
   updateForm(dados) {
-    this.isImageSaved = true;
-    this.cardImageBase64 = dados.logo.url;
+    this.isImageSaved = dados.logo ? true : false;
+    this.cardImageBase64 = dados.logo ? dados.logo.url : null;
 
     this.formulario = this.formBuilder.group({
       nome: [dados.nome, Validators.required],
-      logo: this.formBuilder.group({
-          arquivoId: [dados.logo.arquivoId],
-          nome: [dados.logo.nome],
-          base64: [dados.logo.base64],
-          tipo: [dados.logo.tipo],
-          tamanho: [dados.logo.tamanho],
-      }),
+      logo: dados.logo
+        ? this.formBuilder.group({
+            arquivoId: [dados.logo.arquivoId],
+            nome: [dados.logo.nome],
+            base64: [dados.logo.base64],
+            tipo: [dados.logo.tipo],
+            tamanho: [dados.logo.tamanho],
+          })
+        : null,
     });
   }
 
@@ -114,11 +114,20 @@ export class UpdateJuizoComponent implements OnInit {
             this.cardImageBase64 = imgBase64Path;
             this.isImageSaved = true;
             const logo = this.formulario.get('logo') as FormGroup;
-            logo.get('base64').setValue(imgBase64Path);
-            logo.get('nome').setValue(fileInput.target.files[0].name);
-            logo.get('tamanho').setValue(fileInput.target.files[0].size);
-            logo.get('tipo').setValue(fileInput.target.files[0].type);
-            // this.previewImagePath = imgBase64Path;
+            if (logo.controls) {
+              logo.get('base64').setValue(imgBase64Path);
+              logo.get('nome').setValue(fileInput.target.files[0].name);
+              logo.get('tamanho').setValue(fileInput.target.files[0].size);
+              logo.get('tipo').setValue(fileInput.target.files[0].type);
+            } else {
+              logo.setValue({
+                arquivoId: 0,
+                nome: fileInput.target.files[0].name,
+                base64: imgBase64Path,
+                tipo: fileInput.target.files[0].type,
+                tamanho: fileInput.target.files[0].size,
+              });
+            }
           }
         };
       };
@@ -131,6 +140,17 @@ export class UpdateJuizoComponent implements OnInit {
     this.cardImageBase64 = null;
     this.isImageSaved = false;
     input.value = '';
+
+    const logo = this.formulario.get('logo') as FormGroup;
+    if (logo.controls) {
+      logo.patchValue({
+        arquivoId: 0,
+        nome: null,
+        base64: null,
+        tipo: null,
+        tamanho: 0,
+      });
+    }
   }
 
   verificaValidTouched(campo) {

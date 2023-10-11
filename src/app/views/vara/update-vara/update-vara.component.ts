@@ -10,11 +10,10 @@ import { ConsultaCepService } from 'app/views/usuarios/shared/consulta-cep/consu
 @Component({
   selector: 'app-update-vara',
   templateUrl: './update-vara.component.html',
-  styleUrls: ['./update-vara.component.scss']
+  styleUrls: ['./update-vara.component.scss'],
 })
 export class UpdateVaraComponent implements OnInit {
-
-  formulario: FormGroup;
+  formulario: FormGroup = null;
   id;
   cardImageBase64: any;
   imageError: string;
@@ -22,7 +21,7 @@ export class UpdateVaraComponent implements OnInit {
   juizos;
   escrivaes;
   juizes;
-  public maskCep: Array<string | RegExp>
+  public maskCep: Array<string | RegExp>;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -30,48 +29,12 @@ export class UpdateVaraComponent implements OnInit {
     private notifierService: NotifierService,
     private route: ActivatedRoute,
     private router: Router,
-    private cepService: ConsultaCepService,
-  ) { 
-    this.maskCep = [/\d/, /\d/, /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/,]
-
-    this.formulario = this.formBuilder.group({
-      nome: [null, Validators.required],
-      logo: this.formBuilder.group(
-        {
-          arquivoId: [0],
-          nome: [null],
-          base64: [null],
-          tipo: [null],
-          tamanho: [0],
-        },
-      ),
-      juizoId: [null, Validators.required],
-      escrivaes: [null],
-      juizes: [null],
-      endereco: this.formBuilder.group({
-        cep: [null],
-        numero: [null],
-        complemento: [null],
-        bairro: [null],
-        cidade: [null],
-        estado: [null],
-        logradouro: [null]
-      }),
-    });
+    private cepService: ConsultaCepService
+  ) {
+    this.maskCep = [/\d/, /\d/, /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/];
   }
 
   ngOnInit() {
-
-    forkJoin([
-      this.restangular.one('Judicial/juizo').get().pipe(),
-      this.restangular.one('Judicial/Escrivao').get().pipe(),
-      this.restangular.one('Judicial/Juiz').get().pipe()
-    ]).subscribe(([juizos, escrivaes, juizes] : any[]) => {
-      this.juizos = juizos.data;
-      this.escrivaes = escrivaes.data;
-      this.juizes = juizes.data;
-    });
-
     this.id = this.route.snapshot.params['id'];
     this.restangular
       .all('judicial/vara')
@@ -79,6 +42,16 @@ export class UpdateVaraComponent implements OnInit {
       .subscribe((dados) => {
         this.updateForm(dados.data);
       });
+
+    forkJoin([
+      this.restangular.one('Judicial/juizo').get().pipe(),
+      this.restangular.one('Judicial/Escrivao').get().pipe(),
+      this.restangular.one('Judicial/Juiz').get().pipe(),
+    ]).subscribe(([juizos, escrivaes, juizes]: any[]) => {
+      this.juizos = juizos.data;
+      this.escrivaes = escrivaes.data;
+      this.juizes = juizes.data;
+    });
   }
 
   onSubmit() {
@@ -108,19 +81,21 @@ export class UpdateVaraComponent implements OnInit {
   }
 
   updateForm(dados) {
-    this.isImageSaved = true;
-    this.cardImageBase64 = dados.logo.url;
+    this.isImageSaved = dados.logo ? true : false;
+    this.cardImageBase64 = dados.logo ? dados.logo.url : null;
 
-    this.formulario.patchValue({
-      nome: dados.nome,
-      logo: this.formBuilder.group({
-          arquivoId: dados.logo.arquivoId,
-          nome: dados.logo.nome,
-          base64: dados.logo.base64,
-          tipo: dados.logo.tipo,
-          tamanho: dados.logo.tamanho,
-      }),
-      endereco: {
+    this.formulario = this.formBuilder.group({
+      nome: [dados.nome, Validators.required],
+      logo: dados.logo
+        ? this.formBuilder.group({
+            arquivoId: dados.logo.arquivoId,
+            nome: dados.logo.nome,
+            base64: dados.logo.base64,
+            tipo: dados.logo.tipo,
+            tamanho: dados.logo.tamanho,
+          })
+        : null,
+      endereco: this.formBuilder.group({
         enderecoId: dados.endereco ? dados.endereco.enderecoId : 0,
         cep: dados.endereco ? dados.endereco.cep : '',
         numero: dados.endereco ? dados.endereco.numero : '',
@@ -129,11 +104,13 @@ export class UpdateVaraComponent implements OnInit {
         cidade: dados.endereco ? dados.endereco.cidade : '',
         estado: dados.endereco ? dados.endereco.estado : '',
         logradouro: dados.endereco ? dados.endereco.logradouro : '',
-      },
-      juizoId: dados.juizoId,
-      escrivaes: dados.escrivaes.map(x => x.escrivaoId),
-      juizes: dados.juizes.map(x => x.juizId),
+      }),
+      juizoId: [dados.juizoId, Validators.required],
+      escrivaes: [dados.escrivaes.map((x) => x.escrivaoId)],
+      juizes: [dados.juizes.map((x) => x.juizId)],
     });
+
+    console.log(this.formulario.value);
   }
 
   fileChangeEvent(fileInput: any) {
@@ -212,8 +189,9 @@ export class UpdateVaraComponent implements OnInit {
     const cep = this.formulario.get('endereco.cep').value;
 
     if (cep != null && cep !== '') {
-      this.cepService.consultaCEP(cep)
-        .subscribe(dados => this.populaDadosForm(dados));
+      this.cepService
+        .consultaCEP(cep)
+        .subscribe((dados) => this.populaDadosForm(dados));
     }
   }
 
@@ -227,8 +205,8 @@ export class UpdateVaraComponent implements OnInit {
         complemento: dados.complemento,
         bairro: dados.bairro,
         cidade: dados.localidade,
-        estado: dados.uf
-      }
+        estado: dados.uf,
+      },
     });
   }
 }
