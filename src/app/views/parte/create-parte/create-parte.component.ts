@@ -10,19 +10,17 @@ import { ConsultaCepService } from 'app/views/usuarios/shared/consulta-cep/consu
 @Component({
   selector: 'app-create-parte',
   templateUrl: './create-parte.component.html',
-  styleUrls: ['./create-parte.component.scss']
+  styleUrls: ['./create-parte.component.scss'],
 })
 export class CreateParteComponent implements OnInit {
-
-  formulario: FormGroup
+  formulario: FormGroup;
   advogados: [];
 
-  public mask: Array<string | RegExp>
-  public maskData: Array<string | RegExp>
-  public maskCep: Array<string | RegExp>
-  public maskCpf: Array<string | RegExp>
-  public maskCnpj: Array<string | RegExp>
-  public maskRg: Array<string | RegExp>
+  public mask: Array<string | RegExp>;
+  public maskData: Array<string | RegExp>;
+  public maskCep: Array<string | RegExp>;
+  public maskCpf: Array<string | RegExp>;
+  public maskCnpj: Array<string | RegExp>;
 
   fieldTextType: boolean;
   constructor(
@@ -31,28 +29,79 @@ export class CreateParteComponent implements OnInit {
     private formBuilder: FormBuilder,
     private restangular: Restangular,
     private notifierService: NotifierService,
-    private cepService: ConsultaCepService,
+    private cepService: ConsultaCepService
   ) {
-    this.mask = ['(', /[1-9]/, /\d/, ')', ' ', /\d/, /\d/, /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/]
-    this.maskData = [/\d/, /\d/, '/', /\d/, /\d/, '/', /\d/, /\d/, /\d/, /\d/]
-    this.maskCep = [/\d/, /\d/, /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/,]
-    this.maskCpf = [/\d/, /\d/, /\d/, '.', /\d/, /\d/, /\d/, '.', /\d/, /\d/, /\d/, '-', /\d/, /\d/]
-    this.maskCnpj = [/\d/, /\d/, '.', /\d/, /\d/, /\d/, '.', /\d/, /\d/, /\d/, '/', /\d/, /\d/, /\d/, /\d/, '-', /\d/, /\d/,]
-    this.maskRg = [/\d/, /\d/, '.', /\d/, /\d/, /\d/, '.', /\d/, /\d/, /\d/, '-', /\d/]
+    this.mask = [
+      '(',
+      /[1-9]/,
+      /\d/,
+      ')',
+      ' ',
+      /\d/,
+      /\d/,
+      /\d/,
+      /\d/,
+      /\d/,
+      '-',
+      /\d/,
+      /\d/,
+      /\d/,
+      /\d/,
+    ];
+    this.maskData = [/\d/, /\d/, '/', /\d/, /\d/, '/', /\d/, /\d/, /\d/, /\d/];
+    this.maskCep = [/\d/, /\d/, /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/];
+    this.maskCpf = [
+      /\d/,
+      /\d/,
+      /\d/,
+      '.',
+      /\d/,
+      /\d/,
+      /\d/,
+      '.',
+      /\d/,
+      /\d/,
+      /\d/,
+      '-',
+      /\d/,
+      /\d/,
+    ];
+    this.maskCnpj = [
+      /\d/,
+      /\d/,
+      '.',
+      /\d/,
+      /\d/,
+      /\d/,
+      '.',
+      /\d/,
+      /\d/,
+      /\d/,
+      '/',
+      /\d/,
+      /\d/,
+      /\d/,
+      /\d/,
+      '-',
+      /\d/,
+      /\d/,
+    ];
   }
 
   ngOnInit() {
-    this.restangular.one("judicial/advogado").get().subscribe(a => {
-      this.advogados = a.data;
-      console.log(this.advogados);
-    });
-
+    this.restangular
+      .one('judicial/advogado')
+      .get()
+      .subscribe((a) => {
+        this.advogados = a.data;
+        console.log(this.advogados);
+      });
 
     this.formulario = this.formBuilder.group({
       nomeCompleto: [null, [Validators.required, Validators.minLength(3)]],
-      numeroDocumento: [null, [Validators.required, Validators.minLength(6)]],
+      numeroDocumento: [null],
       dataNascimento: [null],
-      telefoneCelular: [null, [Validators.required, Validators.minLength(3)]],
+      telefoneCelular: [null],
       telefoneConvencional: [null],
       telefoneWhatsapp: [null],
       genero: [null],
@@ -64,61 +113,65 @@ export class CreateParteComponent implements OnInit {
         bairro: [null],
         cidade: [null],
         estado: [null],
-        logradouro: [null]
+        logradouro: [null],
       }),
-      rg: [null],
-      dataEmissao: [null],
-      orgaoEmissor: [null],
       advogados: [null],
       principal: [false],
-    })
+    });
   }
 
   onSubmit() {
     if (!this.formulario.valid) {
       Object.keys(this.formulario.controls).forEach((campo) => {
-        const controle = this.formulario.get(campo)
-        controle.markAsTouched()
-
-      })
-      this.notifierService.notify('error', 'Preencha todos os campos obrigatórios');
-      return
+        const controle = this.formulario.get(campo);
+        controle.markAsTouched();
+      });
+      this.notifierService.notify(
+        'error',
+        'Preencha todos os campos obrigatórios'
+      );
+      return;
     }
 
     const body = {
       pessoa: this.formulario.value,
-      principal: this.formulario.get("principal").value,
-      advogados: this.formulario.get("advogados").value
-    }
+      principal: this.formulario.get('principal').value,
+      advogados: this.formulario.get('advogados').value,
+    };
 
-    this.restangular.all('judicial/parte').post(body).subscribe(a => {
-      this.notifierService.notify('success', 'parte criado com sucesso');
-      this.router.navigateByUrl('/parte');
-    },
-      error => {
-        const errors = error.data.Errors;
-        for (const k in errors) {
-          if (k.toLowerCase() === 'exception') {
-            this.notifierService.notify('error', 'Erro ao criar parte');
-          } else {
-            this.notifierService.notify('error', errors[k]);
+    this.restangular
+      .all('judicial/parte')
+      .post(body)
+      .subscribe(
+        (a) => {
+          this.notifierService.notify('success', 'parte criado com sucesso');
+          this.router.navigateByUrl('/parte');
+        },
+        (error) => {
+          const errors = error.data.Errors;
+          for (const k in errors) {
+            if (k.toLowerCase() === 'exception') {
+              this.notifierService.notify('error', 'Erro ao criar parte');
+            } else {
+              this.notifierService.notify('error', errors[k]);
+            }
           }
+
+          Object.keys(this.formulario.controls).forEach((campo) => {
+            const controle = this.formulario.get(campo);
+            controle.markAsTouched();
+          });
         }
-
-        Object.keys(this.formulario.controls).forEach((campo) => {
-          const controle = this.formulario.get(campo)
-          controle.markAsTouched()
-
-        })
-      })
+      );
   }
 
   consultaCEP() {
     const cep = this.formulario.get('endereco.cep').value;
 
     if (cep != null && cep !== '') {
-      this.cepService.consultaCEP(cep)
-        .subscribe(dados => this.populaDadosForm(dados));
+      this.cepService
+        .consultaCEP(cep)
+        .subscribe((dados) => this.populaDadosForm(dados));
     }
   }
 
@@ -132,19 +185,21 @@ export class CreateParteComponent implements OnInit {
         complemento: dados.complemento,
         bairro: dados.bairro,
         cidade: dados.localidade,
-        estado: dados.uf
-      }
+        estado: dados.uf,
+      },
     });
   }
 
   verificaValidTouched(campo) {
-    return !this.formulario.get(campo).valid && this.formulario.get(campo).touched;
+    return (
+      !this.formulario.get(campo).valid && this.formulario.get(campo).touched
+    );
   }
 
   aplicaCssErro(campo) {
     return {
       'has-error': this.verificaValidTouched(campo),
-    }
+    };
   }
 
   onValueChange(event, campo) {
@@ -155,5 +210,4 @@ export class CreateParteComponent implements OnInit {
   toggleFieldTextType() {
     this.fieldTextType = !this.fieldTextType;
   }
-
 }

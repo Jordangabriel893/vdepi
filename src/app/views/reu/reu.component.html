@@ -9,13 +9,22 @@
         <div class="card-block">
           <div class="row input-search">
             <div class="col-3">
-              <button type="button" class="btn btn-success" [routerLink]="['/create-reu']">
+              <button
+                type="button"
+                class="btn btn-success"
+                [routerLink]="['/create-reu']"
+              >
                 <i class="fa fa-plus-circle"></i>&nbsp; Novo Reu
               </button>
             </div>
           </div>
           <div class="table-responsive mt-4">
-            <table class="table table-striped" [mfData]="reus" #mfreus="mfDataTable" [mfRowsOnPage]="5">
+            <table
+              class="table table-striped"
+              [mfData]="reus"
+              #mfreus="mfDataTable"
+              [mfRowsOnPage]="5"
+            >
               <thead>
                 <tr>
                   <th>
@@ -25,17 +34,21 @@
                     <mfDefaultSorter by="nome">Nome</mfDefaultSorter>
                   </th>
                   <th>
-                    <mfDefaultSorter by="numeroDocumento">Nº Documento</mfDefaultSorter>
+                    <mfDefaultSorter by="numeroDocumento"
+                      >Nº Documento</mfDefaultSorter
+                    >
                   </th>
-                  <th>
+                  <!-- <th>
                     <mfDefaultSorter by="genero">Gênero</mfDefaultSorter>
-                  </th>
+                  </th> -->
                   <th>
-                    <mfDefaultSorter by="tipoPessoa">Tipo de Pessoa</mfDefaultSorter>
+                    <mfDefaultSorter by="tipoPessoa"
+                      >Tipo de Pessoa</mfDefaultSorter
+                    >
                   </th>
-                  <th>
+                  <!-- <th>
                     <mfDefaultSorter by="principal">Principal</mfDefaultSorter>
-                  </th>
+                  </th> -->
                   <th></th>
                 </tr>
               </thead>
@@ -46,27 +59,41 @@
                   </td>
                   <td>{{ item.nomeCompleto | uppercase }}</td>
                   <td nowrap>{{ item.numeroDocumento }}</td>
-                  <td>{{ item.genero == "M" ? "Masculino" : "Feminino" }}</td>
+                  <!-- <td>{{ item.genero == "M" ? "Masculino" : "Feminino" }}</td> -->
                   <td>
                     {{
-                    item.tipoPessoa == "PF"
-                    ? "Pessoa Física"
-                    : "Pessoa Jurídica"
+                      item.tipoPessoa == "PF"
+                        ? "Pessoa Física"
+                        : "Pessoa Jurídica"
                     }}
                   </td>
-                  <td>{{ item.principal ? "Sim" : "Não" }}</td>
+                  <!-- <td>{{ item.principal ? "Sim" : "Não" }}</td> -->
                   <td class="text-center" nowrap>
                     <div class="dropdown" dropdown>
-                      <button class="btn" id="dropdownMenuButton" type="button" data-toggle="dropdown"
-                        aria-expanded="false" dropdownToggle>
+                      <button
+                        class="btn"
+                        id="dropdownMenuButton"
+                        type="button"
+                        data-toggle="dropdown"
+                        aria-expanded="false"
+                        dropdownToggle
+                      >
                         <i class="fa fa-ellipsis-v"></i>
                       </button>
-                      <ul class="dropdown-menu dropdown-menu-right" *dropdownMenu>
+                      <ul
+                        class="dropdown-menu dropdown-menu-right"
+                        *dropdownMenu
+                      >
                         <li (click)="edit(item.id)">
-                          <a class="dropdown-item"><i class="fa fa-edit"></i>&nbsp; Editar</a>
+                          <a class="dropdown-item"
+                            ><i class="fa fa-edit"></i>&nbsp; Editar</a
+                          >
                         </li>
                         <li (click)="remove(item.id)">
-                          <a class="dropdown-item"><i class="fa fa-trash"></i>&nbsp; Remover</a>
+                          <a class="dropdown-item"
+                            ><i class="fa fa-trash"></i>&nbsp; Remover</a
+                          >
+                        </li>
                       </ul>
                     </div>
                   </td>
@@ -82,7 +109,9 @@
               <tfoot>
                 <tr>
                   <td colspan="7">
-                    <mfBootstrapPaginator [rowsOnPageSet]="[5, 10, 25]"></mfBootstrapPaginator>
+                    <mfBootstrapPaginator
+                      [rowsOnPageSet]="[5, 10, 25]"
+                    ></mfBootstrapPaginator>
                   </td>
                 </tr>
               </tfoot>

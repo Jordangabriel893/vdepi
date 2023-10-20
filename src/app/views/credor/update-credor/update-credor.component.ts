@@ -10,10 +10,9 @@ import { ConsultaCepService } from 'app/views/usuarios/shared/consulta-cep/consu
 @Component({
   selector: 'app-update-credor',
   templateUrl: './update-credor.component.html',
-  styleUrls: ['./update-credor.component.scss']
+  styleUrls: ['./update-credor.component.scss'],
 })
 export class UpdateCredorComponent implements OnInit {
-
   formulario: FormGroup;
   id: any;
   advogados: [];
@@ -23,7 +22,6 @@ export class UpdateCredorComponent implements OnInit {
   public maskCep: Array<string | RegExp>;
   public maskCpf: Array<string | RegExp>;
   public maskCnpj: Array<string | RegExp>;
-  public maskRg: Array<string | RegExp>;
 
   constructor(
     private route: ActivatedRoute,
@@ -33,22 +31,71 @@ export class UpdateCredorComponent implements OnInit {
     private notifierService: NotifierService,
     private cepService: ConsultaCepService
   ) {
-    this.mask = ['(',/[1-9]/,/\d/,')',' ',/\d/,/\d/,/\d/,/\d/,/\d/,'-',/\d/,/\d/,/\d/,/\d/,];
+    this.mask = [
+      '(',
+      /[1-9]/,
+      /\d/,
+      ')',
+      ' ',
+      /\d/,
+      /\d/,
+      /\d/,
+      /\d/,
+      /\d/,
+      '-',
+      /\d/,
+      /\d/,
+      /\d/,
+      /\d/,
+    ];
     this.maskData = [/\d/, /\d/, '/', /\d/, /\d/, '/', /\d/, /\d/, /\d/, /\d/];
     this.maskCep = [/\d/, /\d/, /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/];
-    this.maskCpf = [/\d/,/\d/,/\d/,'.',/\d/,/\d/,/\d/,'.',/\d/,/\d/,/\d/,'-',/\d/,/\d/,];
-    this.maskCnpj = [/\d/,/\d/,'.',/\d/,/\d/,/\d/,'.',/\d/,/\d/,/\d/,'/',/\d/,/\d/,/\d/,/\d/,'-',/\d/,/\d/,];
-    this.maskRg = [/\d/,/\d/,'.',/\d/,/\d/,/\d/,'.',/\d/,/\d/,/\d/,'-',/\d/,];
+    this.maskCpf = [
+      /\d/,
+      /\d/,
+      /\d/,
+      '.',
+      /\d/,
+      /\d/,
+      /\d/,
+      '.',
+      /\d/,
+      /\d/,
+      /\d/,
+      '-',
+      /\d/,
+      /\d/,
+    ];
+    this.maskCnpj = [
+      /\d/,
+      /\d/,
+      '.',
+      /\d/,
+      /\d/,
+      /\d/,
+      '.',
+      /\d/,
+      /\d/,
+      /\d/,
+      '/',
+      /\d/,
+      /\d/,
+      /\d/,
+      /\d/,
+      '-',
+      /\d/,
+      /\d/,
+    ];
 
     this.formulario = this.formBuilder.group({
       nomeCompleto: [null, [Validators.required, Validators.minLength(3)]],
-      numeroDocumento: [null, [Validators.required, Validators.minLength(6)]],
+      numeroDocumento: [null],
       dataNascimento: [null],
-      telefoneCelular: [null, [Validators.required, Validators.minLength(3)]],
+      telefoneCelular: [null],
       telefoneConvencional: [null],
       telefoneWhatsapp: [null],
       genero: [null],
-      tipoPessoa: ['PF', [Validators.required]],
+      tipoPessoa: ['PF'],
       endereco: this.formBuilder.group({
         cep: [null],
         numero: [null],
@@ -56,14 +103,11 @@ export class UpdateCredorComponent implements OnInit {
         bairro: [null],
         cidade: [null],
         estado: [null],
-        logradouro: [null]
+        logradouro: [null],
       }),
-      rg: [null],
-      dataEmissao: [null],
-      orgaoEmissor: [null],
       principal: [false],
-      advogados: [null]
-    })
+      advogados: [null],
+    });
   }
 
   ngOnInit() {
@@ -76,9 +120,12 @@ export class UpdateCredorComponent implements OnInit {
         this.updateForm(dados.data);
       });
 
-    this.restangular.one("judicial/advogado").get().subscribe(a => {
-      this.advogados = a.data;
-    });
+    this.restangular
+      .one('judicial/advogado')
+      .get()
+      .subscribe((a) => {
+        this.advogados = a.data;
+      });
   }
 
   onSubmit() {
@@ -96,9 +143,9 @@ export class UpdateCredorComponent implements OnInit {
 
     const body = {
       pessoa: this.formulario.value,
-      principal: this.formulario.get("principal").value,
-      advogados: this.formulario.get("advogados").value
-    }
+      principal: this.formulario.get('principal').value,
+      advogados: this.formulario.get('advogados').value,
+    };
 
     this.restangular
       .all('judicial/credor')
@@ -173,16 +220,10 @@ export class UpdateCredorComponent implements OnInit {
         estado: dados.endereco ? dados.endereco.estado : '',
         logradouro: dados.endereco ? dados.endereco.logradouro : '',
       },
-      rg: dados.rg,
-      dataEmissao: dados.dataEmissao
-        ? moment.utc(dados.dataEmissao).local().toDate()
-        : '',
-      orgaoEmissor: dados.orgaoEmissor,
-      emailConfirmado: dados.emailConfirmado,
       principal: dados.principal,
-      advogados: dados.advogados.map(a => a.pessoaId)
+      advogados: dados.advogados.map((a) => a.pessoaId),
     });
-    console.log(this.formulario.value)
+    console.log(this.formulario.value);
   }
 
   verificaValidTouched(campo) {
@@ -201,5 +242,4 @@ export class UpdateCredorComponent implements OnInit {
     this.formulario.get(campo).markAsTouched();
     this.formulario.get(campo).setValue(event);
   }
-
 }

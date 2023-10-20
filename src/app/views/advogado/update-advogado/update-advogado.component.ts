@@ -9,10 +9,9 @@ import { ConsultaCepService } from 'app/views/usuarios/shared/consulta-cep/consu
 @Component({
   selector: 'app-update-advogado',
   templateUrl: './update-advogado.component.html',
-  styleUrls: ['./update-advogado.component.scss']
+  styleUrls: ['./update-advogado.component.scss'],
 })
 export class UpdateAdvogadoComponent implements OnInit {
-
   formulario: FormGroup;
   id: any;
 
@@ -21,7 +20,6 @@ export class UpdateAdvogadoComponent implements OnInit {
   public maskCep: Array<string | RegExp>;
   public maskCpf: Array<string | RegExp>;
   public maskCnpj: Array<string | RegExp>;
-  public maskRg: Array<string | RegExp>;
 
   constructor(
     private route: ActivatedRoute,
@@ -31,18 +29,67 @@ export class UpdateAdvogadoComponent implements OnInit {
     private notifierService: NotifierService,
     private cepService: ConsultaCepService
   ) {
-    this.mask = ['(',/[1-9]/,/\d/,')',' ',/\d/,/\d/,/\d/,/\d/,/\d/,'-',/\d/,/\d/,/\d/,/\d/,];
+    this.mask = [
+      '(',
+      /[1-9]/,
+      /\d/,
+      ')',
+      ' ',
+      /\d/,
+      /\d/,
+      /\d/,
+      /\d/,
+      /\d/,
+      '-',
+      /\d/,
+      /\d/,
+      /\d/,
+      /\d/,
+    ];
     this.maskData = [/\d/, /\d/, '/', /\d/, /\d/, '/', /\d/, /\d/, /\d/, /\d/];
     this.maskCep = [/\d/, /\d/, /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/];
-    this.maskCpf = [/\d/,/\d/,/\d/,'.',/\d/,/\d/,/\d/,'.',/\d/,/\d/,/\d/,'-',/\d/,/\d/,];
-    this.maskCnpj = [/\d/,/\d/,'.',/\d/,/\d/,/\d/,'.',/\d/,/\d/,/\d/,'/',/\d/,/\d/,/\d/,/\d/,'-',/\d/,/\d/,];
-    this.maskRg = [/\d/,/\d/,'.',/\d/,/\d/,/\d/,'.',/\d/,/\d/,/\d/,'-',/\d/,];
+    this.maskCpf = [
+      /\d/,
+      /\d/,
+      /\d/,
+      '.',
+      /\d/,
+      /\d/,
+      /\d/,
+      '.',
+      /\d/,
+      /\d/,
+      /\d/,
+      '-',
+      /\d/,
+      /\d/,
+    ];
+    this.maskCnpj = [
+      /\d/,
+      /\d/,
+      '.',
+      /\d/,
+      /\d/,
+      /\d/,
+      '.',
+      /\d/,
+      /\d/,
+      /\d/,
+      '/',
+      /\d/,
+      /\d/,
+      /\d/,
+      /\d/,
+      '-',
+      /\d/,
+      /\d/,
+    ];
 
     this.formulario = this.formBuilder.group({
       nomeCompleto: [null, [Validators.required, Validators.minLength(3)]],
-      numeroDocumento: [null, [Validators.required, Validators.minLength(6)]],
+      numeroDocumento: [null],
       dataNascimento: [null],
-      telefoneCelular: [null, [Validators.required, Validators.minLength(3)]],
+      telefoneCelular: [null],
       telefoneConvencional: [null],
       telefoneWhatsapp: [null],
       genero: [null],
@@ -54,12 +101,9 @@ export class UpdateAdvogadoComponent implements OnInit {
         bairro: [null],
         cidade: [null],
         estado: [null],
-        logradouro: [null]
+        logradouro: [null],
       }),
-      rg: [null],
-      dataEmissao: [null],
-      orgaoEmissor: [null],
-    })
+    });
   }
 
   ngOnInit() {
@@ -87,7 +131,7 @@ export class UpdateAdvogadoComponent implements OnInit {
     }
     this.restangular
       .all('judicial/advogado')
-      .customPUT({pessoa: this.formulario.value}, this.id)
+      .customPUT({ pessoa: this.formulario.value }, this.id)
       .subscribe(
         (a) => {
           this.notifierService.notify(
@@ -100,7 +144,10 @@ export class UpdateAdvogadoComponent implements OnInit {
           const errors = error.data.Errors;
           for (const k in errors) {
             if (k.toLowerCase() === 'exception') {
-              this.notifierService.notify('error', 'Erro ao atualizar Advogado');
+              this.notifierService.notify(
+                'error',
+                'Erro ao atualizar Advogado'
+              );
             } else {
               this.notifierService.notify('error', errors[k]);
             }
@@ -158,14 +205,8 @@ export class UpdateAdvogadoComponent implements OnInit {
         estado: dados.endereco ? dados.endereco.estado : '',
         logradouro: dados.endereco ? dados.endereco.logradouro : '',
       },
-      rg: dados.rg,
-      dataEmissao: dados.dataEmissao
-        ? moment.utc(dados.dataEmissao).local().toDate()
-        : '',
-      orgaoEmissor: dados.orgaoEmissor,
-      emailConfirmado: dados.emailConfirmado,
     });
-    console.log(this.formulario.value)
+    console.log(this.formulario.value);
   }
 
   verificaValidTouched(campo) {
@@ -184,5 +225,4 @@ export class UpdateAdvogadoComponent implements OnInit {
     this.formulario.get(campo).markAsTouched();
     this.formulario.get(campo).setValue(event);
   }
-
 }
