@@ -278,6 +278,7 @@ import { UpdateCredorComponent } from './views/credor/update-credor/update-credo
 import { FielDepositarioComponent } from './views/fiel-depositario/fiel-depositario.component';
 import { CreateFielDepositarioComponent } from './views/fiel-depositario/create-fiel-depositario/create-fiel-depositario.component';
 import { UpdateFielDepositarioComponent } from './views/fiel-depositario/update-fiel-depositario/update-fiel-depositario.component';
+import { InputJudicialLoteComponent } from './components/form/input-judicial-lote/input-judicial-lote.component';
 
 export function RestangularConfigFactory(
   RestangularProvider,
@@ -496,6 +497,7 @@ export function RestangularConfigFactory(
     FielDepositarioComponent,
     CreateFielDepositarioComponent,
     UpdateFielDepositarioComponent,
+    InputJudicialLoteComponent,
   ],
   providers: [
     {

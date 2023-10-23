@@ -70,6 +70,17 @@ export class UpdateLotesComponent implements OnInit {
   anexostipo: any;
   numeroAdcAnexo: number;
 
+  //judicial
+  juizes: any[];
+  escrivaes: any[];
+  autores: any[];
+  reus: any[];
+  fieisDepositarios: any[];
+  partes: any[];
+  credores: any[];
+  juizos: any[];
+  varas: any[];
+
   //Valor Avaliação
   modalValorAvalicao: FormGroup;
   tipos;
@@ -150,6 +161,15 @@ export class UpdateLotesComponent implements OnInit {
       this.restangular.one('categoria').get().pipe(),
       this.restangular.one('lotestatus').get().pipe(),
       this.restangular.one('tabelafipe/tipos').get().pipe(),
+      this.restangular.one('judicial/autor').get(),
+      this.restangular.one('judicial/juiz').get(),
+      this.restangular.one('judicial/escrivao').get(),
+      this.restangular.one('judicial/reu').get(),
+      this.restangular.one('judicial/fielDepositario').get(),
+      this.restangular.one('judicial/parte').get(),
+      this.restangular.one('judicial/credor').get(),
+      this.restangular.one('judicial/juizo').get(),
+      this.restangular.one('judicial/vara').get(),
     ]).subscribe((allResp: any[]) => {
       this.local = allResp[3].data;
 
@@ -186,6 +206,16 @@ export class UpdateLotesComponent implements OnInit {
           //   this.formulario.get("valorTaxaAdministrativa").enable();
           //   this.btnFaixa.nativeElement.disabled = false;
           // }
+          
+          this.autores = allResp[8].data;
+          this.juizes = allResp[9].data;
+          this.escrivaes = allResp[10].data;
+          this.reus = allResp[11].data;
+          this.fieisDepositarios = allResp[12].data;
+          this.partes = allResp[13].data;
+          this.credores = allResp[14].data;
+          this.juizos = allResp[15].data;
+          this.varas = allResp[16].data;
 
           this.formulario
             .get('judicial')
@@ -410,6 +440,8 @@ export class UpdateLotesComponent implements OnInit {
   }
 
   updateForm(dados, fotos) {
+    console.log(fotos)
+
     this.formulario = this.formBuilder.group({
       loteId: [dados.loteId, Validators.required],
       descricao: [dados.descricao, Validators.required],
@@ -435,7 +467,24 @@ export class UpdateLotesComponent implements OnInit {
       loteJudicial: this.formBuilder.group(
         dados.loteJudicial == null
           ? this.criarCampoJudicial()
-          : dados.loteJudicial
+          : {
+            loteJudicialId: [dados.loteJudicial.loteJudicialId],
+            numProcesso: [dados.loteJudicial.numProcesso],
+            localDepositario: [dados.loteJudicial.localDepositario],
+            anoProcesso: [dados.loteJudicial.anoProcesso],
+            tipoAcao: [dados.loteJudicial.tipoAcao],
+            comarca: [dados.loteJudicial.comarca],
+            natureza: [dados.loteJudicial.natureza],
+            juizoId: [dados.loteJudicial.juizoId],
+            varaId: [dados.loteJudicial.varaId],
+            juizes: [dados.loteJudicial.juizes.map((x) => x.juizId)],
+            escrivaes: [dados.loteJudicial.escrivaes.map((x) => x.escrivaoId)],
+            autores: [dados.loteJudicial.autores.map((x) => x.autorId)],
+            reus: [dados.loteJudicial.reus.map((x) => x.reuId)],
+            fieisDepositarios: [dados.loteJudicial.fieisDepositarios.map((x) => x.fielDepositarioId)],
+            partes: [dados.loteJudicial.partes.map((x) => x.parteId)],
+            credores: [dados.loteJudicial.credores.map((x) => x.credorId)],
+          }
       ),
       loteJudicialId: [dados.loteJudicialId],
       tipoLoteId: [dados.tipoLoteId],
@@ -526,19 +575,22 @@ export class UpdateLotesComponent implements OnInit {
 
   criarCampoJudicial() {
     return {
-      loteJudicialId: 0,
-      numProcesso: null,
-      autor: null,
-      reu: null,
-      advogados: null,
-      localDepositario: null,
-      recursoPendente: false,
-      anoProcesso: null,
-      tipoAcao: null,
-      recursos: false,
-      comarca: null,
-      natureza: null,
-      juiz: null,
+      loteJudicialId: [0],
+        numProcesso: [null],
+        localDepositario: [null],
+        anoProcesso: [null],
+        tipoAcao: [null],
+        comarca: [null],
+        natureza: [null],
+        juizoId: [null],
+        varaId: [null],
+        juizes: [null],
+        escrivaes: [null],
+        autores: [null],
+        reus: [null],
+        fieisDepositarios: [null],
+        partes: [null],
+        credores: [null]
     };
   }
 
@@ -761,5 +813,29 @@ export class UpdateLotesComponent implements OnInit {
     }
 
     this.faixasIncremento = !this.faixasIncremento;
+  }
+
+  callbackFunction() {
+    forkJoin([
+      this.restangular.one('judicial/autor').get(),
+      this.restangular.one('judicial/juiz').get(),
+      this.restangular.one('judicial/escrivao').get(),
+      this.restangular.one('judicial/reu').get(),
+      this.restangular.one('judicial/fielDepositario').get(),
+      this.restangular.one('judicial/parte').get(),
+      this.restangular.one('judicial/credor').get(),
+      this.restangular.one('judicial/juizo').get(),
+      this.restangular.one('judicial/vara').get(),
+    ]).subscribe((allResp: any[]) => {
+      this.autores = allResp[0].data;
+      this.juizes = allResp[1].data;
+      this.escrivaes = allResp[2].data;
+      this.reus = allResp[3].data;
+      this.fieisDepositarios = allResp[4].data;
+      this.partes = allResp[5].data;
+      this.credores = allResp[6].data;
+      this.juizos = allResp[7].data;
+      this.varas = allResp[8].data;
+    });
   }
 }
