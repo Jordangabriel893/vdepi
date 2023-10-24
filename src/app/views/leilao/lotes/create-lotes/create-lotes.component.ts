@@ -19,6 +19,7 @@ export class CreateLotesComponent implements OnInit {
   @ViewChild('btnFaixa') btnFaixa!: ElementRef;
   @ViewChild('btnFaixaIncremento') btnFaixaIncremento!: ElementRef;
 
+  loading: boolean = false;
   formulario: FormGroup;
   id: any;
   leilaoId;
@@ -546,6 +547,8 @@ export class CreateLotesComponent implements OnInit {
   }
 
   callbackFunction() {
+    this.loading = true;
+
     forkJoin([
       this.restangular.one('judicial/autor').get(),
       this.restangular.one('judicial/juiz').get(),
@@ -566,6 +569,8 @@ export class CreateLotesComponent implements OnInit {
       this.credores = allResp[6].data;
       this.juizos = allResp[7].data;
       this.varas = allResp[8].data;
+
+      this.loading = false;
     });
   }
 

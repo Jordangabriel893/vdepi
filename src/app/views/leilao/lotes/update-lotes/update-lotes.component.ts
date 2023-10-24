@@ -36,6 +36,7 @@ export class UpdateLotesComponent implements OnInit {
   @ViewChild('btnFaixa') btnFaixa!: ElementRef;
   @ViewChild('btnFaixaIncremento') btnFaixaIncremento!: ElementRef;
 
+  loading = false;
   modalRef: BsModalRef;
   formulario: FormGroup;
   id: any;
@@ -816,6 +817,8 @@ export class UpdateLotesComponent implements OnInit {
   }
 
   callbackFunction() {
+    this.loading = true;
+
     forkJoin([
       this.restangular.one('judicial/autor').get(),
       this.restangular.one('judicial/juiz').get(),
@@ -836,6 +839,8 @@ export class UpdateLotesComponent implements OnInit {
       this.credores = allResp[6].data;
       this.juizos = allResp[7].data;
       this.varas = allResp[8].data;
+
+      this.loading = false;
     });
   }
 }

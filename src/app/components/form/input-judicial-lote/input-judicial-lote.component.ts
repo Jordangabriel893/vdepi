@@ -22,11 +22,14 @@ export class InputJudicialLoteComponent implements ControlValueAccessor  {
   @Input() bindValue: string;
   @Input() rota: string;
   @Output() callback = new EventEmitter<any>();
+  @Input() loading: boolean = false;
 
   value: string;
 
   onChange: any = () => {};
   onTouched: any = () => {};
+
+  
 
   constructor() { }
 
@@ -53,6 +56,7 @@ export class InputJudicialLoteComponent implements ControlValueAccessor  {
   }
 
   executeCallback() {
+
     this.callback.emit();
   }
 

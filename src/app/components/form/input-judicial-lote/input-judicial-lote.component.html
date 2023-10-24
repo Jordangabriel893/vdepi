@@ -2,10 +2,16 @@
   <div class="d-flex align-items-center justify-content-between">
     <label for="depositario">{{label}}</label>
     <div>
-      <a [routerLink]="[rota]" target="_blank"><i class="fas fa-plus pointer mr-1"></i></a>
-      <a (click)="executeCallback()"><i class="fas fa-undo pointer"></i></a>
+      <a [routerLink]="[rota]" target="_blank" ><i class="fas fa-plus pointer mr-2"></i></a>
+      <a (click)="executeCallback()" [routerLink]="[]" *ngIf="!loading; else loadingAnimation">
+        <i class="fas fa-undo pointer"></i>
+      </a>
     </div>
   </div>
   <ng-select [items]="items" [bindLabel]="bindLabel" [bindValue]="bindValue" [(ngModel)]="value"
     (ngModelChange)="updateValue($event)" [multiple]="multiple"></ng-select>
 </div>
+
+<ng-template #loadingAnimation>
+  <a [routerLink]="[]"><i [ngClass]="{'spin': true}"  class="fas fa-undo pointer"></i></a>
+</ng-template>
