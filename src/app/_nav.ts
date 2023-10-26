@@ -278,7 +278,7 @@ export const navigation = [
   {
     title: true,
     name: 'JUDICIAL',
-    grupo: 'JUDICIAL',
+    grupo: 'CADASTROS',
   },
 
   {
@@ -349,7 +349,7 @@ export const navigation = [
     name: 'Credores',
     url: '/credor',
     icon: 'fa fa-user',
-    source: 'ATOR_PROCESSO',
+    source: 'LEILOES',
     grupo: 'JUDICIAL',
   },
 
@@ -357,7 +357,7 @@ export const navigation = [
     name: 'Fiel Depositario',
     url: '/fiel-depositario',
     icon: 'fa fa-user',
-    source: 'ATOR_PROCESSO',
+    source: 'LEILOES',
     grupo: 'JUDICIAL',
   },
 ];
