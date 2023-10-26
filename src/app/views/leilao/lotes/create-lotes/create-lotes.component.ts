@@ -19,6 +19,7 @@ export class CreateLotesComponent implements OnInit {
   @ViewChild('btnFaixa') btnFaixa!: ElementRef;
   @ViewChild('btnFaixaIncremento') btnFaixaIncremento!: ElementRef;
 
+  loading: boolean = false;
   formulario: FormGroup;
   id: any;
   leilaoId;
@@ -53,6 +54,17 @@ export class CreateLotesComponent implements OnInit {
   anexostipo: any;
   numeroAdcAnexo: number;
   arrayAnexos = [];
+
+  //judicial
+  juizes: any[];
+  escrivaes: any[];
+  autores: any[];
+  reus: any[];
+  fieisDepositarios: any[];
+  partes: any[];
+  credores: any[];
+  juizos: any[];
+  varas: any[];
 
   local: any;
   editorConfig: AngularEditorConfig = {
@@ -112,17 +124,20 @@ export class CreateLotesComponent implements OnInit {
       loteJudicial: this.formBuilder.group({
         loteJudicialId: [0],
         numProcesso: [null],
-        autor: [null],
-        reu: [null],
-        advogados: [null],
         localDepositario: [null],
-        recursoPendente: [false],
         anoProcesso: [null],
         tipoAcao: [null],
-        recursos: [false],
         comarca: [null],
         natureza: [null],
-        juiz: [null],
+        juizoId: [null],
+        varaId: [null],
+        juizes: [null],
+        escrivaes: [null],
+        autores: [null],
+        reus: [null],
+        fieisDepositarios: [null],
+        partes: [null],
+        credores: [null]
       }),
       loteJudicialId: [null],
       tipoLoteId: [null],
@@ -145,6 +160,15 @@ export class CreateLotesComponent implements OnInit {
       this.restangular.one('categoria').get().pipe(),
       this.restangular.one('lotestatus').get().pipe(),
       this.restangular.one('admin/leilao', this.id).get(),
+      this.restangular.one('judicial/autor').get(),
+      this.restangular.one('judicial/juiz').get(),
+      this.restangular.one('judicial/escrivao').get(),
+      this.restangular.one('judicial/reu').get(),
+      this.restangular.one('judicial/fielDepositario').get(),
+      this.restangular.one('judicial/parte').get(),
+      this.restangular.one('judicial/credor').get(),
+      this.restangular.one('judicial/juizo').get(),
+      this.restangular.one('judicial/vara').get(),
     ]).subscribe((allResp: any[]) => {
       this.local = allResp[3].data;
       this.categorias = allResp[4].data;
@@ -183,10 +207,22 @@ export class CreateLotesComponent implements OnInit {
           })
         )
       );
+
+      this.autores = allResp[7].data;
+      this.juizes = allResp[8].data;
+      this.escrivaes = allResp[9].data;
+      this.reus = allResp[10].data;
+      this.fieisDepositarios = allResp[11].data;
+      this.partes = allResp[12].data;
+      this.credores = allResp[13].data;
+      this.juizos = allResp[14].data;
+      this.varas = allResp[15].data;
     });
   }
 
   onSubmit() {
+    console.log(this.formulario.value);
+
     if (this.formulario.value.judicial == false) {
       this.removeControls();
     }
@@ -508,6 +544,34 @@ export class CreateLotesComponent implements OnInit {
 
   selecionarTipoTaxa(tipo: string) {
     this.formulario.get('tipoTaxa').setValue(tipo);
+  }
+
+  callbackFunction() {
+    this.loading = true;
+
+    forkJoin([
+      this.restangular.one('judicial/autor').get(),
+      this.restangular.one('judicial/juiz').get(),
+      this.restangular.one('judicial/escrivao').get(),
+      this.restangular.one('judicial/reu').get(),
+      this.restangular.one('judicial/fielDepositario').get(),
+      this.restangular.one('judicial/parte').get(),
+      this.restangular.one('judicial/credor').get(),
+      this.restangular.one('judicial/juizo').get(),
+      this.restangular.one('judicial/vara').get(),
+    ]).subscribe((allResp: any[]) => {
+      this.autores = allResp[0].data;
+      this.juizes = allResp[1].data;
+      this.escrivaes = allResp[2].data;
+      this.reus = allResp[3].data;
+      this.fieisDepositarios = allResp[4].data;
+      this.partes = allResp[5].data;
+      this.credores = allResp[6].data;
+      this.juizos = allResp[7].data;
+      this.varas = allResp[8].data;
+
+      this.loading = false;
+    });
   }
 
   // adicionarFaixa() {
