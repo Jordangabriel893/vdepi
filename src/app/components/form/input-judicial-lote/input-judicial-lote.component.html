@@ -3,8 +3,8 @@
     <label for="depositario">{{label}}</label>
     <div>
       <a [routerLink]="[rota]" target="_blank" ><i class="fas fa-plus pointer mr-2"></i></a>
-      <a (click)="executeCallback()" [routerLink]="[]" *ngIf="!loading; else loadingAnimation">
-        <i class="fas fa-undo pointer"></i>
+      <a (click)="refresh($event.target)" [routerLink]="[]" *ngIf="!isSpinning; else loadingAnimation">
+        <i id="refresh" class="fas fa-undo pointer"></i>
       </a>
     </div>
   </div>
