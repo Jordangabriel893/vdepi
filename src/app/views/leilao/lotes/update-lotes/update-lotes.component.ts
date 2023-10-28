@@ -207,7 +207,7 @@ export class UpdateLotesComponent implements OnInit {
           //   this.formulario.get("valorTaxaAdministrativa").enable();
           //   this.btnFaixa.nativeElement.disabled = false;
           // }
-          
+
           this.autores = allResp[8].data;
           this.juizes = allResp[9].data;
           this.escrivaes = allResp[10].data;
@@ -441,7 +441,7 @@ export class UpdateLotesComponent implements OnInit {
   }
 
   updateForm(dados, fotos) {
-    console.log(fotos)
+    console.log(fotos);
 
     this.formulario = this.formBuilder.group({
       loteId: [dados.loteId, Validators.required],
@@ -469,23 +469,29 @@ export class UpdateLotesComponent implements OnInit {
         dados.loteJudicial == null
           ? this.criarCampoJudicial()
           : {
-            loteJudicialId: [dados.loteJudicial.loteJudicialId],
-            numProcesso: [dados.loteJudicial.numProcesso],
-            localDepositario: [dados.loteJudicial.localDepositario],
-            anoProcesso: [dados.loteJudicial.anoProcesso],
-            tipoAcao: [dados.loteJudicial.tipoAcao],
-            comarca: [dados.loteJudicial.comarca],
-            natureza: [dados.loteJudicial.natureza],
-            juizoId: [dados.loteJudicial.juizoId],
-            varaId: [dados.loteJudicial.varaId],
-            juizes: [dados.loteJudicial.juizes.map((x) => x.juizId)],
-            escrivaes: [dados.loteJudicial.escrivaes.map((x) => x.escrivaoId)],
-            autores: [dados.loteJudicial.autores.map((x) => x.autorId)],
-            reus: [dados.loteJudicial.reus.map((x) => x.reuId)],
-            fieisDepositarios: [dados.loteJudicial.fieisDepositarios.map((x) => x.fielDepositarioId)],
-            partes: [dados.loteJudicial.partes.map((x) => x.parteId)],
-            credores: [dados.loteJudicial.credores.map((x) => x.credorId)],
-          }
+              loteJudicialId: [dados.loteJudicial.loteJudicialId],
+              numProcesso: [dados.loteJudicial.numProcesso],
+              localDepositario: [dados.loteJudicial.localDepositario],
+              anoProcesso: [dados.loteJudicial.anoProcesso],
+              tipoAcao: [dados.loteJudicial.tipoAcao],
+              comarca: [dados.loteJudicial.comarca],
+              natureza: [dados.loteJudicial.natureza],
+              juizoId: [dados.loteJudicial.juizoId],
+              varaId: [dados.loteJudicial.varaId],
+              juizes: [dados.loteJudicial.juizes.map((x) => x.juizId)],
+              escrivaes: [
+                dados.loteJudicial.escrivaes.map((x) => x.escrivaoId),
+              ],
+              autores: [dados.loteJudicial.autores.map((x) => x.autorId)],
+              reus: [dados.loteJudicial.reus.map((x) => x.reuId)],
+              fieisDepositarios: [
+                dados.loteJudicial.fieisDepositarios.map(
+                  (x) => x.fielDepositarioId
+                ),
+              ],
+              partes: [dados.loteJudicial.partes.map((x) => x.parteId)],
+              credores: [dados.loteJudicial.credores.map((x) => x.credorId)],
+            }
       ),
       loteJudicialId: [dados.loteJudicialId],
       tipoLoteId: [dados.tipoLoteId],
@@ -577,21 +583,21 @@ export class UpdateLotesComponent implements OnInit {
   criarCampoJudicial() {
     return {
       loteJudicialId: [0],
-        numProcesso: [null],
-        localDepositario: [null],
-        anoProcesso: [null],
-        tipoAcao: [null],
-        comarca: [null],
-        natureza: [null],
-        juizoId: [null],
-        varaId: [null],
-        juizes: [null],
-        escrivaes: [null],
-        autores: [null],
-        reus: [null],
-        fieisDepositarios: [null],
-        partes: [null],
-        credores: [null]
+      numProcesso: [null],
+      localDepositario: [null],
+      anoProcesso: [null],
+      tipoAcao: [null],
+      comarca: [null],
+      natureza: [null],
+      juizoId: [null],
+      varaId: [null],
+      juizes: [null],
+      escrivaes: [null],
+      autores: [null],
+      reus: [null],
+      fieisDepositarios: [null],
+      partes: [null],
+      credores: [null],
     };
   }
 

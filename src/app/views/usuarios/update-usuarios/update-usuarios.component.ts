@@ -262,7 +262,7 @@ export class UpdateUsuariosComponent implements OnInit {
       nomeCompleto: dados.nomeCompleto,
       numeroDocumento: dados.numeroDocumento,
       dataNascimento: dados.dataNascimento
-        ? moment.utc(dados.dataNascimento).local().toDate()
+        ? moment(dados.dataNascimento, 'yyyy-MM-DD').toDate()
         : '',
       telefoneCelular: dados.telefoneCelular,
       telefoneConvencional: dados.telefoneConvencional,
@@ -287,7 +287,7 @@ export class UpdateUsuariosComponent implements OnInit {
       comitentes: dados.comitentes,
       rg: dados.rg,
       dataEmissao: dados.dataEmissao
-        ? moment.utc(dados.dataEmissao).local().toDate()
+        ? moment(dados.dataEmissao, 'yyyy-MM-DD').toDate()
         : '',
       orgaoEmissor: dados.orgaoEmissor,
       emailConfirmado: dados.emailConfirmado,
