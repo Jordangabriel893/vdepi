@@ -13,6 +13,7 @@ import { Restangular } from 'ngx-restangular';
 export class CriarTipoFotoComponent implements OnInit {
 
   formulario: FormGroup;
+  categorias: any[];
 
   constructor(
     private formBuilder: FormBuilder,
@@ -25,10 +26,23 @@ export class CriarTipoFotoComponent implements OnInit {
       visivelSite: [false, Validators.required],
       obrigatorio: [false, Validators.required],
       vistoria: [false, Validators.required],
+      categorias: [null, Validators.required],
     });
   }
 
   ngOnInit() {
+    this.getCategorias();
+  }
+
+  getCategorias() {
+    this.restangular.one('categoria').get().subscribe((res) => {
+      this.categorias = res.data.filter(categoria => categoria.categoriaPaiId);
+    });
+  }
+
+
+  teste(item){
+    console.log(item)
   }
 
   onSubmit() {
