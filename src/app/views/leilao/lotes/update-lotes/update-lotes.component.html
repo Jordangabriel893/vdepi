@@ -242,9 +242,9 @@
                 formControlName="juizoId"
                 [bindLabel]="'nome'"
                 [bindValue]="'juizoId'"
-                rota="/juizo"
-                (callback)="callbackFunction($event)"
-                [loading] = "loading">
+                rota="/create-juizo"
+                inputName="juizo"
+                >
               </app-input-judicial-lote>
               </div>
 
@@ -256,9 +256,9 @@
                 formControlName="varaId"
                 [bindLabel]="'nome'"
                 [bindValue]="'varaId'"
-                rota="/vara"
-                (callback)="callbackFunction($event)"
-                [loading] = "loading">
+                rota="/create-vara"
+                inputName="vara"
+                >
               </app-input-judicial-lote>
               </div>
             
@@ -270,9 +270,9 @@
                 formControlName="juizes"
                 [bindLabel]="'nomeCompleto'"
                 [bindValue]="'pessoaId'"
-                rota="/juiz"
-                (callback)="callbackFunction($event)"
-                [loading] = "loading">
+                rota="/create-juiz"
+                inputName="juiz"
+                >
               </app-input-judicial-lote>
               </div>
             </div>
@@ -286,9 +286,9 @@
                 formControlName="escrivaes"
                 [bindLabel]="'nomeCompleto'"
                 [bindValue]="'pessoaId'"
-                rota="/escrivao"
-                (callback)="callbackFunction($event)"
-                [loading] = "loading">
+                rota="/create-escrivao"
+                inputName="escrivao"
+                >
               </app-input-judicial-lote>
               </div>
 
@@ -300,9 +300,9 @@
                 formControlName="autores"
                 [bindLabel]="'nomeCompleto'"
                 [bindValue]="'id'"
-                rota="/autor"
-                (callback)="callbackFunction($event)"
-                [loading] = "loading">
+                rota="/create-autor"
+                inputName="autor"
+                >
               </app-input-judicial-lote>
               </div>
 
@@ -314,9 +314,9 @@
                 formControlName="reus"
                 [bindLabel]="'nomeCompleto'"
                 [bindValue]="'id'"
-                rota="/reu"
-                (callback)="callbackFunction($event)"
-                [loading] = "loading">
+                rota="/create-reu"
+                inputName="reu"
+                >
               </app-input-judicial-lote>
               </div>
             </div>
@@ -330,9 +330,9 @@
                 formControlName="fieisDepositarios"
                 [bindLabel]="'nomeCompleto'"
                 [bindValue]="'id'"
-                rota="/fiel-depositario"
-                (callback)="callbackFunction($event)"
-                [loading] = "loading">
+                rota="/create-fiel-depositario"
+                inputName="fielDepositario"
+                >
               </app-input-judicial-lote>
               </div>
 
@@ -344,9 +344,9 @@
                 formControlName="partes"
                 [bindLabel]="'nomeCompleto'"
                 [bindValue]="'id'"
-                rota="/parte"
-                (callback)="callbackFunction($event)"
-                [loading] = "loading">
+                rota="/create-parte"
+                inputName="parte"
+                >
               </app-input-judicial-lote>
               </div>
 
@@ -358,9 +358,9 @@
                 formControlName="credores"
                 [bindLabel]="'nomeCompleto'"
                 [bindValue]="'id'"
-                rota="/credor"
-                (callback)="callbackFunction($event)"
-                [loading] = "loading">
+                rota="/create-credor"
+                inputName="credor"
+                >
               </app-input-judicial-lote>
               </div>
             </div>

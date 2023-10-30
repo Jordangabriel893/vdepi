@@ -4,6 +4,7 @@ import {
   Component,
   ElementRef,
   OnInit,
+  Renderer2,
   TemplateRef,
   ViewChild,
 } from '@angular/core';
@@ -137,7 +138,8 @@ export class UpdateLotesComponent implements OnInit {
     private router: Router,
     private formBuilder: FormBuilder,
     private notifierService: NotifierService,
-    private modalService: BsModalService
+    private modalService: BsModalService,
+    private renderer: Renderer2
   ) {
     this.modalValorAvalicao = this.formBuilder.group({
       tipo: [, Validators.required],
@@ -440,9 +442,40 @@ export class UpdateLotesComponent implements OnInit {
     this.inputAnexos.nativeElement.click();
   }
 
-  updateForm(dados, fotos) {
-    console.log(fotos);
+  preencherCampoJudicial(dados) {
+    const juizes = dados.loteJudicial.juizes;
+    const escrivaes = dados.loteJudicial.escrivaes;
+    const autores = dados.loteJudicial.autores;
+    const reus = dados.loteJudicial.reus;
+    const fieisDepositarios = dados.loteJudicial.fieisDepositarios;
+    const partes = dados.loteJudicial.partes;
+    const credores = dados.loteJudicial.credores;
 
+    return {
+      loteJudicialId: [dados.loteJudicial.loteJudicialId],
+      numProcesso: [dados.loteJudicial.numProcesso],
+      localDepositario: [dados.loteJudicial.localDepositario],
+      anoProcesso: [dados.loteJudicial.anoProcesso],
+      tipoAcao: [dados.loteJudicial.tipoAcao],
+      comarca: [dados.loteJudicial.comarca],
+      natureza: [dados.loteJudicial.natureza],
+      juizoId: [dados.loteJudicial.juizoId],
+      varaId: [dados.loteJudicial.varaId],
+      juizes: [juizes ? juizes.map((x) => x.juizId) : []],
+      escrivaes: [escrivaes ? escrivaes.map((x) => x.escrivaoId) : []],
+      autores: [autores ? autores.map((x) => x.autorId) : []],
+      reus: [reus ? reus.map((x) => x.reuId) : []],
+      fieisDepositarios: [
+        fieisDepositarios
+          ? fieisDepositarios.map((x) => x.fielDepositarioId)
+          : [],
+      ],
+      partes: [partes ? partes.map((x) => x.parteId) : []],
+      credores: [credores ? credores.map((x) => x.credorId) : []],
+    };
+  }
+
+  updateForm(dados, fotos) {
     this.formulario = this.formBuilder.group({
       loteId: [dados.loteId, Validators.required],
       descricao: [dados.descricao, Validators.required],
@@ -468,30 +501,7 @@ export class UpdateLotesComponent implements OnInit {
       loteJudicial: this.formBuilder.group(
         dados.loteJudicial == null
           ? this.criarCampoJudicial()
-          : {
-              loteJudicialId: [dados.loteJudicial.loteJudicialId],
-              numProcesso: [dados.loteJudicial.numProcesso],
-              localDepositario: [dados.loteJudicial.localDepositario],
-              anoProcesso: [dados.loteJudicial.anoProcesso],
-              tipoAcao: [dados.loteJudicial.tipoAcao],
-              comarca: [dados.loteJudicial.comarca],
-              natureza: [dados.loteJudicial.natureza],
-              juizoId: [dados.loteJudicial.juizoId],
-              varaId: [dados.loteJudicial.varaId],
-              juizes: [dados.loteJudicial.juizes.map((x) => x.juizId)],
-              escrivaes: [
-                dados.loteJudicial.escrivaes.map((x) => x.escrivaoId),
-              ],
-              autores: [dados.loteJudicial.autores.map((x) => x.autorId)],
-              reus: [dados.loteJudicial.reus.map((x) => x.reuId)],
-              fieisDepositarios: [
-                dados.loteJudicial.fieisDepositarios.map(
-                  (x) => x.fielDepositarioId
-                ),
-              ],
-              partes: [dados.loteJudicial.partes.map((x) => x.parteId)],
-              credores: [dados.loteJudicial.credores.map((x) => x.credorId)],
-            }
+          : this.preencherCampoJudicial(dados)
       ),
       loteJudicialId: [dados.loteJudicialId],
       tipoLoteId: [dados.tipoLoteId],
@@ -605,16 +615,20 @@ export class UpdateLotesComponent implements OnInit {
     const loteJudicial = this.formulario.get('loteJudicial') as FormGroup;
     loteJudicial.removeControl('loteJudicialId');
     loteJudicial.removeControl('numProcesso');
-    loteJudicial.removeControl('autor');
-    loteJudicial.removeControl('reu');
-    loteJudicial.removeControl('depositario');
     loteJudicial.removeControl('localDepositario');
-    loteJudicial.removeControl('recursoPendente');
     loteJudicial.removeControl('anoProcesso');
     loteJudicial.removeControl('tipoAcao');
-    loteJudicial.removeControl('recursos');
     loteJudicial.removeControl('comarca');
     loteJudicial.removeControl('natureza');
+    loteJudicial.removeControl('juizoId');
+    loteJudicial.removeControl('varaId');
+    loteJudicial.removeControl('juizes');
+    loteJudicial.removeControl('escrivaes');
+    loteJudicial.removeControl('autores');
+    loteJudicial.removeControl('reus');
+    loteJudicial.removeControl('fieisDepositarios');
+    loteJudicial.removeControl('partes');
+    loteJudicial.removeControl('credores');
   }
 
   openModal(template: TemplateRef<any>) {
@@ -820,33 +834,5 @@ export class UpdateLotesComponent implements OnInit {
     }
 
     this.faixasIncremento = !this.faixasIncremento;
-  }
-
-  callbackFunction() {
-    this.loading = true;
-
-    forkJoin([
-      this.restangular.one('judicial/autor').get(),
-      this.restangular.one('judicial/juiz').get(),
-      this.restangular.one('judicial/escrivao').get(),
-      this.restangular.one('judicial/reu').get(),
-      this.restangular.one('judicial/fielDepositario').get(),
-      this.restangular.one('judicial/parte').get(),
-      this.restangular.one('judicial/credor').get(),
-      this.restangular.one('judicial/juizo').get(),
-      this.restangular.one('judicial/vara').get(),
-    ]).subscribe((allResp: any[]) => {
-      this.autores = allResp[0].data;
-      this.juizes = allResp[1].data;
-      this.escrivaes = allResp[2].data;
-      this.reus = allResp[3].data;
-      this.fieisDepositarios = allResp[4].data;
-      this.partes = allResp[5].data;
-      this.credores = allResp[6].data;
-      this.juizos = allResp[7].data;
-      this.varas = allResp[8].data;
-
-      this.loading = false;
-    });
   }
 }

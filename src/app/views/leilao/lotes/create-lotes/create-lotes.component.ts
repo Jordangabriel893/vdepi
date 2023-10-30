@@ -97,7 +97,7 @@ export class CreateLotesComponent implements OnInit {
     private route: ActivatedRoute,
     private router: Router,
     private formBuilder: FormBuilder,
-    private notifierService: NotifierService
+    private notifierService: NotifierService,
   ) {
     this.id = this.route.snapshot.params['id'];
     this.leilaoId = this.id;
@@ -486,16 +486,20 @@ export class CreateLotesComponent implements OnInit {
     const loteJudicial = this.formulario.get('loteJudicial') as FormGroup;
     loteJudicial.removeControl('loteJudicialId');
     loteJudicial.removeControl('numProcesso');
-    loteJudicial.removeControl('autor');
-    loteJudicial.removeControl('reu');
-    loteJudicial.removeControl('depositario');
     loteJudicial.removeControl('localDepositario');
-    loteJudicial.removeControl('recursoPendente');
     loteJudicial.removeControl('anoProcesso');
     loteJudicial.removeControl('tipoAcao');
-    loteJudicial.removeControl('recursos');
     loteJudicial.removeControl('comarca');
     loteJudicial.removeControl('natureza');
+    loteJudicial.removeControl('juizoId');
+    loteJudicial.removeControl('varaId');
+    loteJudicial.removeControl('juizes');
+    loteJudicial.removeControl('escrivaes');
+    loteJudicial.removeControl('autores');
+    loteJudicial.removeControl('reus');
+    loteJudicial.removeControl('fieisDepositarios');
+    loteJudicial.removeControl('partes');
+    loteJudicial.removeControl('credores');
   }
 
   verificaValidTouched(campo) {
@@ -544,34 +548,6 @@ export class CreateLotesComponent implements OnInit {
 
   selecionarTipoTaxa(tipo: string) {
     this.formulario.get('tipoTaxa').setValue(tipo);
-  }
-
-  callbackFunction() {
-    this.loading = true;
-
-    forkJoin([
-      this.restangular.one('judicial/autor').get(),
-      this.restangular.one('judicial/juiz').get(),
-      this.restangular.one('judicial/escrivao').get(),
-      this.restangular.one('judicial/reu').get(),
-      this.restangular.one('judicial/fielDepositario').get(),
-      this.restangular.one('judicial/parte').get(),
-      this.restangular.one('judicial/credor').get(),
-      this.restangular.one('judicial/juizo').get(),
-      this.restangular.one('judicial/vara').get(),
-    ]).subscribe((allResp: any[]) => {
-      this.autores = allResp[0].data;
-      this.juizes = allResp[1].data;
-      this.escrivaes = allResp[2].data;
-      this.reus = allResp[3].data;
-      this.fieisDepositarios = allResp[4].data;
-      this.partes = allResp[5].data;
-      this.credores = allResp[6].data;
-      this.juizos = allResp[7].data;
-      this.varas = allResp[8].data;
-
-      this.loading = false;
-    });
   }
 
   // adicionarFaixa() {

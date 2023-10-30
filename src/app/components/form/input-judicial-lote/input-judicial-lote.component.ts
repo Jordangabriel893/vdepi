@@ -1,5 +1,6 @@
-import { Component, Input, OnInit, forwardRef, EventEmitter, Output } from '@angular/core';
+import { Component, Input, OnInit, forwardRef, EventEmitter, Output, Renderer2, ElementRef } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
+import { Restangular } from 'ngx-restangular';
 
 @Component({
   selector: 'app-input-judicial-lote',
@@ -21,17 +22,18 @@ export class InputJudicialLoteComponent implements ControlValueAccessor  {
   @Input() bindLabel: string;	
   @Input() bindValue: string;
   @Input() rota: string;
-  @Output() callback = new EventEmitter<any>();
   @Input() loading: boolean = false;
+  @Input() inputName: string;
+  @Input() entity: any;
 
   value: string;
 
   onChange: any = () => {};
   onTouched: any = () => {};
 
-  
+  isSpinning: boolean = false;
 
-  constructor() { }
+  constructor(private restangular: Restangular, private renderer: Renderer2, private el: ElementRef) { }
 
   writeValue(value: any): void {
     this.value = value;
@@ -55,9 +57,20 @@ export class InputJudicialLoteComponent implements ControlValueAccessor  {
     this.onTouched();
   }
 
-  executeCallback() {
+  refresh(element: HTMLElement) {
+    this.isSpinning = true;
 
-    this.callback.emit();
+    //this.renderer.addClass(element, 'spin');
+
+    this.restangular
+      .one('judicial/' + this.inputName)
+      .get()
+      .subscribe(resp => {
+        this.items = resp.data;
+        this.isSpinning = false;
+        //this.renderer.removeClass(element, 'spin');
+      }, error => {});
+
   }
 
 }
