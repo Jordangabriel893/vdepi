@@ -7,15 +7,14 @@ import { Restangular } from 'ngx-restangular';
 @Component({
   selector: 'app-atualizar-lote-campo',
   templateUrl: './atualizar-lote-campo.component.html',
-  styleUrls: ['./atualizar-lote-campo.component.scss']
+  styleUrls: ['./atualizar-lote-campo.component.scss'],
 })
 export class AtualizarLoteCampoComponent implements OnInit {
-
   formulario: FormGroup;
   id;
   categorias: [];
-  tipos:[];
-  tiposValidacao:[];
+  tipos: [];
+  tiposValidacao: [];
 
   constructor(
     private formBuilder: FormBuilder,
@@ -23,7 +22,7 @@ export class AtualizarLoteCampoComponent implements OnInit {
     private notifierService: NotifierService,
     private route: ActivatedRoute,
     private router: Router
-  ) { }
+  ) {}
 
   ngOnInit() {
     this.id = this.route.snapshot.params['id'];
@@ -31,7 +30,7 @@ export class AtualizarLoteCampoComponent implements OnInit {
       .all('loteCampo')
       .get(this.id)
       .subscribe((dados) => {
-        console.log(dados.data)
+        console.log(dados.data);
         this.updateForm(dados.data);
       });
   }
@@ -49,10 +48,7 @@ export class AtualizarLoteCampoComponent implements OnInit {
           this.router.navigate(['/lote-campo']);
         },
         (error) => {
-          this.notifierService.notify(
-            'error',
-            'Erro ao criar o tipo de lote!'
-          );
+          this.notifierService.notify('error', 'Erro ao criar o tipo de lote!');
 
           Object.keys(this.formulario.controls).forEach((campo) => {
             const controle = this.formulario.get(campo);
@@ -63,39 +59,48 @@ export class AtualizarLoteCampoComponent implements OnInit {
   }
 
   getCategorias() {
-    this.restangular.one('categoria').get().subscribe((res) => {
-      this.categorias = res.data;
-    });
+    this.restangular
+      .one('categoria')
+      .get()
+      .subscribe((res) => {
+        this.categorias = res.data
+          .filter((x) => x.categoriaPaiId === null)
+          .sort((a, b) => a.descricao.localeCompare(b.descricao));
+      });
   }
 
   getTipos() {
-    this.restangular.one('loteCampo/tipoCampo').get().subscribe((res) => {
-      this.tipos = res.data;
-    });
+    this.restangular
+      .one('loteCampo/tipoCampo')
+      .get()
+      .subscribe((res) => {
+        this.tipos = res.data;
+      });
   }
 
   getTiposValidacao() {
-    this.restangular.one('loteCampo/validacoes').get().subscribe((res) => {
-      this.tiposValidacao = res.data;
-    });
+    this.restangular
+      .one('loteCampo/validacoes')
+      .get()
+      .subscribe((res) => {
+        this.tiposValidacao = res.data;
+      });
   }
-
 
   updateForm(dados) {
     this.getCategorias();
     this.getTipos();
-    this.getTiposValidacao();;
-    
+    this.getTiposValidacao();
 
     this.formulario = this.formBuilder.group({
       tipoCampoId: [dados.tipoCampoId, Validators.required],
       categoriaId: [dados.categoriaId, Validators.required],
       descricao: [dados.descricao, Validators.required],
       tamanho: [dados.tamanho, Validators.required],
-      formatacao: [dados.formatacao, Validators.required],
+      formatacao: [dados.formatacao],
       tipoCampoValidacaoId: [dados.tipoCampoValidacaoId, []],
-      ordemExibicao: [dados.orcemExibicao, Validators.required],
-      destaqueSite: [dados.destaqueSite, Validators.required],
+      ordemExibicao: [dados.orcemExibicao || 0],
+      destaqueSite: [dados.destaqueSite],
     });
   }
 

@@ -8,10 +8,9 @@ import { Restangular } from 'ngx-restangular';
 @Component({
   selector: 'app-criar-tipo-foto',
   templateUrl: './criar-tipo-foto.component.html',
-  styleUrls: ['./criar-tipo-foto.component.scss']
+  styleUrls: ['./criar-tipo-foto.component.scss'],
 })
 export class CriarTipoFotoComponent implements OnInit {
-
   formulario: FormGroup;
   categorias: any[];
 
@@ -23,9 +22,9 @@ export class CriarTipoFotoComponent implements OnInit {
   ) {
     this.formulario = this.formBuilder.group({
       descricao: [null, Validators.required],
-      visivelSite: [false, Validators.required],
-      obrigatorio: [false, Validators.required],
-      vistoria: [false, Validators.required],
+      visivelSite: [true],
+      obrigatorio: [false],
+      vistoria: [false],
       categorias: [null, Validators.required],
     });
   }
@@ -35,14 +34,24 @@ export class CriarTipoFotoComponent implements OnInit {
   }
 
   getCategorias() {
-    this.restangular.one('categoria').get().subscribe((res) => {
-      this.categorias = res.data.filter(categoria => categoria.categoriaPaiId);
-    });
+    this.restangular
+      .one('categoria')
+      .get()
+      .subscribe((res) => {
+        this.categorias = res.data
+          .filter((categoria) => categoria.categoriaPaiId != null)
+          .map((x) => {
+            return {
+              categoriaId: x.categoriaId,
+              descricao: x.descricao,
+              categoriaPai: x.categoriaPai.descricao,
+            };
+          });
+      });
   }
 
-
-  teste(item){
-    console.log(item)
+  teste(item) {
+    console.log(item);
   }
 
   onSubmit() {
@@ -58,10 +67,7 @@ export class CriarTipoFotoComponent implements OnInit {
           this.router.navigate(['/tipo-foto']);
         },
         (error) => {
-          this.notifierService.notify(
-            'error',
-            'Erro ao criar o tipo de foto!'
-          );
+          this.notifierService.notify('error', 'Erro ao criar o tipo de foto!');
 
           Object.keys(this.formulario.controls).forEach((campo) => {
             const controle = this.formulario.get(campo);

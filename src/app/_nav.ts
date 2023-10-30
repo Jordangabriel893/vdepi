@@ -254,7 +254,7 @@ export const navigation = [
   {
     name: 'Tipo de lote',
     url: '/tipo-lote',
-    icon: 'fa fa-box',
+    icon: 'fa fa-clone',
     source: 'TIPO_LOTE',
     grupo: 'CADASTROS',
   },
@@ -262,7 +262,7 @@ export const navigation = [
   {
     name: 'Campo de lote',
     url: '/lote-campo',
-    icon: 'fa fa-box',
+    icon: 'fa fa-list',
     source: 'LOTE_CAMPO',
     grupo: 'CADASTROS',
   },
@@ -270,7 +270,7 @@ export const navigation = [
   {
     name: 'Tipo de foto',
     url: '/tipo-foto',
-    icon: 'fa fa-box',
+    icon: 'fa fa-file-image',
     source: 'TIPO_FOTO',
     grupo: 'CADASTROS',
   },
@@ -284,7 +284,7 @@ export const navigation = [
   {
     name: 'Juizos',
     url: '/juizo',
-    icon: 'fa fa-user',
+    icon: 'fa fa-balance-scale',
     source: 'LEILOES',
     grupo: 'JUDICIAL',
   },
@@ -292,7 +292,7 @@ export const navigation = [
   {
     name: 'Varas',
     url: '/vara',
-    icon: 'fa fa-user',
+    icon: 'fa fa-book-open',
     source: 'LEILOES',
     grupo: 'JUDICIAL',
   },
@@ -300,7 +300,7 @@ export const navigation = [
   {
     name: 'Juizes',
     url: '/juiz',
-    icon: 'fa fa-user',
+    icon: 'fa fa-gavel',
     source: 'LEILOES',
     grupo: 'JUDICIAL',
   },
@@ -308,7 +308,7 @@ export const navigation = [
   {
     name: 'Escrivães',
     url: '/escrivao',
-    icon: 'fa fa-user',
+    icon: 'fab fa-readme',
     source: 'LEILOES',
     grupo: 'JUDICIAL',
   },
@@ -316,7 +316,7 @@ export const navigation = [
   {
     name: 'Advogados',
     url: '/advogado',
-    icon: 'fa fa-user',
+    icon: 'fa fa-user-tie',
     source: 'LEILOES',
     grupo: 'JUDICIAL',
   },
@@ -324,7 +324,7 @@ export const navigation = [
   {
     name: 'Réus',
     url: '/reu',
-    icon: 'fa fa-user',
+    icon: 'fa fa-user-edit',
     source: 'LEILOES',
     grupo: 'JUDICIAL',
   },
@@ -332,7 +332,7 @@ export const navigation = [
   {
     name: 'Autores',
     url: '/autor',
-    icon: 'fa fa-user',
+    icon: 'fa fa-user-edit',
     source: 'LEILOES',
     grupo: 'JUDICIAL',
   },
@@ -340,7 +340,7 @@ export const navigation = [
   {
     name: 'Partes',
     url: '/parte',
-    icon: 'fa fa-user',
+    icon: 'fa fa-user-edit',
     source: 'LEILOES',
     grupo: 'JUDICIAL',
   },
@@ -348,7 +348,7 @@ export const navigation = [
   {
     name: 'Credores',
     url: '/credor',
-    icon: 'fa fa-user',
+    icon: 'fa fa-user-edit',
     source: 'LEILOES',
     grupo: 'JUDICIAL',
   },
@@ -356,7 +356,7 @@ export const navigation = [
   {
     name: 'Fiel Depositario',
     url: '/fiel-depositario',
-    icon: 'fa fa-user',
+    icon: 'fa fa-user-edit',
     source: 'LEILOES',
     grupo: 'JUDICIAL',
   },

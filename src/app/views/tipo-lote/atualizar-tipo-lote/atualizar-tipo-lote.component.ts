@@ -7,14 +7,12 @@ import { Restangular } from 'ngx-restangular';
 @Component({
   selector: 'app-atualizar-tipo-lote',
   templateUrl: './atualizar-tipo-lote.component.html',
-  styleUrls: ['./atualizar-tipo-lote.component.scss']
+  styleUrls: ['./atualizar-tipo-lote.component.scss'],
 })
 export class AtualizarTipoLoteComponent implements OnInit {
-
   formulario: FormGroup;
   id;
   categorias: [];
-  regras: [];
 
   constructor(
     private formBuilder: FormBuilder,
@@ -22,7 +20,7 @@ export class AtualizarTipoLoteComponent implements OnInit {
     private notifierService: NotifierService,
     private route: ActivatedRoute,
     private router: Router
-  ) { }
+  ) {}
 
   ngOnInit() {
     this.id = this.route.snapshot.params['id'];
@@ -47,10 +45,7 @@ export class AtualizarTipoLoteComponent implements OnInit {
           this.router.navigate(['/tipo-lote']);
         },
         (error) => {
-          this.notifierService.notify(
-            'error',
-            'Erro ao criar o tipo de lote!'
-          );
+          this.notifierService.notify('error', 'Erro ao criar o tipo de lote!');
 
           Object.keys(this.formulario.controls).forEach((campo) => {
             const controle = this.formulario.get(campo);
@@ -61,26 +56,22 @@ export class AtualizarTipoLoteComponent implements OnInit {
   }
 
   getCategorias() {
-    this.restangular.one('categoria').get().subscribe((res) => {
-      this.categorias = res.data;
-    });
+    this.restangular
+      .one('categoria')
+      .get()
+      .subscribe((res) => {
+        this.categorias = res.data
+          .filter((x) => x.categoriaPaiId === null)
+          .sort((a, b) => a.descricao.localeCompare(b.descricao));
+      });
   }
-
-  getRegras() {
-    this.restangular.one('habilitacao/regras').get().subscribe((res) => {
-      this.regras = res.data;
-    });
-  }
-
 
   updateForm(dados) {
     this.getCategorias();
-    this.getRegras();
 
     this.formulario = this.formBuilder.group({
       descricao: [dados.descricao, Validators.required],
       categoriaId: [dados.categoriaId, Validators.required],
-      regraHabilitacaoId: [dados.regraHabilitacaoId, Validators.required],
     });
   }
 

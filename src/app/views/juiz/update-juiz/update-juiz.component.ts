@@ -75,7 +75,7 @@ export class UpdateJuizComponent implements OnInit {
       telefoneCelular: [null],
       telefoneConvencional: [null],
       telefoneWhatsapp: [null],
-      genero: [null],
+      genero: [null, Validators.required],
       tipoPessoa: ['PF'],
       endereco: this.formBuilder.group({
         cep: [null],

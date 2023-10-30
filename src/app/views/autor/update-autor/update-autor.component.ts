@@ -10,10 +10,9 @@ import { ConsultaCepService } from 'app/views/usuarios/shared/consulta-cep/consu
 @Component({
   selector: 'app-update-autor',
   templateUrl: './update-autor.component.html',
-  styleUrls: ['./update-autor.component.scss']
+  styleUrls: ['./update-autor.component.scss'],
 })
 export class UpdateAutorComponent implements OnInit {
-
   formulario: FormGroup;
   id: any;
   advogados: [];
@@ -33,22 +32,85 @@ export class UpdateAutorComponent implements OnInit {
     private notifierService: NotifierService,
     private cepService: ConsultaCepService
   ) {
-    this.mask = ['(',/[1-9]/,/\d/,')',' ',/\d/,/\d/,/\d/,/\d/,/\d/,'-',/\d/,/\d/,/\d/,/\d/,];
+    this.mask = [
+      '(',
+      /[1-9]/,
+      /\d/,
+      ')',
+      ' ',
+      /\d/,
+      /\d/,
+      /\d/,
+      /\d/,
+      /\d/,
+      '-',
+      /\d/,
+      /\d/,
+      /\d/,
+      /\d/,
+    ];
     this.maskData = [/\d/, /\d/, '/', /\d/, /\d/, '/', /\d/, /\d/, /\d/, /\d/];
     this.maskCep = [/\d/, /\d/, /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/];
-    this.maskCpf = [/\d/,/\d/,/\d/,'.',/\d/,/\d/,/\d/,'.',/\d/,/\d/,/\d/,'-',/\d/,/\d/,];
-    this.maskCnpj = [/\d/,/\d/,'.',/\d/,/\d/,/\d/,'.',/\d/,/\d/,/\d/,'/',/\d/,/\d/,/\d/,/\d/,'-',/\d/,/\d/,];
-    this.maskRg = [/\d/,/\d/,'.',/\d/,/\d/,/\d/,'.',/\d/,/\d/,/\d/,'-',/\d/,];
+    this.maskCpf = [
+      /\d/,
+      /\d/,
+      /\d/,
+      '.',
+      /\d/,
+      /\d/,
+      /\d/,
+      '.',
+      /\d/,
+      /\d/,
+      /\d/,
+      '-',
+      /\d/,
+      /\d/,
+    ];
+    this.maskCnpj = [
+      /\d/,
+      /\d/,
+      '.',
+      /\d/,
+      /\d/,
+      /\d/,
+      '.',
+      /\d/,
+      /\d/,
+      /\d/,
+      '/',
+      /\d/,
+      /\d/,
+      /\d/,
+      /\d/,
+      '-',
+      /\d/,
+      /\d/,
+    ];
+    this.maskRg = [
+      /\d/,
+      /\d/,
+      '.',
+      /\d/,
+      /\d/,
+      /\d/,
+      '.',
+      /\d/,
+      /\d/,
+      /\d/,
+      '-',
+      /\d/,
+    ];
 
     this.formulario = this.formBuilder.group({
       nomeCompleto: [null, [Validators.required, Validators.minLength(3)]],
-      numeroDocumento: [null, [Validators.required, Validators.minLength(6)]],
+      numeroDocumento: [null],
       dataNascimento: [null],
-      telefoneCelular: [null, [Validators.required, Validators.minLength(3)]],
+      telefoneCelular: [null],
       telefoneConvencional: [null],
       telefoneWhatsapp: [null],
       genero: [null],
-      tipoPessoa: ['PF', [Validators.required]],
+      tipoPessoa: ['PF'],
       endereco: this.formBuilder.group({
         cep: [null],
         numero: [null],
@@ -56,14 +118,14 @@ export class UpdateAutorComponent implements OnInit {
         bairro: [null],
         cidade: [null],
         estado: [null],
-        logradouro: [null]
+        logradouro: [null],
       }),
       rg: [null],
       dataEmissao: [null],
       orgaoEmissor: [null],
       principal: [false],
-      advogados: [null]
-    })
+      advogados: [null],
+    });
   }
 
   ngOnInit() {
@@ -76,9 +138,12 @@ export class UpdateAutorComponent implements OnInit {
         this.updateForm(dados.data);
       });
 
-    this.restangular.one("judicial/advogado").get().subscribe(a => {
-      this.advogados = a.data;
-    });
+    this.restangular
+      .one('judicial/advogado')
+      .get()
+      .subscribe((a) => {
+        this.advogados = a.data;
+      });
   }
 
   onSubmit() {
@@ -96,9 +161,9 @@ export class UpdateAutorComponent implements OnInit {
 
     const body = {
       pessoa: this.formulario.value,
-      principal: this.formulario.get("principal").value,
-      advogados: this.formulario.get("advogados").value
-    }
+      principal: this.formulario.get('principal').value,
+      advogados: this.formulario.get('advogados').value,
+    };
 
     this.restangular
       .all('judicial/autor')
@@ -180,9 +245,9 @@ export class UpdateAutorComponent implements OnInit {
       orgaoEmissor: dados.orgaoEmissor,
       emailConfirmado: dados.emailConfirmado,
       principal: dados.principal,
-      advogados: dados.advogados.map(a => a.pessoaId)
+      advogados: dados.advogados.map((a) => a.pessoaId),
     });
-    console.log(this.formulario.value)
+    console.log(this.formulario.value);
   }
 
   verificaValidTouched(campo) {
@@ -201,5 +266,4 @@ export class UpdateAutorComponent implements OnInit {
     this.formulario.get(campo).markAsTouched();
     this.formulario.get(campo).setValue(event);
   }
-
 }

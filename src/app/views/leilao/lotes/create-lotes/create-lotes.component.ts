@@ -97,7 +97,7 @@ export class CreateLotesComponent implements OnInit {
     private route: ActivatedRoute,
     private router: Router,
     private formBuilder: FormBuilder,
-    private notifierService: NotifierService,
+    private notifierService: NotifierService
   ) {
     this.id = this.route.snapshot.params['id'];
     this.leilaoId = this.id;
@@ -105,7 +105,7 @@ export class CreateLotesComponent implements OnInit {
     this.formulario = this.formBuilder.group({
       loteId: [0],
       descricao: [null, Validators.required],
-      descricaoDetalhada: [null, Validators.required],
+      descricaoDetalhada: [null],
       itemLote: [],
       numeroLote: [null, Validators.required],
       leilaoId: [this.id],
@@ -137,7 +137,7 @@ export class CreateLotesComponent implements OnInit {
         reus: [null],
         fieisDepositarios: [null],
         partes: [null],
-        credores: [null]
+        credores: [null],
       }),
       loteJudicialId: [null],
       tipoLoteId: [null],
@@ -221,8 +221,6 @@ export class CreateLotesComponent implements OnInit {
   }
 
   onSubmit() {
-    console.log(this.formulario.value);
-
     if (this.formulario.value.judicial == false) {
       this.removeControls();
     }
@@ -396,13 +394,12 @@ export class CreateLotesComponent implements OnInit {
     this.inputFotos.nativeElement.click();
   }
 
-  preencheTipoLote() {
+  carregarTipoFoto() {
     this.restangular
       .one('tipofoto/categoria/' + this.formulario.value.categoriaId)
       .get()
       .subscribe(
         (allResp) => {
-          console.log(allResp);
           this.tipoFoto = allResp.data;
         },
         (error) => {

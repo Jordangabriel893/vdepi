@@ -5,14 +5,14 @@
       <div class="col-lg-12">
         <div class="card">
           <div class="card-header">
-            <i class="fa fa-user-edit"></i>
+            <i class="fa fa-user-tie"></i>
             Dados Pessoais
           </div>
 
           <div class="card-block">
             <div class="row">
               <div class="form-group col-4">
-                <label for="nomeCompleto">Nome Completo</label>
+                <label for="nomeCompleto">Nome Completo *</label>
                 <input
                   type="text"
                   class="form-control"
@@ -27,7 +27,6 @@
                 <input
                   type="text"
                   class="form-control"
-                  [ngClass]="aplicaCssErro('dataNascimento')"
                   id="dataNascimento"
                   formControlName="dataNascimento"
                   [textMask]="{ mask: maskData }"
@@ -35,11 +34,7 @@
               </div>
               <div class="form-group col-4">
                 <label for="genero">Gênero </label>
-                <select
-                  class="form-control"
-                  [ngClass]="aplicaCssErro('genero')"
-                  formControlName="genero"
-                >
+                <select class="form-control" formControlName="genero">
                   <option value="M">Masculino</option>
                   <option value="F">Feminino</option>
                 </select>
@@ -51,7 +46,6 @@
                 <input
                   type="text"
                   class="form-control"
-                  [ngClass]="aplicaCssErro('telefoneCelular')"
                   id="titulo"
                   formControlName="telefoneCelular"
                   [textMask]="{ mask: mask }"
@@ -68,7 +62,6 @@
                 <label for="numeroDocumento">Nº Documento</label>
                 <input
                   *ngIf="formulario.controls['tipoPessoa'].value == 'PF'"
-                  [ngClass]="aplicaCssErro('numeroDocumento')"
                   type="text"
                   class="form-control"
                   id="numeroDocumento"
@@ -78,7 +71,6 @@
                 />
                 <input
                   *ngIf="formulario.controls['tipoPessoa'].value == 'PJ'"
-                  [ngClass]="aplicaCssErro('numeroDocumento')"
                   type="text"
                   class="form-control"
                   id="numeroDocumento"
@@ -110,7 +102,6 @@
                     type="text"
                     class="form-control"
                     id="cep"
-                    [ngClass]="aplicaCssErro('endereco.cep')"
                     formControlName="cep"
                     (blur)="consultaCEP()"
                     [textMask]="{ mask: maskCep }"
@@ -121,7 +112,6 @@
                   <input
                     type="text"
                     class="form-control"
-                    [ngClass]="aplicaCssErro('endereco.logradouro')"
                     id="logradouro"
                     formControlName="logradouro"
                   />
@@ -132,7 +122,6 @@
                   <input
                     type="text"
                     class="form-control"
-                    [ngClass]="aplicaCssErro('endereco.numero')"
                     id="numero"
                     formControlName="numero"
                   />
@@ -145,7 +134,6 @@
                   <input
                     type="text"
                     class="form-control"
-                    [ngClass]="aplicaCssErro('endereco.complemento')"
                     id="complemento"
                     formControlName="complemento"
                   />
@@ -155,7 +143,6 @@
                   <input
                     type="text"
                     class="form-control"
-                    [ngClass]="aplicaCssErro('endereco.bairro')"
                     id="bairro"
                     formControlName="bairro"
                   />
@@ -167,7 +154,6 @@
                     class="form-control"
                     id="cidade"
                     formControlName="cidade"
-                    [ngClass]="aplicaCssErro('endereco.cidade')"
                   />
                 </div>
                 <div class="form-group col-3">
@@ -177,7 +163,6 @@
                     class="form-control"
                     id="estado"
                     formControlName="estado"
-                    [ngClass]="aplicaCssErro('endereco.estado')"
                     maxlength="2"
                   />
                 </div>

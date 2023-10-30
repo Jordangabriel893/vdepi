@@ -60,7 +60,7 @@
                   class="form-control"
                   [ngClass]="aplicaCssErro('categoriaId')"
                   formControlName="categoriaId"
-                  (change)="preencheTipoLote()"
+                  (change)="carregarTipoFoto()"
                 >
                   <option
                     *ngFor="let item of categoriasFilhas"
@@ -232,138 +232,136 @@
             </div>
 
             <div class="row">
-              
               <div class="form-group col-4">
-                <app-input-judicial-lote 
-                label="Juizo" 
-                [items]="juizos" 
-                [multiple]="false" 
-                formControlName="juizoId"
-                [bindLabel]="'nome'"
-                [bindValue]="'juizoId'"
-                rota="/create-juizo"
-                inputName="juizo"
+                <app-input-judicial-lote
+                  label="Juizo"
+                  [items]="juizos"
+                  [multiple]="false"
+                  formControlName="juizoId"
+                  [bindLabel]="'nome'"
+                  [bindValue]="'juizoId'"
+                  rota="/create-juizo"
+                  inputName="juizo"
                 >
-              </app-input-judicial-lote>
+                </app-input-judicial-lote>
               </div>
 
               <div class="form-group col-4">
-                <app-input-judicial-lote 
-                label="Vara" 
-                [items]="varas" 
-                [multiple]="false" 
-                formControlName="varaId"
-                [bindLabel]="'nome'"
-                [bindValue]="'varaId'"
-                rota="/create-vara"
-                inputName="vara"
+                <app-input-judicial-lote
+                  label="Vara"
+                  [items]="varas"
+                  [multiple]="false"
+                  formControlName="varaId"
+                  [bindLabel]="'nome'"
+                  [bindValue]="'varaId'"
+                  rota="/create-vara"
+                  inputName="vara"
                 >
-              </app-input-judicial-lote>
+                </app-input-judicial-lote>
               </div>
-            
+
               <div class="form-group col-4">
-                <app-input-judicial-lote 
-                label="Juiz" 
-                [items]="juizes" 
-                multiple="true" 
-                formControlName="juizes"
-                [bindLabel]="'nomeCompleto'"
-                [bindValue]="'pessoaId'"
-                rota="/create-juiz"
-                inputName="juiz"
+                <app-input-judicial-lote
+                  label="Juiz"
+                  [items]="juizes"
+                  multiple="true"
+                  formControlName="juizes"
+                  [bindLabel]="'nomeCompleto'"
+                  [bindValue]="'pessoaId'"
+                  rota="/create-juiz"
+                  inputName="juiz"
                 >
-              </app-input-judicial-lote>
+                </app-input-judicial-lote>
               </div>
             </div>
 
             <div class="row">
               <div class="form-group col-4">
-                <app-input-judicial-lote 
-                label="Escrivão" 
-                [items]="escrivaes" 
-                multiple="true" 
-                formControlName="escrivaes"
-                [bindLabel]="'nomeCompleto'"
-                [bindValue]="'pessoaId'"
-                rota="/create-escrivao"
-                inputName="escrivao"
+                <app-input-judicial-lote
+                  label="Escrivão"
+                  [items]="escrivaes"
+                  multiple="true"
+                  formControlName="escrivaes"
+                  [bindLabel]="'nomeCompleto'"
+                  [bindValue]="'pessoaId'"
+                  rota="/create-escrivao"
+                  inputName="escrivao"
                 >
-              </app-input-judicial-lote>
+                </app-input-judicial-lote>
               </div>
 
               <div class="form-group col-4">
-                <app-input-judicial-lote 
-                label="Autor" 
-                [items]="autores" 
-                multiple="true" 
-                formControlName="autores"
-                [bindLabel]="'nomeCompleto'"
-                [bindValue]="'id'"
-                rota="/create-autor"
-                inputName="autor"
+                <app-input-judicial-lote
+                  label="Autor"
+                  [items]="autores"
+                  multiple="true"
+                  formControlName="autores"
+                  [bindLabel]="'nomeCompleto'"
+                  [bindValue]="'id'"
+                  rota="/create-autor"
+                  inputName="autor"
                 >
-              </app-input-judicial-lote>
+                </app-input-judicial-lote>
               </div>
 
               <div class="form-group col-4">
-                <app-input-judicial-lote 
-                label="Réu" 
-                [items]="reus" 
-                multiple="true" 
-                formControlName="reus"
-                [bindLabel]="'nomeCompleto'"
-                [bindValue]="'id'"
-                rota="/create-reu"
-                inputName="reu"
+                <app-input-judicial-lote
+                  label="Réu"
+                  [items]="reus"
+                  multiple="true"
+                  formControlName="reus"
+                  [bindLabel]="'nomeCompleto'"
+                  [bindValue]="'id'"
+                  rota="/create-reu"
+                  inputName="reu"
                 >
-              </app-input-judicial-lote>
+                </app-input-judicial-lote>
               </div>
             </div>
 
             <div class="row">
               <div class="form-group col-4">
-                <app-input-judicial-lote 
-                label="Fiel Depositário" 
-                [items]="fieisDepositarios" 
-                multiple="true" 
-                formControlName="fieisDepositarios"
-                [bindLabel]="'nomeCompleto'"
-                [bindValue]="'id'"
-                rota="/create-fiel-depositario"
-                inputName="fielDepositario"
+                <app-input-judicial-lote
+                  label="Fiel Depositário"
+                  [items]="fieisDepositarios"
+                  multiple="true"
+                  formControlName="fieisDepositarios"
+                  [bindLabel]="'nomeCompleto'"
+                  [bindValue]="'id'"
+                  rota="/create-fiel-depositario"
+                  inputName="fielDepositario"
                 >
-              </app-input-judicial-lote>
+                </app-input-judicial-lote>
               </div>
 
               <div class="form-group col-4">
-                <app-input-judicial-lote 
-                label="Parte" 
-                [items]="partes" 
-                multiple="true" 
-                formControlName="partes"
-                [bindLabel]="'nomeCompleto'"
-                [bindValue]="'id'"
-                rota="/create-parte"
-                inputName="parte"
+                <app-input-judicial-lote
+                  label="Parte"
+                  [items]="partes"
+                  multiple="true"
+                  formControlName="partes"
+                  [bindLabel]="'nomeCompleto'"
+                  [bindValue]="'id'"
+                  rota="/create-parte"
+                  inputName="parte"
                 >
-              </app-input-judicial-lote>
+                </app-input-judicial-lote>
               </div>
 
               <div class="form-group col-4">
-                <app-input-judicial-lote 
-                label="Credores" 
-                [items]="credores" 
-                multiple="true" 
-                formControlName="credores"
-                [bindLabel]="'nomeCompleto'"
-                [bindValue]="'id'"
-                rota="/create-credor"
-                inputName="credor"
+                <app-input-judicial-lote
+                  label="Credores"
+                  [items]="credores"
+                  multiple="true"
+                  formControlName="credores"
+                  [bindLabel]="'nomeCompleto'"
+                  [bindValue]="'id'"
+                  rota="/create-credor"
+                  inputName="credor"
                 >
-              </app-input-judicial-lote>
+                </app-input-judicial-lote>
               </div>
             </div>
-
           </div>
         </div>
       </div>

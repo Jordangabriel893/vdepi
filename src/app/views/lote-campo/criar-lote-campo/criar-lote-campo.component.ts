@@ -8,15 +8,14 @@ import { Restangular } from 'ngx-restangular';
 @Component({
   selector: 'app-criar-lote-campo',
   templateUrl: './criar-lote-campo.component.html',
-  styleUrls: ['./criar-lote-campo.component.scss']
+  styleUrls: ['./criar-lote-campo.component.scss'],
 })
 export class CriarLoteCampoComponent implements OnInit {
-
   formulario: FormGroup;
   categorias: [];
   categoriasAgrupadas: any[] = [];
-  tipos:[];
-  tiposValidacao:[];
+  tipos: [];
+  tiposValidacao: [];
 
   constructor(
     private formBuilder: FormBuilder,
@@ -29,10 +28,10 @@ export class CriarLoteCampoComponent implements OnInit {
       categoriaId: [null, Validators.required],
       descricao: [null, Validators.required],
       tamanho: [null, Validators.required],
-      formatacao: [null, Validators.required],
+      formatacao: [null],
       tipoCampoValidacaoId: [null, []],
-      ordemExibicao: [null, Validators.required],
-      destaqueSite: [false, Validators.required],
+      ordemExibicao: [0],
+      destaqueSite: [false],
     });
   }
 
@@ -43,42 +42,32 @@ export class CriarLoteCampoComponent implements OnInit {
   }
 
   getCategorias() {
-    this.restangular.one('categoria').get().subscribe((res) => {
-      this.categorias = res.data;
-
-      // agrupa as categorias por pai
-      this.categoriasAgrupadas = this.categorias.reduce((result, categoria: any) => {
-        const categoriaPaiId = categoria.categoriaPaiId;
-        if (!categoriaPaiId) {// se for pai
-          result.push({ label: categoria.descricao, id: categoria.categoriaId, filhos: [] }); // cria um novo pai com array de filhos
-        } else {// se for filho
-          const pai = result.find(item => item.id === categoriaPaiId);// recupera o pai
-          if (pai) {
-            pai.filhos.push(categoria);// adiciona o filho ao pai
-          }
-        }
-        return result;
-      }, []);
-
-      // Ordenar categorias e filhos em ordem alfabética
-      this.categoriasAgrupadas.sort((a, b) => a.label.localeCompare(b.label));
-      this.categoriasAgrupadas.forEach(categoria => {
-        categoria.filhos.sort((a, b) => a.descricao.localeCompare(b.descricao));
+    this.restangular
+      .one('categoria')
+      .get()
+      .subscribe((res) => {
+        this.categorias = res.data
+          .filter((x) => x.categoriaPaiId === null)
+          .sort((a, b) => a.descricao.localeCompare(b.descricao));
       });
-            
-    });
   }
 
   getTipos() {
-    this.restangular.one('loteCampo/tipoCampo').get().subscribe((res) => {
-      this.tipos = res.data;
-    });
+    this.restangular
+      .one('loteCampo/tipoCampo')
+      .get()
+      .subscribe((res) => {
+        this.tipos = res.data;
+      });
   }
 
   getTiposValidacao() {
-    this.restangular.one('loteCampo/validacoes').get().subscribe((res) => {
-      this.tiposValidacao = res.data;
-    });
+    this.restangular
+      .one('loteCampo/validacoes')
+      .get()
+      .subscribe((res) => {
+        this.tiposValidacao = res.data;
+      });
   }
 
   onSubmit() {
@@ -94,10 +83,7 @@ export class CriarLoteCampoComponent implements OnInit {
           this.router.navigate(['/lote-campo']);
         },
         (error) => {
-          this.notifierService.notify(
-            'error',
-            'Erro ao criar o tipo de lote!'
-          );
+          this.notifierService.notify('error', 'Erro ao criar o tipo de lote!');
 
           Object.keys(this.formulario.controls).forEach((campo) => {
             const controle = this.formulario.get(campo);

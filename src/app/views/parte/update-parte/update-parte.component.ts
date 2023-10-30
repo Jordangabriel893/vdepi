@@ -68,13 +68,13 @@ export class UpdateParteComponent implements OnInit {
 
     this.formulario = this.formBuilder.group({
       nomeCompleto: [null, [Validators.required, Validators.minLength(3)]],
-      numeroDocumento: [null, [Validators.required, Validators.minLength(6)]],
+      numeroDocumento: [null],
       dataNascimento: [null],
-      telefoneCelular: [null, [Validators.required, Validators.minLength(3)]],
+      telefoneCelular: [null],
       telefoneConvencional: [null],
       telefoneWhatsapp: [null],
       genero: [null],
-      tipoPessoa: ['PF', [Validators.required]],
+      tipoPessoa: ['PF'],
       endereco: this.formBuilder.group({
         cep: [null],
         numero: [null],
@@ -84,9 +84,6 @@ export class UpdateParteComponent implements OnInit {
         estado: [null],
         logradouro: [null],
       }),
-      rg: [null],
-      dataEmissao: [null],
-      orgaoEmissor: [null],
       principal: [false],
       advogados: [null],
     });

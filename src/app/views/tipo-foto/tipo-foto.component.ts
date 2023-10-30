@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Restangular } from 'ngx-restangular';
-import * as Model from '../_models/model'
+import * as Model from '../_models/model';
 import { BsModalRef } from 'ngx-bootstrap/modal';
 import { ConfirmationService, ResolveEmit } from '@jaspero/ng-confirmations';
 import { NotifierService } from 'angular-notifier';
@@ -10,11 +10,10 @@ import { NotifierService } from 'angular-notifier';
 @Component({
   selector: 'app-tipo-foto',
   templateUrl: './tipo-foto.component.html',
-  styleUrls: ['./tipo-foto.component.scss']
+  styleUrls: ['./tipo-foto.component.scss'],
 })
 export class TipoFotoComponent implements OnInit {
-
-  formulario: FormGroup
+  formulario: FormGroup;
   loading = true;
   loadingLog = true;
   selectLeilao;
@@ -30,31 +29,38 @@ export class TipoFotoComponent implements OnInit {
     private restangular: Restangular,
     private formBuilder: FormBuilder,
     private confirmationService: ConfirmationService,
-    private notifierService: NotifierService,
+    private notifierService: NotifierService
   ) {
     this.formulario = this.formBuilder.group({
-      leilao: [null]
-    })
+      leilao: [null],
+    });
   }
 
   ngOnInit() {
     this.getCampos();
   }
 
-  getCampos(){
+  getCampos() {
     this.loading = true;
 
-    this.restangular.one('/TipoFoto').get().subscribe(
-      dados => {
-        this.tipos = dados.data
-        this.loading = false;
-      },
-      () => this.loading = false
-    )
+    this.restangular
+      .one('/TipoFoto')
+      .get()
+      .subscribe(
+        (dados) => {
+          this.tipos = dados.data.sort((a, b) =>
+            a.descricao.localeCompare(b.descricao)
+          );
+          this.loading = false;
+        },
+        () => (this.loading = false)
+      );
   }
 
   edit(id) {
-    this.router.navigate(['/atualizar-tipo-foto', id], { relativeTo: this.route });
+    this.router.navigate(['/atualizar-tipo-foto', id], {
+      relativeTo: this.route,
+    });
   }
 
   remove(id) {

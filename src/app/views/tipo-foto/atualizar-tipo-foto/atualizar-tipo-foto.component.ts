@@ -7,10 +7,9 @@ import { Restangular } from 'ngx-restangular';
 @Component({
   selector: 'app-atualizar-tipo-foto',
   templateUrl: './atualizar-tipo-foto.component.html',
-  styleUrls: ['./atualizar-tipo-foto.component.scss']
+  styleUrls: ['./atualizar-tipo-foto.component.scss'],
 })
 export class AtualizarTipoFotoComponent implements OnInit {
-
   formulario: FormGroup;
   id;
   categorias: any;
@@ -21,7 +20,7 @@ export class AtualizarTipoFotoComponent implements OnInit {
     private notifierService: NotifierService,
     private route: ActivatedRoute,
     private router: Router
-  ) { }
+  ) {}
 
   ngOnInit() {
     this.id = this.route.snapshot.params['id'];
@@ -32,14 +31,24 @@ export class AtualizarTipoFotoComponent implements OnInit {
         this.updateForm(dados.data);
       });
 
-      this.getCategorias();
+    this.getCategorias();
   }
 
-  getCategorias(){
-    this.restangular.one('categoria').get().subscribe((dados) => {
-      this.categorias = dados.data.filter(categoria => categoria.categoriaPaiId);
-      console.log(dados.data)
-    });
+  getCategorias() {
+    this.restangular
+      .one('categoria')
+      .get()
+      .subscribe((res) => {
+        this.categorias = res.data
+          .filter((categoria) => categoria.categoriaPaiId != null)
+          .map((x) => {
+            return {
+              categoriaId: x.categoriaId,
+              descricao: x.descricao,
+              categoriaPai: x.categoriaPai.descricao,
+            };
+          });
+      });
   }
 
   onSubmit() {
@@ -71,10 +80,13 @@ export class AtualizarTipoFotoComponent implements OnInit {
   updateForm(dados) {
     this.formulario = this.formBuilder.group({
       descricao: [dados.descricao, Validators.required],
-      visivelSite: [dados.visivelSite, Validators.required],
-      obrigatorio: [dados.obrigatorio, Validators.required],
-      vistoria: [dados.vistoria, Validators.required],
-      categorias: [dados.categorias.map(x => x.categoriaId), Validators.required],
+      visivelSite: [dados.visivelSite],
+      obrigatorio: [dados.obrigatorio],
+      vistoria: [dados.vistoria],
+      categorias: [
+        dados.categorias.map((x) => x.categoriaId),
+        Validators.required,
+      ],
     });
   }
 

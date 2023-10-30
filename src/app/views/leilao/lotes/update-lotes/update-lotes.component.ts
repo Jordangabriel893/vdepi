@@ -393,7 +393,7 @@ export class UpdateLotesComponent implements OnInit {
     this.inputFotos.nativeElement.click();
   }
 
-  preencheTipoLote() {
+  carregarTipoFoto() {
     this.restangular
       .one('tipofoto/categoria/' + this.formulario.value.categoriaId)
       .get()
@@ -479,7 +479,7 @@ export class UpdateLotesComponent implements OnInit {
     this.formulario = this.formBuilder.group({
       loteId: [dados.loteId, Validators.required],
       descricao: [dados.descricao, Validators.required],
-      descricaoDetalhada: [dados.descricaoDetalhada, Validators.required],
+      descricaoDetalhada: [dados.descricaoDetalhada],
       dataEncerramento: [dados.dataEncerramento],
       itemLote: [dados.itemLote],
       numeroLote: [dados.numeroLote, Validators.required],
@@ -550,7 +550,7 @@ export class UpdateLotesComponent implements OnInit {
 
     //setTimeout(() => { this.mostrarCampoJudicial = true }, 3000)
 
-    this.preencheTipoLote();
+    this.carregarTipoFoto();
   }
 
   filterList(campo: string) {
