@@ -7,9 +7,9 @@
       ></a>
       <a
         (click)="refresh($event.target)"
-        [routerLink]="[]"
         *ngIf="!isSpinning; else loadingAnimation"
         title="Atualizar Lista"
+        class="text-primary"
       >
         <i id="refresh" class="fa fa-sync-alt pointer"></i>
       </a>
@@ -22,11 +22,12 @@
     [(ngModel)]="value"
     (ngModelChange)="updateValue($event)"
     [multiple]="multiple"
+    [disabled]="disabled"
   ></ng-select>
 </div>
 
 <ng-template #loadingAnimation>
-  <a [routerLink]="[]"
-    ><i [ngClass]="{ spin: true }" class="fas fa-undo pointer"></i
+  <a class="text-primary"
+    ><i class="fas fa-sync-alt pointer fa-spin" title="Atualizando..."></i
   ></a>
 </ng-template>

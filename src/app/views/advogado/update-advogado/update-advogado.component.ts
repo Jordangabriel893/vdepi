@@ -206,7 +206,7 @@ export class UpdateAdvogadoComponent implements OnInit {
         logradouro: dados.endereco ? dados.endereco.logradouro : '',
       },
     });
-    console.log(this.formulario.value);
+    //console.log(this.formulario.value);
   }
 
   verificaValidTouched(campo) {

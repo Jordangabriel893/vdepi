@@ -208,7 +208,7 @@ export class CreateFaturaComponent implements OnInit, OnDestroy {
       )
       .filter((v) => v !== null);
 
-    console.log(formasSelecionadas);
+    //console.log(formasSelecionadas);
 
     if (formasSelecionadas.includes(6)) this.guiaChecked = true;
     else this.guiaChecked = false;

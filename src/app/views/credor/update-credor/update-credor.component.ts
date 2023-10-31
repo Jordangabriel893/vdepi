@@ -223,7 +223,7 @@ export class UpdateCredorComponent implements OnInit {
       principal: dados.principal,
       advogados: dados.advogados.map((a) => a.pessoaId),
     });
-    console.log(this.formulario.value);
+    //console.log(this.formulario.value);
   }
 
   verificaValidTouched(campo) {

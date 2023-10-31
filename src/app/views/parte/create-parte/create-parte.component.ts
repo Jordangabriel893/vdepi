@@ -94,7 +94,7 @@ export class CreateParteComponent implements OnInit {
       .get()
       .subscribe((a) => {
         this.advogados = a.data;
-        console.log(this.advogados);
+        //console.log(this.advogados);
       });
 
     this.formulario = this.formBuilder.group({

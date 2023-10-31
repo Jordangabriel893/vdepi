@@ -132,8 +132,8 @@ export class UpdateLotesComponent implements OnInit {
       },
     ],
   };
-  juizoId: number;
-  varaId: number;
+  juizoId: number = 0;
+  varaId: number = 0;
 
   constructor(
     private restangular: Restangular,
@@ -168,14 +168,14 @@ export class UpdateLotesComponent implements OnInit {
       this.restangular.one('lotestatus').get().pipe(),
       this.restangular.one('tabelafipe/tipos').get().pipe(),
       this.restangular.one('judicial/autor').get(),
-      this.restangular.one('judicial/juiz').get(),
-      this.restangular.one('judicial/escrivao').get(),
+      //this.restangular.one('judicial/juiz').get(),
+      //this.restangular.one('judicial/escrivao').get(),
       this.restangular.one('judicial/reu').get(),
       this.restangular.one('judicial/fielDepositario').get(),
       this.restangular.one('judicial/parte').get(),
       this.restangular.one('judicial/credor').get(),
       this.restangular.one('judicial/juizo').get(),
-      this.restangular.one('judicial/vara').get(),
+      //this.restangular.one('judicial/vara').get(),
     ]).subscribe((allResp: any[]) => {
       this.local = allResp[3].data;
 
@@ -214,14 +214,14 @@ export class UpdateLotesComponent implements OnInit {
           // }
 
           this.autores = allResp[8].data;
-          this.juizes = allResp[9].data;
-          this.escrivaes = allResp[10].data;
-          this.reus = allResp[11].data;
-          this.fieisDepositarios = allResp[12].data;
-          this.partes = allResp[13].data;
-          this.credores = allResp[14].data;
-          this.juizos = allResp[15].data;
-          this.varas = allResp[16].data;
+          //this.juizes = allResp[9].data;
+          //this.escrivaes = allResp[10].data;
+          this.reus = allResp[9].data;
+          this.fieisDepositarios = allResp[10].data;
+          this.partes = allResp[11].data;
+          this.credores = allResp[12].data;
+          this.juizos = allResp[13].data;
+          //this.varas = allResp[16].data;
 
           this.formulario
             .get('judicial')
@@ -402,11 +402,11 @@ export class UpdateLotesComponent implements OnInit {
       .get()
       .subscribe(
         (allResp) => {
-          console.log(allResp);
+          //console.log(allResp);
           this.tipoFoto = allResp.data;
         },
         (error) => {
-          console.log(error);
+          //console.log(error);
         }
       );
   }
@@ -454,6 +454,18 @@ export class UpdateLotesComponent implements OnInit {
     const partes = dados.loteJudicial.partes;
     const credores = dados.loteJudicial.credores;
 
+    this.juizoId = dados.loteJudicial.juizoId;
+    this.varaId = dados.loteJudicial.varaId;
+
+    if (this.juizoId && this.juizoId > 0) {
+      this.carregarVaras(this.juizoId).subscribe((resp: any) => {
+        this.varas = resp.data;
+        if (this.varaId && this.varaId > 0) {
+          this.carregarJuizesEscrivaes(this.varaId);
+        }
+      });
+    }
+
     return {
       loteJudicialId: [dados.loteJudicial.loteJudicialId],
       numProcesso: [dados.loteJudicial.numProcesso],
@@ -483,7 +495,6 @@ export class UpdateLotesComponent implements OnInit {
       loteId: [dados.loteId, Validators.required],
       descricao: [dados.descricao, Validators.required],
       descricaoDetalhada: [dados.descricaoDetalhada],
-      dataEncerramento: [dados.dataEncerramento],
       itemLote: [dados.itemLote],
       numeroLote: [dados.numeroLote, Validators.required],
       leilaoId: [dados.leilaoId, Validators.required],
@@ -568,12 +579,9 @@ export class UpdateLotesComponent implements OnInit {
 
         this.formulario.get('loteJudicial').get('varaId').reset();
 
-        this.restangular
-          .one('judicial/vara')
-          .get({ juizoId: value })
-          .subscribe((allResp: any) => {
-            this.varas = allResp.data;
-          });
+        this.carregarVaras(value).subscribe((resp: any) => {
+          this.varas = resp.data;
+        });
       });
 
     this.formulario
@@ -581,23 +589,32 @@ export class UpdateLotesComponent implements OnInit {
       .get('varaId')
       .valueChanges.subscribe((value) => {
         if (isNullOrUndefined(value)) {
-          this.formulario.get('loteJudicial').get('juizes').reset();
-          this.formulario.get('loteJudicial').get('escrivaes').reset();
+          this.formulario.get('loteJudicial').get('juizes').patchValue([]);
+          this.formulario.get('loteJudicial').get('escrivaes').patchValue([]);
 
           this.varaId = 0;
           return;
         }
 
-        const vara = this.varas.find((x) => x.varaId == value);
-
         this.varaId = value;
 
-        this.formulario.get('loteJudicial').get('juizes').reset();
-        this.formulario.get('loteJudicial').get('escrivaes').reset();
-
-        this.juizes = vara.juizes.map((x) => x.juiz);
-        this.escrivaes = vara.escrivaes.map((x) => x.escrivao);
+        this.formulario.get('loteJudicial').get('juizes').patchValue([]);
+        this.formulario.get('loteJudicial').get('escrivaes').patchValue([]);
+        this.carregarJuizesEscrivaes(value);
+        //console.log(this.formulario);
       });
+  }
+
+  carregarVaras(juizoId: number) {
+    return this.restangular.one('judicial/vara').get({ juizoId: juizoId });
+  }
+
+  carregarJuizesEscrivaes(varaId: number) {
+    const vara = this.varas.find((x) => x.varaId == varaId);
+    this.juizes = vara.juizes ? vara.juizes.map((x) => x.juiz) : [];
+    this.escrivaes = vara.escrivaes
+      ? vara.escrivaes.map((x) => x.escrivao)
+      : [];
   }
 
   filterList(campo: string) {
@@ -648,13 +665,13 @@ export class UpdateLotesComponent implements OnInit {
       natureza: [null],
       juizoId: [null],
       varaId: [null],
-      juizes: [null],
-      escrivaes: [null],
-      autores: [null],
-      reus: [null],
-      fieisDepositarios: [null],
-      partes: [null],
-      credores: [null],
+      juizes: [[]],
+      escrivaes: [[]],
+      autores: [[]],
+      reus: [[]],
+      fieisDepositarios: [[]],
+      partes: [[]],
+      credores: [[]],
     };
   }
 
@@ -839,7 +856,7 @@ export class UpdateLotesComponent implements OnInit {
 
     this.taxaFaixa = !this.taxaFaixa;
 
-    console.log(this.btnFaixa);
+    //console.log(this.btnFaixa);
   }
 
   onValueChangeFaixaIncremento(event, campo, i) {

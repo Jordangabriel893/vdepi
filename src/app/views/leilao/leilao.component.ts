@@ -79,7 +79,7 @@ export class LeilaoComponent implements OnInit {
           this.listarLeiloes();
         },
         (error) => {
-          console.log(error.data.Message);
+          //console.log(error.data.Message);
           this.notifierService.notify('error', error.data.Message);
         }
       );

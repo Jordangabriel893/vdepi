@@ -452,7 +452,7 @@ export class CreateLotesComponent implements OnInit {
           this.tipoFoto = allResp.data;
         },
         (error) => {
-          console.log(error);
+          //console.log(error);
         }
       );
   }

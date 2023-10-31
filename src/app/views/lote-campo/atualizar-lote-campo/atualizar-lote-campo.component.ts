@@ -30,7 +30,7 @@ export class AtualizarLoteCampoComponent implements OnInit {
       .all('loteCampo')
       .get(this.id)
       .subscribe((dados) => {
-        console.log(dados.data);
+        //console.log(dados.data);
         this.updateForm(dados.data);
       });
   }

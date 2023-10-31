@@ -36,7 +36,6 @@ export class UpdateJuizoComponent implements OnInit {
   }
 
   onSubmit() {
-    // console.log(this.formulario.value);
     this.restangular
       .all('judicial/juizo')
       .customPUT(this.formulario.value, this.id)
@@ -49,7 +48,7 @@ export class UpdateJuizoComponent implements OnInit {
           this.router.navigate(['/juizo']);
         },
         (error) => {
-          console.log(error);
+          //console.log(error);
           this.notifierService.notify('error', 'Erro ao atualizar Juizo!');
 
           Object.keys(this.formulario.controls).forEach((campo) => {

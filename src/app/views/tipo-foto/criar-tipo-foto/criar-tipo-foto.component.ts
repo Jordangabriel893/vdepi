@@ -51,7 +51,7 @@ export class CriarTipoFotoComponent implements OnInit {
   }
 
   teste(item) {
-    console.log(item);
+    //console.log(item);
   }
 
   onSubmit() {

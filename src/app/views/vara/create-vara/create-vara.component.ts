@@ -10,10 +10,9 @@ import { forkJoin } from 'rxjs';
 @Component({
   selector: 'app-create-vara',
   templateUrl: './create-vara.component.html',
-  styleUrls: ['./create-vara.component.scss']
+  styleUrls: ['./create-vara.component.scss'],
 })
 export class CreateVaraComponent implements OnInit {
-
   formulario: FormGroup;
   imageError: string;
   isImageSaved: boolean;
@@ -21,25 +20,24 @@ export class CreateVaraComponent implements OnInit {
   juizos;
   escrivaes;
   juizes;
-  public maskCep: Array<string | RegExp>
+  public maskCep: Array<string | RegExp>;
 
   constructor(
     private formBuilder: FormBuilder,
     private restangular: Restangular,
     private notifierService: NotifierService,
     private router: Router,
-    private cepService: ConsultaCepService,
+    private cepService: ConsultaCepService
   ) {
-    this.maskCep = [/\d/, /\d/, /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/,]
+    this.maskCep = [/\d/, /\d/, /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/];
   }
 
   ngOnInit() {
-
     forkJoin([
       this.restangular.one('Judicial/juizo').get().pipe(),
       this.restangular.one('Judicial/Escrivao').get().pipe(),
-      this.restangular.one('Judicial/Juiz').get().pipe()
-    ]).subscribe(([juizos, escrivaes, juizes] : any[]) => {
+      this.restangular.one('Judicial/Juiz').get().pipe(),
+    ]).subscribe(([juizos, escrivaes, juizes]: any[]) => {
       this.juizos = juizos.data;
       this.escrivaes = escrivaes.data;
       this.juizes = juizes.data;
@@ -47,15 +45,13 @@ export class CreateVaraComponent implements OnInit {
 
     this.formulario = this.formBuilder.group({
       nome: [null, Validators.required],
-      logo: this.formBuilder.group(
-        {
-          arquivoId: [0],
-          nome: [null],
-          base64: [null],
-          tipo: [null],
-          tamanho: [0],
-        },
-      ),
+      logo: this.formBuilder.group({
+        arquivoId: [0],
+        nome: [null],
+        base64: [null],
+        tipo: [null],
+        tamanho: [0],
+      }),
       juizoId: [null, Validators.required],
       escrivaes: [null],
       juizes: [null],
@@ -66,14 +62,13 @@ export class CreateVaraComponent implements OnInit {
         bairro: [null],
         cidade: [null],
         estado: [null],
-        logradouro: [null]
+        logradouro: [null],
       }),
     });
-
   }
 
   fileChangeEvent(fileInput: any) {
-    console.log(this.formulario)
+    //console.log(this.formulario)
 
     this.imageError = null;
     if (fileInput.target.files && fileInput.target.files[0]) {
@@ -124,7 +119,6 @@ export class CreateVaraComponent implements OnInit {
   }
 
   onSubmit() {
-
     this.restangular
       .all('Judicial/vara')
       .post(this.formulario.value)
@@ -137,10 +131,7 @@ export class CreateVaraComponent implements OnInit {
           this.router.navigate(['/vara']);
         },
         (error) => {
-          this.notifierService.notify(
-            'error',
-            'Erro ao adicionar registro!'
-          );
+          this.notifierService.notify('error', 'Erro ao adicionar registro!');
 
           Object.keys(this.formulario.controls).forEach((campo) => {
             const controle = this.formulario.get(campo);
@@ -175,8 +166,9 @@ export class CreateVaraComponent implements OnInit {
     const cep = this.formulario.get('endereco.cep').value;
 
     if (cep != null && cep !== '') {
-      this.cepService.consultaCEP(cep)
-        .subscribe(dados => this.populaDadosForm(dados));
+      this.cepService
+        .consultaCEP(cep)
+        .subscribe((dados) => this.populaDadosForm(dados));
     }
   }
 
@@ -190,8 +182,8 @@ export class CreateVaraComponent implements OnInit {
         complemento: dados.complemento,
         bairro: dados.bairro,
         cidade: dados.localidade,
-        estado: dados.uf
-      }
+        estado: dados.uf,
+      },
     });
   }
 }

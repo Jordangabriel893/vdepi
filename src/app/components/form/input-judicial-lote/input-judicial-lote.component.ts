@@ -1,4 +1,13 @@
-import { Component, Input, OnInit, forwardRef, EventEmitter, Output, Renderer2, ElementRef } from '@angular/core';
+import {
+  Component,
+  Input,
+  OnInit,
+  forwardRef,
+  EventEmitter,
+  Output,
+  Renderer2,
+  ElementRef,
+} from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { Restangular } from 'ngx-restangular';
 
@@ -14,12 +23,11 @@ import { Restangular } from 'ngx-restangular';
     },
   ],
 })
-export class InputJudicialLoteComponent implements ControlValueAccessor  {
-
+export class InputJudicialLoteComponent implements ControlValueAccessor {
   @Input() label: string;
   @Input() multiple: boolean;
   @Input() items: any[] = [];
-  @Input() bindLabel: string;	
+  @Input() bindLabel: string;
   @Input() bindValue: string;
   @Input() rota: string;
   @Input() loading: boolean = false;
@@ -27,7 +35,7 @@ export class InputJudicialLoteComponent implements ControlValueAccessor  {
   @Input() entity: any;
   @Input() disabled: boolean = false;
   @Input() varaId: number = 0;
-  @Input() juizoId: number;
+  @Input() juizoId: number = 0;
 
   value: string;
 
@@ -36,7 +44,11 @@ export class InputJudicialLoteComponent implements ControlValueAccessor  {
 
   isSpinning: boolean = false;
 
-  constructor(private restangular: Restangular, private renderer: Renderer2, private el: ElementRef) { }
+  constructor(
+    private restangular: Restangular,
+    private renderer: Renderer2,
+    private el: ElementRef
+  ) {}
 
   writeValue(value: any): void {
     this.value = value;
@@ -62,40 +74,43 @@ export class InputJudicialLoteComponent implements ControlValueAccessor  {
 
   refresh(element: HTMLElement) {
     this.isSpinning = true;
-
-    if(this.varaId > 0) {
+    if (this.varaId > 0) {
       this.restangular
         .one('judicial/' + this.inputName + '/vara/' + this.varaId)
         .get()
-        .subscribe(resp => {
-          console.log(resp.data)
-          this.items = resp.data;
-          this.isSpinning = false;
-        }, error => {});
+        .subscribe(
+          (resp) => {
+            this.items = resp.data;
+            this.isSpinning = false;
+          },
+          (error) => {}
+        );
       return;
     }
 
-    if(this.juizoId > 0) {
+    if (this.juizoId > 0) {
       this.restangular
         .one('judicial/' + this.inputName + '/')
-        .get({juizoId: this.juizoId})
-        .subscribe(resp => {
-          console.log(resp.data)
-          this.items = resp.data;
-          this.isSpinning = false;
-        }, error => {});
+        .get({ juizoId: this.juizoId })
+        .subscribe(
+          (resp) => {
+            this.items = resp.data;
+            this.isSpinning = false;
+          },
+          (error) => {}
+        );
       return;
     }
-
 
     this.restangular
       .one('judicial/' + this.inputName)
       .get()
-      .subscribe(resp => {
-        this.items = resp.data;
-        this.isSpinning = false;
-      }, error => {});
-
+      .subscribe(
+        (resp) => {
+          this.items = resp.data;
+          this.isSpinning = false;
+        },
+        (error) => {}
+      );
   }
-
 }

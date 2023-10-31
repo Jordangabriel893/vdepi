@@ -110,7 +110,7 @@ export class UpdateVaraComponent implements OnInit {
       juizes: [dados.juizes.map((x) => x.juizId)],
     });
 
-    console.log(this.formulario.value);
+    //console.log(this.formulario.value);
   }
 
   fileChangeEvent(fileInput: any) {
