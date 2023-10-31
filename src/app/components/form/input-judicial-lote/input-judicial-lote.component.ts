@@ -25,6 +25,9 @@ export class InputJudicialLoteComponent implements ControlValueAccessor  {
   @Input() loading: boolean = false;
   @Input() inputName: string;
   @Input() entity: any;
+  @Input() disabled: boolean = false;
+  @Input() varaId: number = 0;
+  @Input() juizoId: number;
 
   value: string;
 
@@ -60,7 +63,30 @@ export class InputJudicialLoteComponent implements ControlValueAccessor  {
   refresh(element: HTMLElement) {
     this.isSpinning = true;
 
-    //this.renderer.addClass(element, 'spin');
+    if(this.varaId > 0) {
+      this.restangular
+        .one('judicial/' + this.inputName + '/vara/' + this.varaId)
+        .get()
+        .subscribe(resp => {
+          console.log(resp.data)
+          this.items = resp.data;
+          this.isSpinning = false;
+        }, error => {});
+      return;
+    }
+
+    if(this.juizoId > 0) {
+      this.restangular
+        .one('judicial/' + this.inputName + '/')
+        .get({juizoId: this.juizoId})
+        .subscribe(resp => {
+          console.log(resp.data)
+          this.items = resp.data;
+          this.isSpinning = false;
+        }, error => {});
+      return;
+    }
+
 
     this.restangular
       .one('judicial/' + this.inputName)
@@ -68,7 +94,6 @@ export class InputJudicialLoteComponent implements ControlValueAccessor  {
       .subscribe(resp => {
         this.items = resp.data;
         this.isSpinning = false;
-        //this.renderer.removeClass(element, 'spin');
       }, error => {});
 
   }

@@ -1,5 +1,11 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
-import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import {
+  FormArray,
+  FormBuilder,
+  FormControl,
+  FormGroup,
+  Validators,
+} from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AngularEditorConfig } from '@kolkov/angular-editor';
 import { forkJoin } from 'rxjs';
@@ -7,6 +13,7 @@ import { Restangular } from 'ngx-restangular';
 import * as _ from 'lodash';
 import * as moment from 'moment';
 import { NotifierService } from 'angular-notifier';
+import { isNullOrUndefined, isUndefined } from 'util';
 
 @Component({
   selector: 'app-create-lotes',
@@ -91,6 +98,8 @@ export class CreateLotesComponent implements OnInit {
     ],
     sanitize: true,
   };
+  varaId: number = 0;
+  juizoId: number = 0;
 
   constructor(
     private restangular: Restangular,
@@ -130,9 +139,9 @@ export class CreateLotesComponent implements OnInit {
         comarca: [null],
         natureza: [null],
         juizoId: [null],
-        varaId: [null],
-        juizes: [null],
-        escrivaes: [null],
+        varaId: new FormControl({ value: null, disabled: true }),
+        juizes: new FormControl({ value: null, disabled: true }),
+        escrivaes: new FormControl({ value: null, disabled: true }),
         autores: [null],
         reus: [null],
         fieisDepositarios: [null],
@@ -218,6 +227,46 @@ export class CreateLotesComponent implements OnInit {
       this.juizos = allResp[14].data;
       this.varas = allResp[15].data;
     });
+
+    this.formulario
+      .get('loteJudicial')
+      .get('juizoId')
+      .valueChanges.subscribe((value) => {
+        if (isNullOrUndefined(value)) {
+          this.juizoId = 0;
+          return;
+        }
+        this.juizoId = value;
+
+        this.formulario.get('loteJudicial').get('varaId').reset();
+
+        this.restangular
+          .one('judicial/vara')
+          .get({ juizoId: value })
+          .subscribe((allResp: any) => {
+            this.varas = allResp.data;
+          });
+      });
+
+    this.formulario
+      .get('loteJudicial')
+      .get('varaId')
+      .valueChanges.subscribe((value) => {
+        if (isNullOrUndefined(value)) {
+          this.varaId = 0;
+          return;
+        }
+
+        const vara = this.varas.find((x) => x.varaId == value);
+
+        this.varaId = value;
+
+        this.formulario.get('loteJudicial').get('juizes').reset();
+        this.formulario.get('loteJudicial').get('escrivaes').reset();
+
+        this.juizes = vara.juizes.map((x) => x.juiz);
+        this.escrivaes = vara.escrivaes.map((x) => x.escrivao);
+      });
   }
 
   onSubmit() {

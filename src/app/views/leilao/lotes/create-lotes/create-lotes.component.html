@@ -120,7 +120,11 @@
             <i class="fa fa-file-alt"></i>&nbsp;Informações do Processo Judicial
           </div>
 
-          <div class="card-block" formGroupName="loteJudicial">
+          <div
+            class="card-block"
+            formGroupName="loteJudicial"
+            *ngIf="formulario.get('loteJudicial').value"
+          >
             <div class="row">
               <div class="form-group col-4">
                 <label for="numProcesso">Nº Processo </label>
@@ -255,7 +259,9 @@
                   [bindLabel]="'nome'"
                   [bindValue]="'varaId'"
                   rota="/create-vara"
+                  [disabled]="juizoId == 0"
                   inputName="vara"
+                  [juizoId]="juizoId"
                 >
                 </app-input-judicial-lote>
               </div>
@@ -270,6 +276,8 @@
                   [bindValue]="'pessoaId'"
                   rota="/create-juiz"
                   inputName="juiz"
+                  [disabled]="varaId == 0"
+                  [varaId]="varaId"
                 >
                 </app-input-judicial-lote>
               </div>
@@ -286,6 +294,8 @@
                   [bindValue]="'pessoaId'"
                   rota="/create-escrivao"
                   inputName="escrivao"
+                  [disabled]="varaId == 0"
+                  [varaId]="varaId"
                 >
                 </app-input-judicial-lote>
               </div>

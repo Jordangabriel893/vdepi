@@ -25,6 +25,7 @@ import { forkJoin } from 'rxjs';
 import * as moment from 'moment';
 import { NotifierService } from 'angular-notifier';
 import 'moment/locale/pt-br';
+import { isNullOrUndefined } from 'util';
 
 @Component({
   selector: 'app-update-lotes',
@@ -131,6 +132,8 @@ export class UpdateLotesComponent implements OnInit {
       },
     ],
   };
+  juizoId: number;
+  varaId: number;
 
   constructor(
     private restangular: Restangular,
@@ -551,6 +554,50 @@ export class UpdateLotesComponent implements OnInit {
     //setTimeout(() => { this.mostrarCampoJudicial = true }, 3000)
 
     this.carregarTipoFoto();
+
+    this.formulario
+      .get('loteJudicial')
+      .get('juizoId')
+      .valueChanges.subscribe((value) => {
+        if (isNullOrUndefined(value)) {
+          this.formulario.get('loteJudicial').get('varaId').reset();
+          this.juizoId = 0;
+          return;
+        }
+        this.juizoId = value;
+
+        this.formulario.get('loteJudicial').get('varaId').reset();
+
+        this.restangular
+          .one('judicial/vara')
+          .get({ juizoId: value })
+          .subscribe((allResp: any) => {
+            this.varas = allResp.data;
+          });
+      });
+
+    this.formulario
+      .get('loteJudicial')
+      .get('varaId')
+      .valueChanges.subscribe((value) => {
+        if (isNullOrUndefined(value)) {
+          this.formulario.get('loteJudicial').get('juizes').reset();
+          this.formulario.get('loteJudicial').get('escrivaes').reset();
+
+          this.varaId = 0;
+          return;
+        }
+
+        const vara = this.varas.find((x) => x.varaId == value);
+
+        this.varaId = value;
+
+        this.formulario.get('loteJudicial').get('juizes').reset();
+        this.formulario.get('loteJudicial').get('escrivaes').reset();
+
+        this.juizes = vara.juizes.map((x) => x.juiz);
+        this.escrivaes = vara.escrivaes.map((x) => x.escrivao);
+      });
   }
 
   filterList(campo: string) {
