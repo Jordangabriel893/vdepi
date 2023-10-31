@@ -8,7 +8,7 @@
       </a>
     </div>
   </div>
-  <ng-select [items]="items" [bindLabel]="bindLabel" [bindValue]="bindValue" [(ngModel)]="value"
+  <ng-select [items]="items" [bindLabel]="bindLabel" [bindValue]="bindValue" [(ngModel)]="value" [disabled]="disabled"
     (ngModelChange)="updateValue($event)" [multiple]="multiple"></ng-select>
 </div>
 
