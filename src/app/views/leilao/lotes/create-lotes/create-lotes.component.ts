@@ -115,7 +115,7 @@ export class CreateLotesComponent implements OnInit {
       loteId: [0],
       descricao: [null, Validators.required],
       descricaoDetalhada: [null],
-      itemLote: [],
+      itemLote: [null],
       numeroLote: [null, Validators.required],
       leilaoId: [this.id],
       statusId: [null, Validators.required],
@@ -139,14 +139,14 @@ export class CreateLotesComponent implements OnInit {
         comarca: [null],
         natureza: [null],
         juizoId: [null],
-        varaId: new FormControl({ value: null, disabled: true }),
-        juizes: new FormControl({ value: null, disabled: true }),
-        escrivaes: new FormControl({ value: null, disabled: true }),
-        autores: [null],
-        reus: [null],
-        fieisDepositarios: [null],
-        partes: [null],
-        credores: [null],
+        varaId: [null],
+        juizes: [[]],
+        escrivaes: [[]],
+        autores: [[]],
+        reus: [[]],
+        fieisDepositarios: [[]],
+        partes: [[]],
+        credores: [[]],
       }),
       loteJudicialId: [null],
       tipoLoteId: [null],
@@ -170,14 +170,14 @@ export class CreateLotesComponent implements OnInit {
       this.restangular.one('lotestatus').get().pipe(),
       this.restangular.one('admin/leilao', this.id).get(),
       this.restangular.one('judicial/autor').get(),
-      this.restangular.one('judicial/juiz').get(),
-      this.restangular.one('judicial/escrivao').get(),
+      //this.restangular.one('judicial/juiz').get(),
+      //this.restangular.one('judicial/escrivao').get(),
       this.restangular.one('judicial/reu').get(),
       this.restangular.one('judicial/fielDepositario').get(),
       this.restangular.one('judicial/parte').get(),
       this.restangular.one('judicial/credor').get(),
       this.restangular.one('judicial/juizo').get(),
-      this.restangular.one('judicial/vara').get(),
+      //this.restangular.one('judicial/vara').get(),
     ]).subscribe((allResp: any[]) => {
       this.local = allResp[3].data;
       this.categorias = allResp[4].data;
@@ -218,14 +218,14 @@ export class CreateLotesComponent implements OnInit {
       );
 
       this.autores = allResp[7].data;
-      this.juizes = allResp[8].data;
-      this.escrivaes = allResp[9].data;
-      this.reus = allResp[10].data;
-      this.fieisDepositarios = allResp[11].data;
-      this.partes = allResp[12].data;
-      this.credores = allResp[13].data;
-      this.juizos = allResp[14].data;
-      this.varas = allResp[15].data;
+      //this.juizes = allResp[8].data;
+      //this.escrivaes = allResp[9].data;
+      this.reus = allResp[8].data;
+      this.fieisDepositarios = allResp[9].data;
+      this.partes = allResp[10].data;
+      this.credores = allResp[11].data;
+      this.juizos = allResp[12].data;
+      //this.varas = allResp[15].data;
     });
 
     this.formulario
@@ -261,11 +261,13 @@ export class CreateLotesComponent implements OnInit {
 
         this.varaId = value;
 
-        this.formulario.get('loteJudicial').get('juizes').reset();
-        this.formulario.get('loteJudicial').get('escrivaes').reset();
+        this.formulario.get('loteJudicial').get('juizes').patchValue([]);
+        this.formulario.get('loteJudicial').get('escrivaes').patchValue([]);
 
-        this.juizes = vara.juizes.map((x) => x.juiz);
-        this.escrivaes = vara.escrivaes.map((x) => x.escrivao);
+        this.juizes = vara.juizes ? vara.juizes.map((x) => x.juiz) : [];
+        this.escrivaes = vara.escrivaes
+          ? vara.escrivaes.map((x) => x.escrivao)
+          : [];
       });
   }
 
