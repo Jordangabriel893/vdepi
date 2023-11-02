@@ -17,9 +17,41 @@
                 <label for="rota">URL</label>
                 <input type="text" class="form-control" disabled [ngClass]="aplicaCssErro('rota')" id="rota" formControlName="rota">
               </div>
+            </div>
+            <div class="row">
+              <div class="form-group col-6">
+                <label for="empresa">Empresa</label>
+                <select class="form-control" id="empresa" formControlName="empresaId">
+                  <option
+                    [value]="emp.empresaId"
+                    *ngFor="let emp of empresas"
+                  >
+                    {{ emp.nomeFantasia }}
+                  </option>
+                </select>
+              </div>
+              <div class="col-6">
+                <label for="menu">Visivel no menu? </label><br />
+                <label
+                  class="switch switch-text switch-pill switch-primary"
+                >
+                  <input
+                    type="checkbox"
+                    id="menu"
+                    class="switch-input"
+                    formControlName="menu"
+                  />
+                  <span
+                    class="switch-label"
+                    data-on="Sim"
+                    data-off="Não"
+                  ></span>
+                  <span class="switch-handle"></span>
+                </label>
+              </div>
+            </div>
           </div>
         </div>
-      </div>
     </div>
   </div>
   </div>

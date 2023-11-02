@@ -4,6 +4,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { NotifierService } from 'angular-notifier';
 import { Restangular } from 'ngx-restangular';
 import { AngularEditorConfig } from '@kolkov/angular-editor';
+import { Subscription } from 'rxjs';
 @Component({
   selector: 'app-update-paginaestatica',
   templateUrl: './update-paginaestatica.component.html',
@@ -50,6 +51,10 @@ export class UpdatePaginaestaticaComponent implements OnInit {
       },
     ],
   };
+
+  sub: Subscription[] = [];
+  empresas = [];
+
   constructor(
     private formBuilder: FormBuilder,
     private restangular: Restangular,
@@ -66,6 +71,15 @@ export class UpdatePaginaestaticaComponent implements OnInit {
       .subscribe((dados) => {
         this.updateForm(dados.data);
       });
+
+    this.sub.push(
+      this.restangular
+        .one('empresa')
+        .get()
+        .subscribe((x) => {
+          this.empresas = x.data;
+        })
+    );
   }
   onSubmit() {
     if (!this.formulario.valid) {
@@ -108,6 +122,8 @@ export class UpdatePaginaestaticaComponent implements OnInit {
       html: [dados.html, Validators.required],
       titulo: [dados.titulo, Validators.required],
       rota: [dados.rota, Validators.required],
+      menu: [dados.menu, Validators.required],
+      empresaId: [dados.empresaId, Validators.required]
     });
   }
 
