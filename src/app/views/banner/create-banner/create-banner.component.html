@@ -38,7 +38,8 @@
                   <th width="15%">Imagem</th>
                   <th width="25%">Arquivo</th>
                   <th width="25%">Link</th>
-                  <th width="20%" *ngIf="userIsAdmin">Empresa</th>
+                  <th width="20%" class="text-center">Mobile</th>
+                  <!-- <th width="20%" *ngIf="userIsAdmin">Empresa</th> -->
                   <th width="15%"></th>
                 </tr>
               </thead>
@@ -67,8 +68,25 @@
                     />
                     <span *ngIf="item.value.acao === ''"></span>
                   </td>
-
-                  <td *ngIf="userIsAdmin">
+                  <td class="text-center">
+                    <label
+                      class="switch switch-text switch-pill switch-primary"
+                    >
+                      <input
+                        type="checkbox"
+                        id="mobile"
+                        class="switch-input"
+                        formControlName="mobile"
+                      />
+                      <span
+                        class="switch-label"
+                        data-on="Sim"
+                        data-off="Não"
+                      ></span>
+                      <span class="switch-handle"></span>
+                    </label>
+                  </td>
+                  <!-- <td *ngIf="userIsAdmin">
                     <select class="form-control" formControlName="empresaId">
                       <option [value]="null"></option>
                       <option
@@ -78,7 +96,7 @@
                         {{ emp.nomeFantasia }}
                       </option>
                     </select>
-                  </td>
+                  </td> -->
 
                   <td class="text-center">
                     <label class="btn btn-danger m-0" (click)="deleteFoto(i)"

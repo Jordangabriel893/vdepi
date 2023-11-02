@@ -58,14 +58,14 @@ export class EditBannerComponent implements OnInit, OnDestroy {
           this.updateForm(dados.data);
         })
     );
-    this.sub.push(
-      this.restangular
-        .one('empresa')
-        .get()
-        .subscribe((x) => {
-          this.empresas = x.data;
-        })
-    );
+    // this.sub.push(
+    //   this.restangular
+    //     .one('empresa')
+    //     .get()
+    //     .subscribe((x) => {
+    //       this.empresas = x.data;
+    //     })
+    // );
   }
   ngOnInit() {
     // this.formulario = this.formBuilder.group({
@@ -107,7 +107,7 @@ export class EditBannerComponent implements OnInit, OnDestroy {
       linkUrl: dados.linkUrl,
       bannerId: dados.bannerHomerId,
       ativo: dados.ativo,
-      empresaId: dados.empresaId,
+      mobile: dados.mobile,
       arquivo: this.formBuilder.group({
         acesso: dados.arquivo.acesso,
         arquivoId: dados.arquivo.arquivoId,

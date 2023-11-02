@@ -30,8 +30,8 @@
                   <th width="15%">Imagem</th>
                   <th width="35%">Arquivo</th>
                   <th width="15%">Link</th>
-                  <th width="20%" *ngIf="userIsAdmin">Empresa</th>
-                  <th width="15%">Ativo</th>
+                  <th width="20%" class="text-center">Mobile</th>
+                  <!-- <th width="15%" class="text-center">Ativo</th> -->
                 </tr>
               </thead>
               <tbody>
@@ -56,23 +56,42 @@
                       placeholder="Link"
                     />
                   </td>
-                  <td *ngIf="userIsAdmin">
-                    <select class="form-control" formControlName="empresaId">
-                      <option [value]="null"></option>
-                      <option
-                        [value]="emp.empresaId"
-                        *ngFor="let emp of empresas"
-                      >
-                        {{ emp.nomeFantasia }}
-                      </option>
-                    </select>
-                  </td>
                   <td class="text-center">
-                    <select class="form-control" formControlName="ativo">
-                      <option [value]="true">Sim</option>
-                      <option [value]="false">Não</option>
-                    </select>
+                    <label
+                      class="switch switch-text switch-pill switch-primary"
+                    >
+                      <input
+                        type="checkbox"
+                        id="mobile"
+                        class="switch-input"
+                        formControlName="mobile"
+                      />
+                      <span
+                        class="switch-label"
+                        data-on="Sim"
+                        data-off="Não"
+                      ></span>
+                      <span class="switch-handle"></span>
+                    </label>
                   </td>
+                  <!-- <td class="text-center">
+                    <label
+                      class="switch switch-text switch-pill switch-primary"
+                    >
+                      <input
+                        type="checkbox"
+                        id="ativo"
+                        class="switch-input"
+                        formControlName="ativo"
+                      />
+                      <span
+                        class="switch-label"
+                        data-on="Sim"
+                        data-off="Não"
+                      ></span>
+                      <span class="switch-handle"></span>
+                    </label>
+                  </td> -->
                 </tr>
               </tbody>
             </table>

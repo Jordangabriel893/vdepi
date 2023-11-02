@@ -48,14 +48,14 @@ export class CreateBannerComponent implements OnInit, OnDestroy {
       banners: this.formBuilder.array([], Validators.required),
     });
 
-    this.sub.push(
-      this.restangular
-        .one('empresa')
-        .get()
-        .subscribe((x) => {
-          this.empresas = x.data;
-        })
-    );
+    // this.sub.push(
+    //   this.restangular
+    //     .one('empresa')
+    //     .get()
+    //     .subscribe((x) => {
+    //       this.empresas = x.data;
+    //     })
+    // );
   }
   onSubmit(i) {
     if (!this.formulario.valid) {
@@ -159,7 +159,7 @@ export class CreateBannerComponent implements OnInit, OnDestroy {
         this.formBuilder.group({
           linkUrl: '',
           arquivo: obj,
-          empresaId: null,
+          mobile: false,
           acao: 'I',
         })
       );
@@ -171,7 +171,7 @@ export class CreateBannerComponent implements OnInit, OnDestroy {
         this.formBuilder.group({
           linkUrl: '',
           arquivo: obj,
-          empresaId: null,
+          mobile: false,
           acao: 'I',
         })
       );

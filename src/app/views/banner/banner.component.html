@@ -34,8 +34,8 @@
                       >Data Cadastro</mfDefaultSorter
                     >
                   </th>
-                  <th *ngIf="userIsAdmin">
-                    <mfDefaultSorter by="empresa">Empresa</mfDefaultSorter>
+                  <th>
+                    <mfDefaultSorter by="mobile">Mobile</mfDefaultSorter>
                   </th>
                   <th class="text-center">Ações</th>
                 </tr>
@@ -54,7 +54,7 @@
                         | amDateFormat : "DD/MM/yyyy HH:mm"
                     }}
                   </td>
-                  <td *ngIf="userIsAdmin">{{ item.empresa }}</td>
+                  <td>{{ item.mobile ? "SIM" : "NÃO" }}</td>
                   <td class="text-center" nowrap>
                     <button
                       type="button"
