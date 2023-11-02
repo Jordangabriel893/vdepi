@@ -72,14 +72,14 @@ export class UpdatePaginaestaticaComponent implements OnInit {
         this.updateForm(dados.data);
       });
 
-    this.sub.push(
-      this.restangular
-        .one('empresa')
-        .get()
-        .subscribe((x) => {
-          this.empresas = x.data;
-        })
-    );
+    // this.sub.push(
+    //   this.restangular
+    //     .one('empresa')
+    //     .get()
+    //     .subscribe((x) => {
+    //       this.empresas = x.data;
+    //     })
+    // );
   }
   onSubmit() {
     if (!this.formulario.valid) {
@@ -121,9 +121,9 @@ export class UpdatePaginaestaticaComponent implements OnInit {
       paginaEstaticaId: [dados.paginaEstaticaId, Validators.required],
       html: [dados.html, Validators.required],
       titulo: [dados.titulo, Validators.required],
-      rota: [dados.rota, Validators.required],
+      rota: [dados.rota],
       menu: [dados.menu, Validators.required],
-      empresaId: [dados.empresaId, Validators.required]
+      empresaId: [dados.empresaId],
     });
   }
 

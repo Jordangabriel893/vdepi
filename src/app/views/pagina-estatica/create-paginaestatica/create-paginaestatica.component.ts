@@ -67,21 +67,21 @@ export class CreatePaginaestaticaComponent implements OnInit {
       html: [null, Validators.required],
       dataCriacao: [now, Validators.required],
       titulo: [null, Validators.required],
-      rota: [null, Validators.required],
+      rota: [null],
       menu: [false, Validators.required],
-      empresaId: [null, Validators.required],
+      empresaId: [null],
     });
   }
 
   ngOnInit() {
-    this.sub.push(
-      this.restangular
-        .one('empresa')
-        .get()
-        .subscribe((x) => {
-          this.empresas = x.data;
-        })
-    );
+    // this.sub.push(
+    //   this.restangular
+    //     .one('empresa')
+    //     .get()
+    //     .subscribe((x) => {
+    //       this.empresas = x.data;
+    //     })
+    // );
   }
   onSubmit() {
     this.restangular
