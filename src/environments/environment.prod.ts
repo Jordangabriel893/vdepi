@@ -1,6 +1,6 @@
 export const environment = {
   production: true,
-  apiUrl: 'https://hml.id.eblonline.com.br',
-  apiDados: 'https://hml.api.eblonline.com.br',
-  siteUrl: 'https://hml.eblonline.com.br',
+  apiUrl: 'https://id.eblonline.com.br',
+  apiDados: 'https://api.eblonline.com.br',
+  siteUrl: 'https://eblonline.com.br',
 };
