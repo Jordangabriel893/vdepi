@@ -55,7 +55,7 @@ export class PaginaEstaticaComponent implements OnInit {
       .subscribe((ans: ResolveEmit) => {
         if (ans.resolved) {
           this.restangular
-            .one('api/PaginaEstatica', paginaEstaticaId)
+            .one('PaginaEstatica', paginaEstaticaId)
             .remove()
             .subscribe(
               (resp) => {
