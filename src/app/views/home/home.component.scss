@@ -1,0 +1,181 @@
+.body{
+  background: #f3f3f3;
+}
+header{
+  height: 90px;
+  border-bottom: 1px solid rgb(228, 228, 228);
+  background-color: white;
+}
+
+.container {
+  position: relative;
+  display: inline-block; /* Para garantir que o ícone fique ao lado do input */
+  width: 60%; /* largura desejada */
+  height: 40px; /* altura desejada */
+  background-color: #f3f3f3; /* cor de fundo cinza */
+  border-radius: 5px;
+  margin-right: 25px !important;
+}
+
+.search-input {
+  width: calc(100% - 30px); /* 30px é a largura estimada do ícone */
+  height: 100%;
+  border: none;
+  background-color: inherit; /* herda a cor de fundo da div */
+  color: rgb(69, 69, 69); /* cor do texto */
+  padding: 5px 30px 5px 5px; /* espaçamento interno com 30px para o ícone */
+  box-sizing: border-box; /* inclui o padding no cálculo do tamanho */
+  outline: none; /* Remove a borda quando o input está ativo */
+
+}
+
+.search-icon {
+  position: absolute;
+  top: 50%;
+  right: 10px;
+  transform: translateY(-50%);
+  color: rgb(23, 105, 143); /* cor do ícone */
+}
+swiper-container {
+  height: 600px;
+  width: 98%;
+  margin-top: 25px;
+  border-radius: 20px;
+}
+// .firstImage{
+//    background-image: url('../../../assets/banner-slide/banner1.png');
+
+// }
+// .secondImage{
+//   background-image: url('../../../assets/banner-slide/banner2.png');
+// }
+
+swiper-slide {
+  text-align: center;
+  font-size: 18px;
+  background: #fff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 20px;
+}
+
+swiper-slide img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.saiba-mais-btn {
+  margin-top: 20px;
+  background-color: white;
+  color: blue;
+  border-radius: 8px;
+  text-transform: uppercase;
+  border: 2px solid rgb(255, 255, 255); /* Adiciona uma borda de 2px sólida azul */
+  padding: 10px 20px; /* Espaçamento interno */
+  font-size: 14px; /* Tamanho da fonte */
+  cursor: pointer; /* Muda o cursor ao passar por cima */
+  box-shadow: 0 8px 12px rgba(0, 0, 0, 0.1);
+}
+
+.saiba-mais-btn:hover {
+  background-color: rgb(255, 255, 255);
+  color: blue;
+  transition: background-color 0.3s, color 0.3s; /* Adiciona uma transição suave */
+}
+.card-custom{
+  box-shadow: 0 8px 12px rgba(0, 0, 0, 0.1);
+}
+.last-news-paragraph{
+  font-size: 0.9rem;
+}
+.menu-options{
+  overflow-y: auto;
+  height: 400px;
+}
+.menu-options::-webkit-scrollbar {
+  width: 8px;
+}
+.menu-options::-webkit-scrollbar-thumb {
+  background-color: #888; /* Cor do 'ponteiro' da barra de rolagem */
+  border-radius: 4px; /* Adiciona um pouco de arredondamento */
+}
+.fixed-div {
+  width: 350px;
+  height: 530px;
+  background-color: white;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 9999; /* Garante que fique por cima de tudo */
+}
+.last-news-paragraph{
+  font-size: 1rem;
+  max-height: 350px; /* Defina a altura máxima desejada */
+  overflow-y: auto; /* Adiciona a barra de rolagem vertical quando necessário */
+  scrollbar-width: thin;
+
+}
+// @import "~swiper/scss";
+.swiper {
+  width: 100%;
+  height: 100%;
+}
+
+.swiper-slide {
+  text-align: center;
+  font-size: 18px;
+  background: #fff;
+
+  /* Center slide text vertically */
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: -webkit-flex;
+  display: flex;
+  -webkit-box-pack: center;
+  -ms-flex-pack: center;
+  -webkit-justify-content: center;
+  justify-content: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  -webkit-align-items: center;
+  align-items: center;
+}
+
+.swiper-slide img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.last-news-paragraph ::-webkit-scrollbar {
+  width: 10px;
+}
+
+// Medium - MD
+@media(min-width:992px){
+  .last-searchs{
+    max-height: 450px;
+  }
+  .last-news{
+    min-height: 450px;
+    max-height: 450px;
+  }
+
+}
+@media(min-width:1200px){
+  .last-searchs{
+    min-height: 450px;
+    max-height: 450px;
+  }
+  .last-news-paragraph{
+    font-size: 1rem;
+    max-height: 350px; /* Defina a altura máxima desejada */
+    overflow-y: auto; /* Adiciona a barra de rolagem vertical quando necessário */
+    scrollbar-width: thin;
+
+  }
+
+
+}

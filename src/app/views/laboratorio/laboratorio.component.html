@@ -1,0 +1,303 @@
+<div class="body">
+
+  <header class="w-100 row justify-content-between align-items-center m-0 p-0">
+    <section class="col-3   left-side">
+      <img src="../../../assets/icone/Hamburger.png" class="menu-img"
+        (click)="showMenu = !showMenu" style="width: 3rem; cursor: pointer;">
+    </section>
+    <section class="col-3 d-flex justify-content-center">
+      <img src="../../../assets/icone/Logo.png"
+        style="width: 15rem;cursor: pointer;">
+    </section>
+    <section class="col-3 d-flex  justify-content-end right-side">
+      <div class="container">
+        <input type="text" class="search-input">
+        <i class="fas fa-search search-icon "></i>
+      </div>
+    </section>
+  </header>
+  <div class="fixed-div row justify-content-center pt-4" *ngIf="showMenu">
+    <div class="col-12 text-center">
+      <img src="../../../assets/icone/logoMenor.png"
+        style="width: 15rem;cursor: pointer;">
+    </div>
+    <div class="row justify-content-center menu-options">
+      <div class="d-flex justify-content-between align-items-center"
+        style="height: 75px; width: 275px;cursor: pointer;">
+        <h4 style="color:black; font-size: 1rem; font-weight: bolder;">DEPARTAMENTO DE FARMACOLOGIA</h4>
+        <!-- <img src="../../../assets/svg/Group.svg" style="width: 1rem;"> -->
+      </div>
+      <div class="d-flex justify-content-between align-items-center"
+        style="height: 75px; width: 275px;cursor: pointer;">
+        <h4 style="color:black; font-size: 1rem; font-weight: bolder;">LABORATÓRIO DE FARMACOLOGIA APLICADA</h4>
+        <img src="../../../assets/svg/Group.svg" style="width: 1rem;">
+      </div>
+      <div class="d-flex justify-content-between align-items-center"
+        style="height: 75px; width: 275px; cursor: pointer;">
+        <h4 style="color:black; font-size: 1rem; font-weight: bolder; ">LABORATÓRIO DE SERVIÇO BIOTÉRIO</h4>
+        <img src="../../../assets/svg/Group.svg" style="width: 1rem;">
+      </div>
+      <div class="d-flex justify-content-between align-items-center"
+        style="height: 75px; width: 275px; cursor: pointer;">
+        <h4 style="color:black; font-size: 1rem; font-weight: bolder;">LABORATÓRIO DE FARMACOLOGIA MOLECULAR</h4>
+        <img src="../../../assets/svg/Group.svg" style="width: 1rem;">
+      </div>
+      <div class="d-flex justify-content-between align-items-center"
+        style="height: 75px; width: 275px; cursor: pointer;">
+        <h4
+          style="color:black; font-size: 1rem; font-weight: bolder; text-transform: uppercase;">RPT11M</h4>
+        <img src="../../../assets/svg/Group.svg" style="width: 1rem;">
+      </div>
+    </div>
+
+  </div>
+
+  <div class=" row justify-content-center align-items-center m-0 p-0 "
+    style="width: 100%;">
+
+    <swiper-container class="mySwiper col-md-11 m-0 mt-5" navigation="true"
+      pagination="true "
+      keyboard="true" mousewheel="true" css-mode="true">
+      <swiper-slide class="firstImage" style="cursor: pointer;"
+        (click)="redirecionarParaHome()">
+        <img src="../../../assets/banner-slide/Banner Principal.png"
+          style="border-radius: 20px;">
+      </swiper-slide>
+      <swiper-slide class="secondImage" style="cursor: pointer;"
+        (click)="redirecionarParaReadMore()">
+        <img src="../../../assets/banner-slide/Banner Principal 2.png"
+          style="border-radius: 20px;">
+      </swiper-slide>
+      <swiper-slide class="secondImage" style="cursor: pointer;" (click)="redirecionarParaFarmacologia()">
+        <img src="../../../assets/banner-slide/Banner Principal 3.png"
+          style="border-radius: 20px;">
+      </swiper-slide>
+      <swiper-slide class="secondImage" style="cursor: pointer;" (click)="redirecionarParaLaboratorio()">
+        <img src="../../../assets/banner-slide/Banner Principal 4.png"
+          style="border-radius: 20px;">
+      </swiper-slide>
+    </swiper-container>
+
+  </div>
+
+    <!-- SOBRE -->
+    <div class=" row justify-content-center align-items-center m-0 p-0"
+    style="margin-top: 20px !important;">
+
+    <div class="col-md-11 col-lg-10 d-flex
+    justify-content-between align-items-center flex-wrap"
+      style="height: auto; background-color: white; border-radius: 20px; border: 1px solid rgb(219, 219, 219);">
+      <div class="col-md-12 col-lg-5 pt-md-4">
+        <h4 style="font-size: 1.2rem; color: gray;">
+          SOBRE
+        </h4>
+        <h2 style="color:#2864AE; font-weight: bolder;">
+          FARMACOLOGIA 
+          APLICADA
+        </h2>
+        <p class="text-about mb-5">
+          A pesquisa desenvolvida no VDPI gera conhecimento, produtos e serviços nas áreas de bioquímica, biologia molecular e biologia celular de agentes infecciosos e seus hospedeiros, no estudo da regulação da expressão gênica de microorganismos e parasitas, na caracterização molecular de células tronco, em virologia molecular e em biotecnologia e desenvolvimento tecnológico.
+
+          A pesquisa desenvolvida no VDPI gera conhecimento, produtos e serviços nas áreas de bioquímica, biologia molecular e biologia celular de agentes infecciosos e seus hospedeiros, no estudo da regulação da expressão gênica de microorganismos e parasitas.
+        </p>
+
+      </div>
+      <div
+        class="col-md-12 col-lg-7 pb-md-4 text-center d-flex justify-content-xl-center align-items-xl-center">
+        <img src="../../../assets/galeria/Baner sobre (1).png" class="col-lg-11 col-xl-11">
+      </div>
+    </div>
+  </div>
+
+  <!-- SOBRE -->
+  <div  class=" row justify-content-center align-items-center m-0 p-0"
+    style="margin-top: 20px !important;">
+
+    <div class="col-md-11 col-lg-10 d-flex
+    justify-content-between align-items-center flex-wrap"
+      style="height: auto; background-color: white; border-radius: 20px; border: 1px solid rgb(219, 219, 219);">
+      <div class="col-md-12 col-lg-12 pt-md-4 pb-4">
+        <h4 style="font-size: 1.2rem; color: gray; ">
+          ATIVIDADES
+        </h4>
+        <h2 style="color:#2864AE; font-weight: bolder;">
+          PESQUISAS E PROJETOS
+        </h2>
+        <p class="text-about last-news-paragraph-farmacologia">
+          Kostas Drakonakis, Sotiris Ioannidis, Jason Polakis “ReScan: A Middleware Framework for Realistic and Robust Black-box Web Application Scanning” NDSS Symposium 2023, 7 February – 3 March 2023, San Diego, California
+
+          Iosif Arvanitis, Grigoris Ntousakis, Sotiris Ioannidis, Nikos Vasilakis “A Systematic Analysis of the Event-Stream Incident” 15th EuroSec 2022, April 5 – 8 Rennes, France.
+          
+          Tatiana Trantidou, George Bravos, Philippe Valoggia et al. “SENTINEL – Approachable, tailor-made cybersecurity and data protection for small enterprises” IEEE cyber security and Resilience, July 27-29, 
+          virtual
+          
+          Kostas Drakonakis, Sotiris Ioannidis, Jason Polakis “ReScan: A Middleware Framework for Realistic and Robust Black-box Web Application Scanning” NDSS Symposium 2023, 7 February – 3 March 2023, San Diego, California
+          
+          Iosif Arvanitis, Grigoris Ntousakis, Sotiris Ioannidis, Nikos Vasilakis “A Systematic Analysis of the Event-Stream Incident” 15th EuroSec 2022, April 5 – 8 Rennes, France.
+          
+          Tatiana Trantidou, George Bravos, Philippe Valoggia et al. “SENTINEL – Approachable, tailor-made cybersecurity and data protection for small enterprises” IEEE cyber security and Resilience, July 27-29, virtual
+          
+          Kostas Drakonakis, Sotiris Ioannidis, Jason Polakis “ReScan: A Middleware Framework for Realistic and Robust Black-box Web Application Scanning” NDSS Symposium 2023, 7 February – 3 March 2023, San Diego, California
+          
+          Iosif Arvanitis, Grigoris Ntousakis, Sotiris Ioannidis, Nikos Vasilakis “A Systematic Analysis of the Event-Stream Incident” 15th EuroSec 2022, April 5 – 8 Rennes, France.
+          
+          Tatiana Trantidou, George Bravos, Philippe Valoggia et al. “SENTINEL – Approachable, tailor-made cybersecurity and data protection for small enterprises” IEEE cyber security and Resilience, July 27-29, 
+          virtual
+          
+          Kostas Drakonakis, Sotiris Ioannidis, Jason Polakis “ReScan: A Middleware Framework for Realistic and Robust Black-box Web Application Scanning” NDSS Symposium 2023, 7 February – 3 March 2023, San Diego, California
+          
+          Iosif Arvanitis, Grigoris Ntousakis, Sotiris Ioannidis, Nikos Vasilakis “A Systematic Analysis of the Event-Stream Incident” 15th EuroSec 2022, April 5 – 8 Rennes, France.
+          
+          Tatiana Trantidou, George Bravos, Philippe Valoggia et al. “SENTINEL – Approachable, tailor-made cybersecurity and data protection for small enterprises” IEEE cyber security and Resilience, July 27-29, virtual
+          
+          Kostas Drakonakis, Sotiris Ioannidis, Jason Polakis “ReScan: A Middleware Framework for Realistic and Robust Black-box Web Application Scanning” NDSS Symposium 2023, 7 February – 3 March 2023, San Diego, California
+          
+          Iosif Arvanitis, Grigoris Ntousakis, Sotiris Ioannidis, Nikos Vasilakis “A Systematic Analysis of the Event-Stream Incident” 15th EuroSec 2022, April 5 – 8 Rennes, France.
+          
+          Tatiana Trantidou, George Bravos, Philippe Valoggia et al. “SENTINEL – Approachable, tailor-made cybersecurity and data protection for small enterprises” IEEE cyber security and Resilience, July 27-29, 
+          virtual
+        </p>
+      </div>
+    </div>
+  </div>
+
+ <!-- EQUIPE -->
+ <div class="row justify-content-center align-items-center m-0 p-0" style="margin-top: 20px !important;">
+  <div class="col-md-11 col-lg-10 d-flex flex-column justify-content-between align-items-center"
+      style="height: auto; background-color: white; border-radius: 20px; border: 1px solid rgb(219, 219, 219);">
+      <div class="row w-100">
+          <div class="col-12" style="padding-top: 25px;">
+              <h4 style="font-size: 1.2rem; color: rgb(44, 44, 44);">
+                  EQUIPE
+              </h4>
+          </div>
+
+          <div class="col-12 d-flex flex-wrap pb-5" style="padding-top: 25px; overflow: hidden;">
+              <swiper [slidesPerView]="3" [spaceBetween]="50" [virtual]="true" style="width: 100%; overflow: hidden;">
+                  <swiper-slide *ngFor="let item of arrayParceiros">
+                      <ng-template swiperSlide>
+                          <div class="card-custom d-flex flex-column justify-content-center align-items-center"
+                              style="width: 100%; height: auto;">
+                              <div class="card-title w-100 pl-3 pt-4" style="color:#2864AE; text-align: start;">
+                                  <h4 style="font-size: 0.9rem; text-align: start;">NOME</h4>
+                                  <h4 style="font-size: 0.9rem; text-align: start;">CARGO</h4>
+                              </div>
+                              <img [src]="item" style="margin-bottom: 15px; max-width: 100%;">
+                          </div>
+                      </ng-template>
+                  </swiper-slide>
+              </swiper>
+          </div>
+      </div>
+  </div>
+</div>
+
+    <!-- GALERIA -->
+    <div class=" row justify-content-center align-items-center m-0 p-0"
+    style="margin-top: 20px !important;">
+
+    <div
+      class="col-md-11 col-lg-10 d-flex flex-column justify-content-start align-items-center"
+      style="height: auto; background-color: white; border-radius: 20px; border: 1px solid rgb(219, 219, 219);">
+      <div class="row w-100 justify-content-center">
+        <div class="col-12" style="padding-top: 25px;">
+          <h4 style="font-size: 1.2rem; color: rgb(44, 44, 44);">
+            GALERIA
+          </h4>
+        </div>
+
+        <div class="row flex-wrap pb-md-5" style="width: 90%;">
+          <div class="col-md-6 col-lg-4 p-3">
+            <img src="../../../assets/galeria/img1.png">
+          </div>
+          <div class="col-md-6 col-lg-4  p-3 ">
+            <img src="../../../assets/galeria/img2.png">
+          </div>
+          <div class="col-md-6 col-lg-4  p-3 ">
+            <img src="../../../assets/galeria/img3.png">
+          </div>
+          <div class="col-md-6 col-lg-4  p-3 ">
+            <img src="../../../assets/galeria/img4.png">
+          </div>
+          <div class="col-md-6 col-lg-4  p-3 ">
+            <img src="../../../assets/galeria/img5.png">
+          </div>
+          <div class="col-md-6 col-lg-4  p-3 ">
+            <img src="../../../assets/galeria/img6.png">
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <div class=" row justify-content-center  align-items-start m-0 p-0"
+    style="margin-top: 20px !important; background-color: white; height: auto;">
+
+    <div class=" col-md-3 col-lg-3 pt-5 pb-md-5" style="height: auto; ">
+      <h4 style="color: black; font-size: 1.2rem; font-weight: bolder;">Acesso
+        rápido</h4>
+      <div class="link-option d-flex justify-content-between w-100 pt-2">
+        <h4 style="color:#2864AE; font-size: 1rem; font-weight: bolder;">Acesso
+          à Informação</h4>
+        <img src="../../../assets/svg/mdi_plus.svg">
+      </div>
+      <div class="link-option d-flex justify-content-between w-100 pt-2">
+        <h4 style="color:#2864AE; font-size: 1rem; font-weight: bolder;">Composição</h4>
+        <img src="../../../assets/svg/mdi_plus.svg">
+      </div>
+      <div class="link-option d-flex justify-content-between w-100 pt-2">
+        <h4 style="color:#2864AE; font-size: 1rem; font-weight: bolder;">Centrais
+          de conteúdo</h4>
+        <img src="../../../assets/svg/mdi_plus.svg">
+      </div>
+      <div class="link-option d-flex justify-content-between w-100 pt-2">
+        <h4 style="color:#2864AE; font-size: 1rem; font-weight: bolder;">Canais
+          de atendimento</h4>
+        <img src="../../../assets/svg/mdi_plus.svg">
+      </div>
+      <div class="link-option d-flex justify-content-between w-100 pt-2">
+        <h4 style="color:#2864AE; font-size: 1rem; font-weight: bolder;">Notícias</h4>
+        <img src="../../../assets/svg/mdi_plus.svg">
+      </div>
+      <div class="link-option d-flex justify-content-between w-100 pt-2">
+        <h4 style="color:#2864AE; font-size: 1rem; font-weight: bolder;">Saiba
+          mais</h4>
+        <img src="../../../assets/svg/mdi_plus.svg">
+      </div>
+    </div>
+    <div class="col-md-3 col-lg-3 pt-5 pb-md-5" style="height: 250px;">
+      <h4 style="color: black; font-size: 1.2rem; font-weight: bolder;">Links
+        importantes</h4>
+      <div class="link-option d-flex justify-content-between w-100 pt-2">
+        <h4 style="color:#2864AE; font-size: 1rem; font-weight: bolder;">Meu
+          inss</h4>
+        <img src="../../../assets/svg/Group.svg">
+      </div>
+      <div class="link-option d-flex justify-content-between w-100 pt-2">
+        <h4 style="color:#2864AE; font-size: 1rem; font-weight: bolder;">Acesso
+          ao site antigo</h4>
+        <img src="../../../assets/svg/Group.svg">
+      </div>
+      <div class="link-option d-flex justify-content-between w-100 pt-2">
+        <h4 style="color:#2864AE; font-size: 1rem; font-weight: bolder;">Libras</h4>
+        <img src="../../../assets/svg/Group.svg">
+      </div>
+    </div>
+    <div class="col-md-3 col-lg-3 pt-5 pb-md-5" style="height: 250px;">
+      <h4 style="color: black; font-size: 1.2rem; font-weight: bolder;">Rede
+        sociais</h4>
+      <div class="link-option d-flex justify-content-between w-100 pt-2">
+        <img src="../../../assets/svg/mdi_youtube.svg">
+      </div>
+    </div>
+
+  </div>
+
+  <div class=" row justify-content-center align-items-center m-0 p-0"
+    style=" height: 50px;">
+
+    Todo o conteúdo deste site está publicado sob a licença&nbsp;<a href="#">Creative
+      Commons Atribuição-SemDerivações 3.0 Não Adaptada.</a>
+  </div>
+</div>

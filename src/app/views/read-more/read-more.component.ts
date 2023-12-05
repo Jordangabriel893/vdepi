@@ -1,18 +1,12 @@
-import { ChangeDetectorRef, Component, ElementRef, HostListener, NgZone, ViewChild, ViewEncapsulation  } from "@angular/core";
-import { Router } from "@angular/router";
-// import Swiper core and required modules
-import SwiperCore, { Virtual } from 'swiper/core';
+import { ChangeDetectorRef, Component, HostListener, NgZone, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 
-// install Swiper modules
-SwiperCore.use([Virtual]);
 @Component({
-  selector: 'app-home',
-  templateUrl: './home.component.html',
-  styleUrls: ['./home.component.scss']
+  selector: 'app-read-more',
+  templateUrl: './read-more.component.html',
+  styleUrls: ['./read-more.component.scss']
 })
-export class HomeComponent {
-  @ViewChild('sobre') sobre!: ElementRef;
-  @ViewChild('produtos') produtos!: ElementRef;
+export class ReadMoreComponent implements OnInit {
   arrayFalso = [ {
     src:'../../../assets/laboratorios/img1.png',
     title:'LABORATÓRIO DE FARMACOLOGIA'
@@ -38,7 +32,14 @@ export class HomeComponent {
   "../../../assets/galeria/parceiro1.png",
   "../../../assets/galeria/parceiro2.png",
   "../../../assets/galeria/parceiro3.png",
-  "../../../assets/galeria/parceiro4.png"]
+  "../../../assets/galeria/parceiro4.png",
+  "../../../assets/galeria/parceiro4.png"
+];
+  arrayNoticias = [
+    "../../../assets/noticias/Notícia1.png",
+    "../../../assets/noticias/Notícia 2.png"
+  ]
+
   showMenu: boolean = false;
   readMore: boolean = false;
   slides = Array.from({ length: 1000 }).map(
@@ -51,11 +52,6 @@ export class HomeComponent {
     private router: Router
     ) {}
   ngOnInit() {}
-
-  scrollToSection(section: string) {
-    const element = this[section].nativeElement;
-    element.scrollIntoView({ behavior: 'smooth', block: 'start', inline: 'nearest' });
-  }
 
   @HostListener('document:click', ['$event'])
   fecharControle(event: MouseEvent) {

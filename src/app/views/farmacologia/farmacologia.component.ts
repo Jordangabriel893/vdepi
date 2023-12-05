@@ -1,18 +1,12 @@
-import { ChangeDetectorRef, Component, ElementRef, HostListener, NgZone, ViewChild, ViewEncapsulation  } from "@angular/core";
-import { Router } from "@angular/router";
-// import Swiper core and required modules
-import SwiperCore, { Virtual } from 'swiper/core';
+import { ChangeDetectorRef, Component, HostListener, NgZone, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 
-// install Swiper modules
-SwiperCore.use([Virtual]);
 @Component({
-  selector: 'app-home',
-  templateUrl: './home.component.html',
-  styleUrls: ['./home.component.scss']
+  selector: 'app-farmacologia',
+  templateUrl: './farmacologia.component.html',
+  styleUrls: ['./farmacologia.component.scss']
 })
-export class HomeComponent {
-  @ViewChild('sobre') sobre!: ElementRef;
-  @ViewChild('produtos') produtos!: ElementRef;
+export class FarmacologiaComponent implements OnInit {
   arrayFalso = [ {
     src:'../../../assets/laboratorios/img1.png',
     title:'LABORATÓRIO DE FARMACOLOGIA'
@@ -51,11 +45,6 @@ export class HomeComponent {
     private router: Router
     ) {}
   ngOnInit() {}
-
-  scrollToSection(section: string) {
-    const element = this[section].nativeElement;
-    element.scrollIntoView({ behavior: 'smooth', block: 'start', inline: 'nearest' });
-  }
 
   @HostListener('document:click', ['$event'])
   fecharControle(event: MouseEvent) {

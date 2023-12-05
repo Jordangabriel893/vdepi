@@ -1,15 +1,11 @@
 import { Component } from '@angular/core';
-import { setTheme } from 'ngx-bootstrap/utils';
 
 @Component({
-  // tslint:disable-next-line
   selector: 'body',
-  template: '<router-outlet></router-outlet><notifier-container></notifier-container><jaspero-confirmations [defaultSettings]="confirmationOptions"></jaspero-confirmations>'
+  template: '<router-outlet></router-outlet>'
 })
 export class AppComponent {
-  constructor() {
-    setTheme('bs4'); // or 'bs4'
-  }
+  constructor(){}
 
   public confirmationOptions = {
     overlay: true,
