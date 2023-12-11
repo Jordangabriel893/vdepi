@@ -56,10 +56,8 @@ export class FarmacologiaComponent implements OnInit {
     }
   }
   onSwiper(swiper) {
-    console.log(swiper);
   }
   onSlideChange() {
-    console.log('slide change');
   }
   redirecionarParaHome() {
     this.router.navigate(['/home']);
