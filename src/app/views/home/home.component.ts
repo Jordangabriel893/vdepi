@@ -15,6 +15,8 @@ export class HomeComponent {
   @ViewChild('sobre') sobre!: ElementRef;
   @ViewChild('produtos') produtos!: ElementRef;
   @ViewChild('swiperContainer') swiperContainer?: ElementRef;
+  @ViewChild('swiperContainerPremios') swiperContainerPremios?: ElementRef;
+  
   arrayFalso2 = [0, 1, 2];
   arrayParceiros = [
   "../../../assets/galeria/parceiro1.png",
@@ -45,6 +47,15 @@ export class HomeComponent {
   ngAfterViewInit(): void {
     if (this.swiperContainer) {
       new Swiper(this.swiperContainer.nativeElement, {
+        // Opções do Swiper aqui
+        // Por exemplo:
+        slidesPerView: 3,
+        spaceBetween: 30,
+        // Mais opções: https://swiperjs.com/api/
+      });
+    }
+    if (this.swiperContainerPremios) {
+      new Swiper(this.swiperContainerPremios.nativeElement, {
         // Opções do Swiper aqui
         // Por exemplo:
         slidesPerView: 3,

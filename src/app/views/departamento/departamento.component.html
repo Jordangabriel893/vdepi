@@ -73,8 +73,17 @@
         <h2 style="color:#2864AE; font-weight: bolder;">
           {{ dados.nome}}
         </h2>
-        <p class="text-about last-news-paragraph-farmacologia">
+        <p class="text-about last-news-paragraph-farmacologia" *ngIf="dados.sobre">
           {{ dados.sobre}}
+        </p>
+        <p class="text-about last-news-paragraph-farmacologia"
+        *ngIf="!dados.sobre">
+          Lorem Ipsum is simply dummy text of the printing and typesetting industry. 
+          Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, 
+          when an unknown printer took a galley of type and scrambled it to make a type specimen book. 
+          It has survived not only five centuries, but also the leap into electronic typesetting, 
+          remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, 
+          and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
         </p>
       </div>
     </div>
@@ -179,69 +188,6 @@
         </div>
     </div>
 </div>
-
-  <div class=" row justify-content-center  align-items-start m-0 p-0"
-    style="margin-top: 20px !important; background-color: white; height: auto;">
-
-    <div class=" col-md-3 col-lg-3 pt-5 pb-md-5" style="height: auto; ">
-      <h4 style="color: black; font-size: 1.2rem; font-weight: bolder;">Acesso
-        rápido</h4>
-      <div class="link-option d-flex justify-content-between w-100 pt-2">
-        <h4 style="color:#2864AE; font-size: 1rem; font-weight: bolder;">Acesso
-          à Informação</h4>
-        <img src="../../../assets/svg/mdi_plus.svg">
-      </div>
-      <div class="link-option d-flex justify-content-between w-100 pt-2">
-        <h4 style="color:#2864AE; font-size: 1rem; font-weight: bolder;">Composição</h4>
-        <img src="../../../assets/svg/mdi_plus.svg">
-      </div>
-      <div class="link-option d-flex justify-content-between w-100 pt-2">
-        <h4 style="color:#2864AE; font-size: 1rem; font-weight: bolder;">Centrais
-          de conteúdo</h4>
-        <img src="../../../assets/svg/mdi_plus.svg">
-      </div>
-      <div class="link-option d-flex justify-content-between w-100 pt-2">
-        <h4 style="color:#2864AE; font-size: 1rem; font-weight: bolder;">Canais
-          de atendimento</h4>
-        <img src="../../../assets/svg/mdi_plus.svg">
-      </div>
-      <div class="link-option d-flex justify-content-between w-100 pt-2">
-        <h4 style="color:#2864AE; font-size: 1rem; font-weight: bolder;">Notícias</h4>
-        <img src="../../../assets/svg/mdi_plus.svg">
-      </div>
-      <div class="link-option d-flex justify-content-between w-100 pt-2">
-        <h4 style="color:#2864AE; font-size: 1rem; font-weight: bolder;">Saiba
-          mais</h4>
-        <img src="../../../assets/svg/mdi_plus.svg">
-      </div>
-    </div>
-    <div class="col-md-3 col-lg-3 pt-5 pb-md-5" style="height: 250px;">
-      <h4 style="color: black; font-size: 1.2rem; font-weight: bolder;">Links
-        importantes</h4>
-      <div class="link-option d-flex justify-content-between w-100 pt-2">
-        <h4 style="color:#2864AE; font-size: 1rem; font-weight: bolder;">Meu
-          inss</h4>
-        <img src="../../../assets/svg/Group.svg">
-      </div>
-      <div class="link-option d-flex justify-content-between w-100 pt-2">
-        <h4 style="color:#2864AE; font-size: 1rem; font-weight: bolder;">Acesso
-          ao site antigo</h4>
-        <img src="../../../assets/svg/Group.svg">
-      </div>
-      <div class="link-option d-flex justify-content-between w-100 pt-2">
-        <h4 style="color:#2864AE; font-size: 1rem; font-weight: bolder;">Libras</h4>
-        <img src="../../../assets/svg/Group.svg">
-      </div>
-    </div>
-    <div class="col-md-3 col-lg-3 pt-5 pb-md-5" style="height: 250px;">
-      <h4 style="color: black; font-size: 1.2rem; font-weight: bolder;">Rede
-        sociais</h4>
-      <div class="link-option d-flex justify-content-between w-100 pt-2">
-        <img src="../../../assets/svg/mdi_youtube.svg">
-      </div>
-    </div>
-
-  </div>
 
   <div class=" row justify-content-center align-items-center m-0 p-0"
     style=" height: 50px;">

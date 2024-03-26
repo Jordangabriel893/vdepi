@@ -223,24 +223,28 @@
           </h4>
         </div>
         <div class="col-12 d-flex flex-wrap pb-md-5" style="padding-top: 25px; overflow: hidden;">
-          <swiper [slidesPerView]="3" [spaceBetween]="50" [virtual]="true" style="width: 100%; overflow: hidden;">
-            <swiper-slide *ngFor="let item of laboratorios">
-              <ng-template swiperSlide>
-                <div class="card-custom d-flex flex-column justify-content-center align-items-center"
-                  style="width: 90%; height: 300px;">
+          <div #swiperContainerPremios class="swiper-container">
+            <div class="swiper-wrapper">
+              <!-- Seus slides aqui -->
+              <div class="swiper-slide" *ngFor="let item of laboratorios" (click)="redirecionarParaLaboratorio(item.nome)">
+                <div class="card-custom d-flex flex-column justify-content-center align-items-center "
+                  style="width: 90%; height: 275px; background-color: white;">
                   <div class="card-title" style="color:#2864AE;">
-                    <h4 style="font-size: 1rem; text-align: start;">
+                    <h4 style="font-size: 1rem; text-align: start; margin: 10px;">
                       NOME PRÊMIO
                     </h4>
                   </div>
-                  <img src="../../../assets/noticias/premio.png" style="margin-bottom: 15px;">
+                  <img src="../../../assets/noticias/premio.png" style="margin-bottom: 15px; max-width: 100%;">
                 </div>
-                <div class="btn-saiba d-flex justify-content-center align-items-center mb-2" style="width: 90%;">
+                <div class="btn-saiba d-flex justify-content-center align-items-center mb-5" style="width: 90%;">
                   <button class="saiba-mais-btn">SAIBA MAIS</button>
                 </div>
-              </ng-template>
-            </swiper-slide>
-          </swiper>
+              </div>
+            </div>
+            <!-- Adicione as setas de navegação (opcional) -->
+            <div class="swiper-button-next"></div>
+            <div class="swiper-button-prev"></div>
+          </div>
         </div>
       </div>
     </div>
@@ -280,106 +284,6 @@
         </div>
       </div>
     </div>
-  </div>
-
-  <!-- SERVIÇOS -->
-  <div class=" row justify-content-center align-items-center m-0 p-0" style="margin-top: 20px !important;">
-
-    <div class="col-md-11 col-lg-10 d-flex flex-column justify-content-between align-items-center"
-      style="height: 450px; background-color: white; border-radius: 20px; border: 1px solid rgb(219, 219, 219);">
-      <div class="row w-100">
-        <div class="col-12" style="padding-top: 25px;">
-          <h4 style="font-size: 1.2rem; color: rgb(44, 44, 44);">
-            SERVIÇOS
-          </h4>
-        </div>
-
-        <div class="col-12 d-flex" [ngStyle]="{'justify-content': arrayFalso2.length < 5 ? 'space-around' : 'center'}"
-          style="padding-top: 25px;">
-          <div *ngFor="let item of arrayFalso2" class="card-element col-md-4 col-lg-3"
-            style=" display: flex; flex-direction: column; justify-content: center; align-items: center;">
-            <div class="card-custom d-flex flex-column justify-content-center align-items-center "
-              style=" height: 243px;">
-              <div class="card-title" style="color:#2864AE; ">
-                <h4 style="font-size: 1rem; text-align: start;">
-                  PLATAFORMA
-                </h4>
-              </div>
-              <img src="../../../assets/noticias/plataforma.png" style="margin-bottom: 15px;">
-            </div>
-            <div class="btn-saiba d-flex justify-content-center align-items-center" style="width: 90%;">
-              <button class="saiba-mais-btn">SAIBA MAIS</button>
-            </div>
-          </div>
-
-        </div>
-      </div>
-
-    </div>
-  </div>
-
-
-  <div class=" row justify-content-center  align-items-start m-0 p-0"
-    style="margin-top: 20px !important; background-color: white; height: auto;">
-
-    <div class=" col-md-3 col-lg-3 pt-5 pb-md-5" style="height: auto; ">
-      <h4 style="color: black; font-size: 1.2rem; font-weight: bolder;">Acesso
-        rápido</h4>
-      <div class="link-option d-flex justify-content-between w-100 pt-2">
-        <h4 style="color:#2864AE; font-size: 1rem; font-weight: bolder;">Acesso
-          à Informação</h4>
-        <img src="../../../assets/svg/mdi_plus.svg">
-      </div>
-      <div class="link-option d-flex justify-content-between w-100 pt-2">
-        <h4 style="color:#2864AE; font-size: 1rem; font-weight: bolder;">Composição</h4>
-        <img src="../../../assets/svg/mdi_plus.svg">
-      </div>
-      <div class="link-option d-flex justify-content-between w-100 pt-2">
-        <h4 style="color:#2864AE; font-size: 1rem; font-weight: bolder;">Centrais
-          de conteúdo</h4>
-        <img src="../../../assets/svg/mdi_plus.svg">
-      </div>
-      <div class="link-option d-flex justify-content-between w-100 pt-2">
-        <h4 style="color:#2864AE; font-size: 1rem; font-weight: bolder;">Canais
-          de atendimento</h4>
-        <img src="../../../assets/svg/mdi_plus.svg">
-      </div>
-      <div class="link-option d-flex justify-content-between w-100 pt-2">
-        <h4 style="color:#2864AE; font-size: 1rem; font-weight: bolder;">Notícias</h4>
-        <img src="../../../assets/svg/mdi_plus.svg">
-      </div>
-      <div class="link-option d-flex justify-content-between w-100 pt-2">
-        <h4 style="color:#2864AE; font-size: 1rem; font-weight: bolder;">Saiba
-          mais</h4>
-        <img src="../../../assets/svg/mdi_plus.svg">
-      </div>
-    </div>
-    <div class="col-md-3 col-lg-3 pt-5 pb-md-5" style="height: 250px;">
-      <h4 style="color: black; font-size: 1.2rem; font-weight: bolder;">Links
-        importantes</h4>
-      <div class="link-option d-flex justify-content-between w-100 pt-2">
-        <h4 style="color:#2864AE; font-size: 1rem; font-weight: bolder;">Meu
-          inss</h4>
-        <img src="../../../assets/svg/Group.svg">
-      </div>
-      <div class="link-option d-flex justify-content-between w-100 pt-2">
-        <h4 style="color:#2864AE; font-size: 1rem; font-weight: bolder;">Acesso
-          ao site antigo</h4>
-        <img src="../../../assets/svg/Group.svg">
-      </div>
-      <div class="link-option d-flex justify-content-between w-100 pt-2">
-        <h4 style="color:#2864AE; font-size: 1rem; font-weight: bolder;">Libras</h4>
-        <img src="../../../assets/svg/Group.svg">
-      </div>
-    </div>
-    <div class="col-md-3 col-lg-3 pt-5 pb-md-5" style="height: 250px;">
-      <h4 style="color: black; font-size: 1.2rem; font-weight: bolder;">Rede
-        sociais</h4>
-      <div class="link-option d-flex justify-content-between w-100 pt-2">
-        <img src="../../../assets/svg/mdi_youtube.svg">
-      </div>
-    </div>
-
   </div>
 
   <div class=" row justify-content-center align-items-center m-0 p-0" style=" height: 50px;">
