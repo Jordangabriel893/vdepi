@@ -1,34 +1,28 @@
-import { ChangeDetectorRef, Component, ElementRef, HostListener, NgZone, ViewChild, ViewEncapsulation  } from "@angular/core";
-import { Router } from "@angular/router";
-import { InformationsService } from "app/serviços/informations.service";
-// import Swiper core and required modules
-import SwiperCore, { Virtual } from 'swiper/core';
+import { AfterViewInit, ChangeDetectorRef, Component, ElementRef, HostListener, NgZone, OnInit, ViewChild } from '@angular/core';
+import { Router } from '@angular/router';
+import { InformationsService } from 'app/serviços/informations.service';
 import Swiper from 'swiper';
-// install Swiper modules
-SwiperCore.use([Virtual]);
+
 @Component({
-  selector: 'app-home',
-  templateUrl: './home.component.html',
-  styleUrls: ['./home.component.scss']
+  selector: 'app-departamento',
+  templateUrl: './departamento.component.html',
+  styleUrls: ['./departamento.component.scss']
 })
-export class HomeComponent {
-  @ViewChild('sobre') sobre!: ElementRef;
-  @ViewChild('produtos') produtos!: ElementRef;
+export class DepartamentoComponent implements OnInit, AfterViewInit {
   @ViewChild('swiperContainer') swiperContainer?: ElementRef;
+  @ViewChild('swiperContainerEquipe') swiperContainerEquipe?: ElementRef;
   arrayFalso2 = [0, 1, 2];
   arrayParceiros = [
   "../../../assets/galeria/parceiro1.png",
   "../../../assets/galeria/parceiro2.png",
   "../../../assets/galeria/parceiro3.png",
   "../../../assets/galeria/parceiro4.png"]
-  laboratorios = [];
   showMenu: boolean = false;
   readMore: boolean = false;
-  dados;
   slides = Array.from({ length: 1000 }).map(
     (el, index) => `Slide ${index + 1}`
   );
-
+  dados;
   constructor(
     private cd: ChangeDetectorRef,
     private ngZone: NgZone,
@@ -37,27 +31,16 @@ export class HomeComponent {
     ) {}
   ngOnInit() {
 
+    const title = localStorage.getItem('title');
     this.informationsService.getDados().subscribe(data => {
-      this.dados = data.departamentos;
-      data.departamentos.map(item => this.laboratorios.push(...item.laboratorios));
+      this.dados = data.departamentos.find(item => item.nome == title);
+      setTimeout(()=>{this.createSwipers();}, 1000)
     });
+
   }
   ngAfterViewInit(): void {
-    if (this.swiperContainer) {
-      new Swiper(this.swiperContainer.nativeElement, {
-        // Opções do Swiper aqui
-        // Por exemplo:
-        slidesPerView: 3,
-        spaceBetween: 30,
-        // Mais opções: https://swiperjs.com/api/
-      });
-    }
+    
   }
-  scrollToSection(section: string) {
-    const element = this[section].nativeElement;
-    element.scrollIntoView({ behavior: 'smooth', block: 'start', inline: 'nearest' });
-  }
-
   @HostListener('document:click', ['$event'])
   fecharControle(event: MouseEvent) {
     if (!(event.target instanceof Element)) {
@@ -67,10 +50,9 @@ export class HomeComponent {
       this.showMenu = false;
     }
   }
-  navigateTo(nome){
-    localStorage.setItem('title', nome);
-    this.router.navigate([`departamento`]);
-
+  onSwiper(swiper) {
+  }
+  onSlideChange() {
   }
   redirecionarParaHome() {
     this.router.navigate(['/home']);
@@ -89,4 +71,25 @@ export class HomeComponent {
   readAbout(){
     this.readMore =  true;
   }
+  createSwipers(){
+    if (this.swiperContainer) {
+      new Swiper(this.swiperContainer.nativeElement, {
+        // Opções do Swiper aqui
+        // Por exemplo:
+        slidesPerView: 3,
+        spaceBetween: 30,
+        // Mais opções: https://swiperjs.com/api/
+      });
+    }
+    if (this.swiperContainerEquipe) {
+      new Swiper(this.swiperContainerEquipe.nativeElement, {
+        // Opções do Swiper aqui
+        // Por exemplo:
+        slidesPerView: 3,
+        spaceBetween: 30,
+        // Mais opções: https://swiperjs.com/api/
+      });
+    }
+  }
 }
+

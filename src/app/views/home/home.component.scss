@@ -50,6 +50,22 @@ swiper-container {
 //   background-image: url('../../../assets/banner-slide/banner2.png');
 // }
 
+.swiper-slide {
+  width: 220.667px !important;
+  margin-right: 30px !important;
+  flex-direction: column;
+  min-height: 415px !important;
+}
+
+.swiper-slide{
+  img {
+    display: block;
+    width: 75% !important;
+    height: 100%;
+    object-fit: cover;
+  }
+  
+} 
 swiper-slide {
   text-align: center;
   font-size: 18px;

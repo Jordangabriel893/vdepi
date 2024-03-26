@@ -6,12 +6,14 @@ import { HomeComponent } from './views/home';
 import { ReadMoreComponent } from './views/read-more';
 import { FarmacologiaComponent } from './views/farmacologia/farmacologia.component';
 import { LaboratorioComponent } from './views/laboratorio/laboratorio.component';
+import { DepartamentoComponent } from './views/departamento/departamento.component';
 
 // Defina suas rotas
 const routes: Routes = [
   { path: 'home', component: HomeComponent },
   { path: 'read-more', component: ReadMoreComponent },
   { path: 'farmacologia', component: FarmacologiaComponent },
+  { path: 'departamento', component: DepartamentoComponent },
   { path: 'laboratorio', component: LaboratorioComponent },
   { path: '', redirectTo: '/home', pathMatch: 'full' },
   { path: '**', redirectTo: '/home' }

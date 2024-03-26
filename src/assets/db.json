@@ -1,0 +1,231 @@
+{
+  "departamentos": [
+    {
+      "nome": "DEPARTAMENTO DE PRODUTOS NATURAIS (DPN)",
+      "sobre": "A área de Produtos Naturais foi implantada em Farmanguinhos a partir de 1994 para atender à demanda de validação de plantas medicinais, em sintonia com as respectivas políticas públicas do SUS e da OMS então em fase de internalização pelo Brasil. Atualmente sob o Departamento de Produtos Naturais (DPN) estão alocados laboratórios de pesquisa e desenvolvimento de insumos ativos de origem natural e produtos derivados.\nCom atuação em Química de Produtos Naturais, Química Analítica, Farmacognosia e Bioquímica, e em colaboração principalmente com as áreas de Farmacologia, Botânica e Farmacotécnica, seu corpo técnico-cientifico desenvolve processos de validação de espécies vegetais de interesse medicinal e produtos tecnológicos a partir da biodiversidade, em especial fitoterápicos que atendam às demandas de Saúde Pública.\nAs principais linhas de pesquisa do DPN envolvem assim a obtenção de moléculas e extratos ativos de espécies medicinais; o desenvolvimento de métodos analíticos; a padronização/quantificação de extratos vegetais; e produção de material documental para suporte à validação terapêutica de plantas medicinais.\nConstituído por três laboratórios, o DPN reúne 17 doutores, 06 mestres, 04 graduados, além de estudantes que desenvolvem projetos de doutorado, mestrado e iniciação científica dentro das linhas de pesquisa do DPN.\nNossa missão é de atuar em pesquisa, desenvolvimento e inovação em insumos farmacêuticos ativos da biodiversidade, visando atender às demandas de Saúde Pública, com ênfase em doenças negligenciadas e/ou de grande impacto social.\nDesta forma se tornar referência na Fiocruz em insumos farmacêuticos ativos da biodiversidade e protagonista na proposição de soluções terapêuticas seguras e eficazes para o SUS, a partir da geração e difusão de conhecimentos em plantas medicinais, fitofármacos e fitoterápicos.",
+      "laboratorios": [
+        {
+          "nome": "LABORATÓRIO DE PRODUTOS NATURAIS PARA SAÚDE PÚBLICA (LPNSP)",
+          "sobre": "O Laboratório de Produtos Naturais para Saúde Pública (LPNSP) é composto por pesquisadores com competências em Farmácia, Química, Bioquímica, Biomedicina e Biologia. Realiza pesquisa com plantas medicinais da biodiversidade brasileira e desenvolve insumos farmacêuticos ativos e fitoterápicos para tratar doenças de interesse em saúde pública, especialmente leishmanioses. Além disso, qualifica profissionais de nível médio, graduação e pós-graduação.",
+          "descricao": "Descrição do Laboratório de Síntese de Substâncias no Combate a Doenças Tropicais (SSCDT)",
+          "pesquisasProjetos": "Descrição das Pesquisas e Projetos do Laboratório de Síntese de Substâncias no Combate a Doenças Tropicais (SSCDT)",
+          "equipe": [
+              {"nome": "Maria Dutra Behrens", "cargo":"Chefia",  "link": "http://lattes.cnpq.br/0356601864273225"},
+              {"nome": "Raquel Elisa López", "cargo":"Chefia Adjunta",  "link": "http://lattes.cnpq.br/9701239960925787"}
+          ],
+          "reconhecimentos": "Reconhecimentos do Laboratório de Síntese de Substâncias no Combate a Doenças Tropicais (SSCDT)"
+        },
+        {
+          "nome": "LABORATÓRIO DE PLANTAS MEDICINAIS E DERIVADOS (LPMD)",
+          "sobre": "O Laboratório de Plantas Medicinais e Derivados (LPMD) atua em diversas frentes. Realiza análises analítico-laboratoriais ligadas à legislação de medicamentos fitoterápicos e ao formulário da Farmacopeia Brasileira, bem como no desenvolvimento de medicamentos fitoterápicos tradicionais distribuídos no SUS. Além disso, dedica-se ao desenvolvimento e aplicação de metodologias analíticas para garantir a qualidade de produtos, plantas medicinais e medicamentos fitoterápicos para a saúde humana e animal.\n\nSuas atribuições incluem a execução de projetos de pesquisa e desenvolvimento tecnológico na área de plantas medicinais e seus derivados, com aplicação em saúde e biomodelos animais. Participa ativamente de grupos de discussão, atualização e divulgação de legislação, produção e divulgação de assuntos relacionados a medicamentos fitoterápicos, biomodelos e metodologias de qualidade e desenvolvimento.\n\nO LPMD também organiza pareceres técnico-científicos sobre medicamentos fitoterápicos e áreas afins, elabora procedimentos padronizados para o desenvolvimento de produtos, atua na pesquisa e desenvolvimento de diferentes materiais de origem vegetal e compostos bioativos para doenças negligenciadas, desenvolve nanoformulações a partir de óleos, extratos e substâncias bioativas, forma recursos humanos para a área científica, industrial e de desenvolvimento tecnológico, e participa de grupos técnicos, comissões e comitês técnico-científicos relacionados.",
+          "descricao": "Descrição do Laboratório de Síntese de Substâncias no Combate a Doenças Tropicais (SSCDT)",
+          "pesquisasProjetos": "Descrição das Pesquisas e Projetos do Laboratório de Síntese de Substâncias no Combate a Doenças Tropicais (SSCDT)",
+          "equipe": [
+              {"nome": "ANA CLAUDIA FERNANDES AMARAL", "cargo":"Chefia",  "link": "http://lattes.cnpq.br/0219403672641674"},
+              {"nome": "MARIA ATHANA MPALANTINOS", "cargo":"Chefia adjunta",  "link": "http://lattes.cnpq.br/9372927724523776"}
+          ],
+          "reconhecimentos": "Reconhecimentos do Laboratório de Síntese de Substâncias no Combate a Doenças Tropicais (SSCDT)"
+        },
+        {
+          "nome": "LABORATÓRIO DE TECNOLOGIA PARA BIODIVERSIDADE EM SAÚDE (LABTECBIO)",
+          "sobre": "O LabTecBio é composto por um grupo de doutores com afinidades de atuação na Química de Produtos Naturais, ao qual se adicionam colaborações com laboratórios de outras áreas – em especial farmacologia e farmacotécnica. Em alinhamento com sua missão, o LabTecBio executa atividades de pesquisa, desenvolvimento e metodologias interdisciplinares para a inovação químico-farmacêutica de processos e produtos a partir da biodiversidade. Parte de sua força de trabalho também está comprometida com a formação e capacitação de profissionais, em cursos de níveis médio, graduação e pós-graduação. Atuamos na busca de inovações farmacêuticas, no suporte aos programas de saúde, como o Programa de Fitoterapia da Prefeitura do RJ e o Programa Nacional de Plantas Medicinais e Fitoterápicos, para viabilizar o acesso aos medicamentos fitoterápicos eficazes, com baixo custo e menos efeitos adversos. Na perspectiva de novos produtos medicamentosos, LabTecBio está voltado às plantas medicinais, seus extratos e moléculas isoladas com ação antiparasitária, antiviral e anticâncer. Inclui o desenvolvimento de processos, quanto à repetibilidade, escalonamento compatível e métodos analíticos.",
+          "descricao": "Descrição do Laboratório de Síntese de Substâncias no Combate a Doenças Tropicais (SSCDT)",
+          "pesquisasProjetos": "Descrição das Pesquisas e Projetos do Laboratório de Síntese de Substâncias no Combate a Doenças Tropicais (SSCDT)",
+          "equipe": [
+              {"nome": "Antonio Carlos Siani", "cargo":"",  "link": "(http://lattes.cnpq.br/7715101334947994)"},
+              {"nome": "João Batista de Freitas Tostes", "cargo":"",  "link": "(http://lattes.cnpq.br/5343111450390720)"},
+              {"nome": "Marcos Jun Nakamura", "cargo":"",  "link": "(http://lattes.cnpq.br/5875773769554848)"},
+              {"nome": "José Luiz Mazzei da Costa", "cargo":"",  "link": "http://lattes.cnpq.br/0074645014226685)"},
+              {"nome": "Gabrielle Pereira das Neves", "cargo":"",  "link": "(http://lattes.cnpq.br/4416000655929706)"},
+              {"nome": "Dulcinéia Furtado Teixeira", "cargo":"",  "link": "(http://lattes.cnpq.br/2518513898214124)"},
+              {"nome": "Leonardo Lucchetti C. da Silva", "cargo":"",  "link": "(http://lattes.cnpq.br/0452768070735961)"},
+              {"nome": "Simone Sacramento Valverde", "cargo":"",  "link": "(http://lattes.cnpq.br/4557544100221923)"},
+              {"nome": "Maria Raquel Figueiredo", "cargo":"",  "link": "(http://lattes.cnpq.br/7753128742702649)"},
+              {"nome": "André Mesquita Marques", "cargo":"",  "link": "(http://lattes.cnpq.br/9486259076810818)"},
+              {"nome": "Vagner Pereira da Silva", "cargo":"",  "link": "(http://lattes.cnpq.br/9707170986042550)"},
+              {"nome": "Temistocles Barroso de Oliveira", "cargo":"",  "link": "(http://lattes.cnpq.br/2430084700003647)"},
+              {"nome": "Ana Luiza Rangel Bérenger", "cargo":"",  "link": "(http://lattes.cnpq.br/1348388032267443)"}
+          ],
+          "reconhecimentos": "Reconhecimentos do Laboratório de Síntese de Substâncias no Combate a Doenças Tropicais (SSCDT)"
+        }
+      ],
+      "equipe": [],
+      "galeria":[]
+    },
+    {
+      "nome": "ASSESSORIA TÉCNICA DE GESTÃO DE PROJETOS (ATGP)",
+      "sobre": "A Assessoria Técnica de Gestão de Projetos (ATGP) atua no gerenciamento Técnico-Científico de Projetos estratégicos de Pesquisa e Desenvolvimento Tecnológico com foco em produto, da VDEPI. Nossos profissionais caracterizam-se como facilitadores para a execução dos projetos, em consonância com os coordenadores pesquisadores e toda gama de atores envolvidos na dinâmica da cadeia de desenvolvimento de fármacos e medicamentos. Elaboramos a documentação técnico-científica-administrativa dos projetos, bem como sua consolidação, organização e guarda. O assessoramento abarca as informações pertinentes e relevantes para o desenvolvimento da pesquisa em Farmanguinhos, contemplando requisitos sanitários em articulação com especialistas em regulação. Promovemos a construção do Portfólio Tecnológico da VDEPI selecionando projetos de desenvolvimento tecnológicos prioritários para os líderes de laboratórios. Este processo envolveu o desenvolvimento de critérios e classificação pela maturidade tecnológica, consolidando e disseminando uma análise crítica e gerencial dos projetos. Atuamos em parceria com o NIT de FAR e GESTEC colaborando no processo de patenteabilidade, sigilo, parcerias, acordos, orientação em publicações, prospecção, entre outros temas relacionados à Propriedade Intelectual. Desta forma, visamos o alinhamento institucional desenvolvendo projetos em consonância ao interesse da Fiocruz. Nossas atividades gerenciais buscam assessorar a alta gestão com informações relevantes sobre os projetos e discutir de maneira técnico-científica as atividades necessárias para o avanço em maturidade tecnológica. Desta forma, visamos promover um ambiente voltado à gestão de projetos, a fim de subsidiar os pesquisadores, por intermédio do compartilhamento das melhores práticas, com uma abordagem multidisciplinar mais estratégica, de modo a contribuir para o desenvolvimento tecnológico da pesquisa de Farmanguinhos, e, por conseguinte, para a saúde da população brasileira.",
+      "laboratorios": [],
+      "equipe": [],
+      "galeria":[]
+    },
+    {
+      "nome": "DEPARTAMENTO DE SÍNTESE DE FÁRMACOS E BIOATIVOS (DSFB)",
+      "sobre": "O Departamento de Síntese de Fármacos de Farmanguinhos – Fiocruz é composto por dois laboratórios. O mesmo possui ampla infraestrutura que respalda a pesquisa científica, além de ser equipado com 1 aparelho de RMN de 90 MHz, um cromatógrafo gasoso e um sistema de cromatografia em camada fina com detector de massas (TLC-MS). Além disso, o Departamento conta com a plataforma analítica de Farmanguinhos, que possui 2 aparelhos de RMN (400 MHz e 500 MHz), 1 aparelho de espectrometria de massas 'electrospray', 1 aparelho de espectrometria de massas de alta resolução – TOF, espectrofotômetros de IV e UV, cromatógrafos gasosos e HPLC. Adicionalmente, possui um Laboratório de Modelagem Molecular que apresenta uma infraestrutura física com 7 computadores com acesso aos programas específicos. Devido sua vasta experiência na síntese de fármacos, já publicou mais de 130 artigos científicos e inúmeras patentes. Os dois laboratórios de síntese orgânica do Departamento, possuem a infraestrutura necessária para a síntese e caracterização dos produtos e intermediários propostos nos projetos de pesquisa desenvolvidos. Nossas linhas de pesquisa visam a obtenção de potenciais moléculas bioativas frente ao tratamento da AIDS, leucemia mieloide crônica, tuberculose e doenças negligenciadas como a leishmania e Chagas. Desta forma, buscamos protagonismo, disruptivo e inovador no desenvolvimento de novas moléculas bioativas e processos produtivos de insumos farmacêuticos ativos contra doenças negligenciadas, malária, HIV/AIDS, câncer e tuberculose, de forma integrada e sustentável para atender as demandas do SUS. Com a missão de se constituir como um grupo de pesquisa compromissado em promover a geração de conhecimento com foco na saúde pública por meio da realização de pesquisas e desenvolvimentos tecnológicos, visando atender às maiores urgências e necessidades da população e do SUS dentro do contexto do Complexo Econômico e Industrial da Saúde (CEIS).",
+
+      "laboratorios": [
+        {
+          "nome": "LABORATÓRIO DE SÍNTESE DE FÁRMACOS (LASFAR)",
+          "sobre": "Informações sobre o Laboratório de Síntese de Fármacos (LASFAR)",
+          "descricao": "Descrição do Laboratório de Síntese de Fármacos (LASFAR)",
+          "pesquisasProjetos": "Descrição das Pesquisas e Projetos do Laboratório de Síntese de Fármacos (LASFAR)",
+          "equipe": [
+            {"nome": "Nome da Pessoa 1", "cargo":"",  "link": "Link para perfil da Pessoa 1"},
+            {"nome": "Nome da Pessoa 1", "cargo":"",  "link": "Link para perfil da Pessoa 1"}
+          ],
+          "reconhecimentos": "Reconhecimentos do Laboratório de Síntese de Fármacos (LASFAR)"
+        },
+        {
+          "nome": "LABORATÓRIO DE SÍNTESE DE SUBSTÂNCIAS NO COMBATE A DOENÇAS TROPICAIS (SSCDT)",
+          "sobre": "Informações sobre o Laboratório de Síntese de Substâncias no Combate a Doenças Tropicais (SSCDT)",
+          "descricao": "Descrição do Laboratório de Síntese de Substâncias no Combate a Doenças Tropicais (SSCDT)",
+          "pesquisasProjetos": "Descrição das Pesquisas e Projetos do Laboratório de Síntese de Substâncias no Combate a Doenças Tropicais (SSCDT)",
+          "equipe": [
+              {"nome": "Nome da Pessoa 1", "cargo":"",  "link": "Link para perfil da Pessoa 1"},
+              {"nome": "Nome da Pessoa 1", "cargo":"",  "link": "Link para perfil da Pessoa 1"}
+          ],
+          "reconhecimentos": "Reconhecimentos do Laboratório de Síntese de Substâncias no Combate a Doenças Tropicais (SSCDT)"
+        }
+      ],
+      "equipe": [],
+      "galeria":["../assets/galeria/Baner sobre (2).png","../assets/galeria/Baner sobre (3).png","../assets/galeria/Baner sobre (4).png","../assets/galeria/Baner sobre (5).png","../assets/galeria/Baner sobre (6).png","../assets/galeria/Baner sobre (7).png"]
+   
+    },
+    {
+      "nome": "DEPARTAMENTO DA EDUCAÇÃO",
+      "sobre": "Farmanguinhos atua na formação para o Complexo Econômico e Industrial da Saúde (CEIS) desde 2008. As primeiras ofertas foram os cursos de especialização em Tecnologias Industriais Farmacêuticas e em Gestão da Inovação em Fitomedicamentos (atualmente Inovação em Medicamentos da Biodiversidade). Ainda em 2008 foi ofertada a primeira turma de Mestrado Profissional em Gestão, Pesquisa e Desenvolvimento na Indústria Farmacêutica. Com a expertise adquirida em 2018, Farmanguinhos deu um passo à frente e inovou em ofertas educacionais na área. Neste ano foi criado o Departamento de Educação e novos cursos foram idealizados. Assim, a partir de 2019 foram ofertadas as primeiras turmas de Doutorado Profissional em Gestão, Pesquisa e Desenvolvimento na Indústria Farmacêutica (o primeiro da área de Farmácia da CAPES), e de mestrado e doutorado acadêmico em Pesquisa Translacional em Fármacos e Medicamentos. Nesse mesmo ano, o MEC aprovou um curso inédito do Brasil que somente Farmanguinhos oferece: a Residência Multiprofissional em Tecnologias Aplicadas a Indústria Farmacêutica, onde o ambiente fabril é cenário de prática para estudantes de residência. Além das ofertas formais de educação, Farmanguinhos ainda oferece cursos de qualificação nas Escolas de Verão e Inverno, além de palestras e jornadas científicas como o Centro de Estudos e Jornadas Científicas. Desta forma, o Departamento tem se concretizado como uma referência (switch) educacional para o Complexo Econômico Industrial da Saúde, no ensino translacional e voltado para a capacitação e desenvolvimento de profissionais em diversas áreas com ênfase na indústria farmacêutica. Assim, promove a capacitação para o fortalecimento do SUS, através de oferta educacional formal e não formal, incentivando o aprendizado contínuo de forma criativa, inovadora, prática e crítica.",
+      "laboratorios": [],
+      "equipe": [
+          {"nome": "Mariana Conceição de Souza", "cargo":"Chefia",  "link": "http://lattes.cnpq.br/3139928682245637"},
+          {"nome": "Aline de Souza Ramos", "cargo":"Chefia Adjunta",  "link": "http://lattes.cnpq.br/8084336511646320"},
+          {"nome": "Déborah Freire Monteiro de Oliveira ", "cargo":"Gestão Acadêmica",  "link": "http://lattes.cnpq.br/3688064697492350"},
+          {"nome": "Gabriella Macedo Princisval", "cargo":"Gestão Acadêmica",  "link": "http://lattes.cnpq.br/3139928682245637"},
+          {"nome": "Orlando Nascimento Terra Junior", "cargo":"Gestão Acadêmica",  "link": "http://lattes.cnpq.br/6203318093504105"}
+      ],
+      "galeria":[]
+    },
+    {
+      "nome": "DEPARTAMENTO DE FARMACOLOGIA",
+      "sobre": "Criado em 1995 com uma visão multidisciplinar, o Departamento de Farmacologia da VDEPI de Farmanguinhos atua nas áreas de farmacologia, imunologia, biologia celular e molecular, colaborando com a pesquisa, descoberta e desenvolvimentos de fármacos de origem natural ou sintética e produtos biotecnológicos. O Departamento conta com infraestrutura e expertise para a condução de estudos in vitro e in vivo de farmacodinâmica, farmacocinética, farmacologia de segurança e toxicologia aguda, desde a etapa de prospecção de novas moléculas até estudos com produtos formulados, apoiando a elaboração de dossiês para pedido de ensaios clínicos. Em sua estrutura, o Departamento de Farmacologia é formado pelo Laboratório de Farmacologia Aplicada, Laboratório de Farmacologia Molecular, Plataforma Tecnológica FIOCRUZ de ensaios antitumorais RPT11M e Biotério de Experimentação de Animais de Laboratório.\nVisão: Estar entre os principais departamentos nacionais que atuam na pesquisa, descoberta e desenvolvimento de medicamentos para o tratamento de doenças crônico-degenerativas e infecto-parasitárias\nMissão: Atuar na pesquisa, descoberta e desenvolvimento de fármacos, produtos tecnológicos ou biotecnológicos e/ou derivados da biodiversidade visando o desenvolvimento de medicamentos para o tratamento de doenças crônico-degenerativas e infecto-parasitárias",
+      "laboratorios": [
+        {
+          "nome": "LABORATÓRIO DE FARMACOLOGIA APLICADA",
+          "sobre": "Informações sobre o Laboratório de Farmacologia Aplicada",
+          "descricao": "Descrição do Laboratório de Farmacologia Aplicada",
+          "pesquisasProjetos": "Descrição das Pesquisas e Projetos do Laboratório de Farmacologia Aplicada",
+          "equipe": [
+              {"nome": "Nome da Pessoa 1", "cargo":"",  "link": "Link para perfil da Pessoa 1"},
+              {"nome": "Nome da Pessoa 1", "cargo":"",  "link": "Link para perfil da Pessoa 1"}
+          ],
+          "reconhecimentos": "Reconhecimentos do Laboratório de Farmacologia Aplicada"
+        },
+        {
+          "nome": "SERVIÇO BIOTÉRIO DE EXPERIMENTAÇÃO",
+          "sobre": "Informações sobre o Serviço Biotério de Experimentação",
+          "descricao": "Descrição do Serviço Biotério de Experimentação",
+          "pesquisasProjetos": "Descrição das Pesquisas e Projetos do Serviço Biotério de Experimentação",
+          "equipe": [
+              {"nome": "Nome da Pessoa 1", "cargo":"",  "link": "Link para perfil da Pessoa 1"},
+              {"nome": "Nome da Pessoa 1", "cargo":"",  "link": "Link para perfil da Pessoa 1"}
+          ],
+          "reconhecimentos": "Reconhecimentos do Serviço Biotério de Experimentação"
+        },
+        {
+          "nome": "LABORATÓRIO FARMACOLOGIA MOLECULAR",
+          "sobre": "Informações sobre o Laboratório de Farmacologia Molecular",
+          "descricao": "Descrição do Laboratório de Farmacologia Molecular",
+          "pesquisasProjetos": "Descrição das Pesquisas e Projetos do Laboratório de Farmacologia Molecular",
+          "equipe": [
+              {"nome": "Nome da Pessoa 1", "cargo":"",  "link": "Link para perfil da Pessoa 1"},
+              {"nome": "Nome da Pessoa 1", "cargo":"",  "link": "Link para perfil da Pessoa 1"}
+          ],
+          "reconhecimentos": "Reconhecimentos do Laboratório de Farmacologia Molecular"
+        }
+      ],
+      "equipe": [
+          {"nome": "Elaine Cruz Rosas", "cargo":"Chefia",  "link": ""},
+          {"nome": "André Luiz Franco Sampaio", "cargo":"Chefia Adjunta",  "link": ""},
+          {"nome": "Patrícia Jenny Araújo L’Amour", "cargo":"Gestão Acadêmica",  "link": ""},
+          {"nome": "Tainá da Silva Braz Sales", "cargo":"Gestão Acadêmica",  "link": ""},
+          {"nome": "Orlando Nascimento Terra Junior", "cargo":"Gestão Acadêmica",  "link": ""}
+      ],
+      "galeria":[]
+    },
+    {
+      "nome": "NÚCLEO DE FARMACOCINÉTICA",
+      "sobre": "",
+      "laboratorios": [],
+      "equipe": [
+          {"nome": "Nome da Pessoa 1", "cargo":"",  "link": "Link para perfil da Pessoa 1"},
+          {"nome": "Nome da Pessoa 1", "cargo":"",  "link": "Link para perfil da Pessoa 1"}
+      ],
+      "galeria":[]
+    },
+    {
+      "nome": "DEPARTAMENTO DE INOVAÇÃO GALÊNICA",
+      "sobre": "",
+      "laboratorios": [
+        {
+          "nome": "LABORATÓRIO DE MICRO E NANOTECNOLOGIA (LMN)",
+          "sobre": "O Laboratório de Micro e Nanotecnologia está focado no desenvolvimento tecnológico de formulações farmacêuticas para diversas vias de administração, com versatilidade em termos de linhas terapêuticas e fontes de obtenção de insumos ativos. Além disso, possui competência técnica e instrumental para atuar em vacinas, dispositivos para diagnóstico e projetos farmoquímicos. Dispõe de uma ampla gama de equipamentos para as etapas de preparo e caracterização dos projetos. Historicamente voltado para a saúde humana, tem recentemente direcionado esforços para a saúde animal, integrando uma perspectiva de saúde única.\n\nO laboratório tem histórico na área acadêmica, servindo de base para o desenvolvimento de projetos de pós-graduação e geração de conhecimento. Além disso, presta serviços vinculados à Rede de Plataformas Tecnológicas da Fiocruz, atendendo demandas de instituições públicas e privadas. Seus diferenciais incluem competência técnica, versatilidade tecnológica, capacidade de atuação em diferentes escalas e experiência industrial da equipe, contribuindo para o desenvolvimento regulatório dos projetos.",
+          "descricao": "Descrição do Laboratório de Síntese de Substâncias no Combate a Doenças Tropicais (SSCDT)",
+          "pesquisasProjetos": "Descrição das Pesquisas e Projetos do Laboratório de Síntese de Substâncias no Combate a Doenças Tropicais (SSCDT)",
+          "equipe": [
+              {"nome": "Helvécio Vinícius Antunes Rocha", "cargo":"",  "link": "http://lattes.cnpq.br/2176296530102185"},
+              {"nome": "Cinira Fandaruff", "cargo":"",  "link": "http://lattes.cnpq.br/8798903082681874"},
+              {"nome": "Marcelo Henrique da Cunha Chaves", "cargo":"",  "link": "http://lattes.cnpq.br/6977865193051759"}
+          ],
+          "reconhecimentos": "Reconhecimentos do Laboratório de Síntese de Substâncias no Combate a Doenças Tropicais (SSCDT)"
+        },
+        {
+          "nome": "LABORATÓRIO DE FARMACOTÉCNICA EXPERIMENTAL (LABFE)",
+          "sobre": "O Laboratório de Farmacotécnica Experimental (LabFE) faz parte do departamento de Inovação Galênica. Este laboratório trabalha com desenvolvimento de formulações voltadas para o tratamento de variadas doenças, com ênfase nas negligenciadas, obtidas por métodos farmacotécnicos tradicionais (granulação /mistura/compressão, líquidos e semissólidos), técnicas de design de partículas por spray dryer, de obtenção de dispersões sólidas pela extrusão à quente (Hot-melt extrusion) e métodos inovadores como a impressão 3D de medicamentos. Este laboratório faz parte da rede plataformas da Fiocruz e vem consolidando a Plataforma de Manufatura Aditiva de Medicamentos e Insumos para Saúde (PLAMEDIS) através da aquisição da primeira impressora 3D de medicamentos da Fiocruz. Além disso, através do espaço Farlab (Laboratório aberto de prototipagem de Farmanguinhos para inovação em saúde) financiado pela Fiocruz e Finep, a Fiocruz terá seu primeiro 'makerspace' equipado com ferramentas de fabricação digital e prototipação rápida, controladas por computador e operando com os mais diversos materiais de suporte, que permitam a fabricação rápida, flexível e de baixo custo de protótipos para exploração criativa de ideias. O espaço permitirá o preparo de testes de conceito e o estímulo à cultura de compartilhamento, produção cooperada e empreendedorismo para o desenvolvimento de projetos inovadores. Dentre os projetos desenvolvidos no LabFE destacam-se o desenvolvimento de formulações para uso veterinário a partir de produtos naturais; desenvolvimento de complexos fármaco-resina a fim de se obter fármacos mais palatáveis visando população pediátrica; desenvolvimento de formulações através da tecnologia 3D com diferentes aplicações: formulações personalizadas e mais palatáveis para população pediátrica (produção de comprimidos dispersíveis, gomas e chocolates), formulações semissólidas para aplicação tópica (hidrogéis) e microagulhas para aplicação transdérmica em parceria com a PLUMMA-3D do Instituto René Rachou – Fiocruz - MG. O LabFE apresenta parcerias internacionais já estabelecidas com l'École nationale supérieure des Mines d'Albi-Carmaux - IMT Mines Albi na França, Universidade de Londres (UCL London) e suas spin-outs FABRX (impressão 3D) e senCeuTics (análise sensorial) e Universidade De Montfort, na Inglaterra.",
+          "descricao": "Descrição do Laboratório de Síntese de Substâncias no Combate a Doenças Tropicais (SSCDT)",
+          "pesquisasProjetos": "Descrição das Pesquisas e Projetos do Laboratório de Síntese de Substâncias no Combate a Doenças Tropicais (SSCDT)",
+          "equipe": [
+              {"nome": "Alessandra Lifsitch Vicosa", "cargo":"Chefia",  "link": "http://lattes.cnpq.br/6580659070041982"},
+              {"nome": "Márcia Pietroluongo", "cargo":"Tecnologista em Saúde Pública",  "link": "http://lattes.cnpq.br/1154583413552764"},
+              {"nome": "Thiago Frances Guimarães", "cargo":"Tecnologista em Saúde Pública",  "link": "http://lattes.cnpq.br/4704094913015210"},
+              {"nome": "Ana Paula dos Santos Matos", "cargo":"Tecnologista em Pesquisa",  "link": "http://lattes.cnpq.br/2092298874034893"},
+              {"nome": "Luiz Augusto Deodoro Kelly", "cargo":"Chefia",  "link": "http://lattes.cnpq.br/1312668242127801"},
+              {"nome": "TAINA DA SILVA BRAZ SALES", "cargo":"Chefia",  "link": "http:/linkedin.com/in/tainá-da-silva-braz-sales-709a5417a"}
+          ],
+          "reconhecimentos": "Reconhecimentos do Laboratório de Síntese de Substâncias no Combate a Doenças Tropicais (SSCDT)"
+        }
+      ],
+      "equipe": [
+          {"nome": "Nome da Pessoa 1", "cargo":"",  "link": "Link para perfil da Pessoa 1"},
+          {"nome": "Nome da Pessoa 1", "cargo":"",  "link": "Link para perfil da Pessoa 1"}
+      ],
+      "galeria":[]
+    },
+    {
+      "nome": "ASSISTÊNCIA DA ADMINISTRAÇÃO E INFRAESTRUTURA DA PESQUISA",
+      "sobre": "",
+      "laboratorios": [],
+      "equipe": [
+          {"nome": "Nome da Pessoa 1", "cargo":"",  "link": "Link para perfil da Pessoa 1"},
+          {"nome": "Nome da Pessoa 1", "cargo":"",  "link": "Link para perfil da Pessoa 1"}
+      ],
+      "galeria":[]
+    },   
+    {
+      "nome": "DEPARTAMENTO DE MÉTODOS ANALÍTICOS (DMA)",
+      "sobre": "A história do Departamento de Métodos Analíticos (DMA) da Vice-diretoria de Educação, Pesquisa e Inovação de Farmanguinhos remonta a década de 1990, quando foi criada a Central Analítica, apoiando projetos de pesquisa da unidade assim como de outras unidades da Fiocruz e instituições de pesquisa brasileiras. A Central Analítica teve uma participação fundamental na incorporação por Farmanguinhos de tecnologias para a fabricação de medicamentos antirretrovirais, que a ajudaram a controlar a epidemia de AIDS no início do século e ainda hoje mantêm a doença sob controle no Brasil.\nO laboratório também foi responsável pela incorporação de tecnologias inovadoras na unidade. Inicialmente disponibilizava técnicas espectroscópicas e cromatográficas. Posteriormente o departamento introduziu as técnicas espectrométricas, como a espectrometria de massas, e técnicas de estudos no estado sólido, como a termogravimetria e a calorimetria diferencial exploratória. Particularmente estas técnicas de análise de amostras em estado sólido se revelaram tão importantes para a produção de medicamentos na unidade que seu setor no departamento foi totalmente transferido para a Coordenação de Desenvolvimento Tecnológico de Farmanguinhos originando o Laboratório de Estudos no Estado Sólido, que dá suporte fundamental a produção e controle da qualidade da unidade. Outro laboratório que teve origem na antiga Central Analítica foi o Laboratório de Desenvolvimento de Validação Analítica, também Coordenação de Desenvolvimento Tecnológico, responsável hoje pelo suporte analítico ao desenvolvimento e controle dos medicamentos de Farmanguinhos.\nHoje o DMA especializou-se em técnicas espectroscópicas, como a ressonância magnética nuclear e a espectroscopia no infravermelho, em técnicas cromatográficas, como a cromatografia líquida de alta eficiência e a cromatografia com fase gasosa e em técnicas espectrométricas como a espectrometria de massas.\nO DMA segue fornecendo suporte analítico a projetos de pesquisa e oferece os seus serviços através da Rede de Plataformas Tecnológicas da Fiocruz, uma ampla rede de laboratórios que prestam serviços especializados a pesquisadores e oferece soluções ao público interno e externo, inclusive a empresas. O departamento participa com duas plataformas: a de Ressonância Magnética Nuclear; e a de Cromatografia e Espectrometria de massas. A infraestrutura analítica ampla e variada nos torna capazes de atender aos mais diversos campos de pesquisa, como a síntese de novos fármacos, pesquisas com plantas medicinais, suporte ao desenvolvimento de insumos farmacêuticos ativos e de produtos de saúde. Para tanto, contamos com equipamentos de ressonância magnética nuclear, espectroscópio de infravermelho, espectrômetros de massas, cromatógrafos líquidos e cromatógrafos com fase gasosa. Podem ser realizadas análises simples, chamadas de análises de rotina, executadas em condições já padronizadas, ou podem ser realizados estudos, personalizados, nos quais as melhores condições para uma análise são determinadas e essa é executada. Este caso pode envolver a aplicação de várias técnicas, se necessário, para o desenvolvimento de uma metodologia e a sua validação.\nAtualmente, o DMA está trabalhando para a implementação das Boas Práticas de Laboratório, na perspectiva de elevar a qualidade dos seus processos de trabalho e agregar valor tanto aos resultados fornecidos como aos projetos atendidos.",
+      "laboratorios": [],
+      "equipe": [
+          {"nome": "Marcelo Raul Romero Tappin", "cargo":"Chefia",  "link": "http://lattes.cnpq.br/1463305742796733"},
+          {"nome": "Cristiane Ribeiro da Silva", "cargo":"Chefia Adjunta",  "link": "http://lattes.cnpq.br/9734355536973360"},
+          {"nome": "Cristiane França da Costa", "cargo":"",  "link": "http://lattes.cnpq.br/8134287172631740"},
+          {"nome": "Eliane Gonçalves de Carvalho", "cargo":"",  "link": "http://lattes.cnpq.br/8854112357184278"},
+          {"nome": "Rafaella Cruz de Azevedo Silva", "cargo":"",  "link": "http://lattes.cnpq.br/4076394293158151"},
+          {"nome": "Virginia Garcia Correia", "cargo":"",  "link": "http://lattes.cnpq.br/8585522804366905"},
+          {"nome": "Vinicius Vaz Cabral Nery", "cargo":"",  "link": "http://lattes.cnpq.br/2298880657839409"},
+          {"nome": "Licinio de Almeida Fontoura", "cargo":"",  "link": "http://lattes.cnpq.br/4319042887094201"},
+          {"nome": "Marcio Soares", "cargo":"",  "link": "http://lattes.cnpq.br/7849640117897805"},
+          {"nome": "Maria Elizabeth Borges Aguilar", "cargo":"",  "link": "http://lattes.cnpq.br/2644273720261422"}
+      ],
+      "galeria":[]
+    }
+  ]
+}

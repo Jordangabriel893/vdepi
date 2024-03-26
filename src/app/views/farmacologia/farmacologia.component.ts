@@ -66,9 +66,10 @@ export class FarmacologiaComponent implements OnInit {
     this.router.navigate(['/read-more']);
   }
   redirecionarParaFarmacologia(){
-    this.router.navigate(['/farmacologia']);
+    this.router.navigate(['/departamento']);
   }
-  redirecionarParaLaboratorio(){
+  redirecionarParaLaboratorio(nome){
+    localStorage.setItem('titleLab', nome);
     this.router.navigate(['/laboratorio']);
   }
   readAbout(){

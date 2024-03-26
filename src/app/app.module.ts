@@ -32,6 +32,8 @@ import { SwiperModule } from 'swiper/angular';
 import { ReadMoreComponent } from './views/read-more';
 import { FarmacologiaComponent } from './views/farmacologia/farmacologia.component';
 import { LaboratorioComponent } from './views/laboratorio/laboratorio.component';
+import { InformationsService } from './serviços/informations.service';
+import { DepartamentoComponent } from './views/departamento/departamento.component';
 
 @NgModule({
   imports: [
@@ -47,16 +49,19 @@ import { LaboratorioComponent } from './views/laboratorio/laboratorio.component'
     HttpClientModule,
     AlertModule.forRoot(),
     SwiperModule,
+    HttpClientModule,
+    RouterModule
   ],
   declarations: [
     AppComponent,
     HomeComponent,
     ReadMoreComponent,
     FarmacologiaComponent,
-    LaboratorioComponent
+    LaboratorioComponent,
+    DepartamentoComponent
   ],
   providers: [
-
+    InformationsService
   ],
   bootstrap: [AppComponent],
   schemas:[CUSTOM_ELEMENTS_SCHEMA]

@@ -1,12 +1,15 @@
-import { ChangeDetectorRef, Component, HostListener, NgZone, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, ElementRef, HostListener, NgZone, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
-
+import { InformationsService } from 'app/serviços/informations.service';
+import Swiper from 'swiper';
 @Component({
   selector: 'app-laboratorio',
   templateUrl: './laboratorio.component.html',
   styleUrls: ['./laboratorio.component.scss']
 })
 export class LaboratorioComponent implements OnInit {
+  @ViewChild('swiperContainer') swiperContainer?: ElementRef;
+  @ViewChild('swiperContainerEquipe') swiperContainerEquipe?: ElementRef;
   arrayFalso = [ {
     src:'../../../assets/laboratorios/img1.png',
     title:'LABORATÓRIO DE FARMACOLOGIA'
@@ -38,13 +41,22 @@ export class LaboratorioComponent implements OnInit {
   slides = Array.from({ length: 1000 }).map(
     (el, index) => `Slide ${index + 1}`
   );
-
+  dados;
+  departamento;
   constructor(
     private cd: ChangeDetectorRef,
     private ngZone: NgZone,
-    private router: Router
+    private router: Router,
+    private informationsService: InformationsService
     ) {}
-  ngOnInit() {}
+  ngOnInit() {
+    const title = localStorage.getItem('titleLab');
+    this.informationsService.getDados().subscribe(data => {
+      this.departamento = data.departamentos.find(item => item.laboratorios.some(lab => lab.nome == title));
+      this.dados = this.departamento.laboratorios.find(lab => lab.nome == title);
+      setTimeout(()=>{this.createSwipers();}, 1000)
+    });
+  }
 
   @HostListener('document:click', ['$event'])
   fecharControle(event: MouseEvent) {
@@ -55,25 +67,41 @@ export class LaboratorioComponent implements OnInit {
       this.showMenu = false;
     }
   }
-  onSwiper(swiper) {
-    
-  }
-  onSlideChange() {
-    
-  }
   redirecionarParaHome() {
     this.router.navigate(['/home']);
   }
   redirecionarParaReadMore() {
     this.router.navigate(['/read-more']);
   }
-  redirecionarParaFarmacologia(){
-    this.router.navigate(['/farmacologia']);
+  redirecionarParaFarmacologia(nome){
+    localStorage.setItem('title', nome);
+    this.router.navigate(['/departamento']);
   }
-  redirecionarParaLaboratorio(){
+  redirecionarParaLaboratorio(nome){
+    localStorage.setItem('titleLab', nome);
     this.router.navigate(['/laboratorio']);
   }
   readAbout(){
     this.readMore =  true;
+  }
+  createSwipers(){
+    if (this.swiperContainer) {
+      new Swiper(this.swiperContainer.nativeElement, {
+        // Opções do Swiper aqui
+        // Por exemplo:
+        slidesPerView: 3,
+        spaceBetween: 30,
+        // Mais opções: https://swiperjs.com/api/
+      });
+    }
+    if (this.swiperContainerEquipe) {
+      new Swiper(this.swiperContainerEquipe.nativeElement, {
+        // Opções do Swiper aqui
+        // Por exemplo:
+        slidesPerView: 3,
+        spaceBetween: 30,
+        // Mais opções: https://swiperjs.com/api/
+      });
+    }
   }
 }
