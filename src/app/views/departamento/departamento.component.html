@@ -5,9 +5,9 @@
       <img src="../../../assets/icone/Hamburger.png" class="menu-img"
         (click)="showMenu = !showMenu" style="width: 3rem; cursor: pointer;">
     </section>
-    <section class="col-3 d-flex justify-content-center">
-      <img src="../../../assets/icone/Logo.png" (click)="redirecionarParaHome()"
-        style="width: 15rem;cursor: pointer;">
+    <section class="col-3 d-flex justify-content-center" (click)="redirecionarParaHome()">
+      <img class="pr-2" src="../../../assets/icone/farmHeader.png" style="cursor: pointer;">
+      <img src="../../../assets/icone/vdepiHeader.png" style="cursor: pointer;">
     </section>
     <section class="col-3 d-flex  justify-content-end right-side">
       <div class="container">
@@ -17,9 +17,10 @@
     </section>
   </header>
   <div class="fixed-div row justify-content-center pt-4" *ngIf="showMenu">
-    <div class="col-12 text-center">
-      <img src="../../../assets/icone/logoMenor.png"
-        style="width: 15rem;cursor: pointer;">
+    <div class="col-12 text-center d-flex">
+      <img src="../../../assets/icone/farmMenu.png" style="width: 50px;height: 50px;cursor: pointer;margin-left: 20px;
+        margin-right: 15px;">
+      <img src="../../../assets/icone/logoMenu.png" style="width: 200px;height: 50px;cursor: pointer;">
     </div>
     <div class="row justify-content-center menu-options">
       <div class="d-flex justify-content-between align-items-center" 
