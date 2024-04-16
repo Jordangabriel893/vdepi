@@ -4,6 +4,7 @@ import { InformationsService } from "app/serviços/informations.service";
 // import Swiper core and required modules
 import SwiperCore, { Virtual } from 'swiper/core';
 import Swiper from 'swiper';
+import { Lightbox } from "ngx-lightbox";
 // install Swiper modules
 SwiperCore.use([Virtual]);
 @Component({
@@ -30,37 +31,59 @@ export class HomeComponent {
   slides = Array.from({ length: 1000 }).map(
     (el, index) => `Slide ${index + 1}`
   );
-
+  images= [
+    {
+      src: '../../../assets/galeria/img1.png',
+      thumb: 'Descrição da Imagem 1'
+    },
+    {
+      src: '../../../assets/galeria/img2.png',
+      thumb: 'Descrição da Imagem 2'
+    },
+    {
+      src: '../../../assets/galeria/img3.png',
+      thumb: 'Descrição da Imagem 3'
+    },
+    {
+      src: '../../../assets/galeria/img4.png',
+      thumb: 'Descrição da Imagem 4'
+    },
+    {
+      src: '../../../assets/galeria/img5.png',
+      thumb: 'Descrição da Imagem 5'
+    },
+    {
+      src: '../../../assets/galeria/img6.png',
+      thumb: 'Descrição da Imagem 6'
+    }
+  ];
+  _albums: Array<any> = []; 
   constructor(
     private cd: ChangeDetectorRef,
     private ngZone: NgZone,
     private router: Router,
-    private informationsService: InformationsService
+    private informationsService: InformationsService,
+    private _lightbox: Lightbox,
     ) {}
   ngOnInit() {
 
     this.informationsService.getDados().subscribe(data => {
       this.dados = data.departamentos;
+      this.createAlbum();
       data.departamentos.map(item => this.laboratorios.push(...item.laboratorios));
     });
   }
   ngAfterViewInit(): void {
     if (this.swiperContainer) {
       new Swiper(this.swiperContainer.nativeElement, {
-        // Opções do Swiper aqui
-        // Por exemplo:
         slidesPerView: 3,
         spaceBetween: 30,
-        // Mais opções: https://swiperjs.com/api/
       });
     }
     if (this.swiperContainerPremios) {
       new Swiper(this.swiperContainerPremios.nativeElement, {
-        // Opções do Swiper aqui
-        // Por exemplo:
         slidesPerView: 3,
         spaceBetween: 30,
-        // Mais opções: https://swiperjs.com/api/
       });
     }
   }
@@ -99,5 +122,24 @@ export class HomeComponent {
   }
   readAbout(){
     this.readMore =  true;
+  }
+  createAlbum(){
+    let i = 1
+    this.images.forEach(img => {
+      const src = img.src; 
+      const caption = img.thumb; 
+      const thumb = img.src; 
+      const album = { src: src, caption: caption, thumb: thumb }; 
+     this._albums.push(album); 
+     i++
+
+    })
+  }
+  open(index: number): void { // open lightbox 
+    this._lightbox.open(this._albums, index); 
+    } 
+    
+  close(): void { // close lightbox programmatically 
+    this._lightbox.close(); 
   }
 }

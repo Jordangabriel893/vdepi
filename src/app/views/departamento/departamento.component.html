@@ -105,8 +105,8 @@
         </div>
 
         <div class="row flex-wrap pb-md-5" style="width: 90%;">
-          <div class="col-md-6 col-lg-4 p-3" *ngFor="let item of dados.galeria">
-            <img class="w-100" [src]="item" >
+          <div class="col-md-6 col-lg-4 p-3" *ngFor="let item of _albums; let i= index">
+            <img class="w-100" [src]="item.src"  (click)="open(i)">
           </div>
         </div>
       </div>

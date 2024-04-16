@@ -5,9 +5,9 @@
       <img src="../../../assets/icone/Hamburger.png" class="menu-img"
         (click)="showMenu = !showMenu" style="width: 3rem; cursor: pointer;">
     </section>
-    <section class="col-3 d-flex justify-content-center">
-      <img src="../../../assets/icone/Logo.png"
-        style="width: 15rem;cursor: pointer;">
+    <section class="col-3 d-flex justify-content-center" (click)="redirecionarParaHome()">
+      <img class="pr-2" src="../../../assets/icone/farmHeader.png" style="cursor: pointer;">
+      <img src="../../../assets/icone/vdepiHeader.png" style="cursor: pointer;">
     </section>
     <section class="col-3 d-flex  justify-content-end right-side">
       <div class="container">
@@ -16,76 +16,22 @@
       </div>
     </section>
   </header>
-  <div class="fixed-div row justify-content-center pt-4" *ngIf="showMenu">
-    <div class="col-12 text-center">
-      <img src="../../../assets/icone/logoMenor.png"
-        style="width: 15rem;cursor: pointer;">
+  <div class="fixed-div row justify-content-center pt-4" *ngIf="showMenu && dados">
+    <div class="col-12 text-center d-flex">
+      <img src="../../../assets/icone/farmMenu.png" style="width: 50px;height: 50px;cursor: pointer;margin-left: 20px;
+        margin-right: 15px;">
+      <img src="../../../assets/icone/logoMenu.png" style="width: 200px;height: 50px;cursor: pointer;">
     </div>
     <div class="row justify-content-center menu-options">
-      <div class="d-flex justify-content-between align-items-center"
-        style="height: 75px; width: 275px;cursor: pointer;">
+      <div class="d-flex justify-content-between align-items-center" style="height: 75px; width: 275px;cursor: pointer;"
+       >
         <h4 style="color:black; font-size: 1rem; font-weight: bolder;">SOBRE A
           VDPI</h4>
         <img src="../../../assets/svg/Group.svg" style="width: 1rem;">
       </div>
-      <div class="d-flex justify-content-between align-items-center"
-        style="height: 75px; width: 275px;cursor: pointer;">
-        <h4 style="color:black; font-size: 1rem; font-weight: bolder;">DEPARTAMENTO
-          DE PRODUTOS NATURAIS</h4>
-        <img src="../../../assets/svg/Group.svg" style="width: 1rem;">
-      </div>
-      <div class="d-flex justify-content-between align-items-center"
-        style="height: 75px; width: 275px; cursor: pointer;">
-        <h4 style="color:black; font-size: 1rem; font-weight: bolder; ">DEPARTAMENTO
-          ASSISTENCIA DA ADMINISTRAÇAO E INFRAESTRUTURA DA PESQUISA </h4>
-        <img src="../../../assets/svg/Group.svg" style="width: 1rem;">
-      </div>
-      <div class="d-flex justify-content-between align-items-center"
-        style="height: 75px; width: 275px; cursor: pointer;">
-        <h4 style="color:black; font-size: 1rem; font-weight: bolder;">DEPARTAMENTO
-          DE FARMACOLOGIA</h4>
-        <img src="../../../assets/svg/Group.svg" style="width: 1rem;">
-      </div>
-      <div class="d-flex justify-content-between align-items-center"
-        style="height: 75px; width: 275px; cursor: pointer;">
-        <h4
-          style="color:black; font-size: 1rem; font-weight: bolder; text-transform: uppercase;">DEPARTAMENTO
-          DE SÍNTESE DE FÁRMACOS E BIOATIVOS</h4>
-        <img src="../../../assets/svg/Group.svg" style="width: 1rem;">
-      </div>
-      <div class="d-flex justify-content-between align-items-center"
-        style="height: 75px; width: 275px; cursor: pointer;">
-        <h4
-          style="color:black; font-size: 1rem; font-weight: bolder; text-transform: uppercase;">DEPARTAMENTO
-          DE MÉTODOS ANALÍTICOS</h4>
-        <img src="../../../assets/svg/Group.svg" style="width: 1rem;">
-      </div>
-      <div class="d-flex justify-content-between align-items-center"
-        style="height: 75px; width: 275px; cursor: pointer;">
-        <h4
-          style="color:black; font-size: 1rem; font-weight: bolder; text-transform: uppercase;">DEPARTAMENTO
-          EDUCAÇÃO</h4>
-        <img src="../../../assets/svg/Group.svg" style="width: 1rem;">
-      </div>
-      <div class="d-flex justify-content-between align-items-center"
-        style="height: 75px; width: 275px; cursor: pointer;">
-        <h4
-          style="color:black; font-size: 1rem; font-weight: bolder; text-transform: uppercase;">NÚCLEO
-          DE FARMACOCINÉTICA</h4>
-        <img src="../../../assets/svg/Group.svg" style="width: 1rem;">
-      </div>
-      <div class="d-flex justify-content-between align-items-center"
-        style="height: 75px; width: 275px; cursor: pointer;">
-        <h4
-          style="color:black; font-size: 1rem; font-weight: bolder; text-transform: uppercase;">DEPARTAMENTO
-          DE INOVAÇÃO GALÊNICA</h4>
-        <img src="../../../assets/svg/Group.svg" style="width: 1rem;">
-      </div>
-      <div class="d-flex justify-content-between align-items-center"
-        style="height: 75px; width: 275px; cursor: pointer;">
-        <h4
-          style="color:black; font-size: 1rem; font-weight: bolder; text-transform: uppercase;">ASSISTÊNCIA
-          TÉCNICA DE GESTÃO DE PROJETOS</h4>
+      <div class="d-flex justify-content-between align-items-center" *ngFor="let item of dados"
+        style="height: 75px; width: 275px;cursor: pointer;" (click)="redirecionarParaFarmacologia(item.nome)">
+        <h4 style="color:black; font-size: 1rem; font-weight: bolder;">{{item.nome}}</h4>
         <img src="../../../assets/svg/Group.svg" style="width: 1rem;">
       </div>
     </div>
@@ -128,13 +74,18 @@
         </h2>
         <p class="text-about last-news-paragraph">
           A Vice Diretoria de Educação, Pesquisa e Inovação – VDEPI, busca o fortalecimento da pesquisa, desenvolvimento, inovação e formação de recursos humanos, através do constante esforço do seu corpo de pesquisadores, tecnologistas e técnicos, com foco em soluções para as doenças tropicais negligenciadas, doenças de alto custo e doenças de alta incidência.
-
+          <br>
+          <br>
           A VDEPI atua de forma integrada em atendimento aos objetivos e missão deste Instituto “Atuar, como unidade técnico¬-científica da Fiocruz, na promoção da saúde pública, por meio da ge¬ração e difusão de conhecimentos, da educação, da pesquisa, do de¬senvolvimento tecnológico e da produção de medicamentos.”.
           Para cumprir sua missão, a VDEPI é estruturada em seis departamentos, oito laboratórios credenciados, dois serviços, quatro plataformas, dois cursos de pós-graduação stricto senso e dois cursos lato senso, uma assistência de administração e infraestrutura da pesquisa (AAIP) e uma assistência técnica de gestão de projetos (ATGP).
+          <br>
+          <br>
           A VDEPI tem características multidisciplinar, formada por profissionais capacitados para suportar a complexidade e a diversidade das atividades desenvolvidas.
-
+          <br>
+          <br>
           O corpo de pesquisadores de Farmanguinhos trabalha na busca de soluções para fortalecer o Complexo Econômico-Industrial da Saúde – CEIS, e assim atender às demandas do Sistema Único de Saúde – SUS em fármacos e medicamentos.
-
+          <br>
+          <br>
           A gestão da VDEPI é feita pelo seu Comitê Gestor (CG), formado pelos Departamentos, AAIP e ATGP e presidido pela Vice-diretoria de Educação Pesquisa e Inovação, que
           é responsável pelas ações de alinhamento e disseminação das ações estratégicas das respectivas áreas de atuação de cada membro, assim como da definição dos representantes das diversas câmaras técnicas.
 
@@ -143,38 +94,23 @@
     </div>
   </div>
 
-  <!-- GALERIA -->
-  <div class=" row justify-content-center align-items-center m-0 p-0 "
-    style="margin-top: 20px !important;">
+ <!-- GALERIA -->
+ <div class=" row justify-content-center align-items-center m-0 p-0"
+ style="margin-top: 20px !important;">
 
-    <div
-      class="col-md-11 col-lg-10 d-flex flex-column justify-content-start align-items-center"
-      style="height: auto; background-color: white; border-radius: 20px; border: 1px solid rgb(219, 219, 219);">
-      <div class="row w-100 justify-content-center">
-        <div class="col-12" style="padding-top: 25px;">
-          <h4 style="font-size: 1.2rem; color: rgb(44, 44, 44);">
-            GALERIA
-          </h4>
+ <div
+   class="col-md-11 col-lg-10 d-flex flex-column justify-content-start align-items-center" 
+   style="height: auto; background-color: white; border-radius: 20px; border: 1px solid rgb(219, 219, 219);">
+   <div class="row w-100 justify-content-center">
+     <div class="col-12" style="padding-top: 25px;">
+       <h4 style="font-size: 1.2rem; color: rgb(44, 44, 44);">
+         GALERIA
+       </h4>
         </div>
 
-        <div class="row flex-wrap pb-md-5" style="width: 90%;">
-          <div class="col-md-6 col-lg-4 p-3">
-            <img src="../../../assets/galeria/img1.png">
-          </div>
-          <div class="col-md-6 col-lg-4  p-3 ">
-            <img src="../../../assets/galeria/img2.png">
-          </div>
-          <div class="col-md-6 col-lg-4  p-3 ">
-            <img src="../../../assets/galeria/img3.png">
-          </div>
-          <div class="col-md-6 col-lg-4  p-3 ">
-            <img src="../../../assets/galeria/img4.png">
-          </div>
-          <div class="col-md-6 col-lg-4  p-3 ">
-            <img src="../../../assets/galeria/img5.png">
-          </div>
-          <div class="col-md-6 col-lg-4  p-3 ">
-            <img src="../../../assets/galeria/img6.png">
+        <div class="row flex-wrap pb-md-5 d-flex justify-content-center align-items-center" style="width: 90%;" >
+          <div class="col-md-6 col-lg-4 p-3"  *ngFor="let image of _albums; let i=index">
+            <img class="w-100"  [src]="image.src" (click)="open(i)" />
           </div>
         </div>
       </div>
@@ -252,11 +188,14 @@
         </h2>
         <p class="text-about last-news-paragraph">
           Visão: “Ser protagonista e inovador na disponibilização de soluções integradas e sustentáveis para o SUS.”
-
-Missão: “Promover a saúde pública por meio da oferta de soluções integradas e sustentáveis, gerando e difundindo conhecimentos e inovação.”
-
-Vice-Diretora: Dra. Nubia Boechat
-Graduada pela Faculdade de Farmácia da UFRJ, mestra em síntese orgânica pelo NPPN-UFRJ, doutora em química pelo IQ-UFRJ, com estágio “sanduíche” na Universidade de York, Inglaterra. Pós-doutorado na London School of Hygiene and Tropical Medicine de Londres, Inglaterra. Tecnologista sênior da Fundação Oswaldo Cruz (Fiocruz), desde 1986, onde tem ocupado vários cargos, inclusive de Diretora Executiva de Farmanguinhos. Foi vice-secretária da Regional Rio da Sociedade Brasileira de Química e subsecretária de saúde do município de Niterói, Rio de Janeiro. É bolsista em produtividade em pesquisa do CNPq e Cientista do Nosso Estado pela Faperj. Lidera importante grupo de P&D em síntese de fármacos, com centenas de moléculas inéditas obtidas para as doenças negligenciadas, Aids e câncer. Em 2021, foi vencedora do prêmio internacional Mulheres Brasileiras na Química, na categoria Liderança na Indústria, dado pela American Chemical Society em parceria com a Sociedade Brasileira de Química.
+          <br>
+          <br>
+          Missão: “Promover a saúde pública por meio da oferta de soluções integradas e sustentáveis, gerando e difundindo conhecimentos e inovação.”
+          <br>
+          <br>
+          Vice-Diretora: Dra. Nubia Boechat
+          <br>
+          Graduada pela Faculdade de Farmácia da UFRJ, mestra em síntese orgânica pelo NPPN-UFRJ, doutora em química pelo IQ-UFRJ, com estágio “sanduíche” na Universidade de York, Inglaterra. Pós-doutorado na London School of Hygiene and Tropical Medicine de Londres, Inglaterra. Tecnologista sênior da Fundação Oswaldo Cruz (Fiocruz), desde 1986, onde tem ocupado vários cargos, inclusive de Diretora Executiva de Farmanguinhos. Foi vice-secretária da Regional Rio da Sociedade Brasileira de Química e subsecretária de saúde do município de Niterói, Rio de Janeiro. É bolsista em produtividade em pesquisa do CNPq e Cientista do Nosso Estado pela Faperj. Lidera importante grupo de P&D em síntese de fármacos, com centenas de moléculas inéditas obtidas para as doenças negligenciadas, Aids e câncer. Em 2021, foi vencedora do prêmio internacional Mulheres Brasileiras na Química, na categoria Liderança na Indústria, dado pela American Chemical Society em parceria com a Sociedade Brasileira de Química.
 
         </p>
       </div>
@@ -348,70 +287,6 @@ Graduada pela Faculdade de Farmácia da UFRJ, mestra em síntese orgânica pelo 
         </div>
     </div>
 </div>
-
-
-  <div class=" row justify-content-center  align-items-start m-0 p-0"
-    style="margin-top: 20px !important; background-color: white; height: auto;">
-
-    <div class=" col-md-3 col-lg-3 pt-5 pb-md-5" style="height: auto; ">
-      <h4 style="color: black; font-size: 1.2rem; font-weight: bolder;">Acesso
-        rápido</h4>
-      <div class="link-option d-flex justify-content-between w-100 pt-2">
-        <h4 style="color:#2864AE; font-size: 1rem; font-weight: bolder;">Acesso
-          à Informação</h4>
-        <img src="../../../assets/svg/mdi_plus.svg">
-      </div>
-      <div class="link-option d-flex justify-content-between w-100 pt-2">
-        <h4 style="color:#2864AE; font-size: 1rem; font-weight: bolder;">Composição</h4>
-        <img src="../../../assets/svg/mdi_plus.svg">
-      </div>
-      <div class="link-option d-flex justify-content-between w-100 pt-2">
-        <h4 style="color:#2864AE; font-size: 1rem; font-weight: bolder;">Centrais
-          de conteúdo</h4>
-        <img src="../../../assets/svg/mdi_plus.svg">
-      </div>
-      <div class="link-option d-flex justify-content-between w-100 pt-2">
-        <h4 style="color:#2864AE; font-size: 1rem; font-weight: bolder;">Canais
-          de atendimento</h4>
-        <img src="../../../assets/svg/mdi_plus.svg">
-      </div>
-      <div class="link-option d-flex justify-content-between w-100 pt-2">
-        <h4 style="color:#2864AE; font-size: 1rem; font-weight: bolder;">Notícias</h4>
-        <img src="../../../assets/svg/mdi_plus.svg">
-      </div>
-      <div class="link-option d-flex justify-content-between w-100 pt-2">
-        <h4 style="color:#2864AE; font-size: 1rem; font-weight: bolder;">Saiba
-          mais</h4>
-        <img src="../../../assets/svg/mdi_plus.svg">
-      </div>
-    </div>
-    <div class="col-md-3 col-lg-3 pt-5 pb-md-5" style="height: 250px;">
-      <h4 style="color: black; font-size: 1.2rem; font-weight: bolder;">Links
-        importantes</h4>
-      <div class="link-option d-flex justify-content-between w-100 pt-2">
-        <h4 style="color:#2864AE; font-size: 1rem; font-weight: bolder;">Meu
-          inss</h4>
-        <img src="../../../assets/svg/Group.svg">
-      </div>
-      <div class="link-option d-flex justify-content-between w-100 pt-2">
-        <h4 style="color:#2864AE; font-size: 1rem; font-weight: bolder;">Acesso
-          ao site antigo</h4>
-        <img src="../../../assets/svg/Group.svg">
-      </div>
-      <div class="link-option d-flex justify-content-between w-100 pt-2">
-        <h4 style="color:#2864AE; font-size: 1rem; font-weight: bolder;">Libras</h4>
-        <img src="../../../assets/svg/Group.svg">
-      </div>
-    </div>
-    <div class="col-md-3 col-lg-3 pt-5 pb-md-5" style="height: 250px;">
-      <h4 style="color: black; font-size: 1.2rem; font-weight: bolder;">Rede
-        sociais</h4>
-      <div class="link-option d-flex justify-content-between w-100 pt-2">
-        <img src="../../../assets/svg/mdi_youtube.svg">
-      </div>
-    </div>
-
-  </div>
 
   <div class=" row justify-content-center align-items-center m-0 p-0"
     style=" height: 50px;">

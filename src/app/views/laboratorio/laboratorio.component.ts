@@ -1,6 +1,7 @@
 import { ChangeDetectorRef, Component, ElementRef, HostListener, NgZone, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { InformationsService } from 'app/serviços/informations.service';
+import { Lightbox } from 'ngx-lightbox';
 import Swiper from 'swiper';
 @Component({
   selector: 'app-laboratorio',
@@ -31,6 +32,32 @@ export class LaboratorioComponent implements OnInit {
     title:'LABORATÓRIO SÍNTESE DE FARMACOS'
   },];
   arrayFalso2 = [0, 1, 2];
+  images= [
+    {
+      src: '../../../assets/galeria/img1.png',
+      thumb: 'Descrição da Imagem 1'
+    },
+    {
+      src: '../../../assets/galeria/img2.png',
+      thumb: 'Descrição da Imagem 2'
+    },
+    {
+      src: '../../../assets/galeria/img3.png',
+      thumb: 'Descrição da Imagem 3'
+    },
+    {
+      src: '../../../assets/galeria/img4.png',
+      thumb: 'Descrição da Imagem 4'
+    },
+    {
+      src: '../../../assets/galeria/img5.png',
+      thumb: 'Descrição da Imagem 5'
+    },
+    {
+      src: '../../../assets/galeria/img6.png',
+      thumb: 'Descrição da Imagem 6'
+    }
+  ];
   arrayParceiros = [
   "../../../assets/galeria/parceiro1.png",
   "../../../assets/galeria/parceiro2.png",
@@ -42,18 +69,22 @@ export class LaboratorioComponent implements OnInit {
     (el, index) => `Slide ${index + 1}`
   );
   dados;
+  _albums: Array<any> = []; 
   departamento;
   constructor(
     private cd: ChangeDetectorRef,
     private ngZone: NgZone,
     private router: Router,
-    private informationsService: InformationsService
+    private informationsService: InformationsService,
+    private _lightbox: Lightbox,
     ) {}
   ngOnInit() {
+    this.scrollToTop();
     const title = localStorage.getItem('titleLab');
     this.informationsService.getDados().subscribe(data => {
       this.departamento = data.departamentos.find(item => item.laboratorios.some(lab => lab.nome == title));
       this.dados = this.departamento.laboratorios.find(lab => lab.nome == title);
+      this.createAlbum();
       setTimeout(()=>{this.createSwipers();}, 1000)
     });
   }
@@ -103,5 +134,30 @@ export class LaboratorioComponent implements OnInit {
         // Mais opções: https://swiperjs.com/api/
       });
     }
+  }
+  scrollToTop() {
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth' // Para uma rolagem suave, se o navegador suportar
+    });
+  }
+  createAlbum(){
+    let i = 1
+    this.images.forEach(img => {
+      const src = img.src; 
+      const caption = img.thumb; 
+      const thumb = img.src; 
+      const album = { src: src, caption: caption, thumb: thumb }; 
+     this._albums.push(album); 
+     i++
+
+    })
+  }
+  open(index: number): void { // open lightbox 
+    this._lightbox.open(this._albums, index); 
+    } 
+    
+  close(): void { // close lightbox programmatically 
+    this._lightbox.close(); 
   }
 }

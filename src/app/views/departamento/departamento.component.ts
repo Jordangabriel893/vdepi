@@ -1,6 +1,7 @@
 import { AfterViewInit, ChangeDetectorRef, Component, ElementRef, HostListener, NgZone, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { InformationsService } from 'app/serviços/informations.service';
+import { Lightbox } from 'ngx-lightbox';
 import Swiper from 'swiper';
 
 @Component({
@@ -23,17 +24,20 @@ export class DepartamentoComponent implements OnInit, AfterViewInit {
     (el, index) => `Slide ${index + 1}`
   );
   dados;
+  _albums: Array<any> = []; 
   constructor(
     private cd: ChangeDetectorRef,
     private ngZone: NgZone,
     private router: Router,
-    private informationsService: InformationsService
+    private informationsService: InformationsService,
+    private _lightbox: Lightbox,
     ) {}
   ngOnInit() {
 
     const title = localStorage.getItem('title');
     this.informationsService.getDados().subscribe(data => {
       this.dados = data.departamentos.find(item => item.nome == title);
+      this.createAlbum();
       setTimeout(()=>{this.createSwipers();}, 1000)
     });
 
@@ -91,5 +95,20 @@ export class DepartamentoComponent implements OnInit, AfterViewInit {
       });
     }
   }
+  createAlbum(){
+    let i = 1
+    this.dados.galeria.forEach(img => {
+      const src = img; 
+      const caption = 'Descrição da Image'; 
+      const thumb = img; 
+      const album = { src: src, caption: caption, thumb: thumb }; 
+     this._albums.push(album); 
+     i++
+
+    })
+  }
+  open(index: number): void { // open lightbox 
+    this._lightbox.open(this._albums, index); 
+  } 
 }
 

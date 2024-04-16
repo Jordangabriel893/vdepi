@@ -83,7 +83,7 @@
         <div class="read-more w-100 pb-lg-5" style="margin-top: 15px;">
           <h4 style="font-size: 1.2rem; color: gray; text-align: end; cursor: pointer;"
             (click)="redirecionarParaReadMore()">
-            <u> Leia mais</u>
+            <u>Leia mais</u>
           </h4>
         </div>
 
@@ -262,24 +262,9 @@
           </h4>
         </div>
 
-        <div class="row flex-wrap pb-md-5" style="width: 90%;">
-          <div class="col-md-6 col-lg-4 p-3">
-            <img src="../../../assets/galeria/img1.png">
-          </div>
-          <div class="col-md-6 col-lg-4  p-3 ">
-            <img src="../../../assets/galeria/img2.png">
-          </div>
-          <div class="col-md-6 col-lg-4  p-3 ">
-            <img src="../../../assets/galeria/img3.png">
-          </div>
-          <div class="col-md-6 col-lg-4  p-3 ">
-            <img src="../../../assets/galeria/img4.png">
-          </div>
-          <div class="col-md-6 col-lg-4  p-3 ">
-            <img src="../../../assets/galeria/img5.png">
-          </div>
-          <div class="col-md-6 col-lg-4  p-3 ">
-            <img src="../../../assets/galeria/img6.png">
+        <div class="row flex-wrap pb-md-5 d-flex justify-content-center align-items-center" style="width: 90%;" >
+          <div class="col-md-6 col-lg-4 p-3"  *ngFor="let image of _albums; let i=index">
+            <img class="w-100"  [src]="image.src" (click)="open(i)" />
           </div>
         </div>
       </div>

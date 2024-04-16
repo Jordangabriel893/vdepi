@@ -9,7 +9,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AppComponent } from './app.component';
 import localePt from '@angular/common/locales/pt';
-
+import { NgxGalleryModule } from 'ngx-gallery';
+import { LightboxModule } from 'ngx-lightbox';
 registerLocaleData(localePt);
 
 import { RouterModule } from '@angular/router';
@@ -34,7 +35,6 @@ import { FarmacologiaComponent } from './views/farmacologia/farmacologia.compone
 import { LaboratorioComponent } from './views/laboratorio/laboratorio.component';
 import { InformationsService } from './serviços/informations.service';
 import { DepartamentoComponent } from './views/departamento/departamento.component';
-
 @NgModule({
   imports: [
     BrowserModule,
@@ -50,7 +50,9 @@ import { DepartamentoComponent } from './views/departamento/departamento.compone
     AlertModule.forRoot(),
     SwiperModule,
     HttpClientModule,
-    RouterModule
+    RouterModule,
+    NgxGalleryModule,
+    LightboxModule
   ],
   declarations: [
     AppComponent,

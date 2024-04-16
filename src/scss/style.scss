@@ -1,5 +1,9 @@
 @import '~swiper/swiper-bundle.css';
+@import "~@angular/material/prebuilt-themes/indigo-pink.css"; // your theme
 
+.mat-sidenav-container, .mat-sidenav-content, .mat-tab-body-content {
+    transform: none !important;
+}
 .swiper-button-next  .swiper-button-prev {
   color: transparent !important;
 }
