@@ -2,8 +2,8 @@
 
   <header class="w-100 row justify-content-between align-items-center m-0 p-0">
     <section class="col-3   left-side">
-      <img src="../../../assets/icone/Hamburger.png" class="menu-img"
-        (click)="showMenu = !showMenu" style="width: 3rem; cursor: pointer;">
+      <img src="../../../assets/icone/Hamburger.png" class="menu-img" (click)="showMenu = !showMenu"
+        style="width: 3rem; cursor: pointer;">
     </section>
     <section class="col-3 d-flex justify-content-center" (click)="redirecionarParaHome()">
       <img class="pr-2" src="../../../assets/icone/farmHeader.png" style="cursor: pointer;">
@@ -16,15 +16,15 @@
       </div>
     </section>
   </header>
-  <div class="fixed-div row justify-content-center pt-4" *ngIf="showMenu && dados">
-    <div class="col-12 text-center d-flex">
+  <div class="fixed-div row justify-content-center pt-4 " *ngIf="showMenu && dados" style="border-radius: 1rem; box-shadow: 1px 1px 1px 1px #cdcdcd;">
+    <div class="col-12 text-center d-flex" >
       <img src="../../../assets/icone/farmMenu.png" style="width: 50px;height: 50px;cursor: pointer;margin-left: 20px;
-        margin-right: 15px;">
-      <img src="../../../assets/icone/logoMenu.png" style="width: 200px;height: 50px;cursor: pointer;">
+        margin-right: 15px;"  (click)="redirecionarParaHome()">
+      <img src="../../../assets/icone/logoMenu.png" style="width: 200px;height: 50px;cursor: pointer;" (click)="redirecionarParaHome()">
     </div>
     <div class="row justify-content-center menu-options">
-      <div class="d-flex justify-content-between align-items-center" style="height: 75px; width: 275px;cursor: pointer;"
-       >
+      <div class="d-flex justify-content-between align-items-center"
+        style="height: 75px; width: 275px;cursor: pointer;">
         <h4 style="color:black; font-size: 1rem; font-weight: bolder;">SOBRE A
           VDPI</h4>
         <img src="../../../assets/svg/Group.svg" style="width: 1rem;">
@@ -38,29 +38,10 @@
 
   </div>
 
-  <div class=" row justify-content-center align-items-center m-0 p-0 "
-    style="width: 100%;">
-
-    <swiper-container class="mySwiper col-md-11 m-0 mt-5" navigation="true"
-      pagination="true "
-      keyboard="true" mousewheel="true" css-mode="true">
-      <swiper-slide class="firstImage" style="cursor: pointer;"
-        (click)="redirecionarParaHome()">
-        <img src="../../../assets/banner-slide/Banner Principal.png"
-          style="border-radius: 20px;">
-      </swiper-slide>
-      <swiper-slide class="secondImage" style="cursor: pointer;"
-        (click)="redirecionarParaReadMore()">
-        <img src="../../../assets/banner-slide/Banner Principal 2.png"
-          style="border-radius: 20px;">
-      </swiper-slide>
-    </swiper-container>
-
-  </div>
+  <app-banner [title]="titleBanner" [Subtitle]="subtitleBanner"></app-banner>
 
   <!-- SOBRE -->
-  <div  class=" row justify-content-center align-items-center m-0 p-0"
-    style="margin-top: 20px !important;">
+  <div class=" row justify-content-center align-items-center m-0 p-0" style="margin-top: 20px !important;">
 
     <div class="col-md-11 col-lg-10 d-flex
     justify-content-between align-items-center flex-wrap"
@@ -73,56 +54,66 @@
           A VDEPI
         </h2>
         <p class="text-about last-news-paragraph">
-          A Vice Diretoria de Educação, Pesquisa e Inovação – VDEPI, busca o fortalecimento da pesquisa, desenvolvimento, inovação e formação de recursos humanos, através do constante esforço do seu corpo de pesquisadores, tecnologistas e técnicos, com foco em soluções para as doenças tropicais negligenciadas, doenças de alto custo e doenças de alta incidência.
+          A Vice Diretoria de Educação, Pesquisa e Inovação – VDEPI, busca o fortalecimento da pesquisa,
+          desenvolvimento, inovação e formação de recursos humanos, através do constante esforço do seu corpo de
+          pesquisadores, tecnologistas e técnicos, com foco em soluções para as doenças tropicais negligenciadas,
+          doenças de alto custo e doenças de alta incidência.
           <br>
           <br>
-          A VDEPI atua de forma integrada em atendimento aos objetivos e missão deste Instituto “Atuar, como unidade técnico¬-científica da Fiocruz, na promoção da saúde pública, por meio da ge¬ração e difusão de conhecimentos, da educação, da pesquisa, do de¬senvolvimento tecnológico e da produção de medicamentos.”.
-          Para cumprir sua missão, a VDEPI é estruturada em seis departamentos, oito laboratórios credenciados, dois serviços, quatro plataformas, dois cursos de pós-graduação stricto senso e dois cursos lato senso, uma assistência de administração e infraestrutura da pesquisa (AAIP) e uma assistência técnica de gestão de projetos (ATGP).
+          A VDEPI atua de forma integrada em atendimento aos objetivos e missão deste Instituto “Atuar, como unidade
+          técnico¬-científica da Fiocruz, na promoção da saúde pública, por meio da ge¬ração e difusão de conhecimentos,
+          da educação, da pesquisa, do de¬senvolvimento tecnológico e da produção de medicamentos.”.
+          Para cumprir sua missão, a VDEPI é estruturada em seis departamentos, oito laboratórios credenciados, dois
+          serviços, quatro plataformas, dois cursos de pós-graduação stricto senso e dois cursos lato senso, uma
+          assistência de administração e infraestrutura da pesquisa (AAIP) e uma assistência técnica de gestão de
+          projetos (ATGP).
           <br>
           <br>
-          A VDEPI tem características multidisciplinar, formada por profissionais capacitados para suportar a complexidade e a diversidade das atividades desenvolvidas.
+          A VDEPI tem características multidisciplinar, formada por profissionais capacitados para suportar a
+          complexidade e a diversidade das atividades desenvolvidas.
           <br>
           <br>
-          O corpo de pesquisadores de Farmanguinhos trabalha na busca de soluções para fortalecer o Complexo Econômico-Industrial da Saúde – CEIS, e assim atender às demandas do Sistema Único de Saúde – SUS em fármacos e medicamentos.
+          O corpo de pesquisadores de Farmanguinhos trabalha na busca de soluções para fortalecer o Complexo
+          Econômico-Industrial da Saúde – CEIS, e assim atender às demandas do Sistema Único de Saúde – SUS em fármacos
+          e medicamentos.
           <br>
           <br>
-          A gestão da VDEPI é feita pelo seu Comitê Gestor (CG), formado pelos Departamentos, AAIP e ATGP e presidido pela Vice-diretoria de Educação Pesquisa e Inovação, que
-          é responsável pelas ações de alinhamento e disseminação das ações estratégicas das respectivas áreas de atuação de cada membro, assim como da definição dos representantes das diversas câmaras técnicas.
+          A gestão da VDEPI é feita pelo seu Comitê Gestor (CG), formado pelos Departamentos, AAIP e ATGP e presidido
+          pela Vice-diretoria de Educação Pesquisa e Inovação, que
+          é responsável pelas ações de alinhamento e disseminação das ações estratégicas das respectivas áreas de
+          atuação de cada membro, assim como da definição dos representantes das diversas câmaras técnicas.
 
         </p>
       </div>
     </div>
   </div>
 
- <!-- GALERIA -->
- <div class=" row justify-content-center align-items-center m-0 p-0"
- style="margin-top: 20px !important;">
+  <!-- GALERIA -->
+  <!-- <div class=" row justify-content-center align-items-center m-0 p-0" style="margin-top: 20px !important;">
 
- <div
-   class="col-md-11 col-lg-10 d-flex flex-column justify-content-start align-items-center" 
-   style="height: auto; background-color: white; border-radius: 20px; border: 1px solid rgb(219, 219, 219);">
-   <div class="row w-100 justify-content-center">
-     <div class="col-12" style="padding-top: 25px;">
-       <h4 style="font-size: 1.2rem; color: rgb(44, 44, 44);">
-         GALERIA
-       </h4>
+    <div class="col-md-11 col-lg-10 d-flex flex-column justify-content-start align-items-center"
+      style="height: auto; background-color: white; border-radius: 20px; border: 1px solid rgb(219, 219, 219);">
+      <div class="row w-100 justify-content-center">
+        <div class="col-12" style="padding-top: 25px;">
+          <h4 style="font-size: 1.2rem; color: rgb(44, 44, 44);">
+            GALERIA
+          </h4>
         </div>
 
-        <div class="row flex-wrap pb-md-5 d-flex justify-content-center align-items-center" style="width: 90%;" >
-          <div class="col-md-6 col-lg-4 p-3"  *ngFor="let image of _albums; let i=index">
-            <img class="w-100"  [src]="image.src" (click)="open(i)" />
+        <div class="row flex-wrap pb-md-5 d-flex justify-content-center align-items-center" style="width: 90%;">
+          <div class="col-md-6 col-lg-4 p-3" *ngFor="let image of _albums; let i=index">
+            <img class="w-100" [src]="image.src" (click)="open(i)" />
           </div>
         </div>
       </div>
     </div>
-  </div>
+  </div> -->
 
   <!-- ÚLTIMAS PESQUISAS -->
-  <div class=" row justify-content-center align-items-center m-0 p-0 "
+  <!-- <div class=" row justify-content-center align-items-center m-0 p-0 "
     style="margin-top: 20px !important; gap: 2px 10px">
 
-    <div
-      class="last-searchs col-md-11 col-lg-4 d-flex flex-column justify-content-center align-items-center"
+    <div class="last-searchs col-md-11 col-lg-4 d-flex flex-column justify-content-center align-items-center"
       style="height: auto; background-color: white; border-radius: 20px; border: 1px solid rgb(219, 219, 219);">
       <div class="row w-100 p-md-5">
         <div class="col-12">
@@ -150,32 +141,33 @@
       </div>
     </div>
     <div class="last-news col-md-11 col-lg-6 mt-md-4 mt-lg-0"
-    style="height: auto; background-color: white; border-radius: 20px; border: 1px solid rgb(219, 219, 219);">
-    <div class="row w-100">
+      style="height: auto; background-color: white; border-radius: 20px; border: 1px solid rgb(219, 219, 219);">
+      <div class="row w-100">
         <div class="col-12" style="padding-top: 25px;">
-            <h4 style="font-size: 1.2rem; color: rgb(44, 44, 44);">
-                NOTÍCIAS
-            </h4>
+          <h4 style="font-size: 1.2rem; color: rgb(44, 44, 44);">
+            NOTÍCIAS
+          </h4>
         </div>
-        <div class="col-12 d-flex justify-content-lg-center align-items-lg-center" style="padding-top: 25px; overflow: hidden;">
-            <swiper [slidesPerView]="2" [spaceBetween]="50" [virtual]="true" style="width: 100%; overflow: hidden;">
-                <swiper-slide *ngFor="let item of arrayNoticias">
-                    <ng-template swiperSlide>
-                        <div class="d-flex flex-column justify-content-center align-items-center" style="width: 100%; height: auto;">
-                            <img [src]="item" style="margin-bottom: 15px; max-width: 100%;">
-                        </div>
-                    </ng-template>
-                </swiper-slide>
-            </swiper>
+        <div class="col-12 d-flex justify-content-lg-center align-items-lg-center"
+          style="padding-top: 25px; overflow: hidden;">
+           <swiper [slidesPerView]="2" [spaceBetween]="50" [virtual]="true" style="width: 100%; overflow: hidden;">
+            <swiper-slide *ngFor="let item of arrayNoticias">
+              <ng-template swiperSlide>
+                <div class="d-flex flex-column justify-content-center align-items-center"
+                  style="width: 100%; height: auto;">
+                  <img [src]="item" style="margin-bottom: 15px; max-width: 100%;">
+                </div>
+              </ng-template>
+            </swiper-slide>
+          </swiper> 
         </div>
+      </div>
     </div>
-</div>
 
-  </div>
+  </div> -->
 
   <!-- MISSÃO E VISÃO-->
-  <div  class=" row justify-content-center align-items-center m-0 p-0"
-    style="margin-top: 20px !important;">
+  <div class=" row justify-content-center align-items-center m-0 p-0" style="margin-top: 20px !important;">
     <div class="col-md-11 col-lg-10 d-flex
     justify-content-between align-items-center flex-wrap"
       style="height: auto; background-color: white; border-radius: 20px; border: 1px solid rgb(219, 219, 219);">
@@ -190,12 +182,22 @@
           Visão: “Ser protagonista e inovador na disponibilização de soluções integradas e sustentáveis para o SUS.”
           <br>
           <br>
-          Missão: “Promover a saúde pública por meio da oferta de soluções integradas e sustentáveis, gerando e difundindo conhecimentos e inovação.”
+          Missão: “Promover a saúde pública por meio da oferta de soluções integradas e sustentáveis, gerando e
+          difundindo conhecimentos e inovação.”
           <br>
           <br>
           Vice-Diretora: Dra. Nubia Boechat
           <br>
-          Graduada pela Faculdade de Farmácia da UFRJ, mestra em síntese orgânica pelo NPPN-UFRJ, doutora em química pelo IQ-UFRJ, com estágio “sanduíche” na Universidade de York, Inglaterra. Pós-doutorado na London School of Hygiene and Tropical Medicine de Londres, Inglaterra. Tecnologista sênior da Fundação Oswaldo Cruz (Fiocruz), desde 1986, onde tem ocupado vários cargos, inclusive de Diretora Executiva de Farmanguinhos. Foi vice-secretária da Regional Rio da Sociedade Brasileira de Química e subsecretária de saúde do município de Niterói, Rio de Janeiro. É bolsista em produtividade em pesquisa do CNPq e Cientista do Nosso Estado pela Faperj. Lidera importante grupo de P&D em síntese de fármacos, com centenas de moléculas inéditas obtidas para as doenças negligenciadas, Aids e câncer. Em 2021, foi vencedora do prêmio internacional Mulheres Brasileiras na Química, na categoria Liderança na Indústria, dado pela American Chemical Society em parceria com a Sociedade Brasileira de Química.
+          Graduada pela Faculdade de Farmácia da UFRJ, mestra em síntese orgânica pelo NPPN-UFRJ, doutora em química
+          pelo IQ-UFRJ, com estágio “sanduíche” na Universidade de York, Inglaterra. Pós-doutorado na London School of
+          Hygiene and Tropical Medicine de Londres, Inglaterra. Tecnologista sênior da Fundação Oswaldo Cruz (Fiocruz),
+          desde 1986, onde tem ocupado vários cargos, inclusive de Diretora Executiva de Farmanguinhos. Foi
+          vice-secretária da Regional Rio da Sociedade Brasileira de Química e subsecretária de saúde do município de
+          Niterói, Rio de Janeiro. É bolsista em produtividade em pesquisa do CNPq e Cientista do Nosso Estado pela
+          Faperj. Lidera importante grupo de P&D em síntese de fármacos, com centenas de moléculas inéditas obtidas para
+          as doenças negligenciadas, Aids e câncer. Em 2021, foi vencedora do prêmio internacional Mulheres Brasileiras
+          na Química, na categoria Liderança na Indústria, dado pela American Chemical Society em parceria com a
+          Sociedade Brasileira de Química.
 
         </p>
       </div>
@@ -204,8 +206,7 @@
 
 
   <!-- ESTRUTURA ORGANIZACIONAL -->
-  <div class=" row justify-content-center align-items-center m-0 p-0"
-    style="margin-top: 20px !important;">
+  <div class=" row justify-content-center align-items-center m-0 p-0" style="margin-top: 20px !important;">
 
     <div class="col-md-11 col-lg-10 d-flex
   justify-content-between align-items-center flex-wrap"
@@ -217,79 +218,38 @@
         <h2 style="color:#2864AE; font-weight: bolder;">
           ORGANOGRAMA
         </h2>
-        <div
-          class="col-12 col-md-12 col-lg-12 pb-md-4 text-center d-flex justify-content-center align-items-center">
-          <img src="../../../assets/icone/arvoregen (2).png"
-            class="col-md-8 col-lg-8 col-xl-8">
+        <div class="col-12 col-md-12 col-lg-12 pb-md-4 text-center d-flex justify-content-center align-items-center">
+          <img src="../../../assets/icone/arvoregen (2).png" class="col-md-8 col-lg-8 col-xl-8">
         </div>
       </div>
     </div>
   </div>
 
-  <!-- EQUIPE -->
-  <div class="row justify-content-center align-items-center m-0 p-0" style="margin-top: 20px !important;">
-    <div class="col-md-11 col-lg-10 d-flex flex-column justify-content-between align-items-center"
-        style="height: auto; background-color: white; border-radius: 20px; border: 1px solid rgb(219, 219, 219);">
-        <div class="row w-100">
-            <div class="col-12" style="padding-top: 25px;">
-                <h4 style="font-size: 1.2rem; color: rgb(44, 44, 44);">
-                    EQUIPE
-                </h4>
-            </div>
-
-            <div class="col-12 d-flex flex-wrap pb-5" style="padding-top: 25px; overflow: hidden;">
-                <swiper [slidesPerView]="3" [spaceBetween]="50" [virtual]="true" style="width: 100%; overflow: hidden;">
-                    <swiper-slide *ngFor="let item of arrayParceiros">
-                        <ng-template swiperSlide>
-                            <div class="card-custom d-flex flex-column justify-content-center align-items-center"
-                                style="width: 100%; height: auto;">
-                                <div class="card-title w-100 pl-3 pt-4" style="color:#2864AE; text-align: start;">
-                                    <h4 style="font-size: 0.9rem; text-align: start;">NOME</h4>
-                                    <h4 style="font-size: 0.9rem; text-align: start;">CARGO</h4>
-                                </div>
-                                <img [src]="item" style="margin-bottom: 15px; max-width: 100%;">
-                            </div>
-                        </ng-template>
-                    </swiper-slide>
-                </swiper>
-            </div>
-        </div>
+  <div class="labor-component">
+    <div class="labor-component-header">
+      <h1>Laboratórios</h1>
     </div>
-</div>
+    <div class="container-header-labor">
 
-  <!-- PARCEIROS -->
-  <div class="row justify-content-center align-items-center m-0 p-0" style="margin-top: 20px !important;">
-    <div class="col-md-11 col-lg-10 d-flex flex-column justify-content-between align-items-center"
-        style="height: auto; background-color: white; border-radius: 20px; border: 1px solid rgb(219, 219, 219);">
-        <div class="row w-100">
-            <div class="col-12" style="padding-top: 25px;">
-                <h4 style="font-size: 1.2rem; color: rgb(44, 44, 44);">
-                    PARCEIROS
-                </h4>
-            </div>
+      <img src="../../../assets/galeria/Fiocruz.png" alt="">
 
-            <div class="col-12 d-flex flex-wrap pb-5" style="padding-top: 25px; overflow: hidden;">
-                <swiper [slidesPerView]="3" [spaceBetween]="50" [virtual]="true" style="width: 100%; overflow: hidden;">
-                    <swiper-slide *ngFor="let item of arrayFalso">
-                        <ng-template swiperSlide>
-                            <div class="card-custom d-flex flex-column justify-content-center align-items-center"
-                                style="width: 100%; height: auto;">
-                                <div class="card-title w-100 pl-3 pt-4" style="color:#2864AE; text-align: start;">
-                                    <h4 style="font-size: 0.9rem; text-align: start;">NOME PARCEIRO</h4>
-                                </div>
-                                <img src="../../../assets/galeria/hands.png"
-                                    style="margin-bottom: 15px; max-width: 100%;">
-                            </div>
-                        </ng-template>
-                    </swiper-slide>
-                </swiper>
-            </div>
-        </div>
+      <h2>Nossos Laboratórios</h2>
     </div>
-</div>
 
-  <div class=" row justify-content-center align-items-center m-0 p-0"
-    style=" height: 50px;">
+    <ul>
+      <li><a href="#">Laboratório de Farmacologia Aplicada - LFA</a></li>
+      <li><a href="#">Laboratório de Micro e Nanotecnologia - LMN</a></li>
+      <li><a href="#">Laboratório de Farmacotécnica Experimental – LabFE</a></li>
+      <li><a href="#">Laboratório de Síntese de Fármacos – LASFAR</a></li>
+      <li><a href="#">Laboratório de Síntese de Substâncias no Combate a Doenças Tropicais – LSSCDT</a></li>
+      <li><a href="#">Laboratório de Produtos Naturais para a Saúde Pública – LPNSP</a></li>
+      <li><a href="#">Laboratório de Plantas Medicinais e Derivados – LPMD</a></li>
+      <li><a href="#">Laboratório de Tecnologia para a Biodiversidade em Saúde – LabTecBio</a></li>
+    </ul>
+    
+
+  </div>
+  <div class=" row justify-content-center align-items-center m-0 p-0" style=" height: 50px;">
 
     Todo o conteúdo deste site está publicado sob a licença&nbsp;<a href="#">Creative
       Commons Atribuição-SemDerivações 3.0 Não Adaptada.</a>

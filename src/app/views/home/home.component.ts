@@ -17,6 +17,7 @@ export class HomeComponent {
   @ViewChild('produtos') produtos!: ElementRef;
   @ViewChild('swiperContainer') swiperContainer?: ElementRef;
   @ViewChild('swiperContainerPremios') swiperContainerPremios?: ElementRef;
+  titleBanner= "PESQUISA E INOVAÇÃO" 
   
   arrayFalso2 = [0, 1, 2];
   arrayParceiros = [
@@ -33,7 +34,7 @@ export class HomeComponent {
   );
   images= [
     {
-      src: '../../../assets/galeria/img1.png',
+      src: '../../../assets/galeria/teste.jpeg',
       thumb: 'Descrição da Imagem 1'
     },
     {
@@ -71,6 +72,7 @@ export class HomeComponent {
       this.dados = data.departamentos;
       this.createAlbum();
       data.departamentos.map(item => this.laboratorios.push(...item.laboratorios));
+ 
     });
   }
   ngAfterViewInit(): void {
@@ -117,6 +119,7 @@ export class HomeComponent {
     this.router.navigate(['/departamento']);
   }
   redirecionarParaLaboratorio(nome){
+    console.log(nome)
     localStorage.setItem('titleLab', nome);
     this.router.navigate(['/laboratorio']);
   }
@@ -126,6 +129,7 @@ export class HomeComponent {
   createAlbum(){
     let i = 1
     this.images.forEach(img => {
+      console.log(img)
       const src = img.src; 
       const caption = img.thumb; 
       const thumb = img.src; 
@@ -136,7 +140,10 @@ export class HomeComponent {
     })
   }
   open(index: number): void { // open lightbox 
-    this._lightbox.open(this._albums, index); 
+    this._lightbox.open(this._albums, index,{
+      fitImageInViewPort: true,
+    
+    }); 
     } 
     
   close(): void { // close lightbox programmatically 

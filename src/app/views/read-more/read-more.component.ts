@@ -1,47 +1,52 @@
-import { ChangeDetectorRef, Component, HostListener, NgZone, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, HostListener, NgZone, OnInit, Output } from '@angular/core';
 import { Router } from '@angular/router';
+import { BannerComponent } from 'app/components/banner/banner.component';
 import { InformationsService } from 'app/serviços/informations.service';
 
-import { Lightbox } from 'ngx-lightbox'; 
+import { Lightbox } from 'ngx-lightbox';
 @Component({
   selector: 'app-read-more',
   templateUrl: './read-more.component.html',
-  styleUrls: ['./read-more.component.scss']
+  styleUrls: ['./read-more.component.scss'],
+  providers: [BannerComponent]
 })
 export class ReadMoreComponent implements OnInit {
-  arrayFalso = [ {
-    src:'../../../assets/laboratorios/img1.png',
-    title:'LABORATÓRIO DE FARMACOLOGIA'
+
+  titleBanner = "Sobre VDEPI";
+  subtitleBanner = "Vice Direção de ensino e inovação";
+  arrayFalso = [{
+    src: '../../../assets/laboratorios/img1.png',
+    title: 'LABORATÓRIO DE FARMACOLOGIA'
   },
   {
-    src:'../../../assets/laboratorios/img2.png',
-    title:'LABORATÓRIO TEC BIO'
+    src: '../../../assets/laboratorios/img2.png',
+    title: 'LABORATÓRIO TEC BIO'
   },
   {
-    src:'../../../assets/laboratorios/img3.png',
-    title:'LABORATÓRIO LPNSP'
+    src: '../../../assets/laboratorios/img3.png',
+    title: 'LABORATÓRIO LPNSP'
   },
   {
-    src:'../../../assets/laboratorios/img4.png',
-    title:'LABORATÓRIO FARMACOLOGIA MOLECULAR'
+    src: '../../../assets/laboratorios/img4.png',
+    title: 'LABORATÓRIO FARMACOLOGIA MOLECULAR'
   },
   {
-    src:'../../../assets/laboratorios/img5.png',
-    title:'LABORATÓRIO SÍNTESE DE FARMACOS'
+    src: '../../../assets/laboratorios/img5.png',
+    title: 'LABORATÓRIO SÍNTESE DE FARMACOS'
   },];
   arrayFalso2 = [0, 1, 2];
   arrayParceiros = [
-  "../../../assets/galeria/parceiro1.png",
-  "../../../assets/galeria/parceiro2.png",
-  "../../../assets/galeria/parceiro3.png",
-  "../../../assets/galeria/parceiro4.png",
-  "../../../assets/galeria/parceiro4.png"
-];
+    "../../../assets/galeria/parceiro1.png",
+    "../../../assets/galeria/parceiro2.png",
+    "../../../assets/galeria/parceiro3.png",
+    "../../../assets/galeria/parceiro4.png",
+    "../../../assets/galeria/parceiro4.png"
+  ];
   arrayNoticias = [
     "../../../assets/noticias/Notícia1.png",
     "../../../assets/noticias/Notícia 2.png"
   ]
-  images= [
+  images = [
     {
       src: '../../../assets/galeria/img1.png',
       thumb: 'Descrição da Imagem 1'
@@ -67,7 +72,7 @@ export class ReadMoreComponent implements OnInit {
       thumb: 'Descrição da Imagem 6'
     }
   ];
-  _albums: Array<any> = []; 
+  _albums: Array<any> = [];
   showMenu: boolean = false;
   readMore: boolean = false;
   dados;
@@ -82,7 +87,7 @@ export class ReadMoreComponent implements OnInit {
     private router: Router,
     private _lightbox: Lightbox,
     private informationsService: InformationsService
-    ) {}
+  ) { }
   ngOnInit() {
     this.createAlbum()
     this.scrollToTop();
@@ -102,10 +107,10 @@ export class ReadMoreComponent implements OnInit {
     }
   }
   onSwiper(swiper) {
-    
+
   }
   onSlideChange() {
-    
+
   }
   redirecionarParaHome() {
     this.router.navigate(['/home']);
@@ -113,16 +118,16 @@ export class ReadMoreComponent implements OnInit {
   redirecionarParaReadMore() {
     this.router.navigate(['/read-more']);
   }
-  redirecionarParaFarmacologia(nome){
+  redirecionarParaFarmacologia(nome) {
     localStorage.setItem('title', nome);
     this.router.navigate(['/departamento']);
   }
-  redirecionarParaLaboratorio(nome){
+  redirecionarParaLaboratorio(nome) {
     localStorage.setItem('titleLab', nome);
     this.router.navigate(['/laboratorio']);
   }
-  readAbout(){
-    this.readMore =  true;
+  readAbout() {
+    this.readMore = true;
   }
   scrollToTop() {
     window.scrollTo({
@@ -130,24 +135,24 @@ export class ReadMoreComponent implements OnInit {
       behavior: 'smooth' // Para uma rolagem suave, se o navegador suportar
     });
   }
-  createAlbum(){
+  createAlbum() {
     let i = 1
     this.images.forEach(img => {
-      const src = img.src; 
-      const caption = img.thumb; 
-      const thumb = img.src; 
-      const album = { src: src, caption: caption, thumb: thumb }; 
-     this._albums.push(album); 
-     i++
+      const src = img.src;
+      const caption = img.thumb;
+      const thumb = img.src;
+      const album = { src: src, caption: caption, thumb: thumb };
+      this._albums.push(album);
+      i++
 
     })
   }
   open(index: number): void { // open lightbox 
-    this._lightbox.open(this._albums, index); 
-    } 
-    
-  close(): void { // close lightbox programmatically 
-    this._lightbox.close(); 
+    this._lightbox.open(this._albums, index);
   }
-    
+
+  close(): void { // close lightbox programmatically 
+    this._lightbox.close();
+  }
+
 }

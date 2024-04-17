@@ -40,25 +40,7 @@
 
   </div>
 
-  <div class=" row justify-content-center align-items-center m-0 p-0 "
-    style="width: 100%;">
-
-    <swiper-container class="mySwiper col-md-11 m-0 mt-5" navigation="true"
-      pagination="true "
-      keyboard="true" mousewheel="true" css-mode="true">
-      <swiper-slide class="firstImage" style="cursor: pointer;"
-        (click)="redirecionarParaHome()">
-        <img src="../../../assets/banner-slide/Banner Principal.png"
-          style="border-radius: 20px;">
-      </swiper-slide>
-      <swiper-slide class="secondImage" style="cursor: pointer;"
-        (click)="redirecionarParaReadMore()">
-        <img src="../../../assets/banner-slide/Banner Principal 2.png"
-          style="border-radius: 20px;">
-      </swiper-slide>
-    </swiper-container>
-
-  </div>
+  <app-banner [title]="titleBanner"></app-banner>
 
   <!-- SOBRE -->
   <div  class=" row justify-content-center align-items-center m-0 p-0" *ngIf="dados"
@@ -106,7 +88,7 @@
 
         <div class="row flex-wrap pb-md-5" style="width: 90%;">
           <div class="col-md-6 col-lg-4 p-3" *ngFor="let item of _albums; let i= index">
-            <img class="w-100" [src]="item.src"  (click)="open(i)">
+            <img class="w-100" [src]="item.src"  (click)="open(i)" style="cursor: pointer;">
           </div>
         </div>
       </div>

@@ -32,6 +32,7 @@ export class LaboratorioComponent implements OnInit {
     title:'LABORATÓRIO SÍNTESE DE FARMACOS'
   },];
   arrayFalso2 = [0, 1, 2];
+  titleBanner : string = ""
   images= [
     {
       src: '../../../assets/galeria/img1.png',
@@ -84,6 +85,9 @@ export class LaboratorioComponent implements OnInit {
     this.informationsService.getDados().subscribe(data => {
       this.departamento = data.departamentos.find(item => item.laboratorios.some(lab => lab.nome == title));
       this.dados = this.departamento.laboratorios.find(lab => lab.nome == title);
+      console.log(this.dados)
+
+      this.titleBanner = this.dados.nome
       this.createAlbum();
       setTimeout(()=>{this.createSwipers();}, 1000)
     });
@@ -105,6 +109,7 @@ export class LaboratorioComponent implements OnInit {
     this.router.navigate(['/read-more']);
   }
   redirecionarParaFarmacologia(nome){
+    console.log(nome)
     localStorage.setItem('title', nome);
     this.router.navigate(['/departamento']);
   }
@@ -144,9 +149,9 @@ export class LaboratorioComponent implements OnInit {
   createAlbum(){
     let i = 1
     this.images.forEach(img => {
-      const src = img.src; 
+      const src = `${img.src}?width=2000&height=2000`; 
       const caption = img.thumb; 
-      const thumb = img.src; 
+      const thumb = `${img.src}?width=2000&height=2000`; 
       const album = { src: src, caption: caption, thumb: thumb }; 
      this._albums.push(album); 
      i++

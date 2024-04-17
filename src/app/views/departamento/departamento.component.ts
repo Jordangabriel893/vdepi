@@ -25,6 +25,7 @@ export class DepartamentoComponent implements OnInit, AfterViewInit {
   );
   dados;
   _albums: Array<any> = []; 
+  titleBanner = "DEPARTAMENTO DE PRODUTOS NATURAIS";
   constructor(
     private cd: ChangeDetectorRef,
     private ngZone: NgZone,
@@ -98,6 +99,7 @@ export class DepartamentoComponent implements OnInit, AfterViewInit {
   createAlbum(){
     let i = 1
     this.dados.galeria.forEach(img => {
+
       const src = img; 
       const caption = 'Descrição da Image'; 
       const thumb = img; 
@@ -108,7 +110,7 @@ export class DepartamentoComponent implements OnInit, AfterViewInit {
     })
   }
   open(index: number): void { // open lightbox 
-    this._lightbox.open(this._albums, index); 
+    this._lightbox.open(this._albums, index, { wrapAround: true, showImageNumberLabel: false , fitImageInViewPort: true}); 
   } 
 }
 

@@ -35,6 +35,7 @@ import { FarmacologiaComponent } from './views/farmacologia/farmacologia.compone
 import { LaboratorioComponent } from './views/laboratorio/laboratorio.component';
 import { InformationsService } from './serviços/informations.service';
 import { DepartamentoComponent } from './views/departamento/departamento.component';
+import { BannerComponent } from './components/banner/banner.component';
 @NgModule({
   imports: [
     BrowserModule,
@@ -60,7 +61,11 @@ import { DepartamentoComponent } from './views/departamento/departamento.compone
     ReadMoreComponent,
     FarmacologiaComponent,
     LaboratorioComponent,
-    DepartamentoComponent
+    DepartamentoComponent,
+    BannerComponent
+  ],
+  exports: [
+    BannerComponent
   ],
   providers: [
     InformationsService

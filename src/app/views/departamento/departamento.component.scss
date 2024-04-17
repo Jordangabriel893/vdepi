@@ -200,4 +200,9 @@
   
   
   }
-  
+  .ngx-gallery {
+    width: 90vw !important;
+    height: 80vh !important;
+    max-width: 90vw;
+    max-height: 90vh;
+  }
