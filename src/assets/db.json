@@ -269,23 +269,24 @@
     },
     {
       "nome": "DEPARTAMENTO DE FARMACOLOGIA",
-      "sobre": "Criado em 1995 com uma visão multidisciplinar, o Departamento de Farmacologia da VDEPI de Farmanguinhos atua nas áreas de farmacologia, imunologia, biologia celular e molecular, colaborando com a pesquisa, descoberta e desenvolvimentos de fármacos de origem natural ou sintética e produtos biotecnológicos. O Departamento conta com infraestrutura e expertise para a condução de estudos in vitro e in vivo de farmacodinâmica, farmacocinética, farmacologia de segurança e toxicologia aguda, desde a etapa de prospecção de novas moléculas até estudos com produtos formulados, apoiando a elaboração de dossiês para pedido de ensaios clínicos. Em sua estrutura, o Departamento de Farmacologia é formado pelo Laboratório de Farmacologia Aplicada, Laboratório de Farmacologia Molecular, Plataforma Tecnológica FIOCRUZ de ensaios antitumorais RPT11M e Biotério de Experimentação de Animais de Laboratório.\nVisão: Estar entre os principais departamentos nacionais que atuam na pesquisa, descoberta e desenvolvimento de medicamentos para o tratamento de doenças crônico-degenerativas e infecto-parasitárias\nMissão: Atuar na pesquisa, descoberta e desenvolvimento de fármacos, produtos tecnológicos ou biotecnológicos e/ou derivados da biodiversidade visando o desenvolvimento de medicamentos para o tratamento de doenças crônico-degenerativas e infecto-parasitárias",
+      "sobre": "O Laboratório de Farmacologia Aplicada está localizado no prédio de Produtos Naturais, no campus Manguinhos, do Instituto de Tecnologia em Fármacos – Farmanguinhos – FIOCRUZ, e é credenciado junto à Comissão Nacional de Biossegurança como NB2 (CQB 342/12).Somos um laboratório dedicado à pesquisa e desenvolvimento de fármacos e medicamentos, focados em melhorar a saúde e o bem-estar da sociedade, com uma equipe preparada para a pesquisa, descoberta e desenvolvimento de fármacos e comprometida a buscar soluções terapêuticas avançadas para enfrentar os desafios médicos atuais. A Farmacologia Aplicada tem uma abordagem multidisciplinar para investigar os aspectos fundamentais da farmacologia e aplicá-los a pesquisa e desenvolvimento de fármacos com potencial anti-inflamatório, antitumoral e antiparasitário, visando doenças inflamatórias, doenças infecciosas e crônico-degenerativas. Realiza ensaios in vitro e in vivo para compreender os mecanismos pelos quais as substâncias candidatas a fármacos atuam. Essa compreensão permite identificar alvos terapêuticos precisos e moléculas promissoras que possam ser transformadas em medicamentos seguros e eficazes. O laboratório colabora com parceiros acadêmicos, instituições de pesquisa e empresas. A equipe é composta por pesquisadores qualificados, dedicados a enfrentar os desafios científicos mais complexos. A formação contínua e a aprendizagem são valorizadas, o que mantem a equipe atualizada com os avanços mais recentes na área da farmacologia e garantindo que a pesquisas esteja sempre fundamentada nas melhores práticas científicas.",
       "laboratorios": [
         {
           "nome": "LABORATÓRIO DE FARMACOLOGIA APLICADA (LFA)",
-          "sobre": "",
+          "sobre":  "O Laboratório de Farmacologia Aplicada está localizado no prédio de Produtos Naturais, no campus Manguinhos, do Instituto de Tecnologia em Fármacos – Farmanguinhos – FIOCRUZ, e é credenciado junto à Comissão Nacional de Biossegurança como NB2 (CQB 342/12).Somos um laboratório dedicado à pesquisa e desenvolvimento de fármacos e medicamentos, focados em melhorar a saúde e o bem-estar da sociedade, com uma equipe preparada para a pesquisa, descoberta e desenvolvimento de fármacos e comprometida a buscar soluções terapêuticas avançadas para enfrentar os desafios médicos atuais. A Farmacologia Aplicada tem uma abordagem multidisciplinar para investigar os aspectos fundamentais da farmacologia e aplicá-los a pesquisa e desenvolvimento de fármacos com potencial anti-inflamatório, antitumoral e antiparasitário, visando doenças inflamatórias, doenças infecciosas e crônico-degenerativas. Realiza ensaios in vitro e in vivo para compreender os mecanismos pelos quais as substâncias candidatas a fármacos atuam. Essa compreensão permite identificar alvos terapêuticos precisos e moléculas promissoras que possam ser transformadas em medicamentos seguros e eficazes. O laboratório colabora com parceiros acadêmicos, instituições de pesquisa e empresas. A equipe é composta por pesquisadores qualificados, dedicados a enfrentar os desafios científicos mais complexos. A formação contínua e a aprendizagem são valorizadas, o que mantem a equipe atualizada com os avanços mais recentes na área da farmacologia e garantindo que a pesquisas esteja sempre fundamentada nas melhores práticas científicas.",
           "descricao": "",
+          
           "pesquisasProjetos": "",
           "equipe": [
             {
-              "nome": "Nome da Pessoa 1",
-              "cargo": "",
-              "link": "Link para perfil da Pessoa 1"
+              "nome": "Elaine Cruz Rosas",
+              "cargo": "Coordenadora",
+              "link": "http://lattes.cnpq.br/5678243605460064"
             },
             {
-              "nome": "Nome da Pessoa 1",
-              "cargo": "",
-              "link": "Link para perfil da Pessoa 1"
+              "nome": "Leonardo Noboru Seito ",
+              "cargo": "Coordenador Adjunto",
+              "link": "http://lattes.cnpq.br/7904474962328896"
             }
           ],
           "reconhecimentos": "Reconhecimentos do Laboratório de Farmacologia Aplicada"

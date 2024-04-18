@@ -2,8 +2,8 @@
 
   <header class="w-100 row justify-content-between align-items-center m-0 p-0">
     <section class="col-3   left-side">
-      <img src="../../../assets/icone/Hamburger.png" class="menu-img"
-        (click)="showMenu = !showMenu" style="width: 3rem; cursor: pointer;">
+      <img src="../../../assets/icone/Hamburger.png" class="menu-img" (click)="showMenu = !showMenu"
+        style="width: 3rem; cursor: pointer;">
     </section>
     <section class="col-3 d-flex justify-content-center" (click)="redirecionarParaHome()">
       <img class="pr-2" src="../../../assets/icone/farmHeader.png" style="cursor: pointer;">
@@ -23,9 +23,10 @@
       <img src="../../../assets/icone/logoMenu.png" style="width: 200px;height: 50px;cursor: pointer;">
     </div>
     <div class="row justify-content-center menu-options">
-      <div class="d-flex justify-content-between align-items-center" 
-      style="height: 75px; width: 275px;cursor: pointer;">
-        <h4 style="    color: #b7b0b0;; font-size: 1rem; font-weight: bolder;" (click)="redirecionarParaLaboratorio(dados?.nome)">{{dados?.nome}}</h4>
+      <div class="d-flex justify-content-between align-items-center"
+        style="height: 75px; width: 275px;cursor: pointer;">
+        <h4 style="    color: #b7b0b0;; font-size: 1rem; font-weight: bolder;"
+          (click)="redirecionarParaLaboratorio(dados?.nome)">{{dados?.nome}}</h4>
         <!-- <img src="../../../assets/svg/Group.svg" style="width: 1rem;"> -->
       </div>
 
@@ -50,40 +51,58 @@
 
   <app-banner [title]="titleBanner"></app-banner>
 
-    <!-- SOBRE -->
-    <div *ngIf="dados"  class=" row justify-content-center align-items-center m-0 p-0" style="margin-top: 20px !important;" >
+  <!-- SOBRE -->
+  <div *ngIf="dados" class=" row justify-content-center align-items-center m-0 p-0"
+    style="margin-top: 20px !important;">
 
-    <div class="col-md-11 col-lg-10 d-flex justify-content-between align-items-center flex-wrap"  style="height: auto; background-color: white; border-radius: 20px; border: 1px solid rgb(219, 219, 219);" >
+    <div class="col-md-11 col-lg-10 d-flex justify-content-between align-items-center flex-wrap"
+      style="height: auto; background-color: white; border-radius: 20px; border: 1px solid rgb(219, 219, 219);">
       <div class="col-md-12 col-lg-5 pt-md-4">
         <h4 style="font-size: 1.2rem; color: gray;">
           SOBRE
         </h4>
-        <h2 style="color:#2864AE; font-weight: bolder;" >
+        <h2 style="color:#2864AE; font-weight: bolder;">
           {{dados?.nome}}
         </h2>
-        <p class="text-about mb-5" style="overflow-y: auto; max-height: 230px;" *ngIf="dados?.sobre"> 
+        <p class="text-about mb-5" style="overflow-y: auto; max-height: 230px;" *ngIf="dados?.sobre">
           {{dados?.sobre}}
         </p>
-        <p class="text-about mb-5" style="overflow-y: auto; max-height: 230px;"
-        *ngIf="!dados?.sobre">
-          Lorem Ipsum is simply dummy text of the printing and typesetting industry. 
-          Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, 
-          when an unknown printer took a galley of type and scrambled it to make a type specimen book. 
-          It has survived not only five centuries, but also the leap into electronic typesetting, 
-          remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, 
+        <p class="text-about mb-5" style="overflow-y: auto; max-height: 230px;" *ngIf="!dados?.sobre">
+          Lorem Ipsum is simply dummy text of the printing and typesetting industry.
+          Lorem Ipsum has been the industry's standard dummy text ever since the 1500s,
+          when an unknown printer took a galley of type and scrambled it to make a type specimen book.
+          It has survived not only five centuries, but also the leap into electronic typesetting,
+          remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets
+          containing Lorem Ipsum passages,
           and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
         </p>
       </div>
-      <div
-        class="col-md-12 col-lg-7 pb-md-4 text-center d-flex justify-content-xl-center align-items-xl-center">
+      <div class="col-md-12 col-lg-7 pb-md-4 text-center d-flex justify-content-xl-center align-items-xl-center">
         <img src="../../../assets/galeria/Baner sobre (1).png" class="col-lg-11 col-xl-11">
       </div>
     </div>
   </div>
+  <div class="col-md-11 col-lg-10 d-flex
+justify-content-between align-items-center flex-wrap"
+    style="height: auto;margin:2rem auto ; background-color: white; border-radius: 20px; border: 1px solid rgb(219, 219, 219);"
+    *ngIf="dados?.nome.includes('LFA')">
 
+    <ul style="list-style-type: disc;margin: 2rem auto;">
+      <li style="margin: 1rem auto; text-align: justify;"> Visão: Ser um dos principais laboratórios nacionais que apoia
+        a descoberta e o desenvolvimento de
+        medicamentos
+        através da farmacologia aplicada na prospecção e pesquisa de substâncias, moléculas e formulações visando o
+        atendimento das necessidades do Ministério da Saúde e da população brasileira.</li>
+      <li style="margin: 1rem auto; text-align: justify;"> Missão: Contribuir de forma ética com a pesquisa e
+        desenvolvimento de fármaco, biofármacos ou produto
+        tecnológico com ação em doenças infecto-parasitárias e crônico degenerativas, para atender às necessidades do
+        Ministério da Saúde, buscando soluções terapêuticas avançadas, com o intuito de melhorar a saúde da sociedade e
+        garantir tratamentos acessíveis e de qualidade para a população brasileira.</li>
+    </ul>
+
+  </div>
   <!-- ATIVIDADES -->
-  <div  class=" row justify-content-center align-items-center m-0 p-0"
-    style="margin-top: 20px !important;">
+  <div class=" row justify-content-center align-items-center m-0 p-0" style="margin-top: 20px !important;">
 
     <div class="col-md-11 col-lg-10 d-flex
     justify-content-between align-items-center flex-wrap"
@@ -95,532 +114,612 @@
         <h2 style="color:#2864AE; font-weight: bolder;">
           PESQUISAS E PROJETOS
         </h2>
-        <p >
-          <p class="text-about last-news-paragraph-farmacologia" *ngIf="dados?.nome.includes('LPNSP')">
-            Linhas e Projetos:
-            Linha 1 : Pesquisa e desenvolvimento de fitoterápicos e insumos ativos da biodiversidade 
-            Coordenação: Maria Dutra Behrens
-            Objetivo: Estudos de espécies vegetais voltados à validação do uso medicinal e ao desenvolvimento de fitoterápicos e insumos farmacêuticos ativos. As atividades abrangem o desenvolvimento de métodos analíticos e sua aplicação em estudos metabolômicos, avaliação do perfil químico sazonal, caracterização e quantificação dos constituintes de interesse, destacando-se a padronização química de extratos ativos mediante estudos bioguiados e a identificação de metabólitos como potenciais fitofármacos.
-            
-              Projeto: Caracterização de insumos ativos da espécie vegetal Arrabidaea chica (Bonpl.) Verlot, visando ao tratamento de leishmanioses.
-            Descrição: O projeto se propõe a investigar a atividade antileishmania dos extratos aquosos de A. chica buscando possíveis inibidores de proteases polipeptídicos e metabólitos secundários polares ativos e visando ao o desenvolvimento de uma formulação tópica para tratar lesões cutâneas de leishmaniose.
-            
-              Projeto: Caracterização de insumos ativos de Arrabidaea chica (Bonpl.) Verl. com vistas à validação de seu uso medicinal e ao desenvolvimento de medicamentos para tratamento da leishmaniose
-            Descrição: Desenvolvimento de um insumo farmacêutico ativo para tratamento da leishmaniose a partir da caracterização química da droga vegetal, extratos e constituintes de interesse associada à comprovação de atividade leishmanicida.
-            
-              Projeto: Desenvolvimento de modelos de produção de fitoterápicos para o SUS. Subprojeto: Desenvolvimento e controle de qualidade de insumos e produtos.
-            Descrição: Este projeto visa: desenvolver modelos de produção de quatro fitoterápicos como piloto visando à produção em escala adequada para atender a demanda do SUS. Os modelos servirão também como subsídio para a indústria do Estado do RJ, estimulando sua própria iniciativa de produzir fitoterápicos, a fim de consolidar o parque industrial farmacêutico e reduzir a dependência externa do país nesta área estratégica. O projeto envolverá as etapas de cultivo, processamento primário, secundário e farmacotécnico até um produto terminado para cada espécie, com qualidade assegurada ao longo da cadeia.
-            Situação: Em andamento; Natureza: Desenvolvimento.
-            
-            
-            
-            Linha 2: Arranjos produtivos locais de plantas medicinais e fitoterápicos
-            Coordenação: Maria Dutra Behrens
-            Objetivo: Pesquisa e desenvolvimento de tecnologias de produção, metodologias de controle de qualidade e qualificação de profissionais e sistematização da gestão do conhecimento voltados ao fortalecimento da cadeia de produção e utilização de plantas medicinais.
-              
-            Projeto: Matéria-prima de qualidade para atender ao Programa Nacional de Plantas Medicinais e Fitoterápicos. Subprojeto: Desenvolvimento de metodologias e avaliação de parâmetros químicos de espécies do gênero Phyllanthus.
-            Descrição: Este projeto desenvolvido em parceria com a Embrapa, cujo subprojeto é da responsabilidade de Farmanguinhos, visa avaliar a identidade botânica, parâmetros químicos e agronômicos de quatro plantas medicinais para obtenção de material genético padronizado, visando a produção de matéria prima de qualidade, demandada pelo Programa Nacional de Plantas Medicinais e Fitoterápicos. Coordenador do Projeto: Vieira, R. F. (Embrapa). 
-            
-              Projeto: Arranjo produtivo de plantas medicinais e fitoterápicos para atender usuários do SUS no município e região serrana do Rio de Janeiro. Subprojeto: Desenvolvimento e controle de qualidade de insumos e produtos.
-            Descrição: Este projeto visa: desenvolver a produção de plantas medicinais, insumos e fitoterápicos, preferencialmente com cultivo orgânico, considerando a agricultura familiar, o conhecimento tradicional e o científico; fortalecer laboratórios oficiais ou parcerias público-privadas visando à produção de fitoterápicos; implementar programas que garantam a produção e dispensação de plantas medicinais e fitoterápicos no SUS, considerando os recursos disponíveis; promover a qualificação técnica dos profissionais de saúde e demais envolvidos na produção e uso de plantas medicinais e fitoterápicos.
-            
-              Projeto: APL-Fitoterápicos? Estratégia para a produção de fitoterápicos e de implantação do PNPMF nos municípios do Território do Médio Araguaia de Goiás. Subprojeto: Desenvolvimento e controle de qualidade de insumos e produtos.
-            Descrição: Este projeto visa: desenvolver a produção de plantas medicinais, insumos de origem vegetal e fitoterápicos, preferencialmente com cultivo orgânico, com base na agricultura familiar e no conhecimento tradicional e científico como componentes da cadeia produtiva do Arranjo Produtivo Local de Fitoterápicos do Território do Médio Araguaia de Goiás; promover a qualificação técnica dos profissionais de saúde e demais envolvidos na cadeia produtiva de plantas medicinais e fitoterápicos; implantar o Programa Nacional de Plantas Medicinais e Fitoterápicos nos municípios articulados no Arranjo Produtivo Local de Fitoterápicos no Território do Médio Araguaia de Goiás, garantindo a dispensação de plantas medicinais e fitoterápicos no âmbito do SUS
-              
-            Projeto: Projeto Piloto da Agroindústria de Fitoterápicos da Agricultura Familiar? Farmácia Verde. Subprojeto: Revisão de Procedimentos Operacionais Padrão.
-            Descrição: Projeto implantado no Centro de Tecnologia Agroecológica de Pequenos Agricultores? AGROTEC e legalizado pelo MS/ANVISA sob o no. 1.05.237? 0, Resolução RE no.123 de 22.01.2002, com autorização para fabricar, embalar, armazenar, expedir e transportar insumos e medicamentos (fitoterápicos). Objeto do protocolo de intenções firmado em junho/2005 com o MS, MMA, MDA, a FIOCRUZ e ANVISA, em vigor até julho/2010, o projeto visa o fornecimento de fitoterápicos aos serviços de atenção básica e estratégica de saúde de 19 municípios da região oeste de Goiás.
-            
-            
-            Linha 4: Proteases de plantas e seus possíveis papéis terapêuticos 
-            Coordenação: Raquel Elisa da Silva López 
-              Projeto: Estudo do potencial biotecnológico das proteases de plantas e micro-organismos
-            Descrição: A hidrólise de ligações peptídicas por enzimas proteolíticas é a modificação pós-traducional mais significativa em proteínas e peptídeos, mediando e regulando uma grande diversidade de funções crucias em todos os seres vivos, dentre elas a digestão e reciclagem de proteínas para assimilação de aminoácidos, coagulação sanguínea, fibrinólise, crescimento e remodelagem de tecidos e da matriz extracelular, apoptose, respostas imunes, cicatrização, morfogênese, embriogênese, ativação de hormônios, dentre muitas outras funções. Tais enzimas têm sido utilizadas pelo homem desde a Antiguidade, de modo empírico, para tratar enfermidades. Atualmente, constituem o grupo de enzimas mais importante empregadas em diferentes ramos da indústria, como de alimentos e farmacêutica. As proteases terapêuticas são utilizadas para o tratamento de doenças, cirurgias e diagnósticos e podem ser obtidas de fontes naturais ou por expressão heteróloga. As plantas e micro-organismos são valorosas fontes de proteases com importante atividade hidrolítica e grande estabilidade em altas temperaturas e na presença de diversos agentes químicos. As espécies da família Fabaceae ou Leguminosae acumulam grandes quantidades de proteínas em suas sementes e consequentemente seu metabolismo proteíco é aumentado. Portanto, expressam altos teores de proteases e seus inibidores. Ao contrário das proteases de leguminosas, seus inibidores são bastante estudados, e seu potencial terapêutico é quase inesexplorado, portanto o objetivo deste projeto é isolar, fracionar, purificar, estudar as características bioquímicas, estruturais e cinéticas de proteases de diferentes órgãos de espécies de leguminosas e propor formulações farmacêuticas. O desenvolvimento de agentes proteolíticos baseado na seleção de enzimas de leguminosas com características desejáveis, além produzir medicamentos mais específicos e eficientes, vão impactar na diminuição do custo de produção. Além disso, representa ainda a implantação de tecnologias inovadoras para a.
-            
-              Projeto: Estudo do potencial biológico das proteases de Canavalia ensiformis
-              Projeto: Desenvolvimento de formulações terapêuticas com proteases de leguminosas
-            Descrição: As plantas são importantes fontes de proteases com grande atividade hidrolítica sobre vários substratos de relevância biológica. Além disso, tais enzimas apresentam alta estabilidade na presença de temperaturas elevadas e de agentes químicos.
-            
-            
-            
-            Linha 5: Inibidores de proteases de plantas como potenciais agentes terapêuticos 
-            Coordenação: Raquel Elisa da Silva López 
-              
-            Projeto: Inibidores de proteases peptídicos direcionados para principal protease de SARS-CoV-2, como agentes quimioterápicos específicos para covid-19
-            
-            Descrição: A Covid-19, causada pelo coronavírus da síndrome respiratória aguda grave 2 (SARS-CoV-2), é uma pandemia que representa um grande desafio na saúde pública mundial. A grande transmissibilidade do vírus impõe o isolamento social, gera crise na economia e colapso na saúde. Portanto, é prioritário e urgente desenvolver fármacos anti-SARS-CoV-2 específicos e este projeto busca obter inibidores de proteases polipeptídicos de plantas (IPPs) que sejam específicos para a principal protease de SARS-CoV-2, a 3CLpro, envolvida na replicação viral. Ela é distinta das enzimas de mamíferos, logo um bom alvo terapêutico. Os inibidores da HIV-protease e das proteases de MERS-CoV e SARS-CoV não são bons inibidores da 3CLpro, pois não se acomodam bem no sítio ativo da enzima. Já, os inibidores de proteases de plantas (IPPS) são moléculas maiores, mais específicas, pouco tóxicas, eficientes, hidrofílicas, com baixa toxicidade e baixo custo, obtidos por Química Verde e portanto, moléculas promissoras para o desenvolvimento racional de quimioterápicos para tratar Covid-19.
-            
-              Projeto: Inibidores de proteases de leguminosas com atividade anti-câncer
-            
-              Projeto: Desenvolvimento de formulações terapêuticas anticâncer
-            
-              Projeto: Desenvolvimento de formulações tópicas com inibidores de proteases com atividade leishmanicia
-            Descrição: Este projeto visa o desenvolvimento de formulações farmacêuticas para o tratamento de leishmanioses tegumentares contendo inibidores de proteases de espécies de leguminosas, visto que tais enzimas são importantes para a manutenção da infecção e da sobrevivência dos parasitos nos seus hospedeiros. Além de serem efetivos na redução da viabilidade da Leishmania eles apresentam baixa toxicidade para seus hospedeiros.
-  
-          </p>
-          <p class="text-about last-news-paragraph-farmacologia" *ngIf="dados?.nome.includes('LMN')">
-            Linha 1
-            Desenvolvimento de sistemas incrementadores de dissolução/ biodisponibilidade de fármacos
-            pobremente solúveis em água
-            Coordenação: Helvécio Rocha
-            Linha2
-            Desenvolvimento de métodos diferenciais de caracterização de insumos e formulações farmacêuticas no
-            estado sólido
-            Coordenação: Helvécio Rocha
-          </p>
-          <p class="text-about last-news-paragraph-farmacologia" *ngIf="dados?.nome.includes('LPMD')">
-            Linha: Nanoformulações
-            Coordenação: Ana Claudia Fernandes Amaral
-
-            Linha: Ação de Plantas em insetos causadores de Doenças
-
-            Objetivo: Este trabalho irá verificar os efeitos de plantas para o
-            desenvolvimento de protótipos de produtos contra espécies de insetos
-            causadoras de doenças. Formulações poderão no futuro ser inseridas em
-            novas cadeias produtivas, com grande potencial econômico para o país.
-
-            Projeto: Compounds from plants against insects
-
-            Coordenação: Ana Claudia Fernandes Amaral
-
-            Projeto: Estratégias para enfrentamento de insetos causadores de
-            diferentes doenças a partir de material vegetal da biodiversidade
-            brasileira
-
-            Coordenação: Ana Claudia Fernandes Amaral
-
-            Projeto: Avaliação de compostos naturais e óleos essenciais para o
-            desenvolvimento de novas ferramentas de controle de insetos vetores de
-            doenças negligenciadas
-
-            Coordenação: Ana Claudia Fernandes Amaral
-
-            Linha: Isolamento e identificação de substâncias
-            Projeto: Análises Cromatográficas de Produtos Medicinais
+        <p>
+        <p class="text-about last-news-paragraph-farmacologia" *ngIf="dados?.nome.includes('LPNSP')">
+          Linhas e Projetos:
+          Linha 1 : Pesquisa e desenvolvimento de fitoterápicos e insumos ativos da biodiversidade
+          Coordenação: Maria Dutra Behrens
+          Objetivo: Estudos de espécies vegetais voltados à validação do uso medicinal e ao desenvolvimento de
+          fitoterápicos e insumos farmacêuticos ativos. As atividades abrangem o desenvolvimento de métodos analíticos e
+          sua aplicação em estudos metabolômicos, avaliação do perfil químico sazonal, caracterização e quantificação
+          dos constituintes de interesse, destacando-se a padronização química de extratos ativos mediante estudos
+          bioguiados e a identificação de metabólitos como potenciais fitofármacos.
+
+          Projeto: Caracterização de insumos ativos da espécie vegetal Arrabidaea chica (Bonpl.) Verlot, visando ao
+          tratamento de leishmanioses.
+          Descrição: O projeto se propõe a investigar a atividade antileishmania dos extratos aquosos de A. chica
+          buscando possíveis inibidores de proteases polipeptídicos e metabólitos secundários polares ativos e visando
+          ao o desenvolvimento de uma formulação tópica para tratar lesões cutâneas de leishmaniose.
+
+          Projeto: Caracterização de insumos ativos de Arrabidaea chica (Bonpl.) Verl. com vistas à validação de seu uso
+          medicinal e ao desenvolvimento de medicamentos para tratamento da leishmaniose
+          Descrição: Desenvolvimento de um insumo farmacêutico ativo para tratamento da leishmaniose a partir da
+          caracterização química da droga vegetal, extratos e constituintes de interesse associada à comprovação
+          de atividade leishmanicida.
+
+          Projeto: Desenvolvimento de modelos de produção de fitoterápicos para o SUS. Subprojeto: Desenvolvimento e
+          controle de qualidade de insumos e produtos.
+          Descrição: Este projeto visa: desenvolver modelos de produção de quatro fitoterápicos como piloto visando à
+          produção em escala adequada para atender a demanda do SUS. Os modelos servirão também como subsídio para a
+          indústria do Estado do RJ, estimulando sua própria iniciativa de produzir fitoterápicos, a fim de consolidar o
+          parque industrial farmacêutico e reduzir a dependência externa do país nesta área estratégica. O projeto
+          envolverá as etapas de cultivo, processamento primário, secundário e farmacotécnico até um produto terminado
+          para cada espécie, com qualidade assegurada ao longo da cadeia.
+          Situação: Em andamento; Natureza: Desenvolvimento.
+
+
+
+          Linha 2: Arranjos produtivos locais de plantas medicinais e fitoterápicos
+          Coordenação: Maria Dutra Behrens
+          Objetivo: Pesquisa e desenvolvimento de tecnologias de produção, metodologias de controle de qualidade e
+          qualificação de profissionais e sistematização da gestão do conhecimento voltados ao fortalecimento da cadeia
+          de produção e utilização de plantas medicinais.
+
+          Projeto: Matéria-prima de qualidade para atender ao Programa Nacional de Plantas Medicinais e Fitoterápicos.
+          Subprojeto: Desenvolvimento de metodologias e avaliação de parâmetros químicos de espécies do gênero
+          Phyllanthus.
+          Descrição: Este projeto desenvolvido em parceria com a Embrapa, cujo subprojeto é da responsabilidade de
+          Farmanguinhos, visa avaliar a identidade botânica, parâmetros químicos e agronômicos de quatro plantas
+          medicinais para obtenção de material genético padronizado, visando a produção de matéria prima de qualidade,
+          demandada pelo Programa Nacional de Plantas Medicinais e Fitoterápicos. Coordenador do Projeto: Vieira, R. F.
+          (Embrapa).
+
+          Projeto: Arranjo produtivo de plantas medicinais e fitoterápicos para atender usuários do SUS no município e
+          região serrana do Rio de Janeiro. Subprojeto: Desenvolvimento e controle de qualidade de insumos e produtos.
+          Descrição: Este projeto visa: desenvolver a produção de plantas medicinais, insumos e fitoterápicos,
+          preferencialmente com cultivo orgânico, considerando a agricultura familiar, o conhecimento tradicional e o
+          científico; fortalecer laboratórios oficiais ou parcerias público-privadas visando à produção de
+          fitoterápicos; implementar programas que garantam a produção e dispensação de plantas medicinais e
+          fitoterápicos no SUS, considerando os recursos disponíveis; promover a qualificação técnica dos profissionais
+          de saúde e demais envolvidos na produção e uso de plantas medicinais e fitoterápicos.
+
+          Projeto: APL-Fitoterápicos? Estratégia para a produção de fitoterápicos e de implantação do PNPMF nos
+          municípios do Território do Médio Araguaia de Goiás. Subprojeto: Desenvolvimento e controle de qualidade de
+          insumos e produtos.
+          Descrição: Este projeto visa: desenvolver a produção de plantas medicinais, insumos de origem vegetal e
+          fitoterápicos, preferencialmente com cultivo orgânico, com base na agricultura familiar e no conhecimento
+          tradicional e científico como componentes da cadeia produtiva do Arranjo Produtivo Local de Fitoterápicos do
+          Território do Médio Araguaia de Goiás; promover a qualificação técnica dos profissionais de saúde e demais
+          envolvidos na cadeia produtiva de plantas medicinais e fitoterápicos; implantar o Programa Nacional de Plantas
+          Medicinais e Fitoterápicos nos municípios articulados no Arranjo Produtivo Local de Fitoterápicos no
+          Território do Médio Araguaia de Goiás, garantindo a dispensação de plantas medicinais e fitoterápicos no
+          âmbito do SUS
+
+          Projeto: Projeto Piloto da Agroindústria de Fitoterápicos da Agricultura Familiar? Farmácia Verde. Subprojeto:
+          Revisão de Procedimentos Operacionais Padrão.
+          Descrição: Projeto implantado no Centro de Tecnologia Agroecológica de Pequenos Agricultores? AGROTEC e
+          legalizado pelo MS/ANVISA sob o no. 1.05.237? 0, Resolução RE no.123 de 22.01.2002, com autorização para
+          fabricar, embalar, armazenar, expedir e transportar insumos e medicamentos (fitoterápicos). Objeto do
+          protocolo de intenções firmado em junho/2005 com o MS, MMA, MDA, a FIOCRUZ e ANVISA, em vigor até julho/2010,
+          o projeto visa o fornecimento de fitoterápicos aos serviços de atenção básica e estratégica de saúde de 19
+          municípios da região oeste de Goiás.
+
+
+          Linha 4: Proteases de plantas e seus possíveis papéis terapêuticos
+          Coordenação: Raquel Elisa da Silva López
+          Projeto: Estudo do potencial biotecnológico das proteases de plantas e micro-organismos
+          Descrição: A hidrólise de ligações peptídicas por enzimas proteolíticas é a modificação pós-traducional mais
+          significativa em proteínas e peptídeos, mediando e regulando uma grande diversidade de funções crucias em
+          todos os seres vivos, dentre elas a digestão e reciclagem de proteínas para assimilação de aminoácidos,
+          coagulação sanguínea, fibrinólise, crescimento e remodelagem de tecidos e da matriz extracelular, apoptose,
+          respostas imunes, cicatrização, morfogênese, embriogênese, ativação de hormônios, dentre muitas outras
+          funções. Tais enzimas têm sido utilizadas pelo homem desde a Antiguidade, de modo empírico, para tratar
+          enfermidades. Atualmente, constituem o grupo de enzimas mais importante empregadas em diferentes ramos da
+          indústria, como de alimentos e farmacêutica. As proteases terapêuticas são utilizadas para o tratamento de
+          doenças, cirurgias e diagnósticos e podem ser obtidas de fontes naturais ou por expressão heteróloga. As
+          plantas e micro-organismos são valorosas fontes de proteases com importante atividade hidrolítica e grande
+          estabilidade em altas temperaturas e na presença de diversos agentes químicos. As espécies da família Fabaceae
+          ou Leguminosae acumulam grandes quantidades de proteínas em suas sementes e consequentemente seu metabolismo
+          proteíco é aumentado. Portanto, expressam altos teores de proteases e seus inibidores. Ao contrário das
+          proteases de leguminosas, seus inibidores são bastante estudados, e seu potencial terapêutico é quase
+          inesexplorado, portanto o objetivo deste projeto é isolar, fracionar, purificar, estudar as características
+          bioquímicas, estruturais e cinéticas de proteases de diferentes órgãos de espécies de leguminosas e propor
+          formulações farmacêuticas. O desenvolvimento de agentes proteolíticos baseado na seleção de enzimas de
+          leguminosas com características desejáveis, além produzir medicamentos mais específicos e eficientes, vão
+          impactar na diminuição do custo de produção. Além disso, representa ainda a implantação de tecnologias
+          inovadoras para a.
 
-            Coordenação: Ana Claudia Fernandes Amaral
+          Projeto: Estudo do potencial biológico das proteases de Canavalia ensiformis
+          Projeto: Desenvolvimento de formulações terapêuticas com proteases de leguminosas
+          Descrição: As plantas são importantes fontes de proteases com grande atividade hidrolítica sobre vários
+          substratos de relevância biológica. Além disso, tais enzimas apresentam alta estabilidade na presença de
+          temperaturas elevadas e de agentes químicos.
 
-            Linha: Doenças Negligenciadas e afins
 
-            Objetivo: Uso de plantas Medicinais e seus derivados em ensaios para
-            doenças negligenciadas (principalmente malaria, leishmania) e
-            neoplasias.
 
-            Projeto: Seleção de Protótipos Antileishmania a partir de Plantas Nativas
-            do Brasil
+          Linha 5: Inibidores de proteases de plantas como potenciais agentes terapêuticos
+          Coordenação: Raquel Elisa da Silva López
 
-            Coordenação: Ana Claudia Fernandes Amaral
+          Projeto: Inibidores de proteases peptídicos direcionados para principal protease de SARS-CoV-2, como agentes
+          quimioterápicos específicos para covid-19
 
-            Projeto: Atividade Antimicrobiana de Croton lechleri
-            
-            Coordenação: Ana Claudia Fernandes Amaral
+          Descrição: A Covid-19, causada pelo coronavírus da síndrome respiratória aguda grave 2 (SARS-CoV-2), é uma
+          pandemia que representa um grande desafio na saúde pública mundial. A grande transmissibilidade do vírus impõe
+          o isolamento social, gera crise na economia e colapso na saúde. Portanto, é prioritário e urgente desenvolver
+          fármacos anti-SARS-CoV-2 específicos e este projeto busca obter inibidores de proteases polipeptídicos de
+          plantas (IPPs) que sejam específicos para a principal protease de SARS-CoV-2, a 3CLpro, envolvida na
+          replicação viral. Ela é distinta das enzimas de mamíferos, logo um bom alvo terapêutico. Os inibidores da
+          HIV-protease e das proteases de MERS-CoV e SARS-CoV não são bons inibidores da 3CLpro, pois não se acomodam
+          bem no sítio ativo da enzima. Já, os inibidores de proteases de plantas (IPPS) são moléculas maiores, mais
+          específicas, pouco tóxicas, eficientes, hidrofílicas, com baixa toxicidade e baixo custo, obtidos por Química
+          Verde e portanto, moléculas promissoras para o desenvolvimento racional de quimioterápicos para tratar
+          Covid-19.
 
-            Projeto: Reposicionamento de fármacos como estratégia de descoberta
-            de novos alvos contra patógenos fúngicos humanos: aplicações
-            terapêuticas e profiláticas off-label e de redução da virulência
+          Projeto: Inibidores de proteases de leguminosas com atividade anti-câncer
 
-            Coordenação: Ana Claudia Fernandes Amaral
+          Projeto: Desenvolvimento de formulações terapêuticas anticâncer
 
-            Projeto: Protótipos com óleos essenciais e frutos selecionados da
-            Amazônia contra o mosquito mais temido pela população brasileira
+          Projeto: Desenvolvimento de formulações tópicas com inibidores de proteases com atividade leishmanicia
+          Descrição: Este projeto visa o desenvolvimento de formulações farmacêuticas para o tratamento de leishmanioses
+          tegumentares contendo inibidores de proteases de espécies de leguminosas, visto que tais enzimas são
+          importantes para a manutenção da infecção e da sobrevivência dos parasitos nos seus hospedeiros. Além de serem
+          efetivos na redução da viabilidade da Leishmania eles apresentam baixa toxicidade para seus hospedeiros.
 
-            Coordenação: Ana Claudia Fernandes Amaral
+        </p>
+        <p class="text-about last-news-paragraph-farmacologia" *ngIf="dados?.nome.includes('LMN')">
+          Linha 1
+          Desenvolvimento de sistemas incrementadores de dissolução/ biodisponibilidade de fármacos
+          pobremente solúveis em água
+          Coordenação: Helvécio Rocha
+          Linha2
+          Desenvolvimento de métodos diferenciais de caracterização de insumos e formulações farmacêuticas no
+          estado sólido
+          Coordenação: Helvécio Rocha
+        </p>
+        <p class="text-about last-news-paragraph-farmacologia" *ngIf="dados?.nome.includes('LPMD')">
+          Linha: Nanoformulações
+          Coordenação: Ana Claudia Fernandes Amaral
 
-            Projeto: Plantas medicinais utilizadas contra doenças endêmicas
+          Linha: Ação de Plantas em insetos causadores de Doenças
 
-            Coordenação: Ana Claudia Fernandes Amaral
+          Objetivo: Este trabalho irá verificar os efeitos de plantas para o
+          desenvolvimento de protótipos de produtos contra espécies de insetos
+          causadoras de doenças. Formulações poderão no futuro ser inseridas em
+          novas cadeias produtivas, com grande potencial econômico para o país.
 
-            Projeto: Desenvolvimento de Formas Farmaceuticas contra Leishmania
+          Projeto: Compounds from plants against insects
 
-            Coordenação: Ana Claudia Fernandes Amaral
+          Coordenação: Ana Claudia Fernandes Amaral
 
-            Linha: Políticas Públicas e Fitoterápicos e Plantas Medicinais
+          Projeto: Estratégias para enfrentamento de insetos causadores de
+          diferentes doenças a partir de material vegetal da biodiversidade
+          brasileira
 
-            Objetivo: Colaborar na Elaboração e implementação de políticas públicas
-            voltadas para a área de plantas medicinais e fitoterápicos.
+          Coordenação: Ana Claudia Fernandes Amaral
 
-            Projeto: Apoio às Instituições Sediadas no RJ: Caracterização
-            bromatológica e funcional de mel e pólen de abelhas sem ferrão da Mata
-            Atlântica fluminense: uma estratégia para valorização de espécies nativas
+          Projeto: Avaliação de compostos naturais e óleos essenciais para o
+          desenvolvimento de novas ferramentas de controle de insetos vetores de
+          doenças negligenciadas
 
-            Coordenação: Ana Claudia Fernandes Amaral
+          Coordenação: Ana Claudia Fernandes Amaral
 
-            Linha: Produtos Naturais
+          Linha: Isolamento e identificação de substâncias
+          Projeto: Análises Cromatográficas de Produtos Medicinais
 
-            Projeto: Desenvolvimento a base de Óleos Essenciais e Resinas para a
-            Proteção de Cultivares Estratégicos para a Agricultura e Segurança da
-            saúde
+          Coordenação: Ana Claudia Fernandes Amaral
 
-            Coordenação: Ana Claudia Fernandes Amaral
-          </p>
-          <p class="text-about last-news-paragraph-farmacologia" *ngIf="dados?.nome.includes('LABFE')">
-            1 - Desenvolvimento de processos de escalonamento e prototipagem (Otimização de
-            processos desde a escala laboratorial até escala industrial com uso das ferramentas
-            de Quality by design e Planejamento de experimentos (DoE) e impressão 3D).
-
-            2 - Desenvolvimento de tecnologias de produção, controle de qualidade, avaliação pré-
-            clínica e clínica (Secagem/Microencapsulação por aspersão (spray-drying); Preparo de
-            dispersões sólidas por hot melt extrusion (HME); Preparo de complexos com resinas
-            de troca iônica; Melhoria da estabilidade e palatabilidade de fármacos)
-
-            3 - Formulação farmacêutica de medicamentos, incluindo nanoformulação
-            (Formulações com insumos sintéticos e da biodiversidade, para aplicação
-            farmacêutica, veterinária e como insumos para saúde)
-          </p>
-          <p class="text-about last-news-paragraph-farmacologia" *ngIf="dados?.nome.includes('LABTECBIO')">
-            1.Pesquisa e Desenvolvimento de fitoterápicos
-
-            2.Pesquisa e Desenvolvimento de fitofármacos
+          Linha: Doenças Negligenciadas e afins
 
-            3.Triagem biológica de produtos naturais e substâncias sintéticas na busca de
-            novos fármacos
-            Projetos:
-            Projeto 1: Avaliação da atividade inibitória do vírus Chikungunya por
-            moléculas contendo derivados fenólicos como grupos farmacofóricos
-            Coordenador do projeto: Antonio Carlos Siani
-
-            Projeto 2: Investigação das atividades imunomoduladora e inibitória in vitro
-            do vírus Chikungunya por diterpenos isolados do látex medicinal de
-            Euphorbia umbellata (janaúba)
-            Coordenador do projeto: Antonio Carlos Siani
-
-            Projeto 3: Aspectos etnobotânicos e o uso popular do látex de Euphorbia
-            umbellata (janaúba) como medicinal o Brasil
-            Coordenador do projeto: Antonio Carlos Siani
-
-            Projeto 4: Avaliação do potencial anticâncer de terpenoides naturais e de seus
-            derivados obtidos pela semissíntese e bioconversão
-            Coordenador do projeto: José Luiz Mazzei da Costa
-            
-            Projeto 5: Cromatografia líquida guiada pela transposição por modelos na
-            separação e isolamento em macroescala
-            Coordenador do projeto: José Luiz Mazzei da Costa
-
-            Projeto 6: Prospecção de agentes ativos e/ou adjuvantes de origem vegetal na
-            terapia do câncer
-            Coordenador do projeto: Dra Dulcinéia Furtado Teixeira
-
-            Projeto 7: Prospecção de novas moléculas e extratos de plantas medicinais
-            brasileiras, família Asteraceae, arnicas brasileiras, (gêneros Solidago,
-            Chromolaena e Tithonia) com potencial atividade em doenças inflamatórias
-            dependentes como o câncer e doenças epiteliais
-            Coordenador do projeto: Dra Simone Sacramento Valverde
-
-            Projeto 8: Produção e qualificação de IFAVS da biodiversidade brasileira a
-            partir de plantas medicinais da família Asteraceae, arnicas brasileiras,
-            (gêneros Solidago, Chromolaena, Tithonia e Acmella) com potencial no
-            tratamento e controle de leishmaniose e esquistossomose
-            Coordenador do projeto: Dra Simone Sacramento Valverde
-
-            Projeto 9: Produção e Controle de Qualidade de Fitoterápico a base de
-            Solidago chilensis, espécie constante do Programa de Fitoterapia da Prefeitura
-            da Cidade do Rio de Janeiro (SMS/RJ)
-            Coordenador do projeto: Dra Simone Sacramento Valverde
-
-            Projeto 10: Avaliação Quantitativa por CG/MS e por RMN da Sazonalidade
-            de Solidagenona em Inflorescências de Solidago chilensis
-            Coordenador do projeto: Dra Simone Sacramento Valverde
-
-            Projeto 11: Estudo de Óleos Essenciais como Inibidores da Acetilcolinesterase
-            Coordenador do projeto: Dra Simone Sacramento Valverde
-
-            Projeto 12: Estudo Químico de Solidago chilensis Meyen
-            Coordenador do projeto: Dra Simone Sacramento Valverde
-
-            Projeto 13: Desenvolvimento de um fitoproduto a base de Gymnanthemum
-            amygdalinum (Del.) Sch. Bip. ex Walp: Produção do insumo farmacêutico
-            ativo vegetal (IFAV) padronizado.
-            Coordenador do projeto: Maria Raquel Figueiredo e Valber da Silva Frutuoso
-            (IOC), (http://lattes.cnpq.br/0012148860529745) PORTFÓLIO
-            TECNOLÒGICO
-
-            Projeto 14: Desenvolvimento tecnológico de suplemento nutricional com a
-            espécie Gymnanthemum amygdalinum (Delile) Sch. Bip ex Walp para o uso
-            veterinário
-            Coordenador do projeto: Maria Raquel Figueiredo e Valber da Silva Frutuoso
-            (IOC)
-
-            Projeto 15: Fitomedicamento a base de extrato hidroetanólico das folhas de
-            Schinus terebinthifolius Raddi, para a terapia das inflamações articulares.
-            Coordenador do projeto: Maria Raquel Figueiredo e Elaine Cruz Rosas
-
-            Projeto 16: Extratos de Schinus terebinthifolius Raddi frente a três principais
-            agentes da esporotricose: Sporothrix brasiliensis, Sporothrix schenckii e
-            Sporothrix globosa
-            Coordenador do projeto: Maria Raquel Figueiredo e Dayvison Francis Saraiva
-            Freitas
-
-            Projeto 17: Extratos e substâncias oriundas da biodiversidade vegetal e suas
-            potencialidades farmacológicas
-            Coordenador do projeto: Maria Raquel Figueiredo
-          </p>
-          <p class="text-about last-news-paragraph-farmacologia" *ngIf="dados?.nome.includes('LASFAR')">
-            Projeto 1: Desenvolvimento de novos potenciais multialvos para a inibição da
-            replicação do HIV-1
-            Coordenador do Projeto: Dra. Monica bastos
-
-            Projeto 2: Novos derivados do ITRN zidovudina como potenciais inibidores
-            do HIV-1
-            Coordenador do Projeto: Dra. Monica bastos
-
-            Projeto 3: Busca por novos ITRNN como potenciais inibidores do HIV-1
-            Coordenador do Projeto: Dra. Monica bastos
-
-            Projeto 4: Criptococose associada ao HIV: novas moléculas híbridas com
-            possível atividade contra os dois patógenos e desenvolvimento de um modelo
-            celular de avaliação da coinfecção.
-            Coordenador do Projeto: Dra. Monica bastos
-
-            Projeto 5: Novas N-Acilidrazonas como inibidores da cruzaína e potenciais
-            antichagásicos.
-            Coordenador do Projeto: Dr. Samir D’Aquino Carvalho, Dr. Lucas Villas Bôas
-            Hoelz,
-
-            Projeto 6: Análogos do imatinibe contendo derivados indólicos como
-            potenciais antineoplásicos.
-            Coordenador do Projeto: Dra. Monica bastos, Dra. Nubia Boechat
-
-            Projeto 7: Derivados etinil-benzamidas como potenciais inibidores da proteína
-            tirosina cinase BCR-ABL1
-            Coordenador do projeto: Dra. Monica bastos , Dra. Nubia Boechat
-
-            Projeto 8: Novos derivados bifenilpirimidinas como análogos do ponatinibe,
-            planejados como potenciais inibidores da tirosina cinase BCR-ABL1 com a
-            mutação T315I
-            Coordenador do projeto: Dra. Monica bastos, Dra. Nubia Boechat, Dr. Luiz
-            Claudio Ferreira Pimentel
-            
-            Projeto 9: Uma Nova Geração de Derivados da Isoniazida como Protótipos de
-            Fármaco contra a Tuberculose (PORTFÓLIO TECNOLÒGICO)
-            Coordenador do projeto: Dra. Nubia Boechat, Dr. Frederico Silva Castelo-
-            Branco
-
-            Projeto 10: Estratégia Inovadora de Reposicionamento e Associações de
-            Fármacos Contra a COVID-19: uso da triagem virtual em três enzimas
-            essenciais de SARS-CoV- 2 e de um novo modelo de avaliação da replicação
-            viral juntamente com a modulação inflamatória
-            Coordenador do projeto: Dra. Nubia Boechat, Dr. Frederico Silva Castelo-
-            Branco, Monica bastos, Dr. Lucas Villas Bôas Hoelz
-
-            Projeto 11: Planejamento, Síntese e Avaliação Antichagásica de Novos
-            Derivados Nitrotriazólicos
-            Coordenador do projeto: Dra. Nubia Boechat, Dr. Frederico Silva Castelo-
-            Branco, Dr. Rodolfo Rodrigo Florido
-
-            Projeto 12: Planejamento, Síntese e Avaliação Antichagásica de Novos
-            Derivados Triazólicos
-            Coordenador do projeto: Dra. Nubia Boechat e Dr. Frederico Silva Castelo-
-            Branco
-
-            Projeto 13: Planejamento, síntese e avaliação de novos compostos
-            antimicobacterianos
-            Coordenador do projeto: Dra. Nubia Boechat e Dr. Frederico Silva Castelo-
-            Branco
-
-            Projeto 14: Síntese e Avaliação Antimicobacteriana de Novas alfa, alfa-
-            difluoroidrazidas
-            Coordenador do projeto: Dra. Nubia Boechat e Dr. Frederico Silva Castelo-
-            Branco
-
-            Projeto 15: Síntese do 17-DMAG e seu sal cloridrato
-            Coordenador do projeto: Dra. Nubia Boechat, Dr. Frederico Silva Castelo-
-            Branco e Walter Trajano de Sá Filho
-
-            Projeto 16: SintIFA
-            Coordenador do projeto: Dra. Nubia Boechat, Dr. Frederico Silva Castelo-
-            Branco e Dra. Monica bastos (servidora pública,
-
-            Projeto 17: Otimizações na síntese da Isoniazida e Rifapentina com reatores
-            de microfluídica
-            Coordenador do projeto: Dra. Nubia Boechat, Dr. Frederico Silva Castelo-
-            Branco, Walter Trajano de Sá Filho, Mário Celso Pagotto
-            
-            Projeto 18: Nova rota para a obtenção de benznidazol
-            Coordenador do projeto: Dra. Nubia Boechat, Dr. Frederico Silva Castelo-
-            Branco , Dr. João Carlos Martins Mafra, Walter Trajano de Sá Filho
-
-            Projeto 19: Análise de risco da presença de nitrosaminas em insumos
-            farmacêuticos ativos e seus medicamentos
-            Coordenador do projeto: Dra. Nubia Boechat, Dra. Monica bastos, Dr.
-            Frederico Silva Castelo-Branco, Dr. Rodolfo Rodrigo Florido França , Walter
-            Trajano de Sá Filho, Dr. Samir D’Aquino Carvalho, Dr. João Carlos Martins
-            Mafra, M.Sc. Paula Miranda Sá
-
-            Projeto 20: Identificação in silico de novos inibidores da BCR-ABL1 para a
-            luta contra a leucemia mieloide crônica
-            Coordenador do projeto: Dr. Tacio Vinicio Amorim Fernandes
-
-            Projeto 21:
-            Métodos Computacionais Aplicados na Predição de Genotoxicidade de
-            Compostos Bioativos
-            Coordenador do projeto: Dr. Tacio Vinicio Amorim Fernandes
-          </p>
-          <p class="text-about last-news-paragraph-farmacologia" *ngIf="dados?.nome.includes('SSCDT')">
-            Linha 1: Novas metodologias sintéticas utilizando o ultrassom
-            Objetivo: Desenvolvimento de novas metodologias sintéticas utilizando ultrassom
-            visando a aceleração e ou favorecimento na síntese de blocos de construção em aumento
-            de escala e moléculas biologicamente ativas.
-            1 - Projeto: Utilização do ultrassom na síntese de moléculas biologicamente ativas
-            Descrição: O objetivo deste projeto é a utilização do ultrassom na aceleração e ou
-            favorecimento na síntese de blocos de construção em aumento de escala e moléculas
-            biologicamente ativas.
-            2 - Projeto: Síntese de derivados de ácidos acrílicos em escala multigrama por
-            irradiação de ultrassom
-            Descrição: Derivados de ácidos acrílicos são amplamente utilizadas no
-            desenvolvimento de novas moléculas bioativas contra diversas doenças, tais como:
-            tuberculose, malária e câncer. Devido à importância desse building block, o objetivo
-            deste projeto é o desenvolvimento de uma metodologia rápida, em escala multigrama
-            para a síntese de alguns derivados de ácidos acrílicos por irradiação de ultrassom.
-            
-            Linha 2: Síntese de análogos baseados em compostos utilizados no tratamento da
-            malária
-            Objetivo: Obter uma biblioteca de substâncias derivados do fármaco mefloquina e
-            outros análogos quinolínicos, que serão avaliadas quanto a sua atuação no combate à
-            malária.
-            1 - Projeto: Síntese e aumento de escala de intermediários chaves polifuncionalizados
-            e suas aplicações na química medicinal
-            Descrição: Universal (428920/2018-7) Devido à extrema importância dos blocos de
-            construção em química medicinal, esse projeto, irá utilizar diferentes blocos de
-            construção polifuncionalizados que, serão utilizados por nosso grupo de pesquisa na
-            preparação de diferentes substâncias as quais, serão avaliadas frente a diferentes
-            tipos de doenças, em especial as comumente conhecidas como doenças
-            negligenciadas. A preparação dos blocos de construção e as substâncias líderes de
-            cada classe irão ser preparadas em aumento de escala.
-            
-            Linha 3: Novos compostos no combate à Tuberculose
-            
-            Objetivo: Devido à importância da tuberculose no cenário da saúde pública mundial,
-            necessita-se com urgência de novos fármacos mais potentes, de baixo custo, com
-            menores efeitos colaterais e com reduzido tempo da terapia. Desta forma o objetivo
-            desse trabalho é, a partir de grupos farmacofóricos reconhecidamente ativos contra o
-            Mycobacterium tuberculosis, obter uma biblioteca de substâncias, que serão avaliadas
-            quanto a sua atuação no combate à tuberculose.
-            1 - Projeto: Síntese e avaliação antimicobacteriana de derivados benzotiazólicos,
-            benzoimidazólicos e seus análogos estruturais
-            Descrição: O objetivo deste projeto é a síntese e a avaliação antimicobacteriana de
-            diversos derivados benzotiazólicos, benzimidazólicos e seus análogos estruturais. O
-            planejamento das séries de substâncias foi baseado em um número reduzido de
-            etapas e com materiais de partida facilmente disponíveis e de baixo custo.
-            2 - Projeto: Síntese e aumento de escala de building-blocks quinolínicos
-            intermediários-chave na busca por novas moléculas com atividade contra a
-            tuberculose
-            Descrição: PROEP-FAR II (44004/2022-5). O presente projeto visa à obtenção em
-            escala multigrama de building blocks quinolínicos de interesse para o grupo na busca
-            por novas moléculas com potencial atividade contra a tuberculose. Os building
-            blocks propostos neste projeto são derivados do núcleo 7-cloroquinolina, com
-            múltiplos padrões de substituição na posição C-6, e funcionalizados nas posições C-4
-            e/ou C-2.
-            3 - Projeto: Síntese e avaliação tuberculostática de substâncias baseadas no fármaco
-            mefloquina
-            Descrição: Cientista do Nosso Estado (E-26/201.187/2021) A proposta deste projeto
-            é baseada no fármaco mefloquina, a partir do planejamento e síntese de uma
-            biblioteca de substâncias quinolínicas funcionalizadas na posição C-4 que serão
-            avaliadas quanto a sua atuação no combate à tuberculose. Esta funcionalização foi
-            baseada na substância etilenodiamina, que é o grupo farmacofórico do fármaco
-            etambutol, utilizado no tratamento de primeira escolha contra a tuberculose, além de
-            seus respectivos 1,2-aminoálcoois e derivados. Isto permitirá estabelecer um estudo
-            de relação estrutura-atividade que auxiliará na identificação do seu mecanismo de
-            ação e na escolha de uma substância para estudos in vivo.
-            4- Projeto: Planejamento, síntese e avaliação biológica de derivados da cânfora
-            Descrição: Na área da química medicinal, estudos revelaram que a cânfora possui
-            uma diversidade de atividades biológicas, atuando como antiviral, antimicrobiano,
-            antitussígeno e como analgésico. Assim sendo, o objetivo geral deste projeto consiste
-            na síntese em escala de multigramas utilizando a cânfora como material de partida,
-            obtendo building-blocks, como a nitroimina da cânfora, utilizando o intermediário
-            chave canfeceno que será transformado em um mesilato imino álcool da cânfora,
-            todo esse processo sintético até o mesilato ocorrerá em escala multigramas. A partir
-            do mesilato imino-alcool da cânfora será sintetizado novos derivados da cânfora,
-            reagindo com aminas primárias, secundárias e disubstituidas.
-            
-            Linha 4: Novos compostos no combate a Leishmaniose
-            
-            Objetivo: Obter intermediários chaves polifuncionalizados de diferentes classes
-            químicas e seus derivados em escala multigrama, que serão avaliadas quanto a sua
-            atuação no combate à Leishmaniose.
-            1- Projeto: Síntese e aumento de escala de intermediários chaves polifuncionalizados
-            e suas aplicações na química medicinal
-            Descrição: A obtenção de intermediários sintéticos chaves polifuncionalizados em
-            escala otimizada, vem a ser uma estratégia fundamental para se obter diversos
-            compostos de fundamental importância para estudos de suas propriedades
-            farmacológicas. Tal estratégia permite o alcance de uma variabilidade de moléculas
-            estruturalmente diversificadas, facilitando o estudo de relação estrutura atividade e a
-            obtenção de um protótipo. Ademais, tal estratégia possibilita, para um dado produto
-            promissor, a obtenção de quantidade de massa necessária para eventuais ensaios mais
-            avançados in vivo e pré-clínico, bem como antecipa alguns parâmetros que viabiliza
-            sua possível produção em escala otimizada. Neste contexto, o presente trabalho visa
-            a obtenção em escala de multigramas de intermediários chaves (building blocks) de
-            diferentes classes químicas, e seus derivados, com o fim de se obter potenciais
-            substâncias bioativas que tenham propriedades farmacológicas de interesse, tais
-            como leishmanicida.
-            Linha 5: Novos compostos para o tratamento do câncer
-            Objetivo: Obter uma biblioteca de substâncias derivadas do núcleo quinoxalínico e
-            substâncias contendo selenoheterociclos do fármaco mefloquina e outros análogos
-            quinolínicos, que serão avaliadas quanto a sua atuação no combate à malária.
-            1- Projeto: Síntese de derivados quinoxalínicos com potencial atividade antitumoral
-            Descrição: Este projeto tem como objetivo o desenvolvimento de novas séries de
-            derivados quinoxalínicos como promissores agentes antitumorais. Com ênfase na
-            síntese e avaliação farmacológica, exploramos o potencial antitumoral do núcleo
-            quinoxalínico, respaldando-nos nos resultados prévios do grupo, que evidenciaram
-            notável atividade antitumoral dos derivados quinoxalinil-hidrazônicos. Dessa forma,
-            a abordagem deste projeto compreende a síntese de novas séries de derivados
-            quinoxalínicos, visando ampliar a diversidade de compostos que contenham esse
-            núcleo. Com isso, a finalidade é aprofundar a compreensão da atividade
-            biológica desses compostos e contribuir para avanços significativos no campo da
-            pesquisa de agentes antitumorais.
-            2- Projeto: Síntese e avaliação biológica de selenoheterociclos como potenciais
-            agentes antitumorais.
-            Descrição: Nos últimos anos várias estruturas contendo os núcleos oxazol e tiazol
-            tem sido reportadas como potenciais agentes anticâncer. Alguns estudos também
-            tem reportado que a substituição do átomo de enxofre por seu isóstero selênio em
-            diversas moléculas resulta em um aumento da atividade biológica dessas estruturas.
-            Assim sendo, os objetivos específicos deste projeto são a síntese de compostos
-            contendo selenoheterociclos, incluindo os selenoazois que serão avaliados frente a
-            diferentes linhagens de células cancerosas além do estudo da relação estrutura-
-            atividade dessas substâncias.
-          </p>
+          Objetivo: Uso de plantas Medicinais e seus derivados em ensaios para
+          doenças negligenciadas (principalmente malaria, leishmania) e
+          neoplasias.
+
+          Projeto: Seleção de Protótipos Antileishmania a partir de Plantas Nativas
+          do Brasil
+
+          Coordenação: Ana Claudia Fernandes Amaral
+
+          Projeto: Atividade Antimicrobiana de Croton lechleri
+
+          Coordenação: Ana Claudia Fernandes Amaral
+
+          Projeto: Reposicionamento de fármacos como estratégia de descoberta
+          de novos alvos contra patógenos fúngicos humanos: aplicações
+          terapêuticas e profiláticas off-label e de redução da virulência
+
+          Coordenação: Ana Claudia Fernandes Amaral
+
+          Projeto: Protótipos com óleos essenciais e frutos selecionados da
+          Amazônia contra o mosquito mais temido pela população brasileira
+
+          Coordenação: Ana Claudia Fernandes Amaral
+
+          Projeto: Plantas medicinais utilizadas contra doenças endêmicas
+
+          Coordenação: Ana Claudia Fernandes Amaral
+
+          Projeto: Desenvolvimento de Formas Farmaceuticas contra Leishmania
+
+          Coordenação: Ana Claudia Fernandes Amaral
+
+          Linha: Políticas Públicas e Fitoterápicos e Plantas Medicinais
+
+          Objetivo: Colaborar na Elaboração e implementação de políticas públicas
+          voltadas para a área de plantas medicinais e fitoterápicos.
+
+          Projeto: Apoio às Instituições Sediadas no RJ: Caracterização
+          bromatológica e funcional de mel e pólen de abelhas sem ferrão da Mata
+          Atlântica fluminense: uma estratégia para valorização de espécies nativas
+
+          Coordenação: Ana Claudia Fernandes Amaral
+
+          Linha: Produtos Naturais
+
+          Projeto: Desenvolvimento a base de Óleos Essenciais e Resinas para a
+          Proteção de Cultivares Estratégicos para a Agricultura e Segurança da
+          saúde
+
+          Coordenação: Ana Claudia Fernandes Amaral
+        </p>
+        <p class="text-about last-news-paragraph-farmacologia" *ngIf="dados?.nome.includes('LABFE')">
+          1 - Desenvolvimento de processos de escalonamento e prototipagem (Otimização de
+          processos desde a escala laboratorial até escala industrial com uso das ferramentas
+          de Quality by design e Planejamento de experimentos (DoE) e impressão 3D).
+
+          2 - Desenvolvimento de tecnologias de produção, controle de qualidade, avaliação pré-
+          clínica e clínica (Secagem/Microencapsulação por aspersão (spray-drying); Preparo de
+          dispersões sólidas por hot melt extrusion (HME); Preparo de complexos com resinas
+          de troca iônica; Melhoria da estabilidade e palatabilidade de fármacos)
+
+          3 - Formulação farmacêutica de medicamentos, incluindo nanoformulação
+          (Formulações com insumos sintéticos e da biodiversidade, para aplicação
+          farmacêutica, veterinária e como insumos para saúde)
+        </p>
+        <p class="text-about last-news-paragraph-farmacologia" *ngIf="dados?.nome.includes('LABTECBIO')">
+          1.Pesquisa e Desenvolvimento de fitoterápicos
+
+          2.Pesquisa e Desenvolvimento de fitofármacos
+
+          3.Triagem biológica de produtos naturais e substâncias sintéticas na busca de
+          novos fármacos
+          Projetos:
+          Projeto 1: Avaliação da atividade inibitória do vírus Chikungunya por
+          moléculas contendo derivados fenólicos como grupos farmacofóricos
+          Coordenador do projeto: Antonio Carlos Siani
+
+          Projeto 2: Investigação das atividades imunomoduladora e inibitória in vitro
+          do vírus Chikungunya por diterpenos isolados do látex medicinal de
+          Euphorbia umbellata (janaúba)
+          Coordenador do projeto: Antonio Carlos Siani
+
+          Projeto 3: Aspectos etnobotânicos e o uso popular do látex de Euphorbia
+          umbellata (janaúba) como medicinal o Brasil
+          Coordenador do projeto: Antonio Carlos Siani
+
+          Projeto 4: Avaliação do potencial anticâncer de terpenoides naturais e de seus
+          derivados obtidos pela semissíntese e bioconversão
+          Coordenador do projeto: José Luiz Mazzei da Costa
+
+          Projeto 5: Cromatografia líquida guiada pela transposição por modelos na
+          separação e isolamento em macroescala
+          Coordenador do projeto: José Luiz Mazzei da Costa
+
+          Projeto 6: Prospecção de agentes ativos e/ou adjuvantes de origem vegetal na
+          terapia do câncer
+          Coordenador do projeto: Dra Dulcinéia Furtado Teixeira
+
+          Projeto 7: Prospecção de novas moléculas e extratos de plantas medicinais
+          brasileiras, família Asteraceae, arnicas brasileiras, (gêneros Solidago,
+          Chromolaena e Tithonia) com potencial atividade em doenças inflamatórias
+          dependentes como o câncer e doenças epiteliais
+          Coordenador do projeto: Dra Simone Sacramento Valverde
+
+          Projeto 8: Produção e qualificação de IFAVS da biodiversidade brasileira a
+          partir de plantas medicinais da família Asteraceae, arnicas brasileiras,
+          (gêneros Solidago, Chromolaena, Tithonia e Acmella) com potencial no
+          tratamento e controle de leishmaniose e esquistossomose
+          Coordenador do projeto: Dra Simone Sacramento Valverde
+
+          Projeto 9: Produção e Controle de Qualidade de Fitoterápico a base de
+          Solidago chilensis, espécie constante do Programa de Fitoterapia da Prefeitura
+          da Cidade do Rio de Janeiro (SMS/RJ)
+          Coordenador do projeto: Dra Simone Sacramento Valverde
+
+          Projeto 10: Avaliação Quantitativa por CG/MS e por RMN da Sazonalidade
+          de Solidagenona em Inflorescências de Solidago chilensis
+          Coordenador do projeto: Dra Simone Sacramento Valverde
+
+          Projeto 11: Estudo de Óleos Essenciais como Inibidores da Acetilcolinesterase
+          Coordenador do projeto: Dra Simone Sacramento Valverde
+
+          Projeto 12: Estudo Químico de Solidago chilensis Meyen
+          Coordenador do projeto: Dra Simone Sacramento Valverde
+
+          Projeto 13: Desenvolvimento de um fitoproduto a base de Gymnanthemum
+          amygdalinum (Del.) Sch. Bip. ex Walp: Produção do insumo farmacêutico
+          ativo vegetal (IFAV) padronizado.
+          Coordenador do projeto: Maria Raquel Figueiredo e Valber da Silva Frutuoso
+          (IOC), (http://lattes.cnpq.br/0012148860529745) PORTFÓLIO
+          TECNOLÒGICO
+
+          Projeto 14: Desenvolvimento tecnológico de suplemento nutricional com a
+          espécie Gymnanthemum amygdalinum (Delile) Sch. Bip ex Walp para o uso
+          veterinário
+          Coordenador do projeto: Maria Raquel Figueiredo e Valber da Silva Frutuoso
+          (IOC)
+
+          Projeto 15: Fitomedicamento a base de extrato hidroetanólico das folhas de
+          Schinus terebinthifolius Raddi, para a terapia das inflamações articulares.
+          Coordenador do projeto: Maria Raquel Figueiredo e Elaine Cruz Rosas
+
+          Projeto 16: Extratos de Schinus terebinthifolius Raddi frente a três principais
+          agentes da esporotricose: Sporothrix brasiliensis, Sporothrix schenckii e
+          Sporothrix globosa
+          Coordenador do projeto: Maria Raquel Figueiredo e Dayvison Francis Saraiva
+          Freitas
+
+          Projeto 17: Extratos e substâncias oriundas da biodiversidade vegetal e suas
+          potencialidades farmacológicas
+          Coordenador do projeto: Maria Raquel Figueiredo
+        </p>
+        <p class="text-about last-news-paragraph-farmacologia" *ngIf="dados?.nome.includes('LASFAR')">
+          Projeto 1: Desenvolvimento de novos potenciais multialvos para a inibição da
+          replicação do HIV-1
+          Coordenador do Projeto: Dra. Monica bastos
+
+          Projeto 2: Novos derivados do ITRN zidovudina como potenciais inibidores
+          do HIV-1
+          Coordenador do Projeto: Dra. Monica bastos
+
+          Projeto 3: Busca por novos ITRNN como potenciais inibidores do HIV-1
+          Coordenador do Projeto: Dra. Monica bastos
+
+          Projeto 4: Criptococose associada ao HIV: novas moléculas híbridas com
+          possível atividade contra os dois patógenos e desenvolvimento de um modelo
+          celular de avaliação da coinfecção.
+          Coordenador do Projeto: Dra. Monica bastos
+
+          Projeto 5: Novas N-Acilidrazonas como inibidores da cruzaína e potenciais
+          antichagásicos.
+          Coordenador do Projeto: Dr. Samir D’Aquino Carvalho, Dr. Lucas Villas Bôas
+          Hoelz,
+
+          Projeto 6: Análogos do imatinibe contendo derivados indólicos como
+          potenciais antineoplásicos.
+          Coordenador do Projeto: Dra. Monica bastos, Dra. Nubia Boechat
+
+          Projeto 7: Derivados etinil-benzamidas como potenciais inibidores da proteína
+          tirosina cinase BCR-ABL1
+          Coordenador do projeto: Dra. Monica bastos , Dra. Nubia Boechat
+
+          Projeto 8: Novos derivados bifenilpirimidinas como análogos do ponatinibe,
+          planejados como potenciais inibidores da tirosina cinase BCR-ABL1 com a
+          mutação T315I
+          Coordenador do projeto: Dra. Monica bastos, Dra. Nubia Boechat, Dr. Luiz
+          Claudio Ferreira Pimentel
+
+          Projeto 9: Uma Nova Geração de Derivados da Isoniazida como Protótipos de
+          Fármaco contra a Tuberculose (PORTFÓLIO TECNOLÒGICO)
+          Coordenador do projeto: Dra. Nubia Boechat, Dr. Frederico Silva Castelo-
+          Branco
+
+          Projeto 10: Estratégia Inovadora de Reposicionamento e Associações de
+          Fármacos Contra a COVID-19: uso da triagem virtual em três enzimas
+          essenciais de SARS-CoV- 2 e de um novo modelo de avaliação da replicação
+          viral juntamente com a modulação inflamatória
+          Coordenador do projeto: Dra. Nubia Boechat, Dr. Frederico Silva Castelo-
+          Branco, Monica bastos, Dr. Lucas Villas Bôas Hoelz
+
+          Projeto 11: Planejamento, Síntese e Avaliação Antichagásica de Novos
+          Derivados Nitrotriazólicos
+          Coordenador do projeto: Dra. Nubia Boechat, Dr. Frederico Silva Castelo-
+          Branco, Dr. Rodolfo Rodrigo Florido
+
+          Projeto 12: Planejamento, Síntese e Avaliação Antichagásica de Novos
+          Derivados Triazólicos
+          Coordenador do projeto: Dra. Nubia Boechat e Dr. Frederico Silva Castelo-
+          Branco
+
+          Projeto 13: Planejamento, síntese e avaliação de novos compostos
+          antimicobacterianos
+          Coordenador do projeto: Dra. Nubia Boechat e Dr. Frederico Silva Castelo-
+          Branco
+
+          Projeto 14: Síntese e Avaliação Antimicobacteriana de Novas alfa, alfa-
+          difluoroidrazidas
+          Coordenador do projeto: Dra. Nubia Boechat e Dr. Frederico Silva Castelo-
+          Branco
+
+          Projeto 15: Síntese do 17-DMAG e seu sal cloridrato
+          Coordenador do projeto: Dra. Nubia Boechat, Dr. Frederico Silva Castelo-
+          Branco e Walter Trajano de Sá Filho
+
+          Projeto 16: SintIFA
+          Coordenador do projeto: Dra. Nubia Boechat, Dr. Frederico Silva Castelo-
+          Branco e Dra. Monica bastos (servidora pública,
+
+          Projeto 17: Otimizações na síntese da Isoniazida e Rifapentina com reatores
+          de microfluídica
+          Coordenador do projeto: Dra. Nubia Boechat, Dr. Frederico Silva Castelo-
+          Branco, Walter Trajano de Sá Filho, Mário Celso Pagotto
+
+          Projeto 18: Nova rota para a obtenção de benznidazol
+          Coordenador do projeto: Dra. Nubia Boechat, Dr. Frederico Silva Castelo-
+          Branco , Dr. João Carlos Martins Mafra, Walter Trajano de Sá Filho
+
+          Projeto 19: Análise de risco da presença de nitrosaminas em insumos
+          farmacêuticos ativos e seus medicamentos
+          Coordenador do projeto: Dra. Nubia Boechat, Dra. Monica bastos, Dr.
+          Frederico Silva Castelo-Branco, Dr. Rodolfo Rodrigo Florido França , Walter
+          Trajano de Sá Filho, Dr. Samir D’Aquino Carvalho, Dr. João Carlos Martins
+          Mafra, M.Sc. Paula Miranda Sá
+
+          Projeto 20: Identificação in silico de novos inibidores da BCR-ABL1 para a
+          luta contra a leucemia mieloide crônica
+          Coordenador do projeto: Dr. Tacio Vinicio Amorim Fernandes
+
+          Projeto 21:
+          Métodos Computacionais Aplicados na Predição de Genotoxicidade de
+          Compostos Bioativos
+          Coordenador do projeto: Dr. Tacio Vinicio Amorim Fernandes
+        </p>
+        <p class="text-about last-news-paragraph-farmacologia" *ngIf="dados?.nome.includes('SSCDT')">
+          Linha 1: Novas metodologias sintéticas utilizando o ultrassom
+          Objetivo: Desenvolvimento de novas metodologias sintéticas utilizando ultrassom
+          visando a aceleração e ou favorecimento na síntese de blocos de construção em aumento
+          de escala e moléculas biologicamente ativas.
+          1 - Projeto: Utilização do ultrassom na síntese de moléculas biologicamente ativas
+          Descrição: O objetivo deste projeto é a utilização do ultrassom na aceleração e ou
+          favorecimento na síntese de blocos de construção em aumento de escala e moléculas
+          biologicamente ativas.
+          2 - Projeto: Síntese de derivados de ácidos acrílicos em escala multigrama por
+          irradiação de ultrassom
+          Descrição: Derivados de ácidos acrílicos são amplamente utilizadas no
+          desenvolvimento de novas moléculas bioativas contra diversas doenças, tais como:
+          tuberculose, malária e câncer. Devido à importância desse building block, o objetivo
+          deste projeto é o desenvolvimento de uma metodologia rápida, em escala multigrama
+          para a síntese de alguns derivados de ácidos acrílicos por irradiação de ultrassom.
+
+          Linha 2: Síntese de análogos baseados em compostos utilizados no tratamento da
+          malária
+          Objetivo: Obter uma biblioteca de substâncias derivados do fármaco mefloquina e
+          outros análogos quinolínicos, que serão avaliadas quanto a sua atuação no combate à
+          malária.
+          1 - Projeto: Síntese e aumento de escala de intermediários chaves polifuncionalizados
+          e suas aplicações na química medicinal
+          Descrição: Universal (428920/2018-7) Devido à extrema importância dos blocos de
+          construção em química medicinal, esse projeto, irá utilizar diferentes blocos de
+          construção polifuncionalizados que, serão utilizados por nosso grupo de pesquisa na
+          preparação de diferentes substâncias as quais, serão avaliadas frente a diferentes
+          tipos de doenças, em especial as comumente conhecidas como doenças
+          negligenciadas. A preparação dos blocos de construção e as substâncias líderes de
+          cada classe irão ser preparadas em aumento de escala.
+
+          Linha 3: Novos compostos no combate à Tuberculose
+
+          Objetivo: Devido à importância da tuberculose no cenário da saúde pública mundial,
+          necessita-se com urgência de novos fármacos mais potentes, de baixo custo, com
+          menores efeitos colaterais e com reduzido tempo da terapia. Desta forma o objetivo
+          desse trabalho é, a partir de grupos farmacofóricos reconhecidamente ativos contra o
+          Mycobacterium tuberculosis, obter uma biblioteca de substâncias, que serão avaliadas
+          quanto a sua atuação no combate à tuberculose.
+          1 - Projeto: Síntese e avaliação antimicobacteriana de derivados benzotiazólicos,
+          benzoimidazólicos e seus análogos estruturais
+          Descrição: O objetivo deste projeto é a síntese e a avaliação antimicobacteriana de
+          diversos derivados benzotiazólicos, benzimidazólicos e seus análogos estruturais. O
+          planejamento das séries de substâncias foi baseado em um número reduzido de
+          etapas e com materiais de partida facilmente disponíveis e de baixo custo.
+          2 - Projeto: Síntese e aumento de escala de building-blocks quinolínicos
+          intermediários-chave na busca por novas moléculas com atividade contra a
+          tuberculose
+          Descrição: PROEP-FAR II (44004/2022-5). O presente projeto visa à obtenção em
+          escala multigrama de building blocks quinolínicos de interesse para o grupo na busca
+          por novas moléculas com potencial atividade contra a tuberculose. Os building
+          blocks propostos neste projeto são derivados do núcleo 7-cloroquinolina, com
+          múltiplos padrões de substituição na posição C-6, e funcionalizados nas posições C-4
+          e/ou C-2.
+          3 - Projeto: Síntese e avaliação tuberculostática de substâncias baseadas no fármaco
+          mefloquina
+          Descrição: Cientista do Nosso Estado (E-26/201.187/2021) A proposta deste projeto
+          é baseada no fármaco mefloquina, a partir do planejamento e síntese de uma
+          biblioteca de substâncias quinolínicas funcionalizadas na posição C-4 que serão
+          avaliadas quanto a sua atuação no combate à tuberculose. Esta funcionalização foi
+          baseada na substância etilenodiamina, que é o grupo farmacofórico do fármaco
+          etambutol, utilizado no tratamento de primeira escolha contra a tuberculose, além de
+          seus respectivos 1,2-aminoálcoois e derivados. Isto permitirá estabelecer um estudo
+          de relação estrutura-atividade que auxiliará na identificação do seu mecanismo de
+          ação e na escolha de uma substância para estudos in vivo.
+          4- Projeto: Planejamento, síntese e avaliação biológica de derivados da cânfora
+          Descrição: Na área da química medicinal, estudos revelaram que a cânfora possui
+          uma diversidade de atividades biológicas, atuando como antiviral, antimicrobiano,
+          antitussígeno e como analgésico. Assim sendo, o objetivo geral deste projeto consiste
+          na síntese em escala de multigramas utilizando a cânfora como material de partida,
+          obtendo building-blocks, como a nitroimina da cânfora, utilizando o intermediário
+          chave canfeceno que será transformado em um mesilato imino álcool da cânfora,
+          todo esse processo sintético até o mesilato ocorrerá em escala multigramas. A partir
+          do mesilato imino-alcool da cânfora será sintetizado novos derivados da cânfora,
+          reagindo com aminas primárias, secundárias e disubstituidas.
+
+          Linha 4: Novos compostos no combate a Leishmaniose
+
+          Objetivo: Obter intermediários chaves polifuncionalizados de diferentes classes
+          químicas e seus derivados em escala multigrama, que serão avaliadas quanto a sua
+          atuação no combate à Leishmaniose.
+          1- Projeto: Síntese e aumento de escala de intermediários chaves polifuncionalizados
+          e suas aplicações na química medicinal
+          Descrição: A obtenção de intermediários sintéticos chaves polifuncionalizados em
+          escala otimizada, vem a ser uma estratégia fundamental para se obter diversos
+          compostos de fundamental importância para estudos de suas propriedades
+          farmacológicas. Tal estratégia permite o alcance de uma variabilidade de moléculas
+          estruturalmente diversificadas, facilitando o estudo de relação estrutura atividade e a
+          obtenção de um protótipo. Ademais, tal estratégia possibilita, para um dado produto
+          promissor, a obtenção de quantidade de massa necessária para eventuais ensaios mais
+          avançados in vivo e pré-clínico, bem como antecipa alguns parâmetros que viabiliza
+          sua possível produção em escala otimizada. Neste contexto, o presente trabalho visa
+          a obtenção em escala de multigramas de intermediários chaves (building blocks) de
+          diferentes classes químicas, e seus derivados, com o fim de se obter potenciais
+          substâncias bioativas que tenham propriedades farmacológicas de interesse, tais
+          como leishmanicida.
+          Linha 5: Novos compostos para o tratamento do câncer
+          Objetivo: Obter uma biblioteca de substâncias derivadas do núcleo quinoxalínico e
+          substâncias contendo selenoheterociclos do fármaco mefloquina e outros análogos
+          quinolínicos, que serão avaliadas quanto a sua atuação no combate à malária.
+          1- Projeto: Síntese de derivados quinoxalínicos com potencial atividade antitumoral
+          Descrição: Este projeto tem como objetivo o desenvolvimento de novas séries de
+          derivados quinoxalínicos como promissores agentes antitumorais. Com ênfase na
+          síntese e avaliação farmacológica, exploramos o potencial antitumoral do núcleo
+          quinoxalínico, respaldando-nos nos resultados prévios do grupo, que evidenciaram
+          notável atividade antitumoral dos derivados quinoxalinil-hidrazônicos. Dessa forma,
+          a abordagem deste projeto compreende a síntese de novas séries de derivados
+          quinoxalínicos, visando ampliar a diversidade de compostos que contenham esse
+          núcleo. Com isso, a finalidade é aprofundar a compreensão da atividade
+          biológica desses compostos e contribuir para avanços significativos no campo da
+          pesquisa de agentes antitumorais.
+          2- Projeto: Síntese e avaliação biológica de selenoheterociclos como potenciais
+          agentes antitumorais.
+          Descrição: Nos últimos anos várias estruturas contendo os núcleos oxazol e tiazol
+          tem sido reportadas como potenciais agentes anticâncer. Alguns estudos também
+          tem reportado que a substituição do átomo de enxofre por seu isóstero selênio em
+          diversas moléculas resulta em um aumento da atividade biológica dessas estruturas.
+          Assim sendo, os objetivos específicos deste projeto são a síntese de compostos
+          contendo selenoheterociclos, incluindo os selenoazois que serão avaliados frente a
+          diferentes linhagens de células cancerosas além do estudo da relação estrutura-
+          atividade dessas substâncias.
+        </p>
       </div>
     </div>
   </div>
 
-<!-- EQUIPE -->
- <div class="row justify-content-center align-items-center m-0 p-0" style="margin-top: 20px !important;" *ngIf="dados?.equipe.length > 0">
-  <div class="col-md-11 col-lg-10 d-flex flex-column justify-content-between align-items-center"
+  <!-- EQUIPE -->
+  <div class="row justify-content-center align-items-center m-0 p-0" style="margin-top: 20px !important;"
+    *ngIf="dados?.equipe.length > 0">
+    <div class="col-md-11 col-lg-10 d-flex flex-column justify-content-between align-items-center"
       style="height: auto; background-color: white; border-radius: 20px; border: 1px solid rgb(219, 219, 219);">
       <div class="row w-100">
-          <div class="col-12" style="padding-top: 25px;">
-              <h4 style="font-size: 1.2rem; color: rgb(44, 44, 44);">
-                  EQUIPE
-              </h4>
-          </div>
+        <div class="col-12" style="padding-top: 25px;">
+          <h4 style="font-size: 1.2rem; color: rgb(44, 44, 44);">
+            EQUIPE
+          </h4>
+        </div>
 
-          <div class="col-12 d-flex flex-wrap pb-5" style="overflow: hidden; ">
-            <div #swiperContainer class="swiper-container">
-              <div class="swiper-wrapper">
-                <div class="swiper-slide" *ngFor="let item of dados.equipe">
-                  <a [attr.href]="item.link ? item.link : '#'">
-                    <div class="card-custom d-flex flex-column justify-content-center align-items-center mb-5"
+        <div class="col-12 d-flex flex-wrap pb-5" style="overflow: hidden; ">
+          <div #swiperContainer class="swiper-container">
+            <div class="swiper-wrapper">
+              <div class="swiper-slide" *ngFor="let item of dados.equipe">
+                <a [attr.href]="item.link ? item.link : '#'">
+                  <div class="card-custom d-flex flex-column justify-content-center align-items-center mb-5"
                     style="width: 225px; height: auto; min-height: 300px;">
                     <div class="card-title w-100 pl-3 pt-4" style="color:#2864AE; text-align: start;">
-                        <h4 style="font-size: 0.9rem; text-align: start;" *ngIf="item.nome">{{item.nome}}</h4>
-                        <h4 style="font-size: 0.9rem; text-align: start;" *ngIf="item.cargo">{{item.cargo}}</h4>
+                      <h4 style="font-size: 0.9rem; text-align: start;" *ngIf="item.nome">{{item.nome}}</h4>
+                      <h4 style="font-size: 0.9rem; text-align: start;" *ngIf="item.cargo">{{item.cargo}}</h4>
                     </div>
                     <img src="../../../assets/galeria/parceiro4.png" style="margin-bottom: 15px; max-width: 100%;">
-                </div>
-                  </a>
-                  
-                </div>
+                  </div>
+                </a>
+
               </div>
-              
-              <div class="swiper-button-next"></div>
-              <div class="swiper-button-prev"></div>
             </div>
+
+            <div class="swiper-button-next"></div>
+            <div class="swiper-button-prev"></div>
           </div>
+        </div>
       </div>
+    </div>
   </div>
-</div>
 
   <!-- RECONHECIMENTOS -->
-  <div  class=" row justify-content-center align-items-center m-0 p-0"
-    style="margin-top: 20px !important;">
+  <div class=" row justify-content-center align-items-center m-0 p-0" style="margin-top: 20px !important;">
 
     <div class="col-md-11 col-lg-10 d-flex
     justify-content-between align-items-center flex-wrap"
@@ -628,7 +727,7 @@
       <div class="col-md-12 col-lg-12 pt-md-4 pb-4">
         <h4 style="font-size: 1.2rem; color: gray; ">
           RECONHECIMENTOS
-          
+
         </h4>
         <h2 style="color:#2864AE; font-weight: bolder;">
           PRÊMIOS E PROPRIEDADE INTELECTUAL
@@ -662,31 +761,32 @@
           Destaque de trabalho científico entre os dez mais citados no Brazilian Journal
           of Pharmacognosy em 2021.
           Patentes:
-          
+
           AMARAL, Ana Claudia Fernandes; TOMASSINI, Therezinha ; RIBEIRO, Ivone ; SOARES, Milena ; SANTOS,
           Ricardo R dos ; AMARAL, A.C.F. . Processo para a obtenção de esteróides seco derivados do ergostano. 2004,
           Brasil.
           Patente: Privilégio de Inovação. Número do registro: PI04046358, título: &quot;Processo para a obtenção de
-          esteróides seco derivados do ergostano&quot; , Instituição de registro: INPI - Instituto Nacional da Propriedade
+          esteróides seco derivados do ergostano&quot; , Instituição de registro: INPI - Instituto Nacional da
+          Propriedade
           Industrial. Depósito: 25/10/2004; Concessão: 15/01/2019. Instituição(ões) financiadora(s): FIOCRUZ.
 
-          
+
           AMARAL, A. C.; TOMASSINI, Therezinha ; RIBEIRO, Ivone ; SANTOS, Ricardo R dos ; SOARES, Milena .
           PROCESS FOR OBTAINING DRY STEROIDS DERIVATIVE FROM ERGOSTANE. 2004, Brasil.
           Patente: Privilégio de Inovação. Número do registro: WO045171A2, título: &quot;PROCESS FOR OBTAINING DRY
-          STEROIDS DERIVATIVE FROM ERGOSTANE&quot; , Instituição de registro: United States Patent and Trademark 
+          STEROIDS DERIVATIVE FROM ERGOSTANE&quot; , Instituição de registro: United States Patent and Trademark
           Office. Depósito: 25/10/2004; Concessão: 04/05/2006. Instituição(ões) financiadora(s): Fiocruz.
 
-          
+
           Jefferson Rocha de A Silva ; SILVA, Jefferson R A ; ANA, CLAUDIA F. AMARAL ; AMARAL, Ana Claudia
           Fernandes ; AMARAL, Ana Claudia Fernandes ; DARIVA, C. ; JESUS, A. A. ; ALMEIDA, B. M. ;
           ALBUQUERQUE JUNIOR, R. L. C. ; ALBUQUERQUE JUNIOR, R. L. C. ; CARDOSO, J. C. ; NASCIMENTO, M. F. .
-          PROCESSO DE EXTRAÇÃO GUIADA COM PURIFICAÇÃO E CONCENTRAÇÃO DE SUBSTÂNCIAS 
+          PROCESSO DE EXTRAÇÃO GUIADA COM PURIFICAÇÃO E CONCENTRAÇÃO DE SUBSTÂNCIAS
           EXTRAÍDAS A PARTIR DAS CASCAS DO CAULE DE HIMATANTHUS BRACTEATUS (A. DC.) WOODSON. 2015,
           ANTIOXIDANTES Brasil.
           Patente: Privilégio de Inovação. Número do registro: BR1020150239661, título: &quot;PROCESSO DE EXTRAÇÃO
-          GUIADA COM PURIFICAÇÃO E CONCENTRAÇÃO DE SUBSTÂNCIAS ANTIOXIDANTES EXTRAÍDAS A PARTIR 
-          DAS CASCAS DO CAULE DE HIMATANTHUS BRACTEATUS (A. DC.) WOODSON&quot; , Instituição de registro: INPI 
+          GUIADA COM PURIFICAÇÃO E CONCENTRAÇÃO DE SUBSTÂNCIAS ANTIOXIDANTES EXTRAÍDAS A PARTIR
+          DAS CASCAS DO CAULE DE HIMATANTHUS BRACTEATUS (A. DC.) WOODSON&quot; , Instituição de registro: INPI
           - Instituto Nacional da Propriedade Industrial. Depósito: 17/09/2015; Concessão: 20/07/2021.
         </p>
         <p class="text-about last-news-paragraph-farmacologia" *ngIf="dados?.nome.includes('LPNSP')">
@@ -718,7 +818,8 @@
 
           3 - Prêmio Maria Auxiliadora Kaplan - Menção Honrosa, IPPN Instituto de Pesquisas
           de Produtos Naturais da UFRJ, 2020. PASCHOAL, R. G. ; VIÇOSA, A.L. ; MOREIRA, D. L. .
-          Desenvolvimento de metodologia analítica por cromatografia em fase líquida de alta eficiência para quantificação
+          Desenvolvimento de metodologia analítica por cromatografia em fase líquida de alta eficiência para
+          quantificação
           de curcumina. In: V Jornada Fluminense de Produtos Naturais, 2020, Rio de Janeiro. V Jornada Fluminense de
           Produtos Naturais, 2020.
         </p>
@@ -730,11 +831,11 @@
           (RASBQ2022). Marques, André M.; Kaplan, Maria Auxiliadora C.;
           Figueiredo, M. R. The role of Countercurrent Chromatography to separate
           major volatile compounds from essential oil of Manekia obtusa L.
-          
+
           2021. Destaque na 29ª Reunião Anual de Iniciação Científica, área PN (aluna
           Bianca Carvalho dos Santos), Farmanguinhos, Fundação Oswaldo Cruz.
           Produção intelectual:
-          
+
           § Patente: (2023)
           Depósito do Pedido de Patente de Invenção intitulado &quot;Formulação de uma
           microemulsão larvicida e deterrente de oviposição da selina-1,3,7(11) -trien-8-
@@ -748,25 +849,24 @@
           Relatório interno, Jan/2023 (acesso restrito: TecBio &amp; Assessoria de
           Projetos/FAR).
         </p>
-        <p class="text-about last-news-paragraph-farmacologia" 
-        *ngIf="!dados?.nome.includes('LABTECBIO') && !dados?.nome.includes('LABFE') && !dados?.nome.includes('LPNSP') && !dados?.nome.includes('LPMD') && !dados?.nome.includes('LMN')">
-          Lorem Ipsum is simply dummy text of the printing and typesetting industry. 
-          Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, 
-          when an unknown printer took a galley of type and scrambled it to make a type specimen book. 
-          It has survived not only five centuries, but also the leap into electronic typesetting, 
-          remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, 
+        <p class="text-about last-news-paragraph-farmacologia"
+          *ngIf="!dados?.nome.includes('LABTECBIO') && !dados?.nome.includes('LABFE') && !dados?.nome.includes('LPNSP') && !dados?.nome.includes('LPMD') && !dados?.nome.includes('LMN')">
+          Lorem Ipsum is simply dummy text of the printing and typesetting industry.
+          Lorem Ipsum has been the industry's standard dummy text ever since the 1500s,
+          when an unknown printer took a galley of type and scrambled it to make a type specimen book.
+          It has survived not only five centuries, but also the leap into electronic typesetting,
+          remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets
+          containing Lorem Ipsum passages,
           and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
         </p>
       </div>
     </div>
   </div>
 
-    <!-- GALERIA -->
-    <div class=" row justify-content-center align-items-center m-0 p-0"
-    style="margin-top: 20px !important;">
+  <!-- GALERIA -->
+  <div class=" row justify-content-center align-items-center m-0 p-0" style="margin-top: 20px !important;">
 
-    <div
-      class="col-md-11 col-lg-10 d-flex flex-column justify-content-start align-items-center"
+    <div class="col-md-11 col-lg-10 d-flex flex-column justify-content-start align-items-center"
       style="height: auto; background-color: white; border-radius: 20px; border: 1px solid rgb(219, 219, 219);">
       <div class="row w-100 justify-content-center">
         <div class="col-12" style="padding-top: 25px;">
@@ -775,17 +875,16 @@
           </h4>
         </div>
 
-        <div class="row flex-wrap pb-md-5 d-flex justify-content-center align-items-center" style="width: 90%;" >
-          <div class="col-md-6 col-lg-4 p-3"  *ngFor="let image of _albums; let i=index">
-            <img class="w-100"  [src]="image.src" (click)="open(i)" />
+        <div class="row flex-wrap pb-md-5 d-flex justify-content-center align-items-center" style="width: 90%;">
+          <div class="col-md-6 col-lg-4 p-3" *ngFor="let image of _albums; let i=index">
+            <img class="w-100" [src]="image.src" (click)="open(i)" />
           </div>
         </div>
       </div>
     </div>
   </div>
 
-  <div class=" row justify-content-center align-items-center m-0 p-0"
-    style=" height: 50px;">
+  <div class=" row justify-content-center align-items-center m-0 p-0" style=" height: 50px;">
 
     Todo o conteúdo deste site está publicado sob a licença&nbsp;<a href="#">Creative
       Commons Atribuição-SemDerivações 3.0 Não Adaptada.</a>

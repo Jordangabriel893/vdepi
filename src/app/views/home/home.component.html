@@ -17,7 +17,7 @@
     </section>
   </header>
 
-  <div class="fixed-div row justify-content-center pt-4" *ngIf="showMenu && dados">
+  <div class="fixed-div row justify-content-center pt-4" *ngIf="showMenu && dados" style="border-radius: 1rem;">
     <div class="col-12 text-center d-flex">
       <img src="../../../assets/icone/farmMenu.png" style="width: 50px;height: 50px;cursor: pointer;margin-left: 20px;
         margin-right: 15px;">
@@ -255,8 +255,8 @@
       <h2>Nossos Laboratórios</h2>
     </div>
 
-    <ul *ngFor="let laboratorio of laboratorios">
-      <li (click)="redirecionarParaLaboratorio(laboratorio.nome)">{{laboratorio.nome}}</li>
+    <ul>
+      <li  *ngFor="let laboratorio of laboratorios" (click)="redirecionarParaLaboratorio(laboratorio.nome)">{{laboratorio.nome}}</li>
     </ul>
     
   </div>
