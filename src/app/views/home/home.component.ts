@@ -129,7 +129,6 @@ export class HomeComponent {
   createAlbum(){
     let i = 1
     this.images.forEach(img => {
-      console.log(img)
       const src = img.src; 
       const caption = img.thumb; 
       const thumb = img.src; 

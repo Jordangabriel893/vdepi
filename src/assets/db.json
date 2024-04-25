@@ -130,12 +130,15 @@
         }
       ],
       "galeria": [
-        "../assets/galeria/Baner sobre (2).png",
-        "../assets/galeria/Baner sobre (3).png",
-        "../assets/galeria/Baner sobre (4).png",
-        "../assets/galeria/Baner sobre (5).png",
-        "../assets/galeria/Baner sobre (6).png",
-        "../assets/galeria/Baner sobre (7).png"
+        "../assets/laboratorios/DPN/LPMD/LPMD 1.jpg",
+        "../assets/laboratorios/DPN/LPMD/LPMD 2.jpg",
+        "../assets/laboratorios/DPN/LPMD/LPMD 3.JPG",
+        "../assets/laboratorios/DPN/LPMD/LPMD 4.JPG",
+        "../assets/laboratorios/DPN/LabTecBio/LabTecBio 1.JPG",
+        "../assets/laboratorios/DPN/LabTecBio/LabTecBio 2.JPG",
+        "../assets/laboratorios/DPN/LabTecBio/LabTecBio 3.JPG",
+        "../assets/laboratorios/DPN/LabTecBio/LabTecBio 4.JPG",
+        "../assets/laboratorios/DPN/LabTecBio/LabTecBio 5.JPG"
       ]
     },
     {
@@ -219,12 +222,10 @@
         }
       ],
       "galeria": [
-        "../assets/galeria/Baner sobre (2).png",
-        "../assets/galeria/Baner sobre (3).png",
-        "../assets/galeria/Baner sobre (4).png",
-        "../assets/galeria/Baner sobre (5).png",
-        "../assets/galeria/Baner sobre (6).png",
-        "../assets/galeria/Baner sobre (7).png"
+        "../assets/laboratorios/DSFB - LASFAR/LASFAR 1.JPG",
+        "../assets/laboratorios/DSFB - LASFAR/LASFAR 2.JPG",
+        "../assets/laboratorios/DSFB - LASFAR/LASFAR 3.JPG",
+        "../assets/laboratorios/DSFB - LASFAR/LASFAR 4.JPG"
       ]
     },
     {
@@ -273,9 +274,8 @@
       "laboratorios": [
         {
           "nome": "LABORATÓRIO DE FARMACOLOGIA APLICADA (LFA)",
-          "sobre":  "O Laboratório de Farmacologia Aplicada está localizado no prédio de Produtos Naturais, no campus Manguinhos, do Instituto de Tecnologia em Fármacos – Farmanguinhos – FIOCRUZ, e é credenciado junto à Comissão Nacional de Biossegurança como NB2 (CQB 342/12).Somos um laboratório dedicado à pesquisa e desenvolvimento de fármacos e medicamentos, focados em melhorar a saúde e o bem-estar da sociedade, com uma equipe preparada para a pesquisa, descoberta e desenvolvimento de fármacos e comprometida a buscar soluções terapêuticas avançadas para enfrentar os desafios médicos atuais. A Farmacologia Aplicada tem uma abordagem multidisciplinar para investigar os aspectos fundamentais da farmacologia e aplicá-los a pesquisa e desenvolvimento de fármacos com potencial anti-inflamatório, antitumoral e antiparasitário, visando doenças inflamatórias, doenças infecciosas e crônico-degenerativas. Realiza ensaios in vitro e in vivo para compreender os mecanismos pelos quais as substâncias candidatas a fármacos atuam. Essa compreensão permite identificar alvos terapêuticos precisos e moléculas promissoras que possam ser transformadas em medicamentos seguros e eficazes. O laboratório colabora com parceiros acadêmicos, instituições de pesquisa e empresas. A equipe é composta por pesquisadores qualificados, dedicados a enfrentar os desafios científicos mais complexos. A formação contínua e a aprendizagem são valorizadas, o que mantem a equipe atualizada com os avanços mais recentes na área da farmacologia e garantindo que a pesquisas esteja sempre fundamentada nas melhores práticas científicas.",
+          "sobre": "O Laboratório de Farmacologia Aplicada está localizado no prédio de Produtos Naturais, no campus Manguinhos, do Instituto de Tecnologia em Fármacos – Farmanguinhos – FIOCRUZ, e é credenciado junto à Comissão Nacional de Biossegurança como NB2 (CQB 342/12).Somos um laboratório dedicado à pesquisa e desenvolvimento de fármacos e medicamentos, focados em melhorar a saúde e o bem-estar da sociedade, com uma equipe preparada para a pesquisa, descoberta e desenvolvimento de fármacos e comprometida a buscar soluções terapêuticas avançadas para enfrentar os desafios médicos atuais. A Farmacologia Aplicada tem uma abordagem multidisciplinar para investigar os aspectos fundamentais da farmacologia e aplicá-los a pesquisa e desenvolvimento de fármacos com potencial anti-inflamatório, antitumoral e antiparasitário, visando doenças inflamatórias, doenças infecciosas e crônico-degenerativas. Realiza ensaios in vitro e in vivo para compreender os mecanismos pelos quais as substâncias candidatas a fármacos atuam. Essa compreensão permite identificar alvos terapêuticos precisos e moléculas promissoras que possam ser transformadas em medicamentos seguros e eficazes. O laboratório colabora com parceiros acadêmicos, instituições de pesquisa e empresas. A equipe é composta por pesquisadores qualificados, dedicados a enfrentar os desafios científicos mais complexos. A formação contínua e a aprendizagem são valorizadas, o que mantem a equipe atualizada com os avanços mais recentes na área da farmacologia e garantindo que a pesquisas esteja sempre fundamentada nas melhores práticas científicas.",
           "descricao": "",
-          
           "pesquisasProjetos": "",
           "equipe": [
             {
@@ -339,12 +339,13 @@
         }
       ],
       "galeria": [
-        "../assets/galeria/Baner sobre (2).png",
-        "../assets/galeria/Baner sobre (3).png",
-        "../assets/galeria/Baner sobre (4).png",
-        "../assets/galeria/Baner sobre (5).png",
-        "../assets/galeria/Baner sobre (6).png",
-        "../assets/galeria/Baner sobre (7).png"
+        "../assets/laboratorios/DF - Farmacologia/Farmacologia 1.jpeg",
+        "../assets/laboratorios/DF - Farmacologia/Farmacologia 2.jpeg",
+        "../assets/laboratorios/DF - Farmacologia/Farmacologia 3.jpeg",
+        "../assets/laboratorios/DF - Farmacologia/Farmacologia 4.jpeg",
+        "../assets/laboratorios/DF - Farmacologia/Farmacologia 5.jpeg",
+        "../assets/laboratorios/DF - Farmacologia/Farmacologia 6.jpeg",
+        "../assets/laboratorios/DF - Farmacologia/Farmacologia 7.jpeg"
       ]
     },
     {
@@ -364,12 +365,8 @@
         }
       ],
       "galeria": [
-        "../assets/galeria/Baner sobre (2).png",
-        "../assets/galeria/Baner sobre (3).png",
-        "../assets/galeria/Baner sobre (4).png",
-        "../assets/galeria/Baner sobre (5).png",
-        "../assets/galeria/Baner sobre (6).png",
-        "../assets/galeria/Baner sobre (7).png"
+        "../assets/laboratorios/NucleodeFarmacocinetica/Espectrômetrodemassa.jpg",
+        "../assets/laboratorios/NucleodeFarmacocinetica/Sistemadecromatografiaaliquidoacopladoaespectrometrodemassa.jpeg"
       ]
     },
     {
@@ -453,12 +450,11 @@
         }
       ],
       "galeria": [
-        "../assets/galeria/Baner sobre (2).png",
-        "../assets/galeria/Baner sobre (3).png",
-        "../assets/galeria/Baner sobre (4).png",
-        "../assets/galeria/Baner sobre (5).png",
-        "../assets/galeria/Baner sobre (6).png",
-        "../assets/galeria/Baner sobre (7).png"
+        "../assets/laboratorios/DIG - LabFE/LabFE 1.JPG",
+        "../assets/laboratorios/DIG - LabFE/LabFE 2.JPG",
+        "../assets/laboratorios/DIG - LabFE/LabFE 3.JPG",
+        "../assets/laboratorios/DIG - LabFE/LabFE 4.JPG",
+        "../assets/laboratorios/DIG - LabFE/LabFE 5.JPG"
       ]
     },
     {
@@ -543,12 +539,16 @@
         }
       ],
       "galeria": [
-        "../assets/galeria/Baner sobre (2).png",
-        "../assets/galeria/Baner sobre (3).png",
-        "../assets/galeria/Baner sobre (4).png",
-        "../assets/galeria/Baner sobre (5).png",
-        "../assets/galeria/Baner sobre (6).png",
-        "../assets/galeria/Baner sobre (7).png"
+        "../assets/laboratorios/DMA/Imagem 1.jpeg",
+        "../assets/laboratorios/DMA/Imagem 2.jpeg",
+        "../assets/laboratorios/DMA/Imagem 3.jpeg",
+        "../assets/laboratorios/DMA/Imagem 4.jpeg",
+        "../assets/laboratorios/DMA/Imagem 5.jpeg",
+        "../assets/laboratorios/DMA/Imagem 6.jpeg",
+        "../assets/laboratorios/DMA/Imagem 7.jpeg",
+        "../assets/laboratorios/DMA/Imagem 8.jpeg",
+        "../assets/laboratorios/DMA/Imagem 9.jpeg",
+        "../assets/laboratorios/DMA/Imagem 10.jpeg"
       ]
     }
   ]
