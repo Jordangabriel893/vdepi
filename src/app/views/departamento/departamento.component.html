@@ -1,49 +1,12 @@
 <div class="body">
 
-  <header class="w-100 row justify-content-between align-items-center m-0 p-0">
-    <section class="col-3   left-side">
-      <img src="../../../assets/icone/Hamburger.png" class="menu-img"
-        (click)="showMenu = !showMenu" style="width: 3rem; cursor: pointer;">
-    </section>
-    <section class="col-3 d-flex justify-content-center" (click)="redirecionarParaHome()">
-      <img class="pr-2" src="../../../assets/icone/farmHeader.png" style="cursor: pointer;">
-      <img src="../../../assets/icone/vdepiHeader.png" style="cursor: pointer;">
-    </section>
-    <section class="col-3 d-flex  justify-content-end right-side">
-      <div class="container">
-        <input type="text" class="search-input">
-        <i class="fas fa-search search-icon "></i>
-      </div>
-    </section>
-  </header>
-  <div class="fixed-div row justify-content-center pt-4" *ngIf="showMenu">
-    <div class="col-12 text-center d-flex">
-      <img src="../../../assets/icone/farmMenu.png" style="width: 50px;height: 50px;cursor: pointer;margin-left: 20px;
-        margin-right: 15px;">
-      <img src="../../../assets/icone/logoMenu.png" style="width: 200px;height: 50px;cursor: pointer;">
-    </div>
-    <div class="row justify-content-center menu-options">
-      <div class="d-flex justify-content-between align-items-center" 
-        style="height: 75px; width: 275px;cursor: pointer;">
-        <h4 style="    color: #b7b0b0;; font-size: 1rem; font-weight: bolder;" (click)="redirecionarParaFarmacologia(dados.nome)">{{dados.nome}}</h4>
-        <!-- <img src="../../../assets/svg/Group.svg" style="width: 1rem;"> -->
-      </div>
-      <ng-template [ngIf]="dados.laboratorios.length > 0">
-        <div class="d-flex justify-content-between align-items-center" *ngFor="let item of dados.laboratorios" 
-        (click)="redirecionarParaLaboratorio(item.nome)"
-        style="height: 75px; width: 275px;cursor: pointer;">
-        <h4 style="color:black; font-size: 1rem; font-weight: bolder;">{{item.nome}}</h4>
-        </div>
-      </ng-template>
-      
-    </div>
+  <app-header></app-header>
 
-  </div>
 
-  <app-banner [title]="titleBanner"></app-banner>
+  <app-banner [title]="titleBanner" [Subtitle]="Subtitle" [link]="link"></app-banner>
 
   <!-- SOBRE -->
-  <div  class=" row justify-content-center align-items-center m-0 p-0" *ngIf="dados"
+  <div class=" row justify-content-center align-items-center m-0 p-0" *ngIf="dados"
     style="margin-top: 20px !important;">
 
     <div class="col-md-11 col-lg-10 d-flex
@@ -59,25 +22,24 @@
         <p class="text-about last-news-paragraph-farmacologia" *ngIf="dados.sobre">
           {{ dados.sobre}}
         </p>
-        <p class="text-about last-news-paragraph-farmacologia"
-        *ngIf="!dados.sobre">
-          Lorem Ipsum is simply dummy text of the printing and typesetting industry. 
-          Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, 
-          when an unknown printer took a galley of type and scrambled it to make a type specimen book. 
-          It has survived not only five centuries, but also the leap into electronic typesetting, 
-          remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, 
+        <p class="text-about last-news-paragraph-farmacologia" *ngIf="!dados.sobre">
+          Lorem Ipsum is simply dummy text of the printing and typesetting industry.
+          Lorem Ipsum has been the industry's standard dummy text ever since the 1500s,
+          when an unknown printer took a galley of type and scrambled it to make a type specimen book.
+          It has survived not only five centuries, but also the leap into electronic typesetting,
+          remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets
+          containing Lorem Ipsum passages,
           and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
         </p>
       </div>
     </div>
   </div>
 
-    <!-- GALERIA -->
-    <div class=" row justify-content-center align-items-center m-0 p-0"
-    style="margin-top: 20px !important;">
+  <!-- GALERIA -->
+  <div class=" row justify-content-center align-items-center m-0 p-0" style="margin-top: 20px !important;">
 
-    <div
-      class="col-md-11 col-lg-10 d-flex flex-column justify-content-start align-items-center" *ngIf="dados?.galeria.length > 0"
+    <div class="col-md-11 col-lg-10 d-flex flex-column justify-content-start align-items-center"
+      *ngIf="dados?.galeria.length > 0"
       style="height: auto; background-color: white; border-radius: 20px; border: 1px solid rgb(219, 219, 219);">
       <div class="row w-100 justify-content-center">
         <div class="col-12" style="padding-top: 25px;">
@@ -88,94 +50,16 @@
 
         <div class="row flex-wrap pb-md-5" style="width: 90%;">
           <div class="col-md-6 col-lg-4 p-3" *ngFor="let item of _albums; let i= index">
-            <img class="w-100" [src]="item.src"  (click)="open(i)" style="cursor: pointer;">
+            <img class="w-100" [src]="item.src" (click)="open(i)" style="cursor: pointer;">
           </div>
         </div>
       </div>
     </div>
   </div>
 
-  <!-- LABORATORIO -->
-  <div #produtos class="row justify-content-center align-items-center m-0 p-0" style="margin-top: 20px !important;" *ngIf="dados?.laboratorios.length > 0">
-    <div class="col-md-11 col-lg-10 d-flex flex-column justify-content-between align-items-center"
-        style="height: auto; background-color: white; border-radius: 20px; border: 1px solid rgb(219, 219, 219);">
-        <div class="row w-100">
-            <div class="col-12" style="padding-top: 25px;">
-                <h4 style="font-size: 1.2rem; color: rgb(44, 44, 44);">
-                    LABORATÓRIOS
-                </h4>
-            </div>
+  <app-labor [isHome]="isHome"></app-labor>
 
-            <div class="col-12 d-flex flex-wrap" style="padding-top: 25px; overflow: hidden;">
-              <div #swiperContainer class="swiper-container">
-                <div class="swiper-wrapper">
-                  <!-- Seus slides aqui -->
-                  <div class="swiper-slide" *ngFor="let item of dados.laboratorios" (click)="redirecionarParaLaboratorio(item.nome)" style="cursor: pointer;">
-                    <div class="card-custom d-flex flex-column justify-content-center align-items-center "
-                      style="width: 90%; height: 275px; background-color: white;">
-                      <div class="card-title" style="color:#2864AE;">
-                        <h4 style="font-size: 1rem; text-align: start; margin: 10px;">
-                          {{item.nome}}
-                        </h4>
-                      </div>
-                      <img src="../../../assets/laboratorios/img5.png" style="margin-bottom: 15px; max-width: 100%;">
-                    </div>
-                    <div class="btn-saiba d-flex justify-content-center align-items-center mb-5" style="width: 90%;">
-                      <button class="saiba-mais-btn" (click)="redirecionarParaLaboratorio(item.nome)">SAIBA MAIS</button>
-                    </div>
-                  </div>
-                </div>
-                <!-- Adicione as setas de navegação (opcional) -->
-                <div class="swiper-button-next"></div>
-                <div class="swiper-button-prev"></div>
-              </div>
-            </div>
-        </div>
-    </div>
-</div>
-  
-  <!-- EQUIPE -->
-  <div class="row justify-content-center align-items-center m-0 p-0" style="margin-top: 20px !important;" *ngIf="dados?.equipe.length > 0">
-    <div class="col-md-11 col-lg-10 d-flex flex-column justify-content-between align-items-center"
-        style="height: auto; background-color: white; border-radius: 20px; border: 1px solid rgb(219, 219, 219);">
-        <div class="row w-100">
-            <div class="col-12" style="padding-top: 25px;">
-                <h4 style="font-size: 1.2rem; color: rgb(44, 44, 44);">
-                    EQUIPE
-                </h4>
-            </div>
 
-            <div class="col-12 d-flex flex-wrap pb-5" style="overflow: hidden; ">
-              <div #swiperContainerEquipe class="swiper-container">
-                <div class="swiper-wrapper">
-                  <!-- Seus slides aqui -->
-                  <div class="swiper-slide" *ngFor="let item of dados.equipe">
-                    <a [attr.href]="item.link ? item.link : '#'">
-                      <div class="card-custom d-flex flex-column justify-content-center align-items-center mb-5"
-                      style="width: 225px; height: auto; min-height: 300px;">
-                      <div class="card-title w-100 pl-3 pt-4" style="color:#2864AE; text-align: start;">
-                          <h4 style="font-size: 0.9rem; text-align: start;">{{item.nome}}</h4>
-                          <h4 style="font-size: 0.9rem; text-align: start;" *ngIf="item.cargo">{{item.cargo}}</h4>
-                      </div>
-                      <img src="../../../assets/galeria/parceiro4.png" style="margin-bottom: 15px; max-width: 100%;">
-                  </div>
-                    </a>
-                    
-                  </div>
-                </div>
-                <!-- Adicione as setas de navegação (opcional) -->
-                <div class="swiper-button-next"></div>
-                <div class="swiper-button-prev"></div>
-              </div>
-            </div>
-        </div>
-    </div>
-</div>
 
-  <div class=" row justify-content-center align-items-center m-0 p-0"
-    style=" height: 50px;">
-
-    Todo o conteúdo deste site está publicado sob a licença&nbsp;<a href="#">Creative
-      Commons Atribuição-SemDerivações 3.0 Não Adaptada.</a>
-  </div>
+  <app-footer></app-footer>
 </div>

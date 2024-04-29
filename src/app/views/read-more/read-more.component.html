@@ -1,42 +1,6 @@
 <div class="body">
 
-  <header class="w-100 row justify-content-between align-items-center m-0 p-0">
-    <section class="col-3   left-side">
-      <img src="../../../assets/icone/Hamburger.png" class="menu-img" (click)="showMenu = !showMenu"
-        style="width: 3rem; cursor: pointer;">
-    </section>
-    <section class="col-3 d-flex justify-content-center" (click)="redirecionarParaHome()">
-      <img class="pr-2" src="../../../assets/icone/farmHeader.png" style="cursor: pointer;">
-      <img src="../../../assets/icone/vdepiHeader.png" style="cursor: pointer;">
-    </section>
-    <section class="col-3 d-flex  justify-content-end right-side">
-      <div class="container">
-        <input type="text" class="search-input">
-        <i class="fas fa-search search-icon "></i>
-      </div>
-    </section>
-  </header>
-  <div class="fixed-div row justify-content-center pt-4 " *ngIf="showMenu && dados" style="border-radius: 1rem; box-shadow: 1px 1px 1px 1px #cdcdcd;">
-    <div class="col-12 text-center d-flex" >
-      <img src="../../../assets/icone/farmMenu.png" style="width: 50px;height: 50px;cursor: pointer;margin-left: 20px;
-        margin-right: 15px;"  (click)="redirecionarParaHome()">
-      <img src="../../../assets/icone/logoMenu.png" style="width: 200px;height: 50px;cursor: pointer;" (click)="redirecionarParaHome()">
-    </div>
-    <div class="row justify-content-center menu-options">
-      <div class="d-flex justify-content-between align-items-center"
-        style="height: 75px; width: 275px;cursor: pointer;">
-        <h4 style="color:black; font-size: 1rem; font-weight: bolder;">SOBRE A
-          VDPI</h4>
-        <img src="../../../assets/svg/Group.svg" style="width: 1rem;">
-      </div>
-      <div class="d-flex justify-content-between align-items-center" *ngFor="let item of dados"
-        style="height: 75px; width: 275px;cursor: pointer;" (click)="redirecionarParaFarmacologia(item.nome)">
-        <h4 style="color:black; font-size: 1rem; font-weight: bolder;">{{item.nome}}</h4>
-        <img src="../../../assets/svg/Group.svg" style="width: 1rem;">
-      </div>
-    </div>
-
-  </div>
+  <app-header></app-header>
 
   <app-banner [title]="titleBanner" [Subtitle]="subtitleBanner"></app-banner>
 
@@ -175,18 +139,18 @@
         <h4 style="font-size: 1.2rem; color: gray; ">
           MISSÃO E VISÃO
         </h4>
-        <h2 style="color:#2864AE; font-weight: bolder;">
-          A EVOLUÇÃO DA VDEPI
-        </h2>
+
         <p class="text-about last-news-paragraph">
-          Visão: “Ser protagonista e inovador na disponibilização de soluções integradas e sustentáveis para o SUS.”
+          <b>Visão: </b>“Ser protagonista e inovador na disponibilização de soluções integradas e sustentáveis para o
+          SUS.”
           <br>
           <br>
-          Missão: “Promover a saúde pública por meio da oferta de soluções integradas e sustentáveis, gerando e
-          difundindo conhecimentos e inovação.”
+          <b>Missão:</b> “Promover a oferta de soluções integradas e sustentáveis, gerando e difundindo conhecimentos,
+          inovando
+          e fornecendo soluções para doenças de grande relevância para a população brasileira.”
           <br>
           <br>
-          Vice-Diretora: Dra. Nubia Boechat
+          <b>Vice-Diretora: Dra. Nubia Boechat</b>
           <br>
           Graduada pela Faculdade de Farmácia da UFRJ, mestra em síntese orgânica pelo NPPN-UFRJ, doutora em química
           pelo IQ-UFRJ, com estágio “sanduíche” na Universidade de York, Inglaterra. Pós-doutorado na London School of
@@ -237,21 +201,14 @@
     </div>
 
     <ul>
-      <li><a href="#">Laboratório de Farmacologia Aplicada - LFA</a></li>
-      <li><a href="#">Laboratório de Micro e Nanotecnologia - LMN</a></li>
-      <li><a href="#">Laboratório de Farmacotécnica Experimental – LabFE</a></li>
-      <li><a href="#">Laboratório de Síntese de Fármacos – LASFAR</a></li>
-      <li><a href="#">Laboratório de Síntese de Substâncias no Combate a Doenças Tropicais – LSSCDT</a></li>
-      <li><a href="#">Laboratório de Produtos Naturais para a Saúde Pública – LPNSP</a></li>
-      <li><a href="#">Laboratório de Plantas Medicinais e Derivados – LPMD</a></li>
-      <li><a href="#">Laboratório de Tecnologia para a Biodiversidade em Saúde – LabTecBio</a></li>
+      <li *ngFor="let laboratorio of laboratorios" (click)="redirecionarParaLaboratorio(laboratorio.nome)">
+        {{laboratorio.nome}}
+        <ul>
+          <li>Pesquisador Responsável :{{laboratorio?.pesquisadorResponsavel}}</li>
+        </ul>
+      </li>
     </ul>
-    
 
   </div>
-  <div class=" row justify-content-center align-items-center m-0 p-0" style=" height: 50px;">
-
-    Todo o conteúdo deste site está publicado sob a licença&nbsp;<a href="#">Creative
-      Commons Atribuição-SemDerivações 3.0 Não Adaptada.</a>
-  </div>
+  <app-footer></app-footer>
 </div>

@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, ElementRef, HostListener, NgZone, ViewChild, ViewEncapsulation  } from "@angular/core";
+import { ChangeDetectorRef, Component, ElementRef, HostListener, NgZone, ViewChild, ViewEncapsulation } from "@angular/core";
 import { Router } from "@angular/router";
 import { InformationsService } from "app/serviços/informations.service";
 // import Swiper core and required modules
@@ -17,14 +17,14 @@ export class HomeComponent {
   @ViewChild('produtos') produtos!: ElementRef;
   @ViewChild('swiperContainer') swiperContainer?: ElementRef;
   @ViewChild('swiperContainerPremios') swiperContainerPremios?: ElementRef;
-  titleBanner= "PESQUISA E INOVAÇÃO" 
-  
+  titleBanner = "VDEPI – VICE-DIRETORIA DE EDUCAÇÃO, PESQUISA E INOVAÇÃO"
+  isHome: boolean = true;
   arrayFalso2 = [0, 1, 2];
   arrayParceiros = [
-  "../../../assets/galeria/parceiro1.png",
-  "../../../assets/galeria/parceiro2.png",
-  "../../../assets/galeria/parceiro3.png",
-  "../../../assets/galeria/parceiro4.png"]
+    "../../../assets/galeria/parceiro1.png",
+    "../../../assets/galeria/parceiro2.png",
+    "../../../assets/galeria/parceiro3.png",
+    "../../../assets/galeria/parceiro4.png"]
   laboratorios = [];
   showMenu: boolean = false;
   readMore: boolean = false;
@@ -32,47 +32,23 @@ export class HomeComponent {
   slides = Array.from({ length: 1000 }).map(
     (el, index) => `Slide ${index + 1}`
   );
-  images= [
-    {
-      src: '../../../assets/galeria/teste.jpeg',
-      thumb: 'Descrição da Imagem 1'
-    },
-    {
-      src: '../../../assets/galeria/img2.png',
-      thumb: 'Descrição da Imagem 2'
-    },
-    {
-      src: '../../../assets/galeria/img3.png',
-      thumb: 'Descrição da Imagem 3'
-    },
-    {
-      src: '../../../assets/galeria/img4.png',
-      thumb: 'Descrição da Imagem 4'
-    },
-    {
-      src: '../../../assets/galeria/img5.png',
-      thumb: 'Descrição da Imagem 5'
-    },
-    {
-      src: '../../../assets/galeria/img6.png',
-      thumb: 'Descrição da Imagem 6'
-    }
-  ];
-  _albums: Array<any> = []; 
+  images = [];
+
+  _albums: Array<any> = [];
   constructor(
     private cd: ChangeDetectorRef,
     private ngZone: NgZone,
     private router: Router,
     private informationsService: InformationsService,
     private _lightbox: Lightbox,
-    ) {}
+  ) { }
   ngOnInit() {
 
     this.informationsService.getDados().subscribe(data => {
       this.dados = data.departamentos;
       this.createAlbum();
       data.departamentos.map(item => this.laboratorios.push(...item.laboratorios));
- 
+
     });
   }
   ngAfterViewInit(): void {
@@ -89,7 +65,7 @@ export class HomeComponent {
       });
     }
   }
-  scrollToSection(section: string) {
+  scrollToSection(section: any) {
     const element = this[section].nativeElement;
     element.scrollIntoView({ behavior: 'smooth', block: 'start', inline: 'nearest' });
   }
@@ -103,7 +79,7 @@ export class HomeComponent {
       this.showMenu = false;
     }
   }
-  navigateTo(nome){
+  navigateTo(nome) {
     localStorage.setItem('title', nome);
     this.router.navigate([`departamento`]);
 
@@ -114,38 +90,39 @@ export class HomeComponent {
   redirecionarParaReadMore() {
     this.router.navigate(['/read-more']);
   }
-  redirecionarParaFarmacologia(nome){
+  redirecionarParaFarmacologia(nome) {
+
     localStorage.setItem('title', nome);
     this.router.navigate(['/departamento']);
   }
-  redirecionarParaLaboratorio(nome){
+  redirecionarParaLaboratorio(nome) {
     console.log(nome)
     localStorage.setItem('titleLab', nome);
     this.router.navigate(['/laboratorio']);
   }
-  readAbout(){
-    this.readMore =  true;
+  readAbout() {
+    this.readMore = true;
   }
-  createAlbum(){
+  createAlbum() {
     let i = 1
     this.images.forEach(img => {
-      const src = img.src; 
-      const caption = img.thumb; 
-      const thumb = img.src; 
-      const album = { src: src, caption: caption, thumb: thumb }; 
-     this._albums.push(album); 
-     i++
+      const src = img.src;
+      const caption = img.thumb;
+      const thumb = img.src;
+      const album = { src: src, caption: caption, thumb: thumb };
+      this._albums.push(album);
+      i++
 
     })
   }
   open(index: number): void { // open lightbox 
-    this._lightbox.open(this._albums, index,{
+    this._lightbox.open(this._albums, index, {
       fitImageInViewPort: true,
-    
-    }); 
-    } 
-    
+
+    });
+  }
+
   close(): void { // close lightbox programmatically 
-    this._lightbox.close(); 
+    this._lightbox.close();
   }
 }

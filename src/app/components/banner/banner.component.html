@@ -1,12 +1,14 @@
-<div class=" row justify-content-center align-items-center m-0 p-0 banner " >
-  <div class="video-background" >
+<div class=" row justify-content-center align-items-center m-0 p-0 banner ">
+  <div class="video-background">
     <video autoplay loop #videoBanner style="width: 100%;">
       <source src="assets/banner-slide\banner-bg.mp4" type="video/mp4">
     </video>
   </div>
-  <div class="title-banner" >
+  <div class="title-banner">
     <h3 style="color: #fff;font-size: 3rem;"> {{title}}</h3>
-    <h3 style="color: #fff;font-size: 3rem;"> {{Subtitle}}</h3>
+    <a [href]="link" target="_blank">
+      <h3 style="color: #fff;font-size: 3rem;"> {{Subtitle}}</h3>
+    </a>
   </div>
 
 

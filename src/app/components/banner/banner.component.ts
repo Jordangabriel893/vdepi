@@ -9,6 +9,7 @@ export class BannerComponent implements OnInit, AfterViewInit {
 
   @Input() title: string;
   @Input() Subtitle: string;
+  @Input() link: string;
   @ViewChild('videoBanner') videoBanner: ElementRef<HTMLVideoElement>
   constructor() { }
 

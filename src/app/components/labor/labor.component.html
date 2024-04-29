@@ -1,0 +1,21 @@
+<div class="labor-component" *ngIf="laboratorios.length > 0">
+  <div class="labor-component-header">
+    <h1>Laboratórios</h1>
+  </div>
+  <div class="container-header-labor">
+
+    <img src="../../../assets/galeria/Fiocruz.png" alt="">
+
+    <h2>Nossos Laboratórios</h2>
+  </div>
+
+  <ul>
+    <li *ngFor="let laboratorio of laboratorios" (click)="redirecionarParaLaboratorio(laboratorio.nome)">
+      {{laboratorio.nome}}
+      <ul>
+        <li>Pesquisador Responsável :{{laboratorio?.pesquisadorResponsavel}}</li>
+      </ul>
+    </li>
+  </ul>
+
+</div>
