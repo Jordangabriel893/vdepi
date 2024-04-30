@@ -18,6 +18,8 @@ export class HomeComponent {
   @ViewChild('swiperContainer') swiperContainer?: ElementRef;
   @ViewChild('swiperContainerPremios') swiperContainerPremios?: ElementRef;
   titleBanner = "VDEPI – VICE-DIRETORIA DE EDUCAÇÃO, PESQUISA E INOVAÇÃO"
+  Subtitle = "Vice-diretora: Dra. Nubia Boechat"
+  link = "http://lattes.cnpq.br/9152983185617827"
   isHome: boolean = true;
   arrayFalso2 = [0, 1, 2];
   arrayParceiros = [

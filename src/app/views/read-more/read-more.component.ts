@@ -12,7 +12,7 @@ import { Lightbox } from 'ngx-lightbox';
 })
 export class ReadMoreComponent implements OnInit {
 
-  titleBanner = "Vice Diretoria de Educação, Pesquisa e Inovação – VDEPI ";
+  titleBanner = "VICE DIRETORIA DE EDUCAÇÃO, PESQUISA E INOVAÇÃO – VDEPI ";
   subtitleBanner = "Vice-diretora: Dra. Nubia Boechat";
   arrayFalso = [{
     src: '../../../assets/laboratorios/img1.png',
@@ -121,8 +121,8 @@ export class ReadMoreComponent implements OnInit {
   redirecionarParaFarmacologia(nome) {
 
 
-      localStorage.setItem('title', nome);
-      this.router.navigate(['/departamento']);
+    localStorage.setItem('title', nome);
+    this.router.navigate(['/departamento']);
   }
   redirecionarParaLaboratorio(nome) {
     localStorage.setItem('titleLab', nome);
