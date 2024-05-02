@@ -192,32 +192,7 @@
       "nome": "DEPARTAMENTO DE INOVAÇÃO GALÊNICA - DIG",
       "sobre": "O Departamento de inovação galênica desempenha um importante papel na pesquisa e desenvolvimento da VDEPI. O departamento tem contribuído decisivamente para o desenvolvimento tecnológico em projetos estratégicos, em inovações de fronteira, como a nanotecnologia e a impressão 3D. Conta com especialistas qualificados em diversas etapas de P&D, com ênfase no desenvolvimento farmacotécnico. Compreende atividades de caracterização dos protótipos, envolvendo estudos de pré-formulação, assim como o desenvolvimento de formulações preliminares para as experimentações em animais e para o uso humano.Faz interface com as Redes de Plataformas da Fiocruz em diversos eixos de atuação, promovendo a articulação institucional e através de colaborações com outros grupos nacionais e internacionais. Participa dos Programas de Pós-Graduação de Farmanguinhos com atuação na docência e orientação acadêmica e profissional, fomentando a construção de conhecimento e estimulando a pesquisa translacional em medicamentos.",
       "laboratorios": [
-        {
-          "nome": "LABORATÓRIO DE MICRO E NANOTECNOLOGIA (LMN)",
-          "sobre": "O Laboratório de Micro e Nanotecnologia está focado no desenvolvimento tecnológico de formulações farmacêuticas para diversas vias de administração, com versatilidade em termos de linhas terapêuticas e fontes de obtenção de insumos ativos. Além disso, possui competência técnica e instrumental para atuar em vacinas, dispositivos para diagnóstico e projetos farmoquímicos. Dispõe de uma ampla gama de equipamentos para as etapas de preparo e caracterização dos projetos. Historicamente voltado para a saúde humana, tem recentemente direcionado esforços para a saúde animal, integrando uma perspectiva de saúde única.\n\nO laboratório tem histórico na área acadêmica, servindo de base para o desenvolvimento de projetos de pós-graduação e geração de conhecimento. Além disso, presta serviços vinculados à Rede de Plataformas Tecnológicas da Fiocruz, atendendo demandas de instituições públicas e privadas. Seus diferenciais incluem competência técnica, versatilidade tecnológica, capacidade de atuação em diferentes escalas e experiência industrial da equipe, contribuindo para o desenvolvimento regulatório dos projetos.",
-          "descricao": "Descrição do Laboratório de Síntese de Substâncias no Combate a Doenças Tropicais (SSCDT)",
-          "pesquisasProjetos": [],
-          "pesquisadorResponsavel": "Dr. Helvécio Vinícius Antunes Rocha",
-          "linkPesquisadorResponsavel": "http://lattes.cnpq.br/2176296530102185",
-          "equipe": [
-            {
-              "nome": "Helvécio Vinícius Antunes Rocha",
-              "cargo": "",
-              "link": "http://lattes.cnpq.br/2176296530102185"
-            },
-            {
-              "nome": "Cinira Fandaruff",
-              "cargo": "",
-              "link": "http://lattes.cnpq.br/8798903082681874"
-            },
-            {
-              "nome": "Marcelo Henrique da Cunha Chaves",
-              "cargo": "",
-              "link": "http://lattes.cnpq.br/6977865193051759"
-            }
-          ],
-          "reconhecimentos": "Reconhecimentos do Laboratório de Síntese de Substâncias no Combate a Doenças Tropicais (SSCDT)"
-        },
+
         {
           "nome": "LABORATÓRIO DE FARMACOTÉCNICA EXPERIMENTAL (LABFE)",
           "sobre": "O Laboratório de Farmacotécnica Experimental (LabFE) faz parte do departamento de Inovação Galênica. Este laboratório trabalha com desenvolvimento de formulações voltadas para o tratamento de variadas doenças, com ênfase nas negligenciadas, obtidas por métodos farmacotécnicos tradicionais (granulação /mistura/compressão, líquidos e semissólidos), técnicas de design de partículas por spray dryer, de obtenção de dispersões sólidas pela extrusão à quente (Hot-melt extrusion) e métodos inovadores como a impressão 3D de medicamentos. Faz parte da rede plataformas da Fiocruz e vem consolidando a Plataforma de Manufatura Aditiva de Medicamentos e Insumos para Saúde (PLAMEDIS) através da aquisição da primeira impressora 3D de medicamentos da Fiocruz.Além disso, através do espaço Farlab (Laboratório aberto de prototipagem de Farmanguinhos para inovação em saúde) financiado pela Fiocruz e Finep, a Fiocruz terá seu primeiro “makerspace” equipado com ferramentas de fabricação digital e prototipação rápida, controladas por computador e operando com os mais diversos materiais de suporte, que permitam a fabricação rápida, flexível e de baixo custo de protótipos para exploração criativa de ideias. O espaço permitirá o preparo de testes de conceito e o estímulo à cultura de compartilhamento, produção cooperada e empreendedorismo para o desenvolvimento de projetos inovadores. ",
@@ -478,16 +453,6 @@
               "link": "(http://lattes.cnpq.br/1348388032267443)"
             }
           ],
-          "reconhecimentos": "Reconhecimentos do Laboratório de Síntese de Substâncias no Combate a Doenças Tropicais (LSSCDT)"
-        },
-        {
-          "nome": "Seção de Farmacologia Molecular - SFM ",
-          "sobre": "A Farmacologia Molecular atua na avaliação da atividade antitumoral de compostos sobre células tumorais humanas, pesquisa e desenvolvimento farmacêutico, colaborando com a descoberta e elucidação do mecanismo de ação de novos de fármacos. Busca identificar compostos, sintetizados ou da biodiversidade capazes de induzir apoptose e/ou anular os mecanismos de resistência à fármacos, embasando a descoberta de novas terapias auxiliando quimioterapia convencional. A Plataforma de ensaios antitumorais RTP11M, é uma das principais atividades da Seção, oferta ensaios de citotoxicidade e apoptose, para as fases de prospecção, descoberta, estudo de mecanismos de ação e desenvolvimento facilitando a tomada de decisão nos projetos, pela escolha serviços que realmente atendem cada etapa do desenvolvimento de fármacos, biofármacos e produtos tecnológicos. A RPT11M conta com um painel de linhagens tumorais humanas, que representam diferentes órgãos e tecidos, se adequando às necessidades dos usuários. Alinhada a ISO17025, conta com profissionais dedicados à gestão da qualidade.São prestados serviços de prospecção de atividade antitumoral, caracterização de atividade antitumoral, capacitação em cultura de células e consultoria para o acompanhamento de projetos de pesquisa e desenvolvimento.A Plataforma RTP11M oferece os seus serviços através da Rede de Plataformas Tecnológicas da Fiocruz (https://plataformas.fiocruz.br/).",
-          "descricao": "Descrição do Laboratório de Síntese de Substâncias no Combate a Doenças Tropicais (LSSCDT)",
-          "pesquisasProjetos": [],
-          "pesquisadorResponsavel": " André Luiz Franco Sampaio ",
-          "linkPesquisadorResponsavel": "http://lattes.cnpq.br/9141932858980243",
-          "equipe": [],
           "reconhecimentos": "Reconhecimentos do Laboratório de Síntese de Substâncias no Combate a Doenças Tropicais (LSSCDT)"
         }
       ],

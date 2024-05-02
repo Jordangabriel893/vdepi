@@ -21,6 +21,7 @@ export class DepartamentoComponent implements OnInit, AfterViewInit {
   showMenu: boolean = false;
   readMore: boolean = false;
   isHome: boolean = false;
+  isEducation: boolean = false;
   slides = Array.from({ length: 1000 }).map(
     (el, index) => `Slide ${index + 1}`
   );
@@ -42,14 +43,15 @@ export class DepartamentoComponent implements OnInit, AfterViewInit {
     const title = localStorage.getItem('title');
 
     this.titleBanner = title;
+
     this.informationsService.getDados().subscribe(data => {
       this.dados = data.departamentos.find(item => {
         const titleTrimmedLowerCase = title.trim().toLowerCase().replace(/[-–]/g, "");
         const itemNomeTrimmedLowerCase = item.nome.trim().toLowerCase().replace(/[-–]/g, "");
         this.Subtitle = item && item.coordenador ? 'Coordenado por: ' + item.coordenador : '';
         this.link = item && item.linkCoordenador ? item.linkCoordenador : '#';
-
-
+        // console.log(titleTrimmedLowerCase ,titleTrimmedLowerCase )
+        if (itemNomeTrimmedLowerCase === "departamento da educação") { this.isEducation = true }
         return itemNomeTrimmedLowerCase === titleTrimmedLowerCase;
       });
 
