@@ -55,6 +55,7 @@ export class DepartamentoComponent implements OnInit, AfterViewInit {
         return itemNomeTrimmedLowerCase === titleTrimmedLowerCase;
       });
 
+      this.dados.sobre = this.dados.sobre.split('\n');
       this.createAlbum();
       setTimeout(() => { this.createSwipers(); }, 1000)
     });

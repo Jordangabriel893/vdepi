@@ -20,7 +20,9 @@
           {{ dados.nome}}
         </h2>
         <p class="text-about last-news-paragraph-farmacologia" *ngIf="dados.sobre">
-          {{ dados.sobre}}
+          <ng-container *ngFor="let paragrafo of dados.sobre">
+            <p style="text-align: justify;">{{ paragrafo }}</p>
+          </ng-container>
         </p>
         <p class="text-about last-news-paragraph-farmacologia" *ngIf="!dados.sobre">
           Lorem Ipsum is simply dummy text of the printing and typesetting industry.
@@ -33,7 +35,8 @@
         </p>
       </div>
 
-      <div class="col-md-12 col-lg-7 pb-md-4 text-center d-flex justify-content-xl-center align-items-xl-center" *ngIf="isEducation">
+      <div class="col-md-12 col-lg-7 pb-md-4 text-center d-flex justify-content-xl-center align-items-xl-center"
+        *ngIf="isEducation">
         <iframe width="100%" height="315" src="https://www.youtube.com/embed/jS37uwcmkdE" frameborder="0"
           allowfullscreen></iframe>
       </div>
